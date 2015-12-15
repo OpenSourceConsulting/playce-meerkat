@@ -1,0 +1,8 @@
+{
+   "name": "webapp",
+   "requires": [],
+   "id": "4399c220-8953-4566-96c0-ca3457de698f",
+   "resources": [
+      "resources/css/dolly.css"
+   ]
+}

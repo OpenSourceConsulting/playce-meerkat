@@ -1,0 +1,96 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "globalController"
+    },
+    "designerId": "76fe1a40-eb84-4408-b4f9-78bac020609c",
+    "cn": [
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "application"
+                ],
+                "fn": "init",
+                "implHandler": [
+                    "/**",
+                    " * Global Variables를 정의",
+                    " */",
+                    "// Memory Chart, CPU Chart 용 Store 정의",
+                    "var memoryStore, cpuStore;",
+                    "",
+                    "// Memory Chart, CPU Chart 용 Series 겸 Field 정의",
+                    "var fields = ['date', 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8'];",
+                    "",
+                    "// 최대 Infinispan 서버 갯수",
+                    "var serverSize = 8;",
+                    "",
+                    "// REST API 호출을 위한 서버 URL Prefix로써 Athena-Dolly-Console로 Deploy 시 ''로 변경한다.",
+                    "//var urlPrefix = 'http://192.168.0.99/console/';",
+                    "var urlPrefix = '';",
+                    "",
+                    "// 현재 구동중인 Infinispan 서버 갯수를 조회한다.",
+                    "Ext.Ajax.request({",
+                    "    async: false,",
+                    "    url: urlPrefix + 'getServerList',",
+                    "    params: {",
+                    "    },",
+                    "    success: function(response, opts){",
+                    "        var obj = Ext.decode(response.responseText);",
+                    "",
+                    "        serverSize = obj.length;",
+                    "",
+                    "        if (obj.length == 1) {",
+                    "            fields = ['date', 'field1'];",
+                    "        } else if (obj.length == 2) {",
+                    "            fields = ['date', 'field1', 'field2'];",
+                    "        } else if (obj.length == 3) {",
+                    "            fields = ['date', 'field1', 'field2', 'field3'];",
+                    "        } else if (obj.length == 4) {",
+                    "            fields = ['date', 'field1', 'field2', 'field3', 'field4'];",
+                    "        } else if (obj.length == 5) {",
+                    "            fields = ['date', 'field1', 'field2', 'field3', 'field4', 'field5'];",
+                    "        } else if (obj.length == 6) {",
+                    "            fields = ['date', 'field1', 'field2', 'field3', 'field4', 'field5', 'field6'];",
+                    "        } else if (obj.length == 7) {",
+                    "            fields = ['date', 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7'];",
+                    "        }",
+                    "    },",
+                    "    failure: function(response, opts) {",
+                    "        Ext.Msg.alert('Error', 'Server-side failure with status code ' + response.status);",
+                    "    }",
+                    "});",
+                    "",
+                    "memoryStore = Ext.create('Ext.data.JsonStore', {",
+                    "    fields: fields",
+                    "});",
+                    "",
+                    "cpuStore = Ext.create('Ext.data.JsonStore', {",
+                    "    fields: fields",
+                    "});",
+                    "",
+                    "// Global variables를 정의하는 구문으로 GlobalData.urlPrefix, GlobalData.serverSize 등으로 어디에서든 접근이 가능하다.",
+                    "Ext.define('GlobalData', {",
+                    "    singleton: true,",
+                    "",
+                    "    urlPrefix: urlPrefix,",
+                    "    memoryStore: memoryStore,",
+                    "    cpuStore: cpuStore,",
+                    "    serverSize: serverSize",
+                    "});"
+                ]
+            },
+            "designerId": "bc5d01e1-27de-43d1-83ce-f5326d476a40"
+        }
+    ]
+}

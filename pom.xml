@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>athena-meerkat</groupId>
+	<artifactId>athena-meerkat</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<scm>
+		<connection>scm:git:git://github.com/OpenSourceConsulting/athena-meerkat.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/OpenSourceConsulting/athena-meerkat.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/OpenSourceConsulting/athena-meerkat</url>
+	</scm>
+
+	<organization>
+		<name>Open Source Consulting Inc.</name>
+		<url>http://osci.kr</url>
+	</organization>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.compile.version>1.6</project.build.compile.version>
+        <project.build.source.version>1.6</project.build.source.version>
+        <project.build.target.version>1.6</project.build.target.version>
+        <lib.javassist.version>3.12.1.GA</lib.javassist.version>
+        <lib.infinispan.version>6.0.0.Final</lib.infinispan.version>
+		<skipTests>true</skipTests>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>couchbase</id>
+			<name>Couchbase Maven Repository</name>
+			<layout>default</layout>
+			<url>http://files.couchbase.com/maven2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<!-- javassist(BCI) -->
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${lib.javassist.version}</version>
+		</dependency>
+		
+		<!-- infinispan -->
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-client-hotrod</artifactId>
+			<version>${lib.infinispan.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-core</artifactId>
+			<version>${lib.infinispan.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-server-core</artifactId>
+			<version>${lib.infinispan.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-server-hotrod</artifactId>
+			<version>${lib.infinispan.version}</version>
+		</dependency>
+		
+		<!-- couchbase -->
+        <dependency>
+            <groupId>com.couchbase.client</groupId>
+            <artifactId>couchbase-client</artifactId>
+            <version>1.4.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+		
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		
+		<!-- for debugging -->
+		<!-- 
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>7.0.47</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+    </dependencies>
+    
+	<modules>
+		<module>core</module>
+		<module>common</module>
+		<module>console</module>
+		<module>controller</module>
+	</modules>
+</project>

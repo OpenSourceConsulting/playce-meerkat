@@ -1,0 +1,62 @@
+{
+    "name": "meerkat",
+    "settings": {
+        "cmd": {
+            "license": "commercial",
+            "cmdVersion": "4.0.3.74",
+            "frameworkVersion": "4.2.1.883"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "urlPrefix": "http://localhost:1841/",
+        "exportPath": "C:/Users/htran/Desktop/meerkat-ui-build",
+        "spacesToIndent": 4,
+        "sdkPath": "",
+        "lineEnding": "LF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": true,
+        "lastBuildSelection": {
+            "value": "webBuild",
+            "display": "Build web app"
+        }
+    },
+    "xdsVersion": "3.0.0",
+    "xdsBuild": 1337,
+    "schemaVersion": 1,
+    "upgradeVersion": 300000000003,
+    "framework": "ext42",
+    "viewOrderMap": {
+        "view": [
+            "10c76f16-b3f5-4059-acd2-183f46682e75"
+        ],
+        "store": [
+            "e679f6ac-0018-409e-b163-b13106f333ee"
+        ],
+        "controller": [
+            "43dd67a6-085d-49a6-9bad-39193d6863e9",
+            "9e66322b-7e6a-4a12-90f3-4b1e834694c9",
+            "ad74de95-6c32-44a5-a1bd-5ca0403e3c04",
+            "a2905f36-d82e-419f-971b-4c4529192b08",
+            "76fe1a40-eb84-4408-b4f9-78bac020609c"
+        ],
+        "model": [
+            "2d2a2337-a4c3-4714-a3f4-4537c7d2e918"
+        ],
+        "resource": [
+            "a5b947ef-eecb-40af-baed-8ee5558b74d1",
+            "dccc4a23-9682-4e86-8c71-5fdd1e9bec32",
+            "338028a6-a71b-46f8-9a5f-7f21bbb782b0"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

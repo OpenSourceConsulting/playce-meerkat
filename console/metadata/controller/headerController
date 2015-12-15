@@ -1,0 +1,47 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "headerController"
+    },
+    "designerId": "43dd67a6-085d-49a6-9bad-39193d6863e9",
+    "cn": [
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "logoImg",
+                "selector": "#logoImg"
+            },
+            "designerId": "4bf9fbc2-f3b1-4850-90af-81fb42b853da"
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLaunch",
+                "implHandler": [
+                    "/**",
+                    " * CI Logo Image click event를 catch 하도록 설정",
+                    " */",
+                    "this.getLogoImg().getEl().on('click', function() {",
+                    "    window.open('http://www.osci.kr', '_blank');",
+                    "});"
+                ]
+            },
+            "designerId": "8d078194-849d-4149-95c6-a71e64ed3ea7"
+        }
+    ]
+}

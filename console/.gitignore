@@ -1,0 +1,12 @@
+.project
+.settings
+.architect
+.sencha
+packages
+theme
+ext
+app.json.meta
+build
+build.xml
+build.settings
+/target

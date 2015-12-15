@@ -1,0 +1,268 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "sessionDataController"
+    },
+    "designerId": "a2905f36-d82e-419f-971b-4c4529192b08",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#sessionDataBtn",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "click",
+                "implHandler": [
+                    "/**",
+                    " * Session Data List 메뉴 버튼 클릭 시 수행되는 function",
+                    " */",
+                    "var centerContainer = this.getCenterContainer(),",
+                    "    dashboardBtn = this.getDashboardBtn(),",
+                    "    sessionDataBtn = this.getSessionDataBtn();",
+                    "",
+                    "// 현재 선택된 item이 sessionDataPanel일 경우 무시한다.",
+                    "if (centerContainer.layout.getActiveItem().itemId === \"sessionDataPanel\") {",
+                    "    sessionDataBtn.toggle(true);",
+                    "    return;",
+                    "}",
+                    "",
+                    "dashboardBtn.toggle(false);",
+                    "centerContainer.layout.setActiveItem(1);",
+                    "",
+                    "var me = this;",
+                    "me.loadSessionList();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "126fcd91-aeb9-4e67-8584-a676c82019ce"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#sessionDataGrid",
+                "designer|targetType": "Ext.grid.Panel",
+                "fn": "select",
+                "implHandler": [
+                    "/**",
+                    " * Session Data List에서 특정 세션 선택 시 해당 세션의 내용을 조회하고 Detail Panel에 보여주기 위한 function",
+                    " */",
+                    "var detailPanel = this.getDetailPanel();",
+                    "var sessionDataField = this.getSessionDataField();",
+                    "",
+                    "detailPanel.setLoading(true);",
+                    "",
+                    "",
+                    "// JSON Pretty Format으로 세션 상세 내용을 보여주기 위해 설정",
+                    "if (!library) {",
+                    "   var library = {};",
+                    "}",
+                    "",
+                    "library.json = {",
+                    "   replacer: function(match, pIndent, pKey, pVal, pEnd) {",
+                    "      var key = '<span class=json-key>';",
+                    "      var val = '<span class=json-value>';",
+                    "      var str = '<span class=json-string>';",
+                    "      var r = pIndent || '';",
+                    "      if (pKey)",
+                    "         r = r + key + pKey.replace(/[\": ]/g, '') + '</span>: ';",
+                    "      if (pVal)",
+                    "         r = r + (pVal[0] == '\"' ? str : val) + pVal + '</span>';",
+                    "      return r + (pEnd || '');",
+                    "   },",
+                    "   prettyPrint: function(obj) {",
+                    "      var jsonLine = /^( *)(\"[\\w]+\": )?(\"[^\"]*\"|[\\w.+-]*)?([,[{])?$/mg;",
+                    "      return JSON.stringify(obj, null, 5)",
+                    "         .replace(/&/g, '&amp;').replace(/\\\\\"/g, '&quot;')",
+                    "         .replace(/</g, '&lt;').replace(/>/g, '&gt;')",
+                    "         .replace(jsonLine, library.json.replacer);",
+                    "   }",
+                    "};",
+                    "",
+                    "",
+                    "Ext.Ajax.request({",
+                    "    url: GlobalData.urlPrefix + 'getSessionData?key=' + record.get('key'),",
+                    "    params: {",
+                    "    },",
+                    "    success: function(response, opts){",
+                    "        detailPanel.setLoading(false);",
+                    "",
+                    "        if (detailPanel.collapsed !== false) {",
+                    "            detailPanel.toggleCollapse();",
+                    "        }",
+                    "",
+                    "        var result = \"<h2>\" + response.responseText + \"</h2>\";",
+                    "        sessionDataField.setValue(\"<pre>\" + library.json.prettyPrint(Ext.decode(response.responseText)) + \"</pre>\");",
+                    "    },",
+                    "    failure: function(response, opts) {",
+                    "        detailPanel.setLoading(false);",
+                    "        sessionDataField.setValue(null);",
+                    "        Ext.Msg.alert('Error', 'Server-side failure with status code ' + response.status);",
+                    "    }",
+                    "});",
+                    ""
+                ],
+                "name": "select",
+                "scope": "me"
+            },
+            "designerId": "07236d8a-e4ab-4261-ba5a-76c801748570"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "centerContainer",
+                "selector": "#centerContainer"
+            },
+            "designerId": "3906a8ab-1e0b-401c-81b0-acdb4945ed29"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "detailPanel",
+                "selector": "#detailPanel"
+            },
+            "designerId": "968396f5-afb1-4df7-b38d-80dd2b9f5d85"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "dashboardBtn",
+                "selector": "#dashboardBtn"
+            },
+            "designerId": "64ac1ab9-c9f9-4d0c-ba78-57f8b2208648"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "sessionDataBtn",
+                "selector": "#sessionDataBtn"
+            },
+            "designerId": "dfe65722-8bd4-4841-9854-f31b87275e59"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "sessionDataGrid",
+                "selector": "#sessionDataGrid"
+            },
+            "designerId": "5a129b69-de69-4247-bada-f453c20d3db3"
+        },
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "ref": "sessionDataField",
+                "selector": "#sessionDataField"
+            },
+            "designerId": "b2fd08c5-a7f5-46ec-be66-5d71be39078f"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#refreshTool",
+                "designer|targetType": "Ext.panel.Tool",
+                "fn": "onToolClick",
+                "implHandler": [
+                    "/**",
+                    " * Session Data List를 refresh 하기 위해 panel의 refresh tool을 활성화",
+                    " */",
+                    "var me = this;",
+                    "me.loadSessionList();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "06b479e3-5427-4a6f-b1b2-4eeb1e788650"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "loadSessionList",
+                "implHandler": [
+                    "/**",
+                    " * Session Data List를 refresh 하기 위한 function",
+                    " */",
+                    "var sessionDataGrid = this.getSessionDataGrid(),",
+                    "    detailPanel = this.getDetailPanel();",
+                    "",
+                    "if (detailPanel.collapsed === false) {",
+                    "    detailPanel.toggleCollapse();",
+                    "}",
+                    "",
+                    "sessionDataGrid.setLoading(true);",
+                    "",
+                    "Ext.Ajax.request({",
+                    "    url: GlobalData.urlPrefix + 'getSessionKeyList',",
+                    "    params: {",
+                    "    },",
+                    "    success: function(response, opts){",
+                    "        sessionDataGrid.setLoading(false);",
+                    "        var obj = Ext.decode(response.responseText);",
+                    "        var store = Ext.data.StoreManager.lookup('sessionDataStore');",
+                    "        store.loadData(obj);",
+                    "        sessionDataGrid.update();",
+                    "    },",
+                    "    failure: function(response, opts) {",
+                    "        sessionDataGrid.setLoading(false);",
+                    "        Ext.Msg.alert('Error', 'Server-side failure with status code ' + response.status);",
+                    "    }",
+                    "});"
+                ]
+            },
+            "designerId": "195f3230-1ae7-4831-8d89-594637272977"
+        }
+    ]
+}

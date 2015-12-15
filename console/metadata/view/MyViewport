@@ -1,0 +1,232 @@
+{
+    "type": "Ext.container.Viewport",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|initialView": true,
+        "designer|userClassName": "MyViewport",
+        "layout": "border",
+        "requires": [
+            "Ext.layout.container.Border",
+            "Ext.layout.container.Card",
+            "Ext.ux.GMapPanel",
+            "Ext.util.Point",
+            "Ext.chart.*",
+            "Ext.data.*"
+        ]
+    },
+    "designerId": "10c76f16-b3f5-4059-acd2-183f46682e75",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "height": 50,
+                "itemId": "northPanel",
+                "layout": "hbox",
+                "layout|margins": "0 0 5 0",
+                "layout|region": "north",
+                "title": null
+            },
+            "designerId": "7dbbb762-8c8e-4f09-a6cd-3e37d05c131a",
+            "cn": [
+                {
+                    "type": "Ext.Img",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": null,
+                        "height": 45,
+                        "itemId": "logoImg",
+                        "layout|margins": "3 3 3 8",
+                        "margin": "",
+                        "src": "resources/images/logo/osc-logo.png",
+                        "title": "Open Source Consulting Co. ltd.",
+                        "width": 120
+                    },
+                    "designerId": "1df61c34-4505-4585-9615-779515daf0eb"
+                },
+                {
+                    "type": "Ext.Img",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 60,
+                        "itemId": "dollyImg",
+                        "layout|flex": null,
+                        "layout|margins": "0 0 0 8",
+                        "src": "resources/images/logo/athena_dolly_2.png",
+                        "title": "Athena Dolly",
+                        "width": 60
+                    },
+                    "designerId": "9a4ba715-a388-4d6c-a9d2-8872cf821d21"
+                },
+                {
+                    "type": "Ext.toolbar.Spacer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "width": 500
+                    },
+                    "designerId": "f29c1ae6-c741-43c4-b71e-a535b7fe38f2"
+                },
+                {
+                    "type": "Ext.panel.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": null,
+                        "layout": "fit",
+                        "layout|flex": 1,
+                        "title": null
+                    },
+                    "designerId": "a9c1c49e-929c-4f81-a743-e79f19d5c4d8"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "bodyBorder": false,
+                "collapsible": true,
+                "container|align": "stretch",
+                "itemId": "menuPanel",
+                "layout": "vbox",
+                "layout|region": "west",
+                "layout|split": true,
+                "resizable": false,
+                "title": "MENU",
+                "titleAlign": "left",
+                "titleCollapse": false,
+                "width": 250
+            },
+            "configAlternates": {
+                "resizable": "boolean"
+            },
+            "designerId": "6d982375-8215-4696-ace0-dfe170e9c5bd"
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "container|pack": "center",
+                "height": 50,
+                "itemId": "southPanel",
+                "layout": "vbox",
+                "layout|margins": "5 0 0 0",
+                "layout|region": "south",
+                "title": null
+            },
+            "configAlternates": {
+                "bodyStyle": "function"
+            },
+            "designerId": "976d40fa-58cc-454a-a7a9-34ac5f1375e7",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": null,
+                        "itemId": "footerLabel1",
+                        "layout|flex": 1,
+                        "layout|margins": null,
+                        "style": "{text-align: center;}",
+                        "text": "© 2014 , Open Source Consulting, Inc. All rights reserved."
+                    },
+                    "configAlternates": {
+                        "style": "string"
+                    },
+                    "designerId": "d417af3e-ab1a-430c-a3cd-b7b9a66176e8"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "footerLabel2",
+                        "layout|flex": 1,
+                        "layout|margins": null,
+                        "style": "{text-align: center;}",
+                        "text": "Gangnam Mirae Tower 805, Saimdang-ro 174(Seocho-dong), Seocho-gu, Seoul, Korea"
+                    },
+                    "configAlternates": {
+                        "style": "string"
+                    },
+                    "designerId": "0b4f8da2-c1c3-4935-9926-3c5c78da719a"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "itemId": "footerLabel3",
+                        "layout|flex": 1,
+                        "layout|margins": null,
+                        "style": "{text-align: center;}",
+                        "text": "+ 82 (2) 516-0711, sales@osci.kr"
+                    },
+                    "configAlternates": {
+                        "style": "string"
+                    },
+                    "designerId": "41e74b0c-10c5-4f75-8820-55e8f328678c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "frame": false,
+                "itemId": "centerContainer",
+                "layout": "card",
+                "layout|region": "center"
+            },
+            "designerId": "b27eab63-438b-42ba-98dc-e1ed67bb2162"
+        }
+    ]
+}

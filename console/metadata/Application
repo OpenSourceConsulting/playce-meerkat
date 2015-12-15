@@ -1,0 +1,31 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "controllers": [
+            "headerController",
+            "footerController",
+            "dashboardController",
+            "sessionDataController",
+            "globalController"
+        ],
+        "models": [
+            "SessionKeyData"
+        ],
+        "name": "webapp",
+        "requires": [
+            "Ext.window.MessageBox"
+        ],
+        "stores": [
+            "sessionDataStore"
+        ],
+        "views": [
+            "MyViewport"
+        ]
+    },
+    "designerId": "application"
+}

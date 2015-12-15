@@ -1,0 +1,15 @@
+{
+   "name": "webapp",
+   "requires": [],
+   "id": "0bd510ff-3439-4a2e-bb20-0c3861590d70",
+   "resources": [
+      "resources/css/dolly.css"
+   ],
+   "_architect": {
+      "_comment": "Please don't edit. This is Architect data.",
+      "resources": [
+         "resources/css/dolly.css"
+      ],
+      "requires": []
+   }
+}
