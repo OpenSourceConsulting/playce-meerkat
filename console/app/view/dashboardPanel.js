@@ -35,16 +35,8 @@ Ext.define('webapp.view.dashboardPanel', {
         Ext.applyIf(me, {
             dockedItems: [
                 {
-                    xtype: 'container',
-                    flex: 4,
-                    dock: 'top',
-                    layout: {
-                        align: 'stretch',
-                        type: 'hbox'
-                    }
-                },
-                {
                     xtype: 'toolbar',
+                    flex: 1,
                     dock: 'top',
                     items: [
                         {
@@ -56,42 +48,40 @@ Ext.define('webapp.view.dashboardPanel', {
                 },
                 {
                     xtype: 'panel',
+                    collapseMode: 'mini',
+                    flex: 1,
                     dock: 'top',
+                    style: 'border:1',
+                    bodyBorder: true,
                     animCollapse: false,
                     collapseDirection: 'top',
-                    collapsible: true,
+                    collapsible: false,
                     placeholderCollapseHideMode: 2,
                     title: 'Tomcat 1',
                     titleCollapse: true,
                     dockedItems: [
                         {
-                            xtype: 'container',
+                            xtype: 'panel',
                             dock: 'top',
-                            height: 66,
                             layout: {
                                 align: 'stretch',
                                 type: 'hbox'
                             },
                             items: [
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Health',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Health</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -102,24 +92,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Today Availability',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Today Availability</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -131,24 +116,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Today\'s Uptime',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Today\'s Uptime</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -159,24 +139,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Last Downtime',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Last Downtime</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -189,7 +164,7 @@ Ext.define('webapp.view.dashboardPanel', {
                             ]
                         },
                         {
-                            xtype: 'container',
+                            xtype: 'panel',
                             dock: 'bottom',
                             height: 233,
                             width: 657,
@@ -200,10 +175,15 @@ Ext.define('webapp.view.dashboardPanel', {
                             items: [
                                 {
                                     xtype: 'panel',
+                                    flex: 1,
+                                    margin: '10 10 10 10',
+                                    style: 'border:5px;',
                                     width: 600,
                                     layout: {
                                         type: 'fit'
                                     },
+                                    bodyBorder: false,
+                                    bodyStyle: 'border:5px;',
                                     title: 'Server Response Time',
                                     titleAlign: 'center',
                                     dockedItems: [
@@ -212,6 +192,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             dock: 'top',
                                             height: 184,
                                             html: 'SERVER RESPONE TIME',
+                                            style: 'border: 5px;',
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
@@ -247,6 +228,8 @@ Ext.define('webapp.view.dashboardPanel', {
                                 },
                                 {
                                     xtype: 'panel',
+                                    flex: 1,
+                                    margin: '10 10 10 10',
                                     width: 634,
                                     title: 'Server Performance',
                                     titleAlign: 'center',
@@ -294,40 +277,38 @@ Ext.define('webapp.view.dashboardPanel', {
                 },
                 {
                     xtype: 'panel',
+                    flex: 1,
                     dock: 'top',
+                    margin: '10 0 0 0 ',
+                    animCollapse: false,
                     collapseDirection: 'top',
-                    collapsed: false,
-                    collapsible: true,
+                    collapsible: false,
+                    placeholderCollapseHideMode: 2,
                     title: 'Tomcat 2',
+                    titleCollapse: true,
                     dockedItems: [
                         {
-                            xtype: 'container',
+                            xtype: 'panel',
                             dock: 'top',
-                            height: 66,
                             layout: {
                                 align: 'stretch',
                                 type: 'hbox'
                             },
                             items: [
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Health',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Health</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -338,24 +319,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Today Availability',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Today Availability</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -367,24 +343,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Today\'s Uptime',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Today\'s Uptime</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -395,24 +366,19 @@ Ext.define('webapp.view.dashboardPanel', {
                                     ]
                                 },
                                 {
-                                    xtype: 'container',
+                                    xtype: 'panel',
                                     flex: 1,
                                     height: 70,
+                                    margin: '5 5 5 5',
                                     width: 171,
                                     layout: {
                                         align: 'stretch',
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    title: 'Last Downtime',
+                                    titleAlign: 'center',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            margins: '1',
-                                            height: 21,
-                                            html: '<center><span style="font-weight: bold;text-align:center;font-size:large;color:blue">Last Downtime</span></center>',
-                                            width: 37,
-                                            text: ''
-                                        },
                                         {
                                             xtype: 'label',
                                             height: 21,
@@ -425,7 +391,7 @@ Ext.define('webapp.view.dashboardPanel', {
                             ]
                         },
                         {
-                            xtype: 'container',
+                            xtype: 'panel',
                             dock: 'bottom',
                             height: 233,
                             width: 657,
@@ -436,10 +402,13 @@ Ext.define('webapp.view.dashboardPanel', {
                             items: [
                                 {
                                     xtype: 'panel',
+                                    flex: 1,
+                                    margin: '10 10 10 10',
                                     width: 600,
                                     layout: {
                                         type: 'fit'
                                     },
+                                    bodyBorder: true,
                                     title: 'Server Response Time',
                                     titleAlign: 'center',
                                     dockedItems: [
@@ -483,6 +452,8 @@ Ext.define('webapp.view.dashboardPanel', {
                                 },
                                 {
                                     xtype: 'panel',
+                                    flex: 1,
+                                    margin: '10 10 10 10',
                                     width: 634,
                                     title: 'Server Performance',
                                     titleAlign: 'center',

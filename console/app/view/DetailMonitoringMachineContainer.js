@@ -104,16 +104,22 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'panel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
+                                            layout: {
+                                                type: 'fit'
+                                            },
                                             headerPosition: 'bottom',
                                             title: 'CPU',
                                             titleAlign: 'center',
-                                            items: [
+                                            dockedItems: [
                                                 {
                                                     xtype: 'chart',
+                                                    dock: 'top',
                                                     height: 210,
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 35,
+                                                    store: 'DomainStore',
                                                     axes: [
                                                         {
                                                             position: 'gauge',
@@ -135,6 +141,10 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'panel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
+                                            layout: {
+                                                type: 'fit'
+                                            },
                                             headerPosition: 'bottom',
                                             title: 'Memory',
                                             titleAlign: 'center',
@@ -145,6 +155,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 35,
+                                                    store: 'DomainStore',
                                                     axes: [
                                                         {
                                                             position: 'gauge',
@@ -166,6 +177,10 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'panel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
+                                            layout: {
+                                                type: 'fit'
+                                            },
                                             headerPosition: 'bottom',
                                             title: 'Disk',
                                             titleAlign: 'center',
@@ -176,6 +191,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 35,
+                                                    store: 'DomainStore',
                                                     axes: [
                                                         {
                                                             position: 'gauge',
@@ -200,6 +216,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                     xtype: 'panel',
                                     flex: 3,
                                     dock: 'top',
+                                    layout: {
+                                        type: 'fit'
+                                    },
                                     collapsible: true,
                                     title: 'System load',
                                     dockedItems: [
@@ -210,6 +229,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             width: 400,
                                             animate: true,
                                             insetPadding: 20,
+                                            store: 'DomainStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -271,6 +291,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                     xtype: 'panel',
                                     flex: 1,
                                     dock: 'top',
+                                    layout: {
+                                        type: 'fit'
+                                    },
                                     title: 'CPU utilization',
                                     dockedItems: [
                                         {
@@ -280,6 +303,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             width: 400,
                                             animate: true,
                                             insetPadding: 20,
+                                            store: 'DomainStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -345,11 +369,14 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             },
                                             items: [
                                                 {
-                                                    xtype: 'container',
+                                                    xtype: 'panel',
                                                     flex: 1,
+                                                    margin: '5 5 5 5',
                                                     layout: {
                                                         type: 'fit'
                                                     },
+                                                    title: 'Core 1',
+                                                    titleAlign: 'center',
                                                     items: [
                                                         {
                                                             xtype: 'chart',
@@ -357,6 +384,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                             width: 400,
                                                             animate: true,
                                                             insetPadding: 20,
+                                                            store: 'DomainStore',
                                                             axes: [
                                                                 {
                                                                     type: 'Category',
@@ -387,11 +415,14 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                     ]
                                                 },
                                                 {
-                                                    xtype: 'container',
+                                                    xtype: 'panel',
                                                     flex: 1,
+                                                    margin: '5 5 5 5',
                                                     layout: {
                                                         type: 'fit'
                                                     },
+                                                    title: 'Core 2',
+                                                    titleAlign: 'center',
                                                     items: [
                                                         {
                                                             xtype: 'chart',
@@ -399,6 +430,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                             width: 400,
                                                             animate: true,
                                                             insetPadding: 20,
+                                                            store: 'DomainStore',
                                                             axes: [
                                                                 {
                                                                     type: 'Category',
@@ -440,11 +472,14 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             },
                                             items: [
                                                 {
-                                                    xtype: 'container',
+                                                    xtype: 'panel',
                                                     flex: 1,
+                                                    margin: '5 5 5 5',
                                                     layout: {
                                                         type: 'fit'
                                                     },
+                                                    title: 'Core 3',
+                                                    titleAlign: 'center',
                                                     items: [
                                                         {
                                                             xtype: 'chart',
@@ -453,6 +488,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                             width: 400,
                                                             animate: true,
                                                             insetPadding: 20,
+                                                            store: 'DomainStore',
                                                             axes: [
                                                                 {
                                                                     type: 'Category',
@@ -483,11 +519,14 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                     ]
                                                 },
                                                 {
-                                                    xtype: 'container',
+                                                    xtype: 'panel',
                                                     flex: 1,
+                                                    margin: '5 5 5 5',
                                                     layout: {
                                                         type: 'fit'
                                                     },
+                                                    title: 'Core 4',
+                                                    titleAlign: 'center',
                                                     items: [
                                                         {
                                                             xtype: 'chart',
@@ -496,6 +535,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                                             width: 400,
                                                             animate: true,
                                                             insetPadding: 20,
+                                                            store: 'DomainStore',
                                                             axes: [
                                                                 {
                                                                     type: 'Category',
@@ -544,6 +584,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                     xtype: 'panel',
                                     flex: 1,
                                     dock: 'top',
+                                    layout: {
+                                        type: 'fit'
+                                    },
                                     title: 'Disk Utilization'
                                 }
                             ],
@@ -554,6 +597,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                     width: 400,
                                     animate: true,
                                     insetPadding: 20,
+                                    store: 'DomainStore',
                                     axes: [
                                         {
                                             type: 'Category',
@@ -663,7 +707,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'gridpanel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
                                             title: 'Fan',
+                                            titleAlign: 'center',
                                             forceFit: true,
                                             columns: [
                                                 {
@@ -681,7 +727,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'gridpanel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
                                             title: 'Power',
+                                            titleAlign: 'center',
                                             forceFit: true,
                                             columns: [
                                                 {
@@ -699,7 +747,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'gridpanel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
                                             title: 'Temperature',
+                                            titleAlign: 'center',
                                             forceFit: true,
                                             columns: [
                                                 {
@@ -736,7 +786,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'gridpanel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
                                             title: 'Fan',
+                                            titleAlign: 'center',
                                             forceFit: true,
                                             columns: [
                                                 {
@@ -754,7 +806,9 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'gridpanel',
                                             flex: 1,
+                                            margin: '5 5 5 5',
                                             title: 'Power',
+                                            titleAlign: 'center',
                                             forceFit: true,
                                             columns: [
                                                 {

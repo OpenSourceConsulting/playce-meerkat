@@ -27,7 +27,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'container',
+                    xtype: 'panel',
                     flex: 0.5,
                     region: 'north',
                     height: 47,
@@ -40,7 +40,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                 },
                 {
                     xtype: 'panel',
-                    flex: 2.5,
+                    flex: 3,
                     region: 'north',
                     height: 389,
                     layout: {
@@ -123,8 +123,9 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                 },
                 {
                     xtype: 'gridpanel',
-                    flex: 7,
+                    flex: 6.5,
                     region: 'center',
+                    margin: '5 0 0 0 ',
                     title: 'Data sources',
                     forceFit: true,
                     columns: [

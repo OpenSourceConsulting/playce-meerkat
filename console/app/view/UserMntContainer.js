@@ -111,6 +111,71 @@ Ext.define('webapp.view.UserMntContainer', {
                             scope: me
                         }
                     }
+                },
+                {
+                    xtype: 'gridpanel',
+                    height: 349,
+                    margin: '5 0 0 0 ',
+                    title: 'User Role',
+                    forceFit: true,
+                    store: 'UserStore',
+                    columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'userName',
+                            text: 'Name'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 156,
+                            dataIndex: 'fullName',
+                            text: 'Role'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 133,
+                            dataIndex: 'lastLoginDateString',
+                            text: 'User Count'
+                        }
+                    ],
+                    dockedItems: [
+                        {
+                            xtype: 'toolbar',
+                            dock: 'top',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    itemId: 'createBtn',
+                                    text: 'New'
+                                },
+                                {
+                                    xtype: 'tbseparator'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Filtering'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            items: [
+                                {
+                                    xtype: 'pagingtoolbar',
+                                    width: 1099,
+                                    displayInfo: true,
+                                    store: 'UserStore'
+                                }
+                            ]
+                        }
+                    ],
+                    listeners: {
+                        itemcontextmenu: {
+                            fn: me.onGridpanelItemContextMenu1,
+                            scope: me
+                        }
+                    }
                 }
             ]
         });
@@ -119,6 +184,48 @@ Ext.define('webapp.view.UserMntContainer', {
     },
 
     onGridpanelItemContextMenu: function(dataview, record, item, index, e, eOpts) {
+        var mnuContext = Ext.create("Ext.menu.Menu",{
+
+            items: [{
+                id: 'edit-user',
+                text: 'Edit'
+            },
+            {
+                id: 'delete-user',
+                text: 'Delete'
+            }
+                   ],
+            listeners: {
+
+                click: function( _menu, _item, _e, _eOpts ) {
+                   switch (_item.id) {
+                        case 'edit-user':
+
+                           Ext.app.Controller.getController("UserController").showUserWindow("edit", 1);
+                           // Ext.app.getController("UserController").showUserWindow("edit", 1);
+                            break;
+                        case 'delete-user':
+                            alert("Delete user");
+                            break;
+                        default:
+                            break;
+                   }
+                },
+                hide:function(menu){
+                    menu.destroy();
+                }
+            },
+            defaults: {
+               clickHideDelay: 1
+            }
+        });
+
+        mnuContext.showAt(e.getXY());
+        e.stopEvent();
+
+    },
+
+    onGridpanelItemContextMenu1: function(dataview, record, item, index, e, eOpts) {
         var mnuContext = Ext.create("Ext.menu.Menu",{
 
             items: [{

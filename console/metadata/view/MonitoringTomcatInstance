@@ -26,7 +26,6 @@
                 "height": 50,
                 "layout|flex": 0.5
             },
-            "name": "MyToolbar14",
             "designerId": "cce38d3e-75e2-4146-9ee9-a2e98203cce0",
             "cn": [
                 {
@@ -40,7 +39,6 @@
                         "layout|flex": null,
                         "text": "Monitoring > Tomcat instance"
                     },
-                    "name": "MyLabel22",
                     "designerId": "d9c5e993-fb6f-487e-9935-5f7f84e2cb18"
                 }
             ]
@@ -59,7 +57,6 @@
                 "itemId": "tabPanel",
                 "layout|flex": 9.5
             },
-            "name": "MyTabPanel2",
             "designerId": "a4644867-29d6-4c70-8a91-568f35611421",
             "cn": [
                 {
@@ -73,7 +70,6 @@
                         "height": null,
                         "title": "Availability"
                     },
-                    "name": "MyPanel19",
                     "designerId": "c8c4ae85-238c-43a2-a1fe-a4e83316f80c",
                     "cn": [
                         {
@@ -83,7 +79,6 @@
                                 "type": "object"
                             },
                             "codeClass": null,
-                            "name": "TabConfig6",
                             "designerId": "5bff8376-e34a-4ab8-a232-b43d7cf8d06c"
                         },
                         {
@@ -96,7 +91,6 @@
                             "userConfig": {
                                 "dock": "top"
                             },
-                            "name": "MyToolbar15",
                             "designerId": "2cbb346c-0905-48d8-b046-58fd043d9163",
                             "cn": [
                                 {
@@ -110,7 +104,6 @@
                                         "layout|flex": null,
                                         "text": "Availability Hisotry in "
                                     },
-                                    "name": "MyLabel23",
                                     "designerId": "cb6186ad-ef73-48af-a5ae-1a419af54015"
                                 },
                                 {
@@ -124,7 +117,6 @@
                                         "layout|flex": null,
                                         "text": "Last 24 hours"
                                     },
-                                    "name": "MyButton14",
                                     "designerId": "ac417f5a-3268-40b8-bb74-e66caca072cd",
                                     "cn": [
                                         {
@@ -134,7 +126,6 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
-                                            "name": "MyMenu3",
                                             "designerId": "cf1ace7f-8793-4e8b-9404-709f9d057c4d",
                                             "cn": [
                                                 {
@@ -147,7 +138,6 @@
                                                     "userConfig": {
                                                         "text": "Last 30 days"
                                                     },
-                                                    "name": "MyMenuItem3",
                                                     "designerId": "10fe4bcc-9a50-40b9-a040-7eef7a4083fe"
                                                 }
                                             ]
@@ -157,94 +147,104 @@
                             ]
                         },
                         {
-                            "type": "Ext.chart.Chart",
+                            "type": "Ext.container.Container",
                             "reference": {
                                 "name": "dockedItems",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "animate": [
-                                    "true"
-                                ],
                                 "dock": "top",
-                                "height": 250,
-                                "insetPadding": 20,
-                                "width": 400
+                                "layout": "fit"
                             },
-                            "name": "StackedBarChart1",
-                            "designerId": "0b9b1b87-467e-4d8d-8399-f9cdbb0d08c0",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-bar-chart",
-                            "autoName": "StackedBarChart",
+                            "designerId": "848432ec-6b83-4a79-85a7-50a45222eb5c",
                             "cn": [
                                 {
-                                    "type": "Ext.chart.axis.Category",
+                                    "type": "Ext.chart.Chart",
                                     "reference": {
-                                        "name": "axes",
+                                        "name": "items",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "fields": [
-                                            "x"
+                                        "animate": [
+                                            "true"
                                         ],
-                                        "position": "left",
-                                        "title": ""
+                                        "height": 250,
+                                        "insetPadding": 20,
+                                        "store": "DomainStore",
+                                        "width": 400
                                     },
-                                    "name": "MyCategoryAxis9",
-                                    "designerId": "f5a1fde5-b487-4116-8134-5b17be95a9b3"
-                                },
-                                {
-                                    "type": "Ext.chart.axis.Numeric",
-                                    "reference": {
-                                        "name": "axes",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fields": [
-                                            "y1",
-                                            "y2",
-                                            "y3"
-                                        ],
-                                        "position": "bottom",
-                                        "title": "Numeric Axis"
-                                    },
-                                    "name": "MyNumericAxis9",
-                                    "designerId": "19be9c3e-2cb5-4e6b-91e1-013b4dce6ab1"
-                                },
-                                {
-                                    "type": "Ext.chart.series.Bar",
-                                    "reference": {
-                                        "name": "series",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "axis": [
-                                            "bottom"
-                                        ],
-                                        "stacked": true,
-                                        "xField": "x",
-                                        "yField": [
-                                            "y1",
-                                            "y2",
-                                            "y3"
-                                        ]
-                                    },
-                                    "name": "MyBarSeries1",
-                                    "designerId": "dab1d581-8f43-4d0e-9a10-3432ef8a4b14"
-                                },
-                                {
-                                    "type": "Ext.chart.Legend",
-                                    "reference": {
-                                        "name": "legend",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "name": "MyLegend5",
-                                    "designerId": "2e4d134f-9c92-49bf-87c4-927c9a7179ec"
+                                    "designerId": "0b9b1b87-467e-4d8d-8399-f9cdbb0d08c0",
+                                    "isBuiltIn": true,
+                                    "iconCls": "icon-bar-chart",
+                                    "autoName": "StackedBarChart",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.chart.axis.Category",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "x"
+                                                ],
+                                                "position": "left",
+                                                "title": ""
+                                            },
+                                            "designerId": "f5a1fde5-b487-4116-8134-5b17be95a9b3"
+                                        },
+                                        {
+                                            "type": "Ext.chart.axis.Numeric",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "y1",
+                                                    "y2",
+                                                    "y3"
+                                                ],
+                                                "position": "bottom",
+                                                "title": "Numeric Axis"
+                                            },
+                                            "designerId": "19be9c3e-2cb5-4e6b-91e1-013b4dce6ab1"
+                                        },
+                                        {
+                                            "type": "Ext.chart.series.Bar",
+                                            "reference": {
+                                                "name": "series",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "axis": [
+                                                    "bottom"
+                                                ],
+                                                "stacked": true,
+                                                "xField": "x",
+                                                "yField": [
+                                                    "y1",
+                                                    "y2",
+                                                    "y3"
+                                                ]
+                                            },
+                                            "designerId": "dab1d581-8f43-4d0e-9a10-3432ef8a4b14"
+                                        },
+                                        {
+                                            "type": "Ext.chart.Legend",
+                                            "reference": {
+                                                "name": "legend",
+                                                "type": "object"
+                                            },
+                                            "codeClass": null,
+                                            "designerId": "2e4d134f-9c92-49bf-87c4-927c9a7179ec"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -264,7 +264,6 @@
                         "layout": "vbox",
                         "title": "Performance"
                     },
-                    "name": "MyPanel20",
                     "designerId": "4906e243-ddb4-4c18-a456-7a694725b97b",
                     "cn": [
                         {
@@ -274,7 +273,6 @@
                                 "type": "object"
                             },
                             "codeClass": null,
-                            "name": "TabConfig7",
                             "designerId": "8a33990b-c408-4295-82fe-2ebc5ad6a1ab"
                         },
                         {
@@ -288,7 +286,6 @@
                                 "dock": "top",
                                 "layout|flex": 0.5
                             },
-                            "name": "MyToolbar16",
                             "designerId": "8b93023f-4968-4411-b14b-05affb618f93",
                             "cn": [
                                 {
@@ -302,7 +299,6 @@
                                         "layout|flex": null,
                                         "text": "Tracking in "
                                     },
-                                    "name": "MyLabel24",
                                     "designerId": "a291cd97-dba5-4dec-9c3d-00772a78f717"
                                 },
                                 {
@@ -316,7 +312,6 @@
                                         "layout|flex": null,
                                         "text": "Last 24 hours"
                                     },
-                                    "name": "MyButton15",
                                     "designerId": "9c344841-d544-4be0-8892-341ddf3ac3ed",
                                     "cn": [
                                         {
@@ -326,7 +321,6 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
-                                            "name": "MyMenu4",
                                             "designerId": "3f151954-9b30-49e5-92b5-bb0eb837f1f8",
                                             "cn": [
                                                 {
@@ -339,7 +333,6 @@
                                                     "userConfig": {
                                                         "text": "Last 30 days"
                                                     },
-                                                    "name": "MyMenuItem4",
                                                     "designerId": "06e94d01-b377-4c3d-a045-2dc8500f9269"
                                                 }
                                             ]
@@ -363,7 +356,6 @@
                                 "layout|flex": 4.5,
                                 "width": null
                             },
-                            "name": "MyContainer17",
                             "designerId": "6105a53a-ee10-4824-a238-abdd10ff0a00",
                             "cn": [
                                 {
@@ -374,11 +366,13 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "layout": "fit",
                                         "layout|flex": 1,
+                                        "margin": "5 5 5 5",
                                         "title": "Used Memory",
+                                        "titleAlign": "center",
                                         "width": 1226
                                     },
-                                    "name": "MyPanel21",
                                     "designerId": "32ff2426-a2ad-4a97-b791-6df03157472f",
                                     "cn": [
                                         {
@@ -395,9 +389,9 @@
                                                 "dock": "top",
                                                 "height": 275,
                                                 "insetPadding": 20,
+                                                "store": "DomainStore",
                                                 "width": 400
                                             },
-                                            "name": "LineChart8",
                                             "designerId": "8cf57a58-6f82-4cfb-b7bd-7d496dbd8575",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -416,7 +410,6 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
-                                                    "name": "MyCategoryAxis10",
                                                     "designerId": "5afe9956-8ef7-4a5d-9d12-678efd1b2128"
                                                 },
                                                 {
@@ -432,7 +425,6 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
-                                                    "name": "MyNumericAxis10",
                                                     "designerId": "e9048a4a-b03b-4ff3-8eeb-1c3fa50d4124"
                                                 },
                                                 {
@@ -452,7 +444,6 @@
                                                             "y"
                                                         ]
                                                     },
-                                                    "name": "MyLineSeries12",
                                                     "designerId": "e2aec86c-ba2d-48a3-a5a5-26a533442bbd"
                                                 },
                                                 {
@@ -472,7 +463,6 @@
                                                             "y"
                                                         ]
                                                     },
-                                                    "name": "MyLineSeries13",
                                                     "designerId": "036f2fdd-76b3-4dd4-be24-b75b398bffe8"
                                                 },
                                                 {
@@ -482,7 +472,6 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
-                                                    "name": "MyLegend6",
                                                     "designerId": "4f23d094-0e51-4977-a704-9f40d7c2a604"
                                                 }
                                             ]
@@ -497,11 +486,13 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "layout": "fit",
                                         "layout|flex": 1,
+                                        "margin": "5 5 5 5",
                                         "title": "Average Processing Time",
+                                        "titleAlign": "center",
                                         "width": 1226
                                     },
-                                    "name": "MyPanel22",
                                     "designerId": "42ffecdd-02be-4c80-b5dd-7da331a352a1",
                                     "cn": [
                                         {
@@ -518,9 +509,9 @@
                                                 "dock": "top",
                                                 "height": 276,
                                                 "insetPadding": 20,
+                                                "store": "DomainStore",
                                                 "width": 400
                                             },
-                                            "name": "LineChart9",
                                             "designerId": "396bf4db-a82c-4f18-9812-dd1e9bf04624",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -539,7 +530,6 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
-                                                    "name": "MyCategoryAxis11",
                                                     "designerId": "4120e6ac-83f6-4515-9fe9-f598f0e2e62c"
                                                 },
                                                 {
@@ -555,7 +545,6 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
-                                                    "name": "MyNumericAxis11",
                                                     "designerId": "b82383e2-be0b-4728-9bb5-2dcb7344b5a0"
                                                 },
                                                 {
@@ -572,7 +561,6 @@
                                                             "y"
                                                         ]
                                                     },
-                                                    "name": "MyLineSeries14",
                                                     "designerId": "6f0f6055-fa12-496d-8a88-fa9580f67c03"
                                                 },
                                                 {
@@ -582,7 +570,6 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
-                                                    "name": "MyLegend7",
                                                     "designerId": "715ecb68-af4e-451d-be76-e570cf62a6c8"
                                                 },
                                                 {
@@ -602,7 +589,6 @@
                                                             "y"
                                                         ]
                                                     },
-                                                    "name": "MyLineSeries15",
                                                     "designerId": "c67fbefc-d56f-4cbd-a97c-a90eeedc0276"
                                                 }
                                             ]
@@ -626,10 +612,10 @@
                                 "layout": "hbox",
                                 "layout|flex": 5,
                                 "manageHeight": false,
+                                "margin": "5 0 0 0",
                                 "title": "Health history",
                                 "width": 400
                             },
-                            "name": "MyPanel23",
                             "designerId": "8a733f8a-279d-4038-864e-6e8948683c37",
                             "cn": [
                                 {
@@ -642,7 +628,6 @@
                                     "userConfig": {
                                         "dock": "top"
                                     },
-                                    "name": "MyToolbar17",
                                     "designerId": "7bb6e2a7-58d4-400b-a351-df5400b99c69",
                                     "cn": [
                                         {
@@ -656,7 +641,6 @@
                                                 "layout|flex": null,
                                                 "text": "Filtering in"
                                             },
-                                            "name": "MyLabel25",
                                             "designerId": "affc7590-c0b5-48c9-840e-aa169cfdcec8"
                                         },
                                         {
@@ -670,7 +654,6 @@
                                                 "layout|flex": null,
                                                 "text": "Last 24 hours"
                                             },
-                                            "name": "MyButton16",
                                             "designerId": "2b64cd56-be87-42db-8a8a-931773bd03cb",
                                             "cn": [
                                                 {
@@ -680,7 +663,6 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
-                                                    "name": "MyMenu5",
                                                     "designerId": "679e1f02-bff7-428b-95bb-f34f1aa534cd",
                                                     "cn": [
                                                         {
@@ -693,7 +675,6 @@
                                                             "userConfig": {
                                                                 "text": "Lst 30 days"
                                                             },
-                                                            "name": "MyMenuItem5",
                                                             "designerId": "8df1d662-5a6a-4566-b599-733baf566e50"
                                                         }
                                                     ]

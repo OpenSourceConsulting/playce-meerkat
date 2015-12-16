@@ -27,7 +27,7 @@ Ext.define('webapp.view.DomainContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'container',
+                    xtype: 'panel',
                     flex: 0.5,
                     region: 'north',
                     height: 47,
@@ -39,11 +39,46 @@ Ext.define('webapp.view.DomainContainer', {
                     ]
                 },
                 {
+                    xtype: 'panel',
+                    flex: 1.5,
+                    region: 'north',
+                    height: 150,
+                    layout: {
+                        type: 'column'
+                    },
+                    title: 'Overview',
+                    items: [
+                        {
+                            xtype: 'displayfield',
+                            width: 164,
+                            fieldLabel: 'Name:',
+                            value: 'Display Field'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            width: 381,
+                            fieldLabel: 'Tomcat instances:',
+                            value: 'Display Field'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            width: 249,
+                            fieldLabel: 'Type',
+                            value: 'Display Field'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            style: '{text-align:right;font-weight:bold;}',
+                            fieldLabel: 'Data grid server group:'
+                        }
+                    ]
+                },
+                {
                     xtype: 'tabpanel',
                     flex: 8,
                     region: 'center',
                     split: true,
-                    id: 'tomcatInstTabPanel1',
+                    id: 'domainTomcatTab',
                     itemId: 'tomcatInstTabPanel',
                     activeTab: 0,
                     items: [
@@ -319,41 +354,6 @@ Ext.define('webapp.view.DomainContainer', {
                                     displayInfo: true
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    flex: 1.5,
-                    region: 'north',
-                    height: 150,
-                    layout: {
-                        type: 'column'
-                    },
-                    title: 'Overview',
-                    items: [
-                        {
-                            xtype: 'displayfield',
-                            width: 164,
-                            fieldLabel: 'Name:',
-                            value: 'Display Field'
-                        },
-                        {
-                            xtype: 'displayfield',
-                            width: 381,
-                            fieldLabel: 'Tomcat instances:',
-                            value: 'Display Field'
-                        },
-                        {
-                            xtype: 'displayfield',
-                            width: 249,
-                            fieldLabel: 'Type',
-                            value: 'Display Field'
-                        },
-                        {
-                            xtype: 'displayfield',
-                            style: '{text-align:right;font-weight:bold;}',
-                            fieldLabel: 'Data grid server group:'
                         }
                     ]
                 }

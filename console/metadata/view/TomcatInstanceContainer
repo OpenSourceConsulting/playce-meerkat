@@ -15,7 +15,7 @@
     "designerId": "150ab346-3d51-4742-878e-fc2960711343",
     "cn": [
         {
-            "type": "Ext.container.Container",
+            "type": "Ext.panel.Panel",
             "reference": {
                 "name": "items",
                 "type": "array"
@@ -53,7 +53,7 @@
                 "container|align": "stretch",
                 "height": 389,
                 "layout": "hbox",
-                "layout|flex": 2.5,
+                "layout|flex": 3,
                 "layout|region": "north",
                 "manageHeight": false,
                 "title": "Overview"
@@ -261,8 +261,9 @@
             "codeClass": null,
             "userConfig": {
                 "forceFit": true,
-                "layout|flex": 7,
+                "layout|flex": 6.5,
                 "layout|region": "center",
+                "margin": "5 0 0 0 ",
                 "title": "Data sources"
             },
             "designerId": "5e2db69a-c8d5-438c-8497-077fd9e6935d",
