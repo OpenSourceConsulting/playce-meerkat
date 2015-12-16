@@ -20,6 +20,8 @@ Ext.define('webapp.controller.globalController', {
         /**
          * Global Variables를 정의
          */
+
+
         // Memory Chart, CPU Chart 용 Store 정의
         var memoryStore, cpuStore;
 
@@ -29,10 +31,10 @@ Ext.define('webapp.controller.globalController', {
         // 최대 Infinispan 서버 갯수
         var serverSize = 8;
 
-        // REST API 호출을 위한 서버 URL Prefix로써 Athena-Dolly-Console로 Deploy 시 ''로 변경한다.
-        //var urlPrefix = 'http://192.168.0.99/console/';
+        // REST API 호출을 위한 서버 URL Prefix로써 Athena-Dolly-Controller로 Deploy 시 ''로 변경한다.
+        //var urlPrefix = 'http://127.0.0.1:8080/controller/';
         var urlPrefix = '';
-
+        /*
         // 현재 구동중인 Infinispan 서버 갯수를 조회한다.
         Ext.Ajax.request({
             async: false,
@@ -64,7 +66,7 @@ Ext.define('webapp.controller.globalController', {
                 Ext.Msg.alert('Error', 'Server-side failure with status code ' + response.status);
             }
         });
-
+        */
         memoryStore = Ext.create('Ext.data.JsonStore', {
             fields: fields
         });
@@ -80,7 +82,110 @@ Ext.define('webapp.controller.globalController', {
             urlPrefix: urlPrefix,
             memoryStore: memoryStore,
             cpuStore: cpuStore,
-            serverSize: serverSize
+            serverSize: serverSize,
+            isLogined: false
+        });
+
+
+        //this.initExtAjax();
+        //this.initVType();
+    },
+
+    initExtAjax: function() {
+        /*
+         * Global Ajax Config
+         */
+        /*
+        Ext.Ajax.timeout = 20000;// default is 30000.
+        Ext.Ajax.on("requestexception", function(conn, response, options, eOpts){
+
+            if(response.timedout){
+
+                Ext.Msg.show({
+                    title:'Request Timeout',
+                    msg: options.url +' request is timeout.',
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.ERROR
+                });
+
+            }else if(response.status == 403){
+
+                if(options.url.indexOf("user/onAfterLogin") > -1){
+                    return;
+                }
+
+                Ext.Msg.show({
+                    title:'Access Deny',
+                    msg: options.url + ": " + Ext.JSON.decode(response.responseText).msg,
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.ERROR
+                });
+
+            }else{
+
+                Ext.Msg.show({
+                    title:'Server Error',
+                    msg: 'server-side failure with status code ' + response.status,
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.ERROR
+                });
+            }
+        });
+        */
+    },
+
+    initVType: function() {
+        /*
+         * Global Validation(VTypes) Config
+         */
+        Ext.apply(Ext.form.field.VTypes, {
+            daterange: function(val, field) {
+                var date = field.parseDate(val);
+
+                if (!date) {
+                    return false;
+                }
+                if (field.startDateField && (!this.dateRangeMax || (date.getTime() != this.dateRangeMax.getTime()))) {
+                    var start = field.up('form').down('#' + field.startDateField);
+                    start.setMaxValue(date);
+                    start.validate();
+                    this.dateRangeMax = date;
+                }
+                else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
+                    var end = field.up('form').down('#' + field.endDateField);
+                    end.setMinValue(date);
+                    end.validate();
+                    this.dateRangeMin = date;
+                }
+                /*
+                 * Always return true since we're only using this vtype to set the
+                 * min/max allowed values (these are tested for after the vtype test)
+                 */
+                return true;
+            },
+
+            daterangeText: 'Start date must be less than end date',
+
+            password: function(val, field) {
+                //var pwd = field.up('form').down('#passwd');
+                pwd = field.previousNode('textfield');
+                return (val == pwd.getValue());
+            },
+
+            passwordText: 'Passwords do not match',
+
+            numeric: function(val, field) {
+                var numericRe = /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
+                return numericRe.test(val);
+            },
+            numericText : 'Not a valid numeric number. Must be numbers',
+            numericMask : /[.0-9]/,
+
+            template: function(val, field) {
+                var templateRe = /^[a-zA-Z0-9_\.\-]*$/;
+                return templateRe.test(val);
+            },
+            templateText : "영문 대소문자, 숫자, '_', '-', '.' 만 가능합니다."
         });
     }
 

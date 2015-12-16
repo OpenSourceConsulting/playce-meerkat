@@ -1,0 +1,77 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "DeployWindow",
+        "height": 119,
+        "layout": "border",
+        "title": "Deploy",
+        "width": 400
+    },
+    "designerId": "c55d81de-e837-485e-aade-da75dfa1ce01",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "layout|margins": "10"
+            },
+            "name": "MyContainer46",
+            "designerId": "ff664555-99ec-4a3f-b0a9-cd6b620f3b5c",
+            "cn": [
+                {
+                    "type": "Ext.form.field.File",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "margin": 10,
+                        "width": 366
+                    },
+                    "name": "MyFileUpload",
+                    "designerId": "1cbb4aa6-865a-44cf-ba50-0486316b3a1e"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 10 100",
+                        "text": "Deploy"
+                    },
+                    "name": "MyButton35",
+                    "designerId": "b993cb89-82c7-46dd-9796-3f9077680da9"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 10 10 ",
+                        "text": "Cancel"
+                    },
+                    "name": "MyButton36",
+                    "designerId": "bf22eced-6c8e-4138-aa78-ba790a0ef286"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,235 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "designer|userClassName": "DataSourceWindow",
+        "height": 500,
+        "layout": "vbox",
+        "title": "New Datasource",
+        "width": 503
+    },
+    "designerId": "691fac19-b4e1-419d-81c8-ff2a7444d199",
+    "cn": [
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "height": 485,
+                "layout": "column",
+                "layout|flex": 1,
+                "title": ""
+            },
+            "name": "MyFieldSet8",
+            "designerId": "bcffb60a-922a-4d1f-a86e-1308ab3c3fd0",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Name",
+                        "margin": "30 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyTextField37",
+                    "designerId": "ac3fa9e6-8bfc-46f9-810e-4290f381db32"
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Database Type",
+                        "margin": "0 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyComboBox12",
+                    "designerId": "4932194f-7431-45b7-b2ca-566be9199045"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "JDBC URL",
+                        "margin": "0 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyTextField38",
+                    "designerId": "a2eff24a-e46a-437d-bcce-dd5450b349dd"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Username",
+                        "margin": "0 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyTextField39",
+                    "designerId": "28d183a1-63b6-4b23-a4e2-968a9f6981c1"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Pasword",
+                        "margin": "0 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyTextField40",
+                    "designerId": "7f7a8af1-9aab-47e0-be07-a2dd83f6499c"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Retype Password",
+                        "margin": "0 0 10 30",
+                        "width": 414
+                    },
+                    "name": "MyTextField41",
+                    "designerId": "5f8638d1-0ac9-4149-bc42-2403124ed4e2"
+                },
+                {
+                    "type": "Ext.form.FieldSet",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 122,
+                        "title": "Connection Pool",
+                        "width": 464
+                    },
+                    "name": "MyFieldSet9",
+                    "designerId": "a7814d94-f323-4f65-9b45-ba58243cdd53",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Max Connection Pool",
+                                "labelWidth": 130,
+                                "margin": "0 0 10 30",
+                                "width": 414
+                            },
+                            "name": "MyTextField42",
+                            "designerId": "4dbe4fec-6be3-41b4-bf31-b78bbdf0bab7"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Min Connetion Pool",
+                                "labelWidth": 130,
+                                "margin": "0 0 10 30",
+                                "width": 414
+                            },
+                            "name": "MyTextField43",
+                            "designerId": "c46fc1df-3e48-42c0-b296-9b04d9cf9442"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Max Timeout(ms)",
+                                "labelWidth": 130,
+                                "margin": "0 0 10 30",
+                                "width": 414
+                            },
+                            "name": "MyTextField44",
+                            "designerId": "738b94f9-4b8c-4b15-88f7-9726e355e6bd"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 120",
+                        "text": "Test Connection"
+                    },
+                    "name": "MyButton51",
+                    "designerId": "6a51b11d-0650-4eae-a775-6f50a4cb5ac1"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 10",
+                        "text": "Create"
+                    },
+                    "name": "MyButton52",
+                    "designerId": "6cdb0930-1f16-4661-aa49-e3dea620f0ce"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 10",
+                        "text": "Canel"
+                    },
+                    "name": "MyButton53",
+                    "designerId": "6424b68a-a7e7-4347-84d6-5f8ff1fbf3f8"
+                }
+            ]
+        }
+    ]
+}

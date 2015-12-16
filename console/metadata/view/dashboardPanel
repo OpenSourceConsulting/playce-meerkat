@@ -1,0 +1,990 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "dashboardpanel",
+        "designer|userClassName": "dashboardPanel",
+        "height": 792,
+        "itemId": "dashboardPanel",
+        "layout": "border",
+        "title": null
+    },
+    "designerId": "62028c73-84f4-4081-b79f-26f01b095e35",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "dock": "top",
+                "layout": "hbox",
+                "layout|flex": 4
+            },
+            "designerId": "091fa0c3-22fb-44b9-8204-27375ae45d39"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "designerId": "111fd835-1e29-4d72-83a9-62f17d27e047",
+            "cn": [
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Domain",
+                        "layout|flex": null,
+                        "store": "DomainStore"
+                    },
+                    "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "animCollapse": false,
+                "collapseDirection": "top",
+                "collapsible": true,
+                "dock": "top",
+                "placeholderCollapseHideMode": 2,
+                "title": "Tomcat 1",
+                "titleCollapse": true
+            },
+            "designerId": "fba0415c-8047-44ae-8002-db9577e0232d",
+            "cn": [
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "dock": "top",
+                        "height": 66,
+                        "layout": "hbox"
+                    },
+                    "designerId": "612ac344-9ac6-4239-97a5-9483a6ddae57",
+                    "cn": [
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "49f689a7-33c4-475a-95a0-d7c671a72a2f",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Health</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "655e95c4-bcc4-4e4c-8fef-1dfdd56a1820"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "margin": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "100%",
+                                        "width": 171
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "db761087-2f1b-4d80-ae25-4a4ae42d5b37"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "851a81f1-34b6-49c9-af0d-fb7790333592",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Today Availability</span></center>",
+                                        "layout|margins": "1",
+                                        "style": null,
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "186dac9b-207b-445d-a3f0-29c3d1bef97f"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "margin": "0 0 0 30",
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "100%",
+                                        "width": 171
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "62751206-b1f6-4bd9-95ca-9c4b80a8d8d2"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "22e98e00-5468-468e-8b06-48dd6252efdd",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Today's Uptime</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "211161e7-c8f2-4c18-8b4e-f8ff12a49955"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "11 hrs 11 mins 26 secs",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "c9aa78b6-f59d-4a75-b7e1-246dcfb974d6"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "2e461d2a-21ff-43f2-9d4d-d857735492cb",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Last Downtime</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "b0338c7e-eaa0-435b-8536-86cf5efe8d6c"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "1 hrs 51 mins 26 secs",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "69dee8da-3650-4fbd-83b7-3d533744c1e1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "dock": "bottom",
+                        "height": 233,
+                        "layout": "hbox",
+                        "width": 657
+                    },
+                    "designerId": "54ada874-641c-4826-9d38-83533f391b10",
+                    "cn": [
+                        {
+                            "type": "Ext.panel.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout": "fit",
+                                "title": "Server Response Time",
+                                "titleAlign": "center",
+                                "width": 600
+                            },
+                            "designerId": "2800e4cf-6860-4bd5-aa2c-b7d8a91f3f4d",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.Chart",
+                                    "reference": {
+                                        "name": "dockedItems",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "animate": [
+                                            "true"
+                                        ],
+                                        "dock": "top",
+                                        "height": 184,
+                                        "html": [
+                                            "SERVER RESPONE TIME"
+                                        ],
+                                        "insetPadding": 20,
+                                        "store": "DomainStore",
+                                        "width": 598
+                                    },
+                                    "designerId": "973ab27d-ff5e-4f2d-ac09-17d9388e3c96",
+                                    "isBuiltIn": true,
+                                    "iconCls": "icon-line-chart",
+                                    "autoName": "LineChart",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.chart.axis.Category",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "x"
+                                                ],
+                                                "title": "Response Time"
+                                            },
+                                            "designerId": "e3c090eb-2006-438d-b3c1-218718ee28a0"
+                                        },
+                                        {
+                                            "type": "Ext.chart.axis.Numeric",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "y"
+                                                ],
+                                                "title": "ms"
+                                            },
+                                            "designerId": "cc1a2f1b-7057-4f87-bfb7-9938ac3504de"
+                                        },
+                                        {
+                                            "type": "Ext.chart.series.Line",
+                                            "reference": {
+                                                "name": "series",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "smooth": 3,
+                                                "xField": "x",
+                                                "yField": [
+                                                    "y"
+                                                ]
+                                            },
+                                            "designerId": "e824c934-44e8-46d1-b63e-1e152a823314"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.panel.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "title": "Server Performance",
+                                "titleAlign": "center",
+                                "width": 634
+                            },
+                            "designerId": "32334db7-5212-45e5-a3fb-565afa7859fd",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.Chart",
+                                    "reference": {
+                                        "name": "dockedItems",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "animate": [
+                                            "true"
+                                        ],
+                                        "dock": "top",
+                                        "height": 184,
+                                        "insetPadding": 20,
+                                        "store": "DomainStore",
+                                        "width": 598
+                                    },
+                                    "designerId": "67c1ff71-cebe-4188-b9ac-3df549c748fb",
+                                    "isBuiltIn": true,
+                                    "iconCls": "icon-line-chart",
+                                    "autoName": "LineChart",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.chart.axis.Category",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "x"
+                                                ],
+                                                "title": "Time"
+                                            },
+                                            "designerId": "197efc4c-369b-41de-bbc1-64866651f709"
+                                        },
+                                        {
+                                            "type": "Ext.chart.axis.Numeric",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "y"
+                                                ],
+                                                "title": "ms"
+                                            },
+                                            "designerId": "06108b07-6d68-4928-925a-87fe33562031"
+                                        },
+                                        {
+                                            "type": "Ext.chart.series.Line",
+                                            "reference": {
+                                                "name": "series",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "smooth": 3,
+                                                "xField": "x",
+                                                "yField": [
+                                                    "y"
+                                                ]
+                                            },
+                                            "designerId": "da1dc1bb-0e7f-427f-a8db-1a181b63fce4"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseDirection": "top",
+                "collapsed": false,
+                "collapsible": true,
+                "dock": "top",
+                "title": "Tomcat 2"
+            },
+            "designerId": "47691b1e-bbd9-468c-83b1-002ef0d939a0",
+            "cn": [
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "dock": "top",
+                        "height": 66,
+                        "layout": "hbox"
+                    },
+                    "designerId": "fb5831ff-82fd-4936-976f-bf8bbd4d1059",
+                    "cn": [
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "22564819-89c3-4748-852e-f127f9486315",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Health</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "2bb61637-8efc-4f09-bf7d-954ffe0ced3b"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "margin": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "100%",
+                                        "width": 171
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "a78a46d5-8ca0-4d86-9e9a-8a2b2f75f4fa"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "7bd4c3b1-7377-4db1-a53b-b820b6cfef1b",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Today Availability</span></center>",
+                                        "layout|margins": "1",
+                                        "style": null,
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "3ab2c2e2-64bb-424e-8281-0fb6de8a72f7"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "margin": "0 0 0 30",
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "100%",
+                                        "width": 171
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "c9725c9f-fd9b-4e73-8675-019e353370e2"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "6144a81a-7610-4af1-a38d-23f84a034f9a",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Today's Uptime</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "4451c923-c842-4b6e-aaaf-313f61f91242"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "11 hrs 11 mins 26 secs",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "6dc4ff35-f317-4dd7-8463-ebe86263e5a9"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "stretch",
+                                "container|pack": "center",
+                                "height": 70,
+                                "layout": "vbox",
+                                "layout|flex": 1,
+                                "width": 171
+                            },
+                            "designerId": "c1e56f55-13af-4789-b201-7e01fcc29aa0",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": "<center><span style=\"font-weight: bold;text-align:center;font-size:large;color:blue\">Last Downtime</span></center>",
+                                        "layout|margins": "1",
+                                        "text": "",
+                                        "width": 37
+                                    },
+                                    "designerId": "a49677d3-1db4-48a2-ae35-322745c6f077"
+                                },
+                                {
+                                    "type": "Ext.form.Label",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "defaultAlign": null,
+                                        "height": 21,
+                                        "html": null,
+                                        "layout|margins": null,
+                                        "style": "font-size:medium;font-weight:bold; text-align:center;",
+                                        "text": "1 hrs 51 mins 26 secs",
+                                        "width": 37
+                                    },
+                                    "configAlternates": {
+                                        "style": "string"
+                                    },
+                                    "designerId": "a320e70c-fad2-4dd7-9c8f-eaeaef9ff7d5"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "dock": "bottom",
+                        "height": 233,
+                        "layout": "hbox",
+                        "width": 657
+                    },
+                    "designerId": "f792f733-a0a4-4083-8fb0-abcb0bd862a7",
+                    "cn": [
+                        {
+                            "type": "Ext.panel.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "layout": "fit",
+                                "title": "Server Response Time",
+                                "titleAlign": "center",
+                                "width": 600
+                            },
+                            "designerId": "dfe7f55b-d4f1-4d60-a1a9-c428944ef58c",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.Chart",
+                                    "reference": {
+                                        "name": "dockedItems",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "animate": [
+                                            "true"
+                                        ],
+                                        "dock": "top",
+                                        "height": 184,
+                                        "html": [
+                                            "SERVER RESPONE TIME"
+                                        ],
+                                        "insetPadding": 20,
+                                        "store": "DomainStore",
+                                        "width": 598
+                                    },
+                                    "designerId": "2053eb66-ff12-477a-8694-9d3e137c2605",
+                                    "isBuiltIn": true,
+                                    "iconCls": "icon-line-chart",
+                                    "autoName": "LineChart",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.chart.axis.Category",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "x"
+                                                ],
+                                                "title": "Response Time"
+                                            },
+                                            "designerId": "40e96f81-2511-43f1-a26f-bd3fc25c1586"
+                                        },
+                                        {
+                                            "type": "Ext.chart.axis.Numeric",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "y"
+                                                ],
+                                                "title": "ms"
+                                            },
+                                            "designerId": "48bb8e33-d289-4d34-b44d-5dab872c1fb7"
+                                        },
+                                        {
+                                            "type": "Ext.chart.series.Line",
+                                            "reference": {
+                                                "name": "series",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "smooth": 3,
+                                                "xField": "x",
+                                                "yField": [
+                                                    "y"
+                                                ]
+                                            },
+                                            "designerId": "10c6a9be-1843-4d8e-8123-3d466e9bbce8"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.panel.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "title": "Server Performance",
+                                "titleAlign": "center",
+                                "width": 634
+                            },
+                            "designerId": "5ea68dff-29c9-4419-8b7c-c774c4f31caf",
+                            "cn": [
+                                {
+                                    "type": "Ext.chart.Chart",
+                                    "reference": {
+                                        "name": "dockedItems",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "animate": [
+                                            "true"
+                                        ],
+                                        "dock": "top",
+                                        "height": 184,
+                                        "insetPadding": 20,
+                                        "store": "DomainStore",
+                                        "width": 598
+                                    },
+                                    "designerId": "4366ae16-e9d6-4efb-8a62-960f903612eb",
+                                    "isBuiltIn": true,
+                                    "iconCls": "icon-line-chart",
+                                    "autoName": "LineChart",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.chart.axis.Category",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "x"
+                                                ],
+                                                "title": "Time"
+                                            },
+                                            "designerId": "6bfd9015-93b0-47b6-949f-a0f1169a2ae9"
+                                        },
+                                        {
+                                            "type": "Ext.chart.axis.Numeric",
+                                            "reference": {
+                                                "name": "axes",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fields": [
+                                                    "y"
+                                                ],
+                                                "title": "ms"
+                                            },
+                                            "designerId": "05c54d7d-15d6-46dc-80d8-db94e45db734"
+                                        },
+                                        {
+                                            "type": "Ext.chart.series.Line",
+                                            "reference": {
+                                                "name": "series",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "smooth": 3,
+                                                "xField": "x",
+                                                "yField": [
+                                                    "y"
+                                                ]
+                                            },
+                                            "designerId": "feb57a2b-800f-4342-bed0-e2a44131d9ba"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

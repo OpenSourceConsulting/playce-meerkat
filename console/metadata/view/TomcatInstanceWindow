@@ -1,0 +1,224 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "designer|userClassName": "TomcatInstanceWindow",
+        "height": 406,
+        "layout": "vbox",
+        "title": "New Tomcat Instance",
+        "width": 565
+    },
+    "designerId": "bbd3b249-0c84-4551-a29f-d159562fcbee",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "layout|flex": 1,
+                "margin": "10 0 10 10"
+            },
+            "designerId": "02884e5f-da44-4e53-bdeb-d2ad86bc6e6f",
+            "cn": [
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Domain",
+                        "width": 399
+                    },
+                    "designerId": "0df7fd64-33fa-4522-94d4-c1c8a95141f9"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Domain type:",
+                        "value": [
+                            "Display Field"
+                        ]
+                    },
+                    "designerId": "0ca36d5a-20b1-4d28-961d-1854756ffcf6"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Instance name",
+                        "width": 400
+                    },
+                    "designerId": "adc67595-fa3a-4c51-bb08-351c3f65713f"
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Server",
+                        "width": 399
+                    },
+                    "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f"
+                }
+            ]
+        },
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "forceFit": true,
+                "layout|flex": 1,
+                "margin": "10 10 10 10",
+                "title": "Data source"
+            },
+            "designerId": "07100993-b8b4-4219-916c-37905c76d3bd",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "string",
+                        "text": "Select"
+                    },
+                    "designerId": "1a9411c0-d85c-4fa3-b220-14fe3bebc562"
+                },
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "number",
+                        "text": "Name"
+                    },
+                    "designerId": "a5351723-b470-47e5-9305-05e53ba7d6b1"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "date",
+                        "text": "JDBC Url"
+                    },
+                    "designerId": "8f5a4ee7-1d68-4463-9991-57b2619c7e90"
+                },
+                {
+                    "type": "Ext.grid.column.Boolean",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "bool",
+                        "text": "Servers"
+                    },
+                    "designerId": "cce2ad03-69e8-4704-9890-66829c3ad8ee"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "1c0f952d-e93a-428c-9af0-29ffee52fea2"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "Automatically start tomcat after being created",
+                "dock": "top",
+                "fieldLabel": "",
+                "layout|flex": 0.5
+            },
+            "designerId": "a566652a-d685-40a7-ad5c-85158640e4e5"
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "layout": "column"
+            },
+            "designerId": "42f8ce8a-dcf6-4e41-a9e5-3a565693fead",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 200",
+                        "text": "Create"
+                    },
+                    "designerId": "09b74e0d-af2e-4b2d-9d21-f61e2125fd01"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 10",
+                        "text": "Cancel"
+                    },
+                    "designerId": "33bfb36f-ce56-4a0c-93c3-f2f92bfe1252"
+                }
+            ]
+        }
+    ]
+}

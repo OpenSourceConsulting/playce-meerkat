@@ -1,0 +1,109 @@
+{
+    "type": "Ext.data.TreeStore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "MenuTreeStore",
+        "root": [
+            "{",
+            "       expanded: true,",
+            "                children: [",
+            "                    {",
+            "                        text: 'Dashboard',",
+            "                        menuId: 'dashboard',",
+            "                        leaf: true",
+            "                    },",
+            "                    {",
+            "                        text: 'Tomcat Management',",
+            "                        menuId: 'tomcatMng',",
+            "                        expanded: true,",
+            "                        children: [],",
+            "                    },",
+            "                    {",
+            "                        text: 'Monitoring',",
+            "                        menuId: 'monitoring',",
+            "                        expanded: true,",
+            "                        children: [",
+            "                            {",
+            "                                text: 'Servers',",
+            "                                menuId: 'monitoring_servers',",
+            "                                expanded: true,",
+            "                                children: []",
+            "                            },",
+            "                            {",
+            "                                text: 'Tomcat Instances',",
+            "                                menuId: 'monitoring_tomcats',",
+            "                                expanded: true,",
+            "                                children: []",
+            "                            },",
+            "                            ",
+            "                        ]",
+            "                    },",
+            "                    {",
+            "                        text: 'Resource Management',",
+            "                        menuId: 'resourcemng',",
+            "                        expanded: true,",
+            "                        children: [",
+            "                            {",
+            "                                text: 'Servers',",
+            "                                menuId: 'resourcemng_servers',",
+            "                                leaf: true",
+            "                            },",
+            "                            {",
+            "                                text: 'Datasources',",
+            "                                menuId: 'resourcemng_datasources',",
+            "                                leaf: true",
+            "                            }",
+            "                        ]",
+            "                    },",
+            "                    {",
+            "                        text: 'Log Management',",
+            "                        menuId: 'logmng',",
+            "                        leaf: true",
+            "                    },",
+            "                    {",
+            "                        text: 'User Management',",
+            "                        menuId: 'usermnt',",
+            "                        leaf: true",
+            "                    },",
+            "                    ",
+            "                ]",
+            "}"
+        ],
+        "storeId": "MenuTreeStore"
+    },
+    "designerId": "9ddfd8df-9cef-4b2d-944b-7df99f14646b",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "text",
+                "type": "string"
+            },
+            "name": "MyField22",
+            "designerId": "33b36f28-723e-47ce-95f3-354c58e53dbf"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "menuId",
+                "type": "string"
+            },
+            "name": "MyField23",
+            "designerId": "df041d3c-cd54-4b5e-8741-0a86054ce8f9"
+        }
+    ]
+}

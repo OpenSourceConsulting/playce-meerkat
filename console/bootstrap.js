@@ -430,6 +430,7 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "Ext.grid.RowEditor": [],
   "Ext.grid.RowEditorButtons": [],
+  "Ext.grid.Scroller": [],
   "Ext.grid.View": [],
   "Ext.grid.ViewDropZone": [],
   "Ext.grid.column.Action": [
@@ -866,14 +867,45 @@ Ext.ClassManager.addNameAlternateMappings({
   "console.controller.Main": [],
   "console.view.Main": [],
   "console.view.Viewport": [],
+  "webapp.controller.DomainController": [],
+  "webapp.controller.LoginController": [],
+  "webapp.controller.MenuController": [],
+  "webapp.controller.TomcatController": [],
+  "webapp.controller.UserController": [],
   "webapp.controller.dashboardController": [],
   "webapp.controller.footerController": [],
   "webapp.controller.globalController": [],
   "webapp.controller.headerController": [],
-  "webapp.controller.sessionDataController": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatInstanceModel": [],
+  "webapp.model.UserModel": [],
+  "webapp.model.UserRoleModel": [],
+  "webapp.store.DomainStore": [],
+  "webapp.store.MenuTreeStore": [],
+  "webapp.store.TomcatInstanceListStore": [],
+  "webapp.store.UserRoleStore": [],
+  "webapp.store.UserStore": [],
   "webapp.store.sessionDataStore": [],
-  "webapp.view.MyViewport": []
+  "webapp.view.DataSourceServerWindow": [],
+  "webapp.view.DataSourceWindow": [],
+  "webapp.view.DatagridServerGroupWindow": [],
+  "webapp.view.DeployWindow": [],
+  "webapp.view.DetailMonitoringMachineContainer": [],
+  "webapp.view.DetailMonitoringTomcatInstance": [],
+  "webapp.view.DomainContainer": [],
+  "webapp.view.LinkNewDataSourceWindow": [],
+  "webapp.view.MonitoringMachineContainer": [],
+  "webapp.view.MonitoringTomcatInstance": [],
+  "webapp.view.ResourceManagementContainer": [],
+  "webapp.view.ServerManagementContainer": [],
+  "webapp.view.SeverDataGridWindow": [],
+  "webapp.view.TomcatInstanceContainer": [],
+  "webapp.view.TomcatInstanceWindow": [],
+  "webapp.view.UserMntContainer": [],
+  "webapp.view.UserWindow": [],
+  "webapp.view.dashboardPanel": [],
+  "webapp.view.loginWindow": [],
+  "webapp.view.meerkatViewport": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1311,6 +1343,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.RowEditorButtons": [
     "widget.roweditorbuttons"
   ],
+  "Ext.grid.Scroller": [],
   "Ext.grid.View": [
     "widget.gridview"
   ],
@@ -1883,14 +1916,75 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.app-main"
   ],
   "console.view.Viewport": [],
+  "webapp.controller.DomainController": [],
+  "webapp.controller.LoginController": [],
+  "webapp.controller.MenuController": [],
+  "webapp.controller.TomcatController": [],
+  "webapp.controller.UserController": [
+    "controller.UserController"
+  ],
   "webapp.controller.dashboardController": [],
   "webapp.controller.footerController": [],
   "webapp.controller.globalController": [],
   "webapp.controller.headerController": [],
-  "webapp.controller.sessionDataController": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatInstanceModel": [],
+  "webapp.model.UserModel": [
+    "model.UserModel"
+  ],
+  "webapp.model.UserRoleModel": [],
+  "webapp.store.DomainStore": [],
+  "webapp.store.MenuTreeStore": [],
+  "webapp.store.TomcatInstanceListStore": [],
+  "webapp.store.UserRoleStore": [],
+  "webapp.store.UserStore": [],
   "webapp.store.sessionDataStore": [],
-  "webapp.view.MyViewport": []
+  "webapp.view.DataSourceServerWindow": [],
+  "webapp.view.DataSourceWindow": [],
+  "webapp.view.DatagridServerGroupWindow": [],
+  "webapp.view.DeployWindow": [],
+  "webapp.view.DetailMonitoringMachineContainer": [
+    "widget.detailmonitoringmachinecontainer"
+  ],
+  "webapp.view.DetailMonitoringTomcatInstance": [
+    "widget.detailmonitoringtomcatinstance"
+  ],
+  "webapp.view.DomainContainer": [
+    "widget.domaincontainer"
+  ],
+  "webapp.view.LinkNewDataSourceWindow": [],
+  "webapp.view.MonitoringMachineContainer": [
+    "widget.monitoringmachinecontainer"
+  ],
+  "webapp.view.MonitoringTomcatInstance": [
+    "widget.monitoringtomcatinstance"
+  ],
+  "webapp.view.ResourceManagementContainer": [
+    "widget.resourcemanagementcontainer"
+  ],
+  "webapp.view.ServerManagementContainer": [
+    "widget.servermanagementcontainer"
+  ],
+  "webapp.view.SeverDataGridWindow": [],
+  "webapp.view.TomcatInstanceContainer": [
+    "widget.tomcatinstancecontainer"
+  ],
+  "webapp.view.TomcatInstanceWindow": [],
+  "webapp.view.UserMntContainer": [
+    "widget.usermntcontainer"
+  ],
+  "webapp.view.UserWindow": [
+    "widget.UserWindow"
+  ],
+  "webapp.view.dashboardPanel": [
+    "widget.dashboardpanel"
+  ],
+  "webapp.view.loginWindow": [
+    "widget.loginWindow"
+  ],
+  "webapp.view.meerkatViewport": [
+    "widget.dollyViewport"
+  ]
 });
 Ext.setVersion("ext-theme-base", "4.2.1");
 Ext.setVersion("ext-theme-neptune", "4.2.1");

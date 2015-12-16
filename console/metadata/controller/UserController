@@ -1,0 +1,61 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "UserController",
+        "designer|userClassName": "UserController"
+    },
+    "designerId": "b1f08fb1-34e5-4dc0-83a1-ea6ae4f616ef",
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "type",
+                    "user_id"
+                ],
+                "fn": "showUserWindow",
+                "implHandler": [
+                    "",
+                    "var userWindow = Ext.create(\"widget.UserWindow\");",
+                    "userWindow.show();",
+                    "",
+                    "if (type === \"edit\"){",
+                    "    userWindow.title = \"Edit User\";",
+                    "}"
+                ]
+            },
+            "name": "showUserWindow",
+            "designerId": "f3478ddc-55c8-4509-a9c8-96eafd0d51ee"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#createBtn",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onNewUserButtonClick",
+                "implHandler": [
+                    "this.showUserWindow(\"new\", 0);"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "name": "onNewUserButtonClick",
+            "designerId": "90160b86-6a35-4d4e-af26-7fd73a8bffe1"
+        }
+    ]
+}

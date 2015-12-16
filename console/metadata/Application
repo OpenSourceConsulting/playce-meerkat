@@ -10,21 +10,51 @@
             "headerController",
             "footerController",
             "dashboardController",
-            "sessionDataController",
-            "globalController"
+            "globalController",
+            "LoginController",
+            "MenuController",
+            "DomainController",
+            "TomcatController",
+            "UserController"
         ],
         "models": [
-            "SessionKeyData"
+            "SessionKeyData",
+            "UserModel",
+            "TomcatInstanceModel",
+            "UserRoleModel"
         ],
         "name": "webapp",
         "requires": [
             "Ext.window.MessageBox"
         ],
         "stores": [
-            "sessionDataStore"
+            "sessionDataStore",
+            "MenuTreeStore",
+            "TomcatInstanceListStore",
+            "DomainStore",
+            "UserStore",
+            "UserRoleStore"
         ],
         "views": [
-            "MyViewport"
+            "meerkatViewport",
+            "loginWindow",
+            "dashboardPanel",
+            "DomainContainer",
+            "TomcatInstanceWindow",
+            "DeployWindow",
+            "TomcatInstanceContainer",
+            "LinkNewDataSourceWindow",
+            "UserWindow",
+            "DatagridServerGroupWindow",
+            "DataSourceServerWindow",
+            "DetailMonitoringTomcatInstance",
+            "MonitoringMachineContainer",
+            "UserMntContainer",
+            "DetailMonitoringMachineContainer",
+            "SeverDataGridWindow",
+            "DataSourceWindow",
+            "ResourceManagementContainer",
+            "MonitoringTomcatInstance"
         ]
     },
     "designerId": "application"

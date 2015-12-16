@@ -1,0 +1,140 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "designer|userClassName": "SeverDataGridWindow",
+        "height": 298,
+        "layout": "vbox",
+        "title": "New Server Datagrid",
+        "width": 503
+    },
+    "designerId": "515f6f65-9df7-4d9a-a91f-b9f98e788ff5",
+    "cn": [
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top",
+                "height": 485,
+                "layout": "column",
+                "layout|flex": 1,
+                "title": ""
+            },
+            "name": "MyFieldSet7",
+            "designerId": "6d077c30-7f19-4134-bcdd-69abaa6d83d0",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Name",
+                        "margin": "30 0 10 50",
+                        "width": 414
+                    },
+                    "name": "MyTextField34",
+                    "designerId": "f3fba70b-e8b3-45bf-8597-9b306838d096"
+                },
+                {
+                    "type": "Ext.form.field.ComboBox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Type",
+                        "margin": "0 0 10 50",
+                        "width": 414
+                    },
+                    "name": "MyComboBox11",
+                    "designerId": "7dc07016-4ee9-426e-8e5c-a9648054f9f1"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "IP Address",
+                        "margin": "0 0 10 50",
+                        "width": 414
+                    },
+                    "name": "MyTextField35",
+                    "designerId": "83160aaf-a1a8-4ab8-8256-3d520a428eb2"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 10 10 400",
+                        "text": "Lookup"
+                    },
+                    "name": "MyButton48",
+                    "designerId": "ae7f3308-71c4-48b9-81db-aada773c04f2"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Hostname",
+                        "margin": "0 0 10 50",
+                        "width": 414
+                    },
+                    "name": "MyTextField36",
+                    "designerId": "e8d47363-ecf7-4a29-91eb-e7dc0e2e7edc"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 150",
+                        "text": "Create"
+                    },
+                    "name": "MyButton49",
+                    "designerId": "8a9d74ed-8df5-4057-9739-7d5b19f51adb"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "0 0 0 10",
+                        "text": "Canel"
+                    },
+                    "name": "MyButton50",
+                    "designerId": "3f06b92b-ad69-4af3-a6a4-f7e9d7c7e5e3"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "UserRoleStore",
+        "model": "UserRoleModel",
+        "storeId": "UserRoleStore"
+    },
+    "designerId": "bccfc1b4-6a26-49f4-a4b0-c06364e2db48",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "user/rolelist"
+            },
+            "name": "MyAjaxProxy2",
+            "designerId": "56a41dae-c928-49b2-9673-609a67171af9",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyJsonReader2",
+                    "designerId": "2aa7eb94-31d6-44d8-9902-08445fb036b5"
+                }
+            ]
+        }
+    ]
+}

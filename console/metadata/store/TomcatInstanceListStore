@@ -1,0 +1,42 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "TomcatInstanceListStore",
+        "model": "TomcatInstanceModel",
+        "storeId": "TomcatInstanceListStore"
+    },
+    "designerId": "0abfc802-a160-41f8-bb49-b599c253187e",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "tomcat/instance/list"
+            },
+            "designerId": "d74f79b4-4aab-4f35-ae8f-79188127cf14",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "list"
+                    },
+                    "designerId": "e203af4e-bf17-44e3-9ef4-e66de8fbe925"
+                }
+            ]
+        }
+    ]
+}

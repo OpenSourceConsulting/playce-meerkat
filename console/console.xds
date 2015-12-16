@@ -1,0 +1,93 @@
+{
+    "name": "console",
+    "settings": {
+        "cmd": {
+            "license": "commercial",
+            "cmdVersion": "4.0.3.74",
+            "frameworkVersion": "4.2.1.883"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "urlPrefix": "http://localhost:1841/",
+        "exportPath": "C:/Users/htran/Desktop/sencha-build",
+        "spacesToIndent": 4,
+        "sdkPath": "",
+        "lineEnding": "LF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": true,
+        "lastBuildSelection": {
+            "value": "webBuild",
+            "display": "Build web app"
+        }
+    },
+    "xdsVersion": "3.0.0",
+    "xdsBuild": 1337,
+    "schemaVersion": 1,
+    "upgradeVersion": 300000000003,
+    "framework": "ext42",
+    "viewOrderMap": {
+        "view": [
+            "10c76f16-b3f5-4059-acd2-183f46682e75",
+            "54f58b3c-6578-4856-bab3-c3e49daeb87b",
+            "62028c73-84f4-4081-b79f-26f01b095e35",
+            "35963481-a0f1-4ed7-8b91-1af8291d426d",
+            "bbd3b249-0c84-4551-a29f-d159562fcbee",
+            "c55d81de-e837-485e-aade-da75dfa1ce01",
+            "150ab346-3d51-4742-878e-fc2960711343",
+            "112bf472-917a-445b-94b8-7aa4460d074e",
+            "4a13866d-4418-4a1a-8bff-3ebe3762b6b2",
+            "7737156f-b99f-46ed-b322-dded2cda0583",
+            "f2d9170c-1819-4ef8-a559-9328895dd43e",
+            "691fac19-b4e1-419d-81c8-ff2a7444d199",
+            "48e2b438-8422-4af0-800c-8d841f4980f9",
+            "8f3c571d-2e4b-49c6-a435-a250b81b82ab",
+            "2768828a-2f83-4bba-8235-7089cdc734eb",
+            "e3304992-e2bb-4996-9efb-783991b92189",
+            "0cf5471d-a4d3-45a6-b177-3019f1fbe80f",
+            "294eb71a-5ed2-4b1e-b20d-5c73d966c7fb",
+            "515f6f65-9df7-4d9a-a91f-b9f98e788ff5",
+            "f223e421-6df8-4d2a-89c8-0499ee72e378"
+        ],
+        "store": [
+            "e679f6ac-0018-409e-b163-b13106f333ee",
+            "9ddfd8df-9cef-4b2d-944b-7df99f14646b",
+            "0abfc802-a160-41f8-bb49-b599c253187e",
+            "01b90457-de3d-42d3-9e35-e0a7c22ede86",
+            "bccfc1b4-6a26-49f4-a4b0-c06364e2db48",
+            "1e1f7a00-1f0d-4bca-8b69-8c91360348b8"
+        ],
+        "controller": [
+            "43dd67a6-085d-49a6-9bad-39193d6863e9",
+            "9e66322b-7e6a-4a12-90f3-4b1e834694c9",
+            "ad74de95-6c32-44a5-a1bd-5ca0403e3c04",
+            "76fe1a40-eb84-4408-b4f9-78bac020609c",
+            "624c285a-6564-44ca-a2de-257abf79e851",
+            "d2236b26-eb12-4176-a1b5-bb8c1625da65",
+            "daf871fa-23ac-469b-9162-e5085b969f39",
+            "b720a872-22eb-42d8-a0a9-d9f65dd48e2e",
+            "b1f08fb1-34e5-4dc0-83a1-ea6ae4f616ef"
+        ],
+        "model": [
+            "2d2a2337-a4c3-4714-a3f4-4537c7d2e918",
+            "bda15b04-b8fd-4af4-927b-d9a98a685bc3",
+            "2bd6f1a0-615e-4c89-8edd-6f05e5dd8a21",
+            "6627c190-6647-4a8a-b8de-799e49706a5f"
+        ],
+        "resource": [
+            "a5b947ef-eecb-40af-baed-8ee5558b74d1",
+            "dccc4a23-9682-4e86-8c71-5fdd1e9bec32",
+            "338028a6-a71b-46f8-9a5f-7f21bbb782b0"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

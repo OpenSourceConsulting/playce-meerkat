@@ -1,0 +1,173 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "closable": false,
+        "container|align": "stretch",
+        "designer|userAlias": "loginWindow",
+        "designer|userClassName": "loginWindow",
+        "height": 250,
+        "id": "loginWindow",
+        "itemId": "loginWindow",
+        "layout": "vbox",
+        "modal": true,
+        "resizable": false,
+        "title": "Athena Dolly 2.0.0",
+        "width": 420
+    },
+    "configAlternates": {
+        "resizable": "boolean"
+    },
+    "designerId": "54f58b3c-6578-4856-bab3-c3e49daeb87b",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "id": "loginPanel",
+                "itemId": "loginPanel",
+                "layout": "vbox",
+                "layout|flex": 1,
+                "title": null,
+                "width": null
+            },
+            "designerId": "b45964a2-1057-4a7a-a0ee-ea211dc5d7f8",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": 55,
+                        "html": "<h3>환영합니다.<br/>사용하시려면 <font color=\"red\">로그인</font>을 해주십시오.</h3>",
+                        "id": "welcomeLabel",
+                        "itemId": "welcomeLabel",
+                        "layout|flex": null,
+                        "layout|margins": "",
+                        "margin": "5 0 0 0",
+                        "style": "{text-align: center;}",
+                        "text": ""
+                    },
+                    "configAlternates": {
+                        "style": "string"
+                    },
+                    "designerId": "cbaeff94-0634-460d-9577-3fbc2963bf4a"
+                },
+                {
+                    "type": "Ext.form.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "bodyPadding": 10,
+                        "id": "loginForm",
+                        "itemId": "loginForm",
+                        "layout|flex": null,
+                        "margin": "5 0 0 0",
+                        "title": null
+                    },
+                    "designerId": "0cb1644f-ec7b-4701-a74e-2ce865b86df1",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "blankText": "사용자아이디는 필수 입력 항목입니다.",
+                                "fieldLabel": "사용자아이디",
+                                "fieldStyle": "",
+                                "id": "userName",
+                                "itemId": "userName",
+                                "labelAlign": "right",
+                                "labelStyle": "search",
+                                "labelWidth": 90,
+                                "layout|anchor": "100%",
+                                "name": "username",
+                                "style": null,
+                                "width": null
+                            },
+                            "configAlternates": {
+                                "style": "string"
+                            },
+                            "designerId": "aa21edce-509c-4b6e-951a-0b83f35ffed0"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "blankText": "비밀번호는 필수 입력 항목입니다.",
+                                "fieldLabel": "비밀번호",
+                                "id": "password",
+                                "inputType": "password",
+                                "itemId": "password",
+                                "labelAlign": "right",
+                                "labelWidth": 90,
+                                "layout|anchor": "100%",
+                                "name": "password"
+                            },
+                            "designerId": "06ea6889-b7bf-470d-b156-c8fe18dff9e5"
+                        },
+                        {
+                            "type": "Ext.container.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "center",
+                                "container|defaultMargins": [
+                                    "{\"top\":20,\"right\":5,\"bottom\":5,\"left\":5",
+                                    "}"
+                                ],
+                                "layout": "vbox"
+                            },
+                            "designerId": "f572ce99-7386-476b-8362-d6eb712fb98a",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "loginBtn",
+                                        "itemId": "loginBtn",
+                                        "layout|flex": null,
+                                        "scale": "medium",
+                                        "text": "로그인"
+                                    },
+                                    "designerId": "3eeded66-1f4f-473d-bb08-f1ce11665c9e"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

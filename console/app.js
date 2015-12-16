@@ -25,25 +25,55 @@ Ext.application({
         'Ext.window.MessageBox'
     ],
     models: [
-        'SessionKeyData'
+        'SessionKeyData',
+        'UserModel',
+        'TomcatInstanceModel',
+        'UserRoleModel'
     ],
     stores: [
-        'sessionDataStore'
+        'sessionDataStore',
+        'MenuTreeStore',
+        'TomcatInstanceListStore',
+        'DomainStore',
+        'UserStore',
+        'UserRoleStore'
     ],
     views: [
-        'MyViewport'
+        'meerkatViewport',
+        'loginWindow',
+        'dashboardPanel',
+        'DomainContainer',
+        'TomcatInstanceWindow',
+        'DeployWindow',
+        'TomcatInstanceContainer',
+        'LinkNewDataSourceWindow',
+        'UserWindow',
+        'DatagridServerGroupWindow',
+        'DataSourceServerWindow',
+        'DetailMonitoringTomcatInstance',
+        'MonitoringMachineContainer',
+        'UserMntContainer',
+        'DetailMonitoringMachineContainer',
+        'SeverDataGridWindow',
+        'DataSourceWindow',
+        'ResourceManagementContainer',
+        'MonitoringTomcatInstance'
     ],
     controllers: [
         'headerController',
         'footerController',
         'dashboardController',
-        'sessionDataController',
-        'globalController'
+        'globalController',
+        'LoginController',
+        'MenuController',
+        'DomainController',
+        'TomcatController',
+        'UserController'
     ],
     name: 'webapp',
 
     launch: function() {
-        Ext.create('webapp.view.MyViewport');
+        Ext.create('webapp.view.meerkatViewport');
     }
 
 });
