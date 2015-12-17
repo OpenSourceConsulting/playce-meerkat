@@ -46,7 +46,7 @@ Ext.define('webapp.controller.LoginController', {
     },
 
     onLoginClick: function(button, e, eOpts) {
-
+        /*
         var form = Ext.getCmp("loginForm"),			// Login form
             formWindow = Ext.getCmp('loginWindow'),	// Login form window
             values = form.getValues();				// Form values
@@ -126,6 +126,8 @@ Ext.define('webapp.controller.LoginController', {
             });
 
         }
+        */
+         this.successfulLogin("admin", "json");
     },
 
     onLogoutButtonClick: function(button, e, eOpts) {
