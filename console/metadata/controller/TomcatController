@@ -8,5 +8,29 @@
     "userConfig": {
         "designer|userClassName": "TomcatController"
     },
-    "designerId": "b720a872-22eb-42d8-a0a9-d9f65dd48e2e"
+    "designerId": "b720a872-22eb-42d8-a0a9-d9f65dd48e2e",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnNewTomcat",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onNewTomcatClick",
+                "implHandler": [
+                    "  var window = Ext.create(\"widget.TomcatInstanceWindow\");",
+                    "  // Show window",
+                    "  window.show();",
+                    ""
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "729569ef-0153-4249-b36b-4c5ab2a96194"
+        }
+    ]
 }

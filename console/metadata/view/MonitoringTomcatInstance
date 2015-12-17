@@ -16,34 +16,6 @@
     "designerId": "e3304992-e2bb-4996-9efb-783991b92189",
     "cn": [
         {
-            "type": "Ext.toolbar.Toolbar",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "height": 50,
-                "layout|flex": 0.5
-            },
-            "designerId": "cce38d3e-75e2-4146-9ee9-a2e98203cce0",
-            "cn": [
-                {
-                    "type": "Ext.form.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": null,
-                        "text": "Monitoring > Tomcat instance"
-                    },
-                    "designerId": "d9c5e993-fb6f-487e-9935-5f7f84e2cb18"
-                }
-            ]
-        },
-        {
             "type": "Ext.tab.Panel",
             "reference": {
                 "name": "items",

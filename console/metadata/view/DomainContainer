@@ -22,34 +22,6 @@
             },
             "codeClass": null,
             "userConfig": {
-                "height": 47,
-                "layout|flex": 0.5,
-                "layout|region": "north"
-            },
-            "designerId": "016802a3-ab0c-4345-b313-99803c12d988",
-            "cn": [
-                {
-                    "type": "Ext.form.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "text": "Tomcat Management > Domain 1"
-                    },
-                    "designerId": "f23e99ac-58b2-494d-a83e-9994f6152378"
-                }
-            ]
-        },
-        {
-            "type": "Ext.panel.Panel",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
                 "height": 150,
                 "layout": "column",
                 "layout|flex": 1.5,
@@ -155,6 +127,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "Tomcat instances"
                     },
                     "designerId": "5299ec4f-16bc-466d-bf23-71c4d67c625e",
@@ -188,6 +161,8 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "id": "btnNewTomcat",
+                                        "itemId": "btnNewTomcat",
                                         "layout|flex": null,
                                         "text": "New"
                                     },
@@ -360,6 +335,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "Applications"
                     },
                     "designerId": "3b5acea3-b22e-4d25-9671-25503f28a7c8",
@@ -507,6 +483,7 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
+                                                "id": "btnDeployWindow",
                                                 "layout|flex": null,
                                                 "text": "Deploy"
                                             },
@@ -565,6 +542,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "Sessions"
                     },
                     "designerId": "75aa8df8-c495-4f2d-aaf9-4dd7e054ad31",
@@ -693,6 +671,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "Clustering configuration"
                     },
                     "designerId": "2c53fee8-d016-4b4b-b242-d4afc626e7ab",
@@ -726,6 +705,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "itemId": "btnNewClutersingConfiguration",
                                         "layout|flex": null,
                                         "text": "New"
                                     },
@@ -843,6 +823,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "itemId": "btnComparingClusteringConfiguration",
                                         "layout|flex": null,
                                         "text": "Compare"
                                     },

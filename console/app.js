@@ -57,7 +57,9 @@ Ext.application({
         'SeverDataGridWindow',
         'DataSourceWindow',
         'ResourceManagementContainer',
-        'MonitoringTomcatInstance'
+        'MonitoringTomcatInstance',
+        'ClusteringConfigurationWindow',
+        'ClusteringConfigurationComparingWindow'
     ],
     controllers: [
         'headerController',
@@ -68,7 +70,10 @@ Ext.application({
         'MenuController',
         'DomainController',
         'TomcatController',
-        'UserController'
+        'UserController',
+        'ApplicationController',
+        'CluteringConfigurationController',
+        'DatasourceController'
     ],
     name: 'webapp',
 

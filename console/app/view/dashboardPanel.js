@@ -182,7 +182,6 @@ Ext.define('webapp.view.dashboardPanel', {
                                     layout: {
                                         type: 'fit'
                                     },
-                                    bodyBorder: false,
                                     bodyStyle: 'border:5px;',
                                     title: 'Server Response Time',
                                     titleAlign: 'center',

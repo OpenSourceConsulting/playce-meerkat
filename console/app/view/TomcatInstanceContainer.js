@@ -28,19 +28,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
             items: [
                 {
                     xtype: 'panel',
-                    flex: 0.5,
-                    region: 'north',
-                    height: 47,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Tomcat Management > Domain 1> Tomcat 1'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    flex: 3,
+                    flex: 2,
                     region: 'north',
                     height: 389,
                     layout: {
@@ -123,7 +111,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                 },
                 {
                     xtype: 'gridpanel',
-                    flex: 6.5,
+                    flex: 7,
                     region: 'center',
                     margin: '5 0 0 0 ',
                     title: 'Data sources',
@@ -173,7 +161,8 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    text: 'Link new Data source'
+                                    id: 'btnLinkNewDatasource',
+                                    text: 'Link new Datasource'
                                 }
                             ]
                         }

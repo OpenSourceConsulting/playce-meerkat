@@ -66,43 +66,65 @@ Ext.define('webapp.view.meerkatViewport', {
                         {
                             xtype: 'container',
                             region: 'center',
-                            activeItem: 8,
                             frame: false,
                             id: 'centerContainer',
                             itemId: 'centerContainer',
                             layout: {
-                                type: 'card'
+                                align: 'stretch',
+                                type: 'vbox'
                             },
                             items: [
                                 {
-                                    xtype: 'dashboardpanel'
+                                    xtype: 'toolbar',
+                                    flex: 0.5,
+                                    width: 150,
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Navigation > Sub > Sub'
+                                        }
+                                    ]
                                 },
                                 {
-                                    xtype: 'domaincontainer'
-                                },
-                                {
-                                    xtype: 'tomcatinstancecontainer'
-                                },
-                                {
-                                    xtype: 'monitoringmachinecontainer'
-                                },
-                                {
-                                    xtype: 'monitoringtomcatinstance'
-                                },
-                                {
-                                    xtype: 'detailmonitoringmachinecontainer'
-                                },
-                                {
-                                    xtype: 'detailmonitoringtomcatinstance'
-                                },
-                                {
-                                    xtype: 'servermanagementcontainer'
-                                },
-                                {
-                                    xtype: 'resourcemanagementcontainer'
-                                },
-                                {
-                                    xtype: 'usermntcontainer'
+                                    xtype: 'container',
+                                    flex: 9,
+                                    id: 'subCenterContainer',
+                                    width: 150,
+                                    layout: {
+                                        type: 'card'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'dashboardpanel'
+                                        },
+                                        {
+                                            xtype: 'domaincontainer'
+                                        },
+                                        {
+                                            xtype: 'tomcatinstancecontainer'
+                                        },
+                                        {
+                                            xtype: 'monitoringmachinecontainer'
+                                        },
+                                        {
+                                            xtype: 'monitoringtomcatinstance'
+                                        },
+                                        {
+                                            xtype: 'detailmonitoringmachinecontainer'
+                                        },
+                                        {
+                                            xtype: 'detailmonitoringtomcatinstance'
+                                        },
+                                        {
+                                            xtype: 'servermanagementcontainer'
+                                        },
+                                        {
+                                            xtype: 'resourcemanagementcontainer'
+                                        },
+                                        {
+                                            xtype: 'usermntcontainer'
+                                        }
+                                    ]
                                 }
                             ]
                         },

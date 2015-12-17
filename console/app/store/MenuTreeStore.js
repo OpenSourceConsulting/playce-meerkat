@@ -38,7 +38,21 @@ Ext.define('webapp.store.MenuTreeStore', {
                         menuId: 'tomcatMng',
                         expanded: true,
                         children: [
-                            
+                            {
+                                text: 'Domain 1',
+                                menuId: 'tomcatMng_domain_1',
+                                expanded: true,
+                                children: [
+                                    {
+                                        text: 'Tomcat 1',
+                                        menuId: 'tomcatMng_domain_1_tomcat_1',
+                                        expanded: true,
+                                        children: [
+                                            
+                                        ]
+                                    }
+                                ]
+                            }
                         ],
                         
                     },
@@ -52,7 +66,14 @@ Ext.define('webapp.store.MenuTreeStore', {
                                 menuId: 'monitoring_servers',
                                 expanded: true,
                                 children: [
-                                    
+                                    {
+                                        text: 'Server 1',
+                                        menuId: 'monitoring_servers_server_1',
+                                        expanded: true,
+                                        children: [
+                                            
+                                        ]
+                                    }
                                 ]
                             },
                             {
@@ -60,7 +81,14 @@ Ext.define('webapp.store.MenuTreeStore', {
                                 menuId: 'monitoring_tomcats',
                                 expanded: true,
                                 children: [
-                                    
+                                    {
+                                        text: 'Tomcat 1',
+                                        menuId: 'monitoring_tomcats_tomcat_1',
+                                        expanded: true,
+                                        children: [
+                                            
+                                        ]
+                                    }
                                 ]
                             },
                             
@@ -85,7 +113,7 @@ Ext.define('webapp.store.MenuTreeStore', {
                     },
                     {
                         text: 'Log Management',
-                        menuId: 'logmng',
+                        menuId: 'logmnt',
                         leaf: true
                     },
                     {

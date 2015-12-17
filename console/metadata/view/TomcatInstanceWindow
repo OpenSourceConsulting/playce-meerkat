@@ -7,8 +7,11 @@
     "codeClass": null,
     "userConfig": {
         "container|align": "stretch",
+        "designer|userAlias": "TomcatInstanceWindow",
         "designer|userClassName": "TomcatInstanceWindow",
         "height": 406,
+        "id": "TomcatInstanceWindow",
+        "itemId": "TomcatInstanceWindow",
         "layout": "vbox",
         "title": "New Tomcat Instance",
         "width": 565

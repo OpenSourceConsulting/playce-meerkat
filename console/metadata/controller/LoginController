@@ -66,7 +66,7 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onLoginClick",
                 "implHandler": [
-                    "",
+                    "/*",
                     "var form = Ext.getCmp(\"loginForm\"),\t\t\t// Login form",
                     "    formWindow = Ext.getCmp('loginWindow'),\t// Login form window",
                     "    values = form.getValues();\t\t\t\t// Form values",
@@ -145,7 +145,9 @@
                     "        failure: failureCallback",
                     "    });",
                     "",
-                    "}"
+                    "}",
+                    "*/",
+                    " this.successfulLogin(\"admin\", \"json\");"
                 ],
                 "name": "click",
                 "scope": "me"

@@ -21,7 +21,7 @@ Ext.define('webapp.controller.MenuController', {
         var is_leaf = record.get("leaf");
         if(menuId !== undefined){
             if (!is_leaf){
-               this.loadChildMenus(menuId);
+              // this.loadChildMenus(menuId);
             }
 
             this.showMenu(menuId);
@@ -202,30 +202,33 @@ Ext.define('webapp.controller.MenuController', {
 
         if(menuId === "dashboard"){
             activeItem = 0;
-        }else if (menuId === "usermnt"){
-            activeItem = 1;
-            Ext.getStore("UserStore").load();
-        }else if (menuId === "tomcatMng_domain_" && menuId.indexOf("_tomcat_") < 0) {
-            activeItem = 2;
-        }else if (menuId === "tomcatMng_domain_" && menuId.indexOf("_tomcat_") >= 0) {
-            activeItem = 3;
-        }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {
-            activeItem = 4;
 
-        }else if (menuId === "monitoring_tomcats" && menuId.indexOf("_tomcat_") < 0) {
+        }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") < 0) {
+            activeItem = 1;
+        }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
+            activeItem = 2;
+        }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {
+            activeItem = 3;
+
+        }else if (menuId.indexOf("monitoring_tomcats") >= 0 && menuId.indexOf("_tomcat_") < 0) {
+            activeItem = 4;
+        }else if (menuId.indexOf("monitoring_servers") >= 0 && menuId.indexOf("_server_") >= 0) {
             activeItem = 5;
-        }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") >= 0) {
+        }else if (menuId.indexOf("monitoring_tomcats") >= 0 && menuId.indexOf("_tomcat_") >= 0) {
             activeItem = 6;
-        }else if (menuId === "monitoring_tomcats" && menuId.indexOf("_tomcat_") >= 0) {
-            activeItem = 7;
         }else if (menuId === "resourcemng_servers") {
-            activeItem = 8;
+            activeItem = 7;
         }else if (menuId === "resourcemng_datasources") {
+            activeItem = 8;
+        }else if (menuId === "usermnt"){
             activeItem = 9;
+            Ext.getStore("UserStore").load();
+        }else if (menuId ==="logmnt"){
+            alert("Under construction.\n Reused from other project");
         }
 
         if(activeItem > -1){
-            Ext.getCmp("centerContainer").layout.setActiveItem(activeItem);
+            Ext.getCmp("subCenterContainer").layout.setActiveItem(activeItem);
         }
     },
 

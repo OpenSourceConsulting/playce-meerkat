@@ -28,16 +28,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'toolbar',
-                    flex: 0.5,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Resources management > Servers'
-                        }
-                    ]
-                },
-                {
                     xtype: 'tabpanel',
                     flex: 9,
                     height: 597,

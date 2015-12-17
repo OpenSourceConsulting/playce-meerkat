@@ -15,8 +15,11 @@
 
 Ext.define('webapp.view.TomcatInstanceWindow', {
     extend: 'Ext.window.Window',
+    alias: 'widget.TomcatInstanceWindow',
 
     height: 406,
+    id: 'TomcatInstanceWindow',
+    itemId: 'TomcatInstanceWindow',
     width: 565,
     layout: {
         align: 'stretch',

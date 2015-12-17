@@ -17,34 +17,6 @@
     "designerId": "8f3c571d-2e4b-49c6-a435-a250b81b82ab",
     "cn": [
         {
-            "type": "Ext.toolbar.Toolbar",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "height": 50,
-                "layout|flex": 0.5
-            },
-            "designerId": "56e98b6c-b958-472b-9ca5-120d3560a7d0",
-            "cn": [
-                {
-                    "type": "Ext.form.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": null,
-                        "text": "Monitoring > Tomcat instances > tomcat 1"
-                    },
-                    "designerId": "2bd1dce7-89ca-4134-89b1-efc9edf2ed35"
-                }
-            ]
-        },
-        {
             "type": "Ext.tab.Panel",
             "reference": {
                 "name": "items",
@@ -56,7 +28,7 @@
                 "height": null,
                 "id": "tabPanel3",
                 "itemId": "tabPanel",
-                "layout|flex": 9.5
+                "layout|flex": 10
             },
             "designerId": "96eaeeed-d31a-44e7-a7b8-a7c314c07bc4",
             "cn": [

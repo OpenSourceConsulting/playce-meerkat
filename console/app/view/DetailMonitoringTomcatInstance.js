@@ -38,19 +38,8 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'toolbar',
-                    flex: 0.5,
-                    height: 50,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Monitoring > Tomcat instances > tomcat 1'
-                        }
-                    ]
-                },
-                {
                     xtype: 'tabpanel',
-                    flex: 9.5,
+                    flex: 10,
                     id: 'tabPanel3',
                     itemId: 'tabPanel',
                     activeTab: 1,

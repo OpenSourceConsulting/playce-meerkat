@@ -15,9 +15,10 @@
 
 Ext.define('webapp.view.DeployWindow', {
     extend: 'Ext.window.Window',
+    alias: 'widget.DeployWindow',
 
     height: 119,
-    width: 400,
+    width: 606,
     layout: {
         type: 'border'
     },
@@ -36,12 +37,13 @@ Ext.define('webapp.view.DeployWindow', {
                         {
                             xtype: 'filefield',
                             margin: 10,
-                            width: 366,
-                            fieldLabel: 'Label'
+                            width: 571,
+                            fieldLabel: 'Choose application (*.war)',
+                            labelWidth: 180
                         },
                         {
                             xtype: 'button',
-                            margin: '0 0 10 100',
+                            margin: '0 0 10 200',
                             text: 'Deploy'
                         },
                         {

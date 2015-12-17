@@ -15,7 +15,10 @@
             "MenuController",
             "DomainController",
             "TomcatController",
-            "UserController"
+            "UserController",
+            "ApplicationController",
+            "CluteringConfigurationController",
+            "DatasourceController"
         ],
         "models": [
             "SessionKeyData",
@@ -54,7 +57,9 @@
             "SeverDataGridWindow",
             "DataSourceWindow",
             "ResourceManagementContainer",
-            "MonitoringTomcatInstance"
+            "MonitoringTomcatInstance",
+            "ClusteringConfigurationWindow",
+            "ClusteringConfigurationComparingWindow"
         ]
     },
     "designerId": "application"

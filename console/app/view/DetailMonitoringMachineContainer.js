@@ -39,17 +39,8 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'toolbar',
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Monitoring > Machines > 192.168.0.54'
-                        }
-                    ]
-                },
-                {
                     xtype: 'tabpanel',
-                    flex: 2.5,
+                    flex: 3,
                     id: 'tabPanel1',
                     itemId: 'tabPanel',
                     activeTab: 0,

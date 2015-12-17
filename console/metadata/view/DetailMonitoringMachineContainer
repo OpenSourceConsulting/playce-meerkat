@@ -16,34 +16,6 @@
     "designerId": "48e2b438-8422-4af0-800c-8d841f4980f9",
     "cn": [
         {
-            "type": "Ext.toolbar.Toolbar",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "height": null,
-                "layout|flex": null
-            },
-            "designerId": "5397f70f-ddef-4381-9618-c07c531af801",
-            "cn": [
-                {
-                    "type": "Ext.form.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "layout|flex": null,
-                        "text": "Monitoring > Machines > 192.168.0.54"
-                    },
-                    "designerId": "5ee79fb6-5ad7-472a-aac0-61f4117e6b96"
-                }
-            ]
-        },
-        {
             "type": "Ext.tab.Panel",
             "reference": {
                 "name": "items",
@@ -55,7 +27,7 @@
                 "height": null,
                 "id": "tabPanel1",
                 "itemId": "tabPanel",
-                "layout|flex": 2.5
+                "layout|flex": 3
             },
             "designerId": "ff6a682e-4229-4cb2-bfb5-0eab3267a3fa",
             "cn": [

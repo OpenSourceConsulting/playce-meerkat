@@ -22,38 +22,10 @@
             },
             "codeClass": null,
             "userConfig": {
-                "height": 47,
-                "layout|flex": 0.5,
-                "layout|region": "north"
-            },
-            "designerId": "2e399e7e-4f6a-410c-be31-c5539f2f9c4a",
-            "cn": [
-                {
-                    "type": "Ext.form.Label",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "text": "Tomcat Management > Domain 1> Tomcat 1"
-                    },
-                    "designerId": "9a1296af-95d6-413f-81b9-85288697b724"
-                }
-            ]
-        },
-        {
-            "type": "Ext.panel.Panel",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
                 "container|align": "stretch",
                 "height": 389,
                 "layout": "hbox",
-                "layout|flex": 3,
+                "layout|flex": 2,
                 "layout|region": "north",
                 "manageHeight": false,
                 "title": "Overview"
@@ -261,7 +233,7 @@
             "codeClass": null,
             "userConfig": {
                 "forceFit": true,
-                "layout|flex": 6.5,
+                "layout|flex": 7,
                 "layout|region": "center",
                 "margin": "5 0 0 0 ",
                 "title": "Data sources"
@@ -389,8 +361,9 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "id": "btnLinkNewDatasource",
                                 "layout|flex": null,
-                                "text": "Link new Data source"
+                                "text": "Link new Datasource"
                             },
                             "designerId": "601866f3-75cd-4423-8345-b0f00a3e63d5"
                         }

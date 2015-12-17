@@ -14,5 +14,21 @@
  */
 
 Ext.define('webapp.controller.TomcatController', {
-    extend: 'Ext.app.Controller'
+    extend: 'Ext.app.Controller',
+
+    onNewTomcatClick: function(button, e, eOpts) {
+          var window = Ext.create("widget.TomcatInstanceWindow");
+          // Show window
+          window.show();
+
+    },
+
+    init: function(application) {
+        this.control({
+            "#btnNewTomcat": {
+                click: this.onNewTomcatClick
+            }
+        });
+    }
+
 });

@@ -28,16 +28,6 @@ Ext.define('webapp.view.ResourceManagementContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'toolbar',
-                    flex: 0.5,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Resources management > Data source'
-                        }
-                    ]
-                },
-                {
                     xtype: 'container',
                     flex: 9.5,
                     items: [

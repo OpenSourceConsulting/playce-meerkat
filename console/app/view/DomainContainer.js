@@ -28,18 +28,6 @@ Ext.define('webapp.view.DomainContainer', {
             items: [
                 {
                     xtype: 'panel',
-                    flex: 0.5,
-                    region: 'north',
-                    height: 47,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Tomcat Management > Domain 1'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
                     flex: 1.5,
                     region: 'north',
                     height: 150,
@@ -84,6 +72,9 @@ Ext.define('webapp.view.DomainContainer', {
                     items: [
                         {
                             xtype: 'panel',
+                            layout: {
+                                type: 'fit'
+                            },
                             title: 'Tomcat instances',
                             dockedItems: [
                                 {
@@ -92,6 +83,8 @@ Ext.define('webapp.view.DomainContainer', {
                                     items: [
                                         {
                                             xtype: 'button',
+                                            id: 'btnNewTomcat',
+                                            itemId: 'btnNewTomcat',
                                             text: 'New'
                                         },
                                         {
@@ -154,6 +147,9 @@ Ext.define('webapp.view.DomainContainer', {
                         },
                         {
                             xtype: 'panel',
+                            layout: {
+                                type: 'fit'
+                            },
                             title: 'Applications',
                             dockedItems: [
                                 {
@@ -205,6 +201,7 @@ Ext.define('webapp.view.DomainContainer', {
                                             items: [
                                                 {
                                                     xtype: 'button',
+                                                    id: 'btnDeployWindow',
                                                     text: 'Deploy'
                                                 },
                                                 {
@@ -228,6 +225,9 @@ Ext.define('webapp.view.DomainContainer', {
                         },
                         {
                             xtype: 'panel',
+                            layout: {
+                                type: 'fit'
+                            },
                             title: 'Sessions',
                             dockedItems: [
                                 {
@@ -275,6 +275,9 @@ Ext.define('webapp.view.DomainContainer', {
                         },
                         {
                             xtype: 'panel',
+                            layout: {
+                                type: 'fit'
+                            },
                             title: 'Clustering configuration',
                             dockedItems: [
                                 {
@@ -283,6 +286,7 @@ Ext.define('webapp.view.DomainContainer', {
                                     items: [
                                         {
                                             xtype: 'button',
+                                            itemId: 'btnNewClutersingConfiguration',
                                             text: 'New'
                                         },
                                         {
@@ -320,6 +324,7 @@ Ext.define('webapp.view.DomainContainer', {
                                         },
                                         {
                                             xtype: 'button',
+                                            itemId: 'btnComparingClusteringConfiguration',
                                             text: 'Compare'
                                         }
                                     ]

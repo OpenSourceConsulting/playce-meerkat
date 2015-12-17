@@ -15,9 +15,14 @@
 
 Ext.define('webapp.view.LinkNewDataSourceWindow', {
     extend: 'Ext.window.Window',
+    alias: 'widget.LinkNewDataSourceWindow',
 
     height: 288,
     width: 574,
+    layout: {
+        align: 'stretch',
+        type: 'vbox'
+    },
     title: 'Link to new Datasource',
 
     initComponent: function() {
@@ -28,7 +33,12 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                 {
                     xtype: 'container',
                     dock: 'top',
+                    flex: 2,
                     margin: '10 0 0 10',
+                    layout: {
+                        align: 'stretch',
+                        type: 'hbox'
+                    },
                     items: [
                         {
                             xtype: 'displayfield',
@@ -37,6 +47,7 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                         },
                         {
                             xtype: 'displayfield',
+                            margin: '0 10 0 200',
                             fieldLabel: 'Status:',
                             value: 'Display Field'
                         }
@@ -46,6 +57,8 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
             items: [
                 {
                     xtype: 'gridpanel',
+                    flex: 6,
+                    margin: '5 5 5 5',
                     title: '',
                     forceFit: true,
                     columns: [
@@ -73,15 +86,19 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                 },
                 {
                     xtype: 'checkboxfield',
+                    flex: 0.5,
+                    margin: '5 5 5 5',
                     fieldLabel: '',
                     boxLabel: 'Restart tomcat instance after linking new datasource.'
                 },
                 {
                     xtype: 'container',
+                    flex: 1.5,
+                    margin: '10 5 5 5',
                     items: [
                         {
                             xtype: 'button',
-                            margin: '0 0 0 180',
+                            margin: '0 0 0 220',
                             text: 'OK'
                         },
                         {

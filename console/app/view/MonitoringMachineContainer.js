@@ -36,17 +36,6 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'toolbar',
-                    flex: 0.5,
-                    height: 50,
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Monitoring > Machines'
-                        }
-                    ]
-                },
-                {
                     xtype: 'tabpanel',
                     flex: 9.5,
                     id: 'tabPanel',
@@ -63,8 +52,8 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                             dockedItems: [
                                 {
                                     xtype: 'toolbar',
-                                    dock: 'top',
                                     flex: 1,
+                                    dock: 'top',
                                     items: [
                                         {
                                             xtype: 'label',
@@ -87,8 +76,8 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                 },
                                 {
                                     xtype: 'container',
-                                    dock: 'top',
                                     flex: 9,
+                                    dock: 'top',
                                     layout: {
                                         type: 'fit'
                                     },
