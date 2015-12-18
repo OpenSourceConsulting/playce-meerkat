@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<display-name>athena-dolly-console</display-name>
+	
+	<!-- ==================================================== -->
+	<!--                      Filter                          -->
+	<!-- ==================================================== -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+	<!---->
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+		<init-param>
+			<param-name>cors.allowed.origins</param-name>
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.methods</param-name>
+			<param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.headers</param-name>
+			<param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.exposed.headers</param-name>
+			<param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.support.credentials</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.preflight.maxage</param-name>
+			<param-value>10</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+	
+	<!-- ========== Spring Boot Config in Servlet 2.5 ============ -->
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.athena.dolly.controller.DollyBoot</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.boot.legacy.context.web.SpringBootContextLoaderListener</listener-class>
+    </listener>
+	
+	<!-- 
+    <filter>
+        <filter-name>metricFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>metricFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+     -->
+
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextAttribute</param-name>
+            <param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- ================================================ -->
+    
+    <filter>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 
+	<session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
+	 -->
+	 
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error</location>
+	</error-page>
+</web-app>
