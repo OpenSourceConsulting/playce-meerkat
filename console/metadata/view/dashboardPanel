@@ -60,7 +60,7 @@
                 "layout|collapseMode": "mini",
                 "layout|flex": 1,
                 "placeholderCollapseHideMode": 2,
-                "style": "border:1",
+                "style": null,
                 "title": "Tomcat 1",
                 "titleCollapse": true
             },
@@ -92,15 +92,20 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "bodyBorder": true,
                                 "container|align": "stretch",
                                 "container|pack": "center",
                                 "height": 70,
                                 "layout": "vbox",
                                 "layout|flex": 1,
                                 "margin": "5 5 5 5",
+                                "style": null,
                                 "title": "Health",
                                 "titleAlign": "center",
                                 "width": 171
+                            },
+                            "configAlternates": {
+                                "style": "string"
                             },
                             "designerId": "49f689a7-33c4-475a-95a0-d7c671a72a2f",
                             "cn": [
@@ -284,7 +289,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "bodyBorder": null,
+                                "bodyBorder": true,
                                 "bodyStyle": "border:5px;",
                                 "layout": "fit",
                                 "layout|flex": 1,
@@ -406,6 +411,7 @@
                                         "animate": [
                                             "true"
                                         ],
+                                        "border": true,
                                         "dock": "top",
                                         "height": 184,
                                         "insetPadding": 20,

@@ -12,6 +12,16 @@
     "storage": {
         "needsCompile": false,
         "nameIndex": 1,
-        "varData": {}
+        "varData": {
+            "Ext.panel.Panel": {
+                "globalVars": [
+                    {
+                        "name": "panel-border-width",
+                        "enabled": true,
+                        "value": "2px"
+                    }
+                ]
+            }
+        }
     }
 }

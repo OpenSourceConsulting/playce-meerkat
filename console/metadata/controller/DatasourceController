@@ -1,0 +1,34 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "DatasourceController"
+    },
+    "designerId": "bc054c02-ef40-453a-b516-0ac82f5c2997",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnLinkNewDatasource",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onClickLinkNewDatasource",
+                "implHandler": [
+                    "var window = Ext.create(\"widget.LinkNewDataSourceWindow\");",
+                    "window.show();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "ed364357-f656-4688-990f-2a398949f9a6"
+        }
+    ]
+}

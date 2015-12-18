@@ -51,7 +51,6 @@ Ext.define('webapp.view.dashboardPanel', {
                     collapseMode: 'mini',
                     flex: 1,
                     dock: 'top',
-                    style: 'border:1',
                     bodyBorder: true,
                     animCollapse: false,
                     collapseDirection: 'top',
@@ -79,6 +78,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                         pack: 'center',
                                         type: 'vbox'
                                     },
+                                    bodyBorder: true,
                                     title: 'Health',
                                     titleAlign: 'center',
                                     items: [
@@ -182,6 +182,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                     layout: {
                                         type: 'fit'
                                     },
+                                    bodyBorder: true,
                                     bodyStyle: 'border:5px;',
                                     title: 'Server Response Time',
                                     titleAlign: 'center',
@@ -236,6 +237,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                         {
                                             xtype: 'chart',
                                             dock: 'top',
+                                            border: true,
                                             height: 184,
                                             width: 598,
                                             animate: true,

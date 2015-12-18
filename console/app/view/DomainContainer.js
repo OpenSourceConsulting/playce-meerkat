@@ -39,8 +39,9 @@ Ext.define('webapp.view.DomainContainer', {
                         {
                             xtype: 'displayfield',
                             width: 164,
-                            fieldLabel: 'Name:',
-                            value: 'Display Field'
+                            fieldLabel: 'Name',
+                            labelWidth: 150,
+                            value: 'Domain 1'
                         },
                         {
                             xtype: 'displayfield',

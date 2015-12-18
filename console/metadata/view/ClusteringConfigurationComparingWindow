@@ -1,0 +1,127 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|align": "stretch",
+        "designer|userAlias": "ClusteringConfigurationComparingWindow",
+        "designer|userClassName": "ClusteringConfigurationComparingWindow",
+        "height": 483,
+        "layout": "vbox",
+        "margin": "",
+        "title": "Clutering Configuration Comparison",
+        "width": 633
+    },
+    "designerId": "0afcedfc-3608-44cf-99fe-5381e06ae2ff",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "forceFit": true,
+                "layout|flex": 9,
+                "margin": "10 10 10 10",
+                "title": ""
+            },
+            "designerId": "112ce24d-f7e2-4822-800f-599880ee812e",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "string",
+                        "text": "Name"
+                    },
+                    "designerId": "d290b0d7-eb6d-4f17-8ad3-9e77359269a3"
+                },
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "number",
+                        "text": "Current revision"
+                    },
+                    "designerId": "d086e51c-9657-4bfb-8bb5-122ebaa0aa7e"
+                },
+                {
+                    "type": "Ext.grid.column.Date",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "date",
+                        "text": "Revision 20151214-130113"
+                    },
+                    "designerId": "bc8120f9-33db-4f08-9900-e7638aa1a1cc"
+                },
+                {
+                    "type": "Ext.grid.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "5bc5127a-1703-4a67-9cbd-ff37a2705370"
+                },
+                {
+                    "type": "Ext.toolbar.Paging",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "displayInfo": true,
+                        "dock": "bottom",
+                        "width": 360
+                    },
+                    "designerId": "5e334f66-9565-4c5a-be7b-1c75c0d3a589"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": 1
+            },
+            "designerId": "34f73a49-2466-43d9-b706-877f04c49c42",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "margin": "10 0 0 250",
+                        "text": "Close"
+                    },
+                    "designerId": "f25c88e1-35a1-45de-8b9d-01133e1190c0"
+                }
+            ]
+        }
+    ]
+}

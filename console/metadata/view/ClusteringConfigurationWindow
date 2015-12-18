@@ -1,0 +1,81 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "ClusteringConfigurationWindow",
+        "designer|userClassName": "ClusteringConfigurationWindow",
+        "height": 159,
+        "title": "New Configuration ",
+        "width": 400
+    },
+    "designerId": "c0a0e793-ba69-4629-8895-b160810dde62",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "72290551-1dbd-422c-940e-6203a6101158"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Name",
+                "margin": "10 0 10 10",
+                "width": 352
+            },
+            "designerId": "ba5fa332-e83b-4cbe-a178-e277446b2197"
+        },
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Value",
+                "margin": "0 0 10 10",
+                "width": 353
+            },
+            "designerId": "b9069682-9ba8-4fbe-a252-c9e0660edfb3"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "margin": "0 0 0 120",
+                "text": "Create"
+            },
+            "designerId": "a3be3554-3409-4348-ac95-357e64e44559"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "margin": "0 0 0 10",
+                "text": "Cancel"
+            },
+            "designerId": "2d228a76-8bdf-4866-91d0-cfe0b396a43e"
+        }
+    ]
+}

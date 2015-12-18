@@ -32,8 +32,8 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
             dockedItems: [
                 {
                     xtype: 'container',
-                    dock: 'top',
                     flex: 2,
+                    dock: 'top',
                     margin: '10 0 0 10',
                     layout: {
                         align: 'stretch',

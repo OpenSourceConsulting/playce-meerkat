@@ -1,0 +1,55 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "CluteringConfigurationController",
+        "id": "ClusteringConfigurationController"
+    },
+    "designerId": "4e653c30-5657-48e5-8d8f-57649c8467fb",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnNewClutersingConfiguration",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onClickNewClusteringConfiguration",
+                "implHandler": [
+                    "var window = Ext.create(\"widget.ClusteringConfigurationWindow\");",
+                    "window.show();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "a62f551b-3bd2-4a8c-aa77-f7b3bec9351c"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnComparingClusteringConfiguration",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onClickComparingClusteringConfiguration",
+                "implHandler": [
+                    "var window = Ext.create(\"widget.ClusteringConfigurationComparingWindow\");",
+                    "window.show();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "6396a21a-6cc8-4947-aad8-7153095e4a8a"
+        }
+    ]
+}

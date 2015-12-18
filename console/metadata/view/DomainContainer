@@ -39,9 +39,10 @@
                     "codeClass": null,
                     "userConfig": {
                         "designer|displayName": "DomainNameField",
-                        "fieldLabel": "Name:",
+                        "fieldLabel": "Name",
+                        "labelWidth": 150,
                         "value": [
-                            "Display Field"
+                            "Domain 1"
                         ],
                         "width": 164
                     },

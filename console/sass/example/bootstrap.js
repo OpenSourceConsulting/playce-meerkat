@@ -430,7 +430,6 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "Ext.grid.RowEditor": [],
   "Ext.grid.RowEditorButtons": [],
-  "Ext.grid.Scroller": [],
   "Ext.grid.View": [],
   "Ext.grid.ViewDropZone": [],
   "Ext.grid.column.Action": [
@@ -867,6 +866,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "console.controller.Main": [],
   "console.view.Main": [],
   "console.view.Viewport": [],
+  "webapp.controller.ApplicationController": [],
+  "webapp.controller.CluteringConfigurationController": [],
+  "webapp.controller.DatasourceController": [],
   "webapp.controller.DomainController": [],
   "webapp.controller.LoginController": [],
   "webapp.controller.MenuController": [],
@@ -886,6 +888,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],
   "webapp.store.sessionDataStore": [],
+  "webapp.view.ClusteringConfigurationComparingWindow": [],
+  "webapp.view.ClusteringConfigurationWindow": [],
   "webapp.view.DataSourceServerWindow": [],
   "webapp.view.DataSourceWindow": [],
   "webapp.view.DatagridServerGroupWindow": [],
@@ -1343,7 +1347,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.RowEditorButtons": [
     "widget.roweditorbuttons"
   ],
-  "Ext.grid.Scroller": [],
   "Ext.grid.View": [
     "widget.gridview"
   ],
@@ -1916,6 +1919,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.app-main"
   ],
   "console.view.Viewport": [],
+  "webapp.controller.ApplicationController": [],
+  "webapp.controller.CluteringConfigurationController": [],
+  "webapp.controller.DatasourceController": [],
   "webapp.controller.DomainController": [],
   "webapp.controller.LoginController": [],
   "webapp.controller.MenuController": [],
@@ -1939,10 +1945,18 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],
   "webapp.store.sessionDataStore": [],
+  "webapp.view.ClusteringConfigurationComparingWindow": [
+    "widget.ClusteringConfigurationComparingWindow"
+  ],
+  "webapp.view.ClusteringConfigurationWindow": [
+    "widget.ClusteringConfigurationWindow"
+  ],
   "webapp.view.DataSourceServerWindow": [],
   "webapp.view.DataSourceWindow": [],
   "webapp.view.DatagridServerGroupWindow": [],
-  "webapp.view.DeployWindow": [],
+  "webapp.view.DeployWindow": [
+    "widget.DeployWindow"
+  ],
   "webapp.view.DetailMonitoringMachineContainer": [
     "widget.detailmonitoringmachinecontainer"
   ],
@@ -1952,7 +1966,9 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.DomainContainer": [
     "widget.domaincontainer"
   ],
-  "webapp.view.LinkNewDataSourceWindow": [],
+  "webapp.view.LinkNewDataSourceWindow": [
+    "widget.LinkNewDataSourceWindow"
+  ],
   "webapp.view.MonitoringMachineContainer": [
     "widget.monitoringmachinecontainer"
   ],
@@ -1969,7 +1985,9 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.TomcatInstanceContainer": [
     "widget.tomcatinstancecontainer"
   ],
-  "webapp.view.TomcatInstanceWindow": [],
+  "webapp.view.TomcatInstanceWindow": [
+    "widget.TomcatInstanceWindow"
+  ],
   "webapp.view.UserMntContainer": [
     "widget.usermntcontainer"
   ],

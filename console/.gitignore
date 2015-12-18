@@ -10,3 +10,4 @@ build
 build.xml
 build.settings
 /target
+/bin
