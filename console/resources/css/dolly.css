@@ -13,3 +13,8 @@
 #detailPanel .json-string {
    color: olive;
 }
+
+.x-panel
+{
+	border: 1px solid silver !important;
+}
