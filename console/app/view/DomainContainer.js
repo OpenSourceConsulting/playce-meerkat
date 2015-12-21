@@ -17,6 +17,7 @@ Ext.define('webapp.view.DomainContainer', {
     extend: 'Ext.container.Container',
     alias: 'widget.domaincontainer',
 
+    itemId: 'mycontainer37',
     layout: {
         type: 'border'
     },
@@ -38,27 +39,35 @@ Ext.define('webapp.view.DomainContainer', {
                     items: [
                         {
                             xtype: 'displayfield',
+                            id: 'domainNameField',
                             width: 164,
                             fieldLabel: 'Name',
-                            labelWidth: 150,
+                            labelWidth: 50,
                             value: 'Domain 1'
                         },
                         {
                             xtype: 'displayfield',
-                            width: 381,
+                            id: 'tomcatInstancesField',
+                            width: 150,
                             fieldLabel: 'Tomcat instances:',
-                            value: 'Display Field'
+                            labelWidth: 70,
+                            value: 4
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'domainTypeField',
                             width: 249,
                             fieldLabel: 'Type',
-                            value: 'Display Field'
+                            labelWidth: 50,
+                            value: 'Clustering'
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'datagridServerGroupField',
                             style: '{text-align:right;font-weight:bold;}',
-                            fieldLabel: 'Data grid server group:'
+                            width: 218,
+                            fieldLabel: 'Data grid server group:',
+                            value: 'Group 1'
                         }
                     ]
                 },

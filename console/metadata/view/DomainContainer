@@ -9,6 +9,7 @@
         "designer|userAlias": "domaincontainer",
         "designer|userClassName": "DomainContainer",
         "height": null,
+        "itemId": "mycontainer37",
         "layout": "border",
         "width": null
     },
@@ -40,7 +41,8 @@
                     "userConfig": {
                         "designer|displayName": "DomainNameField",
                         "fieldLabel": "Name",
-                        "labelWidth": 150,
+                        "id": "domainNameField",
+                        "labelWidth": 50,
                         "value": [
                             "Domain 1"
                         ],
@@ -58,10 +60,12 @@
                     "userConfig": {
                         "designer|displayName": "TomcatInstanceQuantityField",
                         "fieldLabel": "Tomcat instances:",
+                        "id": "tomcatInstancesField",
+                        "labelWidth": 70,
                         "value": [
-                            "Display Field"
+                            "4"
                         ],
-                        "width": 381
+                        "width": 150
                     },
                     "designerId": "c8111f92-bf14-441a-b97b-e3d76b94ab21"
                 },
@@ -75,8 +79,10 @@
                     "userConfig": {
                         "designer|displayName": "DomainTypeField",
                         "fieldLabel": "Type",
+                        "id": "domainTypeField",
+                        "labelWidth": 50,
                         "value": [
-                            "Display Field"
+                            "Clustering"
                         ],
                         "width": 249
                     },
@@ -92,9 +98,12 @@
                     "userConfig": {
                         "designer|displayName": "DataGridServerGroupField",
                         "fieldLabel": "Data grid server group:",
+                        "id": "datagridServerGroupField",
                         "style": "{text-align:right;font-weight:bold;}",
-                        "value": null,
-                        "width": null
+                        "value": [
+                            "Group 1"
+                        ],
+                        "width": 218
                     },
                     "configAlternates": {
                         "style": "string"

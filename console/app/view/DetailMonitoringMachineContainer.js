@@ -62,22 +62,25 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                         {
                                             xtype: 'displayfield',
                                             fieldLabel: 'Name',
-                                            value: 'Display Field'
+                                            value: 'Machine 1'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 171,
                                             fieldLabel: 'System health',
-                                            value: 'Display Field'
+                                            value: 'OK'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 183,
                                             fieldLabel: 'Hostname',
-                                            value: 'Display Field'
+                                            value: 'Machine17373'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 206,
                                             fieldLabel: 'Host OS',
-                                            value: 'Display Field'
+                                            value: 'Linux'
                                         }
                                     ]
                                 },

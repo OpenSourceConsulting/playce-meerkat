@@ -38,11 +38,32 @@
                     "userConfig": {
                         "displayField": "name",
                         "fieldLabel": "Domain",
+                        "id": "domainComboBox",
+                        "itemId": "mycombobox",
                         "layout|flex": null,
                         "store": "DomainStore",
                         "valueField": "id"
                     },
-                    "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f"
+                    "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onDomainComboBoxSelect",
+                                "implHandler": [
+                                    "window.location.reload();"
+                                ],
+                                "name": "select",
+                                "scope": "me"
+                            },
+                            "designerId": "cf7b1843-4ff3-4517-829e-2e246bfa843c"
+                        }
+                    ]
                 }
             ]
         },

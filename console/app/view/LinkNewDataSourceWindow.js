@@ -42,14 +42,16 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                     items: [
                         {
                             xtype: 'displayfield',
+                            width: 213,
                             fieldLabel: 'Tomcat instance',
-                            value: 'Display Field'
+                            value: 'Tomcat 1'
                         },
                         {
                             xtype: 'displayfield',
-                            margin: '0 10 0 200',
+                            margin: '0 10 0 100',
+                            width: 148,
                             fieldLabel: 'Status:',
-                            value: 'Display Field'
+                            value: 'Started'
                         }
                     ]
                 }

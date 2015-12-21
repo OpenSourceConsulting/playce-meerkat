@@ -8,5 +8,26 @@
     "userConfig": {
         "designer|userClassName": "DomainController"
     },
-    "designerId": "daf871fa-23ac-469b-9162-e5085b969f39"
+    "designerId": "daf871fa-23ac-469b-9162-e5085b969f39",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mycontainer37",
+                "designer|targetType": "Ext.container.Container",
+                "fn": "onContainerActivate",
+                "implHandler": [
+                    ""
+                ],
+                "name": "activate",
+                "scope": "me"
+            },
+            "designerId": "33bb7375-5b87-4aea-afeb-5f92038b62ee"
+        }
+    ]
 }

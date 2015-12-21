@@ -14,5 +14,18 @@
  */
 
 Ext.define('webapp.controller.DomainController', {
-    extend: 'Ext.app.Controller'
+    extend: 'Ext.app.Controller',
+
+    onContainerActivate: function(component, eOpts) {
+
+    },
+
+    init: function(application) {
+        this.control({
+            "#mycontainer37": {
+                activate: this.onContainerActivate
+            }
+        });
+    }
+
 });

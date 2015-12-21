@@ -42,8 +42,9 @@
                     "userConfig": {
                         "fieldLabel": "Tomcat instance",
                         "value": [
-                            "Display Field"
-                        ]
+                            "Tomcat 1"
+                        ],
+                        "width": 213
                     },
                     "designerId": "c66bc43b-9c6e-4f8c-b4e5-2ed2c1468b84"
                 },
@@ -56,10 +57,11 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Status:",
-                        "margin": "0 10 0 200",
+                        "margin": "0 10 0 100",
                         "value": [
-                            "Display Field"
-                        ]
+                            "Started"
+                        ],
+                        "width": 148
                     },
                     "designerId": "fdab203d-d4b3-4ea1-8fdb-305c91db8aaf"
                 }

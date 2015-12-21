@@ -80,7 +80,7 @@
                                     "userConfig": {
                                         "fieldLabel": "Name",
                                         "value": [
-                                            "Display Field"
+                                            "Machine 1"
                                         ]
                                     },
                                     "designerId": "48d9365f-d29a-45cf-a684-537f758da2b4"
@@ -95,8 +95,9 @@
                                     "userConfig": {
                                         "fieldLabel": "System health",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "OK"
+                                        ],
+                                        "width": 171
                                     },
                                     "designerId": "36ebca1f-13e1-4a95-a248-b3ed2a263afd"
                                 },
@@ -110,8 +111,9 @@
                                     "userConfig": {
                                         "fieldLabel": "Hostname",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "Machine17373"
+                                        ],
+                                        "width": 183
                                     },
                                     "designerId": "269cec97-a2cf-42f7-8a96-41aa54d6d0f9"
                                 },
@@ -125,8 +127,9 @@
                                     "userConfig": {
                                         "fieldLabel": "Host OS",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "Linux"
+                                        ],
+                                        "width": 206
                                     },
                                     "designerId": "c0a6cb5d-a1e6-47bd-94ea-b76ca45230e5"
                                 }

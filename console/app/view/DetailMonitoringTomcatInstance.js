@@ -42,7 +42,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                     flex: 10,
                     id: 'tabPanel3',
                     itemId: 'tabPanel',
-                    activeTab: 1,
+                    activeTab: 0,
                     items: [
                         {
                             xtype: 'panel',
@@ -62,27 +62,30 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                         {
                                             xtype: 'displayfield',
                                             fieldLabel: 'Health',
-                                            value: 'Display Field'
+                                            value: 'OK'
                                         },
                                         {
                                             xtype: 'displayfield',
                                             fieldLabel: 'Availability',
-                                            value: 'Display Field'
+                                            value: 'OK'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 212,
                                             fieldLabel: 'Today\'s Availability',
-                                            value: 'Display Field'
+                                            value: '100%'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 238,
                                             fieldLabel: 'Today\'s Uptime',
-                                            value: 'Display Field'
+                                            value: '12 hrs 10 mins 13 secs'
                                         },
                                         {
                                             xtype: 'displayfield',
+                                            width: 265,
                                             fieldLabel: 'Last Downtime',
-                                            value: 'Display Field'
+                                            value: 'N/A'
                                         }
                                     ]
                                 },

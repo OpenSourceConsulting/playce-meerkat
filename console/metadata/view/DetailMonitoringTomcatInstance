@@ -24,7 +24,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "activeTab": 1,
+                "activeTab": 0,
                 "height": null,
                 "id": "tabPanel3",
                 "itemId": "tabPanel",
@@ -82,7 +82,7 @@
                                     "userConfig": {
                                         "fieldLabel": "Health",
                                         "value": [
-                                            "Display Field"
+                                            "OK"
                                         ]
                                     },
                                     "designerId": "08c7717a-851a-40e7-8110-2f5c981bc0d7"
@@ -97,7 +97,7 @@
                                     "userConfig": {
                                         "fieldLabel": "Availability",
                                         "value": [
-                                            "Display Field"
+                                            "OK"
                                         ]
                                     },
                                     "designerId": "009c990d-b4f8-4db5-8968-f2d59379e613"
@@ -112,8 +112,9 @@
                                     "userConfig": {
                                         "fieldLabel": "Today's Availability",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "100%"
+                                        ],
+                                        "width": 212
                                     },
                                     "designerId": "d3b3ec42-72df-48a9-8ba6-343e4fffb381"
                                 },
@@ -127,8 +128,9 @@
                                     "userConfig": {
                                         "fieldLabel": "Today's Uptime",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "12 hrs 10 mins 13 secs"
+                                        ],
+                                        "width": 238
                                     },
                                     "designerId": "0a8b2627-d246-45f0-b610-852949ff4401"
                                 },
@@ -142,8 +144,9 @@
                                     "userConfig": {
                                         "fieldLabel": "Last Downtime",
                                         "value": [
-                                            "Display Field"
-                                        ]
+                                            "N/A"
+                                        ],
+                                        "width": 265
                                     },
                                     "designerId": "60ea49ae-e581-4973-8f44-a67e08fcb4cb"
                                 }

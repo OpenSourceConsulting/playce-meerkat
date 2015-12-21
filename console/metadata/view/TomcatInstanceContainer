@@ -25,7 +25,7 @@
                 "container|align": "stretch",
                 "height": 389,
                 "layout": "hbox",
-                "layout|flex": 2,
+                "layout|flex": 3,
                 "layout|region": "north",
                 "manageHeight": false,
                 "title": "Overview"
@@ -43,7 +43,7 @@
                         "designer|displayName": "HostNameField",
                         "fieldLabel": "Host name:",
                         "value": [
-                            "Display Field"
+                            "Tomcat 1"
                         ],
                         "width": 164
                     },
@@ -60,7 +60,7 @@
                         "designer|displayName": "StatusField",
                         "fieldLabel": "Status",
                         "value": [
-                            "Display Field"
+                            "Started"
                         ],
                         "width": 249
                     },
@@ -77,7 +77,7 @@
                         "designer|displayName": "IPAddressField",
                         "fieldLabel": "IP Address",
                         "value": [
-                            "Display Field"
+                            "192.168.0.83"
                         ],
                         "width": 249
                     },
@@ -94,7 +94,7 @@
                         "designer|displayName": "PortField",
                         "fieldLabel": "Ports:",
                         "value": [
-                            "Display Field"
+                            "{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}"
                         ],
                         "width": 249
                     },
@@ -111,7 +111,7 @@
                         "designer|displayName": "WebServerField",
                         "fieldLabel": "Web server",
                         "value": [
-                            "Display Field"
+                            "Apache Tomcat / 7.0.47"
                         ],
                         "width": 164
                     },
@@ -128,7 +128,7 @@
                         "designer|displayName": "JVMVersionField",
                         "fieldLabel": "JVM Version",
                         "value": [
-                            "Display Field"
+                            "1.7.0_45-b18"
                         ],
                         "width": 164
                     },
@@ -145,7 +145,7 @@
                         "designer|displayName": "OSNameField",
                         "fieldLabel": "OS Name",
                         "value": [
-                            "Display Field"
+                            "Linux"
                         ],
                         "width": 164
                     },
@@ -162,7 +162,7 @@
                         "designer|displayName": "DomainField",
                         "fieldLabel": "Domain",
                         "value": [
-                            "Display Field"
+                            "Domain 1"
                         ],
                         "width": 164
                     },

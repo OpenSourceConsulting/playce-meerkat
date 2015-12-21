@@ -41,10 +41,18 @@ Ext.define('webapp.view.dashboardPanel', {
                     items: [
                         {
                             xtype: 'combobox',
+                            id: 'domainComboBox',
+                            itemId: 'mycombobox',
                             fieldLabel: 'Domain',
                             displayField: 'name',
                             store: 'DomainStore',
-                            valueField: 'id'
+                            valueField: 'id',
+                            listeners: {
+                                select: {
+                                    fn: me.onDomainComboBoxSelect,
+                                    scope: me
+                                }
+                            }
                         }
                     ]
                 },
@@ -506,6 +514,10 @@ Ext.define('webapp.view.dashboardPanel', {
         });
 
         me.callParent(arguments);
+    },
+
+    onDomainComboBoxSelect: function(combo, records, eOpts) {
+        window.location.reload();
     }
 
 });

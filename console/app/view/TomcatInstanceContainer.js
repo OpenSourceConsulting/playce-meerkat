@@ -28,7 +28,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
             items: [
                 {
                     xtype: 'panel',
-                    flex: 2,
+                    flex: 3,
                     region: 'north',
                     height: 389,
                     layout: {
@@ -42,49 +42,49 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             xtype: 'displayfield',
                             width: 164,
                             fieldLabel: 'Host name:',
-                            value: 'Display Field'
+                            value: 'Tomcat 1'
                         },
                         {
                             xtype: 'displayfield',
                             width: 249,
                             fieldLabel: 'Status',
-                            value: 'Display Field'
+                            value: 'Started'
                         },
                         {
                             xtype: 'displayfield',
                             width: 249,
                             fieldLabel: 'IP Address',
-                            value: 'Display Field'
+                            value: '192.168.0.83'
                         },
                         {
                             xtype: 'displayfield',
                             width: 249,
                             fieldLabel: 'Ports:',
-                            value: 'Display Field'
+                            value: '{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}'
                         },
                         {
                             xtype: 'displayfield',
                             width: 164,
                             fieldLabel: 'Web server',
-                            value: 'Display Field'
+                            value: 'Apache Tomcat / 7.0.47'
                         },
                         {
                             xtype: 'displayfield',
                             width: 164,
                             fieldLabel: 'JVM Version',
-                            value: 'Display Field'
+                            value: '1.7.0_45-b18'
                         },
                         {
                             xtype: 'displayfield',
                             width: 164,
                             fieldLabel: 'OS Name',
-                            value: 'Display Field'
+                            value: 'Linux'
                         },
                         {
                             xtype: 'displayfield',
                             width: 164,
                             fieldLabel: 'Domain',
-                            value: 'Display Field'
+                            value: 'Domain 1'
                         }
                     ],
                     dockedItems: [
