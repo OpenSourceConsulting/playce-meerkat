@@ -24,7 +24,8 @@
             "SessionKeyData",
             "UserModel",
             "TomcatInstanceModel",
-            "UserRoleModel"
+            "UserRoleModel",
+            "DomainModel"
         ],
         "name": "webapp",
         "requires": [
@@ -34,9 +35,10 @@
             "sessionDataStore",
             "MenuTreeStore",
             "TomcatInstanceListStore",
-            "DomainStore",
+            "TempoStore",
             "UserStore",
-            "UserRoleStore"
+            "UserRoleStore",
+            "DomainStore"
         ],
         "views": [
             "meerkatViewport",

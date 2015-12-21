@@ -182,7 +182,7 @@
                                                 "dock": "top",
                                                 "height": 210,
                                                 "insetPadding": 35,
-                                                "store": "DomainStore",
+                                                "store": "TempoStore",
                                                 "width": 400
                                             },
                                             "designerId": "fc64b192-46dc-464c-979f-8f03986f8444",
@@ -251,7 +251,7 @@
                                                 "designer|displayName": "CPU",
                                                 "height": 210,
                                                 "insetPadding": 35,
-                                                "store": "DomainStore",
+                                                "store": "TempoStore",
                                                 "width": 400
                                             },
                                             "designerId": "1c1d5bb5-980e-4502-9f93-eb772a62a9e2",
@@ -320,7 +320,7 @@
                                                 "designer|displayName": "CPU",
                                                 "height": 210,
                                                 "insetPadding": 35,
-                                                "store": "DomainStore",
+                                                "store": "TempoStore",
                                                 "width": 400
                                             },
                                             "designerId": "13316bda-3232-4a77-9ef2-6aed0019ad27",
@@ -390,7 +390,7 @@
                                         "dock": "top",
                                         "height": 250,
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "width": 400
                                     },
                                     "designerId": "4191cb83-6a12-436c-a600-2038a7b31221",
@@ -551,7 +551,7 @@
                                         "dock": "top",
                                         "height": 250,
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "width": 400
                                     },
                                     "designerId": "1be65886-53bc-4942-bfe8-777096e98f23",
@@ -715,7 +715,7 @@
                                                         ],
                                                         "height": 250,
                                                         "insetPadding": 20,
-                                                        "store": "DomainStore",
+                                                        "store": "TempoStore",
                                                         "width": 400
                                                     },
                                                     "designerId": "6e53af57-e428-4e64-9891-3b9f61f8ceae",
@@ -802,7 +802,7 @@
                                                         ],
                                                         "height": 250,
                                                         "insetPadding": 20,
-                                                        "store": "DomainStore",
+                                                        "store": "TempoStore",
                                                         "width": 400
                                                     },
                                                     "designerId": "ee4b8258-0fba-4467-b7aa-b3774255ad7e",
@@ -907,7 +907,7 @@
                                                         "border": 1,
                                                         "height": 250,
                                                         "insetPadding": 20,
-                                                        "store": "DomainStore",
+                                                        "store": "TempoStore",
                                                         "width": 400
                                                     },
                                                     "designerId": "bdfe2a09-1d28-405e-9afe-b1ba4c3fc783",
@@ -995,7 +995,7 @@
                                                         "border": "10 10 10 10 ",
                                                         "height": 250,
                                                         "insetPadding": 20,
-                                                        "store": "DomainStore",
+                                                        "store": "TempoStore",
                                                         "width": 400
                                                     },
                                                     "designerId": "84ac66e6-8c3a-4578-a2a3-a3c2cb44d8e4",
@@ -1112,7 +1112,7 @@
                                 ],
                                 "height": 250,
                                 "insetPadding": 20,
-                                "store": "DomainStore",
+                                "store": "TempoStore",
                                 "width": 400
                             },
                             "designerId": "71f48673-91e8-45f3-a434-85bf54c0b350",

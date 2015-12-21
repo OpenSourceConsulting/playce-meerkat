@@ -28,15 +28,17 @@ Ext.application({
         'SessionKeyData',
         'UserModel',
         'TomcatInstanceModel',
-        'UserRoleModel'
+        'UserRoleModel',
+        'DomainModel'
     ],
     stores: [
         'sessionDataStore',
         'MenuTreeStore',
         'TomcatInstanceListStore',
-        'DomainStore',
+        'TempoStore',
         'UserStore',
-        'UserRoleStore'
+        'UserRoleStore',
+        'DomainStore'
     ],
     views: [
         'meerkatViewport',

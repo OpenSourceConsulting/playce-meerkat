@@ -88,7 +88,7 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                             width: 400,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'DomainStore',
+                                            store: 'TempoStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -190,7 +190,7 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 20,
-                                                    store: 'DomainStore',
+                                                    store: 'TempoStore',
                                                     axes: [
                                                         {
                                                             type: 'Category',
@@ -249,7 +249,7 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 20,
-                                                    store: 'DomainStore',
+                                                    store: 'TempoStore',
                                                     axes: [
                                                         {
                                                             type: 'Category',
@@ -318,7 +318,7 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 20,
-                                                    store: 'DomainStore',
+                                                    store: 'TempoStore',
                                                     axes: [
                                                         {
                                                             type: 'Category',
@@ -376,7 +376,7 @@ Ext.define('webapp.view.MonitoringMachineContainer', {
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 20,
-                                                    store: 'DomainStore',
+                                                    store: 'TempoStore',
                                                     axes: [
                                                         {
                                                             type: 'Category',

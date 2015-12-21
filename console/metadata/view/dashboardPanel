@@ -36,9 +36,11 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "displayField": "name",
                         "fieldLabel": "Domain",
                         "layout|flex": null,
-                        "store": "DomainStore"
+                        "store": "DomainStore",
+                        "valueField": "id"
                     },
                     "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f"
                 }
@@ -322,7 +324,7 @@
                                             "SERVER RESPONE TIME"
                                         ],
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "style": "border: 5px;",
                                         "width": 598
                                     },
@@ -415,7 +417,7 @@
                                         "dock": "top",
                                         "height": 184,
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "width": 598
                                     },
                                     "designerId": "67c1ff71-cebe-4188-b9ac-3df549c748fb",
@@ -739,7 +741,7 @@
                                             "SERVER RESPONE TIME"
                                         ],
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "width": 598
                                     },
                                     "designerId": "5c4831a3-5387-4fa4-8311-f2faafa4073d",
@@ -827,7 +829,7 @@
                                         "dock": "top",
                                         "height": 184,
                                         "insetPadding": 20,
-                                        "store": "DomainStore",
+                                        "store": "TempoStore",
                                         "width": 598
                                     },
                                     "designerId": "99df06ca-989f-4ee6-8a9f-fb86fb05b6c3",
