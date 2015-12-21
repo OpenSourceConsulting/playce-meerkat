@@ -86,16 +86,17 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.anonymous().disable().authorizeRequests().anyRequest()
-					.fullyAuthenticated().and().exceptionHandling()
-					.accessDeniedPage("/user/accessDenied").and().formLogin()
-					.loginPage("/user/notLogin")
-					.loginProcessingUrl("/user/login")
-					.defaultSuccessUrl("/user/onAfterLogin", true)
-					.failureUrl("/user/loginFail").and().logout()
-					.logoutUrl("/user/logout")
-					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
-					.disable();
+//			http.anonymous().disable().authorizeRequests().anyRequest()
+//					.fullyAuthenticated().and().exceptionHandling()
+//					.accessDeniedPage("/user/accessDenied").and().formLogin()
+//					.loginPage("/user/notLogin")
+//					.loginProcessingUrl("/user/login")
+//					.defaultSuccessUrl("/user/onAfterLogin", true)
+//					.failureUrl("/user/loginFail").and().logout()
+//					.logoutUrl("/user/logout")
+//					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
+//					.disable();
+			//http.anonymous().
 		}
 
 		@Override
