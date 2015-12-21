@@ -1,5 +1,5 @@
 {
-    "type": "Ext.data.Store",
+    "type": "jsonstore",
     "reference": {
         "name": "items",
         "type": "array"
@@ -7,35 +7,33 @@
     "codeClass": null,
     "userConfig": {
         "designer|userClassName": "DomainStore",
+        "model": "DomainModel",
         "storeId": "DomainStore"
     },
-    "designerId": "01b90457-de3d-42d3-9e35-e0a7c22ede86",
+    "designerId": "d6934800-0a5d-472c-8c40-e3aab1fe41d8",
     "cn": [
         {
-            "type": "Ext.data.Field",
+            "type": "Ext.data.proxy.Ajax",
             "reference": {
-                "name": "fields",
-                "type": "array"
+                "name": "proxy",
+                "type": "object"
             },
             "codeClass": null,
             "userConfig": {
-                "name": "id"
+                "url": "/domain/list"
             },
-            "name": "MyField",
-            "designerId": "5a09b234-ec59-4ec6-8864-e361cc1ab353"
-        },
-        {
-            "type": "Ext.data.Field",
-            "reference": {
-                "name": "fields",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "name": "name"
-            },
-            "name": "MyField1",
-            "designerId": "45f81af2-71e8-46e3-9ff8-2ea2e581df79"
+            "designerId": "8c4af349-21b6-4c7f-a197-73d2e5e9f95c",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "designerId": "ba51360a-b13a-4562-8007-c2a204bfee10"
+                }
+            ]
         }
     ]
 }
