@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -93,8 +94,9 @@ public class Machine {
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcatInstances;
 
-	@OneToOne
-	private DatagridServer datagridServer;
+//	@OneToOne
+//	@JoinColumn(name="datagrid_server_group_id")
+//	private DatagridServer datagridServer;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
 	private Collection<EnvironmentVariable> environmentVariables;
@@ -389,13 +391,13 @@ public class Machine {
 		this.tomcatInstances = tomcatInstances;
 	}
 
-	public DatagridServer getDatagridServer() {
-		return datagridServer;
-	}
-
-	public void setDatagridServer(DatagridServer datagridServer) {
-		this.datagridServer = datagridServer;
-	}
+//	public DatagridServer getDatagridServer() {
+//		return datagridServer;
+//	}
+//
+//	public void setDatagridServer(DatagridServer datagridServer) {
+//		this.datagridServer = datagridServer;
+//	}
 
 	public Collection<EnvironmentVariable> getEnvironmentVariables() {
 		return environmentVariables;

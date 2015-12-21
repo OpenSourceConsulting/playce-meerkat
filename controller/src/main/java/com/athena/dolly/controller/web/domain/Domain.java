@@ -37,7 +37,9 @@ public class Domain implements Serializable {
 	private String name;
 	@Column(name = "is_clustering")
 	private boolean isClustering;
+	
 	@OneToOne
+	@JoinColumn(name="datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 
 	@OneToMany(mappedBy = "domain",	fetch=FetchType.LAZY)
