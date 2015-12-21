@@ -1,0 +1,40 @@
+{
+    "type": "Ext.data.Store",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "TempoStore",
+        "model": "DomainModel",
+        "storeId": "TempoStore"
+    },
+    "designerId": "01b90457-de3d-42d3-9e35-e0a7c22ede86",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "designerId": "5a09b234-ec59-4ec6-8864-e361cc1ab353"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name"
+            },
+            "designerId": "45f81af2-71e8-46e3-9ff8-2ea2e581df79"
+        }
+    ]
+}
