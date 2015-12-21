@@ -30,7 +30,7 @@ Ext.define('webapp.store.UserStore', {
             storeId: 'UserStore',
             proxy: {
                 type: 'ajax',
-                url: '/user/list',
+                url: 'http://localhost:8080/user/list',
                 reader: {
                     type: 'json'
                 }

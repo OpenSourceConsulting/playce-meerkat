@@ -9,6 +9,7 @@
         "designer|userAlias": "usermntcontainer",
         "designer|userClassName": "UserMntContainer",
         "height": 497,
+        "itemId": "mycontainer38",
         "width": 1111
     },
     "designerId": "f223e421-6df8-4d2a-89c8-0499ee72e378",
@@ -37,9 +38,11 @@
                     "codeClass": null,
                     "userConfig": {
                         "dataIndex": "userName",
-                        "text": "User ID"
+                        "hideable": false,
+                        "text": "UserID",
+                        "width": 156
                     },
-                    "designerId": "5f636ad2-8b8f-448e-aa6d-b0f09e4cea1f"
+                    "designerId": "4762a429-b6ec-4ce2-abf8-d37ff0d71610"
                 },
                 {
                     "type": "Ext.grid.column.Column",
@@ -53,7 +56,7 @@
                         "text": "Full Name",
                         "width": 156
                     },
-                    "designerId": "4762a429-b6ec-4ce2-abf8-d37ff0d71610"
+                    "designerId": "d3f6944b-b8e7-4fdc-a8dd-67072cb57a4a"
                 },
                 {
                     "type": "Ext.grid.column.Column",
@@ -63,7 +66,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "userRole.name",
+                        "dataIndex": "userRoleName",
                         "text": "User Role"
                     },
                     "designerId": "daecd585-f0eb-460e-b729-c52be613f741"
@@ -283,7 +286,7 @@
                 "forceFit": true,
                 "height": 349,
                 "margin": "5 0 0 0 ",
-                "store": "UserStore",
+                "store": "UserRoleStore",
                 "title": "User Role"
             },
             "designerId": "07a6a734-7a4b-4970-84c1-a3aadcefa7ae",
@@ -296,7 +299,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "userName",
+                        "dataIndex": "name",
                         "text": "Name"
                     },
                     "designerId": "af7e7b90-92cb-4360-a6f5-55a977bd6b01"
@@ -309,21 +312,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "fullName",
-                        "text": "Role",
-                        "width": 156
-                    },
-                    "designerId": "78a7b78f-3290-460b-8d64-7e29b2913501"
-                },
-                {
-                    "type": "Ext.grid.column.Column",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "lastLoginDateString",
+                        "dataIndex": "userCount",
                         "text": "User Count",
                         "width": 133
                     },
@@ -350,20 +339,6 @@
                     },
                     "designerId": "c4f3f353-18e0-46b1-a1b4-3062e1a865bb",
                     "cn": [
-                        {
-                            "type": "Ext.button.Button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "itemId": "createBtn",
-                                "layout|flex": null,
-                                "text": "New"
-                            },
-                            "designerId": "4edf4964-45fd-4688-ab81-1d9923a2687d"
-                        },
                         {
                             "type": "Ext.toolbar.Separator",
                             "reference": {
@@ -413,7 +388,7 @@
                             "userConfig": {
                                 "displayInfo": true,
                                 "layout|flex": null,
-                                "store": "UserStore",
+                                "store": "UserRoleStore",
                                 "width": 1099
                             },
                             "designerId": "f2d02e21-d78d-4969-a250-e08f641d4144"

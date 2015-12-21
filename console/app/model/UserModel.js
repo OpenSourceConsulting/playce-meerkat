@@ -23,12 +23,28 @@ Ext.define('webapp.model.UserModel', {
 
     fields: [
         {
-            name: 'username',
+            name: 'userName',
             type: 'string'
         },
         {
             name: 'password',
             type: 'string'
+        },
+        {
+            name: 'fullName'
+        },
+        {
+            name: 'userRoleName',
+            type: 'auto'
+        },
+        {
+            name: 'email'
+        },
+        {
+            name: 'createdDateString'
+        },
+        {
+            name: 'lastLoginDateString'
         }
     ]
 });

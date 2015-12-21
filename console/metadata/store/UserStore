@@ -22,9 +22,8 @@
             "userConfig": {
                 "designer|createAlias": "",
                 "designer|displayName": "",
-                "url": "/user/list"
+                "url": "http://localhost:8080/user/list"
             },
-            "name": "MyAjaxProxy1",
             "designerId": "901f5baf-d26b-4e30-97b5-94b214e58900",
             "cn": [
                 {
@@ -34,7 +33,6 @@
                         "type": "object"
                     },
                     "codeClass": null,
-                    "name": "MyJsonReader1",
                     "designerId": "72beb334-6a16-42c0-8c86-adc254eb0027"
                 }
             ]

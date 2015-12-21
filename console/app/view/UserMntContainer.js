@@ -18,6 +18,7 @@ Ext.define('webapp.view.UserMntContainer', {
     alias: 'widget.usermntcontainer',
 
     height: 497,
+    itemId: 'mycontainer38',
     width: 1111,
 
     initComponent: function() {
@@ -34,8 +35,10 @@ Ext.define('webapp.view.UserMntContainer', {
                     columns: [
                         {
                             xtype: 'gridcolumn',
+                            width: 156,
                             dataIndex: 'userName',
-                            text: 'User ID'
+                            hideable: false,
+                            text: 'UserID'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -45,7 +48,7 @@ Ext.define('webapp.view.UserMntContainer', {
                         },
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'userRole.name',
+                            dataIndex: 'userRoleName',
                             text: 'User Role'
                         },
                         {
@@ -118,23 +121,17 @@ Ext.define('webapp.view.UserMntContainer', {
                     margin: '5 0 0 0 ',
                     title: 'User Role',
                     forceFit: true,
-                    store: 'UserStore',
+                    store: 'UserRoleStore',
                     columns: [
                         {
                             xtype: 'gridcolumn',
-                            dataIndex: 'userName',
+                            dataIndex: 'name',
                             text: 'Name'
                         },
                         {
                             xtype: 'gridcolumn',
-                            width: 156,
-                            dataIndex: 'fullName',
-                            text: 'Role'
-                        },
-                        {
-                            xtype: 'gridcolumn',
                             width: 133,
-                            dataIndex: 'lastLoginDateString',
+                            dataIndex: 'userCount',
                             text: 'User Count'
                         }
                     ],
@@ -143,11 +140,6 @@ Ext.define('webapp.view.UserMntContainer', {
                             xtype: 'toolbar',
                             dock: 'top',
                             items: [
-                                {
-                                    xtype: 'button',
-                                    itemId: 'createBtn',
-                                    text: 'New'
-                                },
                                 {
                                     xtype: 'tbseparator'
                                 },
@@ -165,7 +157,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                     xtype: 'pagingtoolbar',
                                     width: 1099,
                                     displayInfo: true,
-                                    store: 'UserStore'
+                                    store: 'UserRoleStore'
                                 }
                             ]
                         }

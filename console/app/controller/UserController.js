@@ -21,6 +21,11 @@ Ext.define('webapp.controller.UserController', {
         this.showUserWindow("new", 0);
     },
 
+    onContainerActivate: function(component, eOpts) {
+        Ext.getStore("UserStore").load();
+        Ext.getStore("UserRoleStore").load();
+    },
+
     showUserWindow: function(type, user_id) {
 
         var userWindow = Ext.create("widget.UserWindow");
@@ -35,6 +40,9 @@ Ext.define('webapp.controller.UserController', {
         this.control({
             "#createBtn": {
                 click: this.onNewUserButtonClick
+            },
+            "#mycontainer38": {
+                activate: this.onContainerActivate
             }
         });
     }

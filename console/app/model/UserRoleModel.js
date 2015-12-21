@@ -28,6 +28,9 @@ Ext.define('webapp.model.UserRoleModel', {
         {
             name: 'id',
             type: 'date'
+        },
+        {
+            name: 'userCount'
         }
     ]
 });

@@ -222,7 +222,6 @@ Ext.define('webapp.controller.MenuController', {
             activeItem = 8;
         }else if (menuId === "usermnt"){
             activeItem = 9;
-            Ext.getStore("UserStore").load();
         }else if (menuId ==="logmnt"){
             alert("Under construction.\n Reused from other project");
         }
