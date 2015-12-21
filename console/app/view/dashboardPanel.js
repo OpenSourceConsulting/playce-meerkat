@@ -42,7 +42,9 @@ Ext.define('webapp.view.dashboardPanel', {
                         {
                             xtype: 'combobox',
                             fieldLabel: 'Domain',
-                            store: 'DomainStore'
+                            displayField: 'name',
+                            store: 'DomainStore',
+                            valueField: 'id'
                         }
                     ]
                 },
@@ -196,7 +198,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'DomainStore',
+                                            store: 'TempoStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -242,7 +244,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'DomainStore',
+                                            store: 'TempoStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -421,7 +423,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'DomainStore',
+                                            store: 'TempoStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
@@ -466,7 +468,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'DomainStore',
+                                            store: 'TempoStore',
                                             axes: [
                                                 {
                                                     type: 'Category',

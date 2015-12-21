@@ -17,22 +17,24 @@ Ext.define('webapp.store.DomainStore', {
     extend: 'Ext.data.Store',
 
     requires: [
-        'Ext.data.Field'
+        'webapp.model.DomainModel',
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
     ],
 
     constructor: function(cfg) {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
+            model: 'webapp.model.DomainModel',
             storeId: 'DomainStore',
-            fields: [
-                {
-                    name: 'id'
-                },
-                {
-                    name: 'name'
+            proxy: {
+                type: 'ajax',
+                url: '/domain/list',
+                reader: {
+                    type: 'json'
                 }
-            ]
+            }
         }, cfg)]);
     }
 });
