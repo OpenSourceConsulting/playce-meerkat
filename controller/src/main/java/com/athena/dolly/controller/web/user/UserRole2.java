@@ -48,5 +48,8 @@ public class UserRole2 {
 	public void setUsers(List<User2> users) {
 		this.users = users;
 	}
+	public int getUserCount(){
+		return users.size();
+	}
 
 }

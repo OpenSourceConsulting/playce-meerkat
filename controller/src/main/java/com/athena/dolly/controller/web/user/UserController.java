@@ -126,14 +126,11 @@ public class UserController {
 		return jsonRes;
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "list")
 	@ResponseBody
-	public GridJsonResponse getUserList(ExtjsGridParam gridParam) {
-		GridJsonResponse res = new GridJsonResponse();
+	public List<User2> getUserList() {
 		List<User2> users = service.getList();
-		res.setTotal((int) users.size());
-		res.setList(users);
-		return res;
+		return users;
 	}
 
 	@RequestMapping("rolelist")

@@ -97,6 +97,10 @@ public class User2 {
 		this.userRole = userRole;
 	}
 
+	public String getUserRoleName()
+	{
+		return this.userRole.getName();
+	}
 	public String getUserName() {
 		return userName;
 	}
