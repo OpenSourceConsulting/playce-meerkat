@@ -45,6 +45,10 @@ Ext.define('webapp.model.UserModel', {
         },
         {
             name: 'lastLoginDateString'
+        },
+        {
+            name: 'id',
+            type: 'int'
         }
     ]
 });

@@ -97,6 +97,19 @@
                 "name": "lastLoginDateString"
             },
             "designerId": "c9d429b6-fb59-4c42-a801-ede62abb6111"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id",
+                "type": "int"
+            },
+            "designerId": "7e591ab6-98b4-43c5-ad31-1decc5291666"
         }
     ]
 }
