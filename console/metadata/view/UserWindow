@@ -8,7 +8,8 @@
     "userConfig": {
         "designer|userAlias": "UserWindow",
         "designer|userClassName": "UserWindow",
-        "height": 248,
+        "height": 284,
+        "id": "UserWindow",
         "title": "New User",
         "width": 440
     },
@@ -28,6 +29,7 @@
                 "frameHeader": false,
                 "header": false,
                 "height": 260,
+                "id": "userForm",
                 "title": "My Form"
             },
             "designerId": "0b5faa97-4a31-43b7-851e-fc15f0fcf3ef",
@@ -40,10 +42,15 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
                         "designer|displayName": "UserIDTextField",
                         "emptyText": "",
                         "fieldLabel": "User ID",
+                        "id": "userIDTextField",
+                        "itemId": "userIDTextField",
                         "name": "UserIDTextField",
+                        "validateBlank": true,
                         "width": 388
                     },
                     "designerId": "48a77a1a-c54b-40e3-adb6-24fa550d61ec"
@@ -56,10 +63,15 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "designer|createAlias": "",
                         "designer|displayName": "PasswordTextField",
                         "emptyText": null,
                         "fieldLabel": "Password",
+                        "id": "passwordTextField",
                         "inputType": "password",
+                        "name": "PasswordTextField",
                         "width": 390
                     },
                     "designerId": "eaab806e-6a23-4a3d-a47b-dcc7cd5e3d00"
@@ -72,9 +84,31 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "designer|displayName": "UserFullNameTextField",
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "designer|createAlias": "",
+                        "designer|displayName": "RetypePasswordTextField",
+                        "emptyText": null,
+                        "fieldLabel": "Retype-Password",
+                        "id": "RetypePasswordTextField",
+                        "inputType": "password",
+                        "name": "RetypePasswordTextField",
+                        "width": 390
+                    },
+                    "designerId": "17bd8436-6d65-4f18-a118-9e44614f295f"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "designer|displayName": "FullNameTextField",
                         "fieldLabel": "Full Name:",
-                        "name": "UserFullNameTextField",
+                        "name": "FullNameTextField",
                         "width": 389
                     },
                     "designerId": "f7001e43-5eae-4114-bdb6-9f468c9663be"
@@ -89,6 +123,7 @@
                     "userConfig": {
                         "designer|displayName": "EmailTextField",
                         "fieldLabel": "Email:",
+                        "id": "emailTextField",
                         "inputType": "email",
                         "name": "EmailTextField",
                         "validateBlank": true,
@@ -108,6 +143,8 @@
                         "designer|displayName": "UserRoleDropDownList",
                         "displayField": "name",
                         "fieldLabel": "User Role",
+                        "id": "UserRoleDropdownList",
+                        "name": "UserRoleDropDownList",
                         "store": "UserRoleStore",
                         "valueField": "id",
                         "width": 390
@@ -141,7 +178,9 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "designer|displayName": "CreateBtn",
+                                "designer|createAlias": "",
+                                "designer|displayName": "BtnUserCreate",
+                                "itemId": "btnCreate",
                                 "layout|margins": "10 10 10 10",
                                 "text": "Create"
                             },

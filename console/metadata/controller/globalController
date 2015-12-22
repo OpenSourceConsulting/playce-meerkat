@@ -112,7 +112,7 @@
                     "/*",
                     " * Global Ajax Config",
                     " */",
-                    "/*",
+                    "",
                     "Ext.Ajax.timeout = 20000;// default is 30000.",
                     "Ext.Ajax.on(\"requestexception\", function(conn, response, options, eOpts){",
                     "",
@@ -147,8 +147,7 @@
                     "            icon: Ext.Msg.ERROR",
                     "        });",
                     "    }",
-                    "});",
-                    "*/"
+                    "});"
                 ]
             },
             "designerId": "50d1b4fd-67c3-478c-97fc-dd4b3f189861"
