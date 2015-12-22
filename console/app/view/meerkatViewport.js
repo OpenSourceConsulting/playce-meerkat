@@ -81,7 +81,8 @@ Ext.define('webapp.view.meerkatViewport', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            text: 'Navigation > Sub > Sub'
+                                            id: 'navigationField',
+                                            text: 'Dashboard'
                                         }
                                     ]
                                 },

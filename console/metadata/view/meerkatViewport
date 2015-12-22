@@ -95,8 +95,9 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "id": "navigationField",
                                         "layout|flex": null,
-                                        "text": "Navigation > Sub > Sub"
+                                        "text": "Dashboard"
                                     },
                                     "designerId": "cf294678-544d-4bdf-8f01-984003c56242"
                                 }

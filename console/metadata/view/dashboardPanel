@@ -345,7 +345,7 @@
                                             "SERVER RESPONE TIME"
                                         ],
                                         "insetPadding": 20,
-                                        "store": "TempoStore",
+                                        "store": "DomainStore",
                                         "style": "border: 5px;",
                                         "width": 598
                                     },

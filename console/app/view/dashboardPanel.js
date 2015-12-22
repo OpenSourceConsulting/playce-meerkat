@@ -206,7 +206,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             width: 598,
                                             animate: true,
                                             insetPadding: 20,
-                                            store: 'TempoStore',
+                                            store: 'DomainStore',
                                             axes: [
                                                 {
                                                     type: 'Category',
