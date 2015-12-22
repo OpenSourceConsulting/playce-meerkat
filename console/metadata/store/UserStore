@@ -22,7 +22,7 @@
             "userConfig": {
                 "designer|createAlias": "",
                 "designer|displayName": "",
-                "url": "http://localhost:8080/user/list"
+                "url": "/user/list"
             },
             "designerId": "901f5baf-d26b-4e30-97b5-94b214e58900",
             "cn": [
