@@ -93,8 +93,8 @@
                     "});",
                     "",
                     "",
-                    "//this.initExtAjax();",
-                    "//this.initVType();"
+                    "this.initExtAjax();",
+                    "this.initVType();"
                 ]
             },
             "designerId": "bc5d01e1-27de-43d1-83ce-f5326d476a40"

@@ -147,7 +147,7 @@
                     "",
                     "}",
                     "",
-                    " this.successfulLogin(\"admin\", \"json\");"
+                    " //this.successfulLogin(\"admin\", \"json\");"
                 ],
                 "name": "click",
                 "scope": "me"

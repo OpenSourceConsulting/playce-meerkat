@@ -87,8 +87,8 @@ Ext.define('webapp.controller.globalController', {
         });
 
 
-        //this.initExtAjax();
-        //this.initVType();
+        this.initExtAjax();
+        this.initVType();
     },
 
     initExtAjax: function() {

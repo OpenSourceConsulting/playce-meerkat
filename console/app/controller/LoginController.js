@@ -127,7 +127,7 @@ Ext.define('webapp.controller.LoginController', {
 
         }
 
-         this.successfulLogin("admin", "json");
+         //this.successfulLogin("admin", "json");
     },
 
     onLogoutButtonClick: function(button, e, eOpts) {
