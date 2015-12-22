@@ -26,6 +26,66 @@ Ext.define('webapp.controller.UserController', {
         Ext.getStore("UserRoleStore").load();
     },
 
+    onCreateUserButtonClick: function(button, e, eOpts) {
+        var form = Ext.getCmp("userForm");			// user form
+        var formWindow = Ext.getCmp('UserWindow');	// Add user window
+
+        var userName = form.getForm().findField("UserIDTextField");
+        var password = form.getForm().findField("PasswordTextField");
+        var retype_password = form.getForm().findField("RetypePasswordTextField");
+        var fullName = form.getForm().findField("FullNameTextField");
+        var email = form.getForm().findField("EmailTextField");
+        var userRole = form.getForm().findField("UserRoleDropdownList");
+
+        if (password.getValue() !== retype_password.getValue()){
+            Ext.Msg.show({
+                title: "Message",
+                msg: "Password and Retype password are not match.",
+                buttons: Ext.Msg.OK,
+                fn: function(choice) {
+                    password.focus();
+                },
+                icon: Ext.Msg.WARNING
+            });
+            return;
+        }
+
+        if (userName.getValue() ==="" || password.getValue() ==="" || retype_password.getValue() ===""||fullName.getValue() ==="" ||email.getValue() ===""||userRole.getValue()< 0){
+            Ext.Msg.show({
+                title: "Message",
+                msg: "Invalid data.",
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING
+            });
+            return;
+        }
+
+        //submit new user request
+
+         Ext.Ajax.request({
+                url: GlobalData.urlPrefix + "user/new",
+             params: {"userID":userName.getValue(),"password":password.getValue(), "fullName":fullName.getValue(),"email":email.getValue(),"userRole":userRole.getValue() },
+                success: function(resp, ops) {
+
+                    var response = Ext.decode(resp.responseText);
+                    if(response===true){
+                        Ext.getStore("UserStore").reload();
+                        formWindow.close();
+                    }
+                    else {
+                             Ext.Msg.show({
+                                title: "Message",
+                                msg: "Invalid information.",
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                    }
+
+                }
+            });
+
+    },
+
     showUserWindow: function(type, user_id) {
 
         var userWindow = Ext.create("widget.UserWindow");
@@ -43,6 +103,9 @@ Ext.define('webapp.controller.UserController', {
             },
             "#mycontainer38": {
                 activate: this.onContainerActivate
+            },
+            "#btnCreate": {
+                click: this.onCreateUserButtonClick
             }
         });
     }

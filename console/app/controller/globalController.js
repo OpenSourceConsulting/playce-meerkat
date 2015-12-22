@@ -95,7 +95,7 @@ Ext.define('webapp.controller.globalController', {
         /*
          * Global Ajax Config
          */
-        /*
+
         Ext.Ajax.timeout = 20000;// default is 30000.
         Ext.Ajax.on("requestexception", function(conn, response, options, eOpts){
 
@@ -131,7 +131,6 @@ Ext.define('webapp.controller.globalController', {
                 });
             }
         });
-        */
     },
 
     initVType: function() {

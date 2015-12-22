@@ -17,7 +17,8 @@ Ext.define('webapp.view.UserWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.UserWindow',
 
-    height: 248,
+    height: 284,
+    id: 'UserWindow',
     width: 440,
     title: 'New User',
 
@@ -29,6 +30,7 @@ Ext.define('webapp.view.UserWindow', {
                 {
                     xtype: 'form',
                     height: 260,
+                    id: 'userForm',
                     bodyPadding: 10,
                     frameHeader: false,
                     header: false,
@@ -36,25 +38,46 @@ Ext.define('webapp.view.UserWindow', {
                     items: [
                         {
                             xtype: 'textfield',
+                            id: 'userIDTextField',
+                            itemId: 'userIDTextField',
                             width: 388,
                             fieldLabel: 'User ID',
                             name: 'UserIDTextField',
-                            emptyText: ''
+                            allowBlank: false,
+                            allowOnlyWhitespace: false,
+                            emptyText: '',
+                            validateBlank: true
                         },
                         {
                             xtype: 'textfield',
+                            id: 'passwordTextField',
                             width: 390,
                             fieldLabel: 'Password',
-                            inputType: 'password'
+                            name: 'PasswordTextField',
+                            inputType: 'password',
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: 'RetypePasswordTextField',
+                            width: 390,
+                            fieldLabel: 'Retype-Password',
+                            name: 'RetypePasswordTextField',
+                            inputType: 'password',
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
                         },
                         {
                             xtype: 'textfield',
                             width: 389,
                             fieldLabel: 'Full Name:',
-                            name: 'UserFullNameTextField'
+                            name: 'FullNameTextField',
+                            allowBlank: false
                         },
                         {
                             xtype: 'textfield',
+                            id: 'emailTextField',
                             width: 391,
                             fieldLabel: 'Email:',
                             name: 'EmailTextField',
@@ -64,8 +87,10 @@ Ext.define('webapp.view.UserWindow', {
                         },
                         {
                             xtype: 'combobox',
+                            id: 'UserRoleDropdownList',
                             width: 390,
                             fieldLabel: 'User Role',
+                            name: 'UserRoleDropDownList',
                             displayField: 'name',
                             store: 'UserRoleStore',
                             valueField: 'id'
@@ -83,6 +108,7 @@ Ext.define('webapp.view.UserWindow', {
                                 {
                                     xtype: 'button',
                                     margins: '10 10 10 10',
+                                    itemId: 'btnCreate',
                                     text: 'Create'
                                 },
                                 {
