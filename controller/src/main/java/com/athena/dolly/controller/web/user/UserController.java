@@ -23,6 +23,9 @@
  * Bong-Jin Kwon	2013. 9. 25.		First Draft.
  */
 package com.athena.dolly.controller.web.user;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 import java.util.Date;
 import java.util.List;
@@ -137,6 +140,24 @@ public class UserController {
 	@ResponseBody
 	public List<UserRole2> getRoleList() {
 		return service.getRoleList();
+	}
+
+	@RequestMapping("new")
+	@ResponseBody
+	public boolean addNewUser(String userID, String password, String fullName,
+			String email, int userRole) {
+		//check existing users by userID and email
+		List<User2> existingUsers = service.getUsers(userID, email);
+		if (existingUsers.size() > 0) {
+			return false;
+		}
+		BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
+		UserRole2 role = service.getUserRole(userRole);
+		User2 user = new User2(userID, fullName, encoder.encode(password), email, role);
+		if (service.addUser(user) != null) {
+			return true;
+		}
+		return false;
 	}
 }
 // end of UserController.java

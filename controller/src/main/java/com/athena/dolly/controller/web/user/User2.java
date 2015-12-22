@@ -123,4 +123,15 @@ public class User2 {
 		return userRole.getName();
 	}
 
+	public User2(String _userID, String _fullName, String _password, String _email, UserRole2 _userRole){
+		userName = _userID;
+		fullName = _fullName;
+		password =_password;
+		email = _email;
+		userRole = _userRole;
+		createdDate = new Date();
+	}
+	public User2(){
+		
+	}
 }
