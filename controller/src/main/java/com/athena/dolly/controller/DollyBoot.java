@@ -52,6 +52,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan(basePackages = { "com.athena.dolly.controller" })
 // @PropertySource(value={"classpath:dolly.properties","classpath:dolly-${spring.profiles.active:local}.properties"})
 @PropertySource(value = { "classpath:db.properties" })
+
 public class DollyBoot extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
@@ -68,7 +69,7 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 	 */
 	@Configuration
 	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-	@EnableGlobalMethodSecurity(securedEnabled = true)
+	@EnableGlobalMethodSecurity(securedEnabled = false)
 	protected static class ApplicationSecurity extends
 			WebSecurityConfigurerAdapter {
 
@@ -86,16 +87,17 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.anonymous().disable().authorizeRequests().anyRequest()
-					.fullyAuthenticated().and().exceptionHandling()
-					.accessDeniedPage("/user/accessDenied").and().formLogin()
-					.loginPage("/user/notLogin")
-					.loginProcessingUrl("/user/login")
-					.defaultSuccessUrl("/user/onAfterLogin", true)
-					.failureUrl("/user/loginFail").and().logout()
-					.logoutUrl("/user/logout")
-					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
-					.disable();			
+//			http.anonymous().disable().authorizeRequests().anyRequest()
+//					.fullyAuthenticated().and().exceptionHandling()
+//					.accessDeniedPage("/user/accessDenied").and().formLogin()
+//					.loginPage("/user/notLogin")
+//					.loginProcessingUrl("/user/login")
+//					.defaultSuccessUrl("/user/onAfterLogin", true)
+//					.failureUrl("/user/loginFail").and().logout()
+//					.logoutUrl("/user/logout")
+//					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
+//					.disable();	
+			http.anonymous().and().csrf().disable();
 		}
 
 		@Override
