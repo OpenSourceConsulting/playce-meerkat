@@ -132,19 +132,6 @@ Ext.define('webapp.view.UserMntContainer', {
                     dockedItems: [
                         {
                             xtype: 'toolbar',
-                            dock: 'top',
-                            items: [
-                                {
-                                    xtype: 'tbseparator'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Filtering'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'toolbar',
                             dock: 'bottom',
                             items: [
                                 {
@@ -155,13 +142,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                 }
                             ]
                         }
-                    ],
-                    listeners: {
-                        itemcontextmenu: {
-                            fn: me.onGridpanelItemContextMenu1,
-                            scope: me
-                        }
-                    }
+                    ]
                 }
             ]
         });
@@ -189,49 +170,7 @@ Ext.define('webapp.view.UserMntContainer', {
                            webapp.app.getController("UserController").showUserWindow("edit", record.get("id"));
                             break;
                         case 'delete-user':
-                            alert("Delete user");
-                            break;
-                        default:
-                            break;
-                   }
-                },
-                hide:function(menu){
-                    menu.destroy();
-                }
-            },
-            defaults: {
-               clickHideDelay: 1
-            }
-        });
-
-        mnuContext.showAt(e.getXY());
-        e.stopEvent();
-
-    },
-
-    onGridpanelItemContextMenu1: function(dataview, record, item, index, e, eOpts) {
-        var mnuContext = Ext.create("Ext.menu.Menu",{
-
-            items: [{
-                id: 'edit-user',
-                text: 'Edit'
-            },
-            {
-                id: 'delete-user',
-                text: 'Delete'
-            }
-                   ],
-            listeners: {
-
-                click: function( _menu, _item, _e, _eOpts ) {
-                   switch (_item.id) {
-                        case 'edit-user':
-
-                           Ext.app.Controller.getController("UserController").showUserWindow("edit", 1);
-                           // Ext.app.getController("UserController").showUserWindow("edit", 1);
-                            break;
-                        case 'delete-user':
-                            alert("Delete user");
+                            webapp.app.getController("UserController").deleteUser(record.get("id"));
                             break;
                         default:
                             break;
