@@ -53,12 +53,6 @@ Ext.define('webapp.view.UserMntContainer', {
                         },
                         {
                             xtype: 'gridcolumn',
-                            width: 186,
-                            dataIndex: 'password',
-                            text: 'Pasword'
-                        },
-                        {
-                            xtype: 'gridcolumn',
                             width: 208,
                             dataIndex: 'email',
                             text: 'Email'
@@ -192,9 +186,7 @@ Ext.define('webapp.view.UserMntContainer', {
                 click: function( _menu, _item, _e, _eOpts ) {
                    switch (_item.id) {
                         case 'edit-user':
-
-                           Ext.app.Controller.getController("UserController").showUserWindow("edit", 1);
-                           // Ext.app.getController("UserController").showUserWindow("edit", 1);
+                           webapp.app.getController("UserController").showUserWindow("edit", record.get("id"));
                             break;
                         case 'delete-user':
                             alert("Delete user");
