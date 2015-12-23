@@ -150,6 +150,36 @@ Ext.define('webapp.controller.UserController', {
 
     },
 
+    deleteUser: function(id) {
+         Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this user?', function(btn){
+
+             if(btn == "yes"){
+                Ext.Ajax.request({
+                    url: GlobalData.urlPrefix+ "/user/delete",
+                    params: {"id":id},
+                    success: function(resp, ops) {
+
+                        var response = Ext.decode(resp.responseText);
+                        if(response===true){
+                            Ext.getStore("UserStore").reload();
+                        }
+                        else {
+                            Ext.Msg.show({
+                                title: "Message",
+                                msg: "User is not existed",
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                        }
+
+                    }
+                });
+
+
+             }
+         });
+    },
+
     init: function(application) {
         this.control({
             "#createBtn": {

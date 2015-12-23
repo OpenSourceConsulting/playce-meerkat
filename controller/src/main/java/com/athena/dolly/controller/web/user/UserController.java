@@ -149,16 +149,16 @@ public class UserController {
 		if (existingUsers.size() > 1) {
 			return false;
 		}
-		if (existingUsers.size() == 1){
-			if (existingUsers.get(0).getId() != id){
+		if (existingUsers.size() == 1) {
+			if (existingUsers.get(0).getId() != id) {
 				return false;
 			}
 		}
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		UserRole2 role = service.getUserRole(userRole);
 		if (currentUser == null) {
-			currentUser = new User2(userName, fullName, encoder.encode(password),
-					email, role);
+			currentUser = new User2(userName, fullName,
+					encoder.encode(password), email, role);
 		} else {
 			currentUser.setUserName(userName);
 			currentUser.setPassword(encoder.encode(password));
@@ -166,7 +166,7 @@ public class UserController {
 			currentUser.setEmail(email);
 			currentUser.setUserRole(role);
 		}
-		
+
 		if (service.saveUser(currentUser) != null) {
 			return true;
 		}
@@ -177,6 +177,19 @@ public class UserController {
 	@ResponseBody
 	public User2 editUser(int id) {
 		return service.findUser(id);
+	}
+
+	@RequestMapping("/delete")
+	@ResponseBody
+	public boolean delete(int id) {
+		User2 user = service.findUser(id);
+		if (user != null) {
+			service.deleteUser(user);
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }
 // end of UserController.java

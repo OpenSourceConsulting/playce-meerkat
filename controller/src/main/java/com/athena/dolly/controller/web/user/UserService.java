@@ -38,6 +38,10 @@ public class UserService implements InitializingBean {
 	public User2 findUser(int id){
 		return repo.findOne(id);
 	}
+	
+	public void deleteUser(User2 user){
+		repo.delete(user);
+	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		System.err.println("\n\nrepo in UserService : " + repo);
