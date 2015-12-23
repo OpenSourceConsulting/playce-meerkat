@@ -23,11 +23,13 @@
  * Bong-Jin Kwon	2013. 9. 25.		First Draft.
  */
 package com.athena.dolly.controller.web.user;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -134,22 +136,47 @@ public class UserController {
 		return service.getRoleList();
 	}
 
-	@RequestMapping("/new")
+	@RequestMapping("/save")
 	@ResponseBody
-	public boolean addNewUser(String userID, String password, String fullName,
-			String email, int userRole) {
-		//check existing users by userID and email
-		List<User2> existingUsers = service.getUsers(userID, email);
-		if (existingUsers.size() > 0) {
+	public boolean saveUser(int id, String userName, String password,
+			String fullName, String email, int userRole) {
+		User2 currentUser = null;
+		if (id > 0) {
+			currentUser = service.findUser(id);
+		}
+		// check existing users by userID and email
+		List<User2> existingUsers = service.getUsers(userName, email);
+		if (existingUsers.size() > 1) {
 			return false;
 		}
-		BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
+		if (existingUsers.size() == 1){
+			if (existingUsers.get(0).getId() != id){
+				return false;
+			}
+		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		UserRole2 role = service.getUserRole(userRole);
-		User2 user = new User2(userID, fullName, encoder.encode(password), email, role);
-		if (service.addUser(user) != null) {
+		if (currentUser == null) {
+			currentUser = new User2(userName, fullName, encoder.encode(password),
+					email, role);
+		} else {
+			currentUser.setUserName(userName);
+			currentUser.setPassword(encoder.encode(password));
+			currentUser.setFullName(fullName);
+			currentUser.setEmail(email);
+			currentUser.setUserRole(role);
+		}
+		
+		if (service.saveUser(currentUser) != null) {
 			return true;
 		}
 		return false;
+	}
+
+	@RequestMapping("/edit")
+	@ResponseBody
+	public User2 editUser(int id) {
+		return service.findUser(id);
 	}
 }
 // end of UserController.java

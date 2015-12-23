@@ -26,18 +26,78 @@ Ext.define('webapp.controller.UserController', {
         Ext.getStore("UserRoleStore").load();
     },
 
-    onCreateUserButtonClick: function(button, e, eOpts) {
+    onSubmitButtonClick: function(button, e, eOpts) {
         var form = Ext.getCmp("userForm");			// user form
         var formWindow = Ext.getCmp('UserWindow');	// Add user window
 
         var userName = form.getForm().findField("UserIDTextField");
         var password = form.getForm().findField("PasswordTextField");
-        var retype_password = form.getForm().findField("RetypePasswordTextField");
+        var retypePassword = form.getForm().findField("RetypePasswordTextField");
         var fullName = form.getForm().findField("FullNameTextField");
         var email = form.getForm().findField("EmailTextField");
         var userRole = form.getForm().findField("UserRoleDropdownList");
+        var _id = form.getForm().findField("IDHiddenField");
 
-        if (password.getValue() !== retype_password.getValue()){
+        var userNameVal = userName.getValue().trim();
+        var passwordVal = password.getValue().trim();
+        var retypePasswordVal = retypePassword.getValue().trim();
+        var fullNameVal = fullName.getValue().trim();
+        var emailVal = email.getValue().trim();
+        var userRoleVal = userRole.getValue();
+        var _idVal = _id.getValue();
+
+        if (!this.validate(userNameVal, passwordVal, retypePasswordVal, fullNameVal, emailVal, userRoleVal)) {
+            return;
+        }
+
+        //submit new user request
+        if (_idVal === "") {
+            _idVal = 0;
+
+        }
+
+        this.save({"id" : _idVal, "userName" : userNameVal,"password" : passwordVal, "fullName" : fullNameVal, "email":emailVal, "userRole":userRoleVal});
+
+
+
+    },
+
+    showUserWindow: function(type, user_id) {
+
+        var userWindow = Ext.create("widget.UserWindow");
+        var submitButton = Ext.getCmp("btnSubmit");
+        if (type === "edit"){
+            userWindow.setTitle("Edit User");
+            submitButton.setText("Save");
+            var form = Ext.getCmp("userForm");			// user form
+
+            var userName = form.getForm().findField("UserIDTextField");
+            var fullName = form.getForm().findField("FullNameTextField");
+            var email = form.getForm().findField("EmailTextField");
+            var userRole = form.getForm().findField("UserRoleDropdownList");
+            var _id = form.getForm().findField("IDHiddenField");
+            //load data to user form
+
+             Ext.Ajax.request({
+                    url: GlobalData.urlPrefix + "user/edit",
+                    params: {"id":user_id},
+                    success: function(resp, ops) {
+                        var response = Ext.decode(resp.responseText);
+                        userName.setValue(response.userName);
+                        fullName.setValue(response.fullName);
+                        email.setValue(response.email);
+                        userRole.setValue(response.userRole.id);
+                        _id.setValue(user_id);
+                    }
+                });
+
+        }
+
+        userWindow.show();
+    },
+
+    validate: function(userName, password, retype_password, fullName, email, userRole) {
+        if (password !== retype_password){
             Ext.Msg.show({
                 title: "Message",
                 msg: "Password and Retype password are not match.",
@@ -47,30 +107,33 @@ Ext.define('webapp.controller.UserController', {
                 },
                 icon: Ext.Msg.WARNING
             });
-            return;
+            return false;
         }
 
-        if (userName.getValue() ==="" || password.getValue() ==="" || retype_password.getValue() ===""||fullName.getValue() ==="" ||email.getValue() ===""||userRole.getValue()< 0){
+        if (userName === "" || password === "" || retype_password === ""||fullName === "" ||email === ""||userRole < 0){
             Ext.Msg.show({
                 title: "Message",
                 msg: "Invalid data.",
                 buttons: Ext.Msg.OK,
                 icon: Ext.Msg.WARNING
             });
-            return;
+            return false;
         }
+        return true;
+    },
 
-        //submit new user request
-
-         Ext.Ajax.request({
-                url: GlobalData.urlPrefix + "user/new",
-             params: {"userID":userName.getValue(),"password":password.getValue(), "fullName":fullName.getValue(),"email":email.getValue(),"userRole":userRole.getValue() },
-                success: function(resp, ops) {
+    save: function(params) {
+        var url = GlobalData.urlPrefix + "user/save";
+        var userWindow = Ext.getCmp('UserWindow');	// Add user window
+        Ext.Ajax.request({
+             url: url,
+             params: params,
+             success: function(resp, ops) {
 
                     var response = Ext.decode(resp.responseText);
                     if(response===true){
                         Ext.getStore("UserStore").reload();
-                        formWindow.close();
+                        userWindow.close();
                     }
                     else {
                              Ext.Msg.show({
@@ -84,16 +147,7 @@ Ext.define('webapp.controller.UserController', {
                 }
             });
 
-    },
 
-    showUserWindow: function(type, user_id) {
-
-        var userWindow = Ext.create("widget.UserWindow");
-        userWindow.show();
-
-        if (type === "edit"){
-            userWindow.title = "Edit User";
-        }
     },
 
     init: function(application) {
@@ -104,8 +158,8 @@ Ext.define('webapp.controller.UserController', {
             "#mycontainer38": {
                 activate: this.onContainerActivate
             },
-            "#btnCreate": {
-                click: this.onCreateUserButtonClick
+            "#btnSubmit": {
+                click: this.onSubmitButtonClick
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.athena.dolly.controller.web.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -32,8 +31,12 @@ public class UserService implements InitializingBean {
 		return roleRepo.findOne(id);
 	}
 	
-	public User2 addUser(User2 user){
+	public User2 saveUser(User2 user){
 		return repo.save(user);
+	}
+	
+	public User2 findUser(int id){
+		return repo.findOne(id);
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {

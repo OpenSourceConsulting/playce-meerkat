@@ -96,6 +96,12 @@ Ext.define('webapp.view.UserWindow', {
                             valueField: 'id'
                         },
                         {
+                            xtype: 'hiddenfield',
+                            anchor: '100%',
+                            fieldLabel: 'Label',
+                            name: 'IDHiddenField'
+                        },
+                        {
                             xtype: 'container',
                             height: 38,
                             layout: {
@@ -108,7 +114,8 @@ Ext.define('webapp.view.UserWindow', {
                                 {
                                     xtype: 'button',
                                     margins: '10 10 10 10',
-                                    itemId: 'btnCreate',
+                                    id: 'btnSubmit',
+                                    itemId: 'btnSubmit',
                                     text: 'Create'
                                 },
                                 {
