@@ -23,10 +23,6 @@ Ext.define('webapp.model.UserModel', {
 
     fields: [
         {
-            name: 'userName',
-            type: 'string'
-        },
-        {
             name: 'password',
             type: 'string'
         },
@@ -49,6 +45,10 @@ Ext.define('webapp.model.UserModel', {
         {
             name: 'id',
             type: 'int'
+        },
+        {
+            name: 'userName',
+            type: 'string'
         }
     ]
 });

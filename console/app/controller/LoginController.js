@@ -163,8 +163,6 @@ Ext.define('webapp.controller.LoginController', {
         //Login Session 설정
         this.session = session;
 
-
-
         var newRecord;
         if(ops == 'json') {
 
@@ -174,7 +172,8 @@ Ext.define('webapp.controller.LoginController', {
 
             newRecord = this.session;
         }
-
+        //solve conflict name variables
+        newRecord.set("userName", this.session["username"]);
 
         // Close window
         var loginWindow = Ext.getCmp('loginWindow');
@@ -184,7 +183,7 @@ Ext.define('webapp.controller.LoginController', {
 
         //Main Layout 설정
         Ext.getCmp("dollyViewport").layout.setActiveItem(1);
-        Ext.getCmp("topUsername").setText(newRecord.get("username"));
+        Ext.getCmp("topUsername").setText(newRecord.get("userName"));
         //Ext.getCmp("topLastLogonLabel").setText("(최근 접속시간 : "+newRecord.get("lastLogon")+")");
 
         //Menu 권한 설정
