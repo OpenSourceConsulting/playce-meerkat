@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 
 import com.athena.dolly.controller.web.domain.Domain;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity

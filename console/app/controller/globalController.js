@@ -78,7 +78,7 @@ Ext.define('webapp.controller.globalController', {
         // Global variables를 정의하는 구문으로 GlobalData.urlPrefix, GlobalData.serverSize 등으로 어디에서든 접근이 가능하다.
         Ext.define('GlobalData', {
             singleton: true,
-
+            lastSelectedMenuId:-1,
             urlPrefix: urlPrefix,
             memoryStore: memoryStore,
             cpuStore: cpuStore,

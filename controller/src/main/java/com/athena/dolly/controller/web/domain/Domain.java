@@ -38,8 +38,9 @@ public class Domain implements Serializable {
 	@Column(name = "is_clustering")
 	private boolean isClustering;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="datagrid_server_group_id")
+	@JsonManagedReference
 	private DatagridServerGroup serverGroup;
 
 	@OneToMany(mappedBy = "domain",	fetch=FetchType.LAZY)
@@ -96,4 +97,12 @@ public class Domain implements Serializable {
 		this.name  = name;
 		this.isClustering = is_clustering;
 	}
+	
+	public int getTomcatInstancesCount (){
+		return tomcats.size();
+	}
+	
+//	public String getDatagridServerGroupName(){
+//		return this.serverGroup.getName();
+//	}
 }

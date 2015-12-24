@@ -17,7 +17,24 @@ Ext.define('webapp.controller.DomainController', {
     extend: 'Ext.app.Controller',
 
     onContainerActivate: function(component, eOpts) {
+        var nameField = Ext.getCmp("domainNameField");
+        var tomcatCountField = Ext.getCmp("tomcatInstancesField");
+        var domainTypeField  = Ext.getCmp("domainTypeField");
+        var dataGridServerGroupField = Ext.getCmp("datagridServerGroupField");
 
+        Ext.Ajax.request({
+            url: GlobalData.urlPrefix + "domain/get",
+            params: {"id":GlobalData.lastSelectedMenuId},
+            method:'GET',
+            success: function(resp, ops) {
+
+                var response = Ext.decode(resp.responseText);
+                nameField.setValue(response.name);
+                tomcatCountField.setValue(response.tomcatInstancesCount);
+                domainTypeField.setValue(response.isClustering===true?"Clustering":"None clustering");
+                dataGridServerGroupField.setValue(response.datagridServerGroupName);
+            }
+        });
     },
 
     init: function(application) {

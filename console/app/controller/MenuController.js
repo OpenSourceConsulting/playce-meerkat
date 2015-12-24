@@ -18,13 +18,25 @@ Ext.define('webapp.controller.MenuController', {
 
     onTreepanelItemClick: function(dataview, record, item, index, e, eOpts) {
         var menuId = record.get("menuId");
+        var menuText = record.get("text");
         var is_leaf = record.get("leaf");
+        var navField = Ext.getCmp("navigationField");
+
+        //if (is_leaf){
+        //    navigationText = navField.getValue() + " > " + menuText;
+        //
+        //else {
+            //vigationText = menuText;
+        //}
+
+        navField.setText(menuText);
+
         if(menuId !== undefined){
             if (!is_leaf){
-              // this.loadChildMenus(menuId);
+               this.loadChildMenus(menuId);
             }
 
-            this.showMenu(menuId);
+            this.showMenu(menuId, menuText);
 
         }
 
@@ -197,48 +209,53 @@ Ext.define('webapp.controller.MenuController', {
 
     },
 
-    showMenu: function(menuId) {
+    showMenu: function(menuId, menuText) {
+
         var activeItem = -1;
-        var navigationText = "";
+
         if(menuId === "dashboard"){
             activeItem = 0;
-            navigationText = "Dashboard";
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") < 0) {
+            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("tomcatMng_domain_")+ "tomcatMng_domain_".length );
             activeItem = 1;
-            navigationText = "Tomcat Management > Domain ...";
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
+            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
             activeItem = 2;
-            navigationText = "Tomcat Management > Domain ... > ...";
+            //navigationText = "Tomcat Management > Domain ... > ...";
         }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {
             activeItem = 3;
-            navigationText = "Monitoring > Servers";
+        //    navigationText = "Monitoring > Servers";
         }else if (menuId.indexOf("monitoring_tomcats") >= 0 && menuId.indexOf("_tomcat_") < 0) {
             activeItem = 4;
-            navigationText = "Monitoring > Tomcat Instances";
+          //  navigationText = "Monitoring > Tomcat Instances";
         }else if (menuId.indexOf("monitoring_servers") >= 0 && menuId.indexOf("_server_") >= 0) {
+            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("_server_") + "_server_".length);
             activeItem = 5;
-            navigationText = "Monitoring > Servers > ...";
+            ///navigationText = "Monitoring > Servers > ...";
         }else if (menuId.indexOf("monitoring_tomcats") >= 0 && menuId.indexOf("_tomcat_") >= 0) {
+            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("_tomcat_")+"_tomcat_".length);
             activeItem = 6;
-            navigationText = "Monitoring > Tomcat Instances > ...";
+            //navigationText = "Monitoring > Tomcat Instances > ...";
         }else if (menuId === "resourcemng_servers") {
             activeItem = 7;
-            navigationText = "Resource Management > Servers";
+            //navigationText = "Resource Management > Servers";
         }else if (menuId === "resourcemng_datasources") {
             activeItem = 8;
-            navigationText = "Resource Management > Datasources";
+            //navigationText = "Resource Management > Datasources";
         }else if (menuId === "usermnt"){
             activeItem = 9;
-            navigationText = "User Management";
+            //navigationText = "User Management";
+            is_child = false;
         }else if (menuId ==="logmnt"){
             alert("Under construction.\n Reused from other project");
-            navigationText = "Log Management";
+            //navigationText = "Log Management";
+            is_child = false;
         }
 
         if(activeItem > -1){
             Ext.getCmp("subCenterContainer").layout.setActiveItem(activeItem);
-            Ext.getCmp("navigationField").setText(navigationText);
         }
+
     },
 
     loadChildMenus: function(parentId) {

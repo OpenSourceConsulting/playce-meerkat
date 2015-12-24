@@ -76,7 +76,7 @@ Ext.define('webapp.view.meerkatViewport', {
                             items: [
                                 {
                                     xtype: 'toolbar',
-                                    flex: 0.5,
+                                    flex: 0.75,
                                     width: 150,
                                     items: [
                                         {

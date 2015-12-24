@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.dolly.controller.ServiceResult;
@@ -34,6 +35,13 @@ public class DomainController {
 			return domains;
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "/get",method=RequestMethod.GET)
+	public @ResponseBody
+	Domain getDomain(int id) {
+		ServiceResult result = domainService.getDomain(id);
+		return (Domain)result.getReturnedVal();
 	}
 
 	@RequestMapping("/tomcatlist")

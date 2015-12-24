@@ -21,7 +21,7 @@ public class DomainService {
 	}
 
 	public ServiceResult edit(int domainId, String name, boolean is_clustering) {
-		Domain domain = domainRepo.getOne(domainId);
+		Domain domain = domainRepo.findOne(domainId);
 		if (domain == null) {
 			return new ServiceResult(Status.FAILED, "Domain does not exist");
 		}
@@ -32,7 +32,7 @@ public class DomainService {
 	}
 
 	public ServiceResult delete(int domainId) {
-		Domain domain = domainRepo.getOne(domainId);
+		Domain domain = domainRepo.findOne(domainId);
 		if (domain == null) {
 			return new ServiceResult(Status.FAILED, "Domain does not exist");
 		}
@@ -50,7 +50,7 @@ public class DomainService {
 	}
 
 	public ServiceResult getApplicationListByDomain(int domainId) {
-		Domain domain = domainRepo.getOne(domainId);
+		Domain domain = domainRepo.findOne(domainId);
 		// Tomcat instances that are belonged to same domain have same
 		// applications. Only retrieve these application for specified domain
 		if (domain != null) {
@@ -62,5 +62,13 @@ public class DomainService {
 			}
 		}
 		return new ServiceResult(Status.FAILED, "Domain does not exist");
+	}
+	
+	public ServiceResult getDomain(int id){
+		Domain domain = domainRepo.findOne(id);
+		if (domain == null){
+			return new ServiceResult(Status.DONE, "Domain is not existed", null);
+		}
+		return new ServiceResult(Status.DONE, "", domain);
 	}
 }

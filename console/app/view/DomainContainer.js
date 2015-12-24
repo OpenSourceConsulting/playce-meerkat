@@ -43,6 +43,7 @@ Ext.define('webapp.view.DomainContainer', {
                             width: 164,
                             fieldLabel: 'Name',
                             labelWidth: 50,
+                            name: 'DomainNameField',
                             value: 'Domain 1'
                         },
                         {
@@ -51,6 +52,7 @@ Ext.define('webapp.view.DomainContainer', {
                             width: 150,
                             fieldLabel: 'Tomcat instances:',
                             labelWidth: 70,
+                            name: 'TomcatInstanceQuantityField',
                             value: 4
                         },
                         {
@@ -59,6 +61,7 @@ Ext.define('webapp.view.DomainContainer', {
                             width: 249,
                             fieldLabel: 'Type',
                             labelWidth: 50,
+                            name: 'DomainTypeField',
                             value: 'Clustering'
                         },
                         {
@@ -67,6 +70,7 @@ Ext.define('webapp.view.DomainContainer', {
                             style: '{text-align:right;font-weight:bold;}',
                             width: 218,
                             fieldLabel: 'Data grid server group:',
+                            name: 'DataGridServerGroupField',
                             value: 'Group 1'
                         }
                     ]
