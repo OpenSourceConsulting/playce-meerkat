@@ -62,6 +62,20 @@ Ext.define('webapp.controller.UserController', {
 
     },
 
+    onTextfieldChange: function(field, newValue, oldValue, eOpts) {
+        var store = Ext.getStore("UserStore");
+        var url = GlobalData.urlPrefix + "user/search";
+        Ext.Ajax.request({
+             url: url,
+            params: {"userID":newValue},
+             success: function(resp, ops) {
+
+                    var response = Ext.decode(resp.responseText);
+                    Ext.getStore("UserStore").loadData(response, false);
+             }
+            });
+    },
+
     showUserWindow: function(type, user_id) {
 
         var userWindow = Ext.create("widget.UserWindow");
@@ -190,6 +204,9 @@ Ext.define('webapp.controller.UserController', {
             },
             "#btnSubmit": {
                 click: this.onSubmitButtonClick
+            },
+            "#mytextfield": {
+                change: this.onTextfieldChange
             }
         });
     }

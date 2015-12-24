@@ -15,5 +15,5 @@ import com.google.gson.JsonParser;
 @Repository
 public interface UserRepository extends JpaRepository<User2, Integer> {
 	List<User2> findByUserNameOrEmail(String userName, String email);
-
+	List<User2> findByUserNameContaining(String userName);
 }

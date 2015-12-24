@@ -178,7 +178,11 @@ public class UserController {
 	public User2 editUser(int id) {
 		return service.findUser(id);
 	}
-
+	@RequestMapping("/search")
+	@ResponseBody
+	public List<User2> searchByUserName(String userID) {
+		return service.getUsers(userID);
+	}
 	@RequestMapping("/delete")
 	@ResponseBody
 	public boolean delete(int id) {

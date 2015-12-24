@@ -85,7 +85,10 @@ Ext.define('webapp.view.UserMntContainer', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Filtering'
+                                    itemId: 'mytextfield',
+                                    fieldLabel: 'Filtering',
+                                    name: 'SearchTextField',
+                                    emptyText: 'User ID'
                                 }
                             ]
                         },

@@ -22,6 +22,9 @@ public class UserService implements InitializingBean {
 	public List<User2> getUsers(String userID, String email){
 		return repo.findByUserNameOrEmail(userID, email);
 	}
+	public List<User2>getUsers(String userID){
+		return repo.findByUserNameContaining(userID);
+	}
 
 	public List<UserRole2> getRoleList() {
 		return roleRepo.findAll();
@@ -42,6 +45,7 @@ public class UserService implements InitializingBean {
 	public void deleteUser(User2 user){
 		repo.delete(user);
 	}
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		System.err.println("\n\nrepo in UserService : " + repo);
