@@ -44,7 +44,6 @@ Ext.define('webapp.controller.MenuController', {
 
     onTreepanelItemContextMenu: function(dataview, record, item, index, e, eOpts) {
         var menuId = record.get("menuId");
-
         var mnuContext = null;
 
         //Tomcat management level
@@ -55,10 +54,10 @@ Ext.define('webapp.controller.MenuController', {
                 id: 'new-domain',
                 text: 'New Domain'
             },
-            {
-                id: 'collapse',
-                text: 'Collapse'
-            },
+         //   {
+         //       id: 'collapse',
+          ///      text: 'Collapse'
+           // },
             {
                 id: 'refresh',
                 text: 'Refresh'
@@ -70,16 +69,16 @@ Ext.define('webapp.controller.MenuController', {
                 click: function( _menu, _item, _e, _eOpts ) {
                    switch (_item.id) {
                         case 'new-domain':
-                            alert("Add new domain");
+                            webapp.app.getController("DomainController").showDomainWindow("new", 0);
                             break;
                         case 'collapse':
-                            alert("Collapse");
+                            //item.collapse();
                             break;
                         case 'refresh':
-                            alert("Refresh");
+                            webapp.app.getController("MenuController").loadChildMenus(menuId);
                             break;
                         default:
-                            alert("Default");
+                            webapp.app.getController("MenuController").loadChildMenus(menuId);
                             break;
                    }
                 },
@@ -123,7 +122,8 @@ Ext.define('webapp.controller.MenuController', {
                             alert("Add new tomcat");
                             break;
                         case 'edit-domain':
-                            alert("Edit domain");
+                            var domainId = menuId.substr(menuId.indexOf("_domain_") + "_domain_".length);
+                            webapp.app.getController("DomainController").showDomainWindow("edit", domainId);
                             break;
                         case 'delete-domain':
                             alert("Delete domain");
@@ -212,15 +212,15 @@ Ext.define('webapp.controller.MenuController', {
     showMenu: function(menuId, menuText) {
 
         var activeItem = -1;
-
+        var objectId = -1;
         if(menuId === "dashboard"){
             activeItem = 0;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") < 0) {
-            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("tomcatMng_domain_")+ "tomcatMng_domain_".length );
+            objectId = menuId.substr(menuId.indexOf("tomcatMng_domain_")+ "tomcatMng_domain_".length );
             activeItem = 1;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
-            GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
-            activeItem = 2;
+             objectId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
+             activeItem = 2;
             //navigationText = "Tomcat Management > Domain ... > ...";
         }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {
             activeItem = 3;
@@ -254,6 +254,14 @@ Ext.define('webapp.controller.MenuController', {
 
         if(activeItem > -1){
             Ext.getCmp("subCenterContainer").layout.setActiveItem(activeItem);
+            switch (activeItem){
+                case 2:
+                   webapp.app.getController("DomainController").loadDomainInfo(objectId);
+                   break;
+                default:
+                    break;
+            }
+
         }
 
     },
@@ -311,8 +319,8 @@ Ext.define('webapp.controller.MenuController', {
         });
     },
 
-    loadDomainList: function(parentId) {
-        alert("Domain list is loading");
+    loadDomainList: function() {
+        this.loadChildMenus("tomcatMng");
     },
 
     loadTomcatList: function(domainId) {

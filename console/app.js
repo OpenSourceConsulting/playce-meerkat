@@ -29,7 +29,8 @@ Ext.application({
         'UserModel',
         'TomcatInstanceModel',
         'UserRoleModel',
-        'DomainModel'
+        'DomainModel',
+        'DatagridServerGroupModel'
     ],
     stores: [
         'sessionDataStore',
@@ -38,7 +39,8 @@ Ext.application({
         'TempoStore',
         'UserStore',
         'UserRoleStore',
-        'DomainStore'
+        'DomainStore',
+        'DatagridServerGroupStore'
     ],
     views: [
         'meerkatViewport',
@@ -61,7 +63,8 @@ Ext.application({
         'ResourceManagementContainer',
         'MonitoringTomcatInstance',
         'ClusteringConfigurationWindow',
-        'ClusteringConfigurationComparingWindow'
+        'ClusteringConfigurationComparingWindow',
+        'DomainWindow'
     ],
     controllers: [
         'headerController',
