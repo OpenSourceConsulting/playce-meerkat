@@ -10,6 +10,7 @@ import javax.persistence.Id;
 
 import com.athena.dolly.controller.web.machine.Machine;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "datagrid_server")
@@ -25,7 +26,7 @@ public class DatagridServer {
 
 	@ManyToOne
 	@JoinColumn(name="server_group_id")
-	@JsonBackReference
+	@JsonManagedReference	
 	private DatagridServerGroup datagridServerGroup;
 
 	public int getId() {

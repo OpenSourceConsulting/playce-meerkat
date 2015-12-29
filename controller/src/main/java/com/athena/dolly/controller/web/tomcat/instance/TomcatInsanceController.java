@@ -61,65 +61,6 @@ public class TomcatInsanceController {
 		// TODO Auto-generated constructor stub
 	}
 
-	@RequestMapping(value = "/instance/list", method = RequestMethod.GET)
-	public GridJsonResponse getList(GridJsonResponse res,
-			ExtjsGridParam gridParam) {
-
-		// service.save(new TomcatInstance("inst11", "1234"));
-		// service.save(new TomcatInstance("inst22", "2222"));
-
-		Page<TomcatInstance> page = service.getList(new PageRequest(gridParam
-				.getPage() - 1, gridParam.getLimit()));
-
-		res.setTotal((int) page.getTotalElements());
-		res.setList(page.getContent());
-
-		return res;
-	}
-
-	@RequestMapping(value = "/instance", method = { RequestMethod.POST,
-			RequestMethod.PUT })
-	public SimpleJsonResponse save(SimpleJsonResponse res, TomcatInstance inst) {
-		TomcatInstance result = service.save(inst);
-
-		service.loadTomcatConfig(result);
-
-		res.setData(result);
-
-		return res;
-	}
-
-	@RequestMapping(value = "/instance/{instId}", method = RequestMethod.GET)
-	public TomcatInstance get(@PathVariable Long instId) {
-		return service.getOne(instId);
-	}
-
-	@RequestMapping(value = "/instance/{instId}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable Long instId) {
-		service.delete(instId);
-	}
-
-	@RequestMapping(value = "/sshtest", method = RequestMethod.POST)
-	public SimpleJsonResponse sshConnectionTest(SimpleJsonResponse res,
-			TomcatInstance inst) {
-
-		// SSHManager sshMng = new SSHManager(inst.getSshUsername(),
-		// inst.getSshPassword(), inst.getIpAddr(), "", inst.getSshPort());
-
-		// String errorMsg = sshMng.connect();
-		//
-		// try {
-		// if (errorMsg != null) {
-		// res.setSuccess(false);
-		// res.setMsg(errorMsg);
-		// }
-		// } finally {
-		// sshMng.close();
-		// }
-
-		return res;
-	}
-
 	@RequestMapping(value = "/instance/start", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean startTomcat(int id) {

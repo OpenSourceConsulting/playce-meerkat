@@ -95,9 +95,17 @@ public class Domain implements Serializable {
 	}
 	
 	public String getDatagridServerGroupName(){
-		if (serverGroup != null){
-			return this.serverGroup.getName();
+		if (getServerGroup() != null){
+			return this.getServerGroup().getName();
 		}
 		return "";
+	}
+
+	public DatagridServerGroup getServerGroup() {
+		return serverGroup;
+	}
+
+	public void setServerGroup(DatagridServerGroup serverGroup) {
+		this.serverGroup = serverGroup;
 	}
 }

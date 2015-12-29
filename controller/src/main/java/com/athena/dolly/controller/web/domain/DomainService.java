@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.athena.dolly.controller.ServiceResult;
 import com.athena.dolly.controller.ServiceResult.Status;
+import com.athena.dolly.controller.web.datagridserver.DatagridServerGroup;
 import com.athena.dolly.controller.web.tomcat.instance.TomcatInstance;
 
 @Service
@@ -14,10 +15,9 @@ public class DomainService {
 	@Autowired
 	private DomainRepository domainRepo;
 
-	public ServiceResult add(String name, boolean is_clusering) {
-		Domain domain = new Domain(name, is_clusering);
+	public boolean save(Domain domain) {
 		domainRepo.save(domain);
-		return new ServiceResult(Status.DONE, "Done", true);
+		return true;
 	}
 
 	public ServiceResult edit(int domainId, String name, boolean is_clustering) {
@@ -63,12 +63,13 @@ public class DomainService {
 		}
 		return new ServiceResult(Status.FAILED, "Domain does not exist");
 	}
-	
-	public ServiceResult getDomain(int id){
+
+	public Domain getDomain(int id) {
 		Domain domain = domainRepo.findOne(id);
-		if (domain == null){
-			return new ServiceResult(Status.DONE, "Domain is not existed", null);
-		}
-		return new ServiceResult(Status.DONE, "", domain);
+		return domain;
+	}
+	public Domain getDomainByName(String name)
+	{
+		return domainRepo.findByName(name);
 	}
 }

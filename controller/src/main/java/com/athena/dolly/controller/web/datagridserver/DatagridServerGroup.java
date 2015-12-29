@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,11 +32,12 @@ public class DatagridServerGroup implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany
-	@JsonManagedReference
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Collection<DatagridServer> datagridServers;
 
 	@OneToOne
+	@JsonBackReference
 	private Domain domain;
 
 	public String getName() {
