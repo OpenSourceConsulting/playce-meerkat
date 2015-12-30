@@ -16,13 +16,16 @@ public class DataGridServerService {
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
 
-	public List<DatagridServerGroup> getGroupList() {
-		List<DatagridServerGroup> list = groupRepo.findAll();
+	public List<DatagridServerGroup> getAvailableGroupList() {
+		List<DatagridServerGroup> list = groupRepo.findByDomainIdIsNull();
 		return list;
 	}
-	
-	public DatagridServerGroup getGroup(int id){
-		return groupRepo.getOne(id);
+
+	public DatagridServerGroup getGroup(int id) {
+		return groupRepo.findOne(id);
 	}
 
+	public boolean saveGroup(DatagridServerGroup group) {
+		return groupRepo.save(group) == null ? false : true;
+	}
 }
