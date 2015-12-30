@@ -84,8 +84,8 @@ public class TomcatInstanceService {
 		return repo.findAll(pageable);
 	}
 
-	public ServiceResult getTomcatListByDomainId(int domainId) {
-		return new ServiceResult(Status.DONE, "", repo.findByDomainId(domainId));
+	public List<TomcatInstance> getTomcatListByDomainId(int domainId) {
+		return repo.findByDomainId(domainId);
 	}
 
 	/**
@@ -253,7 +253,8 @@ public class TomcatInstanceService {
 		}
 		return null;
 	}
-	public ServiceResult getAll(){
+
+	public ServiceResult getAll() {
 		return new ServiceResult(Status.DONE, "", repo.findAll());
 	}
 

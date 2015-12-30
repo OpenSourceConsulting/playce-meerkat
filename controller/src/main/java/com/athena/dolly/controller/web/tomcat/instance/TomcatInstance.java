@@ -178,5 +178,12 @@ public class TomcatInstance implements Serializable {
 	public void setDatasources(Collection<Datasource> datasources) {
 		this.datasources = datasources;
 	}
+	
+	public String getHostName(){
+		return machine.getHostName();
+	}
+	public String getIPAddress(){
+		return machine.getSSHIPAddr();//not sure it's correct
+	}
 
 }
