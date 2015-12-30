@@ -9,15 +9,17 @@ import com.athena.dolly.controller.ServiceResult;
 import com.athena.dolly.controller.ServiceResult.Status;
 import com.athena.dolly.controller.web.datagridserver.DatagridServerGroup;
 import com.athena.dolly.controller.web.tomcat.instance.TomcatInstance;
+import com.athena.dolly.controller.web.tomcat.instance.TomcatInstanceRepository;
 
 @Service
 public class DomainService {
 	@Autowired
 	private DomainRepository domainRepo;
+	@Autowired
+	private TomcatInstanceRepository tomcatRepo;
 
-	public boolean save(Domain domain) {
-		domainRepo.save(domain);
-		return true;
+	public Domain save(Domain domain) {
+		return domainRepo.save(domain);
 	}
 
 	public ServiceResult edit(int domainId, String name, boolean is_clustering) {
@@ -31,13 +33,19 @@ public class DomainService {
 		return new ServiceResult(Status.DONE, "Done", true);
 	}
 
-	public ServiceResult delete(int domainId) {
+	public boolean delete(int domainId) {
 		Domain domain = domainRepo.findOne(domainId);
 		if (domain == null) {
-			return new ServiceResult(Status.FAILED, "Domain does not exist");
+			//return new ServiceResult(Status.FAILED, "Domain does not exist");
+			return false;
 		}
+		//delete all associated tomcats
+		tomcatRepo.delete(domain.getTomcats());
+		//delete relation between domain and datagridgroup
+		domain.getServerGroup().setDomain(null);
 		domainRepo.delete(domain);
-		return new ServiceResult(Status.DONE, "Deleted", true);
+		//return new ServiceResult(Status.DONE, "Deleted", true);
+		return true;
 	}
 
 	public ServiceResult configure(int domainId) {

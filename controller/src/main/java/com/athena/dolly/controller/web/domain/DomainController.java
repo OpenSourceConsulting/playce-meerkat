@@ -55,8 +55,11 @@ public class DomainController {
 			return false;
 		}
 		domain.setServerGroup(group);
-
-		return domainService.save(domain);
+		domainService.save(domain);
+		// update on server group
+		group.setDomain(domainService.getDomainByName(name));
+		datagridService.saveGroup(group);
+		return true;
 	}
 
 	@RequestMapping("/edit")
@@ -86,13 +89,15 @@ public class DomainController {
 	@RequestMapping("/tomcatlist")
 	public @ResponseBody
 	List<TomcatInstance> getTomcatInstanceByDomain(int domainId) {
-		ServiceResult result = tomcatService.getTomcatListByDomainId(domainId);
-		if (result.getStatus() == Status.DONE) {
-			List<TomcatInstance> tomcats = (List<TomcatInstance>) result
-					.getReturnedVal();
-			return tomcats;
-		}
-		return null;
+		// ServiceResult result =
+		// tomcatService.getTomcatListByDomainId(domainId);
+		// if (result.getStatus() == Status.DONE) {
+		// List<TomcatInstance> tomcats = (List<TomcatInstance>) result
+		// .getReturnedVal();
+		// return tomcats;
+		// }
+		// return null;
+		return tomcatService.getTomcatListByDomainId(domainId);
 	}
 
 	@RequestMapping("/applications")
@@ -106,5 +111,11 @@ public class DomainController {
 			return apps;
 		}
 		return null;
+	}
+
+	@RequestMapping("/delete")
+	public @ResponseBody
+	boolean delete(int domainId) {
+		return domainService.delete(domainId);
 	}
 }
