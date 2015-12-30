@@ -117,16 +117,16 @@ Ext.define('webapp.controller.MenuController', {
                    ],
             listeners: {
                click: function( _menu, _item, _e, _eOpts ) {
+                   var domainId = menuId.substr(menuId.indexOf("_domain_") + "_domain_".length);
                    switch (_item.id) {
                         case 'new-tomcat':
                             alert("Add new tomcat");
                             break;
                         case 'edit-domain':
-                            var domainId = menuId.substr(menuId.indexOf("_domain_") + "_domain_".length);
                             webapp.app.getController("DomainController").showDomainWindow("edit", domainId);
                             break;
                         case 'delete-domain':
-                            alert("Delete domain");
+                            webapp.app.getController("DomainController").deleteDomain(domainId);
                             break;
                         case 'expand':
                             alert("Expand");

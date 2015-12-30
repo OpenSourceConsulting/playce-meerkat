@@ -145,8 +145,37 @@ Ext.define('webapp.controller.DomainController', {
                 tomcatCountField.setValue(response.tomcatInstancesCount);
                 domainTypeField.setValue(response.clustering===true?"Clustering":"None clustering");
                 dataGridServerGroupField.setValue(response.datagridServerGroupName);
+                 Ext.getStore("TomcatInstancesListStore").loadData(response.tomcats, false);
             }
         });
+    },
+
+    deleteDomain: function(domainId) {
+        Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this domain?', function(btn){
+             if(btn == "yes"){
+                Ext.Ajax.request({
+                    url: GlobalData.urlPrefix + "/domain/delete",
+                    params: {"domainId":domainId},
+                    success: function(resp, ops) {
+
+                        var response = Ext.decode(resp.responseText);
+                        if(response===true){
+                            webapp.app.getController("MenuController").loadDomainList();
+                        }
+                        else {
+                            Ext.Msg.show({
+                                title: "Message",
+                                msg: "Domain is not existed",
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                        }
+
+                    }
+                });
+
+             }
+         });
     },
 
     init: function(application) {

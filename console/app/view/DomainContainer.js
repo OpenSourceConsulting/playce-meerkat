@@ -123,30 +123,31 @@ Ext.define('webapp.view.DomainContainer', {
                                     height: 326,
                                     title: '',
                                     forceFit: true,
+                                    store: 'TomcatInstanceListStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'id',
                                             text: 'No.'
                                         },
                                         {
                                             xtype: 'numbercolumn',
-                                            dataIndex: 'number',
+                                            dataIndex: 'instanceName',
                                             text: 'Name'
                                         },
                                         {
                                             xtype: 'datecolumn',
-                                            dataIndex: 'date',
+                                            dataIndex: 'hostName',
                                             text: 'Host name'
                                         },
                                         {
                                             xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            dataIndex: 'ipAddr',
                                             text: 'IP Address'
                                         },
                                         {
                                             xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            dataIndex: 'state',
                                             text: 'Status'
                                         }
                                     ]

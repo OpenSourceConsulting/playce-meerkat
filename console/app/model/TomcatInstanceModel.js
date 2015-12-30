@@ -64,6 +64,10 @@ Ext.define('webapp.model.TomcatInstanceModel', {
         {
             name: 'applications',
             type: 'int'
+        },
+        {
+            name: 'hostName',
+            type: 'string'
         }
     ]
 });
