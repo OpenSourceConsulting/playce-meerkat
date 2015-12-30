@@ -217,6 +217,7 @@ Ext.define('webapp.controller.MenuController', {
             activeItem = 0;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") < 0) {
             objectId = menuId.substr(menuId.indexOf("tomcatMng_domain_")+ "tomcatMng_domain_".length );
+            webapp.app.getController("DomainController").loadDomainInfo(objectId);
             activeItem = 1;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
              objectId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
@@ -254,14 +255,6 @@ Ext.define('webapp.controller.MenuController', {
 
         if(activeItem > -1){
             Ext.getCmp("subCenterContainer").layout.setActiveItem(activeItem);
-            switch (activeItem){
-                case 2:
-                   webapp.app.getController("DomainController").loadDomainInfo(objectId);
-                   break;
-                default:
-                    break;
-            }
-
         }
 
     },
