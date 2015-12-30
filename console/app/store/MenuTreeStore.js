@@ -38,21 +38,7 @@ Ext.define('webapp.store.MenuTreeStore', {
                         menuId: 'tomcatMng',
                         expanded: true,
                         children: [
-                            {
-                                text: 'Domain 1',
-                                menuId: 'tomcatMng_domain_1',
-                                expanded: true,
-                                children: [
-                                    {
-                                        text: 'Tomcat 1',
-                                        menuId: 'tomcatMng_domain_1_tomcat_1',
-                                        expanded: true,
-                                        children: [
-                                            
-                                        ]
-                                    }
-                                ]
-                            }
+                            
                         ],
                         
                     },
