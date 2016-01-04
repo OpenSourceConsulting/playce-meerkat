@@ -81,15 +81,20 @@ Ext.define('webapp.view.DomainContainer', {
                     region: 'center',
                     split: true,
                     id: 'domainTomcatTab',
-                    itemId: 'tomcatInstTabPanel',
+                    itemId: 'domainTomcatTab',
                     activeTab: 0,
                     items: [
                         {
                             xtype: 'panel',
+                            id: 'domainTabs',
                             layout: {
                                 type: 'fit'
                             },
                             title: 'Tomcat instances',
+                            tabConfig: {
+                                xtype: 'tab',
+                                id: 'tomcatTabConfig'
+                            },
                             dockedItems: [
                                 {
                                     xtype: 'toolbar',
@@ -116,47 +121,39 @@ Ext.define('webapp.view.DomainContainer', {
                                             fieldLabel: 'Version'
                                         }
                                     ]
-                                },
+                                }
+                            ],
+                            items: [
                                 {
                                     xtype: 'gridpanel',
-                                    dock: 'top',
-                                    height: 326,
                                     title: '',
                                     forceFit: true,
                                     store: 'TomcatInstanceListStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'id',
-                                            text: 'No.'
-                                        },
-                                        {
-                                            xtype: 'numbercolumn',
-                                            dataIndex: 'instanceName',
+                                            dataIndex: 'name',
                                             text: 'Name'
                                         },
                                         {
-                                            xtype: 'datecolumn',
-                                            dataIndex: 'hostName',
-                                            text: 'Host name'
-                                        },
-                                        {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'ipAddr',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'ipaddress',
                                             text: 'IP Address'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'state',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'hostName',
+                                            text: 'Host Name'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'statusString',
                                             text: 'Status'
                                         }
-                                    ]
-                                },
-                                {
-                                    xtype: 'pagingtoolbar',
-                                    dock: 'top',
-                                    width: 360,
-                                    displayInfo: true
+                                    ],
+                                    viewConfig: {
+                                        id: 'associatedTomcatListView'
+                                    }
                                 }
                             ]
                         },
@@ -170,6 +167,7 @@ Ext.define('webapp.view.DomainContainer', {
                                 {
                                     xtype: 'gridpanel',
                                     dock: 'top',
+                                    id: 'associatedApplicationListView',
                                     title: '',
                                     forceFit: true,
                                     columns: [
@@ -290,10 +288,16 @@ Ext.define('webapp.view.DomainContainer', {
                         },
                         {
                             xtype: 'panel',
+                            id: 'clusteringConfigTab',
+                            itemId: 'clusteringConfigTab',
                             layout: {
                                 type: 'fit'
                             },
                             title: 'Clustering configuration',
+                            tabConfig: {
+                                xtype: 'tab',
+                                id: 'clusteringConfigHeader'
+                            },
                             dockedItems: [
                                 {
                                     xtype: 'toolbar',

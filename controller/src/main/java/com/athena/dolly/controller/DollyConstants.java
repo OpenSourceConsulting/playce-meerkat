@@ -83,4 +83,10 @@ public abstract class DollyConstants {
 	 * Class driver for Oracle
 	 */
 	public static String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
+
+	/**
+	 * Tomcat status
+	 */
+	public static final int TOMCAT_STATUS_RUNNING = 1;
+	public static final int TOMCAT_STATUS_SHUTDOWN = 2;
 }

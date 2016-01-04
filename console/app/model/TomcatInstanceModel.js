@@ -26,11 +26,11 @@ Ext.define('webapp.model.TomcatInstanceModel', {
             type: 'int'
         },
         {
-            name: 'instanceName',
+            name: 'name',
             type: 'string'
         },
         {
-            name: 'ipAddr',
+            name: 'ipaddress',
             type: 'string'
         },
         {
@@ -58,7 +58,7 @@ Ext.define('webapp.model.TomcatInstanceModel', {
             type: 'int'
         },
         {
-            name: 'state',
+            name: 'statusString',
             type: 'string'
         },
         {

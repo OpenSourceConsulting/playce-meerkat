@@ -145,8 +145,20 @@ Ext.define('webapp.controller.DomainController', {
                 tomcatCountField.setValue(response.tomcatInstancesCount);
                 domainTypeField.setValue(response.clustering===true?"Clustering":"None clustering");
                 dataGridServerGroupField.setValue(response.datagridServerGroupName);
-                 Ext.getStore("TomcatInstancesListStore").loadData(response.tomcats, false);
+                Ext.getCmp("associatedTomcatListView").getStore().loadData(response.tomcats, false);
+                if (response.tomcats.length > 0 ){
+                  Ext.getCmp("associatedApplicationListView").getStore().loadData(response.tomcats[0].applications, false);
+                }
+
+                //hide/show clustering config tab
+                //if (response.clustering) {
+        //            Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.show();
+        //        }
+        //        else {
+                //          Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.hide();
+        //      }
             }
+
         });
     },
 

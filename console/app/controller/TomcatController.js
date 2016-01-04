@@ -23,10 +23,17 @@ Ext.define('webapp.controller.TomcatController', {
 
     },
 
+    onDomainTomcatTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+ 
+    },
+
     init: function(application) {
         this.control({
             "#btnNewTomcat": {
                 click: this.onNewTomcatClick
+            },
+            "#domainTomcatTab": {
+                tabchange: this.onDomainTomcatTabTabChange
             }
         });
     }

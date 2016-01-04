@@ -38,6 +38,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.athena.dolly.controller.DollyConstants;
 import com.athena.dolly.controller.web.application.Application;
 import com.athena.dolly.controller.web.datasource.Datasource;
 import com.athena.dolly.controller.web.domain.Domain;
@@ -178,12 +179,24 @@ public class TomcatInstance implements Serializable {
 	public void setDatasources(Collection<Datasource> datasources) {
 		this.datasources = datasources;
 	}
-	
-	public String getHostName(){
+
+	public String getHostName() {
 		return machine.getHostName();
 	}
-	public String getIPAddress(){
-		return machine.getSSHIPAddr();//not sure it's correct
+
+	public String getIPAddress() {
+		return machine.getSSHIPAddr();// not sure it's correct
+	}
+
+	public String getStatusString() {
+		switch (this.state) {
+		case DollyConstants.TOMCAT_STATUS_RUNNING:
+			return "Running";
+		case DollyConstants.TOMCAT_STATUS_SHUTDOWN:
+			return "Stopped";
+		default:
+			return "Unknown";
+		}
 	}
 
 }

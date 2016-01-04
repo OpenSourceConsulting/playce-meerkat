@@ -27,10 +27,9 @@ Ext.define('webapp.store.TomcatInstanceListStore', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             model: 'webapp.model.TomcatInstanceModel',
-            storeId: 'TomcatInstanceListStore',
+            storeId: 'tomcatInstanceListStoreID',
             proxy: {
                 type: 'ajax',
-                url: 'tomcat/instance/list',
                 reader: {
                     type: 'json',
                     root: 'list'
