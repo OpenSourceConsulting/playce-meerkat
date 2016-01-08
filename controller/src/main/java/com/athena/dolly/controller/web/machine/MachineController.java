@@ -55,13 +55,32 @@ public class MachineController {
 	public SimpleJsonResponse get() {
 		int id = 1;
 		SimpleJsonResponse res = new SimpleJsonResponse();
-		Machine m = (Machine) service.retrieve(id).getReturnedVal();
+		Machine m = service.retrieve(id);
 		res.setData(m);
 		return res;
 	}
+
 	// for testing bean creation
 	// @Override
 	// public void afterPropertiesSet() throws Exception {
 	// // System.err.println("service : " + service);
 	// }
+
+	@RequestMapping(value = "/testConnection", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean testMachineConnection(int id) {
+		Machine machine = service.retrieve(id);
+		if (machine == null) {
+			return false;
+		}
+		SSHManager sshMng = new SSHManager(machine.getSshUsername(),
+				machine.getSshPassword(), machine.getSSHIPAddr(), "",
+				machine.getSshPort(), 1000);
+		String errorMsg = sshMng.connect();
+		if (errorMsg == null || errorMsg == "") {
+			sshMng.close();
+			return true;
+		}
+		return false;
+	}
 }

@@ -82,6 +82,20 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>3.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.picketbox</groupId>
+			<artifactId>picketbox</artifactId>
+			<version>4.0.20.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ews</groupId>
+			<artifactId>encrypt-dbcp</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/encrypt-dbcp-1.0.0-SNAPSHOT.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>

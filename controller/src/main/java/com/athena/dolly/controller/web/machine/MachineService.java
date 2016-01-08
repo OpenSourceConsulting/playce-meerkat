@@ -81,12 +81,15 @@ public class MachineService implements InitializingBean {
 		return new ServiceResult(Status.DONE, "Done", machines);
 	}
 
-	public ServiceResult retrieve(int id) {
-		return new ServiceResult(Status.DONE, "", machineRepo.findOne(id));
+	// public ServiceResult retrieve(int id) {
+	// return new ServiceResult(Status.DONE, "", machineRepo.findOne(id));
+	// }
+	public Machine retrieve(int id) {
+		return machineRepo.findOne(id);
 	}
 
 	public ServiceResult getList() {
-		
+
 		List<Machine> list = machineRepo.findAll();
 		return new ServiceResult(Status.DONE, "", list);
 	}

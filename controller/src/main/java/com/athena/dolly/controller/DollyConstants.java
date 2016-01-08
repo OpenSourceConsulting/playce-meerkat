@@ -89,4 +89,11 @@ public abstract class DollyConstants {
 	 */
 	public static final int TOMCAT_STATUS_RUNNING = 1;
 	public static final int TOMCAT_STATUS_SHUTDOWN = 2;
+
+	/**
+	 * meerkat repo address
+	 */
+	public static final String MEERKAT_REPO = "/home/meerkat/repo/tomcat/";// input later;
+	public static final String TOMCAT_ARCHIVE_FILE="jboss-ews-as-2.1.0.zip";
+	public static final String TOMCAT_ARCHIVE_TEMPLATE_FILE="jboss-ews-as-template.zip";
 }

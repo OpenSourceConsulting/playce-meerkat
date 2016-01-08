@@ -35,12 +35,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.athena.dolly.controller.DollyConstants;
 import com.athena.dolly.controller.ServiceResult;
 import com.athena.dolly.controller.ServiceResult.Status;
 import com.athena.dolly.controller.common.SSHManager;
 import com.athena.dolly.controller.web.common.model.ExtjsGridParam;
 import com.athena.dolly.controller.web.common.model.GridJsonResponse;
 import com.athena.dolly.controller.web.common.model.SimpleJsonResponse;
+import com.athena.dolly.controller.web.machine.Machine;
+import com.athena.dolly.controller.web.machine.MachineService;
 
 /**
  * <pre>
@@ -56,6 +59,8 @@ public class TomcatInstanceController {
 
 	@Autowired
 	private TomcatInstanceService service;
+	@Autowired
+	private MachineService machineService;
 
 	public TomcatInstanceController() {
 		// TODO Auto-generated constructor stub
@@ -91,8 +96,41 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/listbydomain")
+	@ResponseBody
 	List<TomcatInstance> getTomcatInstances(int domainId) {
 		return service.getTomcatListByDomainId(domainId);
 	}
 
+	@RequestMapping("/addNew")
+	@ResponseBody
+	// add more param later
+	public boolean addNew(String name, int domainId, int machineId) {
+		boolean result = false;
+		Machine machine = machineService.retrieve(machineId);
+		String repoAddr = DollyConstants.MEERKAT_REPO;
+		String command = "";
+		if (machine == null) {
+			return false;
+		}
+
+		SSHManager sshMng = new SSHManager(machine.getSshUsername(),
+				machine.getSshPassword(), machine.getSSHIPAddr(), "",
+				machine.getSshPort(), 1000);
+		String errorMsg = sshMng.connect();
+		if (errorMsg != null || errorMsg != "") {
+			return false;
+		}
+		// copy template to target server by sshManager
+		command = "scp " + repoAddr + "*" + machine.getSshUsername() + "@"
+				+ machine.getSSHIPAddr() + ":/tmp/";
+		sshMng.sendCommand(command);
+		// extract template to target server by sshManager command
+		command = "unzip " + DollyConstants.TOMCAT_ARCHIVE_FILE + "-d ."
+				+ " & unzip " + DollyConstants.TOMCAT_ARCHIVE_TEMPLATE_FILE
+				+ "-d .";
+		// config by sshManager command
+		// start by sshManager command
+		// store to database
+		return false;
+	}
 }
