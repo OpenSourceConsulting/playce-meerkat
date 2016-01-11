@@ -11,14 +11,14 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>   
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
 					<compilerVersion>${project.build.compile.version}</compilerVersion>
 					<source>${project.build.source.version}</source>
 					<target>${project.build.target.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
