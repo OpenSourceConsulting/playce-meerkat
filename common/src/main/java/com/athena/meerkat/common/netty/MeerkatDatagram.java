@@ -40,13 +40,13 @@ import com.athena.meerkat.common.netty.message.MessageType;
  * @author Sang-cheon Park
  * @version 1.0
  */
-public class PeacockDatagram<T> implements Serializable {
+public class MeerkatDatagram<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private T message;
 
-	public PeacockDatagram(T message) {
+	public MeerkatDatagram(T message) {
 		if (message instanceof AbstractMessage) {
 			this.message = message;
 		} else {

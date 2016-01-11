@@ -30,7 +30,7 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.athena.meerkat.common.netty.PeacockDatagram;
+import com.athena.meerkat.common.netty.MeerkatDatagram;
 import com.athena.meerkat.common.netty.message.AbstractMessage;
 import com.athena.meerkat.common.netty.message.ProvisioningResponseMessage;
 
@@ -43,12 +43,12 @@ import com.athena.meerkat.common.netty.message.ProvisioningResponseMessage;
  * @version 1.0
  */
 @Component
-@Qualifier("peacockTransmitter")
-public class PeacockTransmitter {
+@Qualifier("meerkatTransmitter")
+public class MeerkatTransmitter {
 
     @Inject
-    @Named("peacockServerHandler")
-    private PeacockServerHandler handler;
+    @Named("meerkatServerHandler")
+    private MeerkatServerHandler handler;
 	
 	/**
 	 * <pre>
@@ -57,7 +57,7 @@ public class PeacockTransmitter {
 	 * @param datagram
 	 * @throws Exception 
 	 */
-    public ProvisioningResponseMessage sendMessage(PeacockDatagram<AbstractMessage> datagram) throws Exception {
+    public ProvisioningResponseMessage sendMessage(MeerkatDatagram<AbstractMessage> datagram) throws Exception {
 		return handler.sendMessage(datagram);
 	}//end of sendMessage()
     
@@ -82,4 +82,4 @@ public class PeacockTransmitter {
     	handler.channelClose(agentId);
     }//end of channelClose()
 }
-//end of PeacockTransmitter.java
+//end of MeerkatTransmitter.java

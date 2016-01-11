@@ -55,7 +55,7 @@ import org.springframework.stereotype.Component;
 
 import com.athena.meerkat.common.core.action.ShellAction;
 import com.athena.meerkat.common.core.command.Command;
-import com.athena.meerkat.common.netty.PeacockDatagram;
+import com.athena.meerkat.common.netty.MeerkatDatagram;
 import com.athena.meerkat.common.netty.message.AbstractMessage;
 import com.athena.meerkat.common.netty.message.AgentSystemStatusMessage;
 import com.athena.meerkat.common.netty.message.MessageType;
@@ -76,10 +76,10 @@ import com.redhat.rhevm.api.model.VMs;
 @Component
 @Qualifier("peacockServerHandler")
 @Sharable
-public class PeacockServerHandler extends SimpleChannelInboundHandler<Object> {
+public class MeerkatServerHandler extends SimpleChannelInboundHandler<Object> {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PeacockServerHandler.class);
+			.getLogger(MeerkatServerHandler.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -96,15 +96,15 @@ public class PeacockServerHandler extends SimpleChannelInboundHandler<Object> {
 			ChannelFuture future = ctx.write("This channel will be closed.");
 			future.addListener(ChannelFutureListener.CLOSE);
 		} else {
-			if (msg instanceof PeacockDatagram) {
-				MessageType messageType = ((PeacockDatagram<?>) msg)
+			if (msg instanceof MeerkatDatagram) {
+				MessageType messageType = ((MeerkatDatagram<?>) msg)
 						.getMessageType();
 
 				switch (messageType) {
 				case COMMAND:
 					break;
 				case RESPONSE:
-					ProvisioningResponseMessage responseMsg = ((PeacockDatagram<ProvisioningResponseMessage>) msg)
+					ProvisioningResponseMessage responseMsg = ((MeerkatDatagram<ProvisioningResponseMessage>) msg)
 							.getMessage();
 
 					if (responseMsg.isBlocking()) {
@@ -595,7 +595,7 @@ public class PeacockServerHandler extends SimpleChannelInboundHandler<Object> {
 	 * @throws Exception
 	 */
 	public ProvisioningResponseMessage sendMessage(
-			PeacockDatagram<AbstractMessage> datagram) throws Exception { // NOPMD
+			MeerkatDatagram<AbstractMessage> datagram) throws Exception { // NOPMD
 		Channel channel = ChannelManagement.getChannel(datagram.getMessage()
 				.getAgentId());
 		boolean isBlocking = datagram.getMessage().isBlocking();

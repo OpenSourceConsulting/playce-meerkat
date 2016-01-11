@@ -61,6 +61,19 @@
 			<version>${lib.infinispan.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.0.2.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-server-core</artifactId>
 			<version>${lib.infinispan.version}</version>
@@ -147,11 +160,6 @@
 			<version>3.0.5.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>2.0.5</version>
-		</dependency>
-		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 			<version>4.0.29.Final</version>
@@ -184,5 +192,6 @@
 		<module>console</module>
 		<module>controller</module>
 		<!-- <module>agent</module> -->
+		<module>agent</module>
 	</modules>
 </project>

@@ -44,8 +44,8 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  */
 @Component
-@Qualifier("peacockServerInitializer")
-public class PeacockServerInitializer extends ChannelInitializer<SocketChannel> {
+@Qualifier("meerkatServerInitializer")
+public class MeerkatServerInitializer extends ChannelInitializer<SocketChannel> {
 	
 	
     @Override
@@ -55,8 +55,8 @@ public class PeacockServerInitializer extends ChannelInitializer<SocketChannel> 
 
         pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
         pipeline.addLast("encoder", new ObjectEncoder());
-        pipeline.addLast("handler", new PeacockServerHandler());
+        pipeline.addLast("handler", new MeerkatServerHandler());
     }
 
 }
-//end of PeacockServerInitializer.java
+//end of MeerkatServerInitializer.java

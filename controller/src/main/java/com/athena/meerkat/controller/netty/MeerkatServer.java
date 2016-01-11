@@ -54,8 +54,8 @@ import com.athena.meerkat.common.provider.AppContext;
  * @version 1.0
  */
 @Component
-@Qualifier("peacockServer")
-public class PeacockServer implements InitializingBean, ApplicationContextAware {
+@Qualifier("meerkatServer")
+public class MeerkatServer implements InitializingBean, ApplicationContextAware {
 	
     @Value("#{contextProperties['listen.port']}")
     private int port;
@@ -69,8 +69,8 @@ public class PeacockServer implements InitializingBean, ApplicationContextAware 
     private EventLoopGroup workerGroup;
 
     @Inject
-    @Named("peacockServerInitializer")
-    private PeacockServerInitializer initializer;
+    @Named("meerkatServerInitializer")
+    private MeerkatServerInitializer initializer;
 
     
     private Channel channel;
@@ -132,4 +132,4 @@ public class PeacockServer implements InitializingBean, ApplicationContextAware 
 		}
 	}
 }
-//end of PeacockServer.java
+//end of MeerkatServer.java
