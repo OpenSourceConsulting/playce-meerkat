@@ -38,15 +38,15 @@ import org.slf4j.LoggerFactory;
  * @author Sang-cheon Park
  * @version 1.0
  */
-public class PeacockClientListener implements ChannelFutureListener {
+public class MeerkatClientListener implements ChannelFutureListener {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PeacockClientListener.class);
+			.getLogger(MeerkatClientListener.class);
 
-	private final PeacockClient client;
+	private final MeerkatClient client;
 	private final String host;
 
-	public PeacockClientListener(PeacockClient client, String host) {
+	public MeerkatClientListener(MeerkatClient client, String host) {
 		this.client = client;
 		this.host = host;
 	}
@@ -67,4 +67,4 @@ public class PeacockClientListener implements ChannelFutureListener {
 		}
 	}
 }
-// end of PeacockClientListener.java
+// end of MeerkatClientListener.java

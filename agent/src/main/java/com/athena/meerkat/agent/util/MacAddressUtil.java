@@ -33,7 +33,7 @@ import java.util.Set;
 
 /**
  * <pre>
- * Peacock Agent 시스템의 Physical Hardware 주소를 조회하기 위한 유틸 클래스
+ * Meerkat Agent 시스템의 Physical Hardware 주소를 조회하기 위한 유틸 클래스
  * </pre>
  * @author Sang-cheon Park
  * @version 1.0

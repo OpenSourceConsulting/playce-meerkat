@@ -51,8 +51,8 @@ import com.athena.meerkat.common.provider.AppContext;
  * @version 1.0
  */
 @Component
-@Qualifier("peacockClient")
-public class PeacockClient implements ApplicationContextAware {
+@Qualifier("meerkatClient")
+public class MeerkatClient implements ApplicationContextAware {
 
 	private final String[] hosts = AgentConfigUtil.getConfig(
 			MeerkatConstant.SERVER_IP).split(",");
@@ -64,12 +64,12 @@ public class PeacockClient implements ApplicationContextAware {
 	private EventLoopGroup group;
 
 	@Inject
-	@Named("peacockClientInitializer")
-	private PeacockClientInitializer initializer;
+	@Named("meerkatClientInitializer")
+	private MeerkatClientInitializer initializer;
 
 	@Inject
-	@Named("peacockClientHandler")
-	private PeacockClientHandler handler;
+	@Named("meerkatClientHandler")
+	private MeerkatClientHandler handler;
 
 	/**
 	 * <pre>
@@ -87,7 +87,7 @@ public class PeacockClient implements ApplicationContextAware {
 					.option(ChannelOption.SO_KEEPALIVE, true)
 					.handler(new LoggingHandler(LogLevel.WARN))
 					.handler(initializer).remoteAddress(host, port).connect()
-					.addListener(new PeacockClientListener(this, host));
+					.addListener(new MeerkatClientListener(this, host));
 		}
 
 		return bootstrap;
@@ -126,4 +126,4 @@ public class PeacockClient implements ApplicationContextAware {
 		}
 	}
 }
-// end of PeacockClient.java
+// end of MeerkatClient.java

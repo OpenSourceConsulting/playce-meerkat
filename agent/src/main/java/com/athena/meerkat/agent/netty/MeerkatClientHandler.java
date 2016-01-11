@@ -62,7 +62,7 @@ import com.athena.meerkat.agent.util.MacAddressUtil;
 import com.athena.meerkat.agent.util.PropertyUtil;
 import com.athena.meerkat.agent.util.SigarUtil;
 import com.athena.meerkat.common.constant.MeerkatConstant;
-import com.athena.meerkat.common.netty.PeacockDatagram;
+import com.athena.meerkat.common.netty.MeerkatDatagram;
 import com.athena.meerkat.common.netty.message.AgentInitialInfoMessage;
 import com.athena.meerkat.common.netty.message.ConfigInfo;
 import com.athena.meerkat.common.netty.message.MessageType;
@@ -83,19 +83,19 @@ import com.athena.meerkat.common.provider.AppContext;
  * @version 1.0
  */
 @Component
-@Qualifier("peacockClientHandler")
+@Qualifier("meerkatClientHandler")
 @Sharable
-public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
+public class MeerkatClientHandler extends SimpleChannelInboundHandler<Object> {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PeacockClientHandler.class);
+			.getLogger(MeerkatClientHandler.class);
 
 	private boolean connected = false;
 	private static boolean gPackageCollected = false;
 	private static boolean gSoftwareCollected = false;
 	private String machineId = null;
 
-	private PeacockClient client = null;
+	private MeerkatClient client = null;
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -123,7 +123,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 			AgentInitialInfoMessage message = new AgentInitialInfoMessage();
 			message.setMachineId(this.machineId);
 
-			ctx.writeAndFlush(new PeacockDatagram<AgentInitialInfoMessage>(
+			ctx.writeAndFlush(new MeerkatDatagram<AgentInitialInfoMessage>(
 					message));
 		}
 	}
@@ -137,21 +137,21 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 		LOGGER.debug("[Client] Object => " + msg.getClass().getName());
 		LOGGER.debug("[Client] Contents => " + msg.toString());
 
-		if (msg instanceof PeacockDatagram) {
-			MessageType messageType = ((PeacockDatagram<?>) msg)
+		if (msg instanceof MeerkatDatagram) {
+			MessageType messageType = ((MeerkatDatagram<?>) msg)
 					.getMessageType();
 
 			if (messageType.equals(MessageType.COMMAND)) {
 				ProvisioningResponseMessage response = new ProvisioningResponseMessage();
-				response.setAgentId(((PeacockDatagram<ProvisioningCommandMessage>) msg)
+				response.setAgentId(((MeerkatDatagram<ProvisioningCommandMessage>) msg)
 						.getMessage().getAgentId());
-				response.setBlocking(((PeacockDatagram<ProvisioningCommandMessage>) msg)
+				response.setBlocking(((MeerkatDatagram<ProvisioningCommandMessage>) msg)
 						.getMessage().isBlocking());
 
-				((PeacockDatagram<ProvisioningCommandMessage>) msg)
+				((MeerkatDatagram<ProvisioningCommandMessage>) msg)
 						.getMessage().executeCommands(response);
 
-				ctx.writeAndFlush(new PeacockDatagram<ProvisioningResponseMessage>(
+				ctx.writeAndFlush(new MeerkatDatagram<ProvisioningResponseMessage>(
 						response));
 			} else if (messageType.equals(MessageType.PACKAGE_INFO)) {
 				ctx.writeAndFlush("Start OS Package collecting...");
@@ -162,20 +162,20 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 					packageFile = PropertyUtil
 							.getProperty(MeerkatConstant.PACKAGE_FILE_KEY);
 				} catch (Exception e) {
-					LOGGER.error("Peacock Error", e);
+					LOGGER.error("Meerkat Error", e);
 				} finally {
 					if (StringUtils.isEmpty(packageFile)) {
-						packageFile = "/peacock/agent/config/package.log";
+						packageFile = "/meerkat/agent/config/package.log";
 					}
 				}
 
 				new PackageGatherThread(ctx, packageFile).start();
 			} else if (messageType.equals(MessageType.INITIAL_INFO)) {
-				machineId = ((PeacockDatagram<AgentInitialInfoMessage>) msg)
+				machineId = ((MeerkatDatagram<AgentInitialInfoMessage>) msg)
 						.getMessage().getAgentId();
-				String packageCollected = ((PeacockDatagram<AgentInitialInfoMessage>) msg)
+				String packageCollected = ((MeerkatDatagram<AgentInitialInfoMessage>) msg)
 						.getMessage().getPackageCollected();
-				String softwareInstalled = ((PeacockDatagram<AgentInitialInfoMessage>) msg)
+				String softwareInstalled = ((MeerkatDatagram<AgentInitialInfoMessage>) msg)
 						.getMessage().getSoftwareInstalled();
 
 				String agentFile = null;
@@ -185,15 +185,15 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 					agentFile = PropertyUtil
 							.getProperty(MeerkatConstant.AGENT_ID_FILE_KEY);
 				} catch (Exception e) {
-					LOGGER.error("Peacock Error", e);
+					LOGGER.error("Meerkat Error", e);
 				} finally {
 					if (StringUtils.isEmpty(agentFile)) {
-						agentFile = "/peacock/agent/.agent";
+						agentFile = "/meerkat/agent/.agent";
 					}
 				}
 
 				if (StringUtils.isEmpty(agentFile)) {
-					agentFile = "/peacock/agent/.agent";
+					agentFile = "/meerkat/agent/.agent";
 				}
 
 				File file = new File(agentFile);
@@ -241,15 +241,15 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 							packageFile = PropertyUtil
 									.getProperty(MeerkatConstant.PACKAGE_FILE_KEY);
 						} catch (Exception e) {
-							LOGGER.error("Peacock Error", e);
+							LOGGER.error("Meerkat Error", e);
 						} finally {
 							if (StringUtils.isEmpty(packageFile)) {
-								packageFile = "/peacock/agent/config/package.log";
+								packageFile = "/meerkat/agent/config/package.log";
 							}
 						}
 
 						if (StringUtils.isEmpty(packageFile)) {
-							packageFile = "/peacock/agent/config/package.log";
+							packageFile = "/meerkat/agent/config/package.log";
 						}
 
 						file = new File(packageFile);
@@ -305,7 +305,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 
 		// 서버와의 연결이 종료되면 5초 단위로 재접속을 수행한다.
 		if (client == null) {
-			client = AppContext.getBean(PeacockClient.class);
+			client = AppContext.getBean(MeerkatClient.class);
 		}
 
 		final EventLoop eventLoop = ctx.channel().eventLoop();
@@ -358,7 +358,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 	 * 
 	 * @param datagram
 	 */
-	public void sendMessage(PeacockDatagram<?> datagram) {
+	public void sendMessage(MeerkatDatagram<?> datagram) {
 		// Agent가 Controller로 메시지를 전송하는 경우는 Monitoring 정보를 수집하여 전송하는 경우 밖에 없으며,
 		// Agent는 하나만 동작하므로 어떤 체널로 전송이 되는 관계 없음.
 		getAnyChannel().writeAndFlush(datagram);
@@ -372,7 +372,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 	 * @return
 	 * @throws Exception
 	 */
-	private PeacockDatagram<AgentInitialInfoMessage> getAgentInitialInfo()
+	private MeerkatDatagram<AgentInitialInfoMessage> getAgentInitialInfo()
 			throws Exception {
 		String agentId = IOUtils.toString(new File(PropertyUtil
 				.getProperty(MeerkatConstant.AGENT_ID_FILE_KEY)).toURI());
@@ -400,7 +400,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 					e.getMessage());
 		}
 
-		return new PeacockDatagram<AgentInitialInfoMessage>(message);
+		return new MeerkatDatagram<AgentInitialInfoMessage>(message);
 	}// end of getAgentInitialInfo()
 
 	/**
@@ -517,7 +517,7 @@ public class PeacockClientHandler extends SimpleChannelInboundHandler<Object> {
 	// end of ChannelManagement.java
 }
 
-// end of PeacockClientHandler.java
+// end of MeerkatClientHandler.java
 
 /**
  * <pre>
@@ -591,7 +591,7 @@ class PackageGatherThread extends Thread {
 				IOUtils.closeQuietly(fw);
 
 				if (msg.getPackageInfoList().size() > 0) {
-					ctx.writeAndFlush(new PeacockDatagram<OSPackageInfoMessage>(
+					ctx.writeAndFlush(new MeerkatDatagram<OSPackageInfoMessage>(
 							msg));
 				}
 
@@ -1111,7 +1111,7 @@ class SoftwareGatherThread extends Thread {
 			}
 
 			if (msg.getSoftwareInfoList().size() > 0) {
-				ctx.writeAndFlush(new PeacockDatagram<SoftwareInfoMessage>(msg));
+				ctx.writeAndFlush(new MeerkatDatagram<SoftwareInfoMessage>(msg));
 			}
 		} catch (Exception e) {
 			LOGGER.error("Unhandled Exception has occurred. ", e);

@@ -24,12 +24,12 @@ import java.util.UUID;
 
 /**
  * <pre>
- * Peacock Agent의 ID 생성을 위한 제너레이터 클래스
+ * Meerkat Agent의 ID 생성을 위한 제너레이터 클래스
  * </pre>
  * @author Sang-cheon Park
  * @version 1.0
  */
-public final class PeacockAgentIDGenerator {
+public final class MeerkatAgentIDGenerator {
 	
 	/**
 	 * <pre>
@@ -61,4 +61,4 @@ public final class PeacockAgentIDGenerator {
 		return id;
 	}//end of generateId()
 }
-//end of PeacockAgentIDGenerator.java
+//end of MeerkatAgentIDGenerator.java

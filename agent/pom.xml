@@ -31,7 +31,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.athena.peacock.agent.Starter</mainClass>
+							<mainClass>com.athena.meerkat.agent.Starter</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
