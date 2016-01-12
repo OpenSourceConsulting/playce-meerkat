@@ -1,2 +1,2 @@
 #!/bin/sh
-tail -f log/athena-peacock-agent.log
+tail -f log/athena-meerkat-agent.log

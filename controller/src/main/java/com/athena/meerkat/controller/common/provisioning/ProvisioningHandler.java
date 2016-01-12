@@ -49,11 +49,11 @@ import com.athena.meerkat.common.core.action.FileWriteAction;
 import com.athena.meerkat.common.core.action.ShellAction;
 import com.athena.meerkat.common.core.action.support.Property;
 import com.athena.meerkat.common.core.command.Command;
-import com.athena.meerkat.common.netty.PeacockDatagram;
+import com.athena.meerkat.common.netty.MeerkatDatagram;
 import com.athena.meerkat.common.netty.message.AbstractMessage;
 import com.athena.meerkat.common.netty.message.ProvisioningCommandMessage;
 import com.athena.meerkat.common.netty.message.ProvisioningResponseMessage;
-import com.athena.meerkat.controller.netty.PeacockTransmitter;
+import com.athena.meerkat.controller.netty.MeerkatTransmitter;
 //import com.athena.meerkat.controller.web.ceph.CephService;
 //import com.athena.meerkat.controller.web.ceph.base.CephDto;
 //import com.athena.meerkat.controller.web.config.ConfigDto;
@@ -77,8 +77,8 @@ public class ProvisioningHandler {
 			.getLogger(ProvisioningHandler.class);
 
 	@Inject
-	@Named("peacockTransmitter")
-	private PeacockTransmitter peacockTransmitter;
+	@Named("meerkatTransmitter")
+	private MeerkatTransmitter meerkatTransmitter;
 
 	public void install(ProvisioningDetail provisioningDetail) throws Exception {
 		tomcatInstall(provisioningDetail);
@@ -482,26 +482,25 @@ public class ProvisioningHandler {
 		// Add Set chkconfig & Start service Command
 		cmdMsg.addCommand(command);
 
-		// new InstallThread(peacockTransmitter, null, cmdMsg, null, null, null,
-		// null).start();
+		new InstallThread(meerkatTransmitter, cmdMsg).start();
 	}
 
 	private void tomcatRemove(ProvisioningDetail provisioningDetail)
 			throws Exception {
-		//
-		// ProvisioningCommandMessage cmdMsg = new ProvisioningCommandMessage();
-		// cmdMsg.setAgentId(provisioningDetail.getMachineId());
-		// cmdMsg.setBlocking(true);
-		//
-		// Command command = new Command("Uninstall");
-		// int sequence = 0;
-		//
-		// ShellAction sAction = new ShellAction(sequence++);
-		// sAction.setCommand("service");
-		// sAction.addArguments("jbossews");
-		// sAction.addArguments("stop");
-		// command.addAction(sAction);
-		//
+
+		ProvisioningCommandMessage cmdMsg = new ProvisioningCommandMessage();
+		cmdMsg.setAgentId(provisioningDetail.getMachineId());
+		cmdMsg.setBlocking(true);
+
+		Command command = new Command("Uninstall");
+		int sequence = 0;
+
+		ShellAction sAction = new ShellAction(sequence++);
+		sAction.setCommand("service");
+		sAction.addArguments("jbossews");
+		sAction.addArguments("stop");
+		command.addAction(sAction);
+
 		// for (ConfigDto configDto : configList) {
 		// sAction = new ShellAction(sequence++);
 		// sAction.setCommand("rm");
@@ -528,9 +527,10 @@ public class ProvisioningHandler {
 		// ***************************************************************/
 		// software.setInstallStat("UNINSTALLING");
 		//
-		// new UninstallThread(peacockTransmitter, softwareService,
+		// new UninstallThread(meerkatTransmitter, softwareService,
 		// configService,
 		// cmdMsg, software, config).start();
+		new UninstallThread(meerkatTransmitter, cmdMsg).start();
 	}
 
 	private String ewsPasswordEncrypt(String password) {
@@ -555,7 +555,7 @@ class InstallThread extends Thread {
 	protected final Logger LOGGER = LoggerFactory
 			.getLogger(InstallThread.class);
 
-	private final PeacockTransmitter peacockTransmitter;
+	private final MeerkatTransmitter meerkatTransmitter;
 	// private final SoftwareService softwareService;
 	private final ProvisioningCommandMessage cmdMsg;
 
@@ -564,13 +564,13 @@ class InstallThread extends Thread {
 	// private final CephService cephService;
 	// private final CephDto cephDto;
 
-	// public InstallThread(PeacockTransmitter peacockTransmitter,
+	// public InstallThread(meerkatTransmitter meerkatTransmitter,
 	// SoftwareService softwareService, ProvisioningCommandMessage cmdMsg,
 	// SoftwareDto software, List<ConfigDto> configList,
 	// CephService cephService, CephDto cephDto) {
-	public InstallThread(PeacockTransmitter peacockTransmitter,
+	public InstallThread(MeerkatTransmitter meerkatTransmitter,
 			ProvisioningCommandMessage cmdMsg) {
-		this.peacockTransmitter = peacockTransmitter;
+		this.meerkatTransmitter = meerkatTransmitter;
 		// this.softwareService = softwareService;
 		this.cmdMsg = cmdMsg;
 		// this.software = software;
@@ -584,13 +584,13 @@ class InstallThread extends Thread {
 		try {
 			// softwareService.insertSoftware(software);
 
-			PeacockDatagram<AbstractMessage> datagram = new PeacockDatagram<AbstractMessage>(
+			MeerkatDatagram<AbstractMessage> datagram = new MeerkatDatagram<AbstractMessage>(
 					cmdMsg);
-			ProvisioningResponseMessage response = peacockTransmitter
+			ProvisioningResponseMessage response = meerkatTransmitter
 					.sendMessage(datagram);
 
 			// LOGGER.debug("[{}] Installed.", software.getSoftwareName());
-
+			LOGGER.debug("[{}] Installed.", "software.getSoftwareName()");
 			StringBuilder sb = new StringBuilder("");
 			List<String> commands = response.getCommands();
 			List<String> results = response.getResults();
@@ -678,7 +678,7 @@ class UninstallThread extends Thread {
 	protected final Logger LOGGER = LoggerFactory
 			.getLogger(UninstallThread.class);
 
-	private final PeacockTransmitter peacockTransmitter;
+	private final MeerkatTransmitter meerkatTransmitter;
 	// private final SoftwareService softwareService;
 	// private final ConfigService configService;
 	private final ProvisioningCommandMessage cmdMsg;
@@ -686,14 +686,14 @@ class UninstallThread extends Thread {
 	// private final SoftwareDto software;
 	// private final ConfigDto config;
 
-	// public UninstallThread(PeacockTransmitter peacockTransmitter,
+	// public UninstallThread(meerkatTransmitter meerkatTransmitter,
 	// SoftwareService softwareService, ConfigService configService,
 	// ProvisioningCommandMessage cmdMsg, SoftwareDto software,
 	// ConfigDto config) {
 	//
-	public UninstallThread(PeacockTransmitter peacockTransmitter,
+	public UninstallThread(MeerkatTransmitter meerkatTransmitter,
 			ProvisioningCommandMessage cmdMsg) {
-		this.peacockTransmitter = peacockTransmitter;
+		this.meerkatTransmitter = meerkatTransmitter;
 		// this.softwareService = softwareService;
 		// this.configService = configService;
 		this.cmdMsg = cmdMsg;
@@ -706,9 +706,9 @@ class UninstallThread extends Thread {
 		try {
 			// softwareService.updateSoftware(software);
 
-			PeacockDatagram<AbstractMessage> datagram = new PeacockDatagram<AbstractMessage>(
+			MeerkatDatagram<AbstractMessage> datagram = new MeerkatDatagram<AbstractMessage>(
 					cmdMsg);
-			ProvisioningResponseMessage response = peacockTransmitter
+			ProvisioningResponseMessage response = meerkatTransmitter
 					.sendMessage(datagram);
 
 			// LOGGER.debug("[{}] Uninstalled.", software.getSoftwareName());

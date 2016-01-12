@@ -1,0 +1,67 @@
+#! /bin/bash
+# Meerkat Agent chkconfig
+###
+# chkconfig: 235 98 55
+# description: Manages the meerkat services
+###
+
+prog=meerkat-agent
+
+start() {
+        echo -n $"Starting $prog: "
+        cd /meerkat/agent
+        sh start_notail.sh
+
+        case "$(ps -ef | grep java | grep -v grep | grep com.athena.meerkat.agent.Starter | wc -l)" in
+        0) echo "... [FAILED]"
+           ;;
+        1) echo "... [OK]"
+           ;;
+        *) echo "Kill duplicated Meerkat-Agent process."
+           kill -9 $(ps -ef | grep java | grep -v grep | grep com.athena.meerkat.agent.Starter | awk {'print $2'})
+           ;;
+        esac
+
+        return 0
+}
+
+stop() {
+        echo -n $"Stopping $prog: "
+
+        case "$(ps -ef | grep java | grep -v grep | grep com.athena.meerkat.agent.Starter | wc -l)" in
+        0) echo "Meerkat-Agent is not running."
+           return 0
+           ;;
+        1) ;;
+        *) ;;
+        esac
+
+        /meerkat/agent/kill.sh 2> /dev/null
+
+        case "$(ps -ef | grep java | grep -v grep | grep com.athena.meerkat.agent.Starter | wc -l)" in
+        0) echo "... [OK]"
+           ;;
+        1) echo "... [FAILED]"
+           ;;
+        *) echo "... [FAILED]"
+           ;;
+        esac
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        stop
+        start
+        ;;
+  *)
+        echo "Usage: /sbin/service meerkat-agent {start|stop|restart}"
+        exit 1
+esac
+
+exit 0

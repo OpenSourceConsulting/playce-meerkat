@@ -69,15 +69,15 @@ else
 	JAVA_HOME=/usr/java/jdk1.7.0_09
 fi
 
-PID=`ps -ef | grep java | grep "com.athena.peacock.agent.Starter" | awk '{print $2}'`
+PID=`ps -ef | grep java | grep "com.athena.meerkat.agent.Starter" | awk '{print $2}'`
 
 if [ e$PID != "e" ] ; then
-    echo "Peacock Client(Agent) is already RUNNING..."
+    echo "Meerkat Client(Agent) is already RUNNING..."
     exit;
 fi
 
 if [ $JAVA_HOME ] ; then
-	nohup $JAVA_HOME/bin/java -cp .:lib/* com.athena.peacock.agent.Starter > /dev/null 2>&1 &
+	nohup $JAVA_HOME/bin/java -cp .:lib/* com.athena.meerkat.agent.Starter > /dev/null 2>&1 &
 else
-	nohup java -cp .:lib/* com.athena.peacock.agent.Starter > /dev/null 2>&1 &
+	nohup java -cp .:lib/* com.athena.meerkat.agent.Starter > /dev/null 2>&1 &
 fi

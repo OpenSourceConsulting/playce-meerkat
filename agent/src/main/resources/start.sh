@@ -46,7 +46,7 @@ else
 			:
 		else
 			$JAVA_EXE -version 2> tmp.ver 1> /dev/null
-			VERSION=`cat tmp.ver | grep "java version" | awk '{ print substr($3, 2, length($3)-2); }'`
+			VERSION=`cat tmp.ver | grep "openjdk version" | awk '{ print substr($3, 2, length($3)-2); }'`
 			rm tmp.ver
 			VERSION=`echo $VERSION | awk '{ print substr($1, 1, 3); }' | sed -e 's;\.;0;g'`
 			if [ $VERSION ]
@@ -69,17 +69,17 @@ else
 	JAVA_HOME=/usr/java/jdk1.7.0_09
 fi
 
-PID=`ps -ef | grep java | grep "com.athena.peacock.agent.Starter" | awk '{print $2}'`
+PID=`ps -ef | grep java | grep "com.athena.meerkat.agent.Starter" | awk '{print $2}'`
 
 if [ e$PID != "e" ] ; then
-    echo "Peacock Client(Agent) is already RUNNING..."
+    echo "Meerkat Client(Agent) is already RUNNING..."
     exit;
 fi
 
 if [ $JAVA_HOME ] ; then
-	nohup $JAVA_HOME/bin/java -cp .:lib/* com.athena.peacock.agent.Starter > /dev/null 2>&1 &
+	nohup $JAVA_HOME/bin/java -cp .:lib/* com.athena.meerkat.agent.Starter > /dev/null 2>&1 &
 else
-	nohup java -cp .:lib/* com.athena.peacock.agent.Starter > /dev/null 2>&1 &
+	nohup java -cp .:lib/* com.athena.meerkat.agent.Starter > /dev/null 2>&1 &
 fi
 sleep 1
-tail -f log/athena-peacock-agent.log
+tail -f log/athena-meerkat-agent.log
