@@ -70,6 +70,10 @@ public class SystemMonitoringJob extends BaseJob {
 	@Override
 	protected void executeInternal(JobExecution context) throws InternalJobExecutionException {
 		
+//		System.out.println("============= executeInternal() =============");
+//		System.out.println(meerkatTransmitter);
+//		System.out.println(meerkatTransmitter.isConnected());
+		
 		if (!meerkatTransmitter.isConnected()) {
 			return;
 		}

@@ -124,6 +124,12 @@ public class MeerkatClient implements ApplicationContextAware {
 		if (AppContext.getApplicationContext() == null) {
 			AppContext.setApplicationContext(ctx);
 		}
+		
+//		String[] beans = ctx.getBeanDefinitionNames();
+//		
+//		System.out.println("==========================================");
+//		for (String name : beans) 
+//			System.out.println(name);
 	}
 }
 // end of MeerkatClient.java

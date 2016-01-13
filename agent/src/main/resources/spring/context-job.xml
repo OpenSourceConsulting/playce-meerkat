@@ -25,6 +25,6 @@
     <bean id="systemMonitoringTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="systemMonitoringJobDetail"/>
         <!-- Every minutes -->
-        <property name="cronExpression" value="${random.seconds} * * * * ?"/>
+        <property name="cronExpression" value="0/10 * * * * ?"/>
     </bean>
 </beans>
