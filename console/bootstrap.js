@@ -878,12 +878,16 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.controller.footerController": [],
   "webapp.controller.globalController": [],
   "webapp.controller.headerController": [],
+  "webapp.model.DatagridServerGroupModel": [],
   "webapp.model.DomainModel": [],
+  "webapp.model.MachineModel": [],
   "webapp.model.SessionKeyData": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [],
   "webapp.model.UserRoleModel": [],
+  "webapp.store.DatagridServerGroupStore": [],
   "webapp.store.DomainStore": [],
+  "webapp.store.MachineStore": [],
   "webapp.store.MenuTreeStore": [],
   "webapp.store.TempoStore": [],
   "webapp.store.TomcatInstanceListStore": [],
@@ -899,6 +903,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.DetailMonitoringMachineContainer": [],
   "webapp.view.DetailMonitoringTomcatInstance": [],
   "webapp.view.DomainContainer": [],
+  "webapp.view.DomainWindow": [],
   "webapp.view.LinkNewDataSourceWindow": [],
   "webapp.view.MonitoringMachineContainer": [],
   "webapp.view.MonitoringTomcatInstance": [],
@@ -1935,14 +1940,18 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.controller.footerController": [],
   "webapp.controller.globalController": [],
   "webapp.controller.headerController": [],
+  "webapp.model.DatagridServerGroupModel": [],
   "webapp.model.DomainModel": [],
+  "webapp.model.MachineModel": [],
   "webapp.model.SessionKeyData": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [
     "model.UserModel"
   ],
   "webapp.model.UserRoleModel": [],
+  "webapp.store.DatagridServerGroupStore": [],
   "webapp.store.DomainStore": [],
+  "webapp.store.MachineStore": [],
   "webapp.store.MenuTreeStore": [],
   "webapp.store.TempoStore": [],
   "webapp.store.TomcatInstanceListStore": [],
@@ -1969,6 +1978,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "webapp.view.DomainContainer": [
     "widget.domaincontainer"
+  ],
+  "webapp.view.DomainWindow": [
+    "widget.DomainWindow"
   ],
   "webapp.view.LinkNewDataSourceWindow": [
     "widget.LinkNewDataSourceWindow"

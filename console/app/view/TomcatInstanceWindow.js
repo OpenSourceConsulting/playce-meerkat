@@ -17,7 +17,7 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.TomcatInstanceWindow',
 
-    height: 406,
+    height: 591,
     id: 'TomcatInstanceWindow',
     itemId: 'TomcatInstanceWindow',
     width: 565,
@@ -31,88 +31,161 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         var me = this;
 
         Ext.applyIf(me, {
-            dockedItems: [
+            items: [
                 {
-                    xtype: 'container',
+                    xtype: 'form',
                     flex: 1,
-                    dock: 'top',
-                    margin: '10 0 10 10',
-                    items: [
+                    id: 'tomcatForm',
+                    bodyPadding: 10,
+                    title: '',
+                    dockedItems: [
                         {
-                            xtype: 'combobox',
-                            width: 399,
-                            fieldLabel: 'Domain'
+                            xtype: 'container',
+                            dock: 'top',
+                            margin: '10 0 10 10',
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    width: 399,
+                                    fieldLabel: 'Domain',
+                                    displayField: 'name',
+                                    store: 'DomainStore',
+                                    valueField: 'id',
+                                    listeners: {
+                                        select: {
+                                            fn: me.onComboboxSelect,
+                                            scope: me
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'displayfield',
+                                    id: 'domainTypeDisplayField',
+                                    fieldLabel: 'Domain type:'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    width: 400,
+                                    fieldLabel: 'Instance name'
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: 'serverComboBox',
+                                    width: 399,
+                                    fieldLabel: 'Server',
+                                    displayField: 'name',
+                                    store: 'MachineStore',
+                                    valueField: 'id'
+                                },
+                                {
+                                    xtype: 'container',
+                                    layout: {
+                                        align: 'stretch',
+                                        type: 'hbox'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'Test server connection',
+                                            listeners: {
+                                                click: {
+                                                    fn: me.onButtonClick,
+                                                    scope: me
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'displayfield',
+                                            id: 'serverStatusDisplayField',
+                                            margin: '0 0 0 20',
+                                            fieldLabel: 'Server status'
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
-                            xtype: 'displayfield',
-                            fieldLabel: 'Domain type:',
-                            value: 'Display Field'
+                            xtype: 'container',
+                            dock: 'top',
+                            margin: '10 0 10 10',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    width: 399,
+                                    fieldLabel: 'JAVA_HOME'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    width: 400,
+                                    fieldLabel: 'HTTP_PORT'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    width: 399,
+                                    fieldLabel: 'AJP_PORT'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    width: 399,
+                                    fieldLabel: 'SHUTDOWN_PORT',
+                                    labelWidth: 120
+                                }
+                            ]
                         },
                         {
-                            xtype: 'textfield',
-                            width: 400,
-                            fieldLabel: 'Instance name'
+                            xtype: 'gridpanel',
+                            dock: 'top',
+                            margin: '10 10 10 10',
+                            title: 'Data source',
+                            forceFit: true,
+                            columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'string',
+                                    text: 'Select'
+                                },
+                                {
+                                    xtype: 'numbercolumn',
+                                    dataIndex: 'number',
+                                    text: 'Name'
+                                },
+                                {
+                                    xtype: 'datecolumn',
+                                    dataIndex: 'date',
+                                    text: 'JDBC Url'
+                                },
+                                {
+                                    xtype: 'booleancolumn',
+                                    dataIndex: 'bool',
+                                    text: 'Servers'
+                                }
+                            ]
                         },
                         {
-                            xtype: 'combobox',
-                            width: 399,
-                            fieldLabel: 'Server'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'gridpanel',
-                    flex: 1,
-                    dock: 'top',
-                    margin: '10 10 10 10',
-                    title: 'Data source',
-                    forceFit: true,
-                    columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'string',
-                            text: 'Select'
+                            xtype: 'checkboxfield',
+                            dock: 'top',
+                            fieldLabel: '',
+                            boxLabel: 'Automatically start tomcat after being created'
                         },
                         {
-                            xtype: 'numbercolumn',
-                            dataIndex: 'number',
-                            text: 'Name'
-                        },
-                        {
-                            xtype: 'datecolumn',
-                            dataIndex: 'date',
-                            text: 'JDBC Url'
-                        },
-                        {
-                            xtype: 'booleancolumn',
-                            dataIndex: 'bool',
-                            text: 'Servers'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'checkboxfield',
-                    flex: 0.5,
-                    dock: 'top',
-                    fieldLabel: '',
-                    boxLabel: 'Automatically start tomcat after being created'
-                },
-                {
-                    xtype: 'container',
-                    dock: 'top',
-                    layout: {
-                        type: 'column'
-                    },
-                    items: [
-                        {
-                            xtype: 'button',
-                            margin: '0 0 0 200',
-                            text: 'Create'
-                        },
-                        {
-                            xtype: 'button',
-                            margin: '0 0 0 10',
-                            text: 'Cancel'
+                            xtype: 'container',
+                            dock: 'top',
+                            layout: {
+                                type: 'column'
+                            },
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    id: 'btnNewTomcatSubmit',
+                                    margin: '0 0 0 200',
+                                    text: 'Create'
+                                },
+                                {
+                                    xtype: 'button',
+                                    margin: '0 0 0 10',
+                                    text: 'Cancel'
+                                }
+                            ]
                         }
                     ]
                 }
@@ -120,6 +193,41 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         });
 
         me.callParent(arguments);
+    },
+
+    onComboboxSelect: function(combo, records, eOpts) {
+        if (records[0].get("clustering")) {
+           Ext.getCmp("domainTypeDisplayField").setValue("Clustering");
+        }else {
+            Ext.getCmp("domainTypeDisplayField").setValue("Non-Clustering");
+        }
+    },
+
+    onButtonClick: function(button, e, eOpts) {
+        var form = Ext.getCmp('tomcatForm');
+        var server = form.getForm().findField("serverComboBox");
+        var serverId = server.getValue();
+        var url = GlobalData.urlPrefix + "machine/testConnection";
+        var serverStatus = Ext.getCmp("serverStatusDisplayField");
+        var btnSubmit = Ext.getCmp("btnNewTomcatSubmit");
+         Ext.Ajax.request({
+             url: url,
+             params: {"id": serverId},
+             success: function(resp, ops) {
+                 var response = Ext.decode(resp.responseText);
+                 if (response === true){
+                     serverStatus.setValue("Connection success!");
+                     serverStatus.setFieldStyle("color:blue");
+                     btnSubmit.enable();
+                 }
+                 else {
+                     serverStatus.setValue("Connection fail!");
+                     serverStatus.setFieldStyle("color:red");
+                     btnSubmit.disable();
+                 }
+             },
+             method: "GET"
+         });
     }
 
 });

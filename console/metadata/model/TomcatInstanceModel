@@ -31,7 +31,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "instanceName",
+                "name": "name",
                 "type": "string"
             },
             "designerId": "dee15273-de16-48f6-8819-8a5b4e7eb5ef"
@@ -44,7 +44,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "ipAddr",
+                "name": "ipaddress",
                 "type": "string"
             },
             "designerId": "35040f1f-4f24-427b-ae33-fa882729cfb5"
@@ -135,7 +135,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "state",
+                "name": "statusString",
                 "type": "string"
             },
             "designerId": "87344bc0-48e5-4c3c-a092-608cef6c7409"
@@ -152,6 +152,19 @@
                 "type": "int"
             },
             "designerId": "89cc2ba2-a681-4e31-ba01-becd7dc3a2d5"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "hostName",
+                "type": "string"
+            },
+            "designerId": "922e2cdd-3159-4895-a8cb-634adcd701be"
         }
     ]
 }

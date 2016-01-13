@@ -79,20 +79,6 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "password",
-                        "text": "Pasword",
-                        "width": 186
-                    },
-                    "designerId": "d8475960-ddd4-403c-808b-bdc8b0f60869"
-                },
-                {
-                    "type": "Ext.grid.column.Column",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
                         "dataIndex": "email",
                         "text": "Email",
                         "width": 208
@@ -182,8 +168,11 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "emptyText": "User ID",
                                 "fieldLabel": "Filtering",
-                                "layout|flex": null
+                                "itemId": "mytextfield",
+                                "layout|flex": null,
+                                "name": "SearchTextField"
                             },
                             "designerId": "bdbd5c68-bcda-431e-95bc-11d282026bec"
                         }
@@ -244,12 +233,10 @@
                             "        click: function( _menu, _item, _e, _eOpts ) {",
                             "           switch (_item.id) {",
                             "                case 'edit-user':",
-                            "",
-                            "                   Ext.app.Controller.getController(\"UserController\").showUserWindow(\"edit\", 1);",
-                            "                   // Ext.app.getController(\"UserController\").showUserWindow(\"edit\", 1);",
+                            "                   webapp.app.getController(\"UserController\").showUserWindow(\"edit\", record.get(\"id\"));",
                             "                    break;",
                             "                case 'delete-user':",
-                            "                    alert(\"Delete user\");",
+                            "                    webapp.app.getController(\"UserController\").deleteUser(record.get(\"id\"));",
                             "                    break;",
                             "                default:",
                             "                    break;",
@@ -335,45 +322,6 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dock": "top"
-                    },
-                    "designerId": "c4f3f353-18e0-46b1-a1b4-3062e1a865bb",
-                    "cn": [
-                        {
-                            "type": "Ext.toolbar.Separator",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "layout|flex": null
-                            },
-                            "designerId": "64a96e4b-9f16-4d18-9c7d-9fd321f6498e"
-                        },
-                        {
-                            "type": "Ext.form.field.Text",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "fieldLabel": "Filtering",
-                                "layout|flex": null
-                            },
-                            "designerId": "84f7e6ea-3567-4ee1-bf50-ec2b503bf3e5"
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.toolbar.Toolbar",
-                    "reference": {
-                        "name": "dockedItems",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
                         "dock": "bottom"
                     },
                     "designerId": "cfd46046-283b-4dec-a994-68207e7ddea4",
@@ -394,61 +342,6 @@
                             "designerId": "f2d02e21-d78d-4969-a250-e08f641d4144"
                         }
                     ]
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onGridpanelItemContextMenu1",
-                        "implHandler": [
-                            "var mnuContext = Ext.create(\"Ext.menu.Menu\",{",
-                            "",
-                            "    items: [{",
-                            "        id: 'edit-user',",
-                            "        text: 'Edit'",
-                            "    },",
-                            "    {",
-                            "        id: 'delete-user',",
-                            "        text: 'Delete'",
-                            "    }",
-                            "           ],",
-                            "    listeners: {",
-                            "",
-                            "        click: function( _menu, _item, _e, _eOpts ) {",
-                            "           switch (_item.id) {",
-                            "                case 'edit-user':",
-                            "",
-                            "                   Ext.app.Controller.getController(\"UserController\").showUserWindow(\"edit\", 1);",
-                            "                   // Ext.app.getController(\"UserController\").showUserWindow(\"edit\", 1);",
-                            "                    break;",
-                            "                case 'delete-user':",
-                            "                    alert(\"Delete user\");",
-                            "                    break;",
-                            "                default:",
-                            "                    break;",
-                            "           }",
-                            "        },",
-                            "        hide:function(menu){",
-                            "            menu.destroy();",
-                            "        }",
-                            "    },",
-                            "    defaults: {",
-                            "       clickHideDelay: 1",
-                            "    }",
-                            "});",
-                            "",
-                            "mnuContext.showAt(e.getXY());",
-                            "e.stopEvent();",
-                            ""
-                        ],
-                        "name": "itemcontextmenu",
-                        "scope": "me"
-                    },
-                    "designerId": "85a549d9-4f47-4178-ad08-9981b5f93da9"
                 }
             ]
         }

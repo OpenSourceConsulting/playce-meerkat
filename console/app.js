@@ -30,7 +30,8 @@ Ext.application({
         'TomcatInstanceModel',
         'UserRoleModel',
         'DomainModel',
-        'DatagridServerGroupModel'
+        'DatagridServerGroupModel',
+        'MachineModel'
     ],
     stores: [
         'sessionDataStore',
@@ -40,7 +41,8 @@ Ext.application({
         'UserStore',
         'UserRoleStore',
         'DomainStore',
-        'DatagridServerGroupStore'
+        'DatagridServerGroupStore',
+        'MachineStore'
     ],
     views: [
         'meerkatViewport',

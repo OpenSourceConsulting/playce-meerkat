@@ -27,11 +27,35 @@
                 "implHandler": [
                     "",
                     "var userWindow = Ext.create(\"widget.UserWindow\");",
-                    "userWindow.show();",
-                    "",
+                    "var submitButton = Ext.getCmp(\"btnSubmit\");",
                     "if (type === \"edit\"){",
-                    "    userWindow.title = \"Edit User\";",
-                    "}"
+                    "    userWindow.setTitle(\"Edit User\");",
+                    "    submitButton.setText(\"Save\");",
+                    "    var form = Ext.getCmp(\"userForm\");\t\t\t// user form",
+                    "",
+                    "    var userName = form.getForm().findField(\"UserIDTextField\");",
+                    "    var fullName = form.getForm().findField(\"FullNameTextField\");",
+                    "    var email = form.getForm().findField(\"EmailTextField\");",
+                    "    var userRole = form.getForm().findField(\"UserRoleDropdownList\");",
+                    "    var _id = form.getForm().findField(\"IDHiddenField\");",
+                    "    //load data to user form",
+                    "",
+                    "     Ext.Ajax.request({",
+                    "            url: GlobalData.urlPrefix + \"user/edit\",",
+                    "            params: {\"id\":user_id},",
+                    "            success: function(resp, ops) {",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                userName.setValue(response.userName);",
+                    "                fullName.setValue(response.fullName);",
+                    "                email.setValue(response.email);",
+                    "                userRole.setValue(response.userRole.id);",
+                    "                _id.setValue(user_id);",
+                    "            }",
+                    "        });",
+                    "",
+                    "}",
+                    "",
+                    "userWindow.show();"
                 ]
             },
             "designerId": "f3478ddc-55c8-4509-a9c8-96eafd0d51ee"
@@ -83,21 +107,68 @@
             },
             "codeClass": null,
             "userConfig": {
-                "designer|controlQuery": "#btnCreate",
+                "designer|controlQuery": "#btnSubmit",
                 "designer|targetType": "Ext.button.Button",
-                "fn": "onCreateUserButtonClick",
+                "fn": "onSubmitButtonClick",
                 "implHandler": [
                     "var form = Ext.getCmp(\"userForm\");\t\t\t// user form",
                     "var formWindow = Ext.getCmp('UserWindow');\t// Add user window",
                     "",
                     "var userName = form.getForm().findField(\"UserIDTextField\");",
                     "var password = form.getForm().findField(\"PasswordTextField\");",
-                    "var retype_password = form.getForm().findField(\"RetypePasswordTextField\");",
+                    "var retypePassword = form.getForm().findField(\"RetypePasswordTextField\");",
                     "var fullName = form.getForm().findField(\"FullNameTextField\");",
                     "var email = form.getForm().findField(\"EmailTextField\");",
                     "var userRole = form.getForm().findField(\"UserRoleDropdownList\");",
+                    "var _id = form.getForm().findField(\"IDHiddenField\");",
                     "",
-                    "if (password.getValue() !== retype_password.getValue()){",
+                    "var userNameVal = userName.getValue().trim();",
+                    "var passwordVal = password.getValue().trim();",
+                    "var retypePasswordVal = retypePassword.getValue().trim();",
+                    "var fullNameVal = fullName.getValue().trim();",
+                    "var emailVal = email.getValue().trim();",
+                    "var userRoleVal = userRole.getValue();",
+                    "var _idVal = _id.getValue();",
+                    "",
+                    "if (!this.validate(userNameVal, passwordVal, retypePasswordVal, fullNameVal, emailVal, userRoleVal)) {",
+                    "    return;",
+                    "}",
+                    "",
+                    "//submit new user request",
+                    "if (_idVal === \"\") {",
+                    "    _idVal = 0;",
+                    "",
+                    "}",
+                    "",
+                    "this.save({\"id\" : _idVal, \"userName\" : userNameVal,\"password\" : passwordVal, \"fullName\" : fullNameVal, \"email\":emailVal, \"userRole\":userRoleVal});",
+                    "",
+                    "",
+                    ""
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "designerId": "93f9bf02-fb53-40c7-ba45-5296fe7774a9"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "userName",
+                    "password",
+                    "retype_password",
+                    "fullName",
+                    "email",
+                    "userRole"
+                ],
+                "fn": "validate",
+                "implHandler": [
+                    "if (password !== retype_password){",
                     "    Ext.Msg.show({",
                     "        title: \"Message\",",
                     "        msg: \"Password and Retype password are not match.\",",
@@ -107,30 +178,47 @@
                     "        },",
                     "        icon: Ext.Msg.WARNING",
                     "    });",
-                    "    return;",
+                    "    return false;",
                     "}",
                     "",
-                    "if (userName.getValue() ===\"\" || password.getValue() ===\"\" || retype_password.getValue() ===\"\"||fullName.getValue() ===\"\" ||email.getValue() ===\"\"||userRole.getValue()< 0){",
+                    "if (userName === \"\" || password === \"\" || retype_password === \"\"||fullName === \"\" ||email === \"\"||userRole < 0){",
                     "    Ext.Msg.show({",
                     "        title: \"Message\",",
                     "        msg: \"Invalid data.\",",
                     "        buttons: Ext.Msg.OK,",
                     "        icon: Ext.Msg.WARNING",
                     "    });",
-                    "    return;",
+                    "    return false;",
                     "}",
-                    "",
-                    "//submit new user request",
-                    "",
-                    " Ext.Ajax.request({",
-                    "        url: GlobalData.urlPrefix + \"user/new\",",
-                    "     params: {\"userID\":userName.getValue(),\"password\":password.getValue(), \"fullName\":fullName.getValue(),\"email\":email.getValue(),\"userRole\":userRole.getValue() },",
-                    "        success: function(resp, ops) {",
+                    "return true;"
+                ]
+            },
+            "designerId": "ac2dd74f-c435-418f-8334-ea8f26a1dbe9"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "params"
+                ],
+                "fn": "save",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"user/save\";",
+                    "var userWindow = Ext.getCmp('UserWindow');\t// Add user window",
+                    "Ext.Ajax.request({",
+                    "     url: url,",
+                    "     params: params,",
+                    "     success: function(resp, ops) {",
                     "",
                     "            var response = Ext.decode(resp.responseText);",
                     "            if(response===true){",
                     "                Ext.getStore(\"UserStore\").reload();",
-                    "                formWindow.close();",
+                    "                userWindow.close();",
                     "            }",
                     "            else {",
                     "                     Ext.Msg.show({",
@@ -143,12 +231,84 @@
                     "",
                     "        }",
                     "    });",
+                    "",
                     ""
+                ]
+            },
+            "designerId": "3c6f299c-cef5-4e49-9e8c-c065f70b152b"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id"
                 ],
-                "name": "click",
+                "fn": "deleteUser",
+                "implHandler": [
+                    " Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this user?', function(btn){",
+                    "",
+                    "     if(btn == \"yes\"){",
+                    "        Ext.Ajax.request({",
+                    "            url: GlobalData.urlPrefix+ \"/user/delete\",",
+                    "            params: {\"id\":id},",
+                    "            success: function(resp, ops) {",
+                    "",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                if(response===true){",
+                    "                    Ext.getStore(\"UserStore\").reload();",
+                    "                }",
+                    "                else {",
+                    "                    Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: \"User is not existed\",",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.WARNING",
+                    "                    });",
+                    "                }",
+                    "",
+                    "            }",
+                    "        });",
+                    "",
+                    "",
+                    "     }",
+                    " });"
+                ]
+            },
+            "designerId": "c98f1e85-4844-4eb2-94f6-318300bf189d"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mytextfield",
+                "designer|targetType": "Ext.form.field.Text",
+                "fn": "onTextfieldChange",
+                "implHandler": [
+                    "var store = Ext.getStore(\"UserStore\");",
+                    "var url = GlobalData.urlPrefix + \"user/search\";",
+                    "Ext.Ajax.request({",
+                    "     url: url,",
+                    "    params: {\"userID\":newValue},",
+                    "     success: function(resp, ops) {",
+                    "",
+                    "            var response = Ext.decode(resp.responseText);",
+                    "            Ext.getStore(\"UserStore\").loadData(response, false);",
+                    "     }",
+                    "    });"
+                ],
+                "name": "change",
                 "scope": "me"
             },
-            "designerId": "93f9bf02-fb53-40c7-ba45-5296fe7774a9"
+            "designerId": "ef9bb9d5-3ad3-43be-bd3a-4a5ca55788dd"
         }
     ]
 }

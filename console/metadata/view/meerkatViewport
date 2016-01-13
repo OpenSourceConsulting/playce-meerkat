@@ -82,7 +82,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "layout|flex": 0.5,
+                                "layout|flex": 0.75,
                                 "width": 150
                             },
                             "designerId": "0923a0df-9af4-44cc-b232-ef527624ad23",

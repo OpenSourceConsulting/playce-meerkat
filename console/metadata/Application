@@ -25,7 +25,9 @@
             "UserModel",
             "TomcatInstanceModel",
             "UserRoleModel",
-            "DomainModel"
+            "DomainModel",
+            "DatagridServerGroupModel",
+            "MachineModel"
         ],
         "name": "webapp",
         "requires": [
@@ -38,7 +40,9 @@
             "TempoStore",
             "UserStore",
             "UserRoleStore",
-            "DomainStore"
+            "DomainStore",
+            "DatagridServerGroupStore",
+            "MachineStore"
         ],
         "views": [
             "meerkatViewport",
@@ -61,7 +65,8 @@
             "ResourceManagementContainer",
             "MonitoringTomcatInstance",
             "ClusteringConfigurationWindow",
-            "ClusteringConfigurationComparingWindow"
+            "ClusteringConfigurationComparingWindow",
+            "DomainWindow"
         ]
     },
     "designerId": "application"

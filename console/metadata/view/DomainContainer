@@ -43,6 +43,7 @@
                         "fieldLabel": "Name",
                         "id": "domainNameField",
                         "labelWidth": 50,
+                        "name": "DomainNameField",
                         "value": [
                             "Domain 1"
                         ],
@@ -62,6 +63,7 @@
                         "fieldLabel": "Tomcat instances:",
                         "id": "tomcatInstancesField",
                         "labelWidth": 70,
+                        "name": "TomcatInstanceQuantityField",
                         "value": [
                             "4"
                         ],
@@ -81,6 +83,7 @@
                         "fieldLabel": "Type",
                         "id": "domainTypeField",
                         "labelWidth": 50,
+                        "name": "DomainTypeField",
                         "value": [
                             "Clustering"
                         ],
@@ -99,6 +102,7 @@
                         "designer|displayName": "DataGridServerGroupField",
                         "fieldLabel": "Data grid server group:",
                         "id": "datagridServerGroupField",
+                        "name": "DataGridServerGroupField",
                         "style": "{text-align:right;font-weight:bold;}",
                         "value": [
                             "Group 1"
@@ -122,7 +126,7 @@
             "userConfig": {
                 "activeTab": 0,
                 "id": "domainTomcatTab",
-                "itemId": "tomcatInstTabPanel",
+                "itemId": "domainTomcatTab",
                 "layout|flex": 8,
                 "layout|region": "center",
                 "layout|split": true
@@ -137,6 +141,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "id": "domainTabs",
                         "layout": "fit",
                         "title": "Tomcat instances"
                     },
@@ -149,6 +154,9 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "id": "tomcatTabConfig"
+                            },
                             "designerId": "72ce1feb-c46b-4d1d-93f5-99a3323f4c3c"
                         },
                         {
@@ -233,17 +241,16 @@
                         {
                             "type": "Ext.grid.Panel",
                             "reference": {
-                                "name": "dockedItems",
+                                "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "dock": "top",
                                 "forceFit": true,
-                                "height": 326,
+                                "store": "TomcatInstanceListStore",
                                 "title": ""
                             },
-                            "designerId": "8aae97f7-555a-4c5d-b8c2-41feb66e65f6",
+                            "designerId": "95cb7b1d-2a5c-4923-9179-06339ee0835e",
                             "cn": [
                                 {
                                     "type": "Ext.grid.column.Column",
@@ -253,62 +260,49 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "string",
-                                        "text": "No."
-                                    },
-                                    "designerId": "868429b0-48ea-4450-a591-e2773eeff6fe"
-                                },
-                                {
-                                    "type": "Ext.grid.column.Number",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "number",
+                                        "dataIndex": "name",
                                         "text": "Name"
                                     },
-                                    "designerId": "ae3f3100-a4d2-4280-b83f-9217f74d28fa"
+                                    "designerId": "dfa57689-f483-446e-a57d-ea75acc5866a"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Date",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "date",
-                                        "text": "Host name"
-                                    },
-                                    "designerId": "b0049ac8-9f43-43a3-850c-cf0bb1023c30"
-                                },
-                                {
-                                    "type": "Ext.grid.column.Boolean",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "ipaddress",
                                         "text": "IP Address"
                                     },
-                                    "designerId": "aefa924d-f6e7-4a47-bee8-7b8cb8160350"
+                                    "designerId": "7f4bf295-ba1c-40a5-b764-514c4dced790"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Boolean",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "hostName",
+                                        "text": "Host Name"
+                                    },
+                                    "designerId": "c3a395b8-c2ec-492e-808c-ab6bdfa63278"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "statusString",
                                         "text": "Status"
                                     },
-                                    "designerId": "08dbbb29-407d-44a8-ad6b-0e1fe8756866"
+                                    "designerId": "d8765ec3-2275-4c04-84e5-7777c7e66b78"
                                 },
                                 {
                                     "type": "Ext.grid.View",
@@ -317,23 +311,12 @@
                                         "type": "object"
                                     },
                                     "codeClass": null,
-                                    "designerId": "9ce5110e-f645-4a33-813a-3e168d05595e"
+                                    "userConfig": {
+                                        "id": "associatedTomcatListView"
+                                    },
+                                    "designerId": "ecd0205f-ebeb-4c45-b996-81423e4da8c4"
                                 }
                             ]
-                        },
-                        {
-                            "type": "Ext.toolbar.Paging",
-                            "reference": {
-                                "name": "dockedItems",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "displayInfo": true,
-                                "dock": "top",
-                                "width": 360
-                            },
-                            "designerId": "cc6b360b-c194-4766-8b3c-72da3af9a4f6"
                         }
                     ]
                 },
@@ -369,6 +352,7 @@
                             "userConfig": {
                                 "dock": "top",
                                 "forceFit": true,
+                                "id": "associatedApplicationListView",
                                 "title": ""
                             },
                             "designerId": "990b054d-db1a-4f0b-8509-ae715f25d11e",
@@ -681,6 +665,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "id": "clusteringConfigTab",
+                        "itemId": "clusteringConfigTab",
                         "layout": "fit",
                         "title": "Clustering configuration"
                     },
@@ -693,6 +679,10 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "hideMode": null,
+                                "id": "clusteringConfigHeader"
+                            },
                             "designerId": "eb5c320f-2fe1-4204-81af-482fea6f075e"
                         },
                         {

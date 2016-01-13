@@ -152,6 +152,20 @@
                     "designerId": "b0fb224e-107f-421a-94c0-7a16a615d824"
                 },
                 {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "layout|anchor": "100%",
+                        "name": "IDHiddenField"
+                    },
+                    "designerId": "be463b1b-444b-48cf-8998-d044cae35abd"
+                },
+                {
                     "type": "Ext.container.Container",
                     "reference": {
                         "name": "items",
@@ -179,8 +193,9 @@
                             "codeClass": null,
                             "userConfig": {
                                 "designer|createAlias": "",
-                                "designer|displayName": "BtnUserCreate",
-                                "itemId": "btnCreate",
+                                "designer|displayName": "BtnSubmit",
+                                "id": "btnSubmit",
+                                "itemId": "btnSubmit",
                                 "layout|margins": "10 10 10 10",
                                 "text": "Create"
                             },

@@ -17,9 +17,16 @@ Ext.define('webapp.view.DomainWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.DomainWindow',
 
-    height: 196,
+    requires: [
+        'Ext.grid.plugin.RowEditing'
+    ],
+
+    height: 435,
     id: 'domainWindow',
     width: 440,
+    layout: {
+        type: 'fit'
+    },
     title: 'New Domain',
 
     initComponent: function() {
@@ -60,14 +67,26 @@ Ext.define('webapp.view.DomainWindow', {
                                     name: 'DomainType',
                                     value: true,
                                     boxLabel: 'Clustering',
-                                    checked: true
+                                    checked: true,
+                                    listeners: {
+                                        change: {
+                                            fn: me.onDomainTypeClusteringChange,
+                                            scope: me
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'radiofield',
                                     id: 'domainTypeNoneClustering',
                                     name: 'DomainType',
                                     value: false,
-                                    boxLabel: 'Non-clustering'
+                                    boxLabel: 'Non-clustering',
+                                    listeners: {
+                                        change: {
+                                            fn: me.onDomainTypeNoneClusteringChange,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -85,10 +104,45 @@ Ext.define('webapp.view.DomainWindow', {
                         },
                         {
                             xtype: 'hiddenfield',
-                            anchor: '100%',
                             id: 'domainIdHiddenField',
                             fieldLabel: 'Label',
                             name: 'IDHiddenField'
+                        },
+                        {
+                            xtype: 'gridpanel',
+                            height: 230,
+                            id: 'domainClusteringConfigurationGridView',
+                            title: 'Clustering Configuration',
+                            forceFit: true,
+                            columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'string',
+                                    text: 'Name'
+                                },
+                                {
+                                    xtype: 'numbercolumn',
+                                    dataIndex: 'number',
+                                    text: 'Value'
+                                }
+                            ],
+                            plugins: [
+                                Ext.create('Ext.grid.plugin.RowEditing', {
+
+                                })
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'New'
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             xtype: 'container',
@@ -127,6 +181,27 @@ Ext.define('webapp.view.DomainWindow', {
         });
 
         me.callParent(arguments);
+    },
+
+    onDomainTypeClusteringChange: function(field, newValue, oldValue, eOpts) {
+        //alert(newValue);
+        //Ext.getCmp("domainClusteringConfigurationGridView").show();
+        //alert(newValue);
+        var grid =  Ext.getCmp("domainClusteringConfigurationGridView");
+
+        //else{
+        //   Ext.getCmp("domainClusteringConfigurationGridView").hide();
+        //}
+        if(grid.isVisible()){
+           grid.hide();
+        }
+    },
+
+    onDomainTypeNoneClusteringChange: function(field, newValue, oldValue, eOpts) {
+        var grid =  Ext.getCmp("domainClusteringConfigurationGridView");
+        if(!grid.isVisible()){
+           grid.show();
+        }
     }
 
 });
