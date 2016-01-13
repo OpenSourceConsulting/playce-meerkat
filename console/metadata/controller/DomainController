@@ -68,6 +68,7 @@
                     "domainWindow.show();"
                 ]
             },
+            "name": "showDomainWindow",
             "designerId": "934dbb4f-f405-42cc-9d8d-37fada1d63cb"
         },
         {
@@ -96,6 +97,7 @@
                     "return true;"
                 ]
             },
+            "name": "validate",
             "designerId": "70b2be41-ac3a-4db4-a3d6-070eb074b0b0"
         },
         {
@@ -137,6 +139,7 @@
                     "    });"
                 ]
             },
+            "name": "save",
             "designerId": "468eb561-ca4d-4006-8aaa-422e064113aa"
         },
         {
@@ -180,6 +183,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onSubmitNewDomainClick",
             "designerId": "036e37d4-3e7c-4b90-947f-3183cc1f4d30"
         },
         {
@@ -227,6 +231,7 @@
                     "});"
                 ]
             },
+            "name": "loadDomainInfo",
             "designerId": "abe1aea4-0f0a-4cd7-8132-dfe4704050dc"
         },
         {
@@ -269,6 +274,7 @@
                     " });"
                 ]
             },
+            "name": "deleteDomain",
             "designerId": "88fa4a82-0640-4074-b83c-24acbcabce89"
         }
     ]

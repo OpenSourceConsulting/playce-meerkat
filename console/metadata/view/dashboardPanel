@@ -26,6 +26,7 @@
                 "dock": "top",
                 "layout|flex": 1
             },
+            "name": "MyToolbar",
             "designerId": "111fd835-1e29-4d72-83a9-62f17d27e047",
             "cn": [
                 {
@@ -44,6 +45,7 @@
                         "store": "DomainStore",
                         "valueField": "id"
                     },
+                    "name": "MyComboBox",
                     "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f",
                     "cn": [
                         {
@@ -61,6 +63,7 @@
                                 "name": "select",
                                 "scope": "me"
                             },
+                            "name": "onDomainComboBoxSelect",
                             "designerId": "cf7b1843-4ff3-4517-829e-2e246bfa843c"
                         }
                     ]
@@ -87,6 +90,7 @@
                 "title": "Tomcat 1",
                 "titleCollapse": true
             },
+            "name": "MyPanel",
             "configAlternates": {
                 "style": "string"
             },
@@ -105,6 +109,7 @@
                         "height": null,
                         "layout": "hbox"
                     },
+                    "name": "MyPanel1",
                     "designerId": "612ac344-9ac6-4239-97a5-9483a6ddae57",
                     "cn": [
                         {
@@ -127,6 +132,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel2",
                             "configAlternates": {
                                 "style": "string"
                             },
@@ -149,6 +155,7 @@
                                         "text": "100%",
                                         "width": 171
                                     },
+                                    "name": "MyLabel",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -174,6 +181,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel3",
                             "designerId": "851a81f1-34b6-49c9-af0d-fb7790333592",
                             "cn": [
                                 {
@@ -193,6 +201,7 @@
                                         "text": "100%",
                                         "width": 171
                                     },
+                                    "name": "MyLabel1",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -218,6 +227,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel4",
                             "designerId": "22e98e00-5468-468e-8b06-48dd6252efdd",
                             "cn": [
                                 {
@@ -236,6 +246,7 @@
                                         "text": "11 hrs 11 mins 26 secs",
                                         "width": 37
                                     },
+                                    "name": "MyLabel2",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -261,6 +272,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel5",
                             "designerId": "2e461d2a-21ff-43f2-9d4d-d857735492cb",
                             "cn": [
                                 {
@@ -279,6 +291,7 @@
                                         "text": "1 hrs 51 mins 26 secs",
                                         "width": 37
                                     },
+                                    "name": "MyLabel3",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -302,6 +315,7 @@
                         "layout": "hbox",
                         "width": 657
                     },
+                    "name": "MyPanel6",
                     "designerId": "54ada874-641c-4826-9d38-83533f391b10",
                     "cn": [
                         {
@@ -322,6 +336,7 @@
                                 "titleAlign": "center",
                                 "width": 600
                             },
+                            "name": "MyPanel7",
                             "configAlternates": {
                                 "style": "string",
                                 "bodyStyle": "string"
@@ -349,6 +364,7 @@
                                         "style": "border: 5px;",
                                         "width": 598
                                     },
+                                    "name": "LineChart",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -370,6 +386,7 @@
                                                 ],
                                                 "title": "Response Time"
                                             },
+                                            "name": "MyCategoryAxis",
                                             "designerId": "e3c090eb-2006-438d-b3c1-218718ee28a0"
                                         },
                                         {
@@ -385,6 +402,7 @@
                                                 ],
                                                 "title": "ms"
                                             },
+                                            "name": "MyNumericAxis",
                                             "designerId": "cc1a2f1b-7057-4f87-bfb7-9938ac3504de"
                                         },
                                         {
@@ -401,6 +419,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyLineSeries",
                                             "designerId": "e824c934-44e8-46d1-b63e-1e152a823314"
                                         }
                                     ]
@@ -421,6 +440,7 @@
                                 "titleAlign": "center",
                                 "width": 634
                             },
+                            "name": "MyPanel8",
                             "designerId": "32334db7-5212-45e5-a3fb-565afa7859fd",
                             "cn": [
                                 {
@@ -441,6 +461,7 @@
                                         "store": "TempoStore",
                                         "width": 598
                                     },
+                                    "name": "LineChart1",
                                     "designerId": "67c1ff71-cebe-4188-b9ac-3df549c748fb",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-line-chart",
@@ -459,6 +480,7 @@
                                                 ],
                                                 "title": "Time"
                                             },
+                                            "name": "MyCategoryAxis1",
                                             "designerId": "197efc4c-369b-41de-bbc1-64866651f709"
                                         },
                                         {
@@ -474,6 +496,7 @@
                                                 ],
                                                 "title": "ms"
                                             },
+                                            "name": "MyNumericAxis1",
                                             "designerId": "06108b07-6d68-4928-925a-87fe33562031"
                                         },
                                         {
@@ -490,6 +513,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyLineSeries1",
                                             "designerId": "da1dc1bb-0e7f-427f-a8db-1a181b63fce4"
                                         }
                                     ]
@@ -518,6 +542,7 @@
                 "title": "Tomcat 2",
                 "titleCollapse": true
             },
+            "name": "MyPanel9",
             "designerId": "b6a2d061-7e62-4cd6-be8a-f8b6d4129628",
             "cn": [
                 {
@@ -533,6 +558,7 @@
                         "height": null,
                         "layout": "hbox"
                     },
+                    "name": "MyPanel10",
                     "designerId": "19cb4590-d0a9-4620-b2e0-9b8c13fd6032",
                     "cn": [
                         {
@@ -553,6 +579,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel11",
                             "designerId": "4b36362b-1dd5-40b9-9aba-fe4faf8f1c3d",
                             "cn": [
                                 {
@@ -572,6 +599,7 @@
                                         "text": "100%",
                                         "width": 171
                                     },
+                                    "name": "MyLabel4",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -597,6 +625,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel12",
                             "designerId": "194fedd3-2e68-4672-827a-4f90e2eaf00f",
                             "cn": [
                                 {
@@ -616,6 +645,7 @@
                                         "text": "100%",
                                         "width": 171
                                     },
+                                    "name": "MyLabel5",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -641,6 +671,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel13",
                             "designerId": "97521fe2-354e-4487-ace2-feca610bb429",
                             "cn": [
                                 {
@@ -659,6 +690,7 @@
                                         "text": "11 hrs 11 mins 26 secs",
                                         "width": 37
                                     },
+                                    "name": "MyLabel6",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -684,6 +716,7 @@
                                 "titleAlign": "center",
                                 "width": 171
                             },
+                            "name": "MyPanel14",
                             "designerId": "26fe2fd5-d42a-491f-ab65-4feb744b0333",
                             "cn": [
                                 {
@@ -702,6 +735,7 @@
                                         "text": "1 hrs 51 mins 26 secs",
                                         "width": 37
                                     },
+                                    "name": "MyLabel7",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -725,6 +759,7 @@
                         "layout": "hbox",
                         "width": 657
                     },
+                    "name": "MyPanel15",
                     "designerId": "a8e57f87-4958-467c-9d58-2c077a573495",
                     "cn": [
                         {
@@ -743,6 +778,7 @@
                                 "titleAlign": "center",
                                 "width": 600
                             },
+                            "name": "MyPanel16",
                             "designerId": "19ca7677-b165-40d1-b655-8c9a887242c8",
                             "cn": [
                                 {
@@ -765,6 +801,7 @@
                                         "store": "TempoStore",
                                         "width": 598
                                     },
+                                    "name": "LineChart2",
                                     "designerId": "5c4831a3-5387-4fa4-8311-f2faafa4073d",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-line-chart",
@@ -783,6 +820,7 @@
                                                 ],
                                                 "title": "Response Time"
                                             },
+                                            "name": "MyCategoryAxis2",
                                             "designerId": "5e254b57-f3b6-4313-a16c-1b63177a3082"
                                         },
                                         {
@@ -798,6 +836,7 @@
                                                 ],
                                                 "title": "ms"
                                             },
+                                            "name": "MyNumericAxis2",
                                             "designerId": "6ccb890f-f0db-4284-bfdb-654524b1f60a"
                                         },
                                         {
@@ -814,6 +853,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyLineSeries2",
                                             "designerId": "24e53c89-8e27-4844-a785-28a4903a1dd9"
                                         }
                                     ]
@@ -834,6 +874,7 @@
                                 "titleAlign": "center",
                                 "width": 634
                             },
+                            "name": "MyPanel17",
                             "designerId": "2472ac91-1714-462b-aa98-ffba0004dc59",
                             "cn": [
                                 {
@@ -853,6 +894,7 @@
                                         "store": "TempoStore",
                                         "width": 598
                                     },
+                                    "name": "LineChart3",
                                     "designerId": "99df06ca-989f-4ee6-8a9f-fb86fb05b6c3",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-line-chart",
@@ -871,6 +913,7 @@
                                                 ],
                                                 "title": "Time"
                                             },
+                                            "name": "MyCategoryAxis3",
                                             "designerId": "f8010e72-eb13-49ed-9303-7bb5c70e6a19"
                                         },
                                         {
@@ -886,6 +929,7 @@
                                                 ],
                                                 "title": "ms"
                                             },
+                                            "name": "MyNumericAxis3",
                                             "designerId": "eeef0705-1efd-47ab-8fa7-7112b244a8c7"
                                         },
                                         {
@@ -902,6 +946,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyLineSeries3",
                                             "designerId": "3dfee54b-1520-4d57-bdcc-ca066d69fa40"
                                         }
                                     ]

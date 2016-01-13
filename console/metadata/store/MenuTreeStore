@@ -100,6 +100,7 @@
                 "name": "text",
                 "type": "string"
             },
+            "name": "MyField",
             "designerId": "33b36f28-723e-47ce-95f3-354c58e53dbf"
         },
         {
@@ -113,6 +114,7 @@
                 "name": "menuId",
                 "type": "string"
             },
+            "name": "MyField1",
             "designerId": "df041d3c-cd54-4b5e-8741-0a86054ce8f9"
         }
     ]

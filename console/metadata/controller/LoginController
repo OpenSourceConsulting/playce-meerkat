@@ -52,6 +52,7 @@
                 "name": "activate",
                 "scope": "me"
             },
+            "name": "onIntroContainerActivate",
             "designerId": "3dbef118-aa3e-4d1f-b98e-38b5d6f0af16"
         },
         {
@@ -152,6 +153,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onLoginClick",
             "designerId": "96c29205-195c-4487-ac37-06e9510bd959"
         },
         {
@@ -201,6 +203,7 @@
                     "//this.initMenuAuthSetting();"
                 ]
             },
+            "name": "successfulLogin",
             "designerId": "fbce5d4c-6354-4b5a-8ad3-da90d22073d1"
         },
         {
@@ -236,6 +239,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onLogoutButtonClick",
             "designerId": "f246c422-a4f7-4bd9-8b47-4af1fb0c08ea"
         },
         {
@@ -257,6 +261,7 @@
                 "name": "specialkey",
                 "scope": "me"
             },
+            "name": "onTextfieldSpecialkey",
             "designerId": "03e21fba-73a3-4e52-9fc0-1a6799cb082f"
         }
     ]

@@ -21,6 +21,7 @@
                 "ref": "logoImg",
                 "selector": "#logoImg"
             },
+            "name": "logoImg",
             "designerId": "4bf9fbc2-f3b1-4850-90af-81fb42b853da"
         },
         {
@@ -41,6 +42,7 @@
                     "});"
                 ]
             },
+            "name": "onLaunch",
             "designerId": "8d078194-849d-4149-95c6-a71e64ed3ea7"
         }
     ]

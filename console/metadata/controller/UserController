@@ -58,6 +58,7 @@
                     "userWindow.show();"
                 ]
             },
+            "name": "showUserWindow",
             "designerId": "f3478ddc-55c8-4509-a9c8-96eafd0d51ee"
         },
         {
@@ -77,6 +78,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onNewUserButtonClick",
             "designerId": "90160b86-6a35-4d4e-af26-7fd73a8bffe1"
         },
         {
@@ -97,6 +99,7 @@
                 "name": "activate",
                 "scope": "me"
             },
+            "name": "onContainerActivate",
             "designerId": "2d1e1a0b-6258-4546-8a1a-0ed568622111"
         },
         {
@@ -148,6 +151,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onSubmitButtonClick",
             "designerId": "93f9bf02-fb53-40c7-ba45-5296fe7774a9"
         },
         {
@@ -193,6 +197,7 @@
                     "return true;"
                 ]
             },
+            "name": "validate",
             "designerId": "ac2dd74f-c435-418f-8334-ea8f26a1dbe9"
         },
         {
@@ -235,6 +240,7 @@
                     ""
                 ]
             },
+            "name": "save",
             "designerId": "3c6f299c-cef5-4e49-9e8c-c065f70b152b"
         },
         {
@@ -279,6 +285,7 @@
                     " });"
                 ]
             },
+            "name": "deleteUser",
             "designerId": "c98f1e85-4844-4eb2-94f6-318300bf189d"
         },
         {
@@ -308,6 +315,7 @@
                 "name": "change",
                 "scope": "me"
             },
+            "name": "onTextfieldChange",
             "designerId": "ef9bb9d5-3ad3-43be-bd3a-4a5ca55788dd"
         }
     ]

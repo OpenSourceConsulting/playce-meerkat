@@ -21,6 +21,7 @@
                 "name": "name",
                 "type": "string"
             },
+            "name": "MyField26",
             "designerId": "1667775d-0d65-4fd7-9fb8-eb4a7c3bd1ef"
         },
         {
@@ -34,6 +35,7 @@
                 "name": "id",
                 "type": "int"
             },
+            "name": "MyField27",
             "designerId": "4e1f394a-9d50-418d-998c-3529a6431a96"
         },
         {
@@ -46,6 +48,7 @@
             "userConfig": {
                 "name": "userCount"
             },
+            "name": "MyField28",
             "designerId": "3bcae24a-fb98-42f7-a3de-fb6fc86d45f4"
         }
     ]

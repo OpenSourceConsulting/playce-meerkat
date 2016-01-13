@@ -31,6 +31,7 @@
                 "layout|flex": 1,
                 "title": ""
             },
+            "name": "MyForm1",
             "designerId": "5422c2b6-4b11-461c-aefd-3e22df074a55",
             "cn": [
                 {
@@ -44,6 +45,7 @@
                         "dock": "top",
                         "margin": "10 0 10 10"
                     },
+                    "name": "MyContainer29",
                     "designerId": "02884e5f-da44-4e53-bdeb-d2ad86bc6e6f",
                     "cn": [
                         {
@@ -60,6 +62,7 @@
                                 "valueField": "id",
                                 "width": 399
                             },
+                            "name": "MyComboBox7",
                             "designerId": "0df7fd64-33fa-4522-94d4-c1c8a95141f9",
                             "cn": [
                                 {
@@ -81,6 +84,7 @@
                                         "name": "select",
                                         "scope": "me"
                                     },
+                                    "name": "onComboboxSelect",
                                     "designerId": "56e186da-b035-4009-87bf-446db005e87d"
                                 }
                             ]
@@ -96,6 +100,7 @@
                                 "fieldLabel": "Domain type:",
                                 "id": "domainTypeDisplayField"
                             },
+                            "name": "MyDisplayField21",
                             "designerId": "0ca36d5a-20b1-4d28-961d-1854756ffcf6"
                         },
                         {
@@ -109,6 +114,7 @@
                                 "fieldLabel": "Instance name",
                                 "width": 400
                             },
+                            "name": "MyTextField28",
                             "designerId": "adc67595-fa3a-4c51-bb08-351c3f65713f"
                         },
                         {
@@ -126,6 +132,7 @@
                                 "valueField": "id",
                                 "width": 399
                             },
+                            "name": "MyComboBox8",
                             "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f"
                         },
                         {
@@ -139,6 +146,7 @@
                                 "container|align": "stretch",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer30",
                             "designerId": "e9e5a1ff-4113-455c-8d89-7ae2db791409",
                             "cn": [
                                 {
@@ -151,6 +159,7 @@
                                     "userConfig": {
                                         "text": "Test server connection"
                                     },
+                                    "name": "MyButton33",
                                     "designerId": "7b2d76a2-7e6d-4b40-8f27-f35c5667befe",
                                     "cn": [
                                         {
@@ -191,6 +200,7 @@
                                                 "name": "click",
                                                 "scope": "me"
                                             },
+                                            "name": "onButtonClick",
                                             "designerId": "b7f66221-184d-4d4e-8a1c-d6d0afc12034"
                                         }
                                     ]
@@ -207,6 +217,7 @@
                                         "id": "serverStatusDisplayField",
                                         "margin": "0 0 0 20"
                                     },
+                                    "name": "MyDisplayField22",
                                     "configAlternates": {
                                         "style": "string"
                                     },
@@ -227,6 +238,7 @@
                         "dock": "top",
                         "margin": "10 0 10 10"
                     },
+                    "name": "MyContainer31",
                     "designerId": "b9098196-d038-41df-8d84-768aa2f7d86c",
                     "cn": [
                         {
@@ -240,6 +252,7 @@
                                 "fieldLabel": "JAVA_HOME",
                                 "width": 399
                             },
+                            "name": "MyTextField29",
                             "designerId": "c83ed18c-0817-4a20-a0e9-d8350f0d6549"
                         },
                         {
@@ -253,6 +266,7 @@
                                 "fieldLabel": "HTTP_PORT",
                                 "width": 400
                             },
+                            "name": "MyTextField30",
                             "designerId": "1185205c-30b7-4236-823b-045afccc3f6a"
                         },
                         {
@@ -266,6 +280,7 @@
                                 "fieldLabel": "AJP_PORT",
                                 "width": 399
                             },
+                            "name": "MyTextField31",
                             "designerId": "8baee28f-8746-49f3-ac57-b9d0ddc8a7fc"
                         },
                         {
@@ -280,6 +295,7 @@
                                 "labelWidth": 120,
                                 "width": 399
                             },
+                            "name": "MyTextField32",
                             "designerId": "f676f442-e582-4280-80b2-bbf064cef3af"
                         }
                     ]
@@ -297,6 +313,7 @@
                         "margin": "10 10 10 10",
                         "title": "Data source"
                     },
+                    "name": "MyGridPanel22",
                     "designerId": "07100993-b8b4-4219-916c-37905c76d3bd",
                     "cn": [
                         {
@@ -310,6 +327,7 @@
                                 "dataIndex": "string",
                                 "text": "Select"
                             },
+                            "name": "MyColumn31",
                             "designerId": "1a9411c0-d85c-4fa3-b220-14fe3bebc562"
                         },
                         {
@@ -323,6 +341,7 @@
                                 "dataIndex": "number",
                                 "text": "Name"
                             },
+                            "name": "MyNumberColumn23",
                             "designerId": "a5351723-b470-47e5-9305-05e53ba7d6b1"
                         },
                         {
@@ -336,6 +355,7 @@
                                 "dataIndex": "date",
                                 "text": "JDBC Url"
                             },
+                            "name": "MyDateColumn15",
                             "designerId": "8f5a4ee7-1d68-4463-9991-57b2619c7e90"
                         },
                         {
@@ -349,6 +369,7 @@
                                 "dataIndex": "bool",
                                 "text": "Servers"
                             },
+                            "name": "MyBooleanColumn36",
                             "designerId": "cce2ad03-69e8-4704-9890-66829c3ad8ee"
                         },
                         {
@@ -358,6 +379,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "MyGridView22",
                             "designerId": "1c0f952d-e93a-428c-9af0-29ffee52fea2"
                         }
                     ]
@@ -374,6 +396,7 @@
                         "dock": "top",
                         "fieldLabel": ""
                     },
+                    "name": "MyCheckbox",
                     "designerId": "a566652a-d685-40a7-ad5c-85158640e4e5"
                 },
                 {
@@ -387,6 +410,7 @@
                         "dock": "top",
                         "layout": "column"
                     },
+                    "name": "MyContainer32",
                     "designerId": "42f8ce8a-dcf6-4e41-a9e5-3a565693fead",
                     "cn": [
                         {
@@ -401,6 +425,7 @@
                                 "margin": "0 0 0 200",
                                 "text": "Create"
                             },
+                            "name": "MyButton34",
                             "designerId": "09b74e0d-af2e-4b2d-9d21-f61e2125fd01"
                         },
                         {
@@ -414,6 +439,7 @@
                                 "margin": "0 0 0 10",
                                 "text": "Cancel"
                             },
+                            "name": "MyButton35",
                             "designerId": "33bfb36f-ce56-4a0c-93c3-f2f92bfe1252"
                         }
                     ]

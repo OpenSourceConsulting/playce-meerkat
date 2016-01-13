@@ -22,6 +22,7 @@
             "userConfig": {
                 "url": "/domain/list"
             },
+            "name": "MyAjaxProxy",
             "designerId": "8c4af349-21b6-4c7f-a197-73d2e5e9f95c",
             "cn": [
                 {
@@ -31,6 +32,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyJsonReader",
                     "designerId": "ba51360a-b13a-4562-8007-c2a204bfee10"
                 }
             ]

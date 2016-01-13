@@ -29,6 +29,7 @@
                 "itemId": "tabPanel",
                 "layout|flex": 9.5
             },
+            "name": "MyTabPanel1",
             "designerId": "fc58a14e-b61e-40f2-805b-fef5d2b0c53e",
             "cn": [
                 {
@@ -44,6 +45,7 @@
                         "layout": "vbox",
                         "title": "Availability"
                     },
+                    "name": "MyPanel24",
                     "designerId": "19c78086-daaa-4476-b3ed-3456aafe4e9a",
                     "cn": [
                         {
@@ -53,6 +55,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig4",
                             "designerId": "8746b7c4-a958-4b0d-8e92-431c9ddce4a1"
                         },
                         {
@@ -66,6 +69,7 @@
                                 "dock": "top",
                                 "layout|flex": 1
                             },
+                            "name": "MyToolbar8",
                             "designerId": "ffa1a1bb-7cb9-49ba-b880-6a62e1f51ead",
                             "cn": [
                                 {
@@ -79,6 +83,7 @@
                                         "layout|flex": null,
                                         "text": "Availability Hisotry in "
                                     },
+                                    "name": "MyLabel8",
                                     "designerId": "73424524-7931-41e5-96ef-7d1073e95d74"
                                 },
                                 {
@@ -92,6 +97,7 @@
                                         "layout|flex": null,
                                         "text": "Last 24 hours"
                                     },
+                                    "name": "MyButton10",
                                     "designerId": "4b05988d-09e0-45e2-b38c-17de2a4c0e4d",
                                     "cn": [
                                         {
@@ -101,6 +107,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyMenu",
                                             "designerId": "94601fc6-9b70-4afe-839e-2b3a10b6623d",
                                             "cn": [
                                                 {
@@ -113,6 +120,7 @@
                                                     "userConfig": {
                                                         "text": "Last 30 days"
                                                     },
+                                                    "name": "MyMenuItem",
                                                     "designerId": "f9e70f6c-fdf5-4e1b-98cc-b0c837a32d98"
                                                 }
                                             ]
@@ -133,6 +141,7 @@
                                 "layout": "fit",
                                 "layout|flex": 9
                             },
+                            "name": "MyContainer",
                             "designerId": "18560729-4520-45fc-817e-f3cad35e62f1",
                             "cn": [
                                 {
@@ -151,6 +160,7 @@
                                         "store": "TempoStore",
                                         "width": 400
                                     },
+                                    "name": "StackedBarChart",
                                     "designerId": "dc3577ba-970c-4cd0-9957-f4c9cba500af",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-bar-chart",
@@ -170,6 +180,7 @@
                                                 "position": "left",
                                                 "title": ""
                                             },
+                                            "name": "MyCategoryAxis4",
                                             "designerId": "da741d3d-bb8d-4859-80c2-4c89c8661567"
                                         },
                                         {
@@ -188,6 +199,7 @@
                                                 "position": "bottom",
                                                 "title": "Numeric Axis"
                                             },
+                                            "name": "MyNumericAxis4",
                                             "designerId": "7a493966-d6ba-471b-bad1-3d4090d4f92d"
                                         },
                                         {
@@ -209,6 +221,7 @@
                                                     "y3"
                                                 ]
                                             },
+                                            "name": "MyBarSeries",
                                             "designerId": "2e244937-4f34-403f-b535-7f242507a55e"
                                         },
                                         {
@@ -218,6 +231,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyLegend",
                                             "designerId": "5c782654-4857-4e82-a2d8-7350056cf27b"
                                         }
                                     ]
@@ -240,6 +254,7 @@
                         "layout": "vbox",
                         "title": "Performance"
                     },
+                    "name": "MyPanel25",
                     "designerId": "fba29df3-59db-426c-92b1-0f8ae4e64fe0",
                     "cn": [
                         {
@@ -249,6 +264,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig5",
                             "designerId": "7ffe427c-2450-481a-8bfe-41b59e53f975"
                         },
                         {
@@ -262,6 +278,7 @@
                                 "dock": "top",
                                 "layout|flex": 0.5
                             },
+                            "name": "MyToolbar9",
                             "designerId": "077baa91-6e8f-460b-a8ee-85ac7fc7b5dc",
                             "cn": [
                                 {
@@ -275,6 +292,7 @@
                                         "layout|flex": null,
                                         "text": "Tracking in "
                                     },
+                                    "name": "MyLabel9",
                                     "designerId": "04071e5c-c06c-4c76-b280-9e6dea873025"
                                 },
                                 {
@@ -288,6 +306,7 @@
                                         "layout|flex": null,
                                         "text": "Last 24 hours"
                                     },
+                                    "name": "MyButton11",
                                     "designerId": "3fd726e3-f732-49fe-9e53-9b3037973127",
                                     "cn": [
                                         {
@@ -297,6 +316,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyMenu1",
                                             "designerId": "3334b5ca-a168-4615-b12a-f8e1a1553f78",
                                             "cn": [
                                                 {
@@ -309,6 +329,7 @@
                                                     "userConfig": {
                                                         "text": "Last 30 days"
                                                     },
+                                                    "name": "MyMenuItem1",
                                                     "designerId": "5ec8a073-ef08-4223-8102-816d7cb72be4"
                                                 }
                                             ]
@@ -332,6 +353,7 @@
                                 "layout|flex": 3,
                                 "width": null
                             },
+                            "name": "MyContainer1",
                             "designerId": "21db0355-a086-4fa2-be0f-5aa6334209b0",
                             "cn": [
                                 {
@@ -349,6 +371,7 @@
                                         "titleAlign": "center",
                                         "width": 1226
                                     },
+                                    "name": "MyPanel26",
                                     "designerId": "6683634c-809c-4e9c-8a8a-0f3c003bb4ec",
                                     "cn": [
                                         {
@@ -368,6 +391,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart4",
                                             "designerId": "4464047b-5ab2-4080-9590-d77888eb99c5",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -386,6 +410,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis5",
                                                     "designerId": "e95fe060-7279-45cc-b1cf-2459c4e4f92b"
                                                 },
                                                 {
@@ -401,6 +426,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis5",
                                                     "designerId": "b543f5e8-2a55-47bb-814c-3f30e261a425"
                                                 },
                                                 {
@@ -420,6 +446,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries4",
                                                     "designerId": "3c751d37-442c-4e4f-b40b-c8cf1091969b"
                                                 },
                                                 {
@@ -439,6 +466,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries5",
                                                     "designerId": "8ee4b9b2-f75b-4a03-92b9-542eff6eff40"
                                                 },
                                                 {
@@ -448,6 +476,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend1",
                                                     "designerId": "a7f58dbc-8ed8-4ef9-8b12-b1d17d7acc88"
                                                 }
                                             ]
@@ -469,6 +498,7 @@
                                         "titleAlign": "center",
                                         "width": 1226
                                     },
+                                    "name": "MyPanel27",
                                     "designerId": "5411f37a-969d-4d9f-9a33-baeb9093774a",
                                     "cn": [
                                         {
@@ -488,6 +518,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart5",
                                             "designerId": "0a52e930-f2df-444f-ae24-44cac7126ded",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -506,6 +537,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis6",
                                                     "designerId": "b0d55c82-44d3-48d9-acb7-6ae7dc4cb589"
                                                 },
                                                 {
@@ -521,6 +553,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis6",
                                                     "designerId": "8f8e9751-30e1-4983-8eaf-bcee0c599559"
                                                 },
                                                 {
@@ -537,6 +570,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries6",
                                                     "designerId": "65ca1407-e1d0-438e-b593-954336e3a99d"
                                                 },
                                                 {
@@ -546,6 +580,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend2",
                                                     "designerId": "7f338185-ccf8-4931-a4b6-cd25834ebae4"
                                                 },
                                                 {
@@ -565,6 +600,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries7",
                                                     "designerId": "49cdd6db-c51a-4f5e-b0c1-bd38ffa0d18d"
                                                 }
                                             ]
@@ -588,6 +624,7 @@
                                 "layout|flex": 3,
                                 "width": null
                             },
+                            "name": "MyContainer2",
                             "designerId": "5fa09725-c0cf-48d4-b6ea-01b555af8446",
                             "cn": [
                                 {
@@ -605,6 +642,7 @@
                                         "titleAlign": "center",
                                         "width": 1226
                                     },
+                                    "name": "MyPanel28",
                                     "designerId": "84fbb26d-fe0f-40e9-9374-e592f09727c7",
                                     "cn": [
                                         {
@@ -624,6 +662,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart6",
                                             "designerId": "14d5abe3-7b13-435a-a54f-f67c192a44bc",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -642,6 +681,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis7",
                                                     "designerId": "37b499f8-eec8-4d10-b319-f785bf49f8a9"
                                                 },
                                                 {
@@ -657,6 +697,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis7",
                                                     "designerId": "f938bec1-ce8e-4c80-aaff-b98fc63d16be"
                                                 },
                                                 {
@@ -673,6 +714,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries8",
                                                     "designerId": "3f501694-3f5f-4317-b33b-282d69902f36"
                                                 },
                                                 {
@@ -682,6 +724,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend3",
                                                     "designerId": "b74eb869-9e43-4cfe-8ad1-a0c631f38cf1"
                                                 },
                                                 {
@@ -701,6 +744,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries9",
                                                     "designerId": "32f39221-e55c-4f19-9cac-815b16271779"
                                                 }
                                             ]
@@ -722,6 +766,7 @@
                                         "titleAlign": "center",
                                         "width": 1226
                                     },
+                                    "name": "MyPanel29",
                                     "designerId": "c19221ce-fce9-43c9-8560-1380ffb03282",
                                     "cn": [
                                         {
@@ -741,6 +786,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart7",
                                             "designerId": "a5717d42-90a3-4999-b071-d4df203b058d",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -759,6 +805,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis8",
                                                     "designerId": "3db17706-7397-4cbd-a503-ca089823e969"
                                                 },
                                                 {
@@ -774,6 +821,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis8",
                                                     "designerId": "f82dfd55-8cbc-4a80-a5f6-04a778bf74e8"
                                                 },
                                                 {
@@ -790,6 +838,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries10",
                                                     "designerId": "ce4ffdba-6c45-40dc-b491-177327bff81e"
                                                 },
                                                 {
@@ -799,6 +848,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend4",
                                                     "designerId": "f29ebde7-7198-486b-bce3-4100e97d6f10"
                                                 },
                                                 {
@@ -818,6 +868,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries11",
                                                     "designerId": "bbec8513-8dd5-46e7-8307-2160ecda0505"
                                                 }
                                             ]
@@ -844,6 +895,7 @@
                                 "title": "Health history",
                                 "width": 400
                             },
+                            "name": "MyPanel30",
                             "designerId": "3f57ccc8-8115-49d2-a405-e534cdd6579e",
                             "cn": [
                                 {
@@ -856,6 +908,7 @@
                                     "userConfig": {
                                         "dock": "top"
                                     },
+                                    "name": "MyToolbar10",
                                     "designerId": "d489ca20-29ab-4fe1-bc1a-b8eb29e1c623",
                                     "cn": [
                                         {
@@ -869,6 +922,7 @@
                                                 "layout|flex": null,
                                                 "text": "Filtering in"
                                             },
+                                            "name": "MyLabel10",
                                             "designerId": "f2b73226-0b3a-4c85-8b56-0e3b781f28a4"
                                         },
                                         {
@@ -882,6 +936,7 @@
                                                 "layout|flex": null,
                                                 "text": "Last 24 hours"
                                             },
+                                            "name": "MyButton12",
                                             "designerId": "732c74df-0726-4f54-b4e3-738b6f2e1408",
                                             "cn": [
                                                 {
@@ -891,6 +946,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyMenu2",
                                                     "designerId": "57dcac4f-d34a-45a9-b320-08556a544e2a",
                                                     "cn": [
                                                         {
@@ -903,6 +959,7 @@
                                                             "userConfig": {
                                                                 "text": "Lst 30 days"
                                                             },
+                                                            "name": "MyMenuItem2",
                                                             "designerId": "5558f180-4676-4c8b-9ea3-684d12d72930"
                                                         }
                                                     ]

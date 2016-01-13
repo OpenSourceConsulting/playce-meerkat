@@ -30,6 +30,7 @@
                 "itemId": "tabPanel",
                 "layout|flex": 10
             },
+            "name": "MyTabPanel4",
             "designerId": "96eaeeed-d31a-44e7-a7b8-a7c314c07bc4",
             "cn": [
                 {
@@ -47,6 +48,7 @@
                         "manageHeight": false,
                         "title": "Overview"
                     },
+                    "name": "MyPanel53",
                     "designerId": "76c1c7e2-5e33-4280-982f-a27fb0943075",
                     "cn": [
                         {
@@ -56,6 +58,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig13",
                             "designerId": "2ded6c67-957d-4229-809a-72cff236da50"
                         },
                         {
@@ -70,6 +73,7 @@
                                 "height": null,
                                 "manageHeight": false
                             },
+                            "name": "MyPanel54",
                             "designerId": "b00440e1-c02e-4ffc-9e1b-1bdf9c52d603",
                             "cn": [
                                 {
@@ -81,10 +85,9 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Health",
-                                        "value": [
-                                            "OK"
-                                        ]
+                                        "value": "OK"
                                     },
+                                    "name": "MyDisplayField16",
                                     "designerId": "08c7717a-851a-40e7-8110-2f5c981bc0d7"
                                 },
                                 {
@@ -96,10 +99,9 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Availability",
-                                        "value": [
-                                            "OK"
-                                        ]
+                                        "value": "OK"
                                     },
+                                    "name": "MyDisplayField17",
                                     "designerId": "009c990d-b4f8-4db5-8968-f2d59379e613"
                                 },
                                 {
@@ -111,11 +113,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Today's Availability",
-                                        "value": [
-                                            "100%"
-                                        ],
+                                        "value": "100%",
                                         "width": 212
                                     },
+                                    "name": "MyDisplayField18",
                                     "designerId": "d3b3ec42-72df-48a9-8ba6-343e4fffb381"
                                 },
                                 {
@@ -127,11 +128,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Today's Uptime",
-                                        "value": [
-                                            "12 hrs 10 mins 13 secs"
-                                        ],
+                                        "value": "12 hrs 10 mins 13 secs",
                                         "width": 238
                                     },
+                                    "name": "MyDisplayField19",
                                     "designerId": "0a8b2627-d246-45f0-b610-852949ff4401"
                                 },
                                 {
@@ -143,11 +143,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Last Downtime",
-                                        "value": [
-                                            "N/A"
-                                        ],
+                                        "value": "N/A",
                                         "width": 265
                                     },
+                                    "name": "MyDisplayField20",
                                     "designerId": "60ea49ae-e581-4973-8f44-a67e08fcb4cb"
                                 }
                             ]
@@ -164,6 +163,7 @@
                                 "dock": "top",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer11",
                             "designerId": "d4210b16-44b1-42cd-a68e-fe61a1616aa1",
                             "cn": [
                                 {
@@ -180,6 +180,7 @@
                                         "title": "Availability history for last 6 hours",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel55",
                                     "designerId": "d20073ee-f99c-43b8-8dbf-ff359908531d",
                                     "cn": [
                                         {
@@ -199,6 +200,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "BarChart",
                                             "designerId": "7652ecb1-7adc-4a5c-88d0-34d5af8a8e45",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-bar-chart",
@@ -218,6 +220,7 @@
                                                         "position": "left",
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis19",
                                                     "designerId": "96878c6d-34c5-41f7-be29-f89f522b531b"
                                                 },
                                                 {
@@ -234,6 +237,7 @@
                                                         "position": "bottom",
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis19",
                                                     "designerId": "418f367c-df18-49c0-9f0a-9b57162e99f2"
                                                 },
                                                 {
@@ -255,6 +259,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyBarSeries3",
                                                     "designerId": "1e9f6266-6dd5-4d9b-91a8-5d00ffe559e0"
                                                 }
                                             ]
@@ -275,6 +280,7 @@
                                         "title": "Performance history for last 6 hours",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel56",
                                     "designerId": "5bcf7b00-fe31-4af2-a3c6-23931fecd5eb",
                                     "cn": [
                                         {
@@ -294,6 +300,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "BarChart1",
                                             "designerId": "6ab2e360-7b1c-428e-81fe-7f9794e23c27",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-bar-chart",
@@ -313,6 +320,7 @@
                                                         "position": "left",
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis20",
                                                     "designerId": "e9d9e1ed-b4b1-4134-a3b1-2a3c04d21167"
                                                 },
                                                 {
@@ -329,6 +337,7 @@
                                                         "position": "bottom",
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis20",
                                                     "designerId": "517e16fe-85b8-4f42-b68d-3cae13e0d01a"
                                                 },
                                                 {
@@ -350,6 +359,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyBarSeries4",
                                                     "designerId": "db731936-6fc0-4d71-96ec-b4573e194fb3"
                                                 }
                                             ]
@@ -370,6 +380,7 @@
                                 "dock": "top",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer12",
                             "designerId": "836bde6e-a2fb-4477-a7f7-0fab3a25fa40",
                             "cn": [
                                 {
@@ -386,6 +397,7 @@
                                         "title": "Server response time",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel57",
                                     "designerId": "0a8084a0-05ef-4ab9-8ebd-f3f8ece29987",
                                     "cn": [
                                         {
@@ -405,6 +417,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart16",
                                             "designerId": "1423ae49-9267-42b6-a793-e6b2139d43e6",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -423,6 +436,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis21",
                                                     "designerId": "ee2119f3-df9a-4fd0-bc10-2a084393d403"
                                                 },
                                                 {
@@ -438,6 +452,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis21",
                                                     "designerId": "84aa7550-bbe0-4cf5-a6db-49ee2d2ad117"
                                                 },
                                                 {
@@ -454,6 +469,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries24",
                                                     "designerId": "ca518201-27cf-44b2-9a30-8986c07996e1"
                                                 }
                                             ]
@@ -474,6 +490,7 @@
                                         "title": "Server performance",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel58",
                                     "designerId": "89765545-707a-47e5-8c23-d3688e4e0934",
                                     "cn": [
                                         {
@@ -493,6 +510,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart17",
                                             "designerId": "5c93ff3e-80e4-4ea4-b399-0396c11f67ae",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -511,6 +529,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis22",
                                                     "designerId": "3149d234-8971-4427-819d-1ea58ea9fc10"
                                                 },
                                                 {
@@ -526,6 +545,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis22",
                                                     "designerId": "4322894e-277c-4533-9cd9-3d88d7b30b35"
                                                 },
                                                 {
@@ -542,6 +562,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries25",
                                                     "designerId": "86f9965a-87b6-47d7-ab80-0d83f4ec2e2c"
                                                 }
                                             ]
@@ -563,6 +584,7 @@
                                 "dock": "top",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer13",
                             "designerId": "c528f822-9446-4353-8ab9-fdbde5f51fff",
                             "cn": [
                                 {
@@ -580,6 +602,7 @@
                                         "title": "Thread Usage",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel59",
                                     "designerId": "b4c8baa6-00be-4a70-b402-d6f2392d7cef",
                                     "cn": [
                                         {
@@ -599,6 +622,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart18",
                                             "designerId": "6c251339-4ca0-4e6e-966a-cf08d05bfba4",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -617,6 +641,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis23",
                                                     "designerId": "887c3ccd-a79c-433e-8a4a-9e8ceec45403"
                                                 },
                                                 {
@@ -632,6 +657,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis23",
                                                     "designerId": "d59d3861-fa30-4e96-8adf-dcdd513bbec2"
                                                 },
                                                 {
@@ -648,6 +674,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries26",
                                                     "designerId": "5b66d892-2027-4e45-a008-aa4b67fed876"
                                                 }
                                             ]
@@ -669,6 +696,7 @@
                                         "title": "Class Loading",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel60",
                                     "designerId": "3f90c317-20c8-4741-919e-f0ee57bdf33b",
                                     "cn": [
                                         {
@@ -688,6 +716,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart19",
                                             "designerId": "faa8c145-a104-4cb6-9198-c6a44f9dd210",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -706,6 +735,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis24",
                                                     "designerId": "72cfe368-48eb-41ba-a2aa-eec1f55a39df"
                                                 },
                                                 {
@@ -721,6 +751,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis24",
                                                     "designerId": "7a13c295-435f-4ad8-801c-8b8a0f813bd1"
                                                 },
                                                 {
@@ -737,6 +768,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries27",
                                                     "designerId": "9a3fa40f-4bd0-4d48-a46f-67927ebc3d9b"
                                                 }
                                             ]
@@ -758,6 +790,7 @@
                                 "dock": "top",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer14",
                             "designerId": "89bd8113-63b3-4eed-bc15-3cb22ba9e53a",
                             "cn": [
                                 {
@@ -772,6 +805,7 @@
                                         "layout|flex": 1,
                                         "title": "Response summary"
                                     },
+                                    "name": "MyPanel61",
                                     "designerId": "71fc6e75-0c1b-4aae-b447-7c52e98b53d0"
                                 }
                             ]
@@ -794,6 +828,7 @@
                                 "store": "TempoStore",
                                 "width": 400
                             },
+                            "name": "LineChart20",
                             "designerId": "73dfad2b-dfea-41eb-92fc-9bf90b7cd1c3",
                             "isBuiltIn": true,
                             "iconCls": "icon-line-chart",
@@ -812,6 +847,7 @@
                                         ],
                                         "title": "Category Axis"
                                     },
+                                    "name": "MyCategoryAxis25",
                                     "designerId": "8d4375f5-7e8a-4d30-a7c8-67e8f3db9769"
                                 },
                                 {
@@ -827,6 +863,7 @@
                                         ],
                                         "title": "Numeric Axis"
                                     },
+                                    "name": "MyNumericAxis25",
                                     "designerId": "5f695b50-a79b-4f96-a701-8c5d2d7e6b87"
                                 },
                                 {
@@ -843,6 +880,7 @@
                                             "y"
                                         ]
                                     },
+                                    "name": "MyLineSeries28",
                                     "designerId": "67c8c71f-60c3-4d2b-88bd-42aeaa60f26b"
                                 }
                             ]
@@ -863,6 +901,7 @@
                         "layout": "vbox",
                         "title": "Memory"
                     },
+                    "name": "MyPanel62",
                     "designerId": "70a0dc88-ac6e-4316-ad0d-f96470b27cee",
                     "cn": [
                         {
@@ -872,6 +911,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig14",
                             "designerId": "b3656cf4-7528-4505-8e62-db42addf5eb2"
                         },
                         {
@@ -888,6 +928,7 @@
                                 "layout": "hbox",
                                 "layout|flex": 1
                             },
+                            "name": "MyContainer15",
                             "designerId": "26a65fb4-aaaa-442f-9062-fad80f744163",
                             "cn": [
                                 {
@@ -904,6 +945,7 @@
                                         "title": "Memory Utilization",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel63",
                                     "designerId": "0c1b688e-35f1-4ea6-b393-3b3ea7c7458c",
                                     "cn": [
                                         {
@@ -923,6 +965,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "ColumnChart",
                                             "designerId": "8c5590a9-e700-4cdf-b792-20e7abfb9e7f",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-column-chart",
@@ -941,6 +984,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis26",
                                                     "designerId": "1c32ea40-3eef-4d44-9a90-be3797efab23"
                                                 },
                                                 {
@@ -956,6 +1000,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis26",
                                                     "designerId": "33ee91c7-bde4-48e7-858e-86daa9de6eda"
                                                 },
                                                 {
@@ -974,6 +1019,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyColumnSeries",
                                                     "designerId": "9c402d08-685a-43ed-ad49-e3d5c48ae689"
                                                 },
                                                 {
@@ -983,6 +1029,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend11",
                                                     "designerId": "54aea397-3976-4a0c-9bde-a4b33b362ac8"
                                                 }
                                             ]
@@ -1003,6 +1050,7 @@
                                         "title": "Memory Usage",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel64",
                                     "designerId": "0d19763c-0730-407d-a320-4b7b41030bda",
                                     "cn": [
                                         {
@@ -1022,6 +1070,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart21",
                                             "designerId": "b9e98386-a021-44c1-85d6-42c623a76740",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -1040,6 +1089,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis27",
                                                     "designerId": "bd275b01-fec1-4bba-8c77-277d41a9f408"
                                                 },
                                                 {
@@ -1055,6 +1105,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis27",
                                                     "designerId": "27bc037f-5667-4610-bff1-b767a995aae3"
                                                 },
                                                 {
@@ -1071,6 +1122,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries29",
                                                     "designerId": "d9b7f06d-58c6-4ee7-b0fd-4dcd7ff59f5a"
                                                 },
                                                 {
@@ -1080,6 +1132,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyLegend12",
                                                     "designerId": "f60bcd90-5503-4054-a0f9-21185c3fa987"
                                                 }
                                             ]
@@ -1099,6 +1152,7 @@
                                 "dock": "top",
                                 "layout|flex": 4
                             },
+                            "name": "MyContainer16",
                             "designerId": "47f84d7b-8846-4250-84f6-5ba3c411479d",
                             "cn": [
                                 {
@@ -1114,6 +1168,7 @@
                                         "margin": "5 5 5 5",
                                         "title": "Memory Usage"
                                     },
+                                    "name": "MyGridPanel11",
                                     "designerId": "48a2693a-4a73-4e08-b3c7-c997befb0ec3",
                                     "cn": [
                                         {
@@ -1127,6 +1182,7 @@
                                                 "dataIndex": "string",
                                                 "text": "Name"
                                             },
+                                            "name": "MyColumn14",
                                             "designerId": "325a2fb2-ae32-4782-ad2a-7d20dd459ab9"
                                         },
                                         {
@@ -1140,6 +1196,7 @@
                                                 "dataIndex": "number",
                                                 "text": "Type"
                                             },
+                                            "name": "MyNumberColumn10",
                                             "designerId": "25f3790d-0e46-4e53-b208-76b08975b0e0"
                                         },
                                         {
@@ -1153,6 +1210,7 @@
                                                 "dataIndex": "date",
                                                 "text": "Used Memory(MB)"
                                             },
+                                            "name": "MyDateColumn5",
                                             "designerId": "907b5e4f-54fa-49e6-9e5d-8899ace5aa99"
                                         },
                                         {
@@ -1166,6 +1224,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Committed Memory(MB)"
                                             },
+                                            "name": "MyBooleanColumn11",
                                             "designerId": "64744c26-e8be-4e1f-beed-0d6785c0f4af"
                                         },
                                         {
@@ -1179,6 +1238,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Maxium Memory(MB)"
                                             },
+                                            "name": "MyBooleanColumn12",
                                             "designerId": "78748806-083f-4e04-a885-dd28429f7f14"
                                         },
                                         {
@@ -1192,6 +1252,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Used Memory (%)"
                                             },
+                                            "name": "MyBooleanColumn13",
                                             "designerId": "933ff00d-49e2-42c2-88d3-d4e95ff31219"
                                         },
                                         {
@@ -1205,6 +1266,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Free Memory (%)"
                                             },
+                                            "name": "MyBooleanColumn14",
                                             "designerId": "5aae1952-d122-46fd-b0ce-e12d0470d67e"
                                         },
                                         {
@@ -1218,6 +1280,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Health"
                                             },
+                                            "name": "MyBooleanColumn15",
                                             "designerId": "64fff999-2994-410d-8e4e-f4842874bcc0"
                                         },
                                         {
@@ -1227,6 +1290,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyGridView11",
                                             "designerId": "5120642c-c102-4c80-984f-1c763a824c95"
                                         }
                                     ]
@@ -1247,6 +1311,7 @@
                                 "margin": "5 5 5 5",
                                 "title": "Garbage Collector"
                             },
+                            "name": "MyPanel65",
                             "designerId": "27f9fe53-2745-4905-8b0f-6480f427661c",
                             "cn": [
                                 {
@@ -1266,6 +1331,7 @@
                                         "store": "TempoStore",
                                         "width": 400
                                     },
+                                    "name": "LineChart22",
                                     "designerId": "e03b003d-8147-41d1-895e-f4ff8f2b891b",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-line-chart",
@@ -1284,6 +1350,7 @@
                                                 ],
                                                 "title": "Category Axis"
                                             },
+                                            "name": "MyCategoryAxis28",
                                             "designerId": "8f52eeaf-6511-45b8-95f5-6340164f2489"
                                         },
                                         {
@@ -1299,6 +1366,7 @@
                                                 ],
                                                 "title": "Numeric Axis"
                                             },
+                                            "name": "MyNumericAxis28",
                                             "designerId": "a1e28228-8c96-4bb1-8eb8-ad440675f088"
                                         },
                                         {
@@ -1315,6 +1383,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyLineSeries30",
                                             "designerId": "99ab66bb-e05b-486d-ab46-ac65b75aae82"
                                         }
                                     ]
@@ -1337,6 +1406,7 @@
                         "layout": "vbox",
                         "title": "Thread"
                     },
+                    "name": "MyPanel66",
                     "designerId": "3b8ebad5-30d7-4bb1-b421-e8250f0bb49f",
                     "cn": [
                         {
@@ -1346,6 +1416,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig15",
                             "designerId": "ce25e93f-7693-461f-9bcc-bb81d24f2cb1"
                         },
                         {
@@ -1361,6 +1432,7 @@
                                 "layout": "hbox",
                                 "layout|flex": 4
                             },
+                            "name": "MyContainer17",
                             "designerId": "8632e6c8-ded8-4688-9451-1b98fb2e9d82",
                             "cn": [
                                 {
@@ -1377,6 +1449,7 @@
                                         "title": "Thread Pool Utilization",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel67",
                                     "designerId": "641fb733-eb89-47ba-95d3-43488dab36a8",
                                     "cn": [
                                         {
@@ -1396,6 +1469,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "ColumnChart1",
                                             "designerId": "de9bbe03-1afc-4c34-b56e-776e1c250c59",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-column-chart",
@@ -1414,6 +1488,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis29",
                                                     "designerId": "bf6a3a54-8951-4dd1-a28a-9852fe234444"
                                                 },
                                                 {
@@ -1429,6 +1504,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis29",
                                                     "designerId": "084610a3-33a3-4ab7-9ede-1705c3154644"
                                                 },
                                                 {
@@ -1447,6 +1523,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyColumnSeries1",
                                                     "designerId": "4418b4fb-4c23-4e13-88e5-1fa52466754a"
                                                 }
                                             ]
@@ -1467,6 +1544,7 @@
                                         "title": "Busy Threads",
                                         "titleAlign": "center"
                                     },
+                                    "name": "MyPanel68",
                                     "designerId": "80988079-f79b-4250-bc12-56514fe8ebca",
                                     "cn": [
                                         {
@@ -1486,6 +1564,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart23",
                                             "designerId": "f5971d4e-2eff-4970-96e9-132409412b3a",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -1504,6 +1583,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis30",
                                                     "designerId": "704c4010-01a7-43ab-9a4e-d220af7277d7"
                                                 },
                                                 {
@@ -1519,6 +1599,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis30",
                                                     "designerId": "d31b84e6-faa9-4787-a8f3-110ba06dfd67"
                                                 },
                                                 {
@@ -1535,6 +1616,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries31",
                                                     "designerId": "62148dd2-9b3e-430c-9369-70663567c498"
                                                 }
                                             ]
@@ -1553,6 +1635,7 @@
                             "userConfig": {
                                 "layout|flex": 4
                             },
+                            "name": "MyContainer18",
                             "designerId": "006a9e4d-1012-4cee-a513-c9bb61857e0e",
                             "cn": [
                                 {
@@ -1568,6 +1651,7 @@
                                         "margin": "5 5 5 5",
                                         "title": "Thread pool details"
                                     },
+                                    "name": "MyGridPanel12",
                                     "designerId": "66691a98-27db-4459-8ae7-ee4558844ccf",
                                     "cn": [
                                         {
@@ -1581,6 +1665,7 @@
                                                 "dataIndex": "string",
                                                 "text": "Connector Name"
                                             },
+                                            "name": "MyColumn15",
                                             "designerId": "707303e9-39af-4b25-bb7b-616e07c3ed2b"
                                         },
                                         {
@@ -1594,6 +1679,7 @@
                                                 "dataIndex": "number",
                                                 "text": "Busy Threads"
                                             },
+                                            "name": "MyNumberColumn11",
                                             "designerId": "1115fbad-3454-4daf-81f9-cad27de52335"
                                         },
                                         {
@@ -1607,6 +1693,7 @@
                                                 "dataIndex": "date",
                                                 "text": "Maxium Threads"
                                             },
+                                            "name": "MyDateColumn6",
                                             "designerId": "86c8a2f4-0572-4b7b-93dd-702f6855f1dc"
                                         },
                                         {
@@ -1620,6 +1707,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Percentage Used"
                                             },
+                                            "name": "MyBooleanColumn16",
                                             "designerId": "466a1cdf-ddf0-4e1a-92b7-ae186091a0dd"
                                         },
                                         {
@@ -1633,6 +1721,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Percentage Free"
                                             },
+                                            "name": "MyBooleanColumn17",
                                             "designerId": "b4c58e48-a7bf-46ed-b7c0-8aed16299dba"
                                         },
                                         {
@@ -1646,6 +1735,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Health"
                                             },
+                                            "name": "MyBooleanColumn18",
                                             "designerId": "2c36e6ca-b9c5-4ac9-b115-f6d4a9b2acd4"
                                         },
                                         {
@@ -1655,6 +1745,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyGridView12",
                                             "designerId": "b5a06e4b-b561-4add-bfa3-2fa3522f9424"
                                         }
                                     ]
@@ -1677,6 +1768,7 @@
                         "layout": "vbox",
                         "title": "JDBC"
                     },
+                    "name": "MyPanel69",
                     "designerId": "ae4d483f-ed52-4883-a499-d4fe3258f55a",
                     "cn": [
                         {
@@ -1686,6 +1778,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig16",
                             "designerId": "c595ff4f-7c7a-4596-afd9-9b4c57754e0e"
                         },
                         {
@@ -1700,6 +1793,7 @@
                                 "layout|flex": 1,
                                 "title": "Active Connections"
                             },
+                            "name": "MyPanel70",
                             "designerId": "1f50fdc9-d8e1-432d-b32f-530c3729add1",
                             "cn": [
                                 {
@@ -1719,6 +1813,7 @@
                                         "store": "TempoStore",
                                         "width": 400
                                     },
+                                    "name": "ColumnChart2",
                                     "designerId": "37d0d5f1-0eaa-414b-aee1-38364b97fda6",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-column-chart",
@@ -1737,6 +1832,7 @@
                                                 ],
                                                 "title": "Category Axis"
                                             },
+                                            "name": "MyCategoryAxis31",
                                             "designerId": "3eb21606-6d8f-43ca-a368-e532ed9020fb"
                                         },
                                         {
@@ -1752,6 +1848,7 @@
                                                 ],
                                                 "title": "Numeric Axis"
                                             },
+                                            "name": "MyNumericAxis31",
                                             "designerId": "737a9a27-5a83-496e-beb2-2ea23c13487e"
                                         },
                                         {
@@ -1770,6 +1867,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyColumnSeries2",
                                             "designerId": "5496e8f6-daf4-44a4-8d00-9f716f1de5d7"
                                         },
                                         {
@@ -1779,6 +1877,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyLegend13",
                                             "designerId": "2bc7f173-a181-418a-9ab8-b9d0841f3e10"
                                         }
                                     ]
@@ -1797,6 +1896,7 @@
                                 "layout|flex": 1,
                                 "title": "Idle Connections"
                             },
+                            "name": "MyPanel71",
                             "designerId": "25085edd-c797-4bcb-9a88-1f33746541ed",
                             "cn": [
                                 {
@@ -1816,6 +1916,7 @@
                                         "store": "TempoStore",
                                         "width": 400
                                     },
+                                    "name": "ColumnChart3",
                                     "designerId": "ff0a79ae-fffb-4234-9cf7-a9fc57b98536",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-column-chart",
@@ -1834,6 +1935,7 @@
                                                 ],
                                                 "title": "Category Axis"
                                             },
+                                            "name": "MyCategoryAxis32",
                                             "designerId": "ecb2a194-aaa7-4c9a-a144-4f633fb3591c"
                                         },
                                         {
@@ -1849,6 +1951,7 @@
                                                 ],
                                                 "title": "Numeric Axis"
                                             },
+                                            "name": "MyNumericAxis32",
                                             "designerId": "7a800798-db47-4c35-a766-d69e8c4b33a4"
                                         },
                                         {
@@ -1867,6 +1970,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyColumnSeries3",
                                             "designerId": "186b0b59-5fdf-4c23-b261-9f57d39fa14b"
                                         },
                                         {
@@ -1876,6 +1980,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyLegend14",
                                             "designerId": "fe97f695-624b-4a26-ba42-68e505b9c96c"
                                         }
                                     ]
@@ -1896,6 +2001,7 @@
                         "height": null,
                         "title": "Web"
                     },
+                    "name": "MyPanel72",
                     "designerId": "07609bd3-8259-4844-97de-305e83aeea91",
                     "cn": [
                         {
@@ -1905,6 +2011,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig17",
                             "designerId": "84cc204f-9471-4f7a-9e28-837be8f6f5fd"
                         },
                         {
@@ -1918,6 +2025,7 @@
                                 "layout": "fit",
                                 "title": "Request statistics"
                             },
+                            "name": "MyPanel73",
                             "designerId": "53fb34bd-8607-442b-b775-2601876652be",
                             "cn": [
                                 {
@@ -1937,6 +2045,7 @@
                                         "store": "TempoStore",
                                         "width": 400
                                     },
+                                    "name": "ColumnChart4",
                                     "designerId": "c1703555-c372-4037-a984-c9a02bc07963",
                                     "isBuiltIn": true,
                                     "iconCls": "icon-column-chart",
@@ -1955,6 +2064,7 @@
                                                 ],
                                                 "title": "Category Axis"
                                             },
+                                            "name": "MyCategoryAxis33",
                                             "designerId": "72d08e08-a070-4b84-80d4-0cec2fcc32e0"
                                         },
                                         {
@@ -1970,6 +2080,7 @@
                                                 ],
                                                 "title": "Numeric Axis"
                                             },
+                                            "name": "MyNumericAxis33",
                                             "designerId": "92554a56-7098-49fa-8453-66df2d3d2555"
                                         },
                                         {
@@ -1988,6 +2099,7 @@
                                                     "y"
                                                 ]
                                             },
+                                            "name": "MyColumnSeries4",
                                             "designerId": "74439517-07ab-4cca-8e8b-1245291bc85b"
                                         }
                                     ]
@@ -2008,6 +2120,7 @@
                         "height": null,
                         "title": "Web application"
                     },
+                    "name": "MyPanel74",
                     "designerId": "675c0651-2c84-4e44-9235-99b4cc37010a",
                     "cn": [
                         {
@@ -2017,6 +2130,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig18",
                             "designerId": "47aeb3c1-836c-4a49-8180-6fa7657497fe"
                         },
                         {
@@ -2031,6 +2145,7 @@
                                 "dock": "top",
                                 "layout": "hbox"
                             },
+                            "name": "MyContainer19",
                             "designerId": "536b7fd0-0e77-466c-b455-a73f11c84acc",
                             "cn": [
                                 {
@@ -2046,6 +2161,7 @@
                                         "margin": "5 5 5 5",
                                         "title": "Active Sessions"
                                     },
+                                    "name": "MyPanel75",
                                     "designerId": "f9394383-1ebc-4dce-b066-6864bd5278ac",
                                     "cn": [
                                         {
@@ -2065,6 +2181,7 @@
                                                 "store": "TempoStore",
                                                 "width": 400
                                             },
+                                            "name": "LineChart24",
                                             "designerId": "1ba9d608-b090-4e3c-ba86-56f794baf978",
                                             "isBuiltIn": true,
                                             "iconCls": "icon-line-chart",
@@ -2083,6 +2200,7 @@
                                                         ],
                                                         "title": "Category Axis"
                                                     },
+                                                    "name": "MyCategoryAxis34",
                                                     "designerId": "6809636a-d238-4296-b1e7-11cc4b38735f"
                                                 },
                                                 {
@@ -2098,6 +2216,7 @@
                                                         ],
                                                         "title": "Numeric Axis"
                                                     },
+                                                    "name": "MyNumericAxis34",
                                                     "designerId": "7ee5ecb1-ae0c-4c8d-985d-e246661bd19e"
                                                 },
                                                 {
@@ -2114,6 +2233,7 @@
                                                             "y"
                                                         ]
                                                     },
+                                                    "name": "MyLineSeries32",
                                                     "designerId": "d7ccbc62-3e01-4dc2-bc9d-cddcefac81a9"
                                                 }
                                             ]
@@ -2129,6 +2249,7 @@
                                 "type": "array"
                             },
                             "codeClass": null,
+                            "name": "MyContainer20",
                             "designerId": "41880f33-1533-4915-bc81-26dceeac57bc",
                             "cn": [
                                 {
@@ -2143,6 +2264,7 @@
                                         "margin": "5 5 5 5",
                                         "title": "Application Summary"
                                     },
+                                    "name": "MyGridPanel13",
                                     "designerId": "738ad221-9c8d-4ba8-9010-319971b9527a",
                                     "cn": [
                                         {
@@ -2156,6 +2278,7 @@
                                                 "dataIndex": "string",
                                                 "text": "Context"
                                             },
+                                            "name": "MyColumn16",
                                             "designerId": "a943a3f6-5be2-4479-9389-3988f53decaf"
                                         },
                                         {
@@ -2169,6 +2292,7 @@
                                                 "dataIndex": "number",
                                                 "text": "Status"
                                             },
+                                            "name": "MyNumberColumn12",
                                             "designerId": "8662308d-9346-4bd9-bf3c-ac860c68744a"
                                         },
                                         {
@@ -2182,6 +2306,7 @@
                                                 "dataIndex": "date",
                                                 "text": "Processing Times(s)"
                                             },
+                                            "name": "MyDateColumn7",
                                             "designerId": "db1d189a-52ed-4c72-a388-bf5a2308a4ad"
                                         },
                                         {
@@ -2195,6 +2320,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Successful Requests"
                                             },
+                                            "name": "MyBooleanColumn19",
                                             "designerId": "d2482e62-de41-48b6-8e10-44d6387ece9d"
                                         },
                                         {
@@ -2208,6 +2334,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Failed Requests"
                                             },
+                                            "name": "MyBooleanColumn20",
                                             "designerId": "cd2b22cc-b20e-44c1-91d4-afe7ccdb6a7d"
                                         },
                                         {
@@ -2221,6 +2348,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Avg. Response Time(ms)"
                                             },
+                                            "name": "MyBooleanColumn21",
                                             "designerId": "04d5259d-ed4b-4dfd-9e88-7d10fedc0750"
                                         },
                                         {
@@ -2234,6 +2362,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Avg. Requests/min"
                                             },
+                                            "name": "MyBooleanColumn22",
                                             "designerId": "92cc8328-dfc3-4eed-98e9-62f7f7110121"
                                         },
                                         {
@@ -2247,6 +2376,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Avg Bytes/secs"
                                             },
+                                            "name": "MyBooleanColumn23",
                                             "designerId": "22b12b39-86f7-4d0a-9856-0e9332633c44"
                                         },
                                         {
@@ -2260,6 +2390,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Active Sessions"
                                             },
+                                            "name": "MyBooleanColumn24",
                                             "designerId": "efefa5ea-1cb0-4eb7-9a2c-ca5600a0fb78"
                                         },
                                         {
@@ -2273,6 +2404,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Expired Sessions"
                                             },
+                                            "name": "MyBooleanColumn25",
                                             "designerId": "61ca7315-af6d-46b8-a19b-219f3cd1e218"
                                         },
                                         {
@@ -2286,6 +2418,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Rejected Sessions"
                                             },
+                                            "name": "MyBooleanColumn26",
                                             "designerId": "8c1e3bac-2b11-4890-b4f6-55773f86fc0a"
                                         },
                                         {
@@ -2299,6 +2432,7 @@
                                                 "dataIndex": "bool",
                                                 "text": "Health"
                                             },
+                                            "name": "MyBooleanColumn27",
                                             "designerId": "ee058127-12da-4219-b792-fb1605154651"
                                         },
                                         {
@@ -2308,6 +2442,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "MyGridView13",
                                             "designerId": "a5f08aaf-2be4-47d3-95cd-69735415e695"
                                         }
                                     ]

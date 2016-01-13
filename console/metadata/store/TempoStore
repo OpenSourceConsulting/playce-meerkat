@@ -22,6 +22,7 @@
             "userConfig": {
                 "name": "id"
             },
+            "name": "MyField4",
             "designerId": "5a09b234-ec59-4ec6-8864-e361cc1ab353"
         },
         {
@@ -34,6 +35,7 @@
             "userConfig": {
                 "name": "name"
             },
+            "name": "MyField5",
             "designerId": "45f81af2-71e8-46e3-9ff8-2ea2e581df79"
         }
     ]

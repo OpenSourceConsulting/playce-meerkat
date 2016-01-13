@@ -28,6 +28,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onClickDeployWindow",
             "designerId": "d899eea2-01ec-4ab1-a280-4db5fbb330c9"
         }
     ]

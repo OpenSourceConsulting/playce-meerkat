@@ -27,6 +27,7 @@
                 "store": "UserStore",
                 "title": "User List"
             },
+            "name": "MyGridPanel20",
             "designerId": "f5aa34d2-7996-401c-ac16-f3ff1becd130",
             "cn": [
                 {
@@ -42,6 +43,7 @@
                         "text": "UserID",
                         "width": 156
                     },
+                    "name": "MyColumn23",
                     "designerId": "4762a429-b6ec-4ce2-abf8-d37ff0d71610"
                 },
                 {
@@ -56,6 +58,7 @@
                         "text": "Full Name",
                         "width": 156
                     },
+                    "name": "MyColumn24",
                     "designerId": "d3f6944b-b8e7-4fdc-a8dd-67072cb57a4a"
                 },
                 {
@@ -69,6 +72,7 @@
                         "dataIndex": "userRoleName",
                         "text": "User Role"
                     },
+                    "name": "MyColumn25",
                     "designerId": "daecd585-f0eb-460e-b729-c52be613f741"
                 },
                 {
@@ -83,6 +87,7 @@
                         "text": "Email",
                         "width": 208
                     },
+                    "name": "MyColumn26",
                     "designerId": "319d8892-a04d-424f-bfe8-1d085f772d52"
                 },
                 {
@@ -97,6 +102,7 @@
                         "text": "Created Date",
                         "width": 133
                     },
+                    "name": "MyColumn27",
                     "designerId": "cbe544a5-5987-4b9c-95f2-54ce894dab14"
                 },
                 {
@@ -111,6 +117,7 @@
                         "text": "Last Login",
                         "width": 133
                     },
+                    "name": "MyColumn28",
                     "designerId": "e2bb2693-302d-4c02-949f-ec73af01ab0e"
                 },
                 {
@@ -120,6 +127,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyGridView20",
                     "designerId": "3b7d14ee-dde1-45c8-9b17-d4b2f66ecd27"
                 },
                 {
@@ -132,6 +140,7 @@
                     "userConfig": {
                         "dock": "top"
                     },
+                    "name": "MyToolbar26",
                     "designerId": "92d40f14-89f4-430b-a198-a1eadfc202d6",
                     "cn": [
                         {
@@ -146,6 +155,7 @@
                                 "layout|flex": null,
                                 "text": "New"
                             },
+                            "name": "MyButton30",
                             "designerId": "1a2e9ca5-856b-4af1-acd6-dc53e513e12a"
                         },
                         {
@@ -158,6 +168,7 @@
                             "userConfig": {
                                 "layout|flex": null
                             },
+                            "name": "MySeparator9",
                             "designerId": "f223c3c5-21de-4dae-88b6-2f9a97fe02ab"
                         },
                         {
@@ -174,6 +185,7 @@
                                 "layout|flex": null,
                                 "name": "SearchTextField"
                             },
+                            "name": "MyTextField25",
                             "designerId": "bdbd5c68-bcda-431e-95bc-11d282026bec"
                         }
                     ]
@@ -188,6 +200,7 @@
                     "userConfig": {
                         "dock": "bottom"
                     },
+                    "name": "MyToolbar27",
                     "designerId": "dc0fe129-7e02-40aa-b052-0d5f4dc9441f",
                     "cn": [
                         {
@@ -203,6 +216,7 @@
                                 "store": "UserStore",
                                 "width": 1099
                             },
+                            "name": "MyPagingToolbar8",
                             "designerId": "564da720-e9b5-4d26-bf34-6084cf65dc94"
                         }
                     ]
@@ -258,6 +272,7 @@
                         "name": "itemcontextmenu",
                         "scope": "me"
                     },
+                    "name": "onGridpanelItemContextMenu",
                     "designerId": "d89156f6-bd08-4e13-9bc4-9a63d91ef231"
                 }
             ]
@@ -276,6 +291,7 @@
                 "store": "UserRoleStore",
                 "title": "User Role"
             },
+            "name": "MyGridPanel21",
             "designerId": "07a6a734-7a4b-4970-84c1-a3aadcefa7ae",
             "cn": [
                 {
@@ -289,6 +305,7 @@
                         "dataIndex": "name",
                         "text": "Name"
                     },
+                    "name": "MyColumn29",
                     "designerId": "af7e7b90-92cb-4360-a6f5-55a977bd6b01"
                 },
                 {
@@ -303,6 +320,7 @@
                         "text": "User Count",
                         "width": 133
                     },
+                    "name": "MyColumn30",
                     "designerId": "51b8bad7-56fc-42c5-8189-4db978b79ac5"
                 },
                 {
@@ -312,6 +330,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyGridView21",
                     "designerId": "fbc00d28-dc21-445c-bcd0-382efb3c9a38"
                 },
                 {
@@ -324,6 +343,7 @@
                     "userConfig": {
                         "dock": "bottom"
                     },
+                    "name": "MyToolbar28",
                     "designerId": "cfd46046-283b-4dec-a994-68207e7ddea4",
                     "cn": [
                         {
@@ -339,6 +359,7 @@
                                 "store": "UserRoleStore",
                                 "width": 1099
                             },
+                            "name": "MyPagingToolbar9",
                             "designerId": "f2d02e21-d78d-4969-a250-e08f641d4144"
                         }
                     ]

@@ -22,6 +22,7 @@
             "userConfig": {
                 "url": "datagrid/group/list"
             },
+            "name": "MyAjaxProxy4",
             "designerId": "63e20427-d665-4db4-b9fe-d1a984ebcc84",
             "cn": [
                 {
@@ -31,6 +32,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyJsonReader4",
                     "designerId": "aad81c89-31da-40df-890f-83a5ea41c4af"
                 }
             ]

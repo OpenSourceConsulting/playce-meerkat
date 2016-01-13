@@ -69,5 +69,6 @@
             "DomainWindow"
         ]
     },
+    "name": "Application",
     "designerId": "application"
 }

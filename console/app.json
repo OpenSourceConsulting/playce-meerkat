@@ -1,15 +1,7 @@
 {
    "name": "webapp",
    "requires": [],
-   "id": "5b996979-2bda-440f-8092-cbcd9eb0d4b0",
-   "resources": [
-      "resources/css/dolly.css"
-   ],
-   "_architect": {
-      "_comment": "Please don't edit. This is Architect data.",
-      "resources": [
-         "resources/css/dolly.css"
-      ],
-      "requires": []
-   }
+   "id": "1d809131-0d44-4ea9-ad56-a44cc469630a",
+   "theme": "ext-theme-neptune",
+   "resources": []
 }

@@ -21,6 +21,7 @@
                 "ref": "centerContainer",
                 "selector": "#centerContainer"
             },
+            "name": "centerContainer",
             "designerId": "8348af79-361e-4ca5-8b51-6dba75b95ab6"
         },
         {
@@ -34,6 +35,7 @@
                 "ref": "dashboardBtn",
                 "selector": "#dashboardBtn"
             },
+            "name": "dashboardBtn",
             "designerId": "22d1c0aa-bee2-46fa-a2da-c9732e2c5676"
         },
         {
@@ -53,6 +55,7 @@
                     "//this.getStat();"
                 ]
             },
+            "name": "onLaunch",
             "designerId": "24a37b8f-02f2-4b2e-8e84-f0a1b4be28d8"
         }
     ]
