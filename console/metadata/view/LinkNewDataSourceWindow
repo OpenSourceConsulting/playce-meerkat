@@ -30,6 +30,7 @@
                 "layout|flex": 2,
                 "margin": "10 0 0 10"
             },
+            "name": "MyContainer34",
             "designerId": "041adc70-6dcb-44fb-bd61-bb8e53fcc008",
             "cn": [
                 {
@@ -41,11 +42,10 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Tomcat instance",
-                        "value": [
-                            "Tomcat 1"
-                        ],
+                        "value": "Tomcat 1",
                         "width": 213
                     },
+                    "name": "MyDisplayField23",
                     "designerId": "c66bc43b-9c6e-4f8c-b4e5-2ed2c1468b84"
                 },
                 {
@@ -58,11 +58,10 @@
                     "userConfig": {
                         "fieldLabel": "Status:",
                         "margin": "0 10 0 100",
-                        "value": [
-                            "Started"
-                        ],
+                        "value": "Started",
                         "width": 148
                     },
+                    "name": "MyDisplayField24",
                     "designerId": "fdab203d-d4b3-4ea1-8fdb-305c91db8aaf"
                 }
             ]
@@ -80,6 +79,7 @@
                 "margin": "5 5 5 5",
                 "title": ""
             },
+            "name": "MyGridPanel23",
             "designerId": "2118cc8b-dcdb-4a55-a51b-3d96b2ef4f4d",
             "cn": [
                 {
@@ -93,6 +93,7 @@
                         "dataIndex": "string",
                         "text": "Select"
                     },
+                    "name": "MyColumn32",
                     "designerId": "3e44d55a-4f39-416b-ae28-aabee8a79537"
                 },
                 {
@@ -106,6 +107,7 @@
                         "dataIndex": "number",
                         "text": "Data source Name"
                     },
+                    "name": "MyNumberColumn24",
                     "designerId": "c2a222f0-a38d-444a-aec3-103f5e3d0d4a"
                 },
                 {
@@ -119,6 +121,7 @@
                         "dataIndex": "date",
                         "text": "JDBC URL"
                     },
+                    "name": "MyDateColumn16",
                     "designerId": "34e9df28-144c-4059-aeb4-ccde1713805e"
                 },
                 {
@@ -132,6 +135,7 @@
                         "dataIndex": "bool",
                         "text": "Server No"
                     },
+                    "name": "MyBooleanColumn37",
                     "designerId": "b76ea628-13f2-47b7-a008-b14cf6351c2d"
                 },
                 {
@@ -141,6 +145,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyGridView23",
                     "designerId": "2ff22567-554f-4098-a9ef-08baa73fbe04"
                 }
             ]
@@ -158,6 +163,7 @@
                 "layout|flex": 0.5,
                 "margin": "5 5 5 5"
             },
+            "name": "MyCheckbox1",
             "designerId": "97d8d498-28cb-4b55-9e1e-d674562477f7"
         },
         {
@@ -171,6 +177,7 @@
                 "layout|flex": 1.5,
                 "margin": "10 5 5 5"
             },
+            "name": "MyContainer35",
             "designerId": "b2060b50-b757-4c8b-87a3-6f8aff4bcca4",
             "cn": [
                 {
@@ -184,6 +191,7 @@
                         "margin": "0 0 0 220",
                         "text": "OK"
                     },
+                    "name": "MyButton38",
                     "designerId": "a45c6c9d-04f7-4064-b65d-04e0058e4c2a"
                 },
                 {
@@ -197,6 +205,7 @@
                         "margin": "0 0 0 10",
                         "text": "Cancel"
                     },
+                    "name": "MyButton39",
                     "designerId": "b7373ecb-2557-40b7-90c1-ce78ccac3e98"
                 }
             ]

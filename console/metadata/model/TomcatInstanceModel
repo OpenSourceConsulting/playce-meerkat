@@ -21,6 +21,7 @@
                 "name": "id",
                 "type": "int"
             },
+            "name": "MyField6",
             "designerId": "262e4d50-d31a-4924-ac8b-aa53e46445e4"
         },
         {
@@ -34,6 +35,7 @@
                 "name": "name",
                 "type": "string"
             },
+            "name": "MyField7",
             "designerId": "dee15273-de16-48f6-8819-8a5b4e7eb5ef"
         },
         {
@@ -47,6 +49,7 @@
                 "name": "ipaddress",
                 "type": "string"
             },
+            "name": "MyField8",
             "designerId": "35040f1f-4f24-427b-ae33-fa882729cfb5"
         },
         {
@@ -60,6 +63,7 @@
                 "name": "catalinaHome",
                 "type": "string"
             },
+            "name": "MyField9",
             "designerId": "55a6d656-80f8-428f-8e5e-d13fb40f9cc5"
         },
         {
@@ -73,6 +77,7 @@
                 "name": "catalinaBase",
                 "type": "string"
             },
+            "name": "MyField10",
             "designerId": "20671ec6-abf2-4382-bc37-62a3a1453feb"
         },
         {
@@ -86,6 +91,7 @@
                 "name": "sshPort",
                 "type": "int"
             },
+            "name": "MyField11",
             "designerId": "33ca02b1-8010-463a-9dae-78a4dda1feba"
         },
         {
@@ -99,6 +105,7 @@
                 "name": "sshUsername",
                 "type": "string"
             },
+            "name": "MyField12",
             "designerId": "e171b1cc-b3b2-4fb2-8e8e-0075bac87756"
         },
         {
@@ -112,6 +119,7 @@
                 "name": "sshPassword",
                 "type": "string"
             },
+            "name": "MyField13",
             "designerId": "c4a82ec9-ae44-49ab-8d37-f99d4655c83c"
         },
         {
@@ -125,6 +133,7 @@
                 "name": "httpPort",
                 "type": "int"
             },
+            "name": "MyField14",
             "designerId": "b786571d-299d-48c3-a706-9aa15cc6810b"
         },
         {
@@ -138,6 +147,7 @@
                 "name": "statusString",
                 "type": "string"
             },
+            "name": "MyField15",
             "designerId": "87344bc0-48e5-4c3c-a092-608cef6c7409"
         },
         {
@@ -151,6 +161,7 @@
                 "name": "applications",
                 "type": "int"
             },
+            "name": "MyField16",
             "designerId": "89cc2ba2-a681-4e31-ba01-becd7dc3a2d5"
         },
         {
@@ -164,6 +175,7 @@
                 "name": "hostName",
                 "type": "string"
             },
+            "name": "MyField17",
             "designerId": "922e2cdd-3159-4895-a8cb-634adcd701be"
         }
     ]

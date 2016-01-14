@@ -28,6 +28,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onClickLinkNewDatasource",
             "designerId": "ed364357-f656-4688-990f-2a398949f9a6"
         }
     ]

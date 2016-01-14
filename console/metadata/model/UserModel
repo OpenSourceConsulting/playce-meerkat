@@ -22,6 +22,7 @@
                 "name": "password",
                 "type": "string"
             },
+            "name": "MyField18",
             "designerId": "c4dc1733-4d31-4fbb-b23a-6c32cf9ae6ed"
         },
         {
@@ -34,6 +35,7 @@
             "userConfig": {
                 "name": "fullName"
             },
+            "name": "MyField19",
             "designerId": "38514255-cdee-494c-81ef-1ab09f03dc64"
         },
         {
@@ -47,6 +49,7 @@
                 "name": "userRoleName",
                 "type": "auto"
             },
+            "name": "MyField20",
             "designerId": "6f747d18-fa2c-40d0-ad8d-337f68b99fc5"
         },
         {
@@ -59,6 +62,7 @@
             "userConfig": {
                 "name": "email"
             },
+            "name": "MyField21",
             "designerId": "72848f21-8c84-4fb8-b042-fb0ff1b98b37"
         },
         {
@@ -71,6 +75,7 @@
             "userConfig": {
                 "name": "createdDateString"
             },
+            "name": "MyField22",
             "designerId": "97a85547-b39d-4381-86cf-851317c44b0d"
         },
         {
@@ -83,6 +88,7 @@
             "userConfig": {
                 "name": "lastLoginDateString"
             },
+            "name": "MyField23",
             "designerId": "c9d429b6-fb59-4c42-a801-ede62abb6111"
         },
         {
@@ -96,6 +102,7 @@
                 "name": "id",
                 "type": "int"
             },
+            "name": "MyField24",
             "designerId": "7e591ab6-98b4-43c5-ad31-1decc5291666"
         },
         {
@@ -109,6 +116,7 @@
                 "name": "userName",
                 "type": "string"
             },
+            "name": "MyField25",
             "designerId": "6a850527-6ce0-4d3d-a481-f93dab2a421d"
         }
     ]

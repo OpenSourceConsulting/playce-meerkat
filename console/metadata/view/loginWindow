@@ -40,6 +40,7 @@
                 "title": null,
                 "width": null
             },
+            "name": "MyPanel92",
             "designerId": "b45964a2-1057-4a7a-a0ee-ea211dc5d7f8",
             "cn": [
                 {
@@ -60,6 +61,7 @@
                         "style": "{text-align: center;}",
                         "text": ""
                     },
+                    "name": "MyLabel19",
                     "configAlternates": {
                         "style": "string"
                     },
@@ -80,6 +82,7 @@
                         "margin": "5 0 0 0",
                         "title": null
                     },
+                    "name": "MyForm",
                     "designerId": "0cb1644f-ec7b-4701-a74e-2ce865b86df1",
                     "cn": [
                         {
@@ -104,6 +107,7 @@
                                 "style": null,
                                 "width": null
                             },
+                            "name": "MyTextField26",
                             "configAlternates": {
                                 "style": "string"
                             },
@@ -128,6 +132,7 @@
                                 "layout|anchor": "100%",
                                 "name": "password"
                             },
+                            "name": "MyTextField27",
                             "designerId": "06ea6889-b7bf-470d-b156-c8fe18dff9e5"
                         },
                         {
@@ -145,6 +150,7 @@
                                 ],
                                 "layout": "vbox"
                             },
+                            "name": "MyContainer28",
                             "designerId": "f572ce99-7386-476b-8362-d6eb712fb98a",
                             "cn": [
                                 {
@@ -161,6 +167,7 @@
                                         "scale": "medium",
                                         "text": "로그인"
                                     },
+                                    "name": "MyButton32",
                                     "designerId": "3eeded66-1f4f-473d-bb08-f1ce11665c9e"
                                 }
                             ]

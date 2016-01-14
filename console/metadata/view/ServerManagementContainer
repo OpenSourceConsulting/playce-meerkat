@@ -27,6 +27,7 @@
                 "height": 597,
                 "layout|flex": 9
             },
+            "name": "MyTabPanel5",
             "designerId": "91a99ce0-d9c7-402b-a3b4-d7380cacb70e",
             "cn": [
                 {
@@ -43,6 +44,7 @@
                         "manageHeight": false,
                         "title": "Tomcat servers"
                     },
+                    "name": "MyPanel76",
                     "designerId": "91fb1c79-8a09-46c1-9868-22e2a9d9df72",
                     "cn": [
                         {
@@ -52,6 +54,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig19",
                             "designerId": "60e5480c-7cc4-4fe8-bc95-6448a285124f"
                         },
                         {
@@ -65,6 +68,7 @@
                                 "dock": "top",
                                 "layout|flex": 1
                             },
+                            "name": "MyToolbar15",
                             "designerId": "d394cbea-1762-48cf-8f18-c74d125fad96",
                             "cn": [
                                 {
@@ -78,6 +82,7 @@
                                         "layout|flex": null,
                                         "text": "New Server"
                                     },
+                                    "name": "MyButton16",
                                     "designerId": "0a014c76-86cd-4fec-81af-d72dea72534b"
                                 }
                             ]
@@ -95,6 +100,7 @@
                                 "layout|flex": 1,
                                 "title": ""
                             },
+                            "name": "MyGridPanel14",
                             "designerId": "fd9113f9-36ca-4e62-a5a0-735bed27457f",
                             "cn": [
                                 {
@@ -108,6 +114,7 @@
                                         "dataIndex": "string",
                                         "text": "Name"
                                     },
+                                    "name": "MyColumn17",
                                     "designerId": "fbca23fa-8b73-4731-adb8-f9655d20d3de"
                                 },
                                 {
@@ -121,6 +128,7 @@
                                         "dataIndex": "number",
                                         "text": "Operating System"
                                     },
+                                    "name": "MyNumberColumn13",
                                     "designerId": "f9439419-d04c-4816-b316-e4880b24ab6d"
                                 },
                                 {
@@ -134,6 +142,7 @@
                                         "dataIndex": "date",
                                         "text": "Type"
                                     },
+                                    "name": "MyDateColumn8",
                                     "designerId": "aa8aa32d-99d5-42ca-becf-7a29dc1373e3"
                                 },
                                 {
@@ -147,6 +156,7 @@
                                         "dataIndex": "bool",
                                         "text": "IP Address"
                                     },
+                                    "name": "MyBooleanColumn28",
                                     "designerId": "e9e9cbae-7c9b-4db8-97cd-ab0b2d460f9b"
                                 },
                                 {
@@ -160,6 +170,7 @@
                                         "dataIndex": "bool",
                                         "text": "Tomcat Instances"
                                     },
+                                    "name": "MyBooleanColumn29",
                                     "designerId": "da077c65-2bf8-4b76-9106-fced2423a577"
                                 },
                                 {
@@ -169,6 +180,7 @@
                                         "type": "object"
                                     },
                                     "codeClass": null,
+                                    "name": "MyGridView14",
                                     "designerId": "3f0f917e-66ee-4b99-a376-0f1468927f6b"
                                 },
                                 {
@@ -183,6 +195,7 @@
                                         "dock": "bottom",
                                         "width": 360
                                     },
+                                    "name": "MyPagingToolbar4",
                                     "designerId": "9a7ccae3-2329-4f06-a9d4-b8e50c408cdd"
                                 }
                             ]
@@ -198,6 +211,7 @@
                                 "dock": "top",
                                 "layout|flex": 1
                             },
+                            "name": "MyToolbar16",
                             "designerId": "d6e76c71-9325-4fb8-a0a6-0a9932b9513c"
                         },
                         {
@@ -214,6 +228,7 @@
                                 "layout|flex": 7,
                                 "manageHeight": false
                             },
+                            "name": "MyTabPanel6",
                             "designerId": "e39f13dd-575d-4dc0-8d1c-527c16d03e02",
                             "cn": [
                                 {
@@ -228,6 +243,7 @@
                                         "height": null,
                                         "title": "SSH Account"
                                     },
+                                    "name": "MyPanel77",
                                     "designerId": "72880519-2159-432f-9734-64534c59ecbb",
                                     "cn": [
                                         {
@@ -237,6 +253,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "TabConfig20",
                                             "designerId": "a738f3f6-6859-4a3f-ae74-c173a1002004"
                                         },
                                         {
@@ -246,6 +263,7 @@
                                                 "type": "array"
                                             },
                                             "codeClass": null,
+                                            "name": "MyContainer21",
                                             "designerId": "83afde09-1647-4923-91a1-8292137def8e",
                                             "cn": [
                                                 {
@@ -258,6 +276,7 @@
                                                     "userConfig": {
                                                         "fieldLabel": "IP Address:"
                                                     },
+                                                    "name": "MyTextField4",
                                                     "designerId": "55a78de8-d406-45de-bc2f-252f8b865ba1"
                                                 },
                                                 {
@@ -270,6 +289,7 @@
                                                     "userConfig": {
                                                         "fieldLabel": "Port"
                                                     },
+                                                    "name": "MyTextField5",
                                                     "designerId": "7767fcf4-5dfc-4618-a0cf-a1b105f8ede0"
                                                 },
                                                 {
@@ -282,6 +302,7 @@
                                                     "userConfig": {
                                                         "fieldLabel": "User ID"
                                                     },
+                                                    "name": "MyTextField6",
                                                     "designerId": "9bc73eb9-7d2b-46f6-a473-642bf287476e"
                                                 },
                                                 {
@@ -295,6 +316,7 @@
                                                         "fieldLabel": "Password",
                                                         "inputType": "password"
                                                     },
+                                                    "name": "MyTextField7",
                                                     "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
                                                 },
                                                 {
@@ -307,6 +329,7 @@
                                                     "userConfig": {
                                                         "text": "Test"
                                                     },
+                                                    "name": "MyButton17",
                                                     "designerId": "ef4e391e-bf05-4ad2-969c-d43af269dbb7"
                                                 },
                                                 {
@@ -319,6 +342,7 @@
                                                     "userConfig": {
                                                         "text": "Edit"
                                                     },
+                                                    "name": "MyButton18",
                                                     "designerId": "7b796ebf-4efa-42e0-b20a-c9fb3b281ded"
                                                 },
                                                 {
@@ -331,6 +355,7 @@
                                                     "userConfig": {
                                                         "text": "Reset"
                                                     },
+                                                    "name": "MyButton19",
                                                     "designerId": "d2dc1bef-7c33-428f-8b8a-2c473f534cfc"
                                                 }
                                             ]
@@ -347,6 +372,7 @@
                                     "userConfig": {
                                         "title": "Environment Variables"
                                     },
+                                    "name": "MyPanel78",
                                     "designerId": "970d760e-ed8c-4544-8739-5ae98e886032",
                                     "cn": [
                                         {
@@ -356,6 +382,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "TabConfig21",
                                             "designerId": "12bdb8e1-0763-4092-815c-7f8664b27eaa"
                                         },
                                         {
@@ -368,6 +395,7 @@
                                             "userConfig": {
                                                 "dock": "top"
                                             },
+                                            "name": "MyToolbar17",
                                             "designerId": "c0a107d7-a276-44fc-942f-c96d1766220c",
                                             "cn": [
                                                 {
@@ -381,6 +409,7 @@
                                                         "fieldLabel": "Select revision:",
                                                         "layout|flex": null
                                                     },
+                                                    "name": "MyComboBox4",
                                                     "designerId": "5d4b3193-c35c-4f68-b239-d60ef003f6e1"
                                                 },
                                                 {
@@ -393,6 +422,7 @@
                                                     "userConfig": {
                                                         "layout|flex": null
                                                     },
+                                                    "name": "MySeparator5",
                                                     "designerId": "7564ec71-4ebc-4df1-a070-ba02ecb033ef"
                                                 },
                                                 {
@@ -406,6 +436,7 @@
                                                         "layout|flex": null,
                                                         "text": "Active"
                                                     },
+                                                    "name": "MyButton20",
                                                     "designerId": "414e797f-5cc8-4068-90bf-6d54718229f3"
                                                 },
                                                 {
@@ -418,6 +449,7 @@
                                                     "userConfig": {
                                                         "layout|flex": null
                                                     },
+                                                    "name": "MySeparator6",
                                                     "designerId": "6f9dfd07-d151-49ed-b160-8dbeb1e3f82b"
                                                 },
                                                 {
@@ -431,6 +463,7 @@
                                                         "layout|flex": null,
                                                         "text": "New"
                                                     },
+                                                    "name": "MyButton21",
                                                     "designerId": "b02eb045-a581-47b3-847a-f4adb18fc855"
                                                 }
                                             ]
@@ -446,6 +479,7 @@
                                                 "forceFit": true,
                                                 "title": ""
                                             },
+                                            "name": "MyGridPanel15",
                                             "designerId": "200e13b5-c8ae-4832-aa80-a3d319fe1607",
                                             "cn": [
                                                 {
@@ -459,6 +493,7 @@
                                                         "dataIndex": "string",
                                                         "text": "Variable name"
                                                     },
+                                                    "name": "MyColumn18",
                                                     "designerId": "6d3e5fb0-1382-4379-8561-174aa1af9d95"
                                                 },
                                                 {
@@ -472,6 +507,7 @@
                                                         "dataIndex": "number",
                                                         "text": "Value"
                                                     },
+                                                    "name": "MyNumberColumn14",
                                                     "designerId": "358022e8-4216-4f85-9943-6254443b47b8"
                                                 },
                                                 {
@@ -481,6 +517,7 @@
                                                         "type": "object"
                                                     },
                                                     "codeClass": null,
+                                                    "name": "MyGridView15",
                                                     "designerId": "cecdcb69-040e-4345-bbdd-c300f69fd338"
                                                 }
                                             ]
@@ -500,6 +537,7 @@
                                         "manageHeight": false,
                                         "title": "Server.xml"
                                     },
+                                    "name": "MyPanel79",
                                     "designerId": "7add6ceb-d1ff-4729-9675-a3617be0d975",
                                     "cn": [
                                         {
@@ -509,6 +547,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "TabConfig22",
                                             "designerId": "6be02ad4-1d66-4db1-8696-df3385fc0037"
                                         },
                                         {
@@ -524,6 +563,7 @@
                                                 "height": null,
                                                 "width": 100
                                             },
+                                            "name": "MyTabPanel7",
                                             "designerId": "4459bf90-21c7-4139-bce1-c66628319abc",
                                             "cn": [
                                                 {
@@ -538,6 +578,7 @@
                                                         "height": null,
                                                         "title": "GUI"
                                                     },
+                                                    "name": "MyPanel80",
                                                     "designerId": "6560a96c-0045-4488-a45d-b7e1bed20a2c",
                                                     "cn": [
                                                         {
@@ -547,6 +588,7 @@
                                                                 "type": "object"
                                                             },
                                                             "codeClass": null,
+                                                            "name": "TabConfig23",
                                                             "designerId": "f6531554-a3e5-4fa5-856e-f176d2019825"
                                                         },
                                                         {
@@ -562,6 +604,7 @@
                                                                 "margin": "10 0 0 0 0",
                                                                 "title": "GlobalNamingResources"
                                                             },
+                                                            "name": "MyFieldSet",
                                                             "designerId": "ff77a3b4-3f56-424a-9d7a-ccb72fb0a61a",
                                                             "cn": [
                                                                 {
@@ -575,6 +618,7 @@
                                                                         "fieldLabel": "Auth",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField8",
                                                                     "designerId": "920d1bc7-c247-414f-bbe3-b876a147a787"
                                                                 },
                                                                 {
@@ -590,6 +634,7 @@
                                                                         "margin": "0 20 10 10 ",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField9",
                                                                     "designerId": "6bece39f-da59-498a-85bd-48fecb1af601"
                                                                 }
                                                             ]
@@ -607,6 +652,7 @@
                                                                 "margin": null,
                                                                 "title": "Executor.Service"
                                                             },
+                                                            "name": "MyFieldSet1",
                                                             "designerId": "2ff33f7f-8da0-4f3a-b0db-6939e854c2e6",
                                                             "cn": [
                                                                 {
@@ -620,6 +666,7 @@
                                                                         "fieldLabel": "Max Threads",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField10",
                                                                     "designerId": "c6c771e1-0e1f-463c-9e0c-06c18ab70fcb"
                                                                 },
                                                                 {
@@ -635,6 +682,7 @@
                                                                         "margin": "0 10 10 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField11",
                                                                     "designerId": "2a270f26-3e1a-4316-abe8-46243ed1cc47"
                                                                 },
                                                                 {
@@ -648,6 +696,7 @@
                                                                         "fieldLabel": "Max Idle Time",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField12",
                                                                     "designerId": "a58c0404-2296-4cf2-b7bf-d46374f1eeb8"
                                                                 }
                                                             ]
@@ -665,6 +714,7 @@
                                                                 "layout": "column",
                                                                 "title": "Connector.Service"
                                                             },
+                                                            "name": "MyFieldSet2",
                                                             "designerId": "c9606682-94a5-495c-8a8a-30638f7a3068",
                                                             "cn": [
                                                                 {
@@ -680,6 +730,7 @@
                                                                         "margin": "0 0 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField13",
                                                                     "designerId": "3e8129e3-d3b4-4efa-8831-34ff442382dd"
                                                                 },
                                                                 {
@@ -694,6 +745,7 @@
                                                                         "margin": "0 10 10 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField14",
                                                                     "designerId": "ab61379f-b86e-4497-aa0e-f5cb06609895"
                                                                 },
                                                                 {
@@ -709,6 +761,7 @@
                                                                         "margin": "0 0 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField15",
                                                                     "designerId": "df90c5de-16b5-4d6c-91b6-90176f8b663e"
                                                                 },
                                                                 {
@@ -723,6 +776,7 @@
                                                                         "margin": "0 0 10 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField16",
                                                                     "designerId": "40966ab8-13a5-409b-8bee-ee9bb7bebdab"
                                                                 },
                                                                 {
@@ -738,6 +792,7 @@
                                                                         "margin": "",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField17",
                                                                     "designerId": "0094c7fc-284b-4f38-b2df-b1fac45e9724"
                                                                 },
                                                                 {
@@ -752,6 +807,7 @@
                                                                         "margin": "0 0 0 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField18",
                                                                     "designerId": "477c14f4-95a6-4133-834a-f8b706704db4"
                                                                 },
                                                                 {
@@ -767,6 +823,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup",
                                                                     "designerId": "23a50150-9fa5-4a8d-8f45-bff0638b75df",
                                                                     "cn": [
                                                                         {
@@ -780,6 +837,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio",
                                                                             "designerId": "a047ddf7-f46d-46cf-a9b2-9ef8d92b8eb4"
                                                                         },
                                                                         {
@@ -793,6 +851,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio1",
                                                                             "designerId": "b71e4a36-8369-4f7d-aeb7-f48f17ebf659"
                                                                         }
                                                                     ]
@@ -812,6 +871,7 @@
                                                                 "layout": "column",
                                                                 "title": "Host"
                                                             },
+                                                            "name": "MyFieldSet3",
                                                             "designerId": "12692c5b-9c4d-4075-a0da-7c34b1a3ca18",
                                                             "cn": [
                                                                 {
@@ -826,6 +886,7 @@
                                                                         "margin": "0 0 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField19",
                                                                     "designerId": "18ace8c7-334c-4b79-9348-44f1acfd723a"
                                                                 },
                                                                 {
@@ -840,6 +901,7 @@
                                                                         "margin": "0 10 10 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField20",
                                                                     "designerId": "f218b434-2353-45cc-bbb9-404995b89973"
                                                                 },
                                                                 {
@@ -855,6 +917,7 @@
                                                                         "margin": "0 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup1",
                                                                     "designerId": "de967bea-91ae-4eaa-a99f-a4d95d376efb",
                                                                     "cn": [
                                                                         {
@@ -868,6 +931,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio2",
                                                                             "designerId": "e6058b06-9fec-4d83-aa43-c65c7732bfe0"
                                                                         },
                                                                         {
@@ -881,6 +945,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio3",
                                                                             "designerId": "c0a2f1dc-d4aa-4c4d-bb41-8822722587fa"
                                                                         }
                                                                     ]
@@ -897,6 +962,7 @@
                                                             "userConfig": {
                                                                 "dock": "top"
                                                             },
+                                                            "name": "MyToolbar18",
                                                             "designerId": "0a0818ea-a69d-4a5f-9ef9-ae8e12140d03",
                                                             "cn": [
                                                                 {
@@ -911,6 +977,7 @@
                                                                         "margin": "0 0 0 400",
                                                                         "text": "Save"
                                                                     },
+                                                                    "name": "MyButton22",
                                                                     "designerId": "b6a183c0-de30-41ce-a4c1-bad11d82595b"
                                                                 },
                                                                 {
@@ -925,6 +992,7 @@
                                                                         "margin": "0 0 0 50",
                                                                         "text": "Reset"
                                                                     },
+                                                                    "name": "MyButton23",
                                                                     "designerId": "73336ac5-0534-499a-89df-c85e1cfc2dad"
                                                                 }
                                                             ]
@@ -941,6 +1009,7 @@
                                                     "userConfig": {
                                                         "title": "XML Editor"
                                                     },
+                                                    "name": "MyPanel81",
                                                     "designerId": "da58316c-8118-4bdb-858d-c4b5d4a63261",
                                                     "cn": [
                                                         {
@@ -950,6 +1019,7 @@
                                                                 "type": "object"
                                                             },
                                                             "codeClass": null,
+                                                            "name": "TabConfig24",
                                                             "designerId": "169bbed1-5b2e-4779-954b-866caf2f6b0f"
                                                         }
                                                     ]
@@ -966,6 +1036,7 @@
                                             "userConfig": {
                                                 "dock": "top"
                                             },
+                                            "name": "MyToolbar19",
                                             "designerId": "903564b5-8b64-45b0-b2d8-5ae31b7b16a5",
                                             "cn": [
                                                 {
@@ -979,6 +1050,7 @@
                                                         "fieldLabel": "Select revision",
                                                         "layout|flex": null
                                                     },
+                                                    "name": "MyComboBox5",
                                                     "designerId": "8a1dae84-9f1f-4232-992f-7e73058537a8"
                                                 }
                                             ]
@@ -998,6 +1070,7 @@
                                         "manageHeight": false,
                                         "title": "Context.xml"
                                     },
+                                    "name": "MyPanel82",
                                     "designerId": "07963973-7623-4f7e-b5b1-0fd90243a8d9",
                                     "cn": [
                                         {
@@ -1007,6 +1080,7 @@
                                                 "type": "object"
                                             },
                                             "codeClass": null,
+                                            "name": "TabConfig25",
                                             "designerId": "2b616ad9-22f0-4290-81b9-0abf9b95598d"
                                         },
                                         {
@@ -1022,6 +1096,7 @@
                                                 "height": null,
                                                 "width": 100
                                             },
+                                            "name": "MyTabPanel8",
                                             "designerId": "905d7304-a7fe-4037-8669-b044ebb295ca",
                                             "cn": [
                                                 {
@@ -1037,6 +1112,7 @@
                                                         "manageHeight": false,
                                                         "title": "GUI"
                                                     },
+                                                    "name": "MyPanel83",
                                                     "designerId": "2039180c-9b79-4448-adba-0192363ecf04",
                                                     "cn": [
                                                         {
@@ -1046,6 +1122,7 @@
                                                                 "type": "object"
                                                             },
                                                             "codeClass": null,
+                                                            "name": "TabConfig26",
                                                             "designerId": "06355244-5bfb-4a32-87a1-da0236de6a9f"
                                                         },
                                                         {
@@ -1061,6 +1138,7 @@
                                                                 "layout": "column",
                                                                 "title": ""
                                                             },
+                                                            "name": "MyFieldSet4",
                                                             "designerId": "ed71d687-6d0e-410a-9625-f1bb71a0f31a",
                                                             "cn": [
                                                                 {
@@ -1075,6 +1153,7 @@
                                                                         "margin": "10 0 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField21",
                                                                     "designerId": "ec65c534-16c8-45c5-80b0-f9d58b3f5ce5"
                                                                 },
                                                                 {
@@ -1089,6 +1168,7 @@
                                                                         "margin": "10 0 10 10",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyTextField22",
                                                                     "designerId": "6feb807b-5c6f-4840-9ad8-97f25ca1ea30"
                                                                 },
                                                                 {
@@ -1103,6 +1183,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup2",
                                                                     "designerId": "14bb27b6-3057-429d-b1e7-000b18b4dcde",
                                                                     "cn": [
                                                                         {
@@ -1116,6 +1197,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio4",
                                                                             "designerId": "997abeb4-68ae-4784-af52-a8e3bd4af817"
                                                                         },
                                                                         {
@@ -1129,6 +1211,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio5",
                                                                             "designerId": "0fec0540-2ada-430c-a721-e0e3028ce528"
                                                                         }
                                                                     ]
@@ -1145,6 +1228,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup3",
                                                                     "designerId": "6c5c0515-5e03-41cb-bfe0-148f3392ccfb",
                                                                     "cn": [
                                                                         {
@@ -1158,6 +1242,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio6",
                                                                             "designerId": "9c057acd-9008-442a-a798-f5c42d0b4050"
                                                                         },
                                                                         {
@@ -1171,6 +1256,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio7",
                                                                             "designerId": "75e43961-5a8b-4dc3-8d16-c57b40e5d4b7"
                                                                         }
                                                                     ]
@@ -1187,6 +1273,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup4",
                                                                     "designerId": "d147966d-b757-4fd1-8748-267b0af7c638",
                                                                     "cn": [
                                                                         {
@@ -1200,6 +1287,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio8",
                                                                             "designerId": "3c476fb8-476a-45d3-bced-ce6b9bfc06ad"
                                                                         },
                                                                         {
@@ -1213,6 +1301,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio9",
                                                                             "designerId": "282c0a03-d230-47ea-b0d4-0c01d5c927de"
                                                                         }
                                                                     ]
@@ -1229,6 +1318,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup5",
                                                                     "designerId": "95f07550-296c-4418-8a96-c6775d7ca632",
                                                                     "cn": [
                                                                         {
@@ -1242,6 +1332,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio10",
                                                                             "designerId": "43a15c70-61c5-432e-85b0-f3ad30b5c090"
                                                                         },
                                                                         {
@@ -1255,6 +1346,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio11",
                                                                             "designerId": "e4e256a3-0abe-4432-8bab-5643bf7ec3b7"
                                                                         }
                                                                     ]
@@ -1271,6 +1363,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup6",
                                                                     "designerId": "80e6246c-8879-4bba-af3c-7d635fa6bc46",
                                                                     "cn": [
                                                                         {
@@ -1284,6 +1377,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio12",
                                                                             "designerId": "a0646ca9-4180-4729-8904-637a87983651"
                                                                         },
                                                                         {
@@ -1297,6 +1391,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio13",
                                                                             "designerId": "a3a7eb0d-5220-4a44-8228-844da26a5dea"
                                                                         }
                                                                     ]
@@ -1313,6 +1408,7 @@
                                                                         "margin": "10 10 10 0",
                                                                         "width": 414
                                                                     },
+                                                                    "name": "MyRadioGroup7",
                                                                     "designerId": "82fead4d-1850-43a9-8c77-e9db83a07532",
                                                                     "cn": [
                                                                         {
@@ -1326,6 +1422,7 @@
                                                                                 "boxLabel": "Yes",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio14",
                                                                             "designerId": "2e04a59c-8109-4a30-a204-7c7302750f42"
                                                                         },
                                                                         {
@@ -1339,6 +1436,7 @@
                                                                                 "boxLabel": "No",
                                                                                 "fieldLabel": null
                                                                             },
+                                                                            "name": "MyRadio15",
                                                                             "designerId": "b28fbf42-04b1-4eea-ad42-12dc89cbc916"
                                                                         }
                                                                     ]
@@ -1355,6 +1453,7 @@
                                                             "userConfig": {
                                                                 "dock": "top"
                                                             },
+                                                            "name": "MyToolbar20",
                                                             "designerId": "a2c30c73-9f9f-488c-af1a-37f2d0a32f9c",
                                                             "cn": [
                                                                 {
@@ -1369,6 +1468,7 @@
                                                                         "margin": "0 0 0 400",
                                                                         "text": "Save"
                                                                     },
+                                                                    "name": "MyButton24",
                                                                     "designerId": "dc93d1fa-928d-4f5f-8532-f786290cd666"
                                                                 },
                                                                 {
@@ -1383,6 +1483,7 @@
                                                                         "margin": "0 0 0 50",
                                                                         "text": "Reset"
                                                                     },
+                                                                    "name": "MyButton25",
                                                                     "designerId": "0912002b-795a-4502-a2bc-88d4e6150202"
                                                                 }
                                                             ]
@@ -1399,6 +1500,7 @@
                                                     "userConfig": {
                                                         "title": "XML Editor"
                                                     },
+                                                    "name": "MyPanel84",
                                                     "designerId": "64f50a1c-975a-4af9-b0a0-8bf28fa9649c",
                                                     "cn": [
                                                         {
@@ -1408,6 +1510,7 @@
                                                                 "type": "object"
                                                             },
                                                             "codeClass": null,
+                                                            "name": "TabConfig27",
                                                             "designerId": "df7e1708-d10a-4040-82ed-8a2fd6c0bc80"
                                                         }
                                                     ]
@@ -1424,6 +1527,7 @@
                                             "userConfig": {
                                                 "dock": "top"
                                             },
+                                            "name": "MyToolbar21",
                                             "designerId": "d83c27c1-13ac-460b-ad4d-88da1c57c994",
                                             "cn": [
                                                 {
@@ -1437,6 +1541,7 @@
                                                         "fieldLabel": "Select revision",
                                                         "layout|flex": null
                                                     },
+                                                    "name": "MyComboBox6",
                                                     "designerId": "21fbd242-35f3-47b2-a888-a8d97bb6bc10"
                                                 }
                                             ]
@@ -1457,6 +1562,7 @@
                     "userConfig": {
                         "title": "Datagrid Servers"
                     },
+                    "name": "MyPanel85",
                     "designerId": "336df5de-89c5-4f72-a250-c214e860c40c",
                     "cn": [
                         {
@@ -1466,6 +1572,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "TabConfig28",
                             "designerId": "ae7ffd51-87d2-4bd1-86df-24fb719accac"
                         },
                         {
@@ -1478,6 +1585,7 @@
                             "userConfig": {
                                 "dock": "top"
                             },
+                            "name": "MyToolbar22",
                             "designerId": "9f930697-ff68-4f29-be5c-9b18195e18b9",
                             "cn": [
                                 {
@@ -1491,6 +1599,7 @@
                                         "layout|flex": null,
                                         "text": "New Group"
                                     },
+                                    "name": "MyButton26",
                                     "designerId": "3e949c4e-bd0d-44d9-97a7-d91408fc2b21"
                                 }
                             ]
@@ -1506,6 +1615,7 @@
                                 "forceFit": true,
                                 "title": "Datagrid Server Group"
                             },
+                            "name": "MyGridPanel16",
                             "designerId": "a02e1b7b-e293-400e-a992-ccd8a072f646",
                             "cn": [
                                 {
@@ -1519,6 +1629,7 @@
                                         "dataIndex": "string",
                                         "text": "Name"
                                     },
+                                    "name": "MyColumn19",
                                     "designerId": "5503cf3f-e6a9-46ca-821a-76d2598f7bba"
                                 },
                                 {
@@ -1532,6 +1643,7 @@
                                         "dataIndex": "number",
                                         "text": "Type"
                                     },
+                                    "name": "MyNumberColumn15",
                                     "designerId": "d6f54e67-b707-43fd-9269-be1ed98bc9f6"
                                 },
                                 {
@@ -1545,6 +1657,7 @@
                                         "dataIndex": "date",
                                         "text": "Servers"
                                     },
+                                    "name": "MyDateColumn9",
                                     "designerId": "10375863-609f-4667-9ec5-3f7633884138"
                                 },
                                 {
@@ -1558,6 +1671,7 @@
                                         "dataIndex": "bool",
                                         "text": "Action"
                                     },
+                                    "name": "MyBooleanColumn30",
                                     "designerId": "739e3d92-3416-445d-9163-6c3ef886a811"
                                 },
                                 {
@@ -1567,6 +1681,7 @@
                                         "type": "object"
                                     },
                                     "codeClass": null,
+                                    "name": "MyGridView16",
                                     "designerId": "51f10c83-e962-47a2-8be9-ec53257a7393"
                                 },
                                 {
@@ -1581,6 +1696,7 @@
                                         "dock": "bottom",
                                         "width": 360
                                     },
+                                    "name": "MyPagingToolbar5",
                                     "designerId": "6da02255-fc62-44c6-8b51-031909b8c205"
                                 }
                             ]
@@ -1595,6 +1711,7 @@
                             "userConfig": {
                                 "title": "Detail"
                             },
+                            "name": "MyPanel86",
                             "designerId": "67c5ed91-59d1-4338-8acb-fa9e92a8df1f"
                         },
                         {
@@ -1608,6 +1725,7 @@
                                 "forceFit": true,
                                 "title": ""
                             },
+                            "name": "MyGridPanel17",
                             "designerId": "9292a76f-2725-4c9f-8826-cf200f1f450a",
                             "cn": [
                                 {
@@ -1621,6 +1739,7 @@
                                         "dataIndex": "string",
                                         "text": "Server Name"
                                     },
+                                    "name": "MyColumn20",
                                     "designerId": "1665d27c-ec72-46c7-a76d-cdccc415e046"
                                 },
                                 {
@@ -1634,6 +1753,7 @@
                                         "dataIndex": "number",
                                         "text": "Group"
                                     },
+                                    "name": "MyNumberColumn16",
                                     "designerId": "74e23661-4714-493e-b514-16f12b76e36a"
                                 },
                                 {
@@ -1647,6 +1767,7 @@
                                         "dataIndex": "date",
                                         "text": "IP Address"
                                     },
+                                    "name": "MyDateColumn10",
                                     "designerId": "23d0549d-3ddb-4b3d-92bc-569e4f838ba1"
                                 },
                                 {
@@ -1660,6 +1781,7 @@
                                         "dataIndex": "bool",
                                         "text": "Hostname"
                                     },
+                                    "name": "MyBooleanColumn31",
                                     "designerId": "32909919-6a8c-4a03-8418-3a12d56a0bfe"
                                 },
                                 {
@@ -1673,6 +1795,7 @@
                                         "dataIndex": "bool",
                                         "text": "Sessions"
                                     },
+                                    "name": "MyBooleanColumn32",
                                     "designerId": "2cea6d79-b225-407e-be7f-aa6d7fbf0e60"
                                 },
                                 {
@@ -1686,6 +1809,7 @@
                                         "dataIndex": "bool",
                                         "text": "Status"
                                     },
+                                    "name": "MyBooleanColumn33",
                                     "designerId": "ee65dd36-691a-4814-bd79-df3faa7196ed"
                                 },
                                 {
@@ -1699,6 +1823,7 @@
                                         "dataIndex": "bool",
                                         "text": "Actions"
                                     },
+                                    "name": "MyBooleanColumn34",
                                     "designerId": "95e8c9cc-7919-482e-b3d4-b78aeeb15894"
                                 },
                                 {
@@ -1708,6 +1833,7 @@
                                         "type": "object"
                                     },
                                     "codeClass": null,
+                                    "name": "MyGridView17",
                                     "designerId": "b6e71ca4-c9c7-49f0-899b-bfe0ee5c47f5"
                                 },
                                 {
@@ -1722,6 +1848,7 @@
                                         "dock": "bottom",
                                         "width": 360
                                     },
+                                    "name": "MyPagingToolbar6",
                                     "designerId": "42a73116-0de6-4130-94de-bccf7832bd28"
                                 },
                                 {
@@ -1734,6 +1861,7 @@
                                     "userConfig": {
                                         "dock": "top"
                                     },
+                                    "name": "MyToolbar23",
                                     "designerId": "83ae3eac-0c10-4ae9-9324-d914588d42d0",
                                     "cn": [
                                         {
@@ -1747,6 +1875,7 @@
                                                 "layout|flex": null,
                                                 "text": "Add"
                                             },
+                                            "name": "MyButton27",
                                             "designerId": "3a315454-730f-4232-9162-b20cbd89e3f7"
                                         },
                                         {
@@ -1759,6 +1888,7 @@
                                             "userConfig": {
                                                 "layout|flex": null
                                             },
+                                            "name": "MySeparator7",
                                             "designerId": "a0e9649d-a7c3-42bb-a07e-23c220fe555e"
                                         },
                                         {
@@ -1772,6 +1902,7 @@
                                                 "fieldLabel": "Filtering",
                                                 "layout|flex": null
                                             },
+                                            "name": "MyTextField23",
                                             "designerId": "d063e0eb-7c6f-4abe-b116-2d40c6ed2f3d"
                                         }
                                     ]

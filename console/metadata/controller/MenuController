@@ -49,6 +49,7 @@
                 "name": "itemclick",
                 "scope": "me"
             },
+            "name": "onTreepanelItemClick",
             "designerId": "3b6e898b-82dc-42e7-8927-782cf196db05"
         },
         {
@@ -114,6 +115,7 @@
                     ""
                 ]
             },
+            "name": "showMenu",
             "designerId": "7c23fd4f-dd42-4a7b-b855-bc28255615ba"
         },
         {
@@ -181,6 +183,7 @@
                     "});"
                 ]
             },
+            "name": "loadChildMenus",
             "designerId": "6a0c60e2-a275-4647-b845-f567bc760c32"
         },
         {
@@ -196,6 +199,7 @@
                     "this.loadChildMenus(\"tomcatMng\");"
                 ]
             },
+            "name": "loadDomainList",
             "designerId": "9541f229-24f6-4fd1-b9e3-2a94a2eba666"
         },
         {
@@ -214,6 +218,7 @@
                     "alert(\"Tomcat list of \" + domainId + \" is loading\");"
                 ]
             },
+            "name": "loadTomcatList",
             "designerId": "92329e35-c41a-4e38-bd6f-edd162463aae"
         },
         {
@@ -229,6 +234,7 @@
                     "alert(\"Server list is loading\");"
                 ]
             },
+            "name": "loadMonitoringServerList",
             "designerId": "b60b3d55-2e8b-4223-ad79-ec7ff7b8e3af"
         },
         {
@@ -244,6 +250,7 @@
                     "alert(\"Monitoring tomcat list is loading\");"
                 ]
             },
+            "name": "loadMonitoringTomcatList",
             "designerId": "bceb4c52-3300-48e9-9633-1cc9f061424f"
         },
         {
@@ -426,6 +433,7 @@
                 "name": "itemcontextmenu",
                 "scope": "me"
             },
+            "name": "onTreepanelItemContextMenu",
             "designerId": "ca2768f2-c6f8-4568-bbb6-edac1be7793d"
         }
     ]

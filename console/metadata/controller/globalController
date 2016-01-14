@@ -97,6 +97,7 @@
                     "this.initVType();"
                 ]
             },
+            "name": "init",
             "designerId": "bc5d01e1-27de-43d1-83ce-f5326d476a40"
         },
         {
@@ -150,6 +151,7 @@
                     "});"
                 ]
             },
+            "name": "initExtAjax",
             "designerId": "50d1b4fd-67c3-478c-97fc-dd4b3f189861"
         },
         {
@@ -216,6 +218,7 @@
                     "});"
                 ]
             },
+            "name": "initVType",
             "designerId": "e6d733fa-de52-4e11-b6f7-80d2dc99d6cb"
         }
     ]

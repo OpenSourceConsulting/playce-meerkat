@@ -34,6 +34,7 @@
                 "itemId": "domainForm",
                 "title": "My Form"
             },
+            "name": "MyForm3",
             "designerId": "653dfb48-8bda-4cc5-9e65-ea85b22eb171",
             "cn": [
                 {
@@ -55,6 +56,7 @@
                         "validateBlank": true,
                         "width": 388
                     },
+                    "name": "MyTextField38",
                     "designerId": "22ac5c8c-3dfb-4b4b-a158-98c6ede2638c"
                 },
                 {
@@ -69,6 +71,7 @@
                         "fieldLabel": "Type",
                         "id": "domainTypeRadioButtonField"
                     },
+                    "name": "MyRadioGroup8",
                     "designerId": "9329d607-e9d9-4696-9d97-534ef09108a2",
                     "cn": [
                         {
@@ -89,6 +92,7 @@
                                     "true"
                                 ]
                             },
+                            "name": "MyRadio16",
                             "designerId": "57eca5a3-530a-4f02-b41d-3664e1bdbd41",
                             "cn": [
                                 {
@@ -116,6 +120,7 @@
                                         "name": "change",
                                         "scope": "me"
                                     },
+                                    "name": "onDomainTypeClusteringChange",
                                     "designerId": "a41f437e-3b45-4a81-b778-b6eeb7b877ba"
                                 }
                             ]
@@ -137,6 +142,7 @@
                                     "false"
                                 ]
                             },
+                            "name": "MyRadio17",
                             "designerId": "4a6c21fb-7291-4fb2-8485-ae4476cfee00",
                             "cn": [
                                 {
@@ -157,6 +163,7 @@
                                         "name": "change",
                                         "scope": "me"
                                     },
+                                    "name": "onDomainTypeNoneClusteringChange",
                                     "designerId": "5dd83237-5014-426c-b769-97b406258ce5"
                                 }
                             ]
@@ -184,6 +191,7 @@
                         "valueField": "id",
                         "width": 390
                     },
+                    "name": "MyComboBox10",
                     "designerId": "2e241f61-a366-4b9e-8623-ef6f579c36be"
                 },
                 {
@@ -198,6 +206,7 @@
                         "id": "domainIdHiddenField",
                         "name": "IDHiddenField"
                     },
+                    "name": "MyHiddenField1",
                     "designerId": "becf5bd7-dc10-46b1-ae4b-f2365d160955"
                 },
                 {
@@ -213,6 +222,7 @@
                         "id": "domainClusteringConfigurationGridView",
                         "title": "Clustering Configuration"
                     },
+                    "name": "MyGridPanel24",
                     "designerId": "43029281-8af3-4fe2-bfbd-6a7aa8e81508",
                     "cn": [
                         {
@@ -226,6 +236,7 @@
                                 "dataIndex": "string",
                                 "text": "Name"
                             },
+                            "name": "MyColumn33",
                             "designerId": "50592f1f-3b93-4521-a760-2ef06ca4d1d7"
                         },
                         {
@@ -239,6 +250,7 @@
                                 "dataIndex": "number",
                                 "text": "Value"
                             },
+                            "name": "MyNumberColumn25",
                             "designerId": "087b8b4c-22ef-44d8-9361-bba350cbdf3b"
                         },
                         {
@@ -248,6 +260,7 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "name": "MyGridView24",
                             "designerId": "e28cfbce-2d2f-43ac-9fbe-39d588c26597"
                         },
                         {
@@ -257,6 +270,7 @@
                                 "type": "array"
                             },
                             "codeClass": "Ext.grid.plugin.RowEditing",
+                            "name": "MyRowEditingPlugin",
                             "designerId": "0ea1c6ba-b235-42b5-9dd9-36bb2f1434c3"
                         },
                         {
@@ -269,6 +283,7 @@
                             "userConfig": {
                                 "dock": "top"
                             },
+                            "name": "MyToolbar32",
                             "designerId": "114cb875-7234-40f4-a3c6-414df055abba",
                             "cn": [
                                 {
@@ -282,6 +297,7 @@
                                         "layout|flex": null,
                                         "text": "New"
                                     },
+                                    "name": "MyButton42",
                                     "designerId": "be293f8c-bee5-4dee-a4b3-763379762e0c"
                                 }
                             ]
@@ -305,6 +321,7 @@
                         "height": 38,
                         "layout": "hbox"
                     },
+                    "name": "MyContainer37",
                     "designerId": "5c01ff55-6f68-4ae7-9f82-f9a8488a0191",
                     "cn": [
                         {
@@ -322,6 +339,7 @@
                                 "layout|margins": "10 10 10 10",
                                 "text": "Create"
                             },
+                            "name": "MyButton43",
                             "designerId": "bd8d622f-14ba-47fc-883d-2ec1d2f8ffdb"
                         },
                         {
@@ -335,6 +353,7 @@
                                 "designer|displayName": "CancelBtn",
                                 "text": "Cancel"
                             },
+                            "name": "MyButton44",
                             "designerId": "ef4413d7-7cc7-478f-b7fe-91a8019a0a41",
                             "cn": [
                                 {
@@ -359,6 +378,7 @@
                                             " });"
                                         ]
                                     },
+                                    "name": "handler",
                                     "designerId": "0bfbad77-f0c0-40a8-8471-a2afec12fc70"
                                 }
                             ]

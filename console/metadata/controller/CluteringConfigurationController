@@ -29,6 +29,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onClickNewClusteringConfiguration",
             "designerId": "a62f551b-3bd2-4a8c-aa77-f7b3bec9351c"
         },
         {
@@ -49,6 +50,7 @@
                 "name": "click",
                 "scope": "me"
             },
+            "name": "onClickComparingClusteringConfiguration",
             "designerId": "6396a21a-6cc8-4947-aad8-7153095e4a8a"
         }
     ]

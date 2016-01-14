@@ -2,8 +2,8 @@
     "name": "console",
     "settings": {
         "cmd": {
+            "cmdVersion": "6.0.2.14",
             "license": "commercial",
-            "cmdVersion": "4.0.3.74",
             "frameworkVersion": "4.2.1.883"
         },
         "canvasControls": {
@@ -26,12 +26,16 @@
         "lastBuildSelection": {
             "value": "webBuild",
             "display": "Build web app"
-        }
+        },
+        "projectHasEnabledWebServer": false,
+        "lockUrlPrefix": false,
+        "installStatus": "Not Installed",
+        "displayfield-ExtBox1-1193-inputEl": "a new version of the framework is available"
     },
-    "xdsVersion": "3.0.0",
-    "xdsBuild": 1337,
+    "xdsVersion": "3.2.0",
+    "xdsBuild": 339,
     "schemaVersion": 1,
-    "upgradeVersion": 300000000003,
+    "upgradeVersion": 310000000001,
     "framework": "ext42",
     "viewOrderMap": {
         "view": [
@@ -94,9 +98,7 @@
             "a51673ff-2878-4f11-9b99-63666ee6c0d5"
         ],
         "resource": [
-            "a5b947ef-eecb-40af-baed-8ee5558b74d1",
-            "dccc4a23-9682-4e86-8c71-5fdd1e9bec32",
-            "338028a6-a71b-46f8-9a5f-7f21bbb782b0"
+            "a5b947ef-eecb-40af-baed-8ee5558b74d1"
         ],
         "app": [
             "application"

@@ -30,6 +30,7 @@
                 "margin": "10 10 10 10",
                 "title": ""
             },
+            "name": "MyGridPanel27",
             "designerId": "112ce24d-f7e2-4822-800f-599880ee812e",
             "cn": [
                 {
@@ -43,6 +44,7 @@
                         "dataIndex": "string",
                         "text": "Name"
                     },
+                    "name": "MyColumn35",
                     "designerId": "d290b0d7-eb6d-4f17-8ad3-9e77359269a3"
                 },
                 {
@@ -56,6 +58,7 @@
                         "dataIndex": "number",
                         "text": "Current revision"
                     },
+                    "name": "MyNumberColumn26",
                     "designerId": "d086e51c-9657-4bfb-8bb5-122ebaa0aa7e"
                 },
                 {
@@ -69,6 +72,7 @@
                         "dataIndex": "date",
                         "text": "Revision 20151214-130113"
                     },
+                    "name": "MyDateColumn17",
                     "designerId": "bc8120f9-33db-4f08-9900-e7638aa1a1cc"
                 },
                 {
@@ -78,6 +82,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyGridView27",
                     "designerId": "5bc5127a-1703-4a67-9cbd-ff37a2705370"
                 },
                 {
@@ -92,6 +97,7 @@
                         "dock": "bottom",
                         "width": 360
                     },
+                    "name": "MyPagingToolbar10",
                     "designerId": "5e334f66-9565-4c5a-be7b-1c75c0d3a589"
                 }
             ]
@@ -106,6 +112,7 @@
             "userConfig": {
                 "layout|flex": 1
             },
+            "name": "MyContainer39",
             "designerId": "34f73a49-2466-43d9-b706-877f04c49c42",
             "cn": [
                 {
@@ -119,6 +126,7 @@
                         "margin": "10 0 0 250",
                         "text": "Close"
                     },
+                    "name": "MyButton62",
                     "designerId": "f25c88e1-35a1-45de-8b9d-01133e1190c0"
                 }
             ]

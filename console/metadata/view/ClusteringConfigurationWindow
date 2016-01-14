@@ -21,6 +21,7 @@
                 "type": "array"
             },
             "codeClass": null,
+            "name": "MyContainer38",
             "designerId": "72290551-1dbd-422c-940e-6203a6101158"
         },
         {
@@ -35,6 +36,7 @@
                 "margin": "10 0 10 10",
                 "width": 352
             },
+            "name": "MyTextField45",
             "designerId": "ba5fa332-e83b-4cbe-a178-e277446b2197"
         },
         {
@@ -49,6 +51,7 @@
                 "margin": "0 0 10 10",
                 "width": 353
             },
+            "name": "MyTextField46",
             "designerId": "b9069682-9ba8-4fbe-a252-c9e0660edfb3"
         },
         {
@@ -62,6 +65,7 @@
                 "margin": "0 0 0 120",
                 "text": "Create"
             },
+            "name": "MyButton60",
             "designerId": "a3be3554-3409-4348-ac95-357e64e44559"
         },
         {
@@ -75,6 +79,7 @@
                 "margin": "0 0 0 10",
                 "text": "Cancel"
             },
+            "name": "MyButton61",
             "designerId": "2d228a76-8bdf-4866-91d0-cfe0b396a43e"
         }
     ]

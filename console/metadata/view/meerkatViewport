@@ -36,6 +36,7 @@
                 "itemId": "introContainer",
                 "width": 400
             },
+            "name": "MyContainer24",
             "designerId": "c52d8816-f9ac-4ce5-9241-72fb01b097cc"
         },
         {
@@ -51,6 +52,7 @@
                 "layout": "border",
                 "width": 150
             },
+            "name": "MyContainer25",
             "designerId": "6c544bb9-bcb2-4e4a-a6a8-b475f75880c4",
             "cn": [
                 {
@@ -69,6 +71,7 @@
                         "layout|region": "center",
                         "style": null
                     },
+                    "name": "MyContainer26",
                     "configAlternates": {
                         "style": "string"
                     },
@@ -85,6 +88,7 @@
                                 "layout|flex": 0.75,
                                 "width": 150
                             },
+                            "name": "MyToolbar29",
                             "designerId": "0923a0df-9af4-44cc-b232-ef527624ad23",
                             "cn": [
                                 {
@@ -99,6 +103,7 @@
                                         "layout|flex": null,
                                         "text": "Dashboard"
                                     },
+                                    "name": "MyLabel14",
                                     "designerId": "cf294678-544d-4bdf-8f01-984003c56242"
                                 }
                             ]
@@ -116,6 +121,7 @@
                                 "layout|flex": 9,
                                 "width": 150
                             },
+                            "name": "MyContainer27",
                             "designerId": "f0277c32-774a-4a20-9537-58ddcc7c7247",
                             "cn": [
                                 {
@@ -125,6 +131,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "dashboardpanel",
                                     "designerId": "c175cdb4-b46f-4e18-8ced-48a7403d9c64",
                                     "masterInstanceId": "62028c73-84f4-4081-b79f-26f01b095e35"
                                 },
@@ -135,6 +142,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "domaincontainer",
                                     "designerId": "3cd7da39-7043-4076-949a-97051e97c4e7",
                                     "masterInstanceId": "35963481-a0f1-4ed7-8b91-1af8291d426d"
                                 },
@@ -145,6 +153,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "tomcatinstancecontainer",
                                     "designerId": "2d6f7b0a-6672-4829-a82d-796cc5d4b351",
                                     "masterInstanceId": "150ab346-3d51-4742-878e-fc2960711343"
                                 },
@@ -155,6 +164,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "monitoringmachinecontainer",
                                     "designerId": "8439df86-d743-4764-b2c3-49b6e25920f2",
                                     "masterInstanceId": "2768828a-2f83-4bba-8235-7089cdc734eb"
                                 },
@@ -165,6 +175,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "monitoringtomcatinstance",
                                     "designerId": "956d3f59-c084-4ecf-af95-8d19be4590fa",
                                     "masterInstanceId": "e3304992-e2bb-4996-9efb-783991b92189"
                                 },
@@ -175,6 +186,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "detailmonitoringmachinecontainer",
                                     "designerId": "c3956362-8e2a-41d9-91e6-ca12dba1bc0c",
                                     "masterInstanceId": "48e2b438-8422-4af0-800c-8d841f4980f9"
                                 },
@@ -185,6 +197,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "detailmonitoringtomcatinstance",
                                     "designerId": "461a33f7-674f-4918-ad75-f32fa4b8df3f",
                                     "masterInstanceId": "8f3c571d-2e4b-49c6-a435-a250b81b82ab"
                                 },
@@ -195,6 +208,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "servermanagementcontainer",
                                     "designerId": "0d8b7d41-40a0-485a-b69e-bd72d3b32cd6",
                                     "masterInstanceId": "294eb71a-5ed2-4b1e-b20d-5c73d966c7fb"
                                 },
@@ -205,6 +219,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "resourcemanagementcontainer",
                                     "designerId": "85942721-e926-4cae-84d2-581c02bbac48",
                                     "masterInstanceId": "0cf5471d-a4d3-45a6-b177-3019f1fbe80f"
                                 },
@@ -215,6 +230,7 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "name": "usermntcontainer",
                                     "designerId": "b9a9c5e9-9c0d-4c20-a077-af51809ef4ef",
                                     "masterInstanceId": "f223e421-6df8-4d2a-89c8-0499ee72e378"
                                 }
@@ -238,6 +254,7 @@
                         "layout|region": "north",
                         "title": null
                     },
+                    "name": "MyPanel88",
                     "designerId": "7dbbb762-8c8e-4f09-a6cd-3e37d05c131a",
                     "cn": [
                         {
@@ -257,6 +274,7 @@
                                 "title": "Open Source Consulting Co. ltd.",
                                 "width": 120
                             },
+                            "name": "MyImg",
                             "designerId": "1df61c34-4505-4585-9615-779515daf0eb"
                         },
                         {
@@ -275,6 +293,7 @@
                                 "title": "Athena Dolly",
                                 "width": null
                             },
+                            "name": "MyImg1",
                             "designerId": "9a4ba715-a388-4d6c-a9d2-8872cf821d21"
                         },
                         {
@@ -288,6 +307,7 @@
                                 "layout|flex": 2,
                                 "width": 500
                             },
+                            "name": "MySpacer",
                             "designerId": "f29c1ae6-c741-43c4-b71e-a535b7fe38f2"
                         },
                         {
@@ -302,6 +322,7 @@
                                 "layout|flex": 1,
                                 "title": null
                             },
+                            "name": "MyPanel89",
                             "designerId": "a9c1c49e-929c-4f81-a743-e79f19d5c4d8",
                             "cn": [
                                 {
@@ -314,6 +335,7 @@
                                     "userConfig": {
                                         "dock": "top"
                                     },
+                                    "name": "MyToolbar30",
                                     "designerId": "29453b66-19cf-4f2e-9cac-ac1c9d25aa95",
                                     "cn": [
                                         {
@@ -326,6 +348,7 @@
                                             "userConfig": {
                                                 "layout|flex": 1
                                             },
+                                            "name": "MySpacer1",
                                             "designerId": "5981c162-128a-4bed-8c96-9c31098439d0"
                                         },
                                         {
@@ -341,6 +364,7 @@
                                                 "layout|flex": null,
                                                 "text": "홍길동"
                                             },
+                                            "name": "MyLabel15",
                                             "designerId": "755b8a3b-d13e-4f60-bcf4-cb1900833e9e"
                                         },
                                         {
@@ -353,6 +377,7 @@
                                             "userConfig": {
                                                 "layout|flex": null
                                             },
+                                            "name": "MySeparator10",
                                             "designerId": "938dbaf9-6576-4716-87ea-455b7fba3cf9"
                                         },
                                         {
@@ -368,6 +393,7 @@
                                                 "layout|flex": null,
                                                 "text": "로그아웃"
                                             },
+                                            "name": "MyButton31",
                                             "designerId": "30aee9f6-b210-4350-82f7-eae11f086537"
                                         }
                                     ]
@@ -396,6 +422,7 @@
                         "titleCollapse": false,
                         "width": 250
                     },
+                    "name": "MyPanel90",
                     "configAlternates": {
                         "resizable": "boolean"
                     },
@@ -419,6 +446,7 @@
                                 "store": "MenuTreeStore",
                                 "title": "My Tree Panel"
                             },
+                            "name": "MyTreePanel",
                             "designerId": "b8ff9769-2ace-491f-97a0-bd35ed91b8b5",
                             "cn": [
                                 {
@@ -431,6 +459,7 @@
                                     "userConfig": {
                                         "dock": "top"
                                     },
+                                    "name": "MyToolbar31",
                                     "designerId": "05a27ef2-972b-4f55-ac98-e94f41bdbb02"
                                 },
                                 {
@@ -445,6 +474,7 @@
                                         "id": null,
                                         "itemId": null
                                     },
+                                    "name": "MyTreeView",
                                     "designerId": "08f46b7b-177a-41f9-8d96-cc63d648e1ba"
                                 }
                             ]
@@ -469,6 +499,7 @@
                         "layout|region": "south",
                         "title": null
                     },
+                    "name": "MyPanel91",
                     "configAlternates": {
                         "bodyStyle": "function"
                     },
@@ -489,6 +520,7 @@
                                 "style": "{text-align: center;}",
                                 "text": "© 2014 , Open Source Consulting, Inc. All rights reserved."
                             },
+                            "name": "MyLabel16",
                             "configAlternates": {
                                 "style": "string"
                             },
@@ -508,6 +540,7 @@
                                 "style": "{text-align: center;}",
                                 "text": "Gangnam Mirae Tower 805, Saimdang-ro 174(Seocho-dong), Seocho-gu, Seoul, Korea"
                             },
+                            "name": "MyLabel17",
                             "configAlternates": {
                                 "style": "string"
                             },
@@ -527,6 +560,7 @@
                                 "style": "{text-align: center;}",
                                 "text": "+ 82 (2) 516-0711, sales@osci.kr"
                             },
+                            "name": "MyLabel18",
                             "configAlternates": {
                                 "style": "string"
                             },

@@ -32,6 +32,7 @@
                 "id": "userForm",
                 "title": "My Form"
             },
+            "name": "MyForm2",
             "designerId": "0b5faa97-4a31-43b7-851e-fc15f0fcf3ef",
             "cn": [
                 {
@@ -53,6 +54,7 @@
                         "validateBlank": true,
                         "width": 388
                     },
+                    "name": "MyTextField33",
                     "designerId": "48a77a1a-c54b-40e3-adb6-24fa550d61ec"
                 },
                 {
@@ -74,6 +76,7 @@
                         "name": "PasswordTextField",
                         "width": 390
                     },
+                    "name": "MyTextField34",
                     "designerId": "eaab806e-6a23-4a3d-a47b-dcc7cd5e3d00"
                 },
                 {
@@ -95,6 +98,7 @@
                         "name": "RetypePasswordTextField",
                         "width": 390
                     },
+                    "name": "MyTextField35",
                     "designerId": "17bd8436-6d65-4f18-a118-9e44614f295f"
                 },
                 {
@@ -111,6 +115,7 @@
                         "name": "FullNameTextField",
                         "width": 389
                     },
+                    "name": "MyTextField36",
                     "designerId": "f7001e43-5eae-4114-bdb6-9f468c9663be"
                 },
                 {
@@ -130,6 +135,7 @@
                         "vtype": "email",
                         "width": 391
                     },
+                    "name": "MyTextField37",
                     "designerId": "653da474-3c11-4729-8222-a81ab6dd3754"
                 },
                 {
@@ -149,6 +155,7 @@
                         "valueField": "id",
                         "width": 390
                     },
+                    "name": "MyComboBox9",
                     "designerId": "b0fb224e-107f-421a-94c0-7a16a615d824"
                 },
                 {
@@ -163,6 +170,7 @@
                         "layout|anchor": "100%",
                         "name": "IDHiddenField"
                     },
+                    "name": "MyHiddenField",
                     "designerId": "be463b1b-444b-48cf-8998-d044cae35abd"
                 },
                 {
@@ -182,6 +190,7 @@
                         "height": 38,
                         "layout": "hbox"
                     },
+                    "name": "MyContainer36",
                     "designerId": "61b26a38-49b2-4bf4-bf40-9ae26f73e4af",
                     "cn": [
                         {
@@ -199,6 +208,7 @@
                                 "layout|margins": "10 10 10 10",
                                 "text": "Create"
                             },
+                            "name": "MyButton40",
                             "designerId": "e0ffa737-1307-43c8-b933-5a4e9822ae16"
                         },
                         {
@@ -212,6 +222,7 @@
                                 "designer|displayName": "CancelBtn",
                                 "text": "Cancel"
                             },
+                            "name": "MyButton41",
                             "designerId": "c40a9880-cc08-4304-9657-9c5167a320fd",
                             "cn": [
                                 {
@@ -236,6 +247,7 @@
                                             " });"
                                         ]
                                     },
+                                    "name": "handler",
                                     "designerId": "3c7aa01c-c154-41ab-a604-98733bf54ff6"
                                 }
                             ]

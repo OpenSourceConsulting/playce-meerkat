@@ -8,9 +8,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.build.compile.version>1.6</project.build.compile.version>
-		<project.build.source.version>1.6</project.build.source.version>
-		<project.build.target.version>1.6</project.build.target.version>
+		<project.build.compile.version>1.7</project.build.compile.version>
+		<project.build.source.version>1.7</project.build.source.version>
+		<project.build.target.version>1.7</project.build.target.version>
 		<apache.ant.artifact.version>1.9.2</apache.ant.artifact.version>
 	</properties>
 
@@ -144,6 +144,8 @@
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
 				<version>1.1.3</version>
+				<!-- Eclipse error 로 인해 주석처리함. 아래와 같이 사용해야 한다고 함.
+				http://stackoverflow.com/questions/24482259/eclipse-issue-with-maven-build-and-jdk-when-generating-qclasses-in-querydsl
 				<executions>
 					<execution>
 						<goals>

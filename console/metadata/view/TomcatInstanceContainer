@@ -30,6 +30,7 @@
                 "manageHeight": false,
                 "title": "Overview"
             },
+            "name": "MyPanel23",
             "designerId": "f37f0a10-aeef-488a-b87c-e91435b0d10a",
             "cn": [
                 {
@@ -42,11 +43,10 @@
                     "userConfig": {
                         "designer|displayName": "HostNameField",
                         "fieldLabel": "Host name:",
-                        "value": [
-                            "Tomcat 1"
-                        ],
+                        "value": "Tomcat 1",
                         "width": 164
                     },
+                    "name": "MyDisplayField4",
                     "designerId": "53b10d61-dc73-42e3-b247-4e0a48586c57"
                 },
                 {
@@ -59,11 +59,10 @@
                     "userConfig": {
                         "designer|displayName": "StatusField",
                         "fieldLabel": "Status",
-                        "value": [
-                            "Started"
-                        ],
+                        "value": "Started",
                         "width": 249
                     },
+                    "name": "MyDisplayField5",
                     "designerId": "f9ad199d-3f8f-4073-8d46-261e6b66dd8a"
                 },
                 {
@@ -76,11 +75,10 @@
                     "userConfig": {
                         "designer|displayName": "IPAddressField",
                         "fieldLabel": "IP Address",
-                        "value": [
-                            "192.168.0.83"
-                        ],
+                        "value": "192.168.0.83",
                         "width": 249
                     },
+                    "name": "MyDisplayField6",
                     "designerId": "56294c6f-fb77-4f80-b328-7ce2a3b09506"
                 },
                 {
@@ -93,11 +91,10 @@
                     "userConfig": {
                         "designer|displayName": "PortField",
                         "fieldLabel": "Ports:",
-                        "value": [
-                            "{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}"
-                        ],
+                        "value": "{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}",
                         "width": 249
                     },
+                    "name": "MyDisplayField7",
                     "designerId": "c0a3b3e9-c12a-4f14-953b-4afb9a124f23"
                 },
                 {
@@ -110,11 +107,10 @@
                     "userConfig": {
                         "designer|displayName": "WebServerField",
                         "fieldLabel": "Web server",
-                        "value": [
-                            "Apache Tomcat / 7.0.47"
-                        ],
+                        "value": "Apache Tomcat / 7.0.47",
                         "width": 164
                     },
+                    "name": "MyDisplayField8",
                     "designerId": "a82b9beb-bda5-4532-9eaf-de6855e338a6"
                 },
                 {
@@ -127,11 +123,10 @@
                     "userConfig": {
                         "designer|displayName": "JVMVersionField",
                         "fieldLabel": "JVM Version",
-                        "value": [
-                            "1.7.0_45-b18"
-                        ],
+                        "value": "1.7.0_45-b18",
                         "width": 164
                     },
+                    "name": "MyDisplayField9",
                     "designerId": "e8e8c88c-3504-46db-a710-8c5097115443"
                 },
                 {
@@ -144,11 +139,10 @@
                     "userConfig": {
                         "designer|displayName": "OSNameField",
                         "fieldLabel": "OS Name",
-                        "value": [
-                            "Linux"
-                        ],
+                        "value": "Linux",
                         "width": 164
                     },
+                    "name": "MyDisplayField10",
                     "designerId": "bc1ef75a-6218-4fc1-83cf-e0142dac9eb3"
                 },
                 {
@@ -161,11 +155,10 @@
                     "userConfig": {
                         "designer|displayName": "DomainField",
                         "fieldLabel": "Domain",
-                        "value": [
-                            "Domain 1"
-                        ],
+                        "value": "Domain 1",
                         "width": 164
                     },
+                    "name": "MyDisplayField11",
                     "designerId": "1fdd3341-ea63-4b18-b020-9d069a2c8b3b"
                 },
                 {
@@ -178,6 +171,7 @@
                     "userConfig": {
                         "dock": "top"
                     },
+                    "name": "MyToolbar6",
                     "designerId": "e35f467c-cdef-44b9-9782-ba812d993f86",
                     "cn": [
                         {
@@ -192,6 +186,7 @@
                                 "layout|flex": null,
                                 "text": "Start"
                             },
+                            "name": "MyButton6",
                             "designerId": "cb4aa45c-e16f-475b-b171-289ca530f918"
                         },
                         {
@@ -205,6 +200,7 @@
                                 "layout|flex": null,
                                 "text": "Stop"
                             },
+                            "name": "MyButton7",
                             "designerId": "44d08b3a-3995-4390-b0bb-cf66073c44d0"
                         },
                         {
@@ -218,6 +214,7 @@
                                 "layout|flex": null,
                                 "text": "Restart"
                             },
+                            "name": "MyButton8",
                             "designerId": "4a1066f2-9790-4cdc-8b4a-47d58041d388"
                         }
                     ]
@@ -238,6 +235,7 @@
                 "margin": "5 0 0 0 ",
                 "title": "Data sources"
             },
+            "name": "MyGridPanel4",
             "designerId": "5e2db69a-c8d5-438c-8497-077fd9e6935d",
             "cn": [
                 {
@@ -251,6 +249,7 @@
                         "dataIndex": "string",
                         "text": "Name"
                     },
+                    "name": "MyColumn7",
                     "designerId": "38c85f7c-453e-4992-aa78-ab18e968f476"
                 },
                 {
@@ -264,6 +263,7 @@
                         "dataIndex": "number",
                         "text": "JDBC URL"
                     },
+                    "name": "MyNumberColumn3",
                     "designerId": "cb0502dc-46cd-4cfa-b578-33591ea1f603"
                 },
                 {
@@ -277,6 +277,7 @@
                         "dataIndex": "date",
                         "text": "Servers"
                     },
+                    "name": "MyDateColumn3",
                     "designerId": "258af06e-7a43-486e-a5ac-a3ca3c2ec9e0"
                 },
                 {
@@ -290,6 +291,7 @@
                         "dataIndex": "bool",
                         "text": "Min Connection Pool"
                     },
+                    "name": "MyBooleanColumn4",
                     "designerId": "2b0b8008-2915-48e9-a2b1-ff3862264af4"
                 },
                 {
@@ -303,6 +305,7 @@
                         "dataIndex": "bool",
                         "text": "Max Connection Pool"
                     },
+                    "name": "MyBooleanColumn5",
                     "designerId": "f4b6c296-2a7c-4a81-95f1-08a662f16123"
                 },
                 {
@@ -316,6 +319,7 @@
                         "dataIndex": "bool",
                         "text": "Timeout"
                     },
+                    "name": "MyBooleanColumn6",
                     "designerId": "61668939-3893-406f-8ee6-b8f97b136848"
                 },
                 {
@@ -325,6 +329,7 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "name": "MyGridView4",
                     "designerId": "65d93c30-836d-4378-a624-49025e53851c"
                 },
                 {
@@ -339,6 +344,7 @@
                         "dock": "bottom",
                         "width": 360
                     },
+                    "name": "MyPagingToolbar3",
                     "designerId": "d21d9e54-c65c-4c9b-8942-7f339664715a"
                 },
                 {
@@ -351,6 +357,7 @@
                     "userConfig": {
                         "dock": "top"
                     },
+                    "name": "MyToolbar7",
                     "designerId": "49012fa5-0a3a-4ea5-bf3e-6dc828eae3b9",
                     "cn": [
                         {
@@ -365,6 +372,7 @@
                                 "layout|flex": null,
                                 "text": "Link new Datasource"
                             },
+                            "name": "MyButton9",
                             "designerId": "601866f3-75cd-4423-8345-b0f00a3e63d5"
                         }
                     ]
