@@ -22,7 +22,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2014. 6. 27.		First Draft.
  */
-package com.athena.dolly.common.util;
+package com.athena.meerkat.common.util;
 
 import java.io.File;
 import java.io.IOException;

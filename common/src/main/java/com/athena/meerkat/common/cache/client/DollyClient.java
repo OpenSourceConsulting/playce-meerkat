@@ -20,7 +20,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2014. 12. 23.		First Draft.
  */
-package com.athena.dolly.common.cache.client;
+package com.athena.meerkat.common.cache.client;
 
 import java.util.Enumeration;
 import java.util.List;

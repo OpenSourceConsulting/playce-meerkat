@@ -22,7 +22,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2014. 4. 1.		First Draft.
  */
-package com.athena.dolly.common.cache;
+package com.athena.meerkat.common.cache;
 
 import java.io.Serializable;
 

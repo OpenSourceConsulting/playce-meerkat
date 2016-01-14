@@ -22,7 +22,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2013. 12. 17.		First Draft.
  */
-package com.athena.dolly.common.stats;
+package com.athena.meerkat.common.stats;
 
 import java.util.List;
 

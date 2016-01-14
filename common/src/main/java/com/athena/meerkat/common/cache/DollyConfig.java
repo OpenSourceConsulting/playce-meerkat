@@ -22,7 +22,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2013. 12. 5.		First Draft.
  */
-package com.athena.dolly.common.cache;
+package com.athena.meerkat.common.cache;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

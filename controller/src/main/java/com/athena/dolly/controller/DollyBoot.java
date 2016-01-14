@@ -65,7 +65,7 @@ import com.sun.xml.bind.v2.runtime.property.PropertyFactory;
 @ComponentScan(basePackages = { "com.athena.dolly.controller",
 		"com.athena.meerkat.controller" })
 // @PropertySource(value={"classpath:dolly.properties","classpath:dolly-${spring.profiles.active:local}.properties"})
-@PropertySource(value = { "classpath:db.properties" })
+@PropertySource(value = { "classpath:db.properties",  "classpath:context.properties"})
 public class DollyBoot extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
@@ -156,14 +156,14 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 //					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
 //			return config;
 //		}
-
+/*
 		@Bean(name = "contextProperties")
 		public PropertiesFactoryBean getPropeties() {
 			PropertiesFactoryBean bean = new PropertiesFactoryBean();
 			bean.setLocation(new FileSystemResource(
 					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
 			return bean;
-		}
+		}*/
 	}
 
 }

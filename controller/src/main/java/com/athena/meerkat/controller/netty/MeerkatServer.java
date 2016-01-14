@@ -57,7 +57,7 @@ import com.athena.meerkat.common.provider.AppContext;
 @Qualifier("meerkatServer")
 public class MeerkatServer implements InitializingBean, ApplicationContextAware {
 	
-    @Value("#{contextProperties['listen.port']}")
+    @Value("${listen.port}")
     private int port;
 
     @Inject
