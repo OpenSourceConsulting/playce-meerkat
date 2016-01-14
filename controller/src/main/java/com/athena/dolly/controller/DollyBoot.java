@@ -24,20 +24,33 @@
  */
 package com.athena.dolly.controller;
 
+import javax.annotation.PropertyKey;
+
+import io.netty.channel.nio.NioEventLoopGroup;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.sun.xml.bind.v2.runtime.property.PropertyFactory;
 
 /**
  * Main class with Spring Boot
@@ -49,10 +62,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * 
  */
 @EnableAutoConfiguration
-@ComponentScan(basePackages = { "com.athena.dolly.controller" })
+@ComponentScan(basePackages = { "com.athena.dolly.controller",
+		"com.athena.meerkat.controller" })
 // @PropertySource(value={"classpath:dolly.properties","classpath:dolly-${spring.profiles.active:local}.properties"})
 @PropertySource(value = { "classpath:db.properties" })
-
 public class DollyBoot extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
@@ -67,9 +80,10 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 	 * @author Bong-Jin Kwon
 	 * @version 2.0
 	 */
+	@SuppressWarnings("deprecation")
 	@Configuration
 	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-	@EnableGlobalMethodSecurity(securedEnabled = false)
+	@EnableGlobalMethodSecurity(securedEnabled = true)
 	protected static class ApplicationSecurity extends
 			WebSecurityConfigurerAdapter {
 
@@ -87,16 +101,16 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-//			http.anonymous().disable().authorizeRequests().anyRequest()
-//					.fullyAuthenticated().and().exceptionHandling()
-//					.accessDeniedPage("/user/accessDenied").and().formLogin()
-//					.loginPage("/user/notLogin")
-//					.loginProcessingUrl("/user/login")
-//					.defaultSuccessUrl("/user/onAfterLogin", true)
-//					.failureUrl("/user/loginFail").and().logout()
-//					.logoutUrl("/user/logout")
-//					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
-//					.disable();	
+			http.anonymous().disable().authorizeRequests().anyRequest()
+					.fullyAuthenticated().and().exceptionHandling()
+					.accessDeniedPage("/user/accessDenied").and().formLogin()
+					.loginPage("/user/notLogin")
+					.loginProcessingUrl("/user/login")
+					.defaultSuccessUrl("/user/onAfterLogin", true)
+					.failureUrl("/user/loginFail").and().logout()
+					.logoutUrl("/user/logout")
+					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
+					.disable();
 			http.anonymous().and().csrf().disable();
 		}
 
@@ -108,6 +122,33 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		}
 
+		@Bean(name = "bossGroup", destroyMethod = "shutdownGracefully")
+		public NioEventLoopGroup getBossGroup() {
+			NioEventLoopGroup group = new NioEventLoopGroup();
+			return group;
+		}
+
+		@Bean(name = "workerGroup", destroyMethod = "shutdownGracefully")
+		public NioEventLoopGroup getWorkerGroup() {
+			NioEventLoopGroup group = new NioEventLoopGroup();
+			return group;
+		}
+
+//		@Bean(name = "propertyConfigurer")
+//		public PropertyPlaceholderConfigurer getPropertyConfifgurer() {
+//			PropertyPlaceholderConfigurer config = new PropertyPlaceholderConfigurer();
+//			config.setLocation(new FileSystemResource(
+//					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
+//			return config;
+//		}
+
+		@Bean(name = "contextProperties")
+		public PropertiesFactoryBean getPropeties() {
+			PropertiesFactoryBean bean = new PropertiesFactoryBean();
+			bean.setLocation(new FileSystemResource(
+					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
+			return bean;
+		}
 	}
 
 }
