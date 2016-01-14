@@ -108,6 +108,7 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
+
 			http
 				.anonymous().disable()
 				.authorizeRequests()
@@ -125,6 +126,7 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 				.and().csrf()
 					.disable();	
 			//http.anonymous().and().csrf().disable();
+
 		}
 
 		@Override

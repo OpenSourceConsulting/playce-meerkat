@@ -55,6 +55,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 import org.quartz.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -85,7 +86,8 @@ import com.athena.meerkat.common.provider.AppContext;
 @Component
 @Qualifier("meerkatClientHandler")
 @Sharable
-public class MeerkatClientHandler extends SimpleChannelInboundHandler<Object> {
+public class MeerkatClientHandler extends SimpleChannelInboundHandler<Object>
+		implements InitializingBean {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MeerkatClientHandler.class);
@@ -514,7 +516,15 @@ public class MeerkatClientHandler extends SimpleChannelInboundHandler<Object> {
 			return new ArrayList<String>(channelMap.keySet());
 		}// end of getKeys()
 	}
+
 	// end of ChannelManagement.java
+
+	public void afterPropertiesSet() throws Exception {
+		// TODO Auto-generated method stub
+		LOGGER.debug("!!!!!!!!!!Meerkat client handler inited !!!!!!!!!!!!!\n\n\n");
+		System.out
+				.println("!!!!!!!!!!Meerkat client handler inited !!!!!!!!!!!!!\n\n\n");
+	}
 }
 
 // end of MeerkatClientHandler.java

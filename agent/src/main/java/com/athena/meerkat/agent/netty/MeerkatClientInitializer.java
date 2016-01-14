@@ -30,12 +30,15 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
  * <pre>
- *
+ * 
  * </pre>
  * 
  * @author Sang-cheon Park
@@ -43,21 +46,34 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Qualifier("meerkatClientInitializer")
-public class MeerkatClientInitializer extends ChannelInitializer<SocketChannel> {
-	
+public class MeerkatClientInitializer extends ChannelInitializer<SocketChannel>
+		implements InitializingBean {
+
 	@Inject
 	@Named("meerkatClientHandler")
 	private MeerkatClientHandler handler;
-	
-    @Override
-    public void initChannel(SocketChannel ch) throws Exception {
-        // Create a default pipeline implementation.
-        ChannelPipeline pipeline = ch.pipeline();
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(MeerkatClientHandler.class);
 
-        pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
-        pipeline.addLast("encoder", new ObjectEncoder());
-        pipeline.addLast("handler", handler);
-    }
+	@Override
+	public void initChannel(SocketChannel ch) throws Exception {
+		// Create a default pipeline implementation.
+		LOGGER.debug("**************************Tran - Init *****************************");
+		ChannelPipeline pipeline = ch.pipeline();
+
+		pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE,
+				ClassResolvers.cacheDisabled(null)));
+		pipeline.addLast("encoder", new ObjectEncoder());
+		pipeline.addLast("handler", handler);
+	}
+
+	public void afterPropertiesSet() throws Exception {
+
+		LOGGER.debug("!!!!!!!!!!meerkatClientInitializer inited !!!!!!!!!!!!!\n\n\n");
+		System.out
+				.println("!!!!!!!!!!meerkatClientInitializer inited !!!!!!!!!!!!!\n\n\n");
+
+	}
 
 }
-//end of MeerkatClientInitializer.java
+// end of MeerkatClientInitializer.java
