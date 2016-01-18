@@ -15,34 +15,34 @@ public class UserService implements InitializingBean {
 	@Autowired
 	private UserRoleRepository roleRepo;
 
-	public List<User2> getList() {
+	public List<User> getList() {
 		return repo.findAll();
 	}
 	
-	public List<User2> getUsers(String userID, String email){
+	public List<User> getUsers(String userID, String email){
 		return repo.findByUserNameOrEmail(userID, email);
 	}
-	public List<User2>getUsers(String userID){
+	public List<User>getUsers(String userID){
 		return repo.findByUserNameContaining(userID);
 	}
 
-	public List<UserRole2> getRoleList() {
+	public List<UserRole> getRoleList() {
 		return roleRepo.findAll();
 	}
 	
-	public UserRole2 getUserRole(int id){
+	public UserRole getUserRole(int id){
 		return roleRepo.findOne(id);
 	}
 	
-	public User2 saveUser(User2 user){
+	public User saveUser(User user){
 		return repo.save(user);
 	}
 	
-	public User2 findUser(int id){
+	public User findUser(int id){
 		return repo.findOne(id);
 	}
 	
-	public void deleteUser(User2 user){
+	public void deleteUser(User user){
 		repo.delete(user);
 	}
 	

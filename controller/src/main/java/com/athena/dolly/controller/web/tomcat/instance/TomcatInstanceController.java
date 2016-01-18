@@ -26,6 +26,9 @@ package com.athena.dolly.controller.web.tomcat.instance;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +47,7 @@ import com.athena.dolly.controller.web.common.model.GridJsonResponse;
 import com.athena.dolly.controller.web.common.model.SimpleJsonResponse;
 import com.athena.dolly.controller.web.machine.Machine;
 import com.athena.dolly.controller.web.machine.MachineService;
+import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 
 /**
  * <pre>
@@ -61,6 +65,10 @@ public class TomcatInstanceController {
 	private TomcatInstanceService service;
 	@Autowired
 	private MachineService machineService;
+
+	@Inject
+	@Named("provisioningHandler")
+	private ProvisioningHandler provisioningHandler;
 
 	public TomcatInstanceController() {
 		// TODO Auto-generated constructor stub
@@ -106,31 +114,26 @@ public class TomcatInstanceController {
 	// add more param later
 	public boolean addNew(String name, int domainId, int machineId) {
 		boolean result = false;
-		Machine machine = machineService.retrieve(machineId);
-		String repoAddr = DollyConstants.MEERKAT_REPO;
-		String command = "";
-		if (machine == null) {
-			return false;
-		}
-
-		SSHManager sshMng = new SSHManager(machine.getSshUsername(),
-				machine.getSshPassword(), machine.getSSHIPAddr(), "",
-				machine.getSshPort(), 1000);
-		String errorMsg = sshMng.connect();
-		if (errorMsg != null || errorMsg != "") {
-			return false;
-		}
-		// copy template to target server by sshManager
-		command = "scp " + repoAddr + "*" + machine.getSshUsername() + "@"
-				+ machine.getSSHIPAddr() + ":/tmp/";
-		sshMng.sendCommand(command);
-		// extract template to target server by sshManager command
-		command = "unzip " + DollyConstants.TOMCAT_ARCHIVE_FILE + "-d ."
-				+ " & unzip " + DollyConstants.TOMCAT_ARCHIVE_TEMPLATE_FILE
-				+ "-d .";
-		// config by sshManager command
-		// start by sshManager command
-		// store to database
+		// Machine machine = machineService.retrieve(machineId);
+		// String repoAddr = DollyConstants.MEERKAT_REPO;
+		/* sample data */
+		String user = "root";
+		String version = "7.0.54";
+		String java_home = "/usr/java/default";
+		String server_home = "/root";
+		String server_name = "rootServer21";
+		String catalina_home = "/root/jboss-ews-2.1/tomcat7";
+		String catalina_base = "/root/Servers/rootServer21222";
+		String encoding = "UTF-8";
+		int port_offset = 0;
+		int heap_size = 1024;
+		int permgen_size = 256;
+		boolean is_enable_http = true;
+		boolean is_high_availability = true;
+		String bind_address = "192.168.0.88";
+		String other_bind_address = "";
+		boolean is_start_service = true;
+		
 		return false;
 	}
 }

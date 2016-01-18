@@ -24,17 +24,22 @@
  */
 package com.athena.dolly.controller.web.user;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.HttpMethod;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -52,6 +57,7 @@ import com.athena.dolly.controller.web.common.model.SimpleJsonResponse;
 @RequestMapping("/user")
 public class UserController {
 
+	public static final String SESSION_USER_KEY = "loginUser";
 	@Autowired
 	private UserService service;
 
@@ -82,7 +88,8 @@ public class UserController {
 
 		jsonRes.setData(SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal());
-
+		System.out.println(SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal());
 		/*
 		 * if(userDetails != null){
 		 * service.updateLastLogon(userDetails.getUserId()); }
@@ -123,16 +130,51 @@ public class UserController {
 		return jsonRes;
 	}
 
+	@RequestMapping(value = "/login")
+	public @ResponseBody
+	SimpleJsonResponse login(SimpleJsonResponse jsonRes, String username,
+			String password, HttpSession session) {
+
+		List<User> users = service.getUsers(username);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if (users.size() <= 0) {
+			jsonRes.setMsg("Wrong User ID");
+			jsonRes.setSuccess(false);
+		} else {
+			String dbPassword = users.get(0).getPassword();
+			if (!encoder.matches(password, dbPassword)) {
+				jsonRes.setMsg("Wrong password");
+				jsonRes.setSuccess(false);
+			} else {
+				// temporary
+				SimpleGrantedAuthority auth = new SimpleGrantedAuthority(
+						"ADMIN");
+				users.get(0).addAuthority(auth);
+				jsonRes.setSuccess(true);
+				jsonRes.setData(users.get(0));
+				session.setAttribute(SESSION_USER_KEY, users.get(0));
+
+				// Authentication auth = new
+				// UsernamePasswordAuthenticationToken(
+				// users.get(0), null);
+				// SecurityContextHolder.getContext().setAuthentication(auth);
+				// SecurityContextHolder.getContext().getAuthentication().setAuthenticated(true);
+				
+			}
+		}
+		return jsonRes;
+	}
+
 	@RequestMapping(value = "/list")
 	@ResponseBody
-	public List<User2> getUserList() {
-		List<User2> users = service.getList();
+	public List<User> getUserList() {
+		List<User> users = service.getList();
 		return users;
 	}
 
 	@RequestMapping("/rolelist")
 	@ResponseBody
-	public List<UserRole2> getRoleList() {
+	public List<UserRole> getRoleList() {
 		return service.getRoleList();
 	}
 
@@ -140,12 +182,12 @@ public class UserController {
 	@ResponseBody
 	public boolean saveUser(int id, String userName, String password,
 			String fullName, String email, int userRole) {
-		User2 currentUser = null;
+		User currentUser = null;
 		if (id > 0) {
 			currentUser = service.findUser(id);
 		}
 		// check existing users by userID and email
-		List<User2> existingUsers = service.getUsers(userName, email);
+		List<User> existingUsers = service.getUsers(userName, email);
 		if (existingUsers.size() > 1) {
 			return false;
 		}
@@ -155,12 +197,12 @@ public class UserController {
 			}
 		}
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		UserRole2 role = service.getUserRole(userRole);
+		UserRole role = service.getUserRole(userRole);
 		if (currentUser == null) {
-			currentUser = new User2(userName, fullName,
+			currentUser = new User(userName, fullName,
 					encoder.encode(password), email, role);
 		} else {
-			currentUser.setUserName(userName);
+			currentUser.setUsername(userName);
 			currentUser.setPassword(encoder.encode(password));
 			currentUser.setFullName(fullName);
 			currentUser.setEmail(email);
@@ -175,18 +217,20 @@ public class UserController {
 
 	@RequestMapping("/edit")
 	@ResponseBody
-	public User2 editUser(int id) {
+	public User editUser(int id) {
 		return service.findUser(id);
 	}
+
 	@RequestMapping("/search")
 	@ResponseBody
-	public List<User2> searchByUserName(String userID) {
+	public List<User> searchByUserName(String userID) {
 		return service.getUsers(userID);
 	}
+
 	@RequestMapping("/delete")
 	@ResponseBody
 	public boolean delete(int id) {
-		User2 user = service.findUser(id);
+		User user = service.findUser(id);
 		if (user != null) {
 			service.deleteUser(user);
 			return true;

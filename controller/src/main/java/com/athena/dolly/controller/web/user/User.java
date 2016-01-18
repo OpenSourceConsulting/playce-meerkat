@@ -24,6 +24,8 @@
  */
 package com.athena.dolly.controller.web.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,6 +36,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,20 +53,20 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @version 2.0
  */
 
-// @Entity
-// @Table(name = "user")
+@Entity
+@Table(name = "user")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = -1083153050593982734L;
 	@Id
 	@Column(name = "Id")
 	private int Id;
+	@Column(name = "fullname")
+	private String fullName;
 	@Column(name = "username")
 	private String userName;
 	@Column(name = "password")
 	private String password;
-	@Column(name = "fullname")
-	private String fullName;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "last_login_date")
@@ -71,14 +74,12 @@ public class User implements UserDetails {
 	@Column(name = "created_date")
 	private Date createdDate;
 
-	private List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+	@Transient
+	private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
 	@ManyToOne
 	@JsonBackReference
 	private UserRole userRole;
-
-	public User() {
-	}
 
 	public User(String usrName, String pwd) {
 		setUsername(usrName);
@@ -127,9 +128,9 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public void addAuthority(SimpleGrantedAuthority authority) {
-		this.authorities.add(authority);
-	}
+	// public void addAuthority(SimpleGrantedAuthority authority) {
+	// this.authorities.add(authority);
+	// }
 
 	public UserRole getUserRole() {
 		return userRole;
@@ -186,5 +187,38 @@ public class User implements UserDetails {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public String getLastLoginDateString() {
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(createdDate);
+	}
+
+	public String getCreatedDateString() {
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(createdDate);
+	}
+
+	public String getUserRoleString() {
+		return userRole.getName();
+	}
+
+	public User(String _userID, String _fullName, String _password,
+			String _email, UserRole _userRole) {
+		userName = _userID;
+		fullName = _fullName;
+		password = _password;
+		email = _email;
+		userRole = _userRole;
+		createdDate = new Date();
+	}
+
+	public User() {
+
+	}
+
+	public void addAuthority(SimpleGrantedAuthority authority) {
+		this.authorities.add(authority);
+	}
+
 }
 // end of User.java

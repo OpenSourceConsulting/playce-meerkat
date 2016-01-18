@@ -41,6 +41,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,6 +49,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.sun.xml.bind.v2.runtime.property.PropertyFactory;
@@ -65,7 +67,8 @@ import com.sun.xml.bind.v2.runtime.property.PropertyFactory;
 @ComponentScan(basePackages = { "com.athena.dolly.controller",
 		"com.athena.meerkat.controller" })
 // @PropertySource(value={"classpath:dolly.properties","classpath:dolly-${spring.profiles.active:local}.properties"})
-@PropertySource(value = { "classpath:db.properties",  "classpath:context.properties"})
+@PropertySource(value = { "classpath:db.properties",
+		"classpath:context.properties" })
 public class DollyBoot extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
@@ -92,40 +95,28 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 
 		@Override
 		public void configure(WebSecurity web) throws Exception {
-			web.ignoring().antMatchers(
-					"/", 
-					"/index.html", 
-					"/app.js",
+			web.ignoring().antMatchers("/", "/index.html", "/app.js",
 					"/resources/**",
-					
-					"/getServerList", 
-					"/user/notLogin*", 
-					"/user/loginFail*",
-					"/user/accessDenied*", 
-					"/user/onAfterLogout*"
-					);
+
+					"/user/login*", "/getServerList", "/user/notLogin*",
+					"/user/loginFail*", "/user/accessDenied*",
+					"/user/onAfterLogout*");
 		}
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
-			http
-				.anonymous().disable()
-				.authorizeRequests()
-					.anyRequest().fullyAuthenticated()
-				.and().exceptionHandling()
-					.accessDeniedPage("/user/accessDenied")
-				.and().formLogin()
+			http.anonymous().disable().authorizeRequests().anyRequest()
+					.fullyAuthenticated().and().exceptionHandling()
+					.accessDeniedPage("/user/accessDenied").and().formLogin()
 					.loginPage("/user/notLogin")
 					.loginProcessingUrl("/user/login")
 					.defaultSuccessUrl("/user/onAfterLogin", true)
-					.failureUrl("/user/loginFail")
-				.and().logout()
+					.failureUrl("/user/loginFail").and().logout()
 					.logoutUrl("/user/logout")
-					.logoutSuccessUrl("/user/onAfterLogout")
-				.and().csrf()
-					.disable();	
-			//http.anonymous().and().csrf().disable();
+					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
+					.disable();
+			// http.anonymous().and().csrf().disable();
 
 		}
 
@@ -149,21 +140,21 @@ public class DollyBoot extends WebMvcConfigurerAdapter {
 			return group;
 		}
 
-//		@Bean(name = "propertyConfigurer")
-//		public PropertyPlaceholderConfigurer getPropertyConfifgurer() {
-//			PropertyPlaceholderConfigurer config = new PropertyPlaceholderConfigurer();
-//			config.setLocation(new FileSystemResource(
-//					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
-//			return config;
-//		}
-/*
-		@Bean(name = "contextProperties")
-		public PropertiesFactoryBean getPropeties() {
-			PropertiesFactoryBean bean = new PropertiesFactoryBean();
-			bean.setLocation(new FileSystemResource(
-					"D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
-			return bean;
-		}*/
+		// @Bean(name = "propertyConfigurer")
+		// public PropertyPlaceholderConfigurer getPropertyConfifgurer() {
+		// PropertyPlaceholderConfigurer config = new
+		// PropertyPlaceholderConfigurer();
+		// config.setLocation(new FileSystemResource(
+		// "D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"));
+		// return config;
+		// }
+		/*
+		 * @Bean(name = "contextProperties") public PropertiesFactoryBean
+		 * getPropeties() { PropertiesFactoryBean bean = new
+		 * PropertiesFactoryBean(); bean.setLocation(new FileSystemResource(
+		 * "D:\\git\\athena-meerkat\\controller\\src\\main\\resources\\context.properties"
+		 * )); return bean; }
+		 */
 	}
 
 }
