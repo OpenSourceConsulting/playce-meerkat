@@ -224,6 +224,21 @@ Ext.define('webapp.view.DomainContainer', {
                                                     text: 'Deploy'
                                                 },
                                                 {
+                                                    xtype: 'button',
+                                                    id: 'btnDeployWindow3',
+                                                    text: 'Start'
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: 'btnDeployWindow2',
+                                                    text: 'Stop'
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: 'btnDeployWindow1',
+                                                    text: 'Undeploy'
+                                                },
+                                                {
                                                     xtype: 'tbseparator'
                                                 },
                                                 {

@@ -106,7 +106,6 @@ Ext.define('webapp.controller.LoginController', {
             });
         } else {
 
-
             //request login
             Ext.Ajax.request({
                 url: GlobalData.urlPrefix + "user/login",
@@ -127,7 +126,6 @@ Ext.define('webapp.controller.LoginController', {
 
         }
 
-         //this.successfulLogin("admin", "json");
     },
 
     onLogoutButtonClick: function(button, e, eOpts) {

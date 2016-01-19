@@ -127,7 +127,6 @@
                     "    });",
                     "} else {",
                     "",
-                    "",
                     "    //request login",
                     "    Ext.Ajax.request({",
                     "        url: GlobalData.urlPrefix + \"user/login\",",
@@ -147,8 +146,7 @@
                     "    });",
                     "",
                     "}",
-                    "",
-                    " //this.successfulLogin(\"admin\", \"json\");"
+                    ""
                 ],
                 "name": "click",
                 "scope": "me"

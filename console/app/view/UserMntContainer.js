@@ -46,7 +46,7 @@ Ext.define('webapp.view.UserMntContainer', {
                         {
                             xtype: 'gridcolumn',
                             width: 156,
-                            dataIndex: 'userName',
+                            dataIndex: 'username',
                             hideable: false,
                             text: 'UserID'
                         },

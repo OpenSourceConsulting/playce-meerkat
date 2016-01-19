@@ -22,6 +22,7 @@ Ext.define('webapp.controller.UserController', {
     },
 
     onContainerActivate: function(component, eOpts) {
+
         Ext.getStore("UserStore").load();
         Ext.getStore("UserRoleStore").load();
     },
@@ -97,7 +98,7 @@ Ext.define('webapp.controller.UserController', {
                     params: {"id":user_id},
                     success: function(resp, ops) {
                         var response = Ext.decode(resp.responseText);
-                        userName.setValue(response.userName);
+                        userName.setValue(response.username);
                         fullName.setValue(response.fullName);
                         email.setValue(response.email);
                         userRole.setValue(response.userRole.id);

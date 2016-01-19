@@ -38,7 +38,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "userName",
+                        "dataIndex": "username",
                         "hideable": false,
                         "text": "UserID",
                         "width": 156

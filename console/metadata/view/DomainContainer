@@ -509,6 +509,51 @@
                                             "designerId": "98db684e-1928-42d0-9744-551a882df801"
                                         },
                                         {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "id": "btnDeployWindow3",
+                                                "layout|flex": null,
+                                                "text": "Start"
+                                            },
+                                            "name": "MyButton65",
+                                            "designerId": "a756a04f-046a-44d0-b1ec-f6fe4b9812b8"
+                                        },
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "id": "btnDeployWindow2",
+                                                "layout|flex": null,
+                                                "text": "Stop"
+                                            },
+                                            "name": "MyButton64",
+                                            "designerId": "852558a1-f42f-4bb0-a046-92a221a99ddd"
+                                        },
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "id": "btnDeployWindow1",
+                                                "layout|flex": null,
+                                                "text": "Undeploy"
+                                            },
+                                            "name": "MyButton63",
+                                            "designerId": "3d01a5ae-949d-4d0a-8452-8b2721549c34"
+                                        },
+                                        {
                                             "type": "Ext.toolbar.Separator",
                                             "reference": {
                                                 "name": "items",

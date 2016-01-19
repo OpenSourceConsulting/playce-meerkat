@@ -45,7 +45,7 @@
                     "            params: {\"id\":user_id},",
                     "            success: function(resp, ops) {",
                     "                var response = Ext.decode(resp.responseText);",
-                    "                userName.setValue(response.userName);",
+                    "                userName.setValue(response.username);",
                     "                fullName.setValue(response.fullName);",
                     "                email.setValue(response.email);",
                     "                userRole.setValue(response.userRole.id);",
@@ -93,6 +93,7 @@
                 "designer|targetType": "Ext.container.Container",
                 "fn": "onContainerActivate",
                 "implHandler": [
+                    "",
                     "Ext.getStore(\"UserStore\").load();",
                     "Ext.getStore(\"UserRoleStore\").load();"
                 ],

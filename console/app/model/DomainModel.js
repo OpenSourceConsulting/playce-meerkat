@@ -26,6 +26,15 @@ Ext.define('webapp.model.DomainModel', {
         },
         {
             name: 'name'
+        },
+        {
+            name: 'tomcatInstancesCount'
+        },
+        {
+            name: 'datagridServerGroupName'
+        },
+        {
+            name: 'clustering'
         }
     ]
 });

@@ -47,7 +47,7 @@ Ext.define('webapp.model.UserModel', {
             type: 'int'
         },
         {
-            name: 'userName',
+            name: 'username',
             type: 'string'
         }
     ]
