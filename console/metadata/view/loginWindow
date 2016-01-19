@@ -16,7 +16,7 @@
         "layout": "vbox",
         "modal": true,
         "resizable": false,
-        "title": "Athena Dolly 2.0.0",
+        "title": "Athena Meerkat",
         "width": 420
     },
     "configAlternates": {

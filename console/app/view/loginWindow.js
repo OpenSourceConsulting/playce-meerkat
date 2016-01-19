@@ -30,7 +30,7 @@ Ext.define('webapp.view.loginWindow', {
     width: 420,
     resizable: false,
     closable: false,
-    title: 'Athena Dolly 2.0.0',
+    title: 'Athena Meerkat',
     modal: true,
 
     layout: {
