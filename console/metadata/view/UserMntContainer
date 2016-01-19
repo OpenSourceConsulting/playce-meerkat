@@ -437,6 +437,7 @@
                             "userConfig": {
                                 "forceFit": true,
                                 "height": 342,
+                                "store": "MenuTreeStore",
                                 "title": "Permission",
                                 "width": 1112
                             },
@@ -480,24 +481,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "dataIndex": "value",
-                                        "text": "Read"
+                                        "text": "Permission"
                                     },
                                     "name": "MyCheckColumn",
                                     "designerId": "0abf8d59-44e4-4f80-874f-547bee401717"
-                                },
-                                {
-                                    "type": "Ext.grid.column.CheckColumn",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "value",
-                                        "text": "Write"
-                                    },
-                                    "name": "MyCheckColumn1",
-                                    "designerId": "dd6e2482-af5a-48aa-b409-ebc101e70592"
                                 }
                             ]
                         }

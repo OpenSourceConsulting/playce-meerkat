@@ -146,24 +146,10 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "dataIndex": "value",
-                                        "text": "Value"
+                                        "text": "Permission"
                                     },
                                     "name": "MyCheckColumn2",
                                     "designerId": "b9703fd6-2bf7-4c5b-9248-5b3069a11670"
-                                },
-                                {
-                                    "type": "Ext.grid.column.CheckColumn",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "value",
-                                        "text": "Value"
-                                    },
-                                    "name": "MyCheckColumn3",
-                                    "designerId": "dba7cdbd-ef1c-4f3b-abec-b1d2eacc0c63"
                                 }
                             ]
                         }

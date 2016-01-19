@@ -181,6 +181,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                     width: 1112,
                                     title: 'Permission',
                                     forceFit: true,
+                                    store: 'MenuTreeStore',
                                     viewConfig: {
 
                                     },
@@ -194,12 +195,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                         {
                                             xtype: 'checkcolumn',
                                             dataIndex: 'value',
-                                            text: 'Read'
-                                        },
-                                        {
-                                            xtype: 'checkcolumn',
-                                            dataIndex: 'value',
-                                            text: 'Write'
+                                            text: 'Permission'
                                         }
                                     ]
                                 }

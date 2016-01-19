@@ -92,12 +92,7 @@ Ext.define('webapp.view.UserRoleWindow', {
                                         {
                                             xtype: 'checkcolumn',
                                             dataIndex: 'value',
-                                            text: 'Value'
-                                        },
-                                        {
-                                            xtype: 'checkcolumn',
-                                            dataIndex: 'value',
-                                            text: 'Value'
+                                            text: 'Permission'
                                         }
                                     ]
                                 }
