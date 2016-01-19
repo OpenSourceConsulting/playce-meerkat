@@ -18,16 +18,20 @@ Ext.define('webapp.view.UserMntContainer', {
     alias: 'widget.usermntcontainer',
 
     requires: [
+        'Ext.tab.Panel',
+        'Ext.tab.Tab',
         'Ext.grid.Panel',
-        'Ext.grid.column.Column',
         'Ext.grid.View',
-        'Ext.button.Button',
         'Ext.toolbar.Separator',
         'Ext.form.field.Text',
-        'Ext.toolbar.Paging'
+        'Ext.toolbar.Paging',
+        'Ext.tree.Panel',
+        'Ext.tree.View',
+        'Ext.tree.Column',
+        'Ext.grid.column.CheckColumn'
     ],
 
-    height: 497,
+    height: 757,
     itemId: 'mycontainer38',
     width: 1111,
 
@@ -37,121 +41,167 @@ Ext.define('webapp.view.UserMntContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'gridpanel',
-                    height: 349,
-                    title: 'User List',
-                    forceFit: true,
-                    store: 'UserStore',
-                    columns: [
+                    xtype: 'tabpanel',
+                    activeTab: 0,
+                    items: [
                         {
-                            xtype: 'gridcolumn',
-                            width: 156,
-                            dataIndex: 'username',
-                            hideable: false,
-                            text: 'UserID'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 156,
-                            dataIndex: 'fullName',
-                            text: 'Full Name'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'userRoleName',
-                            text: 'User Role'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 208,
-                            dataIndex: 'email',
-                            text: 'Email'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 133,
-                            dataIndex: 'createdDateString',
-                            text: 'Created Date'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 133,
-                            dataIndex: 'lastLoginDateString',
-                            text: 'Last Login'
-                        }
-                    ],
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'top',
+                            xtype: 'panel',
+                            title: 'User',
                             items: [
                                 {
-                                    xtype: 'button',
-                                    itemId: 'createBtn',
-                                    text: 'New'
-                                },
-                                {
-                                    xtype: 'tbseparator'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    itemId: 'mytextfield',
-                                    fieldLabel: 'Filtering',
-                                    name: 'SearchTextField',
-                                    emptyText: 'User ID'
+                                    xtype: 'gridpanel',
+                                    height: 349,
+                                    title: '',
+                                    forceFit: true,
+                                    store: 'UserStore',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 156,
+                                            dataIndex: 'username',
+                                            hideable: false,
+                                            text: 'UserID'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 156,
+                                            dataIndex: 'fullName',
+                                            text: 'Full Name'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'userRoleName',
+                                            text: 'User Role'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 208,
+                                            dataIndex: 'email',
+                                            text: 'Email'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 133,
+                                            dataIndex: 'createdDateString',
+                                            text: 'Created Date'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 133,
+                                            dataIndex: 'lastLoginDateString',
+                                            text: 'Last Login'
+                                        }
+                                    ],
+                                    dockedItems: [
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'top',
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    itemId: 'createBtn',
+                                                    text: 'New'
+                                                },
+                                                {
+                                                    xtype: 'tbseparator'
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    itemId: 'mytextfield',
+                                                    fieldLabel: 'Filtering',
+                                                    name: 'SearchTextField',
+                                                    emptyText: 'User ID'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'bottom',
+                                            items: [
+                                                {
+                                                    xtype: 'pagingtoolbar',
+                                                    width: 1099,
+                                                    displayInfo: true,
+                                                    store: 'UserStore'
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    listeners: {
+                                        itemcontextmenu: {
+                                            fn: me.onGridpanelItemContextMenu,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         },
                         {
-                            xtype: 'toolbar',
-                            dock: 'bottom',
+                            xtype: 'panel',
+                            title: 'User Role',
                             items: [
                                 {
-                                    xtype: 'pagingtoolbar',
-                                    width: 1099,
-                                    displayInfo: true,
-                                    store: 'UserStore'
-                                }
-                            ]
-                        }
-                    ],
-                    listeners: {
-                        itemcontextmenu: {
-                            fn: me.onGridpanelItemContextMenu,
-                            scope: me
-                        }
-                    }
-                },
-                {
-                    xtype: 'gridpanel',
-                    height: 349,
-                    margin: '5 0 0 0 ',
-                    title: 'User Role',
-                    forceFit: true,
-                    store: 'UserRoleStore',
-                    columns: [
-                        {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'name',
-                            text: 'Name'
-                        },
-                        {
-                            xtype: 'gridcolumn',
-                            width: 133,
-                            dataIndex: 'userCount',
-                            text: 'User Count'
-                        }
-                    ],
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'bottom',
-                            items: [
+                                    xtype: 'gridpanel',
+                                    height: 349,
+                                    margin: '5 0 0 0 ',
+                                    title: 'User Role',
+                                    forceFit: true,
+                                    store: 'UserRoleStore',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'name',
+                                            text: 'Name'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            width: 133,
+                                            dataIndex: 'userCount',
+                                            text: 'User Count'
+                                        }
+                                    ],
+                                    dockedItems: [
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'bottom',
+                                            items: [
+                                                {
+                                                    xtype: 'pagingtoolbar',
+                                                    width: 1099,
+                                                    displayInfo: true,
+                                                    store: 'UserRoleStore'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
                                 {
-                                    xtype: 'pagingtoolbar',
-                                    width: 1099,
-                                    displayInfo: true,
-                                    store: 'UserRoleStore'
+                                    xtype: 'treepanel',
+                                    height: 342,
+                                    width: 1112,
+                                    title: 'Permission',
+                                    forceFit: true,
+                                    viewConfig: {
+
+                                    },
+                                    columns: [
+                                        {
+                                            xtype: 'treecolumn',
+                                            dataIndex: 'text',
+                                            text: 'Menu',
+                                            flex: 1
+                                        },
+                                        {
+                                            xtype: 'checkcolumn',
+                                            dataIndex: 'value',
+                                            text: 'Read'
+                                        },
+                                        {
+                                            xtype: 'checkcolumn',
+                                            dataIndex: 'value',
+                                            text: 'Write'
+                                        }
+                                    ]
                                 }
                             ]
                         }
