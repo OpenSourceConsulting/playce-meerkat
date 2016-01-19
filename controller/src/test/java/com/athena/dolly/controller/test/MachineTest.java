@@ -16,11 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-import com.athena.dolly.controller.ServiceResult;
-import com.athena.dolly.controller.ServiceResult.Status;
-import com.athena.dolly.controller.web.machine.Machine;
-import com.athena.dolly.controller.web.machine.MachineRepository;
-import com.athena.dolly.controller.web.machine.MachineService;
+
+
+import com.athena.meerkat.controller.ServiceResult;
+import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.web.machine.Machine;
+import com.athena.meerkat.controller.web.machine.MachineRepository;
+import com.athena.meerkat.controller.web.machine.MachineService;
 
 //@ContextConfiguration("file:./src/test/resources/TestContext.xml")
 @ComponentScan(basePackages = { "com.athena.dolly.controller" })

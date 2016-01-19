@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="controller">
+    <wb-module deploy-name="MeerkatController">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
@@ -7,7 +7,7 @@
         <dependent-module archiveName="common-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common/common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <property name="java-output-path" value="/MeerkatController/target/classes"/>
         <property name="context-root" value="controller"/>
-        <property name="java-output-path" value="/controller/target/classes"/>
     </wb-module>
 </project-modules>

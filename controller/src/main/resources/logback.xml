@@ -7,22 +7,27 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="INFO"/>
+	<logger name="com.athena" level="DEBUG"/>
+
+	<logger name="org.springframework" level="ERROR"/>
 	<logger name="org.springframework.web" level="DEBUG"/>
 	<logger name="org.springframework.web.websocket" level="DEBUG"/>
 	<logger name="org.springframework.web.context.support.StandardServletEnvironment" level="INFO"/>
 	<logger name="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" level="INFO"/>
 	<logger name="org.springframework.security" level="DEBUG"/>
 
-	<logger name="org.mybatis" level="INFO" />
+	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
+	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />
 
+	<!-- 
 	<logger name="java.sql.Connection" level="DEBUG" />
 	<logger name="java.sql.PreparedStatement" level="DEBUG" />
 	<logger name="java.sql.ResultSet" level="DEBUG" />
+	 -->
+	
 
-	<logger name="com.athena.dolly.controller" level="DEBUG"/>
-
-	<root level="DEBUG">
+	<root level="ERROR">
 	    <appender-ref ref="CONSOLE" />
 	</root>
 </configuration>
