@@ -1,0 +1,257 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoScroll": true,
+        "designer|userClassName": "UserRoleWindow",
+        "height": 485,
+        "id": "UserWindow1",
+        "layout": "fit",
+        "title": "New User Role",
+        "width": 440
+    },
+    "name": "UserWindow1",
+    "designerId": "e68f9026-7051-40ab-aa64-f08be2e279c2",
+    "cn": [
+        {
+            "type": "Ext.form.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "bodyPadding": 10,
+                "container|align": "stretch",
+                "designer|createAlias": "",
+                "designer|displayName": "UserForm",
+                "frameHeader": false,
+                "header": false,
+                "height": 260,
+                "id": "userForm1",
+                "layout": "vbox",
+                "title": "My Form"
+            },
+            "name": "MyForm2",
+            "designerId": "3ee0d3ac-e448-44ba-961d-378c95a15f33",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "designer|displayName": "UserIDTextField",
+                        "dock": null,
+                        "emptyText": "",
+                        "fieldLabel": "User Role",
+                        "id": "userIDTextField1",
+                        "itemId": "userIDTextField",
+                        "name": "UserIDTextField",
+                        "validateBlank": true,
+                        "width": 388
+                    },
+                    "name": "MyTextField33",
+                    "designerId": "11628734-3cca-4055-a54c-df437e7c2b2d"
+                },
+                {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "name": "IDHiddenField"
+                    },
+                    "name": "MyHiddenField",
+                    "designerId": "70ef2607-132f-420b-8b27-e06bb78f41b8"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "layout": "fit"
+                    },
+                    "name": "MyContainer40",
+                    "designerId": "dc92e813-fc0c-40cd-8664-544d723f1e6b",
+                    "cn": [
+                        {
+                            "type": "Ext.tree.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 554,
+                                "store": "MenuTreeStore",
+                                "title": "Permission",
+                                "width": 400
+                            },
+                            "name": "TreeGrid1",
+                            "designerId": "9962a7b1-0e72-4a52-a875-9f2f9baccb05",
+                            "isBuiltIn": true,
+                            "iconCls": "icon-treegridpanel",
+                            "autoName": "TreeGrid",
+                            "cn": [
+                                {
+                                    "type": "Ext.tree.View",
+                                    "reference": {
+                                        "name": "viewConfig",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "rootVisible": false
+                                    },
+                                    "name": "MyTreeView3",
+                                    "designerId": "0ecb7231-188c-4a7f-bb63-c157dcd2f200"
+                                },
+                                {
+                                    "type": "Ext.tree.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "text",
+                                        "flex": 1,
+                                        "text": "Nodes"
+                                    },
+                                    "name": "MyTreeColumn2",
+                                    "designerId": "9610e5ef-dc0f-4f58-a80c-1cb6380dd4ee"
+                                },
+                                {
+                                    "type": "Ext.grid.column.CheckColumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "value",
+                                        "text": "Value"
+                                    },
+                                    "name": "MyCheckColumn2",
+                                    "designerId": "b9703fd6-2bf7-4c5b-9248-5b3069a11670"
+                                },
+                                {
+                                    "type": "Ext.grid.column.CheckColumn",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "value",
+                                        "text": "Value"
+                                    },
+                                    "name": "MyCheckColumn3",
+                                    "designerId": "dba7cdbd-ef1c-4f3b-abec-b1d2eacc0c63"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "middle",
+                        "container|defaultMargins": [
+                            "{\"top\":0,\"right\":10,\"bottom\":10,\"left\":0}"
+                        ],
+                        "container|pack": "center",
+                        "dock": "bottom",
+                        "height": 38,
+                        "layout": "hbox",
+                        "layout|flex": 0.5
+                    },
+                    "name": "MyContainer36",
+                    "designerId": "663b2247-c420-41fb-bf0c-514ec3223f95",
+                    "cn": [
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|createAlias": "",
+                                "designer|displayName": "BtnSubmit",
+                                "id": "btnSubmit1",
+                                "itemId": "btnSubmit",
+                                "layout|margins": "10 10 10 10",
+                                "text": "Create"
+                            },
+                            "name": "MyButton40",
+                            "designerId": "bc857b97-0c0f-4553-b950-fcb7ff5924a1"
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "CancelBtn",
+                                "text": "Cancel"
+                            },
+                            "name": "MyButton41",
+                            "designerId": "7065014a-254b-46e7-98f9-b554c28988f1",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            " Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){",
+                                            "",
+                                            "     if(btn == \"yes\"){",
+                                            "        button.up(\"window\").close();",
+                                            "     }",
+                                            " });"
+                                        ]
+                                    },
+                                    "name": "handler",
+                                    "designerId": "805355b7-75e0-4813-9bd0-de41bc6fd71b"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

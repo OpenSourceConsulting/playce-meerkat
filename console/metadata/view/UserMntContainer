@@ -325,8 +325,8 @@
                     "userConfig": {
                         "title": "User Role"
                     },
-                    "name": "MyPanel95",
-                    "designerId": "e489e97d-e9f1-4d5c-8222-c59d1cee73d2",
+                    "name": "MyPanel94",
+                    "designerId": "2b40d92c-9704-48d1-b838-3d2fe4c1e2ff",
                     "cn": [
                         {
                             "type": "Ext.tab.Tab",
@@ -335,8 +335,8 @@
                                 "type": "object"
                             },
                             "codeClass": null,
-                            "name": "TabConfig32",
-                            "designerId": "f6d51d09-9d5e-407d-9852-a28865416729"
+                            "name": "TabConfig30",
+                            "designerId": "bf3018d9-466e-4227-8ef1-e4d932df74a2"
                         },
                         {
                             "type": "Ext.grid.Panel",

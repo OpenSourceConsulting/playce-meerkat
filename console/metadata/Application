@@ -66,7 +66,8 @@
             "MonitoringTomcatInstance",
             "ClusteringConfigurationWindow",
             "ClusteringConfigurationComparingWindow",
-            "DomainWindow"
+            "DomainWindow",
+            "UserRoleWindow"
         ]
     },
     "name": "Application",

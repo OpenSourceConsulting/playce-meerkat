@@ -66,7 +66,8 @@ Ext.application({
         'MonitoringTomcatInstance',
         'ClusteringConfigurationWindow',
         'ClusteringConfigurationComparingWindow',
-        'DomainWindow'
+        'DomainWindow',
+        'UserRoleWindow'
     ],
     controllers: [
         'headerController',
