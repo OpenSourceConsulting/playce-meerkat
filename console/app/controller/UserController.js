@@ -57,7 +57,7 @@ Ext.define('webapp.controller.UserController', {
 
         }
 
-        this.save({"id" : _idVal, "userName" : userNameVal,"password" : passwordVal, "fullName" : fullNameVal, "email":emailVal, "userRole":userRoleVal});
+        this.save({"id" : _idVal, "username" : userNameVal,"password" : passwordVal, "fullName" : fullNameVal, "email":emailVal, "userRole":userRoleVal});
 
 
 
