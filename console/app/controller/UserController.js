@@ -68,7 +68,7 @@ Ext.define('webapp.controller.UserController', {
         var url = GlobalData.urlPrefix + "user/search";
         Ext.Ajax.request({
              url: url,
-            params: {"userID":newValue},
+            params: {"userName":newValue},
              success: function(resp, ops) {
 
                     var response = Ext.decode(resp.responseText);
