@@ -45,6 +45,10 @@ public class UserService implements InitializingBean, UserDetailsService {
 		return roleRepo.findAll();
 	}
 
+	public UserRole getUserRole(String name) {
+		return roleRepo.findByName(name);
+	}
+
 	public UserRole getUserRole(int id) {
 		return roleRepo.findOne(id);
 	}
@@ -77,6 +81,10 @@ public class UserService implements InitializingBean, UserDetailsService {
 		User user = findUser(id);
 		user.setLastLoginDate(new Date());
 		repo.save(user);
+	}
+
+	public UserRole saveUserRole(UserRole role) {
+		return roleRepo.save(role);
 	}
 
 }

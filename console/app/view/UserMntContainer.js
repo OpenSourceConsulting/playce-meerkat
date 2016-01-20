@@ -141,7 +141,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                     xtype: 'gridpanel',
                                     height: 349,
                                     margin: '5 0 0 0 ',
-                                    title: 'User Role',
+                                    title: '',
                                     forceFit: true,
                                     store: 'UserRoleStore',
                                     columns: [
@@ -167,6 +167,17 @@ Ext.define('webapp.view.UserMntContainer', {
                                                     width: 1099,
                                                     displayInfo: true,
                                                     store: 'UserRoleStore'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'top',
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    id: 'userRoleCreateBtn',
+                                                    text: 'New'
                                                 }
                                             ]
                                         }

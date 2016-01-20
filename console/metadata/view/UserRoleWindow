@@ -7,9 +7,10 @@
     "codeClass": null,
     "userConfig": {
         "autoScroll": true,
+        "designer|userAlias": "UserRoleWindow",
         "designer|userClassName": "UserRoleWindow",
         "height": 124,
-        "id": "UserWindow1",
+        "id": "UserRoleWindow",
         "layout": "fit",
         "title": "New User Role",
         "width": 440
@@ -28,11 +29,11 @@
                 "bodyPadding": 10,
                 "container|align": "stretch",
                 "designer|createAlias": "",
-                "designer|displayName": "UserForm",
+                "designer|displayName": "UserRoleForm",
                 "frameHeader": false,
                 "header": false,
                 "height": 260,
-                "id": "userForm1",
+                "id": "userRoleForm",
                 "layout": "vbox",
                 "title": "My Form"
             },
@@ -49,13 +50,13 @@
                     "userConfig": {
                         "allowBlank": false,
                         "allowOnlyWhitespace": false,
-                        "designer|displayName": "UserIDTextField",
+                        "designer|displayName": "UserRoleNameTextField",
                         "dock": null,
                         "emptyText": "",
                         "fieldLabel": "User Role",
-                        "id": "userIDTextField1",
-                        "itemId": "userIDTextField",
-                        "name": "UserIDTextField",
+                        "id": "userRoleNameTextField",
+                        "itemId": "userRoleNameTextField",
+                        "name": "UserRoleNameTextField",
                         "validateBlank": true,
                         "width": 388
                     },
@@ -107,8 +108,8 @@
                             "userConfig": {
                                 "designer|createAlias": "",
                                 "designer|displayName": "BtnSubmit",
-                                "id": "btnSubmit1",
-                                "itemId": "btnSubmit",
+                                "id": "btnUserRoleSubmit",
+                                "itemId": "btnUserRoleSubmit",
                                 "layout|margins": "10 10 10 10",
                                 "text": "Create"
                             },

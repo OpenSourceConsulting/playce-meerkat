@@ -77,6 +77,34 @@ Ext.define('webapp.controller.UserController', {
             });
     },
 
+    onUserRoleCreateBtnClick: function(button, e, eOpts) {
+        this.showUserRoleWindow(0,"add");
+    },
+
+    onBtnUserRoleSubmitClick: function(button, e, eOpts) {
+        var form = Ext.getCmp("userRoleForm");			// user form
+        var formWindow = Ext.getCmp('UserRoleWindow');	// Add user window
+
+        var userRoleName = form.getForm().findField("userRoleNameTextField");
+        var _id = form.getForm().findField("IDHiddenField");
+
+        var userRoleNameVal = userRoleName.getValue().trim();
+        var _idVal = _id.getValue();
+
+        if (!this.validateUserRole(userRoleNameVal)) {
+            return;
+        }
+
+        //submit new user request
+        if (_idVal === "") {
+            _idVal = 0;
+
+        }
+
+        this.saveUserRole({"id" : _idVal, "name" : userRoleNameVal});
+
+    },
+
     showUserWindow: function(type, user_id) {
 
         var userWindow = Ext.create("widget.UserWindow");
@@ -137,6 +165,19 @@ Ext.define('webapp.controller.UserController', {
         return true;
     },
 
+    validateUserRole: function(name) {
+        if (name === ""){
+            Ext.Msg.show({
+                title: "Message",
+                msg: "Invalid data.",
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING
+            });
+            return false;
+        }
+        return true;
+    },
+
     save: function(params) {
         var url = GlobalData.urlPrefix + "user/save";
         var userWindow = Ext.getCmp('UserWindow');	// Add user window
@@ -148,6 +189,7 @@ Ext.define('webapp.controller.UserController', {
                     var response = Ext.decode(resp.responseText);
                     if(response===true){
                         Ext.getStore("UserStore").reload();
+                        Ext.getStore("UserStoreRole").reload();
                         userWindow.close();
                     }
                     else {
@@ -195,6 +237,60 @@ Ext.define('webapp.controller.UserController', {
          });
     },
 
+    showUserRoleWindow: function(id, type) {
+        var userRoleWindow = Ext.create("widget.UserRoleWindow");
+        var submitButton = Ext.getCmp("btnUserRoleSubmit");
+        if (type === "edit"){
+            userWindow.setTitle("Edit User Role");
+            submitButton.setText("Save");
+            var form = Ext.getCmp("userRoleForm");			// user role form
+
+            var userRoleName = form.getForm().findField("UserRoleNameTextField");
+            var _id = form.getForm().findField("IDHiddenField");
+            //load data to user form
+
+             Ext.Ajax.request({
+                    url: GlobalData.urlPrefix + "user/role/edit",
+                    params: {"id":user_id},
+                    success: function(resp, ops) {
+                        var response = Ext.decode(resp.responseText);
+                        userName.setValue(response.userRoleName);
+                        _id.setValue(id);
+                    }
+                });
+
+        }
+
+        userRoleWindow.show();
+    },
+
+    saveUserRole: function(params) {
+        var url = GlobalData.urlPrefix + "user/role/save";
+        var userRoleWindow =Ext.getCmp("UserRoleWindow");	// Add user role window
+        Ext.Ajax.request({
+             url: url,
+             params: params,
+             success: function(resp, ops) {
+
+                    var response = Ext.decode(resp.responseText);
+                    if(response===true){
+                        Ext.getStore("UserRoleStore").reload();
+                        userRoleWindow.close();
+                    }
+                    else {
+                             Ext.Msg.show({
+                                title: "Message",
+                                msg: "Invalid information.",
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                    }
+
+                }
+            });
+
+    },
+
     init: function(application) {
         this.control({
             "#createBtn": {
@@ -208,6 +304,12 @@ Ext.define('webapp.controller.UserController', {
             },
             "#mytextfield": {
                 change: this.onTextfieldChange
+            },
+            "#userRoleCreateBtn": {
+                click: this.onUserRoleCreateBtnClick
+            },
+            "#btnUserRoleSubmit": {
+                click: this.onBtnUserRoleSubmitClick
             }
         });
     }

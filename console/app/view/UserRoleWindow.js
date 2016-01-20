@@ -15,6 +15,7 @@
 
 Ext.define('webapp.view.UserRoleWindow', {
     extend: 'Ext.window.Window',
+    alias: 'widget.UserRoleWindow',
 
     requires: [
         'Ext.form.Panel',
@@ -24,7 +25,7 @@ Ext.define('webapp.view.UserRoleWindow', {
     ],
 
     height: 124,
-    id: 'UserWindow1',
+    id: 'UserRoleWindow',
     width: 440,
     autoScroll: true,
     layout: 'fit',
@@ -38,7 +39,7 @@ Ext.define('webapp.view.UserRoleWindow', {
                 {
                     xtype: 'form',
                     height: 260,
-                    id: 'userForm1',
+                    id: 'userRoleForm',
                     bodyPadding: 10,
                     frameHeader: false,
                     header: false,
@@ -50,11 +51,11 @@ Ext.define('webapp.view.UserRoleWindow', {
                     items: [
                         {
                             xtype: 'textfield',
-                            id: 'userIDTextField1',
-                            itemId: 'userIDTextField',
+                            id: 'userRoleNameTextField',
+                            itemId: 'userRoleNameTextField',
                             width: 388,
                             fieldLabel: 'User Role',
-                            name: 'UserIDTextField',
+                            name: 'UserRoleNameTextField',
                             allowBlank: false,
                             allowOnlyWhitespace: false,
                             emptyText: '',
@@ -87,8 +88,8 @@ Ext.define('webapp.view.UserRoleWindow', {
                                 {
                                     xtype: 'button',
                                     margins: '10 10 10 10',
-                                    id: 'btnSubmit1',
-                                    itemId: 'btnSubmit',
+                                    id: 'btnUserRoleSubmit',
+                                    itemId: 'btnUserRoleSubmit',
                                     text: 'Create'
                                 },
                                 {

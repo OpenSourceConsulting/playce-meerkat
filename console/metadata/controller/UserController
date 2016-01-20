@@ -144,7 +144,7 @@
                     "",
                     "}",
                     "",
-                    "this.save({\"id\" : _idVal, \"userName\" : userNameVal,\"password\" : passwordVal, \"fullName\" : fullNameVal, \"email\":emailVal, \"userRole\":userRoleVal});",
+                    "this.save({\"id\" : _idVal, \"username\" : userNameVal,\"password\" : passwordVal, \"fullName\" : fullNameVal, \"email\":emailVal, \"userRole\":userRoleVal});",
                     "",
                     "",
                     ""
@@ -210,6 +210,34 @@
             "codeClass": null,
             "userConfig": {
                 "designer|params": [
+                    "name"
+                ],
+                "fn": "validateUserRole",
+                "implHandler": [
+                    "if (name === \"\"){",
+                    "    Ext.Msg.show({",
+                    "        title: \"Message\",",
+                    "        msg: \"Invalid data.\",",
+                    "        buttons: Ext.Msg.OK,",
+                    "        icon: Ext.Msg.WARNING",
+                    "    });",
+                    "    return false;",
+                    "}",
+                    "return true;"
+                ]
+            },
+            "name": "validateUserRole",
+            "designerId": "7a85cc01-87dc-473b-8f18-74c308e5f36e"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
                     "params"
                 ],
                 "fn": "save",
@@ -224,6 +252,7 @@
                     "            var response = Ext.decode(resp.responseText);",
                     "            if(response===true){",
                     "                Ext.getStore(\"UserStore\").reload();",
+                    "                Ext.getStore(\"UserStoreRole\").reload();",
                     "                userWindow.close();",
                     "            }",
                     "            else {",
@@ -318,6 +347,159 @@
             },
             "name": "onTextfieldChange",
             "designerId": "ef9bb9d5-3ad3-43be-bd3a-4a5ca55788dd"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#userRoleCreateBtn",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onUserRoleCreateBtnClick",
+                "implHandler": [
+                    "this.showUserRoleWindow(0,\"add\");"
+                ],
+                "name": "click"
+            },
+            "name": "onUserRoleCreateBtnClick",
+            "designerId": "364413d5-c9f4-46ac-b69d-76a1d881465f"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id",
+                    "type"
+                ],
+                "fn": "showUserRoleWindow",
+                "implHandler": [
+                    "var userRoleWindow = Ext.create(\"widget.UserRoleWindow\");",
+                    "var submitButton = Ext.getCmp(\"btnUserRoleSubmit\");",
+                    "if (type === \"edit\"){",
+                    "    userWindow.setTitle(\"Edit User Role\");",
+                    "    submitButton.setText(\"Save\");",
+                    "    var form = Ext.getCmp(\"userRoleForm\");\t\t\t// user role form",
+                    "",
+                    "    var userRoleName = form.getForm().findField(\"UserRoleNameTextField\");",
+                    "    var _id = form.getForm().findField(\"IDHiddenField\");",
+                    "    //load data to user form",
+                    "",
+                    "     Ext.Ajax.request({",
+                    "            url: GlobalData.urlPrefix + \"user/role/edit\",",
+                    "            params: {\"id\":user_id},",
+                    "            success: function(resp, ops) {",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                userName.setValue(response.userRoleName);",
+                    "                _id.setValue(id);",
+                    "            }",
+                    "        });",
+                    "",
+                    "}",
+                    "",
+                    "userRoleWindow.show();"
+                ]
+            },
+            "name": "showUserRoleWindow",
+            "designerId": "9839d4e4-f6fe-42ca-b1ec-6decdab7a471"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "params"
+                ],
+                "fn": "saveUserRole",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"user/role/save\";",
+                    "var userRoleWindow =Ext.getCmp(\"UserRoleWindow\");\t// Add user role window",
+                    "Ext.Ajax.request({",
+                    "     url: url,",
+                    "     params: params,",
+                    "     success: function(resp, ops) {",
+                    "",
+                    "            var response = Ext.decode(resp.responseText);",
+                    "            if(response===true){",
+                    "                Ext.getStore(\"UserRoleStore\").reload();",
+                    "                userRoleWindow.close();",
+                    "            }",
+                    "            else {",
+                    "                     Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: \"Invalid information.\",",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.WARNING",
+                    "                    });",
+                    "            }",
+                    "",
+                    "        }",
+                    "    });",
+                    ""
+                ]
+            },
+            "name": "saveUserRole",
+            "designerId": "446102fb-70eb-448f-b574-17356b669f21"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnUserRoleSubmit",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnUserRoleSubmitClick",
+                "implHandler": [
+                    "var form = Ext.getCmp(\"userRoleForm\");\t\t\t// user form",
+                    "var formWindow = Ext.getCmp('UserRoleWindow');\t// Add user window",
+                    "",
+                    "var userRoleName = form.getForm().findField(\"userRoleNameTextField\");",
+                    "var _id = form.getForm().findField(\"IDHiddenField\");",
+                    "",
+                    "var userRoleNameVal = userRoleName.getValue().trim();",
+                    "var _idVal = _id.getValue();",
+                    "",
+                    "if (!this.validateUserRole(userRoleNameVal)) {",
+                    "    return;",
+                    "}",
+                    "",
+                    "//submit new user request",
+                    "if (_idVal === \"\") {",
+                    "    _idVal = 0;",
+                    "",
+                    "}",
+                    "",
+                    "this.saveUserRole({\"id\" : _idVal, \"name\" : userRoleNameVal});",
+                    ""
+                ],
+                "name": "click"
+            },
+            "name": "onBtnUserRoleSubmitClick",
+            "designerId": "9aef6abe-892d-4851-8903-e2e994c11811"
         }
     ]
 }

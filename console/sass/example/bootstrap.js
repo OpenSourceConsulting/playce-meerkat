@@ -3828,7 +3828,9 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.UserMntContainer": [
     "widget.usermntcontainer"
   ],
-  "webapp.view.UserRoleWindow": [],
+  "webapp.view.UserRoleWindow": [
+    "widget.UserRoleWindow"
+  ],
   "webapp.view.UserWindow": [
     "widget.UserWindow"
   ],

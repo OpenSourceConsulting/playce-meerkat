@@ -201,5 +201,33 @@ public class UserController {
 		}
 
 	}
+
+	@RequestMapping("/role/save")
+	@ResponseBody
+	public boolean saveUserRole(UserRole userRole) {
+		UserRole role = null;
+		if (userRole.getId() > 0) { // edit
+			role = service.getUserRole(userRole.getId());
+		}
+		// check existing user role by name
+
+		UserRole existingRole = service.getUserRole(userRole.getName());
+		if (existingRole != null) {
+			if (existingRole.getId() != userRole.getId()) {
+				return false;
+			}
+		}
+
+		if (role == null) {
+			role = userRole;
+		} else {
+			role.setName(userRole.getName());
+		}
+		if (service.saveUserRole(role) != null) {
+			return true;
+		}
+		return false;
+
+	}
 }
 // end of UserController.java
