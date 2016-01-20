@@ -126,7 +126,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                     ],
                                     listeners: {
                                         itemcontextmenu: {
-                                            fn: me.onGridpanelItemContextMenu,
+                                            fn: me.onGridpanelUserContextMenu,
                                             scope: me
                                         }
                                     }
@@ -181,7 +181,13 @@ Ext.define('webapp.view.UserMntContainer', {
                                                 }
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        itemcontextmenu: {
+                                            fn: me.onGridpanelUserRoleContextMenu,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -193,7 +199,7 @@ Ext.define('webapp.view.UserMntContainer', {
         me.callParent(arguments);
     },
 
-    onGridpanelItemContextMenu: function(dataview, record, item, index, e, eOpts) {
+    onGridpanelUserContextMenu: function(dataview, record, item, index, e, eOpts) {
         var mnuContext = Ext.create("Ext.menu.Menu",{
 
             items: [{
@@ -214,6 +220,45 @@ Ext.define('webapp.view.UserMntContainer', {
                             break;
                         case 'delete-user':
                             webapp.app.getController("UserController").deleteUser(record.get("id"));
+                            break;
+                        default:
+                            break;
+                   }
+                },
+                hide:function(menu){
+                    menu.destroy();
+                }
+            },
+            defaults: {
+               clickHideDelay: 1
+            }
+        });
+
+        mnuContext.showAt(e.getXY());
+        e.stopEvent();
+    },
+
+    onGridpanelUserRoleContextMenu: function(dataview, record, item, index, e, eOpts) {
+        var mnuContext = Ext.create("Ext.menu.Menu",{
+
+            items: [{
+                id: 'edit-user-role',
+                text: 'Edit'
+            },
+            {
+                id: 'delete-user-role',
+                text: 'Delete'
+            }
+                   ],
+            listeners: {
+
+                click: function( _menu, _item, _e, _eOpts ) {
+                   switch (_item.id) {
+                        case 'edit-user-role':
+                           webapp.app.getController("UserController").showUserRoleWindow(record.get("id"),"edit");
+                            break;
+                        case 'delete-user-role':
+                            webapp.app.getController("UserController").deleteUserRole(record.get("id"));
                             break;
                         default:
                             break;

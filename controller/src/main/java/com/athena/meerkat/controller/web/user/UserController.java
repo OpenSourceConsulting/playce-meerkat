@@ -202,6 +202,24 @@ public class UserController {
 
 	}
 
+	@RequestMapping("/role/delete")
+	@ResponseBody
+	public boolean deleteRole(int id) {
+		UserRole userRole = service.getUserRole(id);
+		if (userRole != null) {
+			service.deleteUserRole(userRole);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@RequestMapping("/role/edit")
+	@ResponseBody
+	public UserRole editUserRole(int id) {
+		return service.getUserRole(id);
+	}
+
 	@RequestMapping("/role/save")
 	@ResponseBody
 	public boolean saveUserRole(UserRole userRole) {

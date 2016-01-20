@@ -265,7 +265,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "fn": "onGridpanelItemContextMenu",
+                                        "fn": "onGridpanelUserContextMenu",
                                         "implHandler": [
                                             "var mnuContext = Ext.create(\"Ext.menu.Menu\",{",
                                             "",
@@ -302,13 +302,12 @@
                                             "});",
                                             "",
                                             "mnuContext.showAt(e.getXY());",
-                                            "e.stopEvent();",
-                                            ""
+                                            "e.stopEvent();"
                                         ],
                                         "name": "itemcontextmenu",
                                         "scope": "me"
                                     },
-                                    "name": "onGridpanelItemContextMenu",
+                                    "name": "onGridpanelUserContextMenu",
                                     "designerId": "d89156f6-bd08-4e13-9bc4-9a63d91ef231"
                                 }
                             ]
@@ -454,6 +453,60 @@
                                             "designerId": "65650c3b-ed5f-4034-a9c8-26f8fee3b544"
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onGridpanelUserRoleContextMenu",
+                                        "implHandler": [
+                                            "var mnuContext = Ext.create(\"Ext.menu.Menu\",{",
+                                            "",
+                                            "    items: [{",
+                                            "        id: 'edit-user-role',",
+                                            "        text: 'Edit'",
+                                            "    },",
+                                            "    {",
+                                            "        id: 'delete-user-role',",
+                                            "        text: 'Delete'",
+                                            "    }",
+                                            "           ],",
+                                            "    listeners: {",
+                                            "",
+                                            "        click: function( _menu, _item, _e, _eOpts ) {",
+                                            "           switch (_item.id) {",
+                                            "                case 'edit-user-role':",
+                                            "                   webapp.app.getController(\"UserController\").showUserRoleWindow(record.get(\"id\"),\"edit\");",
+                                            "                    break;",
+                                            "                case 'delete-user-role':",
+                                            "                    webapp.app.getController(\"UserController\").deleteUserRole(record.get(\"id\"));",
+                                            "                    break;",
+                                            "                default:",
+                                            "                    break;",
+                                            "           }",
+                                            "        },",
+                                            "        hide:function(menu){",
+                                            "            menu.destroy();",
+                                            "        }",
+                                            "    },",
+                                            "    defaults: {",
+                                            "       clickHideDelay: 1",
+                                            "    }",
+                                            "});",
+                                            "",
+                                            "mnuContext.showAt(e.getXY());",
+                                            "e.stopEvent();",
+                                            ""
+                                        ],
+                                        "name": "itemcontextmenu",
+                                        "scope": "me"
+                                    },
+                                    "name": "onGridpanelUserRoleContextMenu",
+                                    "designerId": "88fb7794-0758-4664-9e7a-48d99782e9e3"
                                 }
                             ]
                         }

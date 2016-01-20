@@ -189,7 +189,7 @@ Ext.define('webapp.controller.UserController', {
                     var response = Ext.decode(resp.responseText);
                     if(response===true){
                         Ext.getStore("UserStore").reload();
-                        Ext.getStore("UserStoreRole").reload();
+                        Ext.getStore("UserRoleStore").reload();
                         userWindow.close();
                     }
                     else {
@@ -241,7 +241,7 @@ Ext.define('webapp.controller.UserController', {
         var userRoleWindow = Ext.create("widget.UserRoleWindow");
         var submitButton = Ext.getCmp("btnUserRoleSubmit");
         if (type === "edit"){
-            userWindow.setTitle("Edit User Role");
+            userRoleWindow.setTitle("Edit User Role");
             submitButton.setText("Save");
             var form = Ext.getCmp("userRoleForm");			// user role form
 
@@ -251,10 +251,10 @@ Ext.define('webapp.controller.UserController', {
 
              Ext.Ajax.request({
                     url: GlobalData.urlPrefix + "user/role/edit",
-                    params: {"id":user_id},
+                    params: {"id":id},
                     success: function(resp, ops) {
                         var response = Ext.decode(resp.responseText);
-                        userName.setValue(response.userRoleName);
+                        userRoleName.setValue(response.name);
                         _id.setValue(id);
                     }
                 });
@@ -275,6 +275,7 @@ Ext.define('webapp.controller.UserController', {
                     var response = Ext.decode(resp.responseText);
                     if(response===true){
                         Ext.getStore("UserRoleStore").reload();
+                        Ext.getStore("UserStore").reload();
                         userRoleWindow.close();
                     }
                     else {
@@ -289,6 +290,37 @@ Ext.define('webapp.controller.UserController', {
                 }
             });
 
+    },
+
+    deleteUserRole: function(id) {
+         Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this role?', function(btn){
+
+             if(btn == "yes"){
+                Ext.Ajax.request({
+                    url: GlobalData.urlPrefix+ "/user/role/delete",
+                    params: {"id":id},
+                    success: function(resp, ops) {
+
+                        var response = Ext.decode(resp.responseText);
+                        if(response===true){
+                            Ext.getStore("UserRoleStore").reload();
+                            Ext.getStore("UserStore").reload();
+                        }
+                        else {
+                            Ext.Msg.show({
+                                title: "Message",
+                                msg: "User role is not existed",
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                        }
+
+                    }
+                });
+
+
+             }
+         });
     },
 
     init: function(application) {

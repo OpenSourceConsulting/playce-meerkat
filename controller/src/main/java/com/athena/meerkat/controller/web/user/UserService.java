@@ -87,4 +87,9 @@ public class UserService implements InitializingBean, UserDetailsService {
 		return roleRepo.save(role);
 	}
 
+	public void deleteUserRole(UserRole userRole) {
+		repo.delete(userRole.getUsers());
+		roleRepo.delete(userRole);
+	}
+
 }
