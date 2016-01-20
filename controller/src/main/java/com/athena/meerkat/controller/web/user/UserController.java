@@ -145,33 +145,31 @@ public class UserController {
 
 	@RequestMapping("/save")
 	@ResponseBody
-	public boolean saveUser(int id, String userName, String password, String fullName, String email, int userRole) {
+	public boolean saveUser(int id, String userName, String password,
+			String fullName, String email, int userRole) {
 		User currentUser = null;
 		if (id > 0) {
 			currentUser = service.findUser(id);
 		}
 		// check existing users by userID and email
-		
-		/*
-		List<User> existingUsers = service.getUser(userName, email);
-		if (existingUsers.size() > 1) {
-			return false;
-		}
-		if (existingUsers.size() == 1) {
-			if (existingUsers.get(0).getId() != id) {
+
+		User existingUser = service.getUser(userName, email);
+		if (existingUser != null) {
+			if (existingUser.getId() != id) {
 				return false;
 			}
 		}
-		*/
-		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		UserRole role = service.getUserRole(userRole);
 		if (currentUser == null) {
-			currentUser = new User(userName, fullName,
-					encoder.encode(password), email, role);
+			// currentUser = new User(userName, fullName,
+			// encoder.encode(password), email, role);
+			currentUser = new User(userName, fullName, password, email, role);
 		} else {
 			currentUser.setUsername(userName);
-			currentUser.setPassword(encoder.encode(password));
+			// currentUser.setPassword(encoder.encode(password));
+			currentUser.setPassword(password);
 			currentUser.setFullName(fullName);
 			currentUser.setEmail(email);
 			currentUser.setUserRole(role);

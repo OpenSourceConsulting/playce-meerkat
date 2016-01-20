@@ -201,6 +201,9 @@ public class User implements UserDetails {
 	public String getUserRoleString() {
 		return userRole.getName();
 	}
+	public int getUserRoleId() {
+		return userRole.getId();
+	}
 
 	public User(String _userID, String _fullName, String _password,
 			String _email, UserRole _userRole) {

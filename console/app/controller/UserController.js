@@ -101,7 +101,7 @@ Ext.define('webapp.controller.UserController', {
                         userName.setValue(response.username);
                         fullName.setValue(response.fullName);
                         email.setValue(response.email);
-                        userRole.setValue(response.userRole.id);
+                        userRole.setValue(response.userRoleId);
                         _id.setValue(user_id);
                     }
                 });
