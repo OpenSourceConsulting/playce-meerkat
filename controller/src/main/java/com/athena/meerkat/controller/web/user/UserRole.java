@@ -56,4 +56,8 @@ public class UserRole implements Serializable {
 		this.users = users;
 	}
 
+	public int getUserCount() {
+		return this.users.size();
+	}
+
 }
