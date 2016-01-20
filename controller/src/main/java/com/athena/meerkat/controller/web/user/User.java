@@ -64,7 +64,7 @@ public class User implements UserDetails {
 	@Column(name = "fullname")
 	private String fullName;
 	@Column(name = "username")
-	private String userName;
+	private String username;
 	@Column(name = "password")
 	private String password;
 	@Column(name = "email")
@@ -101,7 +101,7 @@ public class User implements UserDetails {
 	@Override
 	public String getUsername() {
 
-		return this.userName;
+		return this.username;
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class User implements UserDetails {
 	}
 
 	public void setUsername(String username) {
-		this.userName = username;
+		this.username = username;
 	}
 
 	public void setPassword(String password) {
@@ -189,11 +189,17 @@ public class User implements UserDetails {
 	}
 
 	public String getLastLoginDateString() {
+		if (lastLoginDate == null) {
+			return "";
+		}
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(createdDate);
+		return df.format(lastLoginDate);
 	}
 
 	public String getCreatedDateString() {
+		if (createdDate == null) {
+			return "";
+		}
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		return df.format(createdDate);
 	}
@@ -201,13 +207,14 @@ public class User implements UserDetails {
 	public String getUserRoleString() {
 		return userRole.getName();
 	}
+
 	public int getUserRoleId() {
 		return userRole.getId();
 	}
 
 	public User(String _userID, String _fullName, String _password,
 			String _email, UserRole _userRole) {
-		userName = _userID;
+		username = _userID;
 		fullName = _fullName;
 		password = _password;
 		email = _email;

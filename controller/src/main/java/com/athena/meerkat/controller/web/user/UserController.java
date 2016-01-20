@@ -86,14 +86,10 @@ public class UserController {
 	@ResponseBody
 	public SimpleJsonResponse onAfterLogin(SimpleJsonResponse jsonRes) {
 
-		jsonRes.setData(SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal());
-		System.out.println(SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal());
-		/*
-		 * if(userDetails != null){
-		 * service.updateLastLogon(userDetails.getUserId()); }
-		 */
+		User loginUser = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		jsonRes.setData(loginUser);
+		service.updateLastLogin(loginUser.getId());
 		return jsonRes;
 	}
 
@@ -145,36 +141,36 @@ public class UserController {
 
 	@RequestMapping("/save")
 	@ResponseBody
-	public boolean saveUser(int id, String userName, String password,
-			String fullName, String email, int userRole) {
+	public boolean saveUser(User user) {
 		User currentUser = null;
-		if (id > 0) {
-			currentUser = service.findUser(id);
+		if (user.getId() > 0) {
+			currentUser = service.findUser(user.getId());
 		}
 		// check existing users by userID and email
 
-		User existingUser = service.getUser(userName, email);
+		User existingUser = service
+				.getUser(user.getUsername(), user.getEmail());
 		if (existingUser != null) {
-			if (existingUser.getId() != id) {
+			if (existingUser.getId() != user.getId()) {
 				return false;
 			}
 		}
 
 		// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		UserRole role = service.getUserRole(userRole);
+		UserRole role = service.getUserRole(user.getUserRoleId());
 		if (currentUser == null) {
 			// currentUser = new User(userName, fullName,
 			// encoder.encode(password), email, role);
-			currentUser = new User(userName, fullName, password, email, role);
+			currentUser = user;
+			currentUser.setCreatedDate(new Date());
 		} else {
-			currentUser.setUsername(userName);
+			currentUser.setUsername(user.getUsername());
 			// currentUser.setPassword(encoder.encode(password));
-			currentUser.setPassword(password);
-			currentUser.setFullName(fullName);
-			currentUser.setEmail(email);
+			currentUser.setPassword(user.getPassword());
+			currentUser.setFullName(user.getFullName());
+			currentUser.setEmail(user.getEmail());
 			currentUser.setUserRole(role);
 		}
-
 		if (service.saveUser(currentUser) != null) {
 			return true;
 		}
