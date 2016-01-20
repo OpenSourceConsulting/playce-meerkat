@@ -911,6 +911,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.TomcatInstanceContainer": [],
   "webapp.view.TomcatInstanceWindow": [],
   "webapp.view.UserMntContainer": [],
+  "webapp.view.UserRoleWindow": [],
   "webapp.view.UserWindow": [],
   "webapp.view.dashboardPanel": [],
   "webapp.view.loginWindow": [],
@@ -2007,6 +2008,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.UserMntContainer": [
     "widget.usermntcontainer"
   ],
+  "webapp.view.UserRoleWindow": [],
   "webapp.view.UserWindow": [
     "widget.UserWindow"
   ],

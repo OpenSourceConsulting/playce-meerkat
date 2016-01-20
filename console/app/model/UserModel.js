@@ -30,7 +30,7 @@ Ext.define('webapp.model.UserModel', {
             name: 'fullName'
         },
         {
-            name: 'userRoleName',
+            name: 'userRoleString',
             type: 'auto'
         },
         {

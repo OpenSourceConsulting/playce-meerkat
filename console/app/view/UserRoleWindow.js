@@ -20,14 +20,10 @@ Ext.define('webapp.view.UserRoleWindow', {
         'Ext.form.Panel',
         'Ext.form.field.Text',
         'Ext.form.field.Hidden',
-        'Ext.tree.Panel',
-        'Ext.tree.View',
-        'Ext.tree.Column',
-        'Ext.grid.column.CheckColumn',
         'Ext.button.Button'
     ],
 
-    height: 485,
+    height: 124,
     id: 'UserWindow1',
     width: 440,
     autoScroll: true,
@@ -68,42 +64,13 @@ Ext.define('webapp.view.UserRoleWindow', {
                             xtype: 'hiddenfield',
                             fieldLabel: 'Label',
                             name: 'IDHiddenField'
-                        },
-                        {
-                            xtype: 'container',
-                            layout: 'fit',
-                            items: [
-                                {
-                                    xtype: 'treepanel',
-                                    height: 554,
-                                    width: 400,
-                                    title: 'Permission',
-                                    store: 'MenuTreeStore',
-                                    viewConfig: {
-                                        rootVisible: false
-                                    },
-                                    columns: [
-                                        {
-                                            xtype: 'treecolumn',
-                                            dataIndex: 'text',
-                                            text: 'Nodes',
-                                            flex: 1
-                                        },
-                                        {
-                                            xtype: 'checkcolumn',
-                                            dataIndex: 'value',
-                                            text: 'Permission'
-                                        }
-                                    ]
-                                }
-                            ]
                         }
                     ],
                     dockedItems: [
                         {
                             xtype: 'container',
-                            dock: 'bottom',
                             flex: 0.5,
+                            dock: 'bottom',
                             height: 38,
                             layout: {
                                 type: 'hbox',

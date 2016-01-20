@@ -46,7 +46,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "userRoleName",
+                "name": "userRoleString",
                 "type": "auto"
             },
             "name": "MyField20",

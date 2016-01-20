@@ -21,14 +21,11 @@ Ext.define('webapp.view.UserMntContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.grid.Panel',
+        'Ext.grid.column.Column',
         'Ext.grid.View',
         'Ext.toolbar.Separator',
         'Ext.form.field.Text',
-        'Ext.toolbar.Paging',
-        'Ext.tree.Panel',
-        'Ext.tree.View',
-        'Ext.tree.Column',
-        'Ext.grid.column.CheckColumn'
+        'Ext.toolbar.Paging'
     ],
 
     height: 757,
@@ -70,7 +67,7 @@ Ext.define('webapp.view.UserMntContainer', {
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'userRoleName',
+                                            dataIndex: 'userRoleString',
                                             text: 'User Role'
                                         },
                                         {
@@ -172,30 +169,6 @@ Ext.define('webapp.view.UserMntContainer', {
                                                     store: 'UserRoleStore'
                                                 }
                                             ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'treepanel',
-                                    height: 342,
-                                    width: 1112,
-                                    title: 'Permission',
-                                    forceFit: true,
-                                    store: 'MenuTreeStore',
-                                    viewConfig: {
-
-                                    },
-                                    columns: [
-                                        {
-                                            xtype: 'treecolumn',
-                                            dataIndex: 'text',
-                                            text: 'Menu',
-                                            flex: 1
-                                        },
-                                        {
-                                            xtype: 'checkcolumn',
-                                            dataIndex: 'value',
-                                            text: 'Permission'
                                         }
                                     ]
                                 }

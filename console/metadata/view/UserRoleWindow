@@ -8,7 +8,7 @@
     "userConfig": {
         "autoScroll": true,
         "designer|userClassName": "UserRoleWindow",
-        "height": 485,
+        "height": 124,
         "id": "UserWindow1",
         "layout": "fit",
         "title": "New User Role",
@@ -75,85 +75,6 @@
                     },
                     "name": "MyHiddenField",
                     "designerId": "70ef2607-132f-420b-8b27-e06bb78f41b8"
-                },
-                {
-                    "type": "Ext.container.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "height": null,
-                        "layout": "fit"
-                    },
-                    "name": "MyContainer40",
-                    "designerId": "dc92e813-fc0c-40cd-8664-544d723f1e6b",
-                    "cn": [
-                        {
-                            "type": "Ext.tree.Panel",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "height": 554,
-                                "store": "MenuTreeStore",
-                                "title": "Permission",
-                                "width": 400
-                            },
-                            "name": "TreeGrid1",
-                            "designerId": "9962a7b1-0e72-4a52-a875-9f2f9baccb05",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-treegridpanel",
-                            "autoName": "TreeGrid",
-                            "cn": [
-                                {
-                                    "type": "Ext.tree.View",
-                                    "reference": {
-                                        "name": "viewConfig",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "rootVisible": false
-                                    },
-                                    "name": "MyTreeView3",
-                                    "designerId": "0ecb7231-188c-4a7f-bb63-c157dcd2f200"
-                                },
-                                {
-                                    "type": "Ext.tree.Column",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "text",
-                                        "flex": 1,
-                                        "text": "Nodes"
-                                    },
-                                    "name": "MyTreeColumn2",
-                                    "designerId": "9610e5ef-dc0f-4f58-a80c-1cb6380dd4ee"
-                                },
-                                {
-                                    "type": "Ext.grid.column.CheckColumn",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "value",
-                                        "text": "Permission"
-                                    },
-                                    "name": "MyCheckColumn2",
-                                    "designerId": "b9703fd6-2bf7-4c5b-9248-5b3069a11670"
-                                }
-                            ]
-                        }
-                    ]
                 },
                 {
                     "type": "Ext.container.Container",

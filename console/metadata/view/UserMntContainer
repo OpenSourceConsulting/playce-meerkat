@@ -105,7 +105,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "userRoleName",
+                                        "dataIndex": "userRoleString",
                                         "text": "User Role"
                                     },
                                     "name": "MyColumn25",
@@ -424,67 +424,6 @@
                                             "designerId": "f2d02e21-d78d-4969-a250-e08f641d4144"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.tree.Panel",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "forceFit": true,
-                                "height": 342,
-                                "store": "MenuTreeStore",
-                                "title": "Permission",
-                                "width": 1112
-                            },
-                            "name": "TreeGrid",
-                            "designerId": "3f4ea880-0da1-41c5-b7f4-f2cd2e644950",
-                            "isBuiltIn": true,
-                            "iconCls": "icon-treegridpanel",
-                            "autoName": "TreeGrid",
-                            "cn": [
-                                {
-                                    "type": "Ext.tree.View",
-                                    "reference": {
-                                        "name": "viewConfig",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "name": "MyTreeView2",
-                                    "designerId": "a76ce221-2aac-41b7-ab6f-a28a8a17549f"
-                                },
-                                {
-                                    "type": "Ext.tree.Column",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "text",
-                                        "flex": 1,
-                                        "text": "Menu"
-                                    },
-                                    "name": "MyTreeColumn1",
-                                    "designerId": "72fb0d44-a66d-4d08-b3b7-5da3cd2e1b26"
-                                },
-                                {
-                                    "type": "Ext.grid.column.CheckColumn",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "value",
-                                        "text": "Permission"
-                                    },
-                                    "name": "MyCheckColumn",
-                                    "designerId": "0abf8d59-44e4-4f80-874f-547bee401717"
                                 }
                             ]
                         }
