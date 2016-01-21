@@ -1,6 +1,8 @@
 package com.athena.meerkat.controller.web.application;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -44,22 +46,27 @@ public class Application implements Serializable {
 	@Column(name = "last_stopped_date")
 	private Date lastStoppedDate;
 	@Column(name = "last_reloaded_date")
-	private Date lastReloaddedDate;
+	private Date lastReloadedDate;
 	@Column(name = "last_started_date")
 	private Date lastStartedDate;
 	private int state;
 	@ManyToOne
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
-	@JoinColumn(name="tomcat_id")
+	@JoinColumn(name = "tomcat_id")
 	private TomcatInstance tomcat;
 
-	@OneToMany(mappedBy = "application")
-	@JsonManagedReference
-	private Collection<Session> sessions;
+	//
+	// @OneToMany(mappedBy = "application")
+	// @JsonManagedReference
+	// private Collection<Session> sessions;
 
 	public String getContextPath() {
 		return contextPath;
+	}
+
+	public String getTomcatName() {
+		return tomcat.getName();
 	}
 
 	public void setContextPath(String contextPath) {
@@ -68,6 +75,14 @@ public class Application implements Serializable {
 
 	public Date getDeployedDate() {
 		return deployedDate;
+	}
+
+	public String getDeployDateString() {
+		if (deployedDate == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(deployedDate);
 	}
 
 	public void setDeployedDate(Date deployedDate) {
@@ -102,6 +117,14 @@ public class Application implements Serializable {
 		return lastModifiedDate;
 	}
 
+	public String getLastModifiedDateString() {
+		if (lastModifiedDate == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(lastModifiedDate);
+	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
@@ -110,20 +133,44 @@ public class Application implements Serializable {
 		return lastStoppedDate;
 	}
 
+	public String getLastStoppedDateString() {
+		if (lastStoppedDate == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(lastStoppedDate);
+	}
+
 	public void setLastStoppedDate(Date lastStoppedDate) {
 		this.lastStoppedDate = lastStoppedDate;
 	}
 
-	public Date getLastReloaddedDate() {
-		return lastReloaddedDate;
+	public Date getLastReloadedDate() {
+		return lastReloadedDate;
+	}
+
+	public String getLastReloadedDateString() {
+		if (lastReloadedDate == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(lastReloadedDate);
 	}
 
 	public void setLastReloaddedDate(Date lastReloaddedDate) {
-		this.lastReloaddedDate = lastReloaddedDate;
+		this.lastReloadedDate = lastReloaddedDate;
 	}
 
 	public Date getLastStartedDate() {
 		return lastStartedDate;
+	}
+
+	public String getLastStartedDateString() {
+		if (lastStartedDate == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(lastStartedDate);
 	}
 
 	public void setLastStartedDate(Date lastStartedDate) {
@@ -146,13 +193,13 @@ public class Application implements Serializable {
 		this.tomcat = tomcat;
 	}
 
-	public Collection<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(Collection<Session> sessions) {
-		this.sessions = sessions;
-	}
+	// public Collection<Session> getSessions() {
+	// return sessions;
+	// }
+	//
+	// public void setSessions(Collection<Session> sessions) {
+	// this.sessions = sessions;
+	// }
 
 	/**
 	 * Constructor

@@ -27,7 +27,6 @@ Ext.define('webapp.view.DomainContainer', {
         'Ext.grid.View',
         'Ext.grid.column.Number',
         'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
         'Ext.toolbar.Paging'
     ],
 
@@ -177,40 +176,36 @@ Ext.define('webapp.view.DomainContainer', {
                                     id: 'associatedApplicationListView',
                                     title: '',
                                     forceFit: true,
+                                    store: 'ApplicationStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'contextPath',
                                             text: 'Path'
                                         },
                                         {
-                                            xtype: 'numbercolumn',
-                                            dataIndex: 'number',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'version',
                                             text: 'Version'
                                         },
                                         {
-                                            xtype: 'datecolumn',
-                                            dataIndex: 'date',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'displayName',
                                             text: 'Display name'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'sessions',
                                             text: 'Sessions'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'state',
                                             text: 'Status'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
-                                            text: 'Tomcat instance'
-                                        },
-                                        {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'sessionTimeOut',
                                             text: 'Session Timeout'
                                         }
                                     ],
@@ -249,12 +244,6 @@ Ext.define('webapp.view.DomainContainer', {
                                             ]
                                         }
                                     ]
-                                },
-                                {
-                                    xtype: 'pagingtoolbar',
-                                    dock: 'top',
-                                    width: 360,
-                                    displayInfo: true
                                 }
                             ]
                         },

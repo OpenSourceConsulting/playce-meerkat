@@ -19,9 +19,10 @@ public class Session {
 	private String key;
 	@Column(name = "session_value")
 	private String value;
-	@ManyToOne
-	@JsonBackReference
-	private Application application;
+	
+//	@ManyToOne
+//	@JsonBackReference
+//	private Application application;
 
 	public Session(String sKey, String sValue) {
 		// TODO Auto-generated constructor stub
@@ -53,11 +54,11 @@ public class Session {
 		this.value = value;
 	}
 
-	public Application getApplication() {
-		return application;
-	}
-
-	public void setApplication(Application application) {
-		this.application = application;
-	}
+//	public Application getApplication() {
+//		return application;
+//	}
+//
+//	public void setApplication(Application application) {
+//		this.application = application;
+//	}
 }

@@ -36,15 +36,15 @@ public class DomainService {
 	public boolean delete(int domainId) {
 		Domain domain = domainRepo.findOne(domainId);
 		if (domain == null) {
-			//return new ServiceResult(Status.FAILED, "Domain does not exist");
+			// return new ServiceResult(Status.FAILED, "Domain does not exist");
 			return false;
 		}
-		//delete all associated tomcats
+		// delete all associated tomcats
 		tomcatRepo.delete(domain.getTomcats());
-		//delete relation between domain and datagridgroup
+		// delete relation between domain and datagridgroup
 		domain.getServerGroup().setDomain(null);
 		domainRepo.delete(domain);
-		//return new ServiceResult(Status.DONE, "Deleted", true);
+		// return new ServiceResult(Status.DONE, "Deleted", true);
 		return true;
 	}
 
@@ -64,7 +64,7 @@ public class DomainService {
 		if (domain != null) {
 			List<TomcatInstance> tomcats = (List<TomcatInstance>) domain
 					.getTomcats();
-			if (tomcats != null) {
+			if (tomcats.size() > 0) {
 				return new ServiceResult(Status.DONE, "", tomcats.get(0)
 						.getApplications());
 			}
@@ -76,8 +76,8 @@ public class DomainService {
 		Domain domain = domainRepo.findOne(id);
 		return domain;
 	}
-	public Domain getDomainByName(String name)
-	{
+
+	public Domain getDomainByName(String name) {
 		return domainRepo.findByName(name);
 	}
 }

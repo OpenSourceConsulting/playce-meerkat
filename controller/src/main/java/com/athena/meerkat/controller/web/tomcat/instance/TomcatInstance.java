@@ -85,13 +85,13 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "domain_id")
 	private Domain domain;
 
-	@OneToMany(mappedBy = "tomcat", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcat")
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonManagedReference
 	private Collection<Application> applications;
 
 	@JoinTable(name = "tomcat_datasource", joinColumns = { @JoinColumn(name = "tomcat_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "datasource_id", referencedColumnName = "id") })
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JsonManagedReference
 	private Collection<Datasource> datasources;
 
