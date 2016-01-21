@@ -220,15 +220,15 @@ Ext.define('webapp.controller.MenuController', {
             webapp.app.getController("DomainController").loadDomainInfo(objectId);
             activeItem = 1;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
-             objectId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
-             activeItem = 2;
+            objectId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
+            activeItem = 2;
             //navigationText = "Tomcat Management > Domain ... > ...";
         }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {
             activeItem = 3;
-        //    navigationText = "Monitoring > Servers";
+            //    navigationText = "Monitoring > Servers";
         }else if (menuId.indexOf("monitoring_tomcats") >= 0 && menuId.indexOf("_tomcat_") < 0) {
             activeItem = 4;
-          //  navigationText = "Monitoring > Tomcat Instances";
+            //  navigationText = "Monitoring > Tomcat Instances";
         }else if (menuId.indexOf("monitoring_servers") >= 0 && menuId.indexOf("_server_") >= 0) {
             GlobalData.lastSelectedMenuId = menuId.substr(menuId.indexOf("_server_") + "_server_".length);
             activeItem = 5;

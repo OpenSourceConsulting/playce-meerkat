@@ -90,13 +90,14 @@ Ext.define('webapp.view.DomainContainer', {
                     flex: 8,
                     region: 'center',
                     split: true,
-                    id: 'domainTomcatTab',
-                    itemId: 'domainTomcatTab',
+                    id: 'domainTabs',
+                    itemId: 'domainTabs',
                     activeTab: 0,
                     items: [
                         {
                             xtype: 'panel',
-                            id: 'domainTabs',
+                            id: 'domainTomcatTab',
+                            itemId: 'domainTomcatTab',
                             layout: 'fit',
                             title: 'Tomcat instances',
                             tabConfig: {

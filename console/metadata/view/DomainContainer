@@ -122,8 +122,8 @@
             "codeClass": null,
             "userConfig": {
                 "activeTab": 0,
-                "id": "domainTomcatTab",
-                "itemId": "domainTomcatTab",
+                "id": "domainTabs",
+                "itemId": "domainTabs",
                 "layout|flex": 8,
                 "layout|region": "center",
                 "layout|split": true
@@ -139,7 +139,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "id": "domainTabs",
+                        "id": "domainTomcatTab",
+                        "itemId": "domainTomcatTab",
                         "layout": "fit",
                         "title": "Tomcat instances"
                     },

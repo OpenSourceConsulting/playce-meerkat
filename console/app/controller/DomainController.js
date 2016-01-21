@@ -151,12 +151,12 @@ Ext.define('webapp.controller.DomainController', {
                 }
 
                 //hide/show clustering config tab
-                //if (response.clustering) {
-        //            Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.show();
-        //        }
-        //        else {
-                //          Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.hide();
-        //      }
+                if (response.clustering) {
+                    Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.show();
+                }
+                else {
+                    Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.hide();
+                }
             }
 
         });
