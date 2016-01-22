@@ -31,8 +31,7 @@ Ext.application({
         'UserRoleModel',
         'DomainModel',
         'DatagridServerGroupModel',
-        'MachineModel',
-        'ApplicationModel'
+        'MachineModel'
     ],
     stores: [
         'sessionDataStore',
@@ -43,8 +42,7 @@ Ext.application({
         'UserRoleStore',
         'DomainStore',
         'DatagridServerGroupStore',
-        'MachineStore',
-        'ApplicationStore'
+        'MachineStore'
     ],
     views: [
         'meerkatViewport',
@@ -82,7 +80,7 @@ Ext.application({
         'TomcatController',
         'UserController',
         'ApplicationController',
-        'ClusteringConfigurationController',
+        'CluteringConfigurationController',
         'DatasourceController'
     ],
     name: 'webapp',

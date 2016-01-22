@@ -40,6 +40,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.athena.meerkat.controller.web.user.UserService;
@@ -60,6 +62,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 	public static void main(String[] args) {
 		SpringApplication.run(MeerkatBoot.class, args);
 	}
+	
 
 	/**
 	 * <pre>
@@ -80,6 +83,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 		
 		@Autowired
 		private UserService userService;
+		
 
 		@Override
 		public void configure(WebSecurity web) throws Exception {
@@ -116,13 +120,15 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 
 		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		    auth.userDetailsService(userService);
+		    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 		    //auth.inMemoryAuthentication().withUser("dolly").password("dolly").roles("ADMIN");
 		}
 
 		
-		
-		
+		@Bean
+		public PasswordEncoder passwordEncoder() {
+			return NoOpPasswordEncoder.getInstance();
+		}
 		
 		/*
 		 * for netty below

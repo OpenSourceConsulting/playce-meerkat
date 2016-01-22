@@ -26,15 +26,13 @@ public class UserService implements InitializingBean, UserDetailsService {
 	@Autowired
 	private UserRoleRepository roleRepo;
 
-	@Autowired
-	private EntityManager entityManager;
 
 	public List<User> getList() {
 		return repo.findAll();
 	}
 
-	public User getUser(String userName, String email) {
-		return repo.findByUsernameOrEmail(userName, email);
+	public User getUser(String userName) {
+		return repo.findByUsername(userName);
 	}
 
 	public List<User> getUsers(String userName) {

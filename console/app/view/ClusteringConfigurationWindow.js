@@ -18,10 +18,9 @@ Ext.define('webapp.view.ClusteringConfigurationWindow', {
     alias: 'widget.ClusteringConfigurationWindow',
 
     requires: [
-        'Ext.form.Panel',
+        'Ext.container.Container',
         'Ext.form.field.Text',
-        'Ext.button.Button',
-        'Ext.form.field.Hidden'
+        'Ext.button.Button'
     ],
 
     height: 159,
@@ -34,43 +33,29 @@ Ext.define('webapp.view.ClusteringConfigurationWindow', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'form',
-                    id: 'ClusteringConfigurationForm',
-                    bodyPadding: 10,
-                    title: '',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            id: 'configNameTextField',
-                            margin: '10 0 10 10',
-                            width: 352,
-                            fieldLabel: 'Name'
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: 'configValueTextField',
-                            margin: '0 0 10 10',
-                            width: 353,
-                            fieldLabel: 'Value'
-                        },
-                        {
-                            xtype: 'button',
-                            id: 'btnSubmitClusteringConfig',
-                            margin: '0 0 0 120',
-                            text: 'Create'
-                        },
-                        {
-                            xtype: 'button',
-                            margin: '0 0 0 10',
-                            text: 'Cancel'
-                        },
-                        {
-                            xtype: 'hiddenfield',
-                            anchor: '100%',
-                            id: 'IDHiddenField',
-                            fieldLabel: 'Label'
-                        }
-                    ]
+                    xtype: 'container'
+                },
+                {
+                    xtype: 'textfield',
+                    margin: '10 0 10 10',
+                    width: 352,
+                    fieldLabel: 'Name'
+                },
+                {
+                    xtype: 'textfield',
+                    margin: '0 0 10 10',
+                    width: 353,
+                    fieldLabel: 'Value'
+                },
+                {
+                    xtype: 'button',
+                    margin: '0 0 0 120',
+                    text: 'Create'
+                },
+                {
+                    xtype: 'button',
+                    margin: '0 0 0 10',
+                    text: 'Cancel'
                 }
             ]
         });

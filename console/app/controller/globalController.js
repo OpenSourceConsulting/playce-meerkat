@@ -31,8 +31,7 @@ Ext.define('webapp.controller.globalController', {
         // 최대 Infinispan 서버 갯수
         var serverSize = 8;
 
-        // REST API 호출을 위한 서버 URL Prefix로써 Athena-Dolly-Controller로 Deploy 시 ''로 변경한다.
-        //var urlPrefix = 'http://127.0.0.1:8080/controller/';
+
         var urlPrefix = '';
         /*
         // 현재 구동중인 Infinispan 서버 갯수를 조회한다.

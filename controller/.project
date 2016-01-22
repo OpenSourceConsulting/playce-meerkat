@@ -3,6 +3,7 @@
 	<name>MeerkatController</name>
 	<comment>Spring Boot Starter Parent. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
 	<projects>
+		<project>MeerkatCommon</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -146,7 +146,6 @@ Ext.define('webapp.view.DomainWindow', {
                                     items: [
                                         {
                                             xtype: 'button',
-                                            itemId: 'mybutton42',
                                             text: 'New'
                                         }
                                     ]

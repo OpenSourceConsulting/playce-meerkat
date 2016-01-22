@@ -28,18 +28,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.HttpMethod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -56,10 +53,18 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	public static final String SESSION_USER_KEY = "loginUser";
+	
+	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private PasswordEncoder passEncoder;
+	
 
 	/**
 	 * <pre>
@@ -142,36 +147,28 @@ public class UserController {
 	@RequestMapping("/save")
 	@ResponseBody
 	public boolean saveUser(User user) {
-		User currentUser = null;
-		if (user.getId() > 0) {
-			currentUser = service.findUser(user.getId());
-		}
-		// check existing users by userID and email
-
-		User existingUser = service
-				.getUser(user.getUsername(), user.getEmail());
-		if (existingUser != null) {
-			if (existingUser.getId() != user.getId()) {
+		
+		
+		if (user.getId() == 0) {
+			User existingUser = service.getUser(user.getUsername());
+			if (existingUser != null) {
 				return false;
-			}
-		}
-
-		// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			} 
+			
+			user.setCreatedDate(new Date());
+		} 
+		
+		
 		UserRole role = service.getUserRole(user.getUserRoleId());
-		if (currentUser == null) {
-			// currentUser = new User(userName, fullName,
-			// encoder.encode(password), email, role);
-			currentUser = user;
-			currentUser.setCreatedDate(new Date());
-		} else {
-			currentUser.setUsername(user.getUsername());
-			// currentUser.setPassword(encoder.encode(password));
-			currentUser.setPassword(user.getPassword());
-			currentUser.setFullName(user.getFullName());
-			currentUser.setEmail(user.getEmail());
-			currentUser.setUserRole(role);
-		}
-		if (service.saveUser(currentUser) != null) {
+		
+		LOGGER.debug("user fullname is {}", user.getFullName());
+		LOGGER.debug("passEncoder is {}", passEncoder.getClass().getCanonicalName());
+		
+		user.setPassword(passEncoder.encode(user.getPassword()));
+		user.setUserRole(role);
+
+		
+		if (service.saveUser(user) != null) {
 			return true;
 		}
 		return false;
