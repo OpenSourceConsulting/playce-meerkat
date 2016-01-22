@@ -59,7 +59,7 @@
 	<!-- ========== Spring Boot Config in Servlet 2.5 ============ -->
 	<context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.athena.dolly.controller.DollyBoot</param-value>
+        <param-value>com.athena.meerkat.controller.MeerkatBoot</param-value>
     </context-param>
 
     <listener>
