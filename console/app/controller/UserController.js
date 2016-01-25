@@ -71,9 +71,10 @@ Ext.define('webapp.controller.UserController', {
                 url: url,
                 params: {"userName":field.getValue()},
                 success: function(resp, ops) {
-
                     var response = Ext.decode(resp.responseText);
                     Ext.getStore("UserStore").loadData(response, false);
+                    Ext.getStore("UserStore").totalCount = response.length;
+                    Ext.getCmp("userListPaging").onLoad();
                 }
             });
         }
