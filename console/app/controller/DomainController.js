@@ -30,6 +30,9 @@ Ext.define('webapp.controller.DomainController', {
         var serverGroupVal = serverGroup.getValue();
         var _idVal = _id.getValue();
 
+        if(!domainTypeVal){ //non-clustering
+         serverGroupVal = 0;
+        }
         if (!this.validate(nameVal, domainTypeVal, serverGroupVal)) {
             return;
         }
@@ -89,8 +92,8 @@ Ext.define('webapp.controller.DomainController', {
         domainWindow.show();
     },
 
-    validate: function(name, groupId) {
-        if (name === "" || groupId === 0){
+    validate: function(name, domainType, groupId) {
+        if (name === "" || (domainType ===true && groupId <=0)){
              Ext.Msg.show({
                 title: "Message",
                 msg: "Invalid data.",

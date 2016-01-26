@@ -19,13 +19,87 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
     id: 'ClusteringConfigurationController',
 
     onClickNewClusteringConfiguration: function(button, e, eOpts) {
+        this.showClusteringConfiguration("add",0);
+    },
+
+    onClickComparingClusteringConfiguration: function(button, e, eOpts) {
+        this.showClusteringConfigurationWindow("add",0);
+    },
+
+    newClusteringConfigurationOnDomainWindow: function(button, e, eOpts) {
+        this.showClusteringConfigurationWindow("add",0);
+    },
+
+    onSubmitClusteringConfigurationClick: function(button, e, eOpts) {
+        var form = Ext.getCmp("clusteringConfigurationForm");			// user form
+        var formWindow = Ext.getCmp('ClusteringConfigurationWindow');	// Add user window
+
+        var name = form.getForm().findField("clusteringConfigurationName");
+        var value = form.getForm().findField("clusteringConfigurationValue");
+        var _id = form.getForm().findField("IDHiddenField");
+
+        var nameVal = name.getValue().trim();
+        var valueVal = value.getValue().trim();
+        var _idVal = _id.getValue();
+
+        if (!this.validate(name, value)) {
+            return;
+        }
+
+        //submit new user request
+        if (_idVal === "") {
+            _idVal = 0;
+
+        }
+
+        this.save({"id" : _idVal, "name" : nameVal,"value" :valueVal});
+
+    },
+
+    showClusteringConfigurationWindow: function(type, id) {
         var window = Ext.create("widget.ClusteringConfigurationWindow");
         window.show();
     },
 
-    onClickComparingClusteringConfiguration: function(button, e, eOpts) {
-        var window = Ext.create("widget.ClusteringConfigurationComparingWindow");
-        window.show();
+    validate: function(name, value) {
+        if (!(name.isValid() && value.isValid())){
+            Ext.Msg.show({
+                title: "Message",
+                msg: "Invalid data.",
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING
+            });
+            return false;
+        }
+        return true;
+    },
+
+    save: function(params) {
+                var url = GlobalData.urlPrefix + "domain/clustering/save";
+                var window = Ext.getCmp('ClusteringConfigurationWindow');	// Add clustering config window
+                Ext.Ajax.request({
+                     url: url,
+                     params: params,
+                     success: function(resp, ops) {
+                            var response = Ext.decode(resp.responseText);
+                            if(response===true){
+                                window.close();
+                            }
+                            else {
+                                Ext.Msg.show({
+                                    title: "Message",
+                                    msg: "Invalid information.",
+                                    buttons: Ext.Msg.OK,
+                                    icon: Ext.Msg.WARNING
+                                });
+                            }
+
+                        }
+                    });
+    },
+
+    deleteConfig: function(id) {
+
     },
 
     init: function(application) {
@@ -35,6 +109,12 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
             },
             "#btnComparingClusteringConfiguration": {
                 click: this.onClickComparingClusteringConfiguration
+            },
+            "#mybutton42": {
+                click: this.newClusteringConfigurationOnDomainWindow
+            },
+            "#btnClusteringConfigurationSubmit": {
+                click: this.onSubmitClusteringConfigurationClick
             }
         });
     }

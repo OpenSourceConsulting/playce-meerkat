@@ -8,7 +8,7 @@
     "userConfig": {
         "designer|userAlias": "DomainWindow",
         "designer|userClassName": "DomainWindow",
-        "height": 435,
+        "height": 193,
         "id": "domainWindow",
         "layout": "fit",
         "title": "New Domain",
@@ -105,17 +105,11 @@
                                     "userConfig": {
                                         "fn": "onDomainTypeClusteringChange",
                                         "implHandler": [
-                                            "//alert(newValue);    ",
-                                            "//Ext.getCmp(\"domainClusteringConfigurationGridView\").show();",
-                                            "//alert(newValue);",
-                                            "var grid =  Ext.getCmp(\"domainClusteringConfigurationGridView\");",
-                                            "",
-                                            "//else{",
-                                            "//   Ext.getCmp(\"domainClusteringConfigurationGridView\").hide();",
-                                            "//}",
-                                            "if(grid.isVisible()){",
-                                            "   grid.hide();",
-                                            "}"
+                                            "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
+                                            "if (comboBox.isVisible()){",
+                                            "    comboBox.hide();",
+                                            "}",
+                                            ""
                                         ],
                                         "name": "change",
                                         "scope": "me"
@@ -155,9 +149,9 @@
                                     "userConfig": {
                                         "fn": "onDomainTypeNoneClusteringChange",
                                         "implHandler": [
-                                            "var grid =  Ext.getCmp(\"domainClusteringConfigurationGridView\");",
-                                            "if(!grid.isVisible()){",
-                                            "   grid.show();",
+                                            "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
+                                            "if (comboBox.isHidden){",
+                                            "    comboBox.show();",
                                             "}"
                                         ],
                                         "name": "change",
@@ -208,101 +202,6 @@
                     },
                     "name": "MyHiddenField1",
                     "designerId": "becf5bd7-dc10-46b1-ae4b-f2365d160955"
-                },
-                {
-                    "type": "Ext.grid.Panel",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "forceFit": true,
-                        "height": 230,
-                        "id": "domainClusteringConfigurationGridView",
-                        "title": "Clustering Configuration"
-                    },
-                    "name": "MyGridPanel24",
-                    "designerId": "43029281-8af3-4fe2-bfbd-6a7aa8e81508",
-                    "cn": [
-                        {
-                            "type": "Ext.grid.column.Column",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "string",
-                                "text": "Name"
-                            },
-                            "name": "MyColumn33",
-                            "designerId": "50592f1f-3b93-4521-a760-2ef06ca4d1d7"
-                        },
-                        {
-                            "type": "Ext.grid.column.Number",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "number",
-                                "text": "Value"
-                            },
-                            "name": "MyNumberColumn25",
-                            "designerId": "087b8b4c-22ef-44d8-9361-bba350cbdf3b"
-                        },
-                        {
-                            "type": "Ext.grid.View",
-                            "reference": {
-                                "name": "viewConfig",
-                                "type": "object"
-                            },
-                            "codeClass": null,
-                            "name": "MyGridView24",
-                            "designerId": "e28cfbce-2d2f-43ac-9fbe-39d588c26597"
-                        },
-                        {
-                            "type": "Ext.grid.plugin.RowEditing",
-                            "reference": {
-                                "name": "plugins",
-                                "type": "array"
-                            },
-                            "codeClass": "Ext.grid.plugin.RowEditing",
-                            "name": "MyRowEditingPlugin",
-                            "designerId": "0ea1c6ba-b235-42b5-9dd9-36bb2f1434c3"
-                        },
-                        {
-                            "type": "Ext.toolbar.Toolbar",
-                            "reference": {
-                                "name": "dockedItems",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dock": "top"
-                            },
-                            "name": "MyToolbar32",
-                            "designerId": "114cb875-7234-40f4-a3c6-414df055abba",
-                            "cn": [
-                                {
-                                    "type": "Ext.button.Button",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "layout|flex": null,
-                                        "text": "New"
-                                    },
-                                    "name": "MyButton42",
-                                    "designerId": "be293f8c-bee5-4dee-a4b3-763379762e0c"
-                                }
-                            ]
-                        }
-                    ]
                 },
                 {
                     "type": "Ext.container.Container",

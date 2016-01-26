@@ -23,8 +23,7 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onClickNewClusteringConfiguration",
                 "implHandler": [
-                    "var window = Ext.create(\"widget.ClusteringConfigurationWindow\");",
-                    "window.show();"
+                    "this.showClusteringConfiguration(\"add\",0);"
                 ],
                 "name": "click",
                 "scope": "me"
@@ -44,14 +43,188 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onClickComparingClusteringConfiguration",
                 "implHandler": [
-                    "var window = Ext.create(\"widget.ClusteringConfigurationComparingWindow\");",
-                    "window.show();"
+                    "this.showClusteringConfigurationWindow(\"add\",0);"
                 ],
                 "name": "click",
                 "scope": "me"
             },
             "name": "onClickComparingClusteringConfiguration",
             "designerId": "6396a21a-6cc8-4947-aad8-7153095e4a8a"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mybutton42",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "newClusteringConfigurationOnDomainWindow",
+                "implHandler": [
+                    "this.showClusteringConfigurationWindow(\"add\",0);"
+                ],
+                "name": "click"
+            },
+            "name": "newClusteringConfigurationOnDomainWindow",
+            "designerId": "cb6dda99-f4a0-4f89-a596-648acd7748af"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "type",
+                    "id"
+                ],
+                "fn": "showClusteringConfigurationWindow",
+                "implHandler": [
+                    "var window = Ext.create(\"widget.ClusteringConfigurationWindow\");",
+                    "window.show();"
+                ]
+            },
+            "name": "showClusteringConfigurationWindow",
+            "designerId": "32f1cda7-e871-4528-8ef8-924de83abb0d"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "name",
+                    "value"
+                ],
+                "fn": "validate",
+                "implHandler": [
+                    "if (!(name.isValid() && value.isValid())){",
+                    "    Ext.Msg.show({",
+                    "        title: \"Message\",",
+                    "        msg: \"Invalid data.\",",
+                    "        buttons: Ext.Msg.OK,",
+                    "        icon: Ext.Msg.WARNING",
+                    "    });",
+                    "    return false;",
+                    "}",
+                    "return true;"
+                ]
+            },
+            "name": "validate",
+            "designerId": "9b583992-7e69-4674-aa93-473d4015de26"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "params"
+                ],
+                "fn": "save",
+                "implHandler": [
+                    "        var url = GlobalData.urlPrefix + \"domain/clustering/save\";",
+                    "        var window = Ext.getCmp('ClusteringConfigurationWindow');\t// Add clustering config window",
+                    "        Ext.Ajax.request({",
+                    "             url: url,",
+                    "             params: params,",
+                    "             success: function(resp, ops) {",
+                    "                    var response = Ext.decode(resp.responseText);",
+                    "                    if(response===true){",
+                    "                        window.close();",
+                    "                    }",
+                    "                    else {",
+                    "                        Ext.Msg.show({",
+                    "                            title: \"Message\",",
+                    "                            msg: \"Invalid information.\",",
+                    "                            buttons: Ext.Msg.OK,",
+                    "                            icon: Ext.Msg.WARNING",
+                    "                        });",
+                    "                    }",
+                    "",
+                    "                }",
+                    "            });"
+                ]
+            },
+            "name": "save",
+            "designerId": "ca36ec27-6e69-4c65-ab95-b634b6cec62e"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id"
+                ],
+                "fn": "deleteConfig"
+            },
+            "name": "deleteConfig",
+            "designerId": "84165bd3-0756-48f0-86d0-1d505ce9de46"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnClusteringConfigurationSubmit",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onSubmitClusteringConfigurationClick",
+                "implHandler": [
+                    "var form = Ext.getCmp(\"clusteringConfigurationForm\");\t\t\t// user form",
+                    "var formWindow = Ext.getCmp('ClusteringConfigurationWindow');\t// Add user window",
+                    "",
+                    "var name = form.getForm().findField(\"clusteringConfigurationName\");",
+                    "var value = form.getForm().findField(\"clusteringConfigurationValue\");",
+                    "var _id = form.getForm().findField(\"IDHiddenField\");",
+                    "",
+                    "var nameVal = name.getValue().trim();",
+                    "var valueVal = value.getValue().trim();",
+                    "var _idVal = _id.getValue();",
+                    "",
+                    "if (!this.validate(name, value)) {",
+                    "    return;",
+                    "}",
+                    "",
+                    "//submit new user request",
+                    "if (_idVal === \"\") {",
+                    "    _idVal = 0;",
+                    "",
+                    "}",
+                    "",
+                    "this.save({\"id\" : _idVal, \"name\" : nameVal,\"value\" :valueVal});",
+                    ""
+                ],
+                "name": "click"
+            },
+            "name": "onSubmitClusteringConfigurationClick",
+            "designerId": "6eaf17ae-78bc-4755-8077-4012374b3a4b"
         }
     ]
 }
