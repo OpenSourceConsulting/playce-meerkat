@@ -50,6 +50,8 @@
                         "fieldLabel": "User ID",
                         "id": "userIDTextField",
                         "itemId": "userIDTextField",
+                        "maxLength": 20,
+                        "minLength": 3,
                         "name": "UserIDTextField",
                         "validateBlank": true,
                         "width": 388
@@ -73,6 +75,8 @@
                         "fieldLabel": "Password",
                         "id": "passwordTextField",
                         "inputType": "password",
+                        "maxLength": 20,
+                        "minLength": 5,
                         "name": "PasswordTextField",
                         "width": 390
                     },
@@ -95,6 +99,8 @@
                         "fieldLabel": "Retype-Password",
                         "id": "RetypePasswordTextField",
                         "inputType": "password",
+                        "maxLength": 20,
+                        "minLength": 5,
                         "name": "RetypePasswordTextField",
                         "width": 390
                     },
@@ -112,6 +118,8 @@
                         "allowBlank": false,
                         "designer|displayName": "FullNameTextField",
                         "fieldLabel": "Full Name:",
+                        "maxLength": 20,
+                        "minLength": 5,
                         "name": "FullNameTextField",
                         "width": 389
                     },
@@ -130,6 +138,8 @@
                         "fieldLabel": "Email:",
                         "id": "emailTextField",
                         "inputType": "email",
+                        "maxLength": 20,
+                        "minLength": 5,
                         "name": "EmailTextField",
                         "validateBlank": true,
                         "vtype": "email",

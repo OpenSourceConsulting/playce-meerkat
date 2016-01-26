@@ -48,7 +48,6 @@ Ext.define('webapp.view.UserMntContainer', {
                                 {
                                     xtype: 'gridpanel',
                                     height: 349,
-                                    id: 'userListGridView',
                                     title: '',
                                     forceFit: true,
                                     store: 'UserStore',
@@ -118,7 +117,6 @@ Ext.define('webapp.view.UserMntContainer', {
                                             items: [
                                                 {
                                                     xtype: 'pagingtoolbar',
-                                                    id: 'userListPaging',
                                                     width: 1099,
                                                     displayInfo: true,
                                                     store: 'UserStore'

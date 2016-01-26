@@ -53,6 +53,8 @@ Ext.define('webapp.view.UserWindow', {
                             allowBlank: false,
                             allowOnlyWhitespace: false,
                             emptyText: '',
+                            maxLength: 20,
+                            minLength: 3,
                             validateBlank: true
                         },
                         {
@@ -63,7 +65,9 @@ Ext.define('webapp.view.UserWindow', {
                             name: 'PasswordTextField',
                             inputType: 'password',
                             allowBlank: false,
-                            allowOnlyWhitespace: false
+                            allowOnlyWhitespace: false,
+                            maxLength: 20,
+                            minLength: 5
                         },
                         {
                             xtype: 'textfield',
@@ -73,14 +77,18 @@ Ext.define('webapp.view.UserWindow', {
                             name: 'RetypePasswordTextField',
                             inputType: 'password',
                             allowBlank: false,
-                            allowOnlyWhitespace: false
+                            allowOnlyWhitespace: false,
+                            maxLength: 20,
+                            minLength: 5
                         },
                         {
                             xtype: 'textfield',
                             width: 389,
                             fieldLabel: 'Full Name:',
                             name: 'FullNameTextField',
-                            allowBlank: false
+                            allowBlank: false,
+                            maxLength: 20,
+                            minLength: 5
                         },
                         {
                             xtype: 'textfield',
@@ -89,6 +97,8 @@ Ext.define('webapp.view.UserWindow', {
                             fieldLabel: 'Email:',
                             name: 'EmailTextField',
                             inputType: 'email',
+                            maxLength: 20,
+                            minLength: 5,
                             validateBlank: true,
                             vtype: 'email'
                         },
