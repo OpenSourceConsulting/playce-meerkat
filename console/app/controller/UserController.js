@@ -119,6 +119,8 @@ Ext.define('webapp.controller.UserController', {
             var email = form.getForm().findField("EmailTextField");
             var userRole = form.getForm().findField("UserRoleDropdownList");
             var _id = form.getForm().findField("IDHiddenField");
+            //used ID cannot be editted.
+            userName.setReadOnly(true);
             //load data to user form
 
              Ext.Ajax.request({

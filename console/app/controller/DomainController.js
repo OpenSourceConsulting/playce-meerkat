@@ -31,7 +31,7 @@ Ext.define('webapp.controller.DomainController', {
         var _idVal = _id.getValue();
 
         if(!domainTypeVal){ //non-clustering
-         serverGroupVal = 0;
+           serverGroupVal = 0;
         }
         if (!this.validate(nameVal, domainTypeVal, serverGroupVal)) {
             return;
@@ -75,15 +75,21 @@ Ext.define('webapp.controller.DomainController', {
                     params: {"id": id},
                     success: function(resp, ops) {
                         var response = Ext.decode(resp.responseText);
-                        name.setValue(response.name);
-                        if(response.clustering) {
+                        name.setValue(response.data.name);
+                        if(response.data.isClustering) {
                             domainTypeClustering.setValue(true);
                             domainTypeNoneClustering.setValue(false);
                         } else{
                             domainTypeClustering.setValue(false);
                             domainTypeNoneClustering.setValue(true);
+                            var comboBox = Ext.getCmp("dataGridServerGroupComboBoxField");
+                            if (comboBox.isVisible()){
+                                comboBox.hide();
+                            }
                         }
-                        serverGroup.setValue(response.serverGroup.id);
+                        if(response.data.serverGroup != null){
+                            serverGroup.setValue(response.data.serverGroup.id);
+                        }
                         _id.setValue(id);
                     }
                 });
@@ -114,7 +120,7 @@ Ext.define('webapp.controller.DomainController', {
              success: function(resp, ops) {
 
                     var response = Ext.decode(resp.responseText);
-                    if(response===true){
+                    if(response.success === true){
                         webapp.app.getController("MenuController").loadDomainList();
                         Ext.getStore("DomainStore").reload();
                         domainWindow.close();
@@ -122,7 +128,7 @@ Ext.define('webapp.controller.DomainController', {
                     else {
                              Ext.Msg.show({
                                 title: "Message",
-                                msg: "Invalid information.",
+                                msg: response.msg,
                                 buttons: Ext.Msg.OK,
                                 icon: Ext.Msg.WARNING
                             });
@@ -144,17 +150,17 @@ Ext.define('webapp.controller.DomainController', {
             method:'GET',
             success: function(resp, ops) {
                 var response = Ext.decode(resp.responseText);
-                nameField.setValue(response.name);
-                tomcatCountField.setValue(response.tomcatInstancesCount);
-                domainTypeField.setValue(response.isClustering===true?"Clustering":"None clustering");
-                dataGridServerGroupField.setValue(response.datagridServerGroupName);
-                Ext.getCmp("associatedTomcatListView").getStore().loadData(response.tomcats, false);
-                if (response.tomcats.length > 0 ){
+                nameField.setValue(response.data.name);
+                tomcatCountField.setValue(response.data.tomcatInstancesCount);
+                domainTypeField.setValue(response.data.isClustering===true?"Clustering":"None clustering");
+                dataGridServerGroupField.setValue(response.data.datagridServerGroupName);
+                Ext.getCmp("associatedTomcatListView").getStore().loadData(response.data.tomcats, false);
+                if (response.data.tomcats.length > 0 ){
                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.tomcats[0].applications, false);
                 }
 
                 //hide/show clustering config tab
-                if (response.clustering) {
+                if (response.data.isClustering) {
                     Ext.getCmp("domainTabs").child("#clusteringConfigTab").tab.show();
                 }
                 else {
@@ -174,13 +180,13 @@ Ext.define('webapp.controller.DomainController', {
                     success: function(resp, ops) {
 
                         var response = Ext.decode(resp.responseText);
-                        if(response===true){
+                        if(response.success){
                             webapp.app.getController("MenuController").loadDomainList();
                         }
                         else {
                             Ext.Msg.show({
                                 title: "Message",
-                                msg: "Domain is not existed",
+                                msg: response.msg,
                                 buttons: Ext.Msg.OK,
                                 icon: Ext.Msg.WARNING
                             });

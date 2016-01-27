@@ -21,6 +21,10 @@ public class DataGridServerService {
 		return list;
 	}
 
+	public List<DatagridServerGroup> getAll() {
+		List<DatagridServerGroup> list = groupRepo.findAll();
+		return list;
+	}
 	public DatagridServerGroup getGroup(int id) {
 		return groupRepo.findOne(id);
 	}

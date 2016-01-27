@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.web.application.Application;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstanceRepository;
 
@@ -41,15 +42,15 @@ public class DomainService {
 	public boolean delete(int domainId) {
 		Domain domain = domainRepo.findOne(domainId);
 		if (domain == null) {
-			// return new ServiceResult(Status.FAILED, "Domain does not exist");
 			return false;
 		}
 		// delete all associated tomcats
 		tomcatRepo.delete(domain.getTomcats());
 		// delete relation between domain and datagridgroup
-		domain.getServerGroup().setDomain(null);
+		if (domain.getServerGroup() != null) {
+			domain.getServerGroup().setDomain(null);
+		}
 		domainRepo.delete(domain);
-		// return new ServiceResult(Status.DONE, "Deleted", true);
 		return true;
 	}
 
@@ -57,24 +58,20 @@ public class DomainService {
 		return new ServiceResult(Status.DONE, "Not implemented yet");
 	}
 
-	public ServiceResult getAll() {
-		List<Domain> list = domainRepo.findAll();
-		return new ServiceResult(Status.DONE, "Done", list);
+	public List<Domain> getAll() {
+		return domainRepo.findAll();
 	}
 
-	public ServiceResult getApplicationListByDomain(int domainId) {
+	public List<Application> getApplicationListByDomain(int domainId) {
 		Domain domain = domainRepo.findOne(domainId);
 		// Tomcat instances that are belonged to same domain have same
 		// applications. Only retrieve these application for specified domain
 		if (domain != null) {
 			List<TomcatInstance> tomcats = (List<TomcatInstance>) domain
 					.getTomcats();
-			if (tomcats.size() > 0) {
-				return new ServiceResult(Status.DONE, "", tomcats.get(0)
-						.getApplications());
-			}
+			return (List<Application>) tomcats.get(0).getApplications();
 		}
-		return new ServiceResult(Status.FAILED, "Domain does not exist");
+		return null;
 	}
 
 	public Domain getDomain(int id) {
@@ -82,7 +79,7 @@ public class DomainService {
 		return domain;
 	}
 
-	public Domain getDomainByName(String name) {
+	public List<Domain> getDomainByName(String name) {
 		return domainRepo.findByName(name);
 	}
 }

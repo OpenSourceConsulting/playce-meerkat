@@ -18,6 +18,6 @@ public class DatagridServerController {
 	@RequestMapping("/group/list")
 	@ResponseBody
 	public List<DatagridServerGroup> list() {
-		return service.getAvailableGroupList();
+		return service.getAll();
 	}
 }
