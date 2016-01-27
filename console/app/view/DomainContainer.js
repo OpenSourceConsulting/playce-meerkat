@@ -369,17 +369,19 @@ Ext.define('webapp.view.DomainContainer', {
                                 {
                                     xtype: 'gridpanel',
                                     dock: 'top',
+                                    id: 'clusteringConfigurationGridView',
                                     title: '',
                                     forceFit: true,
+                                    store: 'ClusteringConfigurationStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'name',
                                             text: 'Name'
                                         },
                                         {
-                                            xtype: 'numbercolumn',
-                                            dataIndex: 'number',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'value',
                                             text: 'Value'
                                         },
                                         {

@@ -18,10 +18,6 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
     id: 'ClusteringConfigurationController',
 
-    onClickNewClusteringConfiguration: function(button, e, eOpts) {
-        this.showClusteringConfiguration("add",0);
-    },
-
     onClickComparingClusteringConfiguration: function(button, e, eOpts) {
         this.showClusteringConfigurationWindow("add",0);
     },
@@ -56,8 +52,38 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
     },
 
+    onBtnNewClutersingConfigurationClick: function(button, e, eOpts) {
+        this.showClusteringConfigurationWindow("add", 0);
+    },
+
     showClusteringConfigurationWindow: function(type, id) {
         var window = Ext.create("widget.ClusteringConfigurationWindow");
+        var submitButton = Ext.getCmp("btnClusteringConfigurationSubmit");
+        if (type === "edit"){
+            window.setTitle("Edit Clustering Configuration");
+            submitButton.setText("Save");
+            var form = Ext.getCmp("clusteringConfigurationForm");			// domain form
+
+            var name = form.getForm().findField("clusteringConfigurationName");
+            var value = form.getForm().findField("clusteringConfigurationValue");
+            var _id = form.getForm().findField("idHiddenField");
+
+            var nameVal = name.getValue().trim();
+            var valueVal = value.getValue().trim();
+            var _idVal = _id.getValue();
+
+            Ext.Ajax.request({
+                url: GlobalData.urlPrefix + "domain/clustering/config/edit",
+                params: {"id": id},
+                success: function(resp, ops) {
+                    var response = Ext.decode(resp.responseText);
+                    name.setValue(response.data.name);
+                    value.setValue(response.data.value);
+                    _id.setValue(id);
+                }
+            });
+        }
+
         window.show();
     },
 
@@ -65,7 +91,7 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
         if (!(name.isValid() && value.isValid())){
             Ext.Msg.show({
                 title: "Message",
-                msg: "Invalid data.",
+                msg: "Invalid input data.",
                 buttons: Ext.Msg.OK,
                 icon: Ext.Msg.WARNING
             });
@@ -75,20 +101,20 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
     },
 
     save: function(params) {
-                var url = GlobalData.urlPrefix + "domain/clustering/save";
+                var url = GlobalData.urlPrefix + "domain/clustering/config/save";
                 var window = Ext.getCmp('ClusteringConfigurationWindow');	// Add clustering config window
                 Ext.Ajax.request({
                      url: url,
                      params: params,
                      success: function(resp, ops) {
                             var response = Ext.decode(resp.responseText);
-                            if(response===true){
+                            if(response.success === true){
                                 window.close();
                             }
                             else {
                                 Ext.Msg.show({
                                     title: "Message",
-                                    msg: "Invalid information.",
+                                    msg: response.msg,
                                     buttons: Ext.Msg.OK,
                                     icon: Ext.Msg.WARNING
                                 });
@@ -104,9 +130,6 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
     init: function(application) {
         this.control({
-            "#btnNewClutersingConfiguration": {
-                click: this.onClickNewClusteringConfiguration
-            },
             "#btnComparingClusteringConfiguration": {
                 click: this.onClickComparingClusteringConfiguration
             },
@@ -115,6 +138,9 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
             },
             "#btnClusteringConfigurationSubmit": {
                 click: this.onSubmitClusteringConfigurationClick
+            },
+            "#btnNewClutersingConfiguration": {
+                click: this.onBtnNewClutersingConfigurationClick
             }
         });
     }

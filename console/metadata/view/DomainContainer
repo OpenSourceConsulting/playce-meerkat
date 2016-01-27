@@ -938,6 +938,8 @@
                             "userConfig": {
                                 "dock": "top",
                                 "forceFit": true,
+                                "id": "clusteringConfigurationGridView",
+                                "store": "ClusteringConfigurationStore",
                                 "title": ""
                             },
                             "name": "MyGridPanel3",
@@ -951,24 +953,24 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "string",
+                                        "dataIndex": "name",
                                         "text": "Name"
                                     },
                                     "name": "MyColumn6",
                                     "designerId": "3e479068-8b35-4608-88d9-fb2f6a4acec9"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Number",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "number",
+                                        "dataIndex": "value",
                                         "text": "Value"
                                     },
-                                    "name": "MyNumberColumn2",
+                                    "name": "MyColumn36",
                                     "designerId": "a4201f80-9809-48e3-9b61-3c2bb0e18714"
                                 },
                                 {

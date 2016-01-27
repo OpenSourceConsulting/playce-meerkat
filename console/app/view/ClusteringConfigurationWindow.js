@@ -61,6 +61,7 @@ Ext.define('webapp.view.ClusteringConfigurationWindow', {
                         },
                         {
                             xtype: 'button',
+                            id: 'btnClusteringConfigurationSubmit',
                             itemId: 'btnClusteringConfigurationSubmit',
                             margin: '0 0 0 120',
                             text: 'Create'

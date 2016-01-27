@@ -31,7 +31,8 @@ Ext.application({
         'UserRoleModel',
         'DomainModel',
         'DatagridServerGroupModel',
-        'MachineModel'
+        'MachineModel',
+        'ClusteringConfigurationModel'
     ],
     stores: [
         'sessionDataStore',
@@ -42,7 +43,8 @@ Ext.application({
         'UserRoleStore',
         'DomainStore',
         'DatagridServerGroupStore',
-        'MachineStore'
+        'MachineStore',
+        'ClusteringConfigurationStore'
     ],
     views: [
         'meerkatViewport',

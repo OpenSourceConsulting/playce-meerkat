@@ -195,9 +195,26 @@ public class DomainController {
 		return json;
 	}
 
-	/*
-	 * @RequestMapping("/clustering/config/save") public @ResponseBody boolean
-	 */
+	@RequestMapping("/clustering/config/save")
+	public @ResponseBody
+	SimpleJsonResponse save(SimpleJsonResponse json,
+			ClusteringConfiguration config) {
+		boolean isEdit = !(config.getId() == 0);
+
+		return json;
+	}
+
+	@RequestMapping("/clustering/config/list")
+	public @ResponseBody
+	SimpleJsonResponse getClusteringConfigList(SimpleJsonResponse json,
+			int domainId, int revision) {
+		List<ClusteringConfiguration> configList = domainService
+				.getClusteringConfigurationList(domainId, revision);
+		json.setData(configList);
+		json.setSuccess(true);
+		return json;
+	}
+
 	@RequestMapping("/delete")
 	public @ResponseBody
 	SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {

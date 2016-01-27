@@ -22,6 +22,8 @@ public class DomainService {
 	private DomainRepository domainRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
+	@Autowired
+	private ClusteringConfigurationRepository clusteringConfigRepo;
 
 	@Transactional
 	public Domain save(Domain domain) {
@@ -81,5 +83,10 @@ public class DomainService {
 
 	public List<Domain> getDomainByName(String name) {
 		return domainRepo.findByName(name);
+	}
+
+	public List<ClusteringConfiguration> getClusteringConfigurationList(
+			int domainId, int revision) {
+		return clusteringConfigRepo.findByDomainAndRevision(domainId, revision);
 	}
 }

@@ -19,26 +19,6 @@
             },
             "codeClass": null,
             "userConfig": {
-                "designer|controlQuery": "#btnNewClutersingConfiguration",
-                "designer|targetType": "Ext.button.Button",
-                "fn": "onClickNewClusteringConfiguration",
-                "implHandler": [
-                    "this.showClusteringConfiguration(\"add\",0);"
-                ],
-                "name": "click",
-                "scope": "me"
-            },
-            "name": "onClickNewClusteringConfiguration",
-            "designerId": "a62f551b-3bd2-4a8c-aa77-f7b3bec9351c"
-        },
-        {
-            "type": "controlleraction",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
                 "designer|controlQuery": "#btnComparingClusteringConfiguration",
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onClickComparingClusteringConfiguration",
@@ -90,6 +70,32 @@
                 "fn": "showClusteringConfigurationWindow",
                 "implHandler": [
                     "var window = Ext.create(\"widget.ClusteringConfigurationWindow\");",
+                    "var submitButton = Ext.getCmp(\"btnClusteringConfigurationSubmit\");",
+                    "if (type === \"edit\"){",
+                    "    window.setTitle(\"Edit Clustering Configuration\");",
+                    "    submitButton.setText(\"Save\");",
+                    "    var form = Ext.getCmp(\"clusteringConfigurationForm\");\t\t\t// domain form",
+                    "",
+                    "    var name = form.getForm().findField(\"clusteringConfigurationName\");",
+                    "    var value = form.getForm().findField(\"clusteringConfigurationValue\");",
+                    "    var _id = form.getForm().findField(\"idHiddenField\");",
+                    "",
+                    "    var nameVal = name.getValue().trim();",
+                    "    var valueVal = value.getValue().trim();",
+                    "    var _idVal = _id.getValue();",
+                    "",
+                    "    Ext.Ajax.request({",
+                    "        url: GlobalData.urlPrefix + \"domain/clustering/config/edit\",",
+                    "        params: {\"id\": id},",
+                    "        success: function(resp, ops) {",
+                    "            var response = Ext.decode(resp.responseText);",
+                    "            name.setValue(response.data.name);",
+                    "            value.setValue(response.data.value);",
+                    "            _id.setValue(id);",
+                    "        }",
+                    "    });",
+                    "}",
+                    "",
                     "window.show();"
                 ]
             },
@@ -113,7 +119,7 @@
                     "if (!(name.isValid() && value.isValid())){",
                     "    Ext.Msg.show({",
                     "        title: \"Message\",",
-                    "        msg: \"Invalid data.\",",
+                    "        msg: \"Invalid input data.\",",
                     "        buttons: Ext.Msg.OK,",
                     "        icon: Ext.Msg.WARNING",
                     "    });",
@@ -138,20 +144,20 @@
                 ],
                 "fn": "save",
                 "implHandler": [
-                    "        var url = GlobalData.urlPrefix + \"domain/clustering/save\";",
+                    "        var url = GlobalData.urlPrefix + \"domain/clustering/config/save\";",
                     "        var window = Ext.getCmp('ClusteringConfigurationWindow');\t// Add clustering config window",
                     "        Ext.Ajax.request({",
                     "             url: url,",
                     "             params: params,",
                     "             success: function(resp, ops) {",
                     "                    var response = Ext.decode(resp.responseText);",
-                    "                    if(response===true){",
+                    "                    if(response.success === true){",
                     "                        window.close();",
                     "                    }",
                     "                    else {",
                     "                        Ext.Msg.show({",
                     "                            title: \"Message\",",
-                    "                            msg: \"Invalid information.\",",
+                    "                            msg: response.msg,",
                     "                            buttons: Ext.Msg.OK,",
                     "                            icon: Ext.Msg.WARNING",
                     "                        });",
@@ -225,6 +231,30 @@
             },
             "name": "onSubmitClusteringConfigurationClick",
             "designerId": "6eaf17ae-78bc-4755-8077-4012374b3a4b"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnNewClutersingConfiguration",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnNewClutersingConfigurationClick",
+                "implHandler": [
+                    "this.showClusteringConfigurationWindow(\"add\", 0);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnNewClutersingConfigurationClick",
+            "designerId": "f8b6cfad-8848-4d4a-9974-ad3d46f1efba"
         }
     ]
 }

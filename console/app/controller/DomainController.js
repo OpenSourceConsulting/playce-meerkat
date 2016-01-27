@@ -156,8 +156,13 @@ Ext.define('webapp.controller.DomainController', {
                 dataGridServerGroupField.setValue(response.data.datagridServerGroupName);
                 Ext.getCmp("associatedTomcatListView").getStore().loadData(response.data.tomcats, false);
                 if (response.data.tomcats.length > 0 ){
-                    Ext.getCmp("associatedApplicationListView").getStore().loadData(response.tomcats[0].applications, false);
+                    Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data.tomcats[0].applications, false);
                 }
+
+                 if (response.data.clusteringConfig.length > 0 ){
+                    Ext.getCmp("clusteringConfigurationGridView").getStore().loadData(response.data.clusteringConfig, false);
+                }
+
 
                 //hide/show clustering config tab
                 if (response.data.isClustering) {

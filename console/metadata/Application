@@ -27,7 +27,8 @@
             "UserRoleModel",
             "DomainModel",
             "DatagridServerGroupModel",
-            "MachineModel"
+            "MachineModel",
+            "ClusteringConfigurationModel"
         ],
         "name": "webapp",
         "requires": [
@@ -42,7 +43,8 @@
             "UserRoleStore",
             "DomainStore",
             "DatagridServerGroupStore",
-            "MachineStore"
+            "MachineStore",
+            "ClusteringConfigurationStore"
         ],
         "views": [
             "meerkatViewport",

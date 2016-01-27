@@ -46,6 +46,10 @@ public class Domain implements Serializable {
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcats;
 
+	@OneToMany(mappedBy = "domain")
+	@JsonManagedReference
+	private Collection<ClusteringConfiguration> clusteringConfig;
+
 	public String getName() {
 		return name;
 	}
@@ -113,5 +117,13 @@ public class Domain implements Serializable {
 
 	public void setServerGroup(DatagridServerGroup serverGroup) {
 		this.serverGroup = serverGroup;
+	}
+
+	public Collection<ClusteringConfiguration> getClusteringConfig() {
+		return clusteringConfig;
+	}
+
+	public void setClusteringConfig(Collection<ClusteringConfiguration> clusteringConfig) {
+		this.clusteringConfig = clusteringConfig;
 	}
 }
