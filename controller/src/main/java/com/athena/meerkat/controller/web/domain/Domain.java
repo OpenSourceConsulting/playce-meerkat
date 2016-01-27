@@ -37,9 +37,9 @@ public class Domain implements Serializable {
 	private String name;
 	@Column(name = "is_clustering")
 	private boolean isClustering;
-	
+
 	@OneToOne
-	@JoinColumn(name="datagrid_server_group_id")
+	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 
 	@OneToMany(mappedBy = "domain")
@@ -48,6 +48,13 @@ public class Domain implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getDatagridServerGroupId() {
+		if (serverGroup != null) {
+			return serverGroup.getId();
+		}
+		return 0;
 	}
 
 	public void setName(String name) {
@@ -62,14 +69,13 @@ public class Domain implements Serializable {
 		this.id = id;
 	}
 
-	public boolean isClustering() {
+	public boolean getIsClustering() {
 		return isClustering;
 	}
 
-	public void setClustering(boolean isClustering) {
+	public void setIsClustering(boolean isClustering) {
 		this.isClustering = isClustering;
 	}
-
 
 	public Collection<TomcatInstance> getTomcats() {
 		return tomcats;
@@ -86,16 +92,16 @@ public class Domain implements Serializable {
 	}
 
 	public Domain(String name, boolean is_clustering) {
-		this.name  = name;
+		this.name = name;
 		this.isClustering = is_clustering;
 	}
-	
-	public int getTomcatInstancesCount (){
+
+	public int getTomcatInstancesCount() {
 		return tomcats.size();
 	}
-	
-	public String getDatagridServerGroupName(){
-		if (getServerGroup() != null){
+
+	public String getDatagridServerGroupName() {
+		if (getServerGroup() != null) {
 			return this.getServerGroup().getName();
 		}
 		return "";

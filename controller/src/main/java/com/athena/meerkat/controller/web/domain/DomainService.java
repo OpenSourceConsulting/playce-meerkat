@@ -2,22 +2,27 @@ package com.athena.meerkat.controller.web.domain;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.web.datagridserver.DatagridServerGroup;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstanceRepository;
 
 @Service
 public class DomainService {
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(DomainService.class);
 	@Autowired
 	private DomainRepository domainRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
 
+	@Transactional
 	public Domain save(Domain domain) {
 		return domainRepo.save(domain);
 	}
@@ -28,7 +33,7 @@ public class DomainService {
 			return new ServiceResult(Status.FAILED, "Domain does not exist");
 		}
 		domain.setName(name);
-		domain.setClustering(is_clustering);
+		domain.setIsClustering(is_clustering);
 		domainRepo.save(domain);
 		return new ServiceResult(Status.DONE, "Done", true);
 	}

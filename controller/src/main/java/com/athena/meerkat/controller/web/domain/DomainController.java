@@ -2,6 +2,8 @@ package com.athena.meerkat.controller.web.domain;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,37 +30,60 @@ public class DomainController {
 	private TomcatInstanceService tomcatService;
 
 	@RequestMapping("/save")
+	@Transactional
 	public @ResponseBody
-	boolean save(int id, String name, boolean isClustering,
-			int datagridServerGroupId) {
-		Domain domain = domainService.getDomainByName(name);
-		if (domain != null) {
-			if (domain.getId() != id) {// domain exist but not in edit
-										// case.
+	boolean save(Domain domain, int datagridServerGroupId) {
+		if (domain.getId() == 0) { // add new domain
+			Domain existingDomain = domainService.getDomainByName(domain
+					.getName());
+			if (existingDomain != null) {
 				return false;
 			}
 		}
-		if (id > 0) { // edit
-			domain = domainService.getDomain(id);
-			if (domain == null) {
+		if (!domain.getIsClustering()) {
+			domain.setServerGroup(null);
+			domain = domainService.save(domain);
+		} else {
+			DatagridServerGroup group = datagridService
+					.getGroup(datagridServerGroupId);
+			if (group == null) {
 				return false;
 			}
-			domain.setName(name);
-			domain.setClustering(isClustering);
-		} else {
-			domain = new Domain(name, isClustering);
+			domain.setServerGroup(group);
+			domainService.save(domain);
+			// update on server group
+			group.setDomain(domainService.getDomainByName(domain.getName()));
+			datagridService.saveGroup(group);
 		}
 
-		DatagridServerGroup group = datagridService
-				.getGroup(datagridServerGroupId);
-		if (group == null) {
-			return false;
-		}
-		domain.setServerGroup(group);
-		domainService.save(domain);
-		// update on server group
-		group.setDomain(domainService.getDomainByName(name));
-		datagridService.saveGroup(group);
+		// Domain domain = domainService.getDomainByName(name);
+		// if (domain != null) {
+		// if (domain.getId() != id) {// domain exist but not in edit
+		// // case.
+		// return false;
+		// }
+		// }
+		// if (id > 0) { // edit
+		// domain = domainService.getDomain(id);
+		// if (domain == null) {
+		// return false;
+		// }
+		// domain.setName(name);
+		// domain.setClustering(isClustering);
+		// } else {
+		// domain = new Domain(name, isClustering);
+		// }
+		//
+		// DatagridServerGroup group = datagridService
+		// .getGroup(datagridServerGroupId);
+		// if (group == null) {
+		// return false;
+		// }
+		// domain.setServerGroup(group);
+		// domainService.save(domain);
+		// // update on server group
+		// group.setDomain(domainService.getDomainByName(name));
+		// datagridService.saveGroup(group);
 		return true;
 	}
 
@@ -113,6 +138,9 @@ public class DomainController {
 		return null;
 	}
 
+	/*
+	 * @RequestMapping("/clustering/config/save") public @ResponseBody boolean
+	 */
 	@RequestMapping("/delete")
 	public @ResponseBody
 	boolean delete(int domainId) {
