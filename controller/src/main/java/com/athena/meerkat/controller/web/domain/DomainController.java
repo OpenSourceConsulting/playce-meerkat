@@ -205,7 +205,7 @@ public class DomainController {
 		List<ClusteringConfiguration> existingConfigs = domainService
 				.getClusteringConfigurationByName(config.getName());
 		if (existingConfigs.size() > 0) {
-			if (!(isEdit && existingConfigs.get(0).getId() != config.getId())) {
+			if (isEdit && existingConfigs.get(0).getId() != config.getId()) {
 				json.setSuccess(false);
 				json.setMsg("Config name is duplicated.");
 				return json;
@@ -215,6 +215,20 @@ public class DomainController {
 		config.setDomain(domain);
 		domainService.saveConfig(config);
 		json.setSuccess(true);
+		return json;
+	}
+
+	@RequestMapping("/clustering/config/edit")
+	public @ResponseBody
+	SimpleJsonResponse editClusteringConfig(SimpleJsonResponse json, int id) {
+		ClusteringConfiguration config = domainService.getConfig(id);
+		if (config == null) {
+			json.setSuccess(false);
+			json.setMsg("This configuration does not exist");
+		} else {
+			json.setSuccess(true);
+			json.setData(config);
+		}
 		return json;
 	}
 
