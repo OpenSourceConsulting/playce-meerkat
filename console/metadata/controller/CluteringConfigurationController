@@ -65,16 +65,21 @@
             "userConfig": {
                 "designer|params": [
                     "type",
-                    "id"
+                    "id",
+                    "domainId"
                 ],
                 "fn": "showClusteringConfigurationWindow",
                 "implHandler": [
                     "var window = Ext.create(\"widget.ClusteringConfigurationWindow\");",
                     "var submitButton = Ext.getCmp(\"btnClusteringConfigurationSubmit\");",
+                    "var form = Ext.getCmp(\"clusteringConfigurationForm\");\t\t\t// clustering configuration form.",
+                    "var _domainId = form.getForm().findField(\"domainIdClusteringWindowHiddenField\");",
+                    "",
+                    "_domainId.setValue(domainId);",
+                    "",
                     "if (type === \"edit\"){",
                     "    window.setTitle(\"Edit Clustering Configuration\");",
                     "    submitButton.setText(\"Save\");",
-                    "    var form = Ext.getCmp(\"clusteringConfigurationForm\");\t\t\t// domain form",
                     "",
                     "    var name = form.getForm().findField(\"clusteringConfigurationName\");",
                     "    var value = form.getForm().findField(\"clusteringConfigurationValue\");",
@@ -82,7 +87,6 @@
                     "",
                     "    var nameVal = name.getValue().trim();",
                     "    var valueVal = value.getValue().trim();",
-                    "    var _idVal = _id.getValue();",
                     "",
                     "    Ext.Ajax.request({",
                     "        url: GlobalData.urlPrefix + \"domain/clustering/config/edit\",",
@@ -145,13 +149,15 @@
                 "fn": "save",
                 "implHandler": [
                     "        var url = GlobalData.urlPrefix + \"domain/clustering/config/save\";",
-                    "        var window = Ext.getCmp('ClusteringConfigurationWindow');\t// Add clustering config window",
+                    "        var window = Ext.getCmp('clusteringConfigurationWindow');\t// Add clustering config window",
                     "        Ext.Ajax.request({",
                     "             url: url,",
                     "             params: params,",
                     "             success: function(resp, ops) {",
                     "                    var response = Ext.decode(resp.responseText);",
                     "                    if(response.success === true){",
+                    "                       Ext.getCmp(\"clusteringConfigurationGridView\").getStore().getProxy().url = \"domain/clustering/config/list?revision=1&domainId=\"+params[\"domainId\"];",
+                    "                        Ext.getCmp(\"clusteringConfigurationGridView\").getStore().load();",
                     "                        window.close();",
                     "                    }",
                     "                    else {",
@@ -209,10 +215,12 @@
                     "var name = form.getForm().findField(\"clusteringConfigurationName\");",
                     "var value = form.getForm().findField(\"clusteringConfigurationValue\");",
                     "var _id = form.getForm().findField(\"IDHiddenField\");",
+                    "var _domainId = form.getForm().findField(\"domainIdClusteringWindowHiddenField\");",
                     "",
                     "var nameVal = name.getValue().trim();",
                     "var valueVal = value.getValue().trim();",
                     "var _idVal = _id.getValue();",
+                    "var _domainIdVal = _domainId.getValue();",
                     "",
                     "if (!this.validate(name, value)) {",
                     "    return;",
@@ -224,7 +232,7 @@
                     "",
                     "}",
                     "",
-                    "this.save({\"id\" : _idVal, \"name\" : nameVal,\"value\" :valueVal});",
+                    "this.save({\"id\" : _idVal, \"name\" : nameVal,\"value\" :valueVal, \"revision\":1 ,\"domainId\":_domainIdVal});//revision 1 for testing.",
                     ""
                 ],
                 "name": "click"
@@ -249,7 +257,7 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onBtnNewClutersingConfigurationClick",
                 "implHandler": [
-                    "this.showClusteringConfigurationWindow(\"add\", 0);"
+                    "this.showClusteringConfigurationWindow(\"add\", 0, GlobalData.lastSelectedMenuId);"
                 ],
                 "name": "click"
             },

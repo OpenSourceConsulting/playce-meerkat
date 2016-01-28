@@ -25,8 +25,10 @@ Ext.define('webapp.view.ClusteringConfigurationWindow', {
     ],
 
     height: 159,
+    id: 'clusteringConfigurationWindow',
     width: 400,
     title: 'New Configuration ',
+    modal: true,
 
     initComponent: function() {
         var me = this;
@@ -75,6 +77,13 @@ Ext.define('webapp.view.ClusteringConfigurationWindow', {
                             xtype: 'hiddenfield',
                             anchor: '100%',
                             id: 'idHiddenField',
+                            fieldLabel: 'Label',
+                            name: 'IDHiddenField'
+                        },
+                        {
+                            xtype: 'hiddenfield',
+                            anchor: '100%',
+                            id: 'domainIdClusteringWindowHiddenField',
                             fieldLabel: 'Label',
                             name: 'IDHiddenField'
                         }

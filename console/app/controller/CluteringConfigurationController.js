@@ -33,10 +33,12 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
         var name = form.getForm().findField("clusteringConfigurationName");
         var value = form.getForm().findField("clusteringConfigurationValue");
         var _id = form.getForm().findField("IDHiddenField");
+        var _domainId = form.getForm().findField("domainIdClusteringWindowHiddenField");
 
         var nameVal = name.getValue().trim();
         var valueVal = value.getValue().trim();
         var _idVal = _id.getValue();
+        var _domainIdVal = _domainId.getValue();
 
         if (!this.validate(name, value)) {
             return;
@@ -48,21 +50,25 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
         }
 
-        this.save({"id" : _idVal, "name" : nameVal,"value" :valueVal});
+        this.save({"id" : _idVal, "name" : nameVal,"value" :valueVal, "revision":1 ,"domainId":_domainIdVal});//revision 1 for testing.
 
     },
 
     onBtnNewClutersingConfigurationClick: function(button, e, eOpts) {
-        this.showClusteringConfigurationWindow("add", 0);
+        this.showClusteringConfigurationWindow("add", 0, GlobalData.lastSelectedMenuId);
     },
 
-    showClusteringConfigurationWindow: function(type, id) {
+    showClusteringConfigurationWindow: function(type, id, domainId) {
         var window = Ext.create("widget.ClusteringConfigurationWindow");
         var submitButton = Ext.getCmp("btnClusteringConfigurationSubmit");
+        var form = Ext.getCmp("clusteringConfigurationForm");			// clustering configuration form.
+        var _domainId = form.getForm().findField("domainIdClusteringWindowHiddenField");
+
+        _domainId.setValue(domainId);
+
         if (type === "edit"){
             window.setTitle("Edit Clustering Configuration");
             submitButton.setText("Save");
-            var form = Ext.getCmp("clusteringConfigurationForm");			// domain form
 
             var name = form.getForm().findField("clusteringConfigurationName");
             var value = form.getForm().findField("clusteringConfigurationValue");
@@ -70,7 +76,6 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
             var nameVal = name.getValue().trim();
             var valueVal = value.getValue().trim();
-            var _idVal = _id.getValue();
 
             Ext.Ajax.request({
                 url: GlobalData.urlPrefix + "domain/clustering/config/edit",
@@ -102,13 +107,15 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
 
     save: function(params) {
                 var url = GlobalData.urlPrefix + "domain/clustering/config/save";
-                var window = Ext.getCmp('ClusteringConfigurationWindow');	// Add clustering config window
+                var window = Ext.getCmp('clusteringConfigurationWindow');	// Add clustering config window
                 Ext.Ajax.request({
                      url: url,
                      params: params,
                      success: function(resp, ops) {
                             var response = Ext.decode(resp.responseText);
                             if(response.success === true){
+                               Ext.getCmp("clusteringConfigurationGridView").getStore().getProxy().url = "domain/clustering/config/list?revision=1&domainId="+params["domainId"];
+                                Ext.getCmp("clusteringConfigurationGridView").getStore().load();
                                 window.close();
                             }
                             else {

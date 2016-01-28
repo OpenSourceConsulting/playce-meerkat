@@ -9,6 +9,8 @@
         "designer|userAlias": "ClusteringConfigurationWindow",
         "designer|userClassName": "ClusteringConfigurationWindow",
         "height": 159,
+        "id": "clusteringConfigurationWindow",
+        "modal": true,
         "title": "New Configuration ",
         "width": 400
     },
@@ -112,6 +114,22 @@
                     },
                     "name": "MyHiddenField2",
                     "designerId": "cabf06cf-40d5-427d-959c-2d01e0cdb6e8"
+                },
+                {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "id": "domainIdClusteringWindowHiddenField",
+                        "layout|anchor": "100%",
+                        "name": "IDHiddenField"
+                    },
+                    "name": "MyHiddenField",
+                    "designerId": "fe2c97b3-8cdd-4b74-a305-b9305b20966d"
                 }
             ]
         }

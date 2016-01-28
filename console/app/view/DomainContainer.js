@@ -390,12 +390,6 @@ Ext.define('webapp.view.DomainContainer', {
                                             text: 'Action'
                                         }
                                     ]
-                                },
-                                {
-                                    xtype: 'pagingtoolbar',
-                                    dock: 'top',
-                                    width: 360,
-                                    displayInfo: true
                                 }
                             ]
                         }

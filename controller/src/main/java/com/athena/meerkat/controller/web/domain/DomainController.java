@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.web.application.Application;
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.datagridserver.DataGridServerService;
 import com.athena.meerkat.controller.web.datagridserver.DatagridServerGroup;
@@ -198,19 +199,32 @@ public class DomainController {
 	@RequestMapping("/clustering/config/save")
 	public @ResponseBody
 	SimpleJsonResponse save(SimpleJsonResponse json,
-			ClusteringConfiguration config) {
+			ClusteringConfiguration config, int domainId) {
 		boolean isEdit = !(config.getId() == 0);
 
+		List<ClusteringConfiguration> existingConfigs = domainService
+				.getClusteringConfigurationByName(config.getName());
+		if (existingConfigs.size() > 0) {
+			if (!(isEdit && existingConfigs.get(0).getId() != config.getId())) {
+				json.setSuccess(false);
+				json.setMsg("Config name is duplicated.");
+				return json;
+			}
+		}
+		Domain domain = domainService.getDomain(domainId);
+		config.setDomain(domain);
+		domainService.saveConfig(config);
+		json.setSuccess(true);
 		return json;
 	}
 
 	@RequestMapping("/clustering/config/list")
 	public @ResponseBody
-	SimpleJsonResponse getClusteringConfigList(SimpleJsonResponse json,
+	GridJsonResponse getClusteringConfigList(GridJsonResponse json,
 			int domainId, int revision) {
 		List<ClusteringConfiguration> configList = domainService
 				.getClusteringConfigurationList(domainId, revision);
-		json.setData(configList);
+		json.setList(configList);
 		json.setSuccess(true);
 		return json;
 	}

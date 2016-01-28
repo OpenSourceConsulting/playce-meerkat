@@ -159,7 +159,7 @@ Ext.define('webapp.controller.DomainController', {
                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data.tomcats[0].applications, false);
                 }
 
-                 if (response.data.clusteringConfig.length > 0 ){
+                if (response.data.clusteringConfig.length > 0 ){
                     Ext.getCmp("clusteringConfigurationGridView").getStore().loadData(response.data.clusteringConfig, false);
                 }
 

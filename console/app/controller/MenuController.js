@@ -217,6 +217,7 @@ Ext.define('webapp.controller.MenuController', {
             activeItem = 0;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") < 0) {
             objectId = menuId.substr(menuId.indexOf("tomcatMng_domain_")+ "tomcatMng_domain_".length );
+            GlobalData.lastSelectedMenuId = objectId;
             webapp.app.getController("DomainController").loadDomainInfo(objectId);
             activeItem = 1;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {

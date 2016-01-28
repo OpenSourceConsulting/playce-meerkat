@@ -87,6 +87,15 @@ public class DomainService {
 
 	public List<ClusteringConfiguration> getClusteringConfigurationList(
 			int domainId, int revision) {
-		return clusteringConfigRepo.findByDomainAndRevision(domainId, revision);
+		return clusteringConfigRepo.findByDomain_IdAndRevision(domainId, revision);
+	}
+
+	public List<ClusteringConfiguration> getClusteringConfigurationByName(
+			String name) {
+		return clusteringConfigRepo.findByName(name);
+	}
+
+	public ClusteringConfiguration saveConfig(ClusteringConfiguration config) {
+		return clusteringConfigRepo.save(config);
 	}
 }

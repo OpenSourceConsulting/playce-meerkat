@@ -78,5 +78,21 @@ public class ClusteringConfiguration implements Serializable {
 	public void setRevision(int revision) {
 		this.revision = revision;
 	}
+	
+	public int getDomainId()
+	{
+		if(getDomain()!=null){
+			return getDomain().getId();
+		}
+		return 0;
+	}
+
+	public Domain getDomain() {
+		return domain;
+	}
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
+	}
 
 }

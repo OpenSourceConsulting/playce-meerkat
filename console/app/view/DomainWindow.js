@@ -31,6 +31,7 @@ Ext.define('webapp.view.DomainWindow', {
     width: 440,
     layout: 'fit',
     title: 'New Domain',
+    modal: true,
 
     initComponent: function() {
         var me = this;

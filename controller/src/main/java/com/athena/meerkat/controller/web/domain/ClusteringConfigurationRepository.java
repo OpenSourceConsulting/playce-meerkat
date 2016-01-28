@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClusteringConfigurationRepository extends
 		JpaRepository<ClusteringConfiguration, Integer> {
-	List<ClusteringConfiguration> findByDomainAndRevision(int domain,
+	List<ClusteringConfiguration> findByDomain_IdAndRevision(int Id,
 			int revision);
+
+	List<ClusteringConfiguration> findByName(String name);
 
 }

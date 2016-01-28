@@ -998,21 +998,6 @@
                                     "designerId": "9669d413-07f3-4089-bbe3-755bddfc2e66"
                                 }
                             ]
-                        },
-                        {
-                            "type": "Ext.toolbar.Paging",
-                            "reference": {
-                                "name": "dockedItems",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "displayInfo": true,
-                                "dock": "top",
-                                "width": 360
-                            },
-                            "name": "MyPagingToolbar2",
-                            "designerId": "94c9557f-5ce0-42a2-8509-33ae4ae9eb70"
                         }
                     ]
                 }
