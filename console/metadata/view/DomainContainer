@@ -974,20 +974,6 @@
                                     "designerId": "a4201f80-9809-48e3-9b61-3c2bb0e18714"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Date",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "date",
-                                        "text": "Action"
-                                    },
-                                    "name": "MyDateColumn2",
-                                    "designerId": "631c6963-8436-4cf6-a18d-c50c4247530c"
-                                },
-                                {
                                     "type": "Ext.grid.View",
                                     "reference": {
                                         "name": "viewConfig",
@@ -996,6 +982,59 @@
                                     "codeClass": null,
                                     "name": "MyGridView3",
                                     "designerId": "9669d413-07f3-4089-bbe3-755bddfc2e66"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onClusteringConfigurationGridViewItemContextMenu",
+                                        "implHandler": [
+                                            "var mnuContext = Ext.create(\"Ext.menu.Menu\",{",
+                                            "",
+                                            "            items: [{",
+                                            "                id: 'edit-clustering-config',",
+                                            "                text: 'Edit'",
+                                            "            },",
+                                            "            {",
+                                            "                id: 'delete-clustering-config',",
+                                            "                text: 'Delete'",
+                                            "            }",
+                                            "                   ],",
+                                            "            listeners: {",
+                                            "",
+                                            "                click: function( _menu, _item, _e, _eOpts ) {",
+                                            "                   switch (_item.id) {",
+                                            "                        case 'edit-clustering-config':",
+                                            "                            webapp.app.getController(\"CluteringConfigurationController\").showClusteringConfigurationWindow(\"edit\", record.get(\"id\"), GlobalData.lastSelectedMenuId);",
+                                            "                            break;",
+                                            "                        case 'delete-clustering-config':",
+                                            "                            webapp.app.getController(\"CluteringConfigurationController\").deleteConfig(record.get(\"id\"));",
+                                            "                            break;",
+                                            "                        default:",
+                                            "                            break;",
+                                            "                   }",
+                                            "                },",
+                                            "                hide:function(menu){",
+                                            "                    menu.destroy();",
+                                            "                }",
+                                            "            },",
+                                            "            defaults: {",
+                                            "               clickHideDelay: 1",
+                                            "            }",
+                                            "        });",
+                                            "",
+                                            "        mnuContext.showAt(e.getXY());",
+                                            "        e.stopEvent();"
+                                        ],
+                                        "name": "itemcontextmenu",
+                                        "scope": "me"
+                                    },
+                                    "name": "onClusteringConfigurationGridViewItemContextMenu",
+                                    "designerId": "5ceae622-b6ca-4d14-b2fb-e665259a75b3"
                                 }
                             ]
                         }

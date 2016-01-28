@@ -383,13 +383,14 @@ Ext.define('webapp.view.DomainContainer', {
                                             xtype: 'gridcolumn',
                                             dataIndex: 'value',
                                             text: 'Value'
-                                        },
-                                        {
-                                            xtype: 'datecolumn',
-                                            dataIndex: 'date',
-                                            text: 'Action'
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        itemcontextmenu: {
+                                            fn: me.onClusteringConfigurationGridViewItemContextMenu,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -399,6 +400,45 @@ Ext.define('webapp.view.DomainContainer', {
         });
 
         me.callParent(arguments);
+    },
+
+    onClusteringConfigurationGridViewItemContextMenu: function(dataview, record, item, index, e, eOpts) {
+        var mnuContext = Ext.create("Ext.menu.Menu",{
+
+                    items: [{
+                        id: 'edit-clustering-config',
+                        text: 'Edit'
+                    },
+                    {
+                        id: 'delete-clustering-config',
+                        text: 'Delete'
+                    }
+                           ],
+                    listeners: {
+
+                        click: function( _menu, _item, _e, _eOpts ) {
+                           switch (_item.id) {
+                                case 'edit-clustering-config':
+                                    webapp.app.getController("CluteringConfigurationController").showClusteringConfigurationWindow("edit", record.get("id"), GlobalData.lastSelectedMenuId);
+                                    break;
+                                case 'delete-clustering-config':
+                                    webapp.app.getController("CluteringConfigurationController").deleteConfig(record.get("id"));
+                                    break;
+                                default:
+                                    break;
+                           }
+                        },
+                        hide:function(menu){
+                            menu.destroy();
+                        }
+                    },
+                    defaults: {
+                       clickHideDelay: 1
+                    }
+                });
+
+                mnuContext.showAt(e.getXY());
+                e.stopEvent();
     }
 
 });

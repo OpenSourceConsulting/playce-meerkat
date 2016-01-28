@@ -132,7 +132,31 @@ Ext.define('webapp.controller.CluteringConfigurationController', {
     },
 
     deleteConfig: function(id) {
+          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this configuration?', function(btn){
+              if(btn == "yes"){
+                var url = GlobalData.urlPrefix + "domain/clustering/config/delete";
+                Ext.Ajax.request({
+                    url: url,
+                    params: {"id":id},
+                    success: function(resp, ops) {
+                        var response = Ext.decode(resp.responseText);
+                        if(response.success === true){
+                            Ext.getCmp("clusteringConfigurationGridView").getStore().getProxy().url = "domain/clustering/config/list?revision=1&domainId="+GlobalData.lastSelectedMenuId;
+                            Ext.getCmp("clusteringConfigurationGridView").getStore().load();
+                        }
+                        else {
+                            Ext.Msg.show({
+                                title: "Message",
+                                msg: response.msg,
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                        }
 
+                    }
+                });
+              }
+          });
     },
 
     init: function(application) {

@@ -103,4 +103,8 @@ public class DomainService {
 	public ClusteringConfiguration getConfig(int id) {
 		return clusteringConfigRepo.findOne(id);
 	}
+
+	public void deleteClusteringConfig(ClusteringConfiguration config) {
+		clusteringConfigRepo.delete(config);
+	}
 }

@@ -232,6 +232,20 @@ public class DomainController {
 		return json;
 	}
 
+	@RequestMapping("/clustering/config/delete")
+	public @ResponseBody
+	SimpleJsonResponse deleteClusteringConfig(SimpleJsonResponse json, int id) {
+		ClusteringConfiguration config = domainService.getConfig(id);
+		if (config == null) {
+			json.setSuccess(false);
+			json.setMsg("This configuration does not exist");
+		} else {
+			domainService.deleteClusteringConfig(config);
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
 	@RequestMapping("/clustering/config/list")
 	public @ResponseBody
 	GridJsonResponse getClusteringConfigList(GridJsonResponse json,
