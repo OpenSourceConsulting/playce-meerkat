@@ -351,10 +351,6 @@ Ext.define('webapp.view.DomainContainer', {
                                         {
                                             xtype: 'button',
                                             text: 'Set active'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            text: 'Delete'
                                         }
                                     ]
                                 },
