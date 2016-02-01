@@ -51,6 +51,15 @@ Ext.define('webapp.controller.DomainController', {
         this.showDomainWindow("edit",GlobalData.lastSelectedMenuId);
     },
 
+    onMycontainer37Activate: function(component, eOpts) {
+        Ext.getCmp("associatedTomcatGridView").getStore().clearData();
+        Ext.getCmp("associatedApplicationListView").getStore().clearData();
+        Ext.getCmp("associatedApplicationListView").getStore().clearData();
+        Ext.getCmp("clusteringConfigurationGridView").getStore().clearData();
+        Ext.getCmp("domainSessionGridView").getStore().clearData();
+
+    },
+
     showDomainWindow: function(type, id) {
 
         var domainWindow = Ext.create("widget.DomainWindow");
@@ -148,6 +157,12 @@ Ext.define('webapp.controller.DomainController', {
         var domainTypeField  = Ext.getCmp("domainTypeField");
         var dataGridServerGroupField = Ext.getCmp("datagridServerGroupField");
 
+        Ext.getCmp("associatedTomcatGridView").getStore().removeAll();
+        Ext.getCmp("associatedApplicationListView").getStore().removeAll();
+        Ext.getCmp("associatedApplicationListView").getStore().removeAll();
+        Ext.getCmp("clusteringConfigurationGridView").getStore().removeAll();
+        Ext.getCmp("domainSessionGridView").getStore().clearData();
+
         Ext.Ajax.request({
             url: GlobalData.urlPrefix + "domain/get",
             params: {"id":domainId},
@@ -215,6 +230,9 @@ Ext.define('webapp.controller.DomainController', {
             },
             "#mybutton68": {
                 click: this.onEditButtonClick
+            },
+            "#mycontainer37": {
+                activate: this.onMycontainer37Activate
             }
         });
     }

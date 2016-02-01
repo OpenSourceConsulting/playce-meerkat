@@ -147,6 +147,7 @@ Ext.define('webapp.view.DomainContainer', {
                             items: [
                                 {
                                     xtype: 'gridpanel',
+                                    id: 'associatedTomcatGridView',
                                     title: '',
                                     forceFit: true,
                                     store: 'TomcatInstanceListStore',
@@ -272,6 +273,7 @@ Ext.define('webapp.view.DomainContainer', {
                                 {
                                     xtype: 'gridpanel',
                                     dock: 'top',
+                                    id: 'domainSessionGridView',
                                     title: '',
                                     forceFit: true,
                                     columns: [
