@@ -66,7 +66,6 @@
             "0afcedfc-3608-44cf-99fe-5381e06ae2ff"
         ],
         "store": [
-            "4c2bc173-1fa6-41fb-9f51-1e615e29ba62",
             "e679f6ac-0018-409e-b163-b13106f333ee",
             "9ddfd8df-9cef-4b2d-944b-7df99f14646b",
             "0abfc802-a160-41f8-bb49-b599c253187e",
@@ -76,7 +75,8 @@
             "1e1f7a00-1f0d-4bca-8b69-8c91360348b8",
             "d6934800-0a5d-472c-8c40-e3aab1fe41d8",
             "7be1464b-b85b-4caf-9733-110ae0a6bc65",
-            "87f696ea-8c64-46b1-a92b-c19e8dad6363"
+            "87f696ea-8c64-46b1-a92b-c19e8dad6363",
+            "de51d561-d5c6-46d4-bd09-96e6dfc2232f"
         ],
         "controller": [
             "43dd67a6-085d-49a6-9bad-39193d6863e9",

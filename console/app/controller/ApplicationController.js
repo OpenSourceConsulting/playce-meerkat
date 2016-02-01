@@ -16,15 +16,141 @@
 Ext.define('webapp.controller.ApplicationController', {
     extend: 'Ext.app.Controller',
 
-    onClickDeployWindow: function(button, e, eOpts) {
-        var window = Ext.create("widget.DeployWindow");
-        window.show();
+    onBtnSubmitDeployClick: function(button, e, eOpts) {
+
+        var form = Ext.getCmp('applicationDeployForm');			// domain form
+         var window = Ext.getCmp("deployWindow");
+        var localWarPath = form.getForm().findField("warLocalPathFileField");
+        var displayName = form.getForm().findField("displayNameTextField");
+        var contextPath = form.getForm().findField("contextPathTextField");
+        var installationRemotePath = form.getForm().findField("installationRemotePathTextField");
+        var params = {"displayName":displayName.getValue(), "localWarFilePath":localWarPath.getValue(), "contextPath":contextPath.getValue(),"warPath":installationRemotePath.getValue(),"domainId":GlobalData.lastSelectedMenuId};
+        Ext.Ajax.request({
+             url: GlobalData.urlPrefix + "application/deploy",
+             params: params,
+             success: function(resp, ops) {
+                    var response = Ext.decode(resp.responseText);
+                    if(response.success === true){
+                        window.close();
+                    }
+                    else {
+                             Ext.Msg.show({
+                                title: "Message",
+                                msg: response.msg,
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
+                            });
+                    }
+
+                }
+            });
+
+    },
+
+    onMybutton37Click: function(button, e, eOpts) {
+        var window = Ext.getCmp("deployWindow");
+        window.close();
+    },
+
+    onBtnApplicationDeployClick: function(button, e, eOpts) {
+        this.showDeployWindow();
+    },
+
+    onBtnApplicationStartClick: function(button, e, eOpts) {
+        var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
+        var appId = selectedRecords[0].get("id");
+        this.changeState(appId,1);
+
+    },
+
+    onBtnApplicationRestartClick: function(button, e, eOpts) {
+        var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
+        var appId = selectedRecords[0].get("id");
+        this.changeState(appId,3);
+    },
+
+    onBtnApplicationStopClick: function(button, e, eOpts) {
+        var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
+        var appId = selectedRecords[0].get("id");
+        this.changeState(appId,2);
+    },
+
+    onBtnApplicationUndeployClick: function(button, e, eOpts) {
+
+    },
+
+    showDeployWindow: function() {
+         var window = Ext.create("widget.DeployWindow");
+         window.show();
+    },
+
+    changeState: function(appId, state) {
+        var url = GlobalData.urlPrefix;
+        if(state === 1) {// start
+            url += "application/start";
+        }
+        else if(state===2) {//stop
+            url += "application/stop";
+        }
+        else if(state === 3) {//restart
+            url += "application/restart";
+        }
+
+        Ext.Ajax.request({
+                     url: url,
+                     params: {"id" : appId},
+                     success: function(resp, ops) {
+                            var response = Ext.decode(resp.responseText);
+                            if(response.success === true){
+                                Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection()[0].set("state",response.data);
+                                if (response.data === 1) {
+                                    Ext.getCmp("btnApplicationStart").disable();
+                                    Ext.getCmp("btnApplicationStop").enable();
+                                    Ext.getCmp("btnApplicationRestart").enable();
+                                    Ext.getCmp("btnApplicationUndeploy").disable();
+                                }else if (response.data === 2){
+                                    Ext.getCmp("btnApplicationStart").enable();
+                                    Ext.getCmp("btnApplicationStop").disable();
+                                    Ext.getCmp("btnApplicationRestart").disable();
+                                    Ext.getCmp("btnApplicationUndeploy").enable();
+
+                                }
+                            }
+                            else {
+                                     Ext.Msg.show({
+                                        title: "Message",
+                                        msg: response.msg,
+                                        buttons: Ext.Msg.OK,
+                                        icon: Ext.Msg.WARNING
+                                    });
+                            }
+
+                        }
+                    });
     },
 
     init: function(application) {
         this.control({
-            "#btnDeployWindow": {
-                click: this.onClickDeployWindow
+            "#btnSubmitDeploy": {
+                click: this.onBtnSubmitDeployClick
+            },
+            "#mybutton37": {
+                click: this.onMybutton37Click
+            },
+            "#btnApplicationDeploy": {
+                click: this.onBtnApplicationDeployClick
+            },
+            "#btnApplicationStart": {
+                click: this.onBtnApplicationStartClick
+            },
+            "#btnApplicationRestart": {
+                click: this.onBtnApplicationRestartClick
+            },
+            "#btnApplicationStop": {
+                click: this.onBtnApplicationStopClick
+            },
+            "#btnApplicationUndeploy": {
+                click: this.onBtnApplicationUndeployClick
             }
         });
     }

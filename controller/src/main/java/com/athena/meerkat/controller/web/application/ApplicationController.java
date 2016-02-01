@@ -1,11 +1,115 @@
 package com.athena.meerkat.controller.web.application;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.athena.meerkat.common.constant.MeerkatConstant;
+import com.athena.meerkat.controller.common.State;
+import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.domain.ClusteringConfiguration;
+import com.athena.meerkat.controller.web.domain.Domain;
+import com.athena.meerkat.controller.web.domain.DomainService;
 
 @Controller
+@RequestMapping("application")
 public class ApplicationController {
 
 	@Autowired
-	private ApplicationService service;
+	private ApplicationService appService;
+	@Autowired
+	private DomainService domainService;
+
+	@RequestMapping("/deploy")
+	public @ResponseBody
+	SimpleJsonResponse deploy(SimpleJsonResponse json, Application app,
+			int domainId) {
+		Domain domain = domainService.getDomain(domainId);
+		if (domain == null) {
+			json.setMsg("Domain does not exist.");
+			json.setSuccess(false);
+			return json;
+		}
+		app.setLastModifiedDate(new Date());
+		app.setDeployedDate(new Date());
+		appService.deploy(app, domain);
+		return json;
+	}
+
+	@RequestMapping("/start")
+	public @ResponseBody
+	SimpleJsonResponse start(SimpleJsonResponse json, int id) {
+		Application app = appService.getApplication(id);
+		if (app == null) {
+			json.setSuccess(false);
+			json.setMsg("Application does not exist.");
+			return json;
+		}
+
+		if (app.getState() == State.APP_STATE_STARTED) {
+			json.setSuccess(false);
+			json.setMsg("Application has been already started.");
+			return json;
+		}
+
+		if (appService.start(app)) {
+			json.setSuccess(true);
+			json.setData(State.APP_STATE_STARTED);
+		}
+		return json;
+	}
+
+	@RequestMapping("/stop")
+	public @ResponseBody
+	SimpleJsonResponse stop(SimpleJsonResponse json, int id) {
+		Application app = appService.getApplication(id);
+		if (app == null) {
+			json.setSuccess(false);
+			json.setMsg("Application does not exist.");
+			return json;
+		}
+
+		if (app.getState() == State.APP_STATE_STOPPED) {
+			json.setSuccess(false);
+			json.setMsg("Application has been already stopped.");
+			return json;
+		}
+
+		if (appService.stop(app)) {
+			json.setSuccess(true);
+			json.setData(State.APP_STATE_STOPPED);
+		}
+		return json;
+	}
+
+	@RequestMapping("/restart")
+	public @ResponseBody
+	SimpleJsonResponse restart(SimpleJsonResponse json, int id) {
+		Application app = appService.getApplication(id);
+		if (app == null) {
+			json.setSuccess(false);
+			json.setMsg("Application does not exist.");
+			return json;
+		}
+
+		if (app.getState() == State.APP_STATE_STOPPED) {
+			json.setSuccess(false);
+			json.setMsg("Application has been already stopped.");
+			return json;
+		} else {
+			if (appService.stop(app)) {
+				if (appService.start(app)) {
+					json.setSuccess(true);
+					json.setData(State.APP_STATE_STARTED);
+				}
+			}
+		}
+
+		return json;
+	}
+
 }

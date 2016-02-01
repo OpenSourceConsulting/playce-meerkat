@@ -44,7 +44,8 @@ Ext.application({
         'DomainStore',
         'DatagridServerGroupStore',
         'MachineStore',
-        'ClusteringConfigurationStore'
+        'ClusteringConfigurationStore',
+        'ApplicationStore'
     ],
     views: [
         'meerkatViewport',

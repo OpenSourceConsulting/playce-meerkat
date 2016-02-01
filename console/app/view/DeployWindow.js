@@ -18,40 +18,75 @@ Ext.define('webapp.view.DeployWindow', {
     alias: 'widget.DeployWindow',
 
     requires: [
-        'Ext.container.Container',
+        'Ext.form.Panel',
         'Ext.form.field.File',
         'Ext.button.Button'
     ],
 
-    height: 119,
+    height: 249,
+    id: 'deployWindow',
     width: 606,
-    layout: 'border',
+    layout: 'fit',
     title: 'Deploy',
 
     initComponent: function() {
         var me = this;
 
         Ext.applyIf(me, {
-            dockedItems: [
+            items: [
                 {
-                    xtype: 'container',
-                    margins: '10',
-                    dock: 'top',
+                    xtype: 'form',
+                    id: 'applicationDeployForm',
+                    bodyPadding: 10,
+                    title: '',
                     items: [
                         {
                             xtype: 'filefield',
+                            id: 'warLocalPathFileField',
                             margin: 10,
                             width: 571,
                             fieldLabel: 'Choose application (*.war)',
                             labelWidth: 180
                         },
                         {
+                            xtype: 'textfield',
+                            id: 'displayNameTextField',
+                            margin: 10,
+                            width: 571,
+                            fieldLabel: 'Display name',
+                            labelWidth: 180,
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: 'contextPathTextField',
+                            margin: 10,
+                            width: 571,
+                            fieldLabel: 'Context path',
+                            labelWidth: 180,
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: 'installationRemotePathTextField',
+                            margin: 10,
+                            width: 571,
+                            fieldLabel: 'Installation path',
+                            labelWidth: 180,
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
+                        },
+                        {
                             xtype: 'button',
+                            id: 'btnSubmitDeploy',
                             margin: '0 0 10 200',
                             text: 'Deploy'
                         },
                         {
                             xtype: 'button',
+                            itemId: 'mybutton37',
                             margin: '0 0 10 10 ',
                             text: 'Cancel'
                         }

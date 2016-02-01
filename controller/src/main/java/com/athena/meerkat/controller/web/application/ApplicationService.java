@@ -1,58 +1,63 @@
 package com.athena.meerkat.controller.web.application;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.common.State;
+import com.athena.meerkat.controller.web.domain.Domain;
+import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 
 @Service
 public class ApplicationService {
 	@Autowired
 	private ApplicationRepository appRepo;
 
-	public ServiceResult add(String name, String context_path, String war_path,
-			String version) {
-		if (context_path.isEmpty() || war_path.isEmpty() || name.isEmpty()
-				|| version.isEmpty()) {
-			return new ServiceResult(Status.FAILED, "Invalid data");
+	public boolean deploy(Application app, Domain domain) {
+		// Deploy an application to a domain means deploy to all tomcat
+		// assoicated to that domain.
+		Collection<TomcatInstance> tomcats = domain.getTomcats();
+		for (TomcatInstance tomcat : tomcats) {
+			app.setTomcat(tomcat);
+			this.save(app);
 		}
-		Application app = new Application(name, context_path, war_path, version);
-		app.setLastModifiedDate(new Date());
+		return true;
+
+	}
+
+	public Application getApplication(int id) {
+		return appRepo.findOne(id);
+	}
+
+	public boolean start(Application app) {
+		boolean success = false;
+		// provisioning
+		// ....
+		app.setState(State.APP_STATE_STARTED);
+		app.setLastStartedDate(new Date());
+		this.save(app);
+		success = true;
+		return success;
+	}
+
+	public boolean stop(Application app) {
+		boolean success = false;
+		// provisioning
+		// ....
+		app.setState(State.APP_STATE_STOPPED);
+		app.setLastStoppedDate(new Date());
+		this.save(app);
+		success = true;
+		return success;
+	}
+
+	public void save(Application app) {
 		appRepo.save(app);
-		return new ServiceResult(Status.FAILED, "Done", app);
 	}
 
-	public ServiceResult edit(int appId, String context_path, String war_path,
-			String name, String version) {
-		Application app = appRepo.getOne(appId);
-		if (app == null) {
-			return new ServiceResult(Status.FAILED,
-					"Application does not exist");
-		}
-		if (context_path.isEmpty() || war_path.isEmpty() || name.isEmpty()
-				|| version.isEmpty()) {
-			return new ServiceResult(Status.FAILED, "Invalid data");
-		}
-		app.setDisplayName(name);
-		app.setContextPath(context_path);
-		app.setWarPath(war_path);
-		app.setVersion(version);
-		app.setLastModifiedDate(new Date());
-		appRepo.save(app);
-
-		return new ServiceResult(Status.DONE, "Done", app);
-	}
-
-	public ServiceResult delete(int appId) {
-		Application app = appRepo.getOne(appId);
-		if (app == null) {
-			return new ServiceResult(Status.FAILED,
-					"Application does not exist");
-		}
-		appRepo.delete(app);
-		return new ServiceResult(Status.DONE, "Done", true);
-	}
 }

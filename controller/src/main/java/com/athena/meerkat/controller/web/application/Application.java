@@ -214,4 +214,12 @@ public class Application implements Serializable {
 		warPath = war_path;
 		this.version = version;
 	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
 }

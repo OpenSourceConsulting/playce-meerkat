@@ -30,7 +30,6 @@ Ext.define('webapp.store.ApplicationStore', {
             storeId: 'ApplicationStore',
             proxy: {
                 type: 'ajax',
-                url: 'domain/applications',
                 reader: {
                     type: 'json'
                 }
