@@ -19,7 +19,8 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
 
     requires: [
         'Ext.form.field.Display',
-        'Ext.button.Button',
+        'Ext.tab.Panel',
+        'Ext.tab.Tab',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
         'Ext.grid.column.Date',
@@ -119,61 +120,77 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                     ]
                 },
                 {
-                    xtype: 'gridpanel',
+                    xtype: 'tabpanel',
                     flex: 7,
                     region: 'center',
-                    margin: '5 0 0 0 ',
-                    title: 'Data sources',
-                    forceFit: true,
-                    columns: [
+                    activeTab: 0,
+                    items: [
                         {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'string',
-                            text: 'Name'
-                        },
-                        {
-                            xtype: 'numbercolumn',
-                            dataIndex: 'number',
-                            text: 'JDBC URL'
-                        },
-                        {
-                            xtype: 'datecolumn',
-                            dataIndex: 'date',
-                            text: 'Servers'
-                        },
-                        {
-                            xtype: 'booleancolumn',
-                            dataIndex: 'bool',
-                            text: 'Min Connection Pool'
-                        },
-                        {
-                            xtype: 'booleancolumn',
-                            dataIndex: 'bool',
-                            text: 'Max Connection Pool'
-                        },
-                        {
-                            xtype: 'booleancolumn',
-                            dataIndex: 'bool',
-                            text: 'Timeout'
-                        }
-                    ],
-                    dockedItems: [
-                        {
-                            xtype: 'pagingtoolbar',
-                            dock: 'bottom',
-                            width: 360,
-                            displayInfo: true
-                        },
-                        {
-                            xtype: 'toolbar',
-                            dock: 'top',
+                            xtype: 'panel',
+                            title: 'Data sources',
                             items: [
                                 {
-                                    xtype: 'button',
-                                    id: 'btnLinkNewDatasource',
-                                    text: 'Link new Datasource'
+                                    xtype: 'gridpanel',
+                                    margin: '5 0 0 0 ',
+                                    title: '',
+                                    forceFit: true,
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'string',
+                                            text: 'Name'
+                                        },
+                                        {
+                                            xtype: 'numbercolumn',
+                                            dataIndex: 'number',
+                                            text: 'JDBC URL'
+                                        },
+                                        {
+                                            xtype: 'datecolumn',
+                                            dataIndex: 'date',
+                                            text: 'Servers'
+                                        },
+                                        {
+                                            xtype: 'booleancolumn',
+                                            dataIndex: 'bool',
+                                            text: 'Min Connection Pool'
+                                        },
+                                        {
+                                            xtype: 'booleancolumn',
+                                            dataIndex: 'bool',
+                                            text: 'Max Connection Pool'
+                                        },
+                                        {
+                                            xtype: 'booleancolumn',
+                                            dataIndex: 'bool',
+                                            text: 'Timeout'
+                                        }
+                                    ],
+                                    dockedItems: [
+                                        {
+                                            xtype: 'pagingtoolbar',
+                                            dock: 'bottom',
+                                            width: 360,
+                                            displayInfo: true
+                                        },
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'top',
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    id: 'btnLinkNewDatasource',
+                                                    text: 'Link new Datasource'
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'panel',
+                            title: 'Applications'
                         }
                     ]
                 }
