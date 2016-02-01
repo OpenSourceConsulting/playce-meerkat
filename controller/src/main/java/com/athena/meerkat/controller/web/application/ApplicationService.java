@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.application;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,14 @@ public class ApplicationService {
 		appRepo.save(app);
 	}
 
+	public boolean undeploy(Application app, Domain domain) {
+		List<Application> apps = appRepo.findByDisplayNameAndTomcat_Domain_Id(
+				app.getDisplayName(), domain.getId());
+		for (Application a : apps) {
+			app.setTomcat(null);
+			appRepo.delete(a);
+		}
+		return true;
+
 	}
+}

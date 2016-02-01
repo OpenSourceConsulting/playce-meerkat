@@ -43,6 +43,29 @@ public class ApplicationController {
 		return json;
 	}
 
+	@RequestMapping("/undeploy")
+	public @ResponseBody
+	SimpleJsonResponse undeploy(SimpleJsonResponse json, int Id, int domainId) {
+		Application app = appService.getApplication(Id);
+		Domain domain = domainService.getDomain(domainId);
+		if (domain == null) {
+			json.setMsg("Domain does not exist.");
+			json.setSuccess(false);
+			return json;
+		}
+		if (app == null) {
+			json.setSuccess(false);
+			json.setMsg("Application does not exist.");
+			return json;
+		} else {
+			if (appService.undeploy(app, domain)) {
+				json.setSuccess(true);
+				return json;
+			}
+		}
+		return json;
+	}
+
 	@RequestMapping("/start")
 	public @ResponseBody
 	SimpleJsonResponse start(SimpleJsonResponse json, int id) {

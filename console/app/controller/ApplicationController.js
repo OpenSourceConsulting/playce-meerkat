@@ -93,7 +93,47 @@ Ext.define('webapp.controller.ApplicationController', {
     },
 
     onBtnApplicationUndeployClick: function(button, e, eOpts) {
-         this.loadAppListByDomain(GlobalData.lastSelectedMenuId);
+         Ext.MessageBox.confirm('Confirm', 'Are you sure you want to undeploy this application?', function(btn){
+                     if(btn == "yes"){
+                             var domainId = GlobalData.lastSelectedMenuId;
+                            var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
+                            var appId = selectedRecords[0].get("id");
+                            Ext.Ajax.request({
+                                 url: GlobalData.urlPrefix + "application/undeploy",
+                                 params:{"Id":appId, "domainId":domainId},
+                                 success: function(resp, ops) {
+                                     var response = Ext.decode(resp.responseText);
+                                     if(response.success){
+                                         Ext.Ajax.request({
+                                             url: GlobalData.urlPrefix + "application/list",
+                                             params:{"domainId":domainId},
+                                             success: function(resp, ops) {
+                                                 var response = Ext.decode(resp.responseText);
+                                                 if(response.success){
+                                                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
+                                                 } else {
+                                                     Ext.Msg.show({
+                                                         title: "Message",
+                                                         msg: response.msg,
+                                                         buttons: Ext.Msg.OK,
+                                                         icon: Ext.Msg.WARNING
+                                                     });
+                                                 }
+                                             }
+                                         });
+                                     } else {
+                                         Ext.Msg.show({
+                                             title: "Message",
+                                             msg: response.msg,
+                                             buttons: Ext.Msg.OK,
+                                             icon: Ext.Msg.WARNING
+                                         });
+                                     }
+                                 }
+
+         });
+                     }
+         });
     },
 
     showDeployWindow: function() {
