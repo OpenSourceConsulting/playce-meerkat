@@ -47,6 +47,10 @@ Ext.define('webapp.controller.DomainController', {
 
     },
 
+    onEditButtonClick: function(button, e, eOpts) {
+        this.showDomainWindow("edit",GlobalData.lastSelectedMenuId);
+    },
+
     showDomainWindow: function(type, id) {
 
         var domainWindow = Ext.create("widget.DomainWindow");
@@ -208,6 +212,9 @@ Ext.define('webapp.controller.DomainController', {
         this.control({
             "#btnSubmitNewDomain": {
                 click: this.onSubmitNewDomainClick
+            },
+            "#mybutton68": {
+                click: this.onEditButtonClick
             }
         });
     }

@@ -82,6 +82,19 @@ Ext.define('webapp.view.DomainContainer', {
                             name: 'DataGridServerGroupField',
                             value: 'Group 1'
                         }
+                    ],
+                    dockedItems: [
+                        {
+                            xtype: 'panel',
+                            dock: 'right',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    itemId: 'mybutton68',
+                                    text: 'Edit'
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
