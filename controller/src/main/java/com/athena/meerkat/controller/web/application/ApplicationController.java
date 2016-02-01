@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.application;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.domain.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.domain.DomainService;
+import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 
 @Controller
 @RequestMapping("application")
@@ -34,6 +36,7 @@ public class ApplicationController {
 			json.setSuccess(false);
 			return json;
 		}
+		app.setState(State.APP_STATE_STOPPED);
 		app.setLastModifiedDate(new Date());
 		app.setDeployedDate(new Date());
 		appService.deploy(app, domain);
@@ -112,4 +115,19 @@ public class ApplicationController {
 		return json;
 	}
 
+	@RequestMapping("/list")
+	public @ResponseBody
+	SimpleJsonResponse getAppListByDomain(SimpleJsonResponse json, int domainId) {
+		Domain domain = domainService.getDomain(domainId);
+		if (domain == null) {
+			json.setSuccess(false);
+			json.setMsg("Domain does not exist");
+		}
+		List<TomcatInstance> tomcats = domain.getTomcats();
+		if (tomcats.size() > 0) {
+			json.setSuccess(true);
+			json.setData(tomcats.get(0).getApplications());
+		}
+		return json;
+	}
 }

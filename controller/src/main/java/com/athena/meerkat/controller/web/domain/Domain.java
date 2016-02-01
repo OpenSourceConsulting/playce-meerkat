@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +45,7 @@ public class Domain implements Serializable {
 
 	@OneToMany(mappedBy = "domain")
 	@JsonManagedReference
-	private Collection<TomcatInstance> tomcats;
+	private List<TomcatInstance> tomcats;
 
 	@OneToMany(mappedBy = "domain")
 	@JsonManagedReference
@@ -81,11 +82,11 @@ public class Domain implements Serializable {
 		this.isClustering = isClustering;
 	}
 
-	public Collection<TomcatInstance> getTomcats() {
+	public List<TomcatInstance> getTomcats() {
 		return tomcats;
 	}
 
-	public void setTomcats(Collection<TomcatInstance> tomcats) {
+	public void setTomcats(List<TomcatInstance> tomcats) {
 		this.tomcats = tomcats;
 	}
 
@@ -123,7 +124,8 @@ public class Domain implements Serializable {
 		return clusteringConfig;
 	}
 
-	public void setClusteringConfig(Collection<ClusteringConfiguration> clusteringConfig) {
+	public void setClusteringConfig(
+			Collection<ClusteringConfiguration> clusteringConfig) {
 		this.clusteringConfig = clusteringConfig;
 	}
 }

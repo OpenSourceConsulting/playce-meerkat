@@ -2,13 +2,10 @@ package com.athena.meerkat.controller.web.application;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.athena.meerkat.controller.ServiceResult;
-import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
@@ -60,4 +57,4 @@ public class ApplicationService {
 		appRepo.save(app);
 	}
 
-}
+	}

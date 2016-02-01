@@ -22,7 +22,7 @@ Ext.define('webapp.model.ApplicationModel', {
 
     fields: [
         {
-            name: 'Id',
+            name: 'id',
             type: 'int'
         },
         {
