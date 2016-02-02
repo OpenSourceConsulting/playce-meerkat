@@ -27,7 +27,8 @@ Ext.define('webapp.view.DomainContainer', {
         'Ext.grid.View',
         'Ext.grid.column.Number',
         'Ext.grid.column.Date',
-        'Ext.toolbar.Paging'
+        'Ext.toolbar.Paging',
+        'Ext.grid.plugin.RowEditing'
     ],
 
     itemId: 'mycontainer37',
@@ -394,7 +395,12 @@ Ext.define('webapp.view.DomainContainer', {
                                             fn: me.onClusteringConfigurationGridViewItemContextMenu,
                                             scope: me
                                         }
-                                    }
+                                    },
+                                    plugins: [
+                                        Ext.create('Ext.grid.plugin.RowEditing', {
+
+                                        })
+                                    ]
                                 }
                             ]
                         }
