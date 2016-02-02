@@ -27,6 +27,18 @@ Ext.define('webapp.controller.TomcatController', {
  
     },
 
+    onStartTomcatClick: function(button, e, eOpts) {
+
+    },
+
+    onStopTomcatClick: function(button, e, eOpts) {
+
+    },
+
+    onTomcatRestartClick: function(button, e, eOpts) {
+
+    },
+
     init: function(application) {
         this.control({
             "#btnNewTomcat": {
@@ -34,6 +46,15 @@ Ext.define('webapp.controller.TomcatController', {
             },
             "#domainTomcatTab": {
                 tabchange: this.onDomainTomcatTabTabChange
+            },
+            "#btnTomcatStart": {
+                click: this.onStartTomcatClick
+            },
+            "#btnTomcatStop": {
+                click: this.onStopTomcatClick
+            },
+            "#btnTomcatRestart": {
+                click: this.onTomcatRestartClick
             }
         });
     }
