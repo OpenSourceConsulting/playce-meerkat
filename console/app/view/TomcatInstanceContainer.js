@@ -105,14 +105,17 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                                 {
                                     xtype: 'button',
                                     disabled: true,
+                                    id: 'btnTomcatStart',
                                     text: 'Start'
                                 },
                                 {
                                     xtype: 'button',
+                                    itemId: 'btnTomcatStop',
                                     text: 'Stop'
                                 },
                                 {
                                     xtype: 'button',
+                                    itemId: 'btnTomcatRestart',
                                     text: 'Restart'
                                 }
                             ]
