@@ -90,7 +90,7 @@ public class Machine {
 	@JsonManagedReference
 	private Collection<NetworkInterface> networkInterfaces;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
+	@OneToMany(mappedBy = "machine")
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcatInstances;
 

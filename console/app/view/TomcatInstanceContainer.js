@@ -50,36 +50,40 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                     items: [
                         {
                             xtype: 'displayfield',
-                            id: 'tomcatHostNameField',
-                            width: 164,
-                            fieldLabel: 'Host name:',
+                            id: 'tomcatNameField',
+                            width: 150,
+                            fieldLabel: 'Name',
+                            labelWidth: 50,
                             value: ''
                         },
                         {
                             xtype: 'displayfield',
                             id: 'tomcatStateField',
-                            width: 249,
+                            width: 150,
                             fieldLabel: 'Status',
+                            labelWidth: 50,
                             value: ''
                         },
                         {
                             xtype: 'displayfield',
                             id: 'tomcatIPAddField',
-                            width: 249,
+                            width: 200,
                             fieldLabel: 'IP Address',
+                            labelWidth: 80,
                             value: ''
                         },
                         {
                             xtype: 'displayfield',
                             id: 'tomcatPortField',
-                            width: 249,
+                            width: 200,
                             fieldLabel: 'Ports:',
+                            labelWidth: 50,
                             value: ''
                         },
                         {
                             xtype: 'displayfield',
                             id: 'tomcatWebServerField',
-                            width: 164,
+                            width: 200,
                             fieldLabel: 'Web server',
                             value: ''
                         },
@@ -88,6 +92,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             id: 'tomcatJVMVersionField',
                             width: 164,
                             fieldLabel: 'JVM Version',
+                            labelWidth: 80,
                             value: ''
                         },
                         {
@@ -95,6 +100,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             id: 'tomcatOSField',
                             width: 164,
                             fieldLabel: 'OS Name',
+                            labelWidth: 80,
                             value: 'Linux'
                         },
                         {
@@ -118,12 +124,13 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                                 },
                                 {
                                     xtype: 'button',
-                                    itemId: 'btnTomcatStop',
+                                    id: 'btnTomcatStop',
+                                    itemId: '',
                                     text: 'Stop'
                                 },
                                 {
                                     xtype: 'button',
-                                    itemId: 'btnTomcatRestart',
+                                    id: 'btnTomcatRestart',
                                     text: 'Restart'
                                 }
                             ]

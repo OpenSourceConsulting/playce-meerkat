@@ -8,10 +8,10 @@
         },
         "canvasControls": {
             "viewportSize": {
-                "name": "Large",
+                "name": "Auto Expand",
                 "builtIn": true,
-                "height": 1024,
-                "width": 1280
+                "height": null,
+                "width": null
             }
         },
         "urlPrefix": "http://localhost:8080/controller",

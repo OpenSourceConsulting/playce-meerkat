@@ -23,7 +23,7 @@ public class ApplicationService {
 		for (TomcatInstance tomcat : tomcats) {
 			Application newApp = app.clone();
 			newApp.setTomcat(tomcat);
-			appRepo.saveAndFlush(newApp);
+			appRepo.save(newApp);
 		}
 		return true;
 

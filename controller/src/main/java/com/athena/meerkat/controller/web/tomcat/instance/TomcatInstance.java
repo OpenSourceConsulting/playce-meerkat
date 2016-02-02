@@ -212,4 +212,24 @@ public class TomcatInstance implements Serializable {
 		this.webServer = webServer;
 	}
 
+	public String getOSName() {
+		if (machine != null) {
+			return machine.getOsName();
+		}
+		return "";
+	}
+
+	public String getJvm() {
+		if (machine != null) {
+			return machine.getJvmVersion();
+		}
+		return "";
+	}
+	public String getDomainName() {
+		if (domain != null) {
+			return domain.getName();
+		}
+		return "";
+	}
+
 }

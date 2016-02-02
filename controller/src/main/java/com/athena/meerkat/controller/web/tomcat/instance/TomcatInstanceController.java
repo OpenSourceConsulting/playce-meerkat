@@ -95,11 +95,23 @@ public class TomcatInstanceController {
 
 			// update to db
 			if (state == State.TOMCAT_STATE_STARTED) {
-				success = service.start(tomcat); // provisioning &&
-													// service.start(tomcat);
+				if (tomcat.getState() == State.TOMCAT_STATE_STARTED) {
+					json.setSuccess(false);
+					json.setMsg("Tomcat is already started.");
+				} else {
+					success = service.start(tomcat); // provisioning &&
+														// service.start(tomcat);
+					json.setData(State.TOMCAT_STATE_STARTED);
+				}
 			} else if (state == State.TOMCAT_STATE_STOPPED) {
-				success = service.stop(tomcat); // provisioning &&
-				// service.stop(tomcat);
+				if (tomcat.getState() == State.TOMCAT_STATE_STOPPED) {
+					json.setSuccess(false);
+					json.setMsg("Tomcat is already stopped.");
+				} else {
+					success = service.stop(tomcat); // provisioning &&
+					// service.stop(tomcat);
+					json.setData(State.TOMCAT_STATE_STOPPED);
+				}
 			}
 
 			json.setSuccess(success);
