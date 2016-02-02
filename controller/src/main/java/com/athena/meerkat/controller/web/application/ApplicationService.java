@@ -21,8 +21,9 @@ public class ApplicationService {
 		// assoicated to that domain.
 		Collection<TomcatInstance> tomcats = domain.getTomcats();
 		for (TomcatInstance tomcat : tomcats) {
-			app.setTomcat(tomcat);
-			this.save(app);
+			Application newApp = app.clone();
+			newApp.setTomcat(tomcat);
+			appRepo.saveAndFlush(newApp);
 		}
 		return true;
 

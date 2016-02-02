@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "application")
-public class Application implements Serializable {
+public class Application implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -30,6 +32,7 @@ public class Application implements Serializable {
 
 	@Id
 	@Column(name = "Id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int Id;
 	@Column(name = "context_path")
 	private String contextPath;
@@ -221,5 +224,13 @@ public class Application implements Serializable {
 
 	public void setId(int id) {
 		Id = id;
+	}
+
+	public Application clone() {
+		try {
+			return (Application) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 }
