@@ -28,15 +28,104 @@ Ext.define('webapp.controller.TomcatController', {
     },
 
     onStartTomcatClick: function(button, e, eOpts) {
-
+        this.changeState(GlobalData.lastSelectedMenuId, 1);
     },
 
     onStopTomcatClick: function(button, e, eOpts) {
-
+        this.changeState(GlobalData.lastSelectedMenuId, 2);
     },
 
     onTomcatRestartClick: function(button, e, eOpts) {
+        this.changeState(GlobalData.lastSelectedMenuId, 3);
+    },
 
+    changeState: function(id, state) {
+        var url = GlobalData.urlPrefix;
+        var newState = "";
+        var action = "";
+        if(state === 1) {// start
+            url += "tomcat/instance/start";
+            newState = "Started";
+            action = "start";
+        }
+        else if(state===2) {//stop
+            url += "tomcat/instance/stop";
+            newState = "Stopped";
+            action = "stop";
+        }
+        else if(state === 3) {//restart
+            url += "tomcat/instance/restart";
+            newState = "Restarted";
+            action = "restart";
+        }
+        Ext.MessageBox.confirm('Confirm', 'Are you sure you want to ' + action +' this application?', function(btn){
+          if(btn == "yes"){
+
+                Ext.Ajax.request({
+                             url: url,
+                             params: {"id" : id},
+                             success: function(resp, ops) {
+                                    var response = Ext.decode(resp.responseText);
+                                    if(response.success === true){
+                                        Ext.getCmp("tomcatStateField").setValue(newState);
+                                        if (response.data === 1) {
+                                            Ext.getCmp("btnTomcatStart").disable();
+                                            Ext.getCmp("btnTomcatStop").enable();
+                                            Ext.getCmp("btnTomcatRestart").enable();
+                                        }else if (response.data === 2){
+                                            Ext.getCmp("btnTomcatStart").enable();
+                                            Ext.getCmp("btnTomcatStop").disable();
+                                            Ext.getCmp("btnTomcatRestart").disable();
+
+                                        }
+                                    }
+                                    else {
+                                             Ext.Msg.show({
+                                                title: "Message",
+                                                msg: response.msg,
+                                                buttons: Ext.Msg.OK,
+                                                icon: Ext.Msg.WARNING
+                                            });
+                                    }
+
+                                }
+                            });
+                  }
+                });
+    },
+
+    getTomcatInstance: function(id) {
+        var url = GlobalData.urlPrefix + "tomcat/instance/get";
+        Ext.Ajax.request({
+            url: url,
+            params: {"id" : id},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    return response.data;
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            }
+        });
+    },
+
+    displayTomcatInstance: function(id) {
+        var tomcat = getTomcatInstance(id);
+        Ext.getCmp("tomcatHostNameField").setValue(tomcat.hostname);
+        Ext.getCmp("tomcatStateField").setValue(tomcat.state === 1?"Started":"Stopped");
+        Ext.getCmp("tomcatIPAddField").setValue(tomcat.ipaddress);
+        Ext.getCmp("tomcatPortField").setValue("{HTTP:"+tomcat.httpPort+", AJP:"+tomcat.ajpPort+", redirect:"+tomcat.redirectPort+"}");
+        Ext.getCmp("tomcatOSField").setValue(tomcat.osName);
+        Ext.getCmp("tomcatJVMVersionField").setValue(tomcat.jvmVersion);
+        Ext.getCmp("tomcatWebServerField").setValue(tomcat.webServer);
+        Ext.getCmp("tomcatDomainField").setValue(tomcat.domainName);
     },
 
     init: function(application) {

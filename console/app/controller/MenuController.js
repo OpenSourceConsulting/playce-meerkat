@@ -222,6 +222,7 @@ Ext.define('webapp.controller.MenuController', {
             activeItem = 1;
         }else if (menuId.indexOf("tomcatMng_domain_") >=0 && menuId.indexOf("_tomcat_") >= 0) {
             objectId = menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
+            GlobalData.lastSelectedMenuId = objectId;
             activeItem = 2;
             //navigationText = "Tomcat Management > Domain ... > ...";
         }else if (menuId === "monitoring_servers" && menuId.indexOf("_server_") < 0) {

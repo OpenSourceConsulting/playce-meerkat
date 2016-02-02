@@ -40,6 +40,7 @@ import org.springframework.stereotype.Service;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
+import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.datasource.Datasource;
 import com.athena.meerkat.controller.web.datasource.DatasourceRepository;
@@ -92,11 +93,11 @@ public class TomcatInstanceService {
 		return repo.save(inst);
 	}
 
-	public TomcatInstance getOne(Long id) {
+	public TomcatInstance findOne(int id) {
 		return repo.findOne(id);
 	}
 
-	public void delete(Long id) {
+	public void delete(int id) {
 		repo.delete(id);
 	}
 
@@ -202,34 +203,25 @@ public class TomcatInstanceService {
 	/**
 	 * Start a tomcat instance
 	 * 
-	 * @param id
+	 * @param tomcat
 	 * @return status of process. True for success
 	 */
-	public boolean start(int id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/**
-	 * Restart tomcat instance
-	 * 
-	 * @param id
-	 * @return status of process. True for success
-	 */
-	public boolean restart(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean start(TomcatInstance tomcat) {
+		tomcat.setState(State.TOMCAT_STATE_STARTED);
+		repo.save(tomcat);
+		return true;
 	}
 
 	/**
 	 * Stop tomcat instance
 	 * 
-	 * @param id
+	 * @param tomcat
 	 * @return
 	 */
-	public boolean stop(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean stop(TomcatInstance tomcat) {
+		tomcat.setState(State.TOMCAT_STATE_STOPPED);
+		repo.save(tomcat);
+		return true;
 	}
 
 	public ServiceResult getAssociatedTomcatList(int dataSourceId) {

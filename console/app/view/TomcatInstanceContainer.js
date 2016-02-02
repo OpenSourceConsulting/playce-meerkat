@@ -50,48 +50,56 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                     items: [
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatHostNameField',
                             width: 164,
                             fieldLabel: 'Host name:',
-                            value: 'Tomcat 1'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatStateField',
                             width: 249,
                             fieldLabel: 'Status',
-                            value: 'Started'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatIPAddField',
                             width: 249,
                             fieldLabel: 'IP Address',
-                            value: '192.168.0.83'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatPortField',
                             width: 249,
                             fieldLabel: 'Ports:',
-                            value: '{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatWebServerField',
                             width: 164,
                             fieldLabel: 'Web server',
-                            value: 'Apache Tomcat / 7.0.47'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatJVMVersionField',
                             width: 164,
                             fieldLabel: 'JVM Version',
-                            value: '1.7.0_45-b18'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatOSField',
                             width: 164,
                             fieldLabel: 'OS Name',
                             value: 'Linux'
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'tomcatDomainField',
                             width: 164,
                             fieldLabel: 'Domain',
                             value: 'Domain 1'

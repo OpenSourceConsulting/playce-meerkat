@@ -1,6 +1,5 @@
 package com.athena.meerkat.controller.web.application;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.athena.meerkat.common.constant.MeerkatConstant;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.domain.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.domain.DomainService;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;

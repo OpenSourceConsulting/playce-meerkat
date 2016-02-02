@@ -37,7 +37,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
+import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.machine.MachineService;
 
 /**
@@ -67,20 +69,63 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/start", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean startTomcat(int id) {
-		return service.start(id);
+	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id) {
+		TomcatInstance tomcat = service.findOne(id);
+		return changeTomcatState(json, tomcat, State.TOMCAT_STATE_STARTED);
 	}
 
 	@RequestMapping(value = "/instance/restart", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean restartTomcat(int id) {
-		return service.restart(id);
+	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
+		TomcatInstance tomcat = service.findOne(id);
+		json = changeTomcatState(json, tomcat, State.TOMCAT_STATE_STOPPED);
+		json = changeTomcatState(json, tomcat, State.TOMCAT_STATE_STARTED);
+		return json;
+	}
+
+	private SimpleJsonResponse changeTomcatState(SimpleJsonResponse json,
+			TomcatInstance tomcat, int state) {
+		if (tomcat == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat does not exist.");
+		} else {
+			boolean success = false;
+			// provisioning
+			// ..
+
+			// update to db
+			if (state == State.TOMCAT_STATE_STARTED) {
+				success = service.start(tomcat); // provisioning &&
+													// service.start(tomcat);
+			} else if (state == State.TOMCAT_STATE_STOPPED) {
+				success = service.stop(tomcat); // provisioning &&
+				// service.stop(tomcat);
+			}
+
+			json.setSuccess(success);
+		}
+		return json;
 	}
 
 	@RequestMapping(value = "/instance/stop", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean stopTomcat(int id) {
-		return service.stop(id);
+	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id) {
+		TomcatInstance tomcat = service.findOne(id);
+		return changeTomcatState(json, tomcat, State.TOMCAT_STATE_STOPPED);
+	}
+
+	@RequestMapping(value = "/instance/get")
+	@ResponseBody
+	public SimpleJsonResponse getTomcat(SimpleJsonResponse json, int id) {
+		TomcatInstance tomcat = service.findOne(id);
+		if (tomcat == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat instance does not exist.");
+		} else {
+			json.setSuccess(true);
+			json.setData(tomcat);
+		}
+		return json;
 	}
 
 	@RequestMapping("/list")
@@ -104,27 +149,27 @@ public class TomcatInstanceController {
 	@ResponseBody
 	// add more param later
 	public boolean addNew(String name, int domainId, int machineId) {
-		boolean result = false;
+		// boolean result = false;
 		// Machine machine = machineService.retrieve(machineId);
 		// String repoAddr = DollyConstants.MEERKAT_REPO;
 		/* sample data */
-		String user = "root";
-		String version = "7.0.54";
-		String java_home = "/usr/java/default";
-		String server_home = "/root";
-		String server_name = "rootServer21";
-		String catalina_home = "/root/jboss-ews-2.1/tomcat7";
-		String catalina_base = "/root/Servers/rootServer21222";
-		String encoding = "UTF-8";
-		int port_offset = 0;
-		int heap_size = 1024;
-		int permgen_size = 256;
-		boolean is_enable_http = true;
-		boolean is_high_availability = true;
-		String bind_address = "192.168.0.88";
-		String other_bind_address = "";
-		boolean is_start_service = true;
-		
+		// String user = "root";
+		// String version = "7.0.54";
+		// String java_home = "/usr/java/default";
+		// String server_home = "/root";
+		// String server_name = "rootServer21";
+		// String catalina_home = "/root/jboss-ews-2.1/tomcat7";
+		// String catalina_base = "/root/Servers/rootServer21222";
+		// String encoding = "UTF-8";
+		// int port_offset = 0;
+		// int heap_size = 1024;
+		// int permgen_size = 256;
+		// boolean is_enable_http = true;
+		// boolean is_high_availability = true;
+		// String bind_address = "192.168.0.88";
+		// String other_bind_address = "";
+		// boolean is_start_service = true;
+
 		return false;
 	}
 }
