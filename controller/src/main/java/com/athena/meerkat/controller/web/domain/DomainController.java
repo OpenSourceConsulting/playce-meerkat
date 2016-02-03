@@ -205,7 +205,7 @@ public class DomainController {
 		List<ClusteringConfiguration> existingConfigs = domainService
 				.getClusteringConfigurationByName(config.getName());
 		if (existingConfigs.size() > 0) {
-			if (isEdit && existingConfigs.get(0).getId() != config.getId()) {
+			if (!isEdit || (isEdit && existingConfigs.get(0).getId() != config.getId())) {
 				json.setSuccess(false);
 				json.setMsg("Config name is duplicated.");
 				return json;
