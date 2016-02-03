@@ -32,7 +32,8 @@ Ext.application({
         'DomainModel',
         'DatagridServerGroupModel',
         'MachineModel',
-        'ClusteringConfigurationModel'
+        'ClusteringConfigurationModel',
+        'DatasourceModel'
     ],
     stores: [
         'sessionDataStore',
@@ -45,7 +46,8 @@ Ext.application({
         'DatagridServerGroupStore',
         'MachineStore',
         'ClusteringConfigurationStore',
-        'ApplicationStore'
+        'ApplicationStore',
+        'DatasourceStore'
     ],
     views: [
         'meerkatViewport',

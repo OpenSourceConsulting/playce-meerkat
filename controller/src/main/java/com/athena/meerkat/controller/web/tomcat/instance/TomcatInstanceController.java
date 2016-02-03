@@ -40,6 +40,8 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.domain.Domain;
+import com.athena.meerkat.controller.web.domain.DomainService;
 import com.athena.meerkat.controller.web.machine.MachineService;
 
 /**
@@ -58,7 +60,8 @@ public class TomcatInstanceController {
 	private TomcatInstanceService service;
 	@Autowired
 	private MachineService machineService;
-
+	@Autowired
+	private DomainService domainService;
 	@Inject
 	@Named("provisioningHandler")
 	private ProvisioningHandler provisioningHandler;
@@ -141,20 +144,26 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/list")
-	List<TomcatInstance> getTomcatInstance() {
-		ServiceResult result = service.getAll();
-		if (result.getStatus() == Status.DONE) {
-			List<TomcatInstance> tomcats = (List<TomcatInstance>) result
-					.getReturnedVal();
-			return tomcats;
-		}
-		return null;
+	public @ResponseBody
+	SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
+		List<TomcatInstance> tomcats = service.getAll();
+		json.setData(tomcats);
+		json.setSuccess(true);
+		return json;
 	}
 
 	@RequestMapping("/listbydomain")
-	@ResponseBody
-	List<TomcatInstance> getTomcatInstances(int domainId) {
-		return service.getTomcatListByDomainId(domainId);
+	public @ResponseBody
+	SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
+		Domain domain = domainService.getDomain(domainId);
+		if (domain == null) {
+			json.setSuccess(false);
+			json.setMsg("Domain does not exist.");
+		} else {
+			json.setData(service.getTomcatListByDomainId(domain.getId()));
+			json.setSuccess(true);
+		}
+		return json;
 	}
 
 	@RequestMapping("/addNew")

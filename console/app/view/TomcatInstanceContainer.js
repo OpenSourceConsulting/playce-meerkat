@@ -149,38 +149,40 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             items: [
                                 {
                                     xtype: 'gridpanel',
+                                    id: 'tomcatDatasourcesGrid',
                                     margin: '5 0 0 0 ',
                                     title: '',
                                     forceFit: true,
+                                    store: 'DatasourceStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'name',
                                             text: 'Name'
                                         },
                                         {
                                             xtype: 'numbercolumn',
-                                            dataIndex: 'number',
+                                            dataIndex: 'jdbcUrl',
                                             text: 'JDBC URL'
                                         },
                                         {
                                             xtype: 'datecolumn',
-                                            dataIndex: 'date',
+                                            dataIndex: 'Id',
                                             text: 'Servers'
                                         },
                                         {
                                             xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            dataIndex: 'minConnectionPool',
                                             text: 'Min Connection Pool'
                                         },
                                         {
                                             xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            dataIndex: 'maxConnectionPool',
                                             text: 'Max Connection Pool'
                                         },
                                         {
                                             xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            dataIndex: 'timeout',
                                             text: 'Timeout'
                                         }
                                     ],
@@ -208,7 +210,43 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                         },
                         {
                             xtype: 'panel',
-                            title: 'Applications'
+                            title: 'Applications',
+                            items: [
+                                {
+                                    xtype: 'gridpanel',
+                                    id: 'tomcatApplicationGrid',
+                                    title: '',
+                                    forceFit: true,
+                                    store: 'ApplicationStore',
+                                    columns: [
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'contextPath',
+                                            text: 'Context Path'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'displayName',
+                                            text: 'Name'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'warPath',
+                                            text: '*.war path'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'version',
+                                            text: 'Version'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'state',
+                                            text: 'State'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

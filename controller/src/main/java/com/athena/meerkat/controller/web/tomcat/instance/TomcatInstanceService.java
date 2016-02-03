@@ -241,8 +241,8 @@ public class TomcatInstanceService {
 		return null;
 	}
 
-	public ServiceResult getAll() {
-		return new ServiceResult(Status.DONE, "", repo.findAll());
+	public List<TomcatInstance> getAll() {
+		return repo.findAll();
 	}
 
 }

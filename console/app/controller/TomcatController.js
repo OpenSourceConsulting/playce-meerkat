@@ -136,6 +136,10 @@ Ext.define('webapp.controller.TomcatController', {
                 Ext.getCmp("tomcatJVMVersionField").setValue(tomcat.jvm);
                 Ext.getCmp("tomcatWebServerField").setValue(tomcat.webServer);
                 Ext.getCmp("tomcatDomainField").setValue(tomcat.domainName);
+
+                Ext.getCmp("tomcatApplicationGrid").getStore().loadData(tomcat.applications, false);
+                Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(tomcat.datasources, false);
+
             });
 
     },
