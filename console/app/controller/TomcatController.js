@@ -59,40 +59,39 @@ Ext.define('webapp.controller.TomcatController', {
             action = "restart";
         }
         Ext.MessageBox.confirm('Confirm', 'Are you sure you want to ' + action +' this application?', function(btn){
-          if(btn == "yes"){
+            if(btn == "yes"){
 
                 Ext.Ajax.request({
-                             url: url,
-                             params: {"id" : id},
-                             success: function(resp, ops) {
-                                    var response = Ext.decode(resp.responseText);
-                                    if(response.success === true){
-                                        Ext.getCmp("tomcatStateField").setValue(newState);
-                                        if (response.data === 1) {
-                                            Ext.getCmp("btnTomcatStart").disable();
-                                            Ext.getCmp("btnTomcatStop").enable();
-                                            Ext.getCmp("btnTomcatRestart").enable();
-                                        }else if (response.data === 2){
-                                            alert(Ext.getCmp("btnTomcatStop").isDisabled());
-                                            Ext.getCmp("btnTomcatStart").enable();
-                                            Ext.getCmp("btnTomcatStop").disable();
-                                            Ext.getCmp("btnTomcatRestart").disable();
+                    url: url,
+                    params: {"id" : id},
+                    success: function(resp, ops) {
+                        var response = Ext.decode(resp.responseText);
+                        if(response.success === true){
+                            Ext.getCmp("tomcatStateField").setValue(newState);
+                            if (response.data === 1) {
+                                Ext.getCmp("btnTomcatStart").disable();
+                                Ext.getCmp("btnTomcatStop").enable();
+                                Ext.getCmp("btnTomcatRestart").enable();
+                            }else if (response.data === 2){
+                                Ext.getCmp("btnTomcatStart").enable();
+                                Ext.getCmp("btnTomcatStop").disable();
+                                Ext.getCmp("btnTomcatRestart").disable();
 
-                                        }
-                                    }
-                                    else {
-                                             Ext.Msg.show({
-                                                title: "Message",
-                                                msg: response.msg,
-                                                buttons: Ext.Msg.OK,
-                                                icon: Ext.Msg.WARNING
-                                            });
-                                    }
-
-                                }
+                            }
+                        }
+                        else {
+                            Ext.Msg.show({
+                                title: "Message",
+                                msg: response.msg,
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.WARNING
                             });
-                  }
+                        }
+
+                    }
                 });
+            }
+        });
     },
 
     getTomcatInstance: function(id, callback) {
@@ -121,6 +120,16 @@ Ext.define('webapp.controller.TomcatController', {
             this.getTomcatInstance(id,function(tomcat){
                 Ext.getCmp("tomcatNameField").setValue(tomcat.name);
                 Ext.getCmp("tomcatStateField").setValue(tomcat.state === 1?"Started":"Stopped");
+                if (tomcat.state === 1) {
+                    Ext.getCmp("btnTomcatStart").disable();
+                    Ext.getCmp("btnTomcatStop").enable();
+                    Ext.getCmp("btnTomcatRestart").enable();
+                }else if (tomcat.state === 2){
+                    Ext.getCmp("btnTomcatStart").enable();
+                    Ext.getCmp("btnTomcatStop").disable();
+                    Ext.getCmp("btnTomcatRestart").disable();
+
+                }
                 Ext.getCmp("tomcatIPAddField").setValue(tomcat.ipaddress);
                 Ext.getCmp("tomcatPortField").setValue("{HTTP:"+tomcat.httpPort+", AJP:"+tomcat.ajpPort+", redirect:"+tomcat.redirectPort+"}");
                 Ext.getCmp("tomcatOSField").setValue(tomcat.osname);

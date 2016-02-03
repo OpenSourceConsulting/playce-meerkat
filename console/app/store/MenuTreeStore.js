@@ -118,6 +118,10 @@ Ext.define('webapp.store.MenuTreeStore', {
                 {
                     name: 'menuId',
                     type: 'string'
+                },
+                {
+                    name: 'state',
+                    type: 'int'
                 }
             ]
         }, cfg)]);

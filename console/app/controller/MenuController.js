@@ -70,7 +70,7 @@ Ext.define('webapp.controller.MenuController', {
                    switch (_item.id) {
                         case 'new-domain':
                             webapp.app.getController("DomainController").showDomainWindow("new", 0);
-                            break;
+                           break;
                         case 'collapse':
                             //item.collapse();
                             break;
@@ -120,7 +120,7 @@ Ext.define('webapp.controller.MenuController', {
                    var domainId = menuId.substr(menuId.indexOf("_domain_") + "_domain_".length);
                    switch (_item.id) {
                         case 'new-tomcat':
-                            alert("Add new tomcat");
+                            webapp.app.getController("TomcatController").show("new", 0);
                             break;
                         case 'edit-domain':
                             webapp.app.getController("DomainController").showDomainWindow("edit", domainId);
@@ -147,15 +147,18 @@ Ext.define('webapp.controller.MenuController', {
 
         }
         else if (menuId.indexOf("tomcatMng_domain_") >= 0 && menuId.indexOf("_tomcat_") >= 0) { //tomcat level
+            var tomcatId =  menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
             mnuContext =  Ext.create("Ext.menu.Menu",{
-
             items: [{
                 id: 'start-tomcat',
-                text: 'Start'
+                text: 'Start',
+                disabled:record.get("state") === 1?true:false
             },
             {
                 id: 'stop-tomcat',
-                text: 'Stop'
+                text: 'Stop',
+                disabled:record.get("state") === 2?true:false
+
             },
             {
                 id: 'edit-tomcat',
@@ -175,10 +178,10 @@ Ext.define('webapp.controller.MenuController', {
                 click: function( _menu, _item, _e, _eOpts ) {
                    switch (_item.id) {
                         case 'start-tomcat':
-                            alert("Start tomcat");
+                            webapp.app.getController("TomcatController").changeState(tomcatId, 1);
                             break;
                         case 'stop-tomcat':
-                            alert("Stop tomcat");
+                            webapp.app.getController("TomcatController").changeState(tomcatId, 2);
                             break;
                         case 'edit-tomcat':
                             alert("Edit tomcat");
@@ -309,7 +312,11 @@ Ext.define('webapp.controller.MenuController', {
             success: function(resp, ops) {
                 var response = Ext.decode(resp.responseText);
                 for(i = 0; i < response.data.length; i ++){
-                    parentNode.appendChild({"text":response.data[i].name, "menuId": prefix_child_menu_id + response.data[i].id, "leaf": is_child_leaf,"expanded":!is_child_leaf});
+                    if (prefix_child_menu_id.indexOf("_tomcat_") >= 0){
+                        parentNode.appendChild({"text":response.data[i].name, "menuId": prefix_child_menu_id + response.data[i].id, "leaf": is_child_leaf,"expanded":!is_child_leaf,"state":response.data[i].state});;
+                    } else {
+                        parentNode.appendChild({"text":response.data[i].name, "menuId": prefix_child_menu_id + response.data[i].id, "leaf": is_child_leaf,"expanded":!is_child_leaf,"state":0});
+                    }
                 }
             }
         });
