@@ -19,14 +19,12 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
 
     requires: [
         'Ext.form.field.Display',
+        'Ext.toolbar.Toolbar',
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
-        'Ext.grid.View',
-        'Ext.toolbar.Paging'
+        'Ext.grid.column.Column',
+        'Ext.grid.View'
     ],
 
     layout: 'border',
@@ -161,38 +159,37 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                                             text: 'Name'
                                         },
                                         {
-                                            xtype: 'numbercolumn',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'dbType',
+                                            text: 'Type'
+                                        },
+                                        {
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'jdbcUrl',
                                             text: 'JDBC URL'
                                         },
                                         {
-                                            xtype: 'datecolumn',
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'Id',
                                             text: 'Servers'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'minConnectionPool',
                                             text: 'Min Connection Pool'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'maxConnectionPool',
                                             text: 'Max Connection Pool'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'timeout',
                                             text: 'Timeout'
                                         }
                                     ],
                                     dockedItems: [
-                                        {
-                                            xtype: 'pagingtoolbar',
-                                            dock: 'bottom',
-                                            width: 360,
-                                            displayInfo: true
-                                        },
                                         {
                                             xtype: 'toolbar',
                                             dock: 'top',

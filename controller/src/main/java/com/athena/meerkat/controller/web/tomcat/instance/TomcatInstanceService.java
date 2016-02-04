@@ -101,6 +101,11 @@ public class TomcatInstanceService {
 		repo.delete(id);
 	}
 
+	public List<Datasource> getDatasourceListByTomcat(TomcatInstance tomcat) {
+		List<Datasource> list = (List<Datasource>) tomcat.getDatasources();
+		return list;
+	}
+
 	@Async
 	public void loadTomcatConfig(TomcatInstance inst) {
 

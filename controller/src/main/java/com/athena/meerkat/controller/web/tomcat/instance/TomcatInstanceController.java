@@ -40,6 +40,7 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.datasource.Datasource;
 import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.domain.DomainService;
 import com.athena.meerkat.controller.web.machine.MachineService;
@@ -143,7 +144,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/list")
+	@RequestMapping("/instance/list")
 	public @ResponseBody
 	SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
@@ -152,7 +153,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/listbydomain")
+	@RequestMapping("/instance/listbydomain")
 	public @ResponseBody
 	SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
 		Domain domain = domainService.getDomain(domainId);
@@ -162,6 +163,23 @@ public class TomcatInstanceController {
 		} else {
 			json.setData(service.getTomcatListByDomainId(domain.getId()));
 			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping("/instance/datasource")
+	public @ResponseBody
+	SimpleJsonResponse getDatasourceByTomcat(SimpleJsonResponse json,
+			int tomcatId) {
+		TomcatInstance tomcat = service.findOne(tomcatId);
+		if (tomcat == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat does not exist");
+		} else {
+			List<Datasource> datasources = service
+					.getDatasourceListByTomcat(tomcat);
+			json.setSuccess(true);
+			json.setData(datasources);
 		}
 		return json;
 	}
