@@ -20,17 +20,17 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
     requires: [
         'Ext.form.field.Display',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
+        'Ext.grid.column.CheckColumn',
         'Ext.grid.View',
         'Ext.form.field.Checkbox',
         'Ext.button.Button'
     ],
 
     height: 288,
+    id: 'linkNewDataSourceWindow',
     width: 574,
-    title: 'Link to new Datasource',
+    title: 'Link to datasource',
+    modal: true,
 
     layout: {
         type: 'vbox',
@@ -54,12 +54,14 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                     items: [
                         {
                             xtype: 'displayfield',
+                            id: 'linkDatasourceTomcatNameField',
                             width: 213,
                             fieldLabel: 'Tomcat instance',
                             value: 'Tomcat 1'
                         },
                         {
                             xtype: 'displayfield',
+                            id: 'linkDatasourceTomcatStatusField',
                             margin: '0 10 0 100',
                             width: 148,
                             fieldLabel: 'Status:',
@@ -72,27 +74,30 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                 {
                     xtype: 'gridpanel',
                     flex: 6,
+                    id: 'allDatasourceGrid',
                     margin: '5 5 5 5',
                     title: '',
                     forceFit: true,
+                    store: 'LinkingTomcatDatasourceStore',
                     columns: [
                         {
-                            xtype: 'gridcolumn',
-                            dataIndex: 'string',
+                            xtype: 'checkcolumn',
+                            width: 50,
+                            dataIndex: 'selected',
                             text: 'Select'
                         },
                         {
-                            xtype: 'numbercolumn',
-                            dataIndex: 'number',
+                            xtype: 'gridcolumn',
+                            dataIndex: 'name',
                             text: 'Data source Name'
                         },
                         {
-                            xtype: 'datecolumn',
-                            dataIndex: 'date',
+                            xtype: 'gridcolumn',
+                            dataIndex: 'jdbcUrl',
                             text: 'JDBC URL'
                         },
                         {
-                            xtype: 'booleancolumn',
+                            xtype: 'gridcolumn',
                             dataIndex: 'bool',
                             text: 'Server No'
                         }
@@ -101,6 +106,7 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                 {
                     xtype: 'checkboxfield',
                     flex: 0.5,
+                    id: 'restartTomcatCheckbox',
                     margin: '5 5 5 5',
                     fieldLabel: '',
                     boxLabel: 'Restart tomcat instance after linking new datasource.'
@@ -112,13 +118,20 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
                     items: [
                         {
                             xtype: 'button',
+                            itemId: 'mybutton38',
                             margin: '0 0 0 220',
-                            text: 'OK'
+                            text: 'Save'
                         },
                         {
                             xtype: 'button',
                             margin: '0 0 0 10',
-                            text: 'Cancel'
+                            text: 'Cancel',
+                            listeners: {
+                                click: {
+                                    fn: me.onButtonClick,
+                                    scope: me
+                                }
+                            }
                         }
                     ]
                 }
@@ -126,6 +139,15 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
         });
 
         me.callParent(arguments);
+    },
+
+    onButtonClick: function(button, e, eOpts) {
+         Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){
+
+             if(btn == "yes"){
+                button.up("window").close();
+             }
+         });
     }
 
 });

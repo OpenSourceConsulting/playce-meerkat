@@ -5,15 +5,16 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Id;
+
+import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "data_source")
@@ -39,6 +40,9 @@ public class Datasource {
 	private int minConnectionPool;
 	@Column(name = "jdbc_url")
 	private String jdbcUrl;
+
+	@Transient
+	private boolean selected;
 
 	@JoinTable(name = "tomcat_datasource", joinColumns = { @JoinColumn(name = "datasource_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tomcat_id", referencedColumnName = "id") })
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -131,5 +135,21 @@ public class Datasource {
 
 	public void setTomcatInstances(Collection<TomcatInstance> tomcatInstances) {
 		this.tomcatInstances = tomcatInstances;
+	}
+
+	public void associateTomcat(TomcatInstance tomcat) {
+		this.tomcatInstances.add(tomcat);
+	}
+
+	public void removeTomcat(TomcatInstance tomcat) {
+		this.tomcatInstances.remove(tomcat);
+	}
+
+	public boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

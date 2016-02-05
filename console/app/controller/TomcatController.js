@@ -138,35 +138,10 @@ Ext.define('webapp.controller.TomcatController', {
                 Ext.getCmp("tomcatDomainField").setValue(tomcat.domainName);
 
                 Ext.getCmp("tomcatApplicationGrid").getStore().loadData(tomcat.applications, false);
+                Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(tomcat.datasources, false);
 
             });
 
-            this.getDatasourceListByTomcat(id, function(datasource){
-                 Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(datasource, false);
-
-            });
-    },
-
-    getDatasourceListByTomcat: function(tomcatId, callback) {
-               var url = GlobalData.urlPrefix + "tomcat/instance/datasource";
-                Ext.Ajax.request({
-                    url: url,
-                    params: {"tomcatId" : tomcatId},
-                    success: function(resp, ops) {
-                        var response = Ext.decode(resp.responseText);
-                        if(response.success === true){
-                            callback(response.data);
-                        }
-                        else {
-                            Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.WARNING
-                            });
-                        }
-                    }
-                });
     },
 
     init: function(application) {

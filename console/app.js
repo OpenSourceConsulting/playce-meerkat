@@ -47,7 +47,8 @@ Ext.application({
         'MachineStore',
         'ClusteringConfigurationStore',
         'ApplicationStore',
-        'DatasourceStore'
+        'DatasourceStore',
+        'LinkingTomcatDatasourceStore'
     ],
     views: [
         'meerkatViewport',

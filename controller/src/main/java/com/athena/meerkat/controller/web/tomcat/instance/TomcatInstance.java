@@ -26,6 +26,7 @@ package com.athena.meerkat.controller.web.tomcat.instance;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -183,6 +184,22 @@ public class TomcatInstance implements Serializable {
 
 	public void setDatasources(Collection<Datasource> datasources) {
 		this.datasources = datasources;
+	}
+
+	public void associateDatasource(Datasource ds) {
+		this.datasources.add(ds);
+	}
+
+	public void associateDatasources(List<Datasource> dss) {
+		this.datasources.addAll(dss);
+	}
+
+	public void removeDatasource(Datasource ds) {
+		this.datasources.remove(ds);
+	}
+
+	public void removeDatasources(List<Datasource> dss) {
+		this.datasources.removeAll(dss);
 	}
 
 	public String getHostName() {

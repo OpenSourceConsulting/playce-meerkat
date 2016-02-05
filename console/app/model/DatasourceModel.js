@@ -47,6 +47,10 @@ Ext.define('webapp.model.DatasourceModel', {
         },
         {
             name: 'jdbcUrl'
+        },
+        {
+            name: 'selected',
+            type: 'boolean'
         }
     ]
 });

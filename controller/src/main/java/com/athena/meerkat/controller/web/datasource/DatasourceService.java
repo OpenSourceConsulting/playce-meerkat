@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.datasource;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,12 +13,15 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstanceRepository;
 import com.mysql.jdbc.Connection;
 
 @Service
 public class DatasourceService {
 	@Autowired
 	private DatasourceRepository datasourceRepo;
+	@Autowired
+	private TomcatInstanceRepository tomcatRepo;
 
 	public ServiceResult add(String name, String dbType, String userName,
 			String pwd, int timeOut, int maxConnectionPool,
@@ -120,9 +124,39 @@ public class DatasourceService {
 		}
 	}
 
-	public ServiceResult getAll() {
+	public List<Datasource> getAll() {
 		List<Datasource> list = datasourceRepo.findAll();
-		return new ServiceResult(Status.DONE, "Done", list);
+		return list;
 
+	}
+
+	public Datasource findOne(int id) {
+		return datasourceRepo.findOne(id);
+	}
+
+	public void associateTomcat(TomcatInstance tomcat,
+			List<Datasource> datasources) {
+		// for (Datasource ds : datasources) {
+		// if (!ds.getTomcatInstances().contains(tomcat)) {
+		// ds.associateTomcat(tomcat);
+		// }
+		//
+		// }
+		List<Datasource> currentDatasources = (List<Datasource>) tomcat
+				.getDatasources();
+		List<Datasource> deletingDatasources = new ArrayList<Datasource>();
+		for (Datasource ds : currentDatasources) {
+			if (!datasources.contains(ds)) {
+				// remove from current list if user want to remove
+				deletingDatasources.add(ds);
+			} else {
+				// if user still keep this datasource, dont remove in the
+				// current list, ju st remove in the new list
+				datasources.remove(ds);
+			}
+		}
+		tomcat.removeDatasources(deletingDatasources);
+		tomcat.associateDatasources(datasources);
+		tomcatRepo.save(tomcat);
 	}
 }

@@ -197,11 +197,17 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                                                 {
                                                     xtype: 'button',
                                                     id: 'btnLinkNewDatasource',
-                                                    text: 'Link new Datasource'
+                                                    text: 'Link Datasource'
                                                 }
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    listeners: {
+                                        itemcontextmenu: {
+                                            fn: me.onTomcatDatasourcesGridItemContextMenu,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -251,6 +257,40 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
         });
 
         me.callParent(arguments);
+    },
+
+    onTomcatDatasourcesGridItemContextMenu: function(dataview, record, item, index, e, eOpts) {
+        var mnuContext = Ext.create("Ext.menu.Menu",{
+
+            items: [
+            {
+                id: 'remove-datasource',
+                text: 'Remove'
+            }
+                   ],
+            listeners: {
+
+                click: function( _menu, _item, _e, _eOpts ) {
+                   switch (_item.id) {
+
+                        case 'remove-datasource':
+                            webapp.app.getController("DatasourceController").removeDs(GlobalData.lastSelectedMenuId, record.get("id"));
+                            break;
+                        default:
+                            break;
+                   }
+                },
+                hide:function(menu){
+                    menu.destroy();
+                }
+            },
+            defaults: {
+               clickHideDelay: 1
+            }
+        });
+
+        mnuContext.showAt(e.getXY());
+        e.stopEvent();
     }
 
 });
