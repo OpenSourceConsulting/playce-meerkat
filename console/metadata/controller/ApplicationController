@@ -18,18 +18,333 @@
             },
             "codeClass": null,
             "userConfig": {
-                "designer|controlQuery": "#btnDeployWindow",
+                "designer|controlQuery": "#btnSubmitDeploy",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
                 "designer|targetType": "Ext.button.Button",
-                "fn": "onClickDeployWindow",
+                "fn": "onBtnSubmitDeployClick",
+                "implHandler": [
+                    "var form = Ext.getCmp('applicationDeployForm');\t\t\t// domain form",
+                    "var window = Ext.getCmp(\"deployWindow\");",
+                    "var localWarPath = form.getForm().findField(\"warLocalPathFileField\");",
+                    "var displayName = form.getForm().findField(\"displayNameTextField\");",
+                    "var contextPath = form.getForm().findField(\"contextPathTextField\");",
+                    "var installationRemotePath = form.getForm().findField(\"installationRemotePathTextField\");",
+                    "var params = {\"displayName\":displayName.getValue(), \"localWarFilePath\":localWarPath.getValue(), \"contextPath\":contextPath.getValue(),\"warPath\":installationRemotePath.getValue(),\"domainId\":GlobalData.lastSelectedMenuId};",
+                    "Ext.Ajax.request({",
+                    "    url: GlobalData.urlPrefix + \"application/deploy\",",
+                    "    params: params,",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            window.close();",
+                    "            Ext.Ajax.request({",
+                    "                url: GlobalData.urlPrefix + \"application/list\",",
+                    "                params:{\"domainId\":GlobalData.lastSelectedMenuId},",
+                    "                success: function(resp, ops) {",
+                    "                    var response = Ext.decode(resp.responseText);",
+                    "                    if(response.success){",
+                    "                        Ext.getCmp(\"associatedApplicationListView\").getStore().loadData(response.data);",
+                    "                    } else {",
+                    "                        Ext.Msg.show({",
+                    "                            title: \"Message\",",
+                    "                            msg: response.msg,",
+                    "                            buttons: Ext.Msg.OK,",
+                    "                            icon: Ext.Msg.WARNING",
+                    "                        });",
+                    "                    }",
+                    "                }",
+                    "            });",
+                    "",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "",
+                    "    }",
+                    "});"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnSubmitDeployClick",
+            "designerId": "21b6d733-76fa-4e6c-a56c-3baa878c0933"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mybutton37",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onMybutton37Click",
+                "implHandler": [
+                    "var window = Ext.getCmp(\"deployWindow\");",
+                    "window.close();"
+                ],
+                "name": "click"
+            },
+            "name": "onMybutton37Click",
+            "designerId": "1db1af2b-89d2-45c7-ae1b-5010c3f9a2f8"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnApplicationDeploy",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnApplicationDeployClick",
+                "implHandler": [
+                    "this.showDeployWindow();"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnApplicationDeployClick",
+            "designerId": "1d539550-326f-4b18-b45c-e1754d87ccbf"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnApplicationStart",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnApplicationStartClick",
+                "implHandler": [
+                    "var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();",
+                    "var appId = selectedRecords[0].get(\"id\");",
+                    "this.changeState(appId,1);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnApplicationStartClick",
+            "designerId": "d0cbcddc-aa30-455e-bc4a-7dea0b879c4b"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnApplicationRestart",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnApplicationRestartClick",
+                "implHandler": [
+                    "var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();",
+                    "var appId = selectedRecords[0].get(\"id\");",
+                    "this.changeState(appId,3);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnApplicationRestartClick",
+            "designerId": "e5eb1eb5-b3c5-43a0-9225-03171a1e76af"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnApplicationStop",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnApplicationStopClick",
+                "implHandler": [
+                    "var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();",
+                    "var appId = selectedRecords[0].get(\"id\");",
+                    "this.changeState(appId,2);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnApplicationStopClick",
+            "designerId": "c341d4b8-5240-4b2e-bf1f-745a313f4f83"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnApplicationUndeploy",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnApplicationUndeployClick",
+                "implHandler": [
+                    " Ext.MessageBox.confirm('Confirm', 'Are you sure you want to undeploy this application?', function(btn){",
+                    "     if(btn == \"yes\"){",
+                    "         var domainId = GlobalData.lastSelectedMenuId;",
+                    "         var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();",
+                    "         var appId = selectedRecords[0].get(\"id\");",
+                    "         Ext.Ajax.request({",
+                    "             url: GlobalData.urlPrefix + \"application/undeploy\",",
+                    "             params:{\"Id\":appId, \"domainId\":domainId},",
+                    "             success: function(resp, ops) {",
+                    "                 var response = Ext.decode(resp.responseText);",
+                    "                 if(response.success){",
+                    "                     Ext.Ajax.request({",
+                    "                         url: GlobalData.urlPrefix + \"application/list\",",
+                    "                         params:{\"domainId\":domainId},",
+                    "                         success: function(resp, ops) {",
+                    "                             var response = Ext.decode(resp.responseText);",
+                    "                             if(response.success){",
+                    "                                 Ext.getCmp(\"associatedApplicationListView\").getStore().loadData(response.data);",
+                    "                             } else {",
+                    "                                 Ext.Msg.show({",
+                    "                                     title: \"Message\",",
+                    "                                     msg: response.msg,",
+                    "                                     buttons: Ext.Msg.OK,",
+                    "                                     icon: Ext.Msg.WARNING",
+                    "                                 });",
+                    "                             }",
+                    "                         }",
+                    "                     });",
+                    "                 } else {",
+                    "                     Ext.Msg.show({",
+                    "                         title: \"Message\",",
+                    "                         msg: response.msg,",
+                    "                         buttons: Ext.Msg.OK,",
+                    "                         icon: Ext.Msg.WARNING",
+                    "                     });",
+                    "                 }",
+                    "             }",
+                    "",
+                    "         });",
+                    "     }",
+                    " });"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnApplicationUndeployClick",
+            "designerId": "4fa9acf3-9a6d-45b2-8ed7-d0c2a8f6e20a"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "showDeployWindow",
                 "implHandler": [
                     "var window = Ext.create(\"widget.DeployWindow\");",
                     "window.show();"
-                ],
-                "name": "click",
-                "scope": "me"
+                ]
             },
-            "name": "onClickDeployWindow",
-            "designerId": "d899eea2-01ec-4ab1-a280-4db5fbb330c9"
+            "name": "showDeployWindow",
+            "designerId": "730c30c4-996f-4831-b04f-d7180e2667a0"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "appId",
+                    "state"
+                ],
+                "fn": "changeState",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix;",
+                    "if(state === 1) {// start",
+                    "    url += \"application/start\";",
+                    "}",
+                    "else if(state===2) {//stop",
+                    "    url += \"application/stop\";",
+                    "}",
+                    "else if(state === 3) {//restart",
+                    "    url += \"application/restart\";",
+                    "}",
+                    "",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"id\" : appId},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection()[0].set(\"state\",response.data);",
+                    "            if (response.data === 1) {",
+                    "                Ext.getCmp(\"btnApplicationStart\").disable();",
+                    "                Ext.getCmp(\"btnApplicationStop\").enable();",
+                    "                Ext.getCmp(\"btnApplicationRestart\").enable();",
+                    "                Ext.getCmp(\"btnApplicationUndeploy\").disable();",
+                    "            }else if (response.data === 2){",
+                    "                Ext.getCmp(\"btnApplicationStart\").enable();",
+                    "                Ext.getCmp(\"btnApplicationStop\").disable();",
+                    "                Ext.getCmp(\"btnApplicationRestart\").disable();",
+                    "                Ext.getCmp(\"btnApplicationUndeploy\").enable();",
+                    "",
+                    "            }",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "",
+                    "    }",
+                    "});"
+                ]
+            },
+            "name": "changeState",
+            "designerId": "289076c4-fcaa-4987-b2e3-c21b15313c40"
         }
     ]
 }

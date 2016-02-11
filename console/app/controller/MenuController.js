@@ -70,7 +70,7 @@ Ext.define('webapp.controller.MenuController', {
                    switch (_item.id) {
                         case 'new-domain':
                             webapp.app.getController("DomainController").showDomainWindow("new", 0);
-                           break;
+                            break;
                         case 'collapse':
                             //item.collapse();
                             break;
@@ -147,56 +147,56 @@ Ext.define('webapp.controller.MenuController', {
 
         }
         else if (menuId.indexOf("tomcatMng_domain_") >= 0 && menuId.indexOf("_tomcat_") >= 0) { //tomcat level
-            var tomcatId =  menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
+           var tomcatId =  menuId.substr(menuId.indexOf("_tomcat_") + "_tomcat_".length);
             mnuContext =  Ext.create("Ext.menu.Menu",{
-            items: [{
-                id: 'start-tomcat',
-                text: 'Start',
-                disabled:record.get("state") === 1?true:false
-            },
-            {
-                id: 'stop-tomcat',
-                text: 'Stop',
-                disabled:record.get("state") === 2?true:false
-
-            },
-            {
-                id: 'edit-tomcat',
-                text: 'Edit'
-            },
-            {
-                id: 'delete-tomcat',
-                text: 'Delete'
-            },
-            {
-                id:'refresh',
-                text:'Refresh'
-            }
-
-                   ],
-            listeners: {
-                click: function( _menu, _item, _e, _eOpts ) {
-                   switch (_item.id) {
-                        case 'start-tomcat':
-                            webapp.app.getController("TomcatController").changeState(tomcatId, 1);
-                            break;
-                        case 'stop-tomcat':
-                            webapp.app.getController("TomcatController").changeState(tomcatId, 2);
-                            break;
-                        case 'edit-tomcat':
-                            alert("Edit tomcat");
-                            break;
-                        case 'delete-tomcat':
-                            alert("Delete tomcat");
-                            break;
-                        case 'refresh':
-                                alert("Refresh");
-                            break;
-                    }
+                items: [{
+                    id: 'start-tomcat',
+                    text: 'Start',
+                    disabled:record.get("state") === 1?true:false
                 },
-                hide:function(menu){
-                    menu.destroy();
-                }
+                        {
+                            id: 'stop-tomcat',
+                            text: 'Stop',
+                            disabled:record.get("state") === 2?true:false
+
+                        },
+                        {
+                            id: 'edit-tomcat',
+                            text: 'Edit'
+                        },
+                        {
+                            id: 'delete-tomcat',
+                            text: 'Delete'
+                        },
+                        {
+                            id:'refresh',
+                            text:'Refresh'
+                        }
+
+                       ],
+                listeners: {
+                    click: function( _menu, _item, _e, _eOpts ) {
+                        switch (_item.id) {
+                            case 'start-tomcat':
+                                webapp.app.getController("TomcatController").changeState(tomcatId, 1);
+                                break;
+                            case 'stop-tomcat':
+                                webapp.app.getController("TomcatController").changeState(tomcatId, 2);
+                                break;
+                            case 'edit-tomcat':
+                                alert("Edit tomcat");
+                                break;
+                            case 'delete-tomcat':
+                                alert("Delete tomcat");
+                                break;
+                            case 'refresh':
+                                alert("Refresh");
+                                break;
+                        }
+                    },
+                    hide:function(menu){
+                        menu.destroy();
+                    }
            },
            defaults: {
              clickHideDelay: 1

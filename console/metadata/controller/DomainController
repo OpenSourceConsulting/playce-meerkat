@@ -214,6 +214,12 @@
                     "var domainTypeField  = Ext.getCmp(\"domainTypeField\");",
                     "var dataGridServerGroupField = Ext.getCmp(\"datagridServerGroupField\");",
                     "",
+                    "Ext.getCmp(\"associatedTomcatGridView\").getStore().removeAll();",
+                    "Ext.getCmp(\"associatedApplicationListView\").getStore().removeAll();",
+                    "Ext.getCmp(\"associatedApplicationListView\").getStore().removeAll();",
+                    "Ext.getCmp(\"clusteringConfigurationGridView\").getStore().removeAll();",
+                    "Ext.getCmp(\"domainSessionGridView\").getStore().clearData();",
+                    "",
                     "Ext.Ajax.request({",
                     "    url: GlobalData.urlPrefix + \"domain/get\",",
                     "    params: {\"id\":domainId},",
@@ -291,6 +297,57 @@
             },
             "name": "deleteDomain",
             "designerId": "88fa4a82-0640-4074-b83c-24acbcabce89"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mybutton68",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onEditButtonClick",
+                "implHandler": [
+                    "this.showDomainWindow(\"edit\",GlobalData.lastSelectedMenuId);"
+                ],
+                "name": "click"
+            },
+            "name": "onEditButtonClick",
+            "designerId": "06c3c13d-ce02-4223-99df-4a3e2d98befa"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mycontainer37",
+                "designer|params": [
+                    "component",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.container.Container",
+                "fn": "onMycontainer37Activate",
+                "implHandler": [
+                    "Ext.getCmp(\"associatedTomcatGridView\").getStore().clearData();",
+                    "Ext.getCmp(\"associatedApplicationListView\").getStore().clearData();",
+                    "Ext.getCmp(\"associatedApplicationListView\").getStore().clearData();",
+                    "Ext.getCmp(\"clusteringConfigurationGridView\").getStore().clearData();",
+                    "Ext.getCmp(\"domainSessionGridView\").getStore().clearData();"
+                ],
+                "name": "activate"
+            },
+            "name": "onMycontainer37Activate",
+            "designerId": "0306f2dd-4a29-463c-a317-f131be26d55a"
         }
     ]
 }

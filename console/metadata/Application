@@ -28,7 +28,8 @@
             "DomainModel",
             "DatagridServerGroupModel",
             "MachineModel",
-            "ClusteringConfigurationModel"
+            "ClusteringConfigurationModel",
+            "DatasourceModel"
         ],
         "name": "webapp",
         "requires": [
@@ -45,7 +46,9 @@
             "DatagridServerGroupStore",
             "MachineStore",
             "ClusteringConfigurationStore",
-            "ApplicationStore"
+            "ApplicationStore",
+            "DatasourceStore",
+            "LinkingTomcatDatasourceStore"
         ],
         "views": [
             "meerkatViewport",

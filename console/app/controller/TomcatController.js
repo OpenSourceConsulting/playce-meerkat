@@ -27,15 +27,15 @@ Ext.define('webapp.controller.TomcatController', {
  
     },
 
-    onStartTomcatClick: function(button, e, eOpts) {
-        this.changeState(GlobalData.lastSelectedMenuId, 1);
+    onBtnTomcatStartClick: function(button, e, eOpts) {
+         this.changeState(GlobalData.lastSelectedMenuId, 1);
     },
 
-    onStopTomcatClick: function(button, e, eOpts) {
-        this.changeState(GlobalData.lastSelectedMenuId, 2);
+    onBtnTomcatStopClick: function(button, e, eOpts) {
+         this.changeState(GlobalData.lastSelectedMenuId, 2);
     },
 
-    onTomcatRestartClick: function(button, e, eOpts) {
+    onBtnTomcatRestartClick: function(button, e, eOpts) {
         this.changeState(GlobalData.lastSelectedMenuId, 3);
     },
 
@@ -117,31 +117,30 @@ Ext.define('webapp.controller.TomcatController', {
     },
 
     displayTomcatInstance: function(id) {
-            this.getTomcatInstance(id,function(tomcat){
-                Ext.getCmp("tomcatNameField").setValue(tomcat.name);
-                Ext.getCmp("tomcatStateField").setValue(tomcat.state === 1?"Started":"Stopped");
-                if (tomcat.state === 1) {
-                    Ext.getCmp("btnTomcatStart").disable();
-                    Ext.getCmp("btnTomcatStop").enable();
-                    Ext.getCmp("btnTomcatRestart").enable();
-                }else if (tomcat.state === 2){
-                    Ext.getCmp("btnTomcatStart").enable();
-                    Ext.getCmp("btnTomcatStop").disable();
-                    Ext.getCmp("btnTomcatRestart").disable();
+         this.getTomcatInstance(id,function(tomcat){
+             Ext.getCmp("tomcatNameField").setValue(tomcat.name);
+             Ext.getCmp("tomcatStateField").setValue(tomcat.state === 1?"Started":"Stopped");
+             if (tomcat.state === 1) {
+                 Ext.getCmp("btnTomcatStart").disable();
+                 Ext.getCmp("btnTomcatStop").enable();
+                 Ext.getCmp("btnTomcatRestart").enable();
+             }else if (tomcat.state === 2){
+                 Ext.getCmp("btnTomcatStart").enable();
+                 Ext.getCmp("btnTomcatStop").disable();
+                 Ext.getCmp("btnTomcatRestart").disable();
 
-                }
-                Ext.getCmp("tomcatIPAddField").setValue(tomcat.ipaddress);
-                Ext.getCmp("tomcatPortField").setValue("{HTTP:"+tomcat.httpPort+", AJP:"+tomcat.ajpPort+", redirect:"+tomcat.redirectPort+"}");
-                Ext.getCmp("tomcatOSField").setValue(tomcat.osname);
-                Ext.getCmp("tomcatJVMVersionField").setValue(tomcat.jvm);
-                Ext.getCmp("tomcatWebServerField").setValue(tomcat.webServer);
-                Ext.getCmp("tomcatDomainField").setValue(tomcat.domainName);
+             }
+             Ext.getCmp("tomcatIPAddField").setValue(tomcat.ipaddress);
+             Ext.getCmp("tomcatPortField").setValue("{HTTP:"+tomcat.httpPort+", AJP:"+tomcat.ajpPort+", redirect:"+tomcat.redirectPort+"}");
+             Ext.getCmp("tomcatOSField").setValue(tomcat.osname);
+             Ext.getCmp("tomcatJVMVersionField").setValue(tomcat.jvm);
+             Ext.getCmp("tomcatWebServerField").setValue(tomcat.webServer);
+             Ext.getCmp("tomcatDomainField").setValue(tomcat.domainName);
 
-                Ext.getCmp("tomcatApplicationGrid").getStore().loadData(tomcat.applications, false);
-                Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(tomcat.datasources, false);
+             Ext.getCmp("tomcatApplicationGrid").getStore().loadData(tomcat.applications, false);
+             Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(tomcat.datasources, false);
 
-            });
-
+         });
     },
 
     init: function(application) {
@@ -153,13 +152,13 @@ Ext.define('webapp.controller.TomcatController', {
                 tabchange: this.onDomainTomcatTabTabChange
             },
             "#btnTomcatStart": {
-                click: this.onStartTomcatClick
+                click: this.onBtnTomcatStartClick
             },
             "#btnTomcatStop": {
-                click: this.onStopTomcatClick
+                click: this.onBtnTomcatStopClick
             },
             "#btnTomcatRestart": {
-                click: this.onTomcatRestartClick
+                click: this.onBtnTomcatRestartClick
             }
         });
     }

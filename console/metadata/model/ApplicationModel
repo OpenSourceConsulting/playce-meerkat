@@ -19,7 +19,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "Id",
+                "name": "id",
                 "type": "int"
             },
             "name": "MyField35",

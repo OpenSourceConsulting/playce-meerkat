@@ -145,7 +145,7 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
          Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){
 
              if(btn == "yes"){
-                button.up("window").close();
+                 button.up("window").close();
              }
          });
     }

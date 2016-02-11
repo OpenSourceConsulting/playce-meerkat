@@ -52,6 +52,229 @@
             },
             "name": "onDomainTomcatTabTabChange",
             "designerId": "8499dc46-7fe0-4f1a-9b4a-d8e9d74ff333"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnTomcatStart",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnTomcatStartClick",
+                "implHandler": [
+                    " this.changeState(GlobalData.lastSelectedMenuId, 1);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnTomcatStartClick",
+            "designerId": "7d0f859b-a192-465e-b4f9-940a947a8e1a"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnTomcatStop",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnTomcatStopClick",
+                "implHandler": [
+                    " this.changeState(GlobalData.lastSelectedMenuId, 2);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnTomcatStopClick",
+            "designerId": "63d4440a-0d94-4f31-8214-4e19a6fbd8e0"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnTomcatRestart",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnTomcatRestartClick",
+                "implHandler": [
+                    "this.changeState(GlobalData.lastSelectedMenuId, 3);"
+                ],
+                "name": "click"
+            },
+            "name": "onBtnTomcatRestartClick",
+            "designerId": "c7d3d1d0-ad40-4384-8fb3-e9d1fd480b94"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id",
+                    "state"
+                ],
+                "fn": "changeState",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix;",
+                    "var newState = \"\";",
+                    "var action = \"\";",
+                    "if(state === 1) {// start",
+                    "    url += \"tomcat/instance/start\";",
+                    "    newState = \"Started\";",
+                    "    action = \"start\";",
+                    "}",
+                    "else if(state===2) {//stop",
+                    "    url += \"tomcat/instance/stop\";",
+                    "    newState = \"Stopped\";",
+                    "    action = \"stop\";",
+                    "}",
+                    "else if(state === 3) {//restart",
+                    "    url += \"tomcat/instance/restart\";",
+                    "    newState = \"Restarted\";",
+                    "    action = \"restart\";",
+                    "}",
+                    "Ext.MessageBox.confirm('Confirm', 'Are you sure you want to ' + action +' this application?', function(btn){",
+                    "    if(btn == \"yes\"){",
+                    "",
+                    "        Ext.Ajax.request({",
+                    "            url: url,",
+                    "            params: {\"id\" : id},",
+                    "            success: function(resp, ops) {",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                if(response.success === true){",
+                    "                    Ext.getCmp(\"tomcatStateField\").setValue(newState);",
+                    "                    if (response.data === 1) {",
+                    "                        Ext.getCmp(\"btnTomcatStart\").disable();",
+                    "                        Ext.getCmp(\"btnTomcatStop\").enable();",
+                    "                        Ext.getCmp(\"btnTomcatRestart\").enable();",
+                    "                    }else if (response.data === 2){",
+                    "                        Ext.getCmp(\"btnTomcatStart\").enable();",
+                    "                        Ext.getCmp(\"btnTomcatStop\").disable();",
+                    "                        Ext.getCmp(\"btnTomcatRestart\").disable();",
+                    "",
+                    "                    }",
+                    "                }",
+                    "                else {",
+                    "                    Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: response.msg,",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.WARNING",
+                    "                    });",
+                    "                }",
+                    "",
+                    "            }",
+                    "        });",
+                    "    }",
+                    "});"
+                ]
+            },
+            "name": "changeState",
+            "designerId": "a4d18f35-9139-45ed-894d-170c01221cc5"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id",
+                    "callback"
+                ],
+                "fn": "getTomcatInstance",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"tomcat/instance/get\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"id\" : id},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            callback(response.data);",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    }",
+                    "});"
+                ]
+            },
+            "name": "getTomcatInstance",
+            "designerId": "b73e6838-48b9-498e-892f-eed5d8279164"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "id"
+                ],
+                "fn": "displayTomcatInstance",
+                "implHandler": [
+                    " this.getTomcatInstance(id,function(tomcat){",
+                    "     Ext.getCmp(\"tomcatNameField\").setValue(tomcat.name);",
+                    "     Ext.getCmp(\"tomcatStateField\").setValue(tomcat.state === 1?\"Started\":\"Stopped\");",
+                    "     if (tomcat.state === 1) {",
+                    "         Ext.getCmp(\"btnTomcatStart\").disable();",
+                    "         Ext.getCmp(\"btnTomcatStop\").enable();",
+                    "         Ext.getCmp(\"btnTomcatRestart\").enable();",
+                    "     }else if (tomcat.state === 2){",
+                    "         Ext.getCmp(\"btnTomcatStart\").enable();",
+                    "         Ext.getCmp(\"btnTomcatStop\").disable();",
+                    "         Ext.getCmp(\"btnTomcatRestart\").disable();",
+                    "",
+                    "     }",
+                    "     Ext.getCmp(\"tomcatIPAddField\").setValue(tomcat.ipaddress);",
+                    "     Ext.getCmp(\"tomcatPortField\").setValue(\"{HTTP:\"+tomcat.httpPort+\", AJP:\"+tomcat.ajpPort+\", redirect:\"+tomcat.redirectPort+\"}\");",
+                    "     Ext.getCmp(\"tomcatOSField\").setValue(tomcat.osname);",
+                    "     Ext.getCmp(\"tomcatJVMVersionField\").setValue(tomcat.jvm);",
+                    "     Ext.getCmp(\"tomcatWebServerField\").setValue(tomcat.webServer);",
+                    "     Ext.getCmp(\"tomcatDomainField\").setValue(tomcat.domainName);",
+                    "",
+                    "     Ext.getCmp(\"tomcatApplicationGrid\").getStore().loadData(tomcat.applications, false);",
+                    "     Ext.getCmp(\"tomcatDatasourcesGrid\").getStore().loadData(tomcat.datasources, false);",
+                    "",
+                    " });"
+                ]
+            },
+            "name": "displayTomcatInstance",
+            "designerId": "87bc045b-a696-4cf4-ae31-c83eda39580a"
         }
     ]
 }

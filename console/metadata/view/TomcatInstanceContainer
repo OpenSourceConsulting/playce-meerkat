@@ -42,9 +42,11 @@
                     "codeClass": null,
                     "userConfig": {
                         "designer|displayName": "HostNameField",
-                        "fieldLabel": "Host name:",
-                        "value": "Tomcat 1",
-                        "width": 164
+                        "fieldLabel": "Name",
+                        "id": "tomcatNameField",
+                        "labelWidth": 50,
+                        "value": "",
+                        "width": 150
                     },
                     "name": "MyDisplayField4",
                     "designerId": "53b10d61-dc73-42e3-b247-4e0a48586c57"
@@ -59,8 +61,10 @@
                     "userConfig": {
                         "designer|displayName": "StatusField",
                         "fieldLabel": "Status",
-                        "value": "Started",
-                        "width": 249
+                        "id": "tomcatStateField",
+                        "labelWidth": 50,
+                        "value": "",
+                        "width": 150
                     },
                     "name": "MyDisplayField5",
                     "designerId": "f9ad199d-3f8f-4073-8d46-261e6b66dd8a"
@@ -75,8 +79,10 @@
                     "userConfig": {
                         "designer|displayName": "IPAddressField",
                         "fieldLabel": "IP Address",
-                        "value": "192.168.0.83",
-                        "width": 249
+                        "id": "tomcatIPAddField",
+                        "labelWidth": 80,
+                        "value": "",
+                        "width": 200
                     },
                     "name": "MyDisplayField6",
                     "designerId": "56294c6f-fb77-4f80-b328-7ce2a3b09506"
@@ -91,8 +97,10 @@
                     "userConfig": {
                         "designer|displayName": "PortField",
                         "fieldLabel": "Ports:",
-                        "value": "{HTTP 1.1: 8080, AJP: 8009, redirect: 8443}",
-                        "width": 249
+                        "id": "tomcatPortField",
+                        "labelWidth": 50,
+                        "value": "",
+                        "width": 200
                     },
                     "name": "MyDisplayField7",
                     "designerId": "c0a3b3e9-c12a-4f14-953b-4afb9a124f23"
@@ -107,8 +115,9 @@
                     "userConfig": {
                         "designer|displayName": "WebServerField",
                         "fieldLabel": "Web server",
-                        "value": "Apache Tomcat / 7.0.47",
-                        "width": 164
+                        "id": "tomcatWebServerField",
+                        "value": "",
+                        "width": 200
                     },
                     "name": "MyDisplayField8",
                     "designerId": "a82b9beb-bda5-4532-9eaf-de6855e338a6"
@@ -123,7 +132,9 @@
                     "userConfig": {
                         "designer|displayName": "JVMVersionField",
                         "fieldLabel": "JVM Version",
-                        "value": "1.7.0_45-b18",
+                        "id": "tomcatJVMVersionField",
+                        "labelWidth": 80,
+                        "value": "",
                         "width": 164
                     },
                     "name": "MyDisplayField9",
@@ -139,7 +150,9 @@
                     "userConfig": {
                         "designer|displayName": "OSNameField",
                         "fieldLabel": "OS Name",
-                        "value": "Linux",
+                        "id": "tomcatOSField",
+                        "labelWidth": 80,
+                        "value": "",
                         "width": 164
                     },
                     "name": "MyDisplayField10",
@@ -155,6 +168,7 @@
                     "userConfig": {
                         "designer|displayName": "DomainField",
                         "fieldLabel": "Domain",
+                        "id": "tomcatDomainField",
                         "value": "Domain 1",
                         "width": 164
                     },
@@ -183,6 +197,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "disabled": true,
+                                "id": "btnTomcatStart",
                                 "layout|flex": null,
                                 "text": "Start"
                             },
@@ -197,6 +212,8 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "id": "btnTomcatStop",
+                                "itemId": "",
                                 "layout|flex": null,
                                 "text": "Stop"
                             },
@@ -211,6 +228,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "id": "btnTomcatRestart",
                                 "layout|flex": null,
                                 "text": "Restart"
                             },
@@ -222,158 +240,370 @@
             ]
         },
         {
-            "type": "Ext.grid.Panel",
+            "type": "Ext.tab.Panel",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "forceFit": true,
+                "activeTab": 0,
                 "layout|flex": 7,
-                "layout|region": "center",
-                "margin": "5 0 0 0 ",
-                "title": "Data sources"
+                "layout|region": "center"
             },
-            "name": "MyGridPanel4",
-            "designerId": "5e2db69a-c8d5-438c-8497-077fd9e6935d",
+            "name": "MyTabPanel11",
+            "designerId": "9d8e9a01-5d28-4cff-9c6f-fc7e1e6d3370",
             "cn": [
                 {
-                    "type": "Ext.grid.column.Column",
+                    "type": "Ext.panel.Panel",
                     "reference": {
-                        "name": "columns",
+                        "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "string",
-                        "text": "Name"
+                        "title": "Data sources"
                     },
-                    "name": "MyColumn7",
-                    "designerId": "38c85f7c-453e-4992-aa78-ab18e968f476"
-                },
-                {
-                    "type": "Ext.grid.column.Number",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "number",
-                        "text": "JDBC URL"
-                    },
-                    "name": "MyNumberColumn3",
-                    "designerId": "cb0502dc-46cd-4cfa-b578-33591ea1f603"
-                },
-                {
-                    "type": "Ext.grid.column.Date",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "date",
-                        "text": "Servers"
-                    },
-                    "name": "MyDateColumn3",
-                    "designerId": "258af06e-7a43-486e-a5ac-a3ca3c2ec9e0"
-                },
-                {
-                    "type": "Ext.grid.column.Boolean",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "bool",
-                        "text": "Min Connection Pool"
-                    },
-                    "name": "MyBooleanColumn4",
-                    "designerId": "2b0b8008-2915-48e9-a2b1-ff3862264af4"
-                },
-                {
-                    "type": "Ext.grid.column.Boolean",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "bool",
-                        "text": "Max Connection Pool"
-                    },
-                    "name": "MyBooleanColumn5",
-                    "designerId": "f4b6c296-2a7c-4a81-95f1-08a662f16123"
-                },
-                {
-                    "type": "Ext.grid.column.Boolean",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "bool",
-                        "text": "Timeout"
-                    },
-                    "name": "MyBooleanColumn6",
-                    "designerId": "61668939-3893-406f-8ee6-b8f97b136848"
-                },
-                {
-                    "type": "Ext.grid.View",
-                    "reference": {
-                        "name": "viewConfig",
-                        "type": "object"
-                    },
-                    "codeClass": null,
-                    "name": "MyGridView4",
-                    "designerId": "65d93c30-836d-4378-a624-49025e53851c"
-                },
-                {
-                    "type": "Ext.toolbar.Paging",
-                    "reference": {
-                        "name": "dockedItems",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "displayInfo": true,
-                        "dock": "bottom",
-                        "width": 360
-                    },
-                    "name": "MyPagingToolbar3",
-                    "designerId": "d21d9e54-c65c-4c9b-8942-7f339664715a"
-                },
-                {
-                    "type": "Ext.toolbar.Toolbar",
-                    "reference": {
-                        "name": "dockedItems",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dock": "top"
-                    },
-                    "name": "MyToolbar7",
-                    "designerId": "49012fa5-0a3a-4ea5-bf3e-6dc828eae3b9",
+                    "name": "MyPanel96",
+                    "designerId": "0c937a04-9da8-45f8-9bcf-d2cf5b42e1c3",
                     "cn": [
                         {
-                            "type": "Ext.button.Button",
+                            "type": "Ext.tab.Tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "TabConfig31",
+                            "designerId": "eea303c9-c577-40d9-af06-bb52eea43563"
+                        },
+                        {
+                            "type": "Ext.grid.Panel",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "id": "btnLinkNewDatasource",
-                                "layout|flex": null,
-                                "text": "Link new Datasource"
+                                "forceFit": true,
+                                "id": "tomcatDatasourcesGrid",
+                                "margin": "5 0 0 0 ",
+                                "store": "DatasourceStore",
+                                "title": ""
                             },
-                            "name": "MyButton9",
-                            "designerId": "601866f3-75cd-4423-8345-b0f00a3e63d5"
+                            "name": "MyGridPanel4",
+                            "designerId": "5e2db69a-c8d5-438c-8497-077fd9e6935d",
+                            "cn": [
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "name",
+                                        "text": "Name"
+                                    },
+                                    "name": "MyColumn7",
+                                    "designerId": "38c85f7c-453e-4992-aa78-ab18e968f476"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "dbType",
+                                        "text": "Type"
+                                    },
+                                    "name": "MyColumn44",
+                                    "designerId": "258af06e-7a43-486e-a5ac-a3ca3c2ec9e0"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "jdbcUrl",
+                                        "text": "JDBC URL"
+                                    },
+                                    "name": "MyColumn43",
+                                    "designerId": "cb0502dc-46cd-4cfa-b578-33591ea1f603"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "Id",
+                                        "text": "Servers"
+                                    },
+                                    "name": "MyColumn48",
+                                    "designerId": "9d0f6568-8e9c-4e53-8d1f-ffe4a0846c86"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "minConnectionPool",
+                                        "text": "Min Connection Pool"
+                                    },
+                                    "name": "MyColumn45",
+                                    "designerId": "2b0b8008-2915-48e9-a2b1-ff3862264af4"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "maxConnectionPool",
+                                        "text": "Max Connection Pool"
+                                    },
+                                    "name": "MyColumn46",
+                                    "designerId": "f4b6c296-2a7c-4a81-95f1-08a662f16123"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "timeout",
+                                        "text": "Timeout"
+                                    },
+                                    "name": "MyColumn47",
+                                    "designerId": "61668939-3893-406f-8ee6-b8f97b136848"
+                                },
+                                {
+                                    "type": "Ext.grid.View",
+                                    "reference": {
+                                        "name": "viewConfig",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "name": "MyGridView4",
+                                    "designerId": "65d93c30-836d-4378-a624-49025e53851c"
+                                },
+                                {
+                                    "type": "Ext.toolbar.Toolbar",
+                                    "reference": {
+                                        "name": "dockedItems",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dock": "top"
+                                    },
+                                    "name": "MyToolbar7",
+                                    "designerId": "49012fa5-0a3a-4ea5-bf3e-6dc828eae3b9",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.button.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "id": "btnLinkNewDatasource",
+                                                "layout|flex": null,
+                                                "text": "Link Datasource"
+                                            },
+                                            "name": "MyButton9",
+                                            "designerId": "601866f3-75cd-4423-8345-b0f00a3e63d5"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onTomcatDatasourcesGridItemContextMenu",
+                                        "implHandler": [
+                                            "var mnuContext = Ext.create(\"Ext.menu.Menu\",{",
+                                            "",
+                                            "    items: [",
+                                            "    {",
+                                            "      id: 'remove-datasource',",
+                                            "      text: 'Remove'",
+                                            "    }",
+                                            "    ],",
+                                            "    listeners: {",
+                                            "",
+                                            "        click: function( _menu, _item, _e, _eOpts ) {",
+                                            "          switch (_item.id) {",
+                                            "",
+                                            "            case 'remove-datasource':",
+                                            "              webapp.app.getController(\"DatasourceController\").removeDs(GlobalData.lastSelectedMenuId, record.get(\"id\"));",
+                                            "              break;",
+                                            "            default:",
+                                            "              break;",
+                                            "          }",
+                                            "        },",
+                                            "        hide:function(menu){",
+                                            "           menu.destroy();",
+                                            "        }",
+                                            "    },",
+                                            "    defaults: {",
+                                            "        clickHideDelay: 1",
+                                            "    }",
+                                            "});",
+                                            "",
+                                            "mnuContext.showAt(e.getXY());",
+                                            "e.stopEvent();"
+                                        ],
+                                        "name": "itemcontextmenu",
+                                        "scope": "me"
+                                    },
+                                    "name": "onTomcatDatasourcesGridItemContextMenu",
+                                    "designerId": "2f81fd89-f60c-47a1-8eab-c94c836c076a"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.panel.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "Applications"
+                    },
+                    "name": "MyPanel97",
+                    "designerId": "782e1c8c-175b-4a8c-b6cd-a288efa29e77",
+                    "cn": [
+                        {
+                            "type": "Ext.tab.Tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "TabConfig32",
+                            "designerId": "1b99fdef-6218-41fd-ac9b-7f3725229ac9"
+                        },
+                        {
+                            "type": "Ext.grid.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "forceFit": true,
+                                "id": "tomcatApplicationGrid",
+                                "store": "ApplicationStore",
+                                "title": ""
+                            },
+                            "name": "MyGridPanel28",
+                            "designerId": "28f79d84-2d99-46da-ac32-ac9fcfb6a99b",
+                            "cn": [
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "contextPath",
+                                        "text": "Context Path"
+                                    },
+                                    "name": "MyColumn49",
+                                    "designerId": "180536b2-acea-4fed-8f9d-4396a2778bfb"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "displayName",
+                                        "text": "Name"
+                                    },
+                                    "name": "MyColumn50",
+                                    "designerId": "bf0d029d-d28a-4bd7-aa7f-aaf4106ae2da"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "warPath",
+                                        "text": "*.war path"
+                                    },
+                                    "name": "MyColumn51",
+                                    "designerId": "bc15cc2d-1f92-43f6-aa62-f1a174da51fc"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "version",
+                                        "text": "Version"
+                                    },
+                                    "name": "MyColumn52",
+                                    "designerId": "2cf73a6b-8ea4-4848-b5bc-2ac0d9575b8a"
+                                },
+                                {
+                                    "type": "Ext.grid.column.Column",
+                                    "reference": {
+                                        "name": "columns",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "dataIndex": "state",
+                                        "text": "State"
+                                    },
+                                    "name": "MyColumn53",
+                                    "designerId": "2ed75311-7473-4f8d-9f6b-09d8f32c10c9"
+                                },
+                                {
+                                    "type": "Ext.grid.View",
+                                    "reference": {
+                                        "name": "viewConfig",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "name": "MyGridView28",
+                                    "designerId": "dcde8736-59eb-4abc-8c3d-aeb502b6e95e"
+                                }
+                            ]
                         }
                     ]
                 }

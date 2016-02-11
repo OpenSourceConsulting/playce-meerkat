@@ -99,7 +99,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             width: 164,
                             fieldLabel: 'OS Name',
                             labelWidth: 80,
-                            value: 'Linux'
+                            value: ''
                         },
                         {
                             xtype: 'displayfield',
@@ -264,28 +264,28 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
 
             items: [
             {
-                id: 'remove-datasource',
-                text: 'Remove'
+              id: 'remove-datasource',
+              text: 'Remove'
             }
-                   ],
+            ],
             listeners: {
 
                 click: function( _menu, _item, _e, _eOpts ) {
-                   switch (_item.id) {
+                  switch (_item.id) {
 
-                        case 'remove-datasource':
-                            webapp.app.getController("DatasourceController").removeDs(GlobalData.lastSelectedMenuId, record.get("id"));
-                            break;
-                        default:
-                            break;
-                   }
+                    case 'remove-datasource':
+                      webapp.app.getController("DatasourceController").removeDs(GlobalData.lastSelectedMenuId, record.get("id"));
+                      break;
+                    default:
+                      break;
+                  }
                 },
                 hide:function(menu){
-                    menu.destroy();
+                   menu.destroy();
                 }
             },
             defaults: {
-               clickHideDelay: 1
+                clickHideDelay: 1
             }
         });
 

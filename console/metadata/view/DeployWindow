@@ -8,26 +8,28 @@
     "userConfig": {
         "designer|userAlias": "DeployWindow",
         "designer|userClassName": "DeployWindow",
-        "height": 119,
-        "layout": "border",
+        "height": 249,
+        "id": "deployWindow",
+        "layout": "fit",
         "title": "Deploy",
         "width": 606
     },
     "designerId": "c55d81de-e837-485e-aade-da75dfa1ce01",
     "cn": [
         {
-            "type": "Ext.container.Container",
+            "type": "Ext.form.Panel",
             "reference": {
-                "name": "dockedItems",
+                "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "dock": "top",
-                "layout|margins": "10"
+                "bodyPadding": 10,
+                "id": "applicationDeployForm",
+                "title": ""
             },
-            "name": "MyContainer33",
-            "designerId": "ff664555-99ec-4a3f-b0a9-cd6b620f3b5c",
+            "name": "MyForm5",
+            "designerId": "cbc3433d-eeac-4946-a278-d5ddec346862",
             "cn": [
                 {
                     "type": "Ext.form.field.File",
@@ -38,12 +40,73 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Choose application (*.war)",
+                        "id": "warLocalPathFileField",
                         "labelWidth": 180,
                         "margin": 10,
                         "width": 571
                     },
                     "name": "MyFileUpload",
                     "designerId": "1cbb4aa6-865a-44cf-ba50-0486316b3a1e"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "fieldLabel": "Display name",
+                        "id": "displayNameTextField",
+                        "labelWidth": 180,
+                        "layout|anchor": null,
+                        "margin": 10,
+                        "width": 571
+                    },
+                    "name": "MyTextField1",
+                    "designerId": "e78555f3-c33a-4d5b-abfb-ac275c12e322"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "fieldLabel": "Context path",
+                        "id": "contextPathTextField",
+                        "labelWidth": 180,
+                        "layout|anchor": null,
+                        "margin": 10,
+                        "width": 571
+                    },
+                    "name": "MyTextField47",
+                    "designerId": "7a352c23-18ac-4c65-b956-a0214a46685a"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "fieldLabel": "Installation path",
+                        "id": "installationRemotePathTextField",
+                        "labelWidth": 180,
+                        "layout|anchor": null,
+                        "margin": 10,
+                        "width": 571
+                    },
+                    "name": "MyTextField48",
+                    "designerId": "0363ac9c-eefb-41a5-a173-1522e350246b"
                 },
                 {
                     "type": "Ext.button.Button",
@@ -53,6 +116,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "id": "btnSubmitDeploy",
                         "margin": "0 0 10 200",
                         "text": "Deploy"
                     },
@@ -67,6 +131,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "itemId": "mybutton37",
                         "margin": "0 0 10 10 ",
                         "text": "Cancel"
                     },

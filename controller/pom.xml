@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>athena-meerkat</groupId>
+	<groupId>com.athena.meerkat</groupId>
 	<artifactId>controller</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.compile.version>1.7</project.build.compile.version>
@@ -40,14 +40,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
-		<!-- 
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		 -->
+
+		<!-- <dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			<scope>runtime</scope> </dependency> -->
 
 		<!-- for Servlet 2.5 -->
 		<dependency>
@@ -58,7 +53,7 @@
 
 		<dependency>
 			<groupId>com.athena.meerkat</groupId>
-			<artifactId>athena-meerkat-common</artifactId>
+			<artifactId>common</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
@@ -120,38 +115,28 @@
 					<layout>ZIP</layout>
 				</configuration>
 			</plugin>
-			<!--  -->
+			<!-- -->
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
 				<version>1.1.3</version>
-				<!-- Eclipse error 로 인해 주석처리함. 아래와 같이 사용해야 한다고 함.
-				http://stackoverflow.com/questions/24482259/eclipse-issue-with-maven-build-and-jdk-when-generating-qclasses-in-querydsl
-				<executions>
-					<execution>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/generated-sources/java</outputDirectory>
-							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-						</configuration>
-					</execution>
-				</executions>
-				-->
+				<!-- Eclipse error 로 인해 주석처리함. 아래와 같이 사용해야 한다고 함. http://stackoverflow.com/questions/24482259/eclipse-issue-with-maven-build-and-jdk-when-generating-qclasses-in-querydsl 
+					<executions> <execution> <goals> <goal>process</goal> </goals> <configuration> 
+					<outputDirectory>target/generated-sources/java</outputDirectory> <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor> 
+					</configuration> </execution> </executions> -->
 				<dependencies>
-		            <dependency>
-		                <groupId>com.mysema.querydsl</groupId>
-		                <artifactId>querydsl-apt</artifactId>
-		                <version>3.6.0</version>
-		            </dependency>
-		            <dependency>
-		                <groupId>com.mysema.querydsl</groupId>
-		                <artifactId>querydsl-jpa</artifactId>
-		                <classifier>apt</classifier>
-		                <version>3.6.0</version>
-		            </dependency>
-		        </dependencies>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-apt</artifactId>
+						<version>3.6.0</version>
+					</dependency>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-jpa</artifactId>
+						<classifier>apt</classifier>
+						<version>3.6.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

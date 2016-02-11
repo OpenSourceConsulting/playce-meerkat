@@ -24,13 +24,13 @@ Ext.define('webapp.controller.DatasourceController', {
         var selectedDsIds = "";
         var items = Ext.getCmp("allDatasourceGrid").getStore();
         items.each(function(rec){
-           if(rec.get("selected") === true){
-               selectedDsIds += "#" + rec.get("id");
-           }
+            if(rec.get("selected") === true){
+                selectedDsIds += "#" + rec.get("id");
+            }
         });
 
         var restartTomcat = Ext.getCmp("restartTomcatCheckbox").getValue();
-          var window = Ext.getCmp("linkNewDataSourceWindow");
+        var window = Ext.getCmp("linkNewDataSourceWindow");
         var url = GlobalData.urlPrefix + "datasource/tomcat/link/save";
         Ext.Ajax.request({
             url: url,
@@ -38,7 +38,7 @@ Ext.define('webapp.controller.DatasourceController', {
             success: function(resp, ops) {
                 var response = Ext.decode(resp.responseText);
                 if(response.success === true){
-                   Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(response.data);
+                    Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(response.data);
                     window.close();
                 }
                 else {
@@ -57,78 +57,78 @@ Ext.define('webapp.controller.DatasourceController', {
     showLinkDatasourceWindow: function(tomcatId, type) {
         var window = Ext.create("widget.LinkNewDataSourceWindow");
         var url = GlobalData.urlPrefix + "datasource/tomcat/link/list";
-         Ext.Ajax.request({
-             url: url,
-             params: {"tomcatId" : GlobalData.lastSelectedMenuId},
-             success: function(resp, ops) {
-                 var response = Ext.decode(resp.responseText);
-                 if(response.success === true){
-                     var gridStore = Ext.getCmp("allDatasourceGrid").getStore();
-                     gridStore.loadData(response.data);
-                     //load name, state of tomcat
-                     Ext.getCmp("linkDatasourceTomcatNameField").setValue(Ext.getCmp("tomcatNameField").getValue());
-                     Ext.getCmp("linkDatasourceTomcatStatusField").setValue(Ext.getCmp("tomcatStateField").getValue());
+        Ext.Ajax.request({
+            url: url,
+            params: {"tomcatId" : GlobalData.lastSelectedMenuId},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    var gridStore = Ext.getCmp("allDatasourceGrid").getStore();
+                    gridStore.loadData(response.data);
+                    //load name, state of tomcat
+                    Ext.getCmp("linkDatasourceTomcatNameField").setValue(Ext.getCmp("tomcatNameField").getValue());
+                    Ext.getCmp("linkDatasourceTomcatStatusField").setValue(Ext.getCmp("tomcatStateField").getValue());
 
-                 }
-                 else {
-                     Ext.Msg.show({
-                         title: "Message",
-                         msg: response.msg,
-                         buttons: Ext.Msg.OK,
-                         icon: Ext.Msg.WARNING
-                     });
-                 }
-             }
-         });
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            }
+        });
         window.show();
     },
 
     getDatasourceListByTomcat: function(tomcatId, callback) {
-               var url = GlobalData.urlPrefix + "tomcat/instance/datasource";
-                Ext.Ajax.request({
-                    url: url,
-                    params: {"tomcatId" : tomcatId},
-                    success: function(resp, ops) {
-                        var response = Ext.decode(resp.responseText);
-                        if(response.success === true){
-                            callback(response.data);
-                        }
-                        else {
-                            Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.WARNING
-                            });
-                        }
-                    }
-                });
+        var url = GlobalData.urlPrefix + "tomcat/instance/datasource";
+        Ext.Ajax.request({
+            url: url,
+            params: {"tomcatId" : tomcatId},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    callback(response.data);
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            }
+        });
     },
 
     removeDs: function(tomcatId, dsId) {
-        Ext.MessageBox.confirm('Confirm', 'Are you sure you want to remove this datasource?', function(btn){
+           Ext.MessageBox.confirm('Confirm', 'Are you sure you want to remove this datasource?', function(btn){
 
-             if(btn == "yes"){
-                var url = GlobalData.urlPrefix + "datasource/tomcat/link/remove";
-                Ext.Ajax.request({
-                    url: url,
-                    params: {"tomcatId" : tomcatId, "dsId":dsId},
-                    success: function(resp, ops) {
-                        var response = Ext.decode(resp.responseText);
-                        if(response.success === true){
-                            Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(response.data);
-                        }
-                        else {
-                            Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.WARNING
-                            });
-                        }
-                    }
-                });
-             }});
+               if(btn == "yes"){
+                   var url = GlobalData.urlPrefix + "datasource/tomcat/link/remove";
+                   Ext.Ajax.request({
+                       url: url,
+                       params: {"tomcatId" : tomcatId, "dsId":dsId},
+                       success: function(resp, ops) {
+                           var response = Ext.decode(resp.responseText);
+                           if(response.success === true){
+                               Ext.getCmp("tomcatDatasourcesGrid").getStore().loadData(response.data);
+                           }
+                           else {
+                               Ext.Msg.show({
+                                   title: "Message",
+                                   msg: response.msg,
+                                   buttons: Ext.Msg.OK,
+                                   icon: Ext.Msg.WARNING
+                               });
+                           }
+                       }
+                   });
+               }});
     },
 
     init: function(application) {

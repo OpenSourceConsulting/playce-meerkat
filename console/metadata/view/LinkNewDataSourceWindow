@@ -10,8 +10,10 @@
         "designer|userAlias": "LinkNewDataSourceWindow",
         "designer|userClassName": "LinkNewDataSourceWindow",
         "height": 288,
+        "id": "linkNewDataSourceWindow",
         "layout": "vbox",
-        "title": "Link to new Datasource",
+        "modal": true,
+        "title": "Link to datasource",
         "width": 574
     },
     "designerId": "112bf472-917a-445b-94b8-7aa4460d074e",
@@ -42,6 +44,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Tomcat instance",
+                        "id": "linkDatasourceTomcatNameField",
                         "value": "Tomcat 1",
                         "width": 213
                     },
@@ -57,6 +60,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Status:",
+                        "id": "linkDatasourceTomcatStatusField",
                         "margin": "0 10 0 100",
                         "value": "Started",
                         "width": 148
@@ -75,13 +79,30 @@
             "codeClass": null,
             "userConfig": {
                 "forceFit": true,
+                "id": "allDatasourceGrid",
                 "layout|flex": 6,
                 "margin": "5 5 5 5",
+                "store": "LinkingTomcatDatasourceStore",
                 "title": ""
             },
             "name": "MyGridPanel23",
             "designerId": "2118cc8b-dcdb-4a55-a51b-3d96b2ef4f4d",
             "cn": [
+                {
+                    "type": "Ext.grid.column.CheckColumn",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "selected",
+                        "text": "Select",
+                        "width": 50
+                    },
+                    "name": "MyCheckColumn",
+                    "designerId": "3e44d55a-4f39-416b-ae28-aabee8a79537"
+                },
                 {
                     "type": "Ext.grid.column.Column",
                     "reference": {
@@ -90,42 +111,28 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "string",
-                        "text": "Select"
-                    },
-                    "name": "MyColumn32",
-                    "designerId": "3e44d55a-4f39-416b-ae28-aabee8a79537"
-                },
-                {
-                    "type": "Ext.grid.column.Number",
-                    "reference": {
-                        "name": "columns",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "dataIndex": "number",
+                        "dataIndex": "name",
                         "text": "Data source Name"
                     },
-                    "name": "MyNumberColumn24",
+                    "name": "MyColumn54",
                     "designerId": "c2a222f0-a38d-444a-aec3-103f5e3d0d4a"
                 },
                 {
-                    "type": "Ext.grid.column.Date",
+                    "type": "Ext.grid.column.Column",
                     "reference": {
                         "name": "columns",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "dataIndex": "date",
+                        "dataIndex": "jdbcUrl",
                         "text": "JDBC URL"
                     },
-                    "name": "MyDateColumn16",
+                    "name": "MyColumn55",
                     "designerId": "34e9df28-144c-4059-aeb4-ccde1713805e"
                 },
                 {
-                    "type": "Ext.grid.column.Boolean",
+                    "type": "Ext.grid.column.Column",
                     "reference": {
                         "name": "columns",
                         "type": "array"
@@ -135,7 +142,7 @@
                         "dataIndex": "bool",
                         "text": "Server No"
                     },
-                    "name": "MyBooleanColumn37",
+                    "name": "MyColumn56",
                     "designerId": "b76ea628-13f2-47b7-a008-b14cf6351c2d"
                 },
                 {
@@ -160,6 +167,7 @@
             "userConfig": {
                 "boxLabel": "Restart tomcat instance after linking new datasource.",
                 "fieldLabel": "",
+                "id": "restartTomcatCheckbox",
                 "layout|flex": 0.5,
                 "margin": "5 5 5 5"
             },
@@ -188,8 +196,9 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "itemId": "mybutton38",
                         "margin": "0 0 0 220",
-                        "text": "OK"
+                        "text": "Save"
                     },
                     "name": "MyButton38",
                     "designerId": "a45c6c9d-04f7-4064-b65d-04e0058e4c2a"
@@ -205,8 +214,33 @@
                         "margin": "0 0 0 10",
                         "text": "Cancel"
                     },
-                    "name": "MyButton39",
-                    "designerId": "b7373ecb-2557-40b7-90c1-ce78ccac3e98"
+                    "name": "MyButton4",
+                    "designerId": "b5a738c3-524e-495a-a1f9-1b7c527303c0",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onButtonClick",
+                                "implHandler": [
+                                    " Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){",
+                                    "",
+                                    "     if(btn == \"yes\"){",
+                                    "         button.up(\"window\").close();",
+                                    "     }",
+                                    " });"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onButtonClick",
+                            "designerId": "35be92f8-07a5-41f3-b575-21c3adc733f5"
+                        }
+                    ]
                 }
             ]
         }

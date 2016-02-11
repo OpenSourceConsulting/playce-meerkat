@@ -17,51 +17,50 @@ Ext.define('webapp.controller.ApplicationController', {
     extend: 'Ext.app.Controller',
 
     onBtnSubmitDeployClick: function(button, e, eOpts) {
-
         var form = Ext.getCmp('applicationDeployForm');			// domain form
-         var window = Ext.getCmp("deployWindow");
+        var window = Ext.getCmp("deployWindow");
         var localWarPath = form.getForm().findField("warLocalPathFileField");
         var displayName = form.getForm().findField("displayNameTextField");
         var contextPath = form.getForm().findField("contextPathTextField");
         var installationRemotePath = form.getForm().findField("installationRemotePathTextField");
         var params = {"displayName":displayName.getValue(), "localWarFilePath":localWarPath.getValue(), "contextPath":contextPath.getValue(),"warPath":installationRemotePath.getValue(),"domainId":GlobalData.lastSelectedMenuId};
         Ext.Ajax.request({
-             url: GlobalData.urlPrefix + "application/deploy",
-             params: params,
-             success: function(resp, ops) {
-                    var response = Ext.decode(resp.responseText);
-                    if(response.success === true){
-                        window.close();
-                        Ext.Ajax.request({
-                          url: GlobalData.urlPrefix + "application/list",
-                          params:{"domainId":GlobalData.lastSelectedMenuId},
-                          success: function(resp, ops) {
-                               var response = Ext.decode(resp.responseText);
-                                  if(response.success){
-                                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
-                                  } else {
-                                      Ext.Msg.show({
-                                          title: "Message",
-                                          msg: response.msg,
-                                          buttons: Ext.Msg.OK,
-                                          icon: Ext.Msg.WARNING
-                                      });
-                                  }
-                }
-              });
-
-                    }
-                    else {
-                             Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.WARNING
-                            });
-                    }
+            url: GlobalData.urlPrefix + "application/deploy",
+            params: params,
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    window.close();
+                    Ext.Ajax.request({
+                        url: GlobalData.urlPrefix + "application/list",
+                        params:{"domainId":GlobalData.lastSelectedMenuId},
+                        success: function(resp, ops) {
+                            var response = Ext.decode(resp.responseText);
+                            if(response.success){
+                                Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
+                            } else {
+                                Ext.Msg.show({
+                                    title: "Message",
+                                    msg: response.msg,
+                                    buttons: Ext.Msg.OK,
+                                    icon: Ext.Msg.WARNING
+                                });
+                            }
+                        }
+                    });
 
                 }
-            });
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+
+            }
+        });
     },
 
     onMybutton37Click: function(button, e, eOpts) {
@@ -77,7 +76,6 @@ Ext.define('webapp.controller.ApplicationController', {
         var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
         var appId = selectedRecords[0].get("id");
         this.changeState(appId,1);
-
     },
 
     onBtnApplicationRestartClick: function(button, e, eOpts) {
@@ -94,33 +92,23 @@ Ext.define('webapp.controller.ApplicationController', {
 
     onBtnApplicationUndeployClick: function(button, e, eOpts) {
          Ext.MessageBox.confirm('Confirm', 'Are you sure you want to undeploy this application?', function(btn){
-                     if(btn == "yes"){
-                             var domainId = GlobalData.lastSelectedMenuId;
-                            var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
-                            var appId = selectedRecords[0].get("id");
-                            Ext.Ajax.request({
-                                 url: GlobalData.urlPrefix + "application/undeploy",
-                                 params:{"Id":appId, "domainId":domainId},
+             if(btn == "yes"){
+                 var domainId = GlobalData.lastSelectedMenuId;
+                 var selectedRecords=Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection();
+                 var appId = selectedRecords[0].get("id");
+                 Ext.Ajax.request({
+                     url: GlobalData.urlPrefix + "application/undeploy",
+                     params:{"Id":appId, "domainId":domainId},
+                     success: function(resp, ops) {
+                         var response = Ext.decode(resp.responseText);
+                         if(response.success){
+                             Ext.Ajax.request({
+                                 url: GlobalData.urlPrefix + "application/list",
+                                 params:{"domainId":domainId},
                                  success: function(resp, ops) {
                                      var response = Ext.decode(resp.responseText);
                                      if(response.success){
-                                         Ext.Ajax.request({
-                                             url: GlobalData.urlPrefix + "application/list",
-                                             params:{"domainId":domainId},
-                                             success: function(resp, ops) {
-                                                 var response = Ext.decode(resp.responseText);
-                                                 if(response.success){
-                                                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
-                                                 } else {
-                                                     Ext.Msg.show({
-                                                         title: "Message",
-                                                         msg: response.msg,
-                                                         buttons: Ext.Msg.OK,
-                                                         icon: Ext.Msg.WARNING
-                                                     });
-                                                 }
-                                             }
-                                         });
+                                         Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
                                      } else {
                                          Ext.Msg.show({
                                              title: "Message",
@@ -130,15 +118,25 @@ Ext.define('webapp.controller.ApplicationController', {
                                          });
                                      }
                                  }
-
-         });
+                             });
+                         } else {
+                             Ext.Msg.show({
+                                 title: "Message",
+                                 msg: response.msg,
+                                 buttons: Ext.Msg.OK,
+                                 icon: Ext.Msg.WARNING
+                             });
+                         }
                      }
+
+                 });
+             }
          });
     },
 
     showDeployWindow: function() {
-         var window = Ext.create("widget.DeployWindow");
-         window.show();
+        var window = Ext.create("widget.DeployWindow");
+        window.show();
     },
 
     changeState: function(appId, state) {
@@ -154,56 +152,36 @@ Ext.define('webapp.controller.ApplicationController', {
         }
 
         Ext.Ajax.request({
-                     url: url,
-                     params: {"id" : appId},
-                     success: function(resp, ops) {
-                            var response = Ext.decode(resp.responseText);
-                            if(response.success === true){
-                                Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection()[0].set("state",response.data);
-                                if (response.data === 1) {
-                                    Ext.getCmp("btnApplicationStart").disable();
-                                    Ext.getCmp("btnApplicationStop").enable();
-                                    Ext.getCmp("btnApplicationRestart").enable();
-                                    Ext.getCmp("btnApplicationUndeploy").disable();
-                                }else if (response.data === 2){
-                                    Ext.getCmp("btnApplicationStart").enable();
-                                    Ext.getCmp("btnApplicationStop").disable();
-                                    Ext.getCmp("btnApplicationRestart").disable();
-                                    Ext.getCmp("btnApplicationUndeploy").enable();
+            url: url,
+            params: {"id" : appId},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    Ext.getCmp('associatedApplicationListView').getSelectionModel().getSelection()[0].set("state",response.data);
+                    if (response.data === 1) {
+                        Ext.getCmp("btnApplicationStart").disable();
+                        Ext.getCmp("btnApplicationStop").enable();
+                        Ext.getCmp("btnApplicationRestart").enable();
+                        Ext.getCmp("btnApplicationUndeploy").disable();
+                    }else if (response.data === 2){
+                        Ext.getCmp("btnApplicationStart").enable();
+                        Ext.getCmp("btnApplicationStop").disable();
+                        Ext.getCmp("btnApplicationRestart").disable();
+                        Ext.getCmp("btnApplicationUndeploy").enable();
 
-                                }
-                            }
-                            else {
-                                     Ext.Msg.show({
-                                        title: "Message",
-                                        msg: response.msg,
-                                        buttons: Ext.Msg.OK,
-                                        icon: Ext.Msg.WARNING
-                                    });
-                            }
-
-                        }
-                    });
-    },
-
-    loadAppListByDomain: function(domainId) {
-         Ext.Ajax.request({
-                          url: GlobalData.urlPrefix + "application/list",
-                          params:{"domainId":domainId},
-                          success: function(resp, ops) {
-                               var response = Ext.decode(resp.responseText);
-                                  if(response.success){
-                                     Ext.getCmp("associatedApplicationListView").getStore().loadData(response.data);
-                                  } else {
-                                      Ext.Msg.show({
-                                          title: "Message",
-                                          msg: response.msg,
-                                          buttons: Ext.Msg.OK,
-                                          icon: Ext.Msg.WARNING
-                                      });
-                                  }
+                    }
                 }
-              });
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+
+            }
+        });
     },
 
     init: function(application) {

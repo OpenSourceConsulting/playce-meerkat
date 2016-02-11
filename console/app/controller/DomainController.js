@@ -57,7 +57,6 @@ Ext.define('webapp.controller.DomainController', {
         Ext.getCmp("associatedApplicationListView").getStore().clearData();
         Ext.getCmp("clusteringConfigurationGridView").getStore().clearData();
         Ext.getCmp("domainSessionGridView").getStore().clearData();
-
     },
 
     showDomainWindow: function(type, id) {

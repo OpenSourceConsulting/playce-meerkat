@@ -22,14 +22,192 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onClickLinkNewDatasource",
                 "implHandler": [
-                    "var window = Ext.create(\"widget.LinkNewDataSourceWindow\");",
-                    "window.show();"
+                    "this.showLinkDatasourceWindow(GlobalData.lastSelectedMenuId, \"new\");"
                 ],
                 "name": "click",
                 "scope": "me"
             },
             "name": "onClickLinkNewDatasource",
             "designerId": "ed364357-f656-4688-990f-2a398949f9a6"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mybutton38",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onMybutton38Click",
+                "implHandler": [
+                    "var selectedDsIds = \"\";",
+                    "var items = Ext.getCmp(\"allDatasourceGrid\").getStore();",
+                    "items.each(function(rec){",
+                    "    if(rec.get(\"selected\") === true){",
+                    "        selectedDsIds += \"#\" + rec.get(\"id\");",
+                    "    }",
+                    "});",
+                    "",
+                    "var restartTomcat = Ext.getCmp(\"restartTomcatCheckbox\").getValue();",
+                    "var window = Ext.getCmp(\"linkNewDataSourceWindow\");",
+                    "var url = GlobalData.urlPrefix + \"datasource/tomcat/link/save\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"ids\":selectedDsIds, \"tomcatId\" : GlobalData.lastSelectedMenuId,\"isRestart\":restartTomcat},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            Ext.getCmp(\"tomcatDatasourcesGrid\").getStore().loadData(response.data);",
+                    "            window.close();",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    },",
+                    "",
+                    "});"
+                ],
+                "name": "click"
+            },
+            "name": "onMybutton38Click",
+            "designerId": "7674ee09-c002-4c91-beb0-c045f03dc159"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "tomcatId",
+                    "type"
+                ],
+                "fn": "showLinkDatasourceWindow",
+                "implHandler": [
+                    "var window = Ext.create(\"widget.LinkNewDataSourceWindow\");",
+                    "var url = GlobalData.urlPrefix + \"datasource/tomcat/link/list\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"tomcatId\" : GlobalData.lastSelectedMenuId},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            var gridStore = Ext.getCmp(\"allDatasourceGrid\").getStore();",
+                    "            gridStore.loadData(response.data);",
+                    "            //load name, state of tomcat",
+                    "            Ext.getCmp(\"linkDatasourceTomcatNameField\").setValue(Ext.getCmp(\"tomcatNameField\").getValue());",
+                    "            Ext.getCmp(\"linkDatasourceTomcatStatusField\").setValue(Ext.getCmp(\"tomcatStateField\").getValue());",
+                    "",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    }",
+                    "});",
+                    "window.show();"
+                ]
+            },
+            "name": "showLinkDatasourceWindow",
+            "designerId": "d47b21fa-4941-4888-bd8b-08bb9318c3c4"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "tomcatId",
+                    "callback"
+                ],
+                "fn": "getDatasourceListByTomcat",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"tomcat/instance/datasource\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"tomcatId\" : tomcatId},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success === true){",
+                    "            callback(response.data);",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    }",
+                    "});"
+                ]
+            },
+            "name": "getDatasourceListByTomcat",
+            "designerId": "7b1b9d7e-7952-4d6b-a318-335d277686a6"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "tomcatId",
+                    "dsId"
+                ],
+                "fn": "removeDs",
+                "implHandler": [
+                    "   Ext.MessageBox.confirm('Confirm', 'Are you sure you want to remove this datasource?', function(btn){",
+                    "",
+                    "       if(btn == \"yes\"){",
+                    "           var url = GlobalData.urlPrefix + \"datasource/tomcat/link/remove\";",
+                    "           Ext.Ajax.request({",
+                    "               url: url,",
+                    "               params: {\"tomcatId\" : tomcatId, \"dsId\":dsId},",
+                    "               success: function(resp, ops) {",
+                    "                   var response = Ext.decode(resp.responseText);",
+                    "                   if(response.success === true){",
+                    "                       Ext.getCmp(\"tomcatDatasourcesGrid\").getStore().loadData(response.data);",
+                    "                   }",
+                    "                   else {",
+                    "                       Ext.Msg.show({",
+                    "                           title: \"Message\",",
+                    "                           msg: response.msg,",
+                    "                           buttons: Ext.Msg.OK,",
+                    "                           icon: Ext.Msg.WARNING",
+                    "                       });",
+                    "                   }",
+                    "               }",
+                    "           });",
+                    "       }});"
+                ]
+            },
+            "name": "removeDs",
+            "designerId": "0ea8f307-a5d4-4bfa-9898-f1a99bf33a07"
         }
     ]
 }
