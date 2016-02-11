@@ -17,7 +17,7 @@ public class ServiceResult {
 	}
 
 	public ServiceResult(Status s, String msg, Object rVal) {
-		status = s;
+		status = s;  
 		message = msg;
 		returnedVal = rVal;
 	}
