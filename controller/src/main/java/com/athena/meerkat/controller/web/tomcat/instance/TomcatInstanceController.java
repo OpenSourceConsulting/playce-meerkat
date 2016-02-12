@@ -184,10 +184,14 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/addNew")
+	@RequestMapping("/save")
 	@ResponseBody
 	// add more param later
-	public boolean addNew(String name, int domainId, int machineId) {
+	public SimpleJsonResponse save(SimpleJsonResponse json,
+			TomcatInstance tomcat, int machineId, int domainId, String dsIds, boolean autoRestart) {
+		System.out.println(tomcat.getName());
+		System.out.println(machineId);
+		System.out.println(domainId);
 		// boolean result = false;
 		// Machine machine = machineService.retrieve(machineId);
 		// String repoAddr = DollyConstants.MEERKAT_REPO;
@@ -209,6 +213,8 @@ public class TomcatInstanceController {
 		// String other_bind_address = "";
 		// boolean is_start_service = true;
 
-		return false;
+		json.setMsg("false");
+		json.setSuccess(false);
+		return json;
 	}
 }

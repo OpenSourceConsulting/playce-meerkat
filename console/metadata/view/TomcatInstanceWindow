@@ -49,45 +49,19 @@
                     "designerId": "02884e5f-da44-4e53-bdeb-d2ad86bc6e6f",
                     "cn": [
                         {
-                            "type": "Ext.form.field.ComboBox",
+                            "type": "Ext.form.field.Display",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "displayField": "name",
                                 "fieldLabel": "Domain",
-                                "store": "DomainStore",
-                                "valueField": "id",
+                                "id": "domainField",
                                 "width": 399
                             },
-                            "name": "MyComboBox7",
-                            "designerId": "0df7fd64-33fa-4522-94d4-c1c8a95141f9",
-                            "cn": [
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onComboboxSelect",
-                                        "implHandler": [
-                                            "if (records[0].get(\"clustering\")) {",
-                                            "   Ext.getCmp(\"domainTypeDisplayField\").setValue(\"Clustering\");",
-                                            "}else {",
-                                            "    Ext.getCmp(\"domainTypeDisplayField\").setValue(\"Non-Clustering\");",
-                                            "}"
-                                        ],
-                                        "name": "select",
-                                        "scope": "me"
-                                    },
-                                    "name": "onComboboxSelect",
-                                    "designerId": "56e186da-b035-4009-87bf-446db005e87d"
-                                }
-                            ]
+                            "name": "MyDisplayField25",
+                            "designerId": "0df7fd64-33fa-4522-94d4-c1c8a95141f9"
                         },
                         {
                             "type": "Ext.form.field.Display",
@@ -111,7 +85,10 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
                                 "fieldLabel": "Instance name",
+                                "id": "newTomcatNameField",
                                 "width": 400
                             },
                             "name": "MyTextField28",
@@ -126,6 +103,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "displayField": "name",
+                                "editable": false,
                                 "fieldLabel": "Server",
                                 "id": "serverComboBox",
                                 "store": "MachineStore",
@@ -133,7 +111,31 @@
                                 "width": 399
                             },
                             "name": "MyComboBox8",
-                            "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f"
+                            "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onServerComboBoxSelect",
+                                        "implHandler": [
+                                            "if(combo.getValue() > 0 ){",
+                                            "  Ext.getCmp(\"btnTestConnection\").enable();",
+                                            "}else {",
+                                            "    Ext.getCmp(\"btnTestConnection\").disable();",
+                                            "}"
+                                        ],
+                                        "name": "select",
+                                        "scope": "me"
+                                    },
+                                    "name": "onServerComboBoxSelect",
+                                    "designerId": "472f5482-a1a8-473c-a887-fa877c02e7d6"
+                                }
+                            ]
                         },
                         {
                             "type": "Ext.container.Container",
@@ -157,53 +159,13 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "disabled": true,
+                                        "id": "btnTestConnection",
+                                        "itemId": "",
                                         "text": "Test server connection"
                                     },
                                     "name": "MyButton33",
-                                    "designerId": "7b2d76a2-7e6d-4b40-8f27-f35c5667befe",
-                                    "cn": [
-                                        {
-                                            "type": "basiceventbinding",
-                                            "reference": {
-                                                "name": "listeners",
-                                                "type": "array"
-                                            },
-                                            "codeClass": null,
-                                            "userConfig": {
-                                                "fn": "onButtonClick",
-                                                "implHandler": [
-                                                    "var form = Ext.getCmp('tomcatForm');",
-                                                    "var server = form.getForm().findField(\"serverComboBox\");",
-                                                    "var serverId = server.getValue();",
-                                                    "var url = GlobalData.urlPrefix + \"machine/testConnection\";",
-                                                    "var serverStatus = Ext.getCmp(\"serverStatusDisplayField\");",
-                                                    "var btnSubmit = Ext.getCmp(\"btnNewTomcatSubmit\");",
-                                                    " Ext.Ajax.request({",
-                                                    "     url: url,",
-                                                    "     params: {\"id\": serverId},",
-                                                    "     success: function(resp, ops) {",
-                                                    "         var response = Ext.decode(resp.responseText);",
-                                                    "         if (response === true){",
-                                                    "             serverStatus.setValue(\"Connection success!\");",
-                                                    "             serverStatus.setFieldStyle(\"color:blue\");",
-                                                    "             btnSubmit.enable();",
-                                                    "         }",
-                                                    "         else {",
-                                                    "             serverStatus.setValue(\"Connection fail!\");",
-                                                    "             serverStatus.setFieldStyle(\"color:red\");",
-                                                    "             btnSubmit.disable();",
-                                                    "         }",
-                                                    "     },",
-                                                    "     method: \"GET\"",
-                                                    " });"
-                                                ],
-                                                "name": "click",
-                                                "scope": "me"
-                                            },
-                                            "name": "onButtonClick",
-                                            "designerId": "b7f66221-184d-4d4e-8a1c-d6d0afc12034"
-                                        }
-                                    ]
+                                    "designerId": "7b2d76a2-7e6d-4b40-8f27-f35c5667befe"
                                 },
                                 {
                                     "type": "Ext.form.field.Display",
@@ -249,54 +211,69 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
                                 "fieldLabel": "JAVA_HOME",
+                                "id": "javaHomeField",
+                                "labelWidth": 150,
                                 "width": 399
                             },
                             "name": "MyTextField29",
                             "designerId": "c83ed18c-0817-4a20-a0e9-d8350f0d6549"
                         },
                         {
-                            "type": "Ext.form.field.Text",
+                            "type": "Ext.form.field.Number",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
                                 "fieldLabel": "HTTP_PORT",
+                                "id": "httpPortField",
+                                "labelWidth": 150,
                                 "width": 400
                             },
-                            "name": "MyTextField30",
+                            "name": "MyNumberField",
                             "designerId": "1185205c-30b7-4236-823b-045afccc3f6a"
                         },
                         {
-                            "type": "Ext.form.field.Text",
+                            "type": "Ext.form.field.Number",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
                                 "fieldLabel": "AJP_PORT",
+                                "id": "ajpPortField",
+                                "labelWidth": 150,
                                 "width": 399
                             },
-                            "name": "MyTextField31",
+                            "name": "MyNumberField1",
                             "designerId": "8baee28f-8746-49f3-ac57-b9d0ddc8a7fc"
                         },
                         {
-                            "type": "Ext.form.field.Text",
+                            "type": "Ext.form.field.Number",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "fieldLabel": "SHUTDOWN_PORT",
-                                "labelWidth": 120,
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "REDIRECT_PORT",
+                                "id": "redirectPortField",
+                                "labelWidth": 150,
                                 "width": 399
                             },
-                            "name": "MyTextField32",
-                            "designerId": "f676f442-e582-4280-80b2-bbf064cef3af"
+                            "name": "MyNumberField3",
+                            "designerId": "34dbea0e-50fc-49b6-8ccb-cad0d15d76f1"
                         }
                     ]
                 },
@@ -310,12 +287,28 @@
                     "userConfig": {
                         "dock": "top",
                         "forceFit": true,
+                        "id": "datasourceGrid",
                         "margin": "10 10 10 10",
-                        "title": "Data source"
+                        "store": "LinkingTomcatDatasourceStore",
+                        "title": "Data sources"
                     },
                     "name": "MyGridPanel22",
                     "designerId": "07100993-b8b4-4219-916c-37905c76d3bd",
                     "cn": [
+                        {
+                            "type": "Ext.grid.column.CheckColumn",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "selected",
+                                "text": "Select"
+                            },
+                            "name": "MyCheckColumn1",
+                            "designerId": "1a9411c0-d85c-4fa3-b220-14fe3bebc562"
+                        },
                         {
                             "type": "Ext.grid.column.Column",
                             "reference": {
@@ -324,52 +317,38 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "dataIndex": "string",
-                                "text": "Select"
-                            },
-                            "name": "MyColumn31",
-                            "designerId": "1a9411c0-d85c-4fa3-b220-14fe3bebc562"
-                        },
-                        {
-                            "type": "Ext.grid.column.Number",
-                            "reference": {
-                                "name": "columns",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "dataIndex": "number",
+                                "dataIndex": "name",
                                 "text": "Name"
                             },
-                            "name": "MyNumberColumn23",
+                            "name": "MyColumn57",
                             "designerId": "a5351723-b470-47e5-9305-05e53ba7d6b1"
                         },
                         {
-                            "type": "Ext.grid.column.Date",
+                            "type": "Ext.grid.column.Column",
                             "reference": {
                                 "name": "columns",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "dataIndex": "date",
+                                "dataIndex": "jdbcUrl",
                                 "text": "JDBC Url"
                             },
-                            "name": "MyDateColumn15",
+                            "name": "MyColumn58",
                             "designerId": "8f5a4ee7-1d68-4463-9991-57b2619c7e90"
                         },
                         {
-                            "type": "Ext.grid.column.Boolean",
+                            "type": "Ext.grid.column.Column",
                             "reference": {
                                 "name": "columns",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "dataIndex": "bool",
+                                "dataIndex": "dbType",
                                 "text": "Servers"
                             },
-                            "name": "MyBooleanColumn36",
+                            "name": "MyColumn59",
                             "designerId": "cce2ad03-69e8-4704-9890-66829c3ad8ee"
                         },
                         {
@@ -394,7 +373,8 @@
                     "userConfig": {
                         "boxLabel": "Automatically start tomcat after being created",
                         "dock": "top",
-                        "fieldLabel": ""
+                        "fieldLabel": "",
+                        "id": "autoRestartTomcatCheckbox"
                     },
                     "name": "MyCheckbox",
                     "designerId": "a566652a-d685-40a7-ad5c-85158640e4e5"
@@ -421,7 +401,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "id": "btnNewTomcatSubmit",
+                                "id": "btnTomcatSubmit",
                                 "margin": "0 0 0 200",
                                 "text": "Create"
                             },
@@ -436,6 +416,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "id": "btnCancelTomcat",
                                 "margin": "0 0 0 10",
                                 "text": "Cancel"
                             },
@@ -443,6 +424,21 @@
                             "designerId": "33bfb36f-ce56-4a0c-93c3-f2f92bfe1252"
                         }
                     ]
+                },
+                {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "id": "tomcatHiddenField",
+                        "layout|anchor": "100%"
+                    },
+                    "name": "MyHiddenField3",
+                    "designerId": "22bc3fa2-bc62-4ac2-8dbb-3f55a9007fa5"
                 }
             ]
         }

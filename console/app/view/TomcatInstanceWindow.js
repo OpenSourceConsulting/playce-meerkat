@@ -19,15 +19,15 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
 
     requires: [
         'Ext.form.Panel',
-        'Ext.form.field.ComboBox',
         'Ext.form.field.Display',
+        'Ext.form.field.ComboBox',
         'Ext.button.Button',
+        'Ext.form.field.Number',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
+        'Ext.grid.column.CheckColumn',
         'Ext.grid.View',
-        'Ext.form.field.Checkbox'
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.Hidden'
     ],
 
     height: 591,
@@ -59,18 +59,10 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             margin: '10 0 10 10',
                             items: [
                                 {
-                                    xtype: 'combobox',
+                                    xtype: 'displayfield',
+                                    id: 'domainField',
                                     width: 399,
-                                    fieldLabel: 'Domain',
-                                    displayField: 'name',
-                                    store: 'DomainStore',
-                                    valueField: 'id',
-                                    listeners: {
-                                        select: {
-                                            fn: me.onComboboxSelect,
-                                            scope: me
-                                        }
-                                    }
+                                    fieldLabel: 'Domain'
                                 },
                                 {
                                     xtype: 'displayfield',
@@ -79,17 +71,27 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                 },
                                 {
                                     xtype: 'textfield',
+                                    id: 'newTomcatNameField',
                                     width: 400,
-                                    fieldLabel: 'Instance name'
+                                    fieldLabel: 'Instance name',
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
                                 },
                                 {
                                     xtype: 'combobox',
                                     id: 'serverComboBox',
                                     width: 399,
                                     fieldLabel: 'Server',
+                                    editable: false,
                                     displayField: 'name',
                                     store: 'MachineStore',
-                                    valueField: 'id'
+                                    valueField: 'id',
+                                    listeners: {
+                                        select: {
+                                            fn: me.onServerComboBoxSelect,
+                                            scope: me
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'container',
@@ -100,13 +102,10 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                     items: [
                                         {
                                             xtype: 'button',
-                                            text: 'Test server connection',
-                                            listeners: {
-                                                click: {
-                                                    fn: me.onButtonClick,
-                                                    scope: me
-                                                }
-                                            }
+                                            disabled: true,
+                                            id: 'btnTestConnection',
+                                            itemId: '',
+                                            text: 'Test server connection'
                                         },
                                         {
                                             xtype: 'displayfield',
@@ -125,52 +124,69 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             items: [
                                 {
                                     xtype: 'textfield',
+                                    id: 'javaHomeField',
                                     width: 399,
-                                    fieldLabel: 'JAVA_HOME'
+                                    fieldLabel: 'JAVA_HOME',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
                                 },
                                 {
-                                    xtype: 'textfield',
+                                    xtype: 'numberfield',
+                                    id: 'httpPortField',
                                     width: 400,
-                                    fieldLabel: 'HTTP_PORT'
+                                    fieldLabel: 'HTTP_PORT',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
                                 },
                                 {
-                                    xtype: 'textfield',
+                                    xtype: 'numberfield',
+                                    id: 'ajpPortField',
                                     width: 399,
-                                    fieldLabel: 'AJP_PORT'
+                                    fieldLabel: 'AJP_PORT',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
                                 },
                                 {
-                                    xtype: 'textfield',
+                                    xtype: 'numberfield',
+                                    id: 'redirectPortField',
                                     width: 399,
-                                    fieldLabel: 'SHUTDOWN_PORT',
-                                    labelWidth: 120
+                                    fieldLabel: 'REDIRECT_PORT',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
                                 }
                             ]
                         },
                         {
                             xtype: 'gridpanel',
                             dock: 'top',
+                            id: 'datasourceGrid',
                             margin: '10 10 10 10',
-                            title: 'Data source',
+                            title: 'Data sources',
                             forceFit: true,
+                            store: 'LinkingTomcatDatasourceStore',
                             columns: [
                                 {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'string',
+                                    xtype: 'checkcolumn',
+                                    dataIndex: 'selected',
                                     text: 'Select'
                                 },
                                 {
-                                    xtype: 'numbercolumn',
-                                    dataIndex: 'number',
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'name',
                                     text: 'Name'
                                 },
                                 {
-                                    xtype: 'datecolumn',
-                                    dataIndex: 'date',
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'jdbcUrl',
                                     text: 'JDBC Url'
                                 },
                                 {
-                                    xtype: 'booleancolumn',
-                                    dataIndex: 'bool',
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'dbType',
                                     text: 'Servers'
                                 }
                             ]
@@ -178,6 +194,7 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                         {
                             xtype: 'checkboxfield',
                             dock: 'top',
+                            id: 'autoRestartTomcatCheckbox',
                             fieldLabel: '',
                             boxLabel: 'Automatically start tomcat after being created'
                         },
@@ -188,16 +205,25 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: 'btnNewTomcatSubmit',
+                                    id: 'btnTomcatSubmit',
                                     margin: '0 0 0 200',
                                     text: 'Create'
                                 },
                                 {
                                     xtype: 'button',
+                                    id: 'btnCancelTomcat',
                                     margin: '0 0 0 10',
                                     text: 'Cancel'
                                 }
                             ]
+                        }
+                    ],
+                    items: [
+                        {
+                            xtype: 'hiddenfield',
+                            anchor: '100%',
+                            id: 'tomcatHiddenField',
+                            fieldLabel: 'Label'
                         }
                     ]
                 }
@@ -207,39 +233,12 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         me.callParent(arguments);
     },
 
-    onComboboxSelect: function(combo, records, eOpts) {
-        if (records[0].get("clustering")) {
-           Ext.getCmp("domainTypeDisplayField").setValue("Clustering");
+    onServerComboBoxSelect: function(combo, records, eOpts) {
+        if(combo.getValue() > 0 ){
+          Ext.getCmp("btnTestConnection").enable();
         }else {
-            Ext.getCmp("domainTypeDisplayField").setValue("Non-Clustering");
+            Ext.getCmp("btnTestConnection").disable();
         }
-    },
-
-    onButtonClick: function(button, e, eOpts) {
-        var form = Ext.getCmp('tomcatForm');
-        var server = form.getForm().findField("serverComboBox");
-        var serverId = server.getValue();
-        var url = GlobalData.urlPrefix + "machine/testConnection";
-        var serverStatus = Ext.getCmp("serverStatusDisplayField");
-        var btnSubmit = Ext.getCmp("btnNewTomcatSubmit");
-         Ext.Ajax.request({
-             url: url,
-             params: {"id": serverId},
-             success: function(resp, ops) {
-                 var response = Ext.decode(resp.responseText);
-                 if (response === true){
-                     serverStatus.setValue("Connection success!");
-                     serverStatus.setFieldStyle("color:blue");
-                     btnSubmit.enable();
-                 }
-                 else {
-                     serverStatus.setValue("Connection fail!");
-                     serverStatus.setFieldStyle("color:red");
-                     btnSubmit.disable();
-                 }
-             },
-             method: "GET"
-         });
     }
 
 });

@@ -92,6 +92,7 @@ Ext.define('webapp.view.DomainContainer', {
                                 {
                                     xtype: 'button',
                                     itemId: 'mybutton68',
+                                    margin: '50 5 0 0',
                                     text: 'Edit'
                                 }
                             ]

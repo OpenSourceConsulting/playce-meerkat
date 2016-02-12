@@ -126,6 +126,15 @@ public class DatasourceController {
 		return json;
 	}
 
+	@RequestMapping("/tomcat/link/list/all")
+	@ResponseBody
+	public SimpleJsonResponse getAvailableDatasource(SimpleJsonResponse json) {
+		List<Datasource> datasources = service.getAll();
+		json.setData(datasources);
+		json.setSuccess(true);
+		return json;
+	}
+
 	@RequestMapping("/tomcat/link/save")
 	@ResponseBody
 	public SimpleJsonResponse saveLinking(SimpleJsonResponse json, String ids,

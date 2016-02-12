@@ -120,7 +120,7 @@ Ext.define('webapp.controller.MenuController', {
                    var domainId = menuId.substr(menuId.indexOf("_domain_") + "_domain_".length);
                    switch (_item.id) {
                         case 'new-tomcat':
-                            webapp.app.getController("TomcatController").show("new", 0);
+                            webapp.app.getController("TomcatController").showTomcatWindow("new", 0, domainId);
                             break;
                         case 'edit-domain':
                             webapp.app.getController("DomainController").showDomainWindow("edit", domainId);

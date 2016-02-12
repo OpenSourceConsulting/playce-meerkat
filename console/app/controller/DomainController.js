@@ -99,7 +99,7 @@ Ext.define('webapp.controller.DomainController', {
                                 comboBox.hide();
                             }
                         }
-                        if(response.data.serverGroup != null){
+                        if(response.data.serverGroup !== null){
                             serverGroup.setValue(response.data.serverGroup.id);
                         }
                         _id.setValue(id);

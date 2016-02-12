@@ -17,10 +17,7 @@ Ext.define('webapp.controller.TomcatController', {
     extend: 'Ext.app.Controller',
 
     onNewTomcatClick: function(button, e, eOpts) {
-          var window = Ext.create("widget.TomcatInstanceWindow");
-          // Show window
-          window.show();
-
+        this.showTomcatWindow("new",0);
     },
 
     onDomainTomcatTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
@@ -37,6 +34,79 @@ Ext.define('webapp.controller.TomcatController', {
 
     onBtnTomcatRestartClick: function(button, e, eOpts) {
         this.changeState(GlobalData.lastSelectedMenuId, 3);
+    },
+
+    onTestServerClick: function(button, e, eOpts) {
+        var form = Ext.getCmp('tomcatForm');
+        var server = form.getForm().findField("serverComboBox");
+        var serverId = server.getValue();
+        var url = GlobalData.urlPrefix + "machine/testConnection";
+        var serverStatus = Ext.getCmp("serverStatusDisplayField");
+        var btnSubmit = Ext.getCmp("btnTomcatSubmit");
+         Ext.Ajax.request({
+             url: url,
+             params: {"id": serverId},
+             success: function(resp, ops) {
+                 var response = Ext.decode(resp.responseText);
+                 if (response === true){
+                     serverStatus.setValue("Connection success!");
+                     serverStatus.setFieldStyle("color:blue");
+                     btnSubmit.enable();
+                 }
+                 else {
+                     serverStatus.setValue("Connection fail!");
+                     serverStatus.setFieldStyle("color:red");
+                     btnSubmit.disable();
+                 }
+             },
+             method: "GET"
+         });
+    },
+
+    onBtnTomcatSubmitClick: function(button, e, eOpts) {
+
+        var form = Ext.getCmp("tomcatForm");			// domain form
+
+        var name = form.getForm().findField("newTomcatNameField");
+        var server = form.getForm().findField("serverComboBox");
+        var _id = form.getForm().findField("tomcatHiddenField");
+
+        var javaHome = form.getForm().findField("javaHomeField");
+        var httpPort = form.getForm().findField("httpPortField");
+        var ajpPort = form.getForm().findField("ajpPortField");
+        var redirectPort = form.getForm().findField("redirectPortField");
+        var autoRestart =  Ext.getCmp("autoRestartTomcatCheckbox");
+
+
+        var nameVal = name.getValue();
+        var serverVal = server.getValue();
+        var _idVal = _id.getValue();
+        var javaHomeVal = javaHome.getValue();
+        var httpPortVal = httpPort.getValue();
+        var ajpPortVal = ajpPort.getValue();
+        var redirectPortVal = redirectPort.getValue();
+        var autoRestartVal = autoRestart.getValue();
+        var selectedDsIds = "";
+        var items = Ext.getCmp("datasourceGrid").getStore();
+        items.each(function(rec){
+            if(rec.get("selected") === true){
+                selectedDsIds += "#" + rec.get("id");
+            }
+        });
+
+        if(!this.validate(nameVal, serverVal, javaHomeVal, httpPortVal, ajpPortVal,redirectPortVal)){
+            return;
+        }
+        if(_idVal === ""){
+            _idVal = 0;
+        }
+
+        var params = {"id":_idVal, "name": nameVal, "machineId": serverVal, "javaHome":javaHomeVal, "httpPort":httpPortVal, "ajpPort":ajpPortVal,
+                       "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId , "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
+        this. save(params, function(){
+            button.up("window").close();
+        });
+
     },
 
     changeState: function(id, state) {
@@ -143,6 +213,127 @@ Ext.define('webapp.controller.TomcatController', {
          });
     },
 
+    showTomcatWindow: function(type, id, domainId) {
+        var tomcatWindow = Ext.create("widget.TomcatInstanceWindow");
+        var submitButton = Ext.getCmp("btnTomcatSubmit");
+        var form = Ext.getCmp("tomcatForm");			// tomcat form
+
+        var domain = form.getForm().findField("domainField");
+        var domainType = form.getForm().findField("domainTypeDisplayField");
+
+        if(domainId !== null) {
+            Ext.Ajax.request({
+                url: GlobalData.urlPrefix + "domain/get",
+                params: {"id": domainId},
+                success: function(resp, ops) {
+                    var response = Ext.decode(resp.responseText);
+                    domain.setValue(response.data.name);
+                    domainType.setValue(response.data.isClustering == 1?"Clustering":"Non-clustering");
+                },
+                method:"GET"
+            });
+        }
+        if (type === "edit"){
+            tomcatWindow.setTitle("Edit Tomcat instance");
+            submitButton.setText("Save");
+
+            var name = form.getForm().findField("newTomcatNameField");
+            var server = form.getForm().findField("serverComboBox");
+            var _id = form.getForm().findField("tomcatHiddenField");
+
+            var javaHome = form.getForm().findField("javaHomeField");
+            var httpPort = form.getForm().findField("httpPortField");
+            var ajpPort = form.getForm().findField("ajpPortField");
+            var redirectPort = form.getForm().findField("redirectPortField");
+        /*
+             Ext.Ajax.request({
+                    url: GlobalData.urlPrefix + "domain/edit",
+                    params: {"id": id},
+                    success: function(resp, ops) {
+                        var response = Ext.decode(resp.responseText);
+                        name.setValue(response.data.name);
+                        if(response.data.isClustering) {
+                            domainTypeClustering.setValue(true);
+                            domainTypeNoneClustering.setValue(false);
+                        } else{
+                            domainTypeClustering.setValue(false);
+                            domainTypeNoneClustering.setValue(true);
+                            var comboBox = Ext.getCmp("dataGridServerGroupComboBoxField");
+                            if (comboBox.isVisible()){
+                                comboBox.hide();
+                            }
+                        }
+                        if(response.data.serverGroup !== null){
+                            serverGroup.setValue(response.data.serverGroup.id);
+                        }
+                        _id.setValue(id);
+                    }
+                });*/
+        }
+        else {
+            var url = GlobalData.urlPrefix + "datasource/tomcat/link/list/all";
+            Ext.Ajax.request({
+                url: url,
+                success: function(resp, ops) {
+                    var response = Ext.decode(resp.responseText);
+                    if(response.success === true){
+                        var gridStore = Ext.getCmp("datasourceGrid").getStore();
+                        gridStore.loadData(response.data);
+                    }
+                    else {
+                        Ext.Msg.show({
+                            title: "Message",
+                            msg: response.msg,
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.WARNING
+                        });
+                    }
+                }
+            });
+
+        }
+
+        tomcatWindow.show();
+    },
+
+    validate: function(name, server, javaHome, httpPort, ajpPort, redirectPort) {
+        if(name === "" || javaHome === "" || httpPort === "" ||  redirectPort === "" || ajpPort === "" || server <= 0){
+            Ext.Msg.show({
+                title: "Message",
+                msg: "Invalid data.",
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING
+            });
+            return false;
+        }
+        return true;
+    },
+
+    save: function(params, callback) {
+
+        var url = GlobalData.urlPrefix + "tomcat/save";
+        Ext.Ajax.request({
+            url: url,
+            params: params,
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    callback();
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            }
+        });
+
+
+    },
+
     init: function(application) {
         this.control({
             "#btnNewTomcat": {
@@ -159,6 +350,12 @@ Ext.define('webapp.controller.TomcatController', {
             },
             "#btnTomcatRestart": {
                 click: this.onBtnTomcatRestartClick
+            },
+            "#btnTestConnection": {
+                click: this.onTestServerClick
+            },
+            "#btnTomcatSubmit": {
+                click: this.onBtnTomcatSubmitClick
             }
         });
     }

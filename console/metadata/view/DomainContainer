@@ -135,6 +135,7 @@
                             "userConfig": {
                                 "id": null,
                                 "itemId": "mybutton68",
+                                "margin": "50 5 0 0",
                                 "text": "Edit"
                             },
                             "name": "MyButton67",
