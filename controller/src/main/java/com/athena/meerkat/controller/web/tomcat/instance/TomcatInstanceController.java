@@ -195,7 +195,16 @@ public class TomcatInstanceController {
 	public SimpleJsonResponse save(SimpleJsonResponse json,
 			TomcatInstance tomcat, int machineId, int domainId, String dsIds,
 			boolean autoRestart) {
-
+		// check existing
+		TomcatInstance existingTomcat = service.findByNameAndDomain(
+				tomcat.getName(), domainId);
+		if (existingTomcat != null) {
+			if (existingTomcat.getId() != tomcat.getId()) {
+				json.setSuccess(false);
+				json.setMsg("Tomcat name is duplicated.");
+				return json;
+			}
+		}
 		Machine machine = machineService.retrieve(machineId);
 		Domain domain = domainService.getDomain(domainId);
 		if (machine != null) {
@@ -221,10 +230,12 @@ public class TomcatInstanceController {
 		// provisioning section
 		// ....
 		//
-
 		if (provisioning_result) {
-			if (service.save(tomcat) != null) {
+			TomcatInstance tc = service.save(tomcat);
+			if (tc != null) {
+				json.setData(service.getTomcatListByDomainId(domainId));
 				json.setSuccess(true);
+
 			} else {
 				json.setSuccess(false);
 				json.setMsg("An error occurred while saving tomcat instance to database.");
@@ -232,6 +243,10 @@ public class TomcatInstanceController {
 		} else {
 			json.setSuccess(false);
 			json.setMsg("An error occurred while provisioning to target server.");
+		}
+
+		if (autoRestart) {
+			service.start(tomcat);
 		}
 
 		// String repoAddr = DollyConstants.MEERKAT_REPO;

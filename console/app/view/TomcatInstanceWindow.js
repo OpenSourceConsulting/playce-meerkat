@@ -213,7 +213,13 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                     xtype: 'button',
                                     id: 'btnCancelTomcat',
                                     margin: '0 0 0 10',
-                                    text: 'Cancel'
+                                    text: 'Cancel',
+                                    listeners: {
+                                        click: {
+                                            fn: me.onBtnCancelTomcatClick,
+                                            scope: me
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -239,6 +245,15 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         }else {
             Ext.getCmp("btnTestConnection").disable();
         }
+    },
+
+    onBtnCancelTomcatClick: function(button, e, eOpts) {
+         Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){
+
+             if(btn == "yes"){
+                button.up("window").close();
+             }
+         });
     }
 
 });

@@ -294,7 +294,7 @@ Ext.define('webapp.controller.MenuController', {
             prefix_child_menu_id = parentId + "_tomcat_";
         }
         else {
-             return;
+            return;
         }
 
         var treePanel = Ext.getCmp("menuTreePanel");

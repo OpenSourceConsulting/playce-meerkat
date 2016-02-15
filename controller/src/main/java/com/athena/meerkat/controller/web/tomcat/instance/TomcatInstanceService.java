@@ -250,4 +250,18 @@ public class TomcatInstanceService {
 		return repo.findAll();
 	}
 
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * 
+	 * @param name
+	 * @param domainId
+	 * @return
+	 */
+	public TomcatInstance findByNameAndDomain(String name, int domainId) {
+
+		return repo.findByNameAndDomainId(name, domainId);
+	}
+
 }

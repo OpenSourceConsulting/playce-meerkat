@@ -102,8 +102,10 @@ Ext.define('webapp.controller.TomcatController', {
         }
 
         var params = {"id":_idVal, "name": nameVal, "machineId": serverVal, "javaHome":javaHomeVal, "httpPort":httpPortVal, "ajpPort":ajpPortVal,
-                       "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId , "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
-        this. save(params, function(){
+                      "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId , "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
+        this. save(params, function(data){
+            //webapp.app.getController("DomainController").loadDomainInfo(GlobalData.lastSelectedMenuId);
+            //Ext.getCmp("associatedTomcatListView").getStore().loadData(data, false);
             button.up("window").close();
         });
 
@@ -318,7 +320,8 @@ Ext.define('webapp.controller.TomcatController', {
             success: function(resp, ops) {
                 var response = Ext.decode(resp.responseText);
                 if(response.success === true){
-                    callback();
+                    Ext.getCmp("associatedTomcatListView").getStore().loadData(response.data);
+                    callback(response.data);
                 }
                 else {
                     Ext.Msg.show({
