@@ -222,7 +222,7 @@
                 ],
                 "fn": "loadTomcatList",
                 "implHandler": [
-                    "alert(\"Tomcat list of \" + domainId + \" is loading\");"
+                    "this.loadChildMenus(\"tomcatMng_domain_\"+domainId);"
                 ]
             },
             "name": "loadTomcatList",

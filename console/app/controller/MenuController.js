@@ -327,7 +327,7 @@ Ext.define('webapp.controller.MenuController', {
     },
 
     loadTomcatList: function(domainId) {
-        alert("Tomcat list of " + domainId + " is loading");
+        this.loadChildMenus("tomcatMng_domain_"+domainId);
     },
 
     loadMonitoringServerList: function() {
