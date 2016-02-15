@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "machine")
 public class Machine {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
 	@Column(name = "name", nullable = false)
@@ -94,9 +95,9 @@ public class Machine {
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcatInstances;
 
-//	@OneToOne
-//	@JoinColumn(name="datagrid_server_group_id")
-//	private DatagridServer datagridServer;
+	// @OneToOne
+	// @JoinColumn(name="datagrid_server_group_id")
+	// private DatagridServer datagridServer;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
 	private Collection<EnvironmentVariable> environmentVariables;
@@ -391,13 +392,13 @@ public class Machine {
 		this.tomcatInstances = tomcatInstances;
 	}
 
-//	public DatagridServer getDatagridServer() {
-//		return datagridServer;
-//	}
-//
-//	public void setDatagridServer(DatagridServer datagridServer) {
-//		this.datagridServer = datagridServer;
-//	}
+	// public DatagridServer getDatagridServer() {
+	// return datagridServer;
+	// }
+	//
+	// public void setDatagridServer(DatagridServer datagridServer) {
+	// this.datagridServer = datagridServer;
+	// }
 
 	public Collection<EnvironmentVariable> getEnvironmentVariables() {
 		return environmentVariables;

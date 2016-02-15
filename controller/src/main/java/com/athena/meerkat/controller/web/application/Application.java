@@ -32,7 +32,7 @@ public class Application implements Serializable, Cloneable {
 
 	@Id
 	@Column(name = "Id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
 	@Column(name = "context_path")
 	private String contextPath;

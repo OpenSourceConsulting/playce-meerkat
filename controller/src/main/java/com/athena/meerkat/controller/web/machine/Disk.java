@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,6 +27,7 @@ public class Disk implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
 	@Column(name = "name")
@@ -38,7 +41,7 @@ public class Disk implements Serializable {
 	@Column(name = "free_capacity")
 	private double freeCapacity;
 	@ManyToOne
-	//using this annotation to prevent Infinite recursion json mapping
+	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
 	private Machine machine;
 

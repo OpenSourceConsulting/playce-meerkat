@@ -2,6 +2,8 @@ package com.athena.meerkat.controller.web.session;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -13,16 +15,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "session")
 public class Session {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
 	@Column(name = "session_key")
 	private String key;
 	@Column(name = "session_value")
 	private String value;
-	
-//	@ManyToOne
-//	@JsonBackReference
-//	private Application application;
+
+	// @ManyToOne
+	// @JsonBackReference
+	// private Application application;
 
 	public Session(String sKey, String sValue) {
 		// TODO Auto-generated constructor stub
@@ -54,11 +57,11 @@ public class Session {
 		this.value = value;
 	}
 
-//	public Application getApplication() {
-//		return application;
-//	}
-//
-//	public void setApplication(Application application) {
-//		this.application = application;
-//	}
+	// public Application getApplication() {
+	// return application;
+	// }
+	//
+	// public void setApplication(Application application) {
+	// this.application = application;
+	// }
 }

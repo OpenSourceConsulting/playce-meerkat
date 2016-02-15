@@ -2,6 +2,8 @@ package com.athena.meerkat.controller.web.datagridserver;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class DatagridServer {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
 	@Column(name = "type")
@@ -25,8 +28,8 @@ public class DatagridServer {
 	private Machine machine;
 
 	@ManyToOne
-	@JoinColumn(name="server_group_id")
-	@JsonManagedReference	
+	@JoinColumn(name = "server_group_id")
+	@JsonManagedReference
 	private DatagridServerGroup datagridServerGroup;
 
 	public int getId() {
