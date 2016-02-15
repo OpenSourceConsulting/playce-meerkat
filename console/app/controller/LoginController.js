@@ -21,7 +21,7 @@ Ext.define('webapp.controller.LoginController', {
         var me = this;
 
         Ext.Ajax.request({
-            url: GlobalData.urlPrefix + 'user/onAfterLogin',
+            url: GlobalData.urlPrefix + 'auth/onAfterLogin',
             success: function(resp, ops) {
 
                 var response = Ext.decode(resp.responseText);
@@ -108,7 +108,7 @@ Ext.define('webapp.controller.LoginController', {
 
             //request login
             Ext.Ajax.request({
-                url: GlobalData.urlPrefix + "user/login",
+                url: GlobalData.urlPrefix + "auth/login",
                 params: values,
                 success: function(resp, ops) {
 
@@ -130,7 +130,7 @@ Ext.define('webapp.controller.LoginController', {
 
     onLogoutButtonClick: function(button, e, eOpts) {
         Ext.Ajax.request({
-            url: GlobalData.urlPrefix + 'user/logout',
+            url: GlobalData.urlPrefix + 'auth/logout',
             disableCaching : true,
             success: function(response){
                 /*
