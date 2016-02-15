@@ -34,14 +34,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.athena.meerkat.controller.web.user.UserService;
@@ -54,6 +59,7 @@ import com.athena.meerkat.controller.web.user.UserService;
  * @author BongJin Kwon
  * 
  */
+@Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat.controller" })
 @PropertySource(value={"classpath:dolly.properties", "classpath:dolly-${spring.profiles.active:local}.properties"})
@@ -72,10 +78,9 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 	 * @author Bong-Jin Kwon
 	 * @version 2.0
 	 */
-	@SuppressWarnings("deprecation")
 	@Configuration
-	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-	@EnableGlobalMethodSecurity(securedEnabled = true)
+	//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+	@EnableWebSecurity
 	protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
 		@Autowired
@@ -93,41 +98,87 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 					"/resources/**",
 
 					"/getServerList", 
-					"/user/notLogin*",
-					"/user/loginFail*", 
-					"/user/accessDenied*",
-					"/user/onAfterLogout*"
+					"/auth/notLogin*",
+					"/auth/loginFail*", 
+					"/auth/accessDenied*",
+					"/auth/onAfterLogout*"
 					);
 		}
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
-			http.anonymous().disable().authorizeRequests().anyRequest()
-					.fullyAuthenticated().and().exceptionHandling()
-					.accessDeniedPage("/user/accessDenied").and().formLogin()
-					.loginPage("/user/notLogin")
-					.loginProcessingUrl("/user/login")
-					.defaultSuccessUrl("/user/onAfterLogin", true)
-					.failureUrl("/user/loginFail").and().logout()
-					.logoutUrl("/user/logout")
-					.logoutSuccessUrl("/user/onAfterLogout").and().csrf()
+			http.anonymous()
+					.disable()
+				.authorizeRequests()
+				/*
+					.expressionHandler(webExpressionHandler())
+                    .antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+                    .antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+                    .antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
+                    .antMatchers(HttpMethod.GET, "/tomcat/**").access("hasRole('ROLE_TOMCAT_USER')")
+                    
+                    .antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
+                    .antMatchers("/dbmonitor/**").access("hasRole('ROLE_MONITOR_DB')")
+                    
+                    .antMatchers(HttpMethod.POST, "/res/**").access("hasRole('ROLE_RES_ADMIN')")
+                    .antMatchers(HttpMethod.GET, "/res/**").access("hasRole('ROLE_RES_USER')")
+                    
+                    .antMatchers(HttpMethod.POST, "/user/**").access("hasRole('ROLE_USER_ADMIN')")
+                    .antMatchers(HttpMethod.GET, "/user/**").access("hasRole('ROLE_USER_USER')")
+                    */
+                    .anyRequest()
+                    .fullyAuthenticated()
+					.and()
+				.exceptionHandling()
+					.accessDeniedPage("/auth/accessDenied")
+					.and()
+				.formLogin()
+					.loginPage("/auth/notLogin")
+					.loginProcessingUrl("/auth/login")
+					.defaultSuccessUrl("/auth/onAfterLogin", true)
+					.failureUrl("/auth/loginFail")
+					.and()
+				.logout()
+					.logoutUrl("/auth/logout")
+					.logoutSuccessUrl("/auth/onAfterLogout")
+					.and()
+				.csrf()
 					.disable();
 			// http.anonymous().and().csrf().disable();
 
 		}
 		
-
 		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-		    //auth.inMemoryAuthentication().withUser("dolly").password("dolly").roles("ADMIN");
+		    //auth.inMemoryAuthentication().withUser("dolly").password("dolly").roles("TOMCAT_USER");
+		}
+		
+		@Bean
+		public RoleHierarchy roleHierarchy() {
+		  RoleHierarchyImpl r = new RoleHierarchyImpl();
+		  r.setHierarchy("ROLE_TOMCAT_ADMIN > ROLE_TOMCAT_USER | ROLE_MONITOR_ADMIN > ROLE_MONITOR_DB | ROLE_RES_ADMIN > ROLE_RES_USER | ROLE_USER_ADMIN > ROLE_USER_USER " + 
+				  		 "ROLE_ADMIN > ROLE_TOMCAT_ADMIN | ROLE_ADMIN > ROLE_MONITOR_ADMIN | ROLE_ADMIN > ROLE_RES_ADMIN | ROLE_ADMIN > ROLE_USER_ADMIN");
+		  return r;
+		}
+		
+		private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
+		    DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+		    defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+		    return defaultWebSecurityExpressionHandler;
 		}
 
-		
+		/**
+		 * <pre>
+		 * configure user password encoder 
+		 * </pre>
+		 * @return
+		 */
 		@Bean
 		public PasswordEncoder passwordEncoder() {
 			return NoOpPasswordEncoder.getInstance();
+			//return new BCryptPasswordEncoder();
 		}
 		
 		/*
