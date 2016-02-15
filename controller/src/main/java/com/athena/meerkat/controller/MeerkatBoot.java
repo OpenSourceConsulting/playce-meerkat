@@ -111,7 +111,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 			http.anonymous()
 					.disable()
 				.authorizeRequests()
-				/*
+					/*
 					.expressionHandler(webExpressionHandler())
                     .antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
                     .antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")

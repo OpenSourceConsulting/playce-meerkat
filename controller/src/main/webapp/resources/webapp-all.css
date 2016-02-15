@@ -1,3 +1,4 @@
+/* ======================== ETC ======================== */
 /* including package ext-theme-base */
 /**
  * Creates a background gradient.
@@ -62,6 +63,7 @@
  */
 /* including package ext-theme-neutral */
 /* including package ext-theme-neptune */
+/* ======================== VAR ======================== */
 /* including package ext-theme-neptune */
 /**
  * @var {boolean}
@@ -3965,6 +3967,7 @@
  * paths in the CSS output to be generated correctly. By default this is the same as the
  * CSS output directory.
  */
+/* ======================== RULE ======================== */
 /* including package ext-theme-base */
 /* line 1, ../../../../ext/packages/ext-theme-base/sass/src/Component.scss */
 .x-body {
