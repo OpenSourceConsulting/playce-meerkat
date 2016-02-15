@@ -41,19 +41,21 @@ import org.slf4j.LoggerFactory;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Sang-cheon Park
  * @version 1.0
  */
 public class FileWriteAction extends Action {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(FileWriteAction.class);
-	
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(FileWriteAction.class);
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String contents;
 	private String fileName;
 	private String permission;
-	
+
 	public FileWriteAction(int sequence) {
 		super(sequence);
 	}
@@ -66,7 +68,8 @@ public class FileWriteAction extends Action {
 	}
 
 	/**
-	 * @param contents the contents to set
+	 * @param contents
+	 *            the contents to set
 	 */
 	public void setContents(String contents) {
 		this.contents = contents;
@@ -80,7 +83,8 @@ public class FileWriteAction extends Action {
 	}
 
 	/**
-	 * @param fileName the fileName to set
+	 * @param fileName
+	 *            the fileName to set
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
@@ -94,41 +98,47 @@ public class FileWriteAction extends Action {
 	}
 
 	/**
-	 * @param permission the permission to set
+	 * @param permission
+	 *            the permission to set
 	 */
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.athena.meerkat.common.core.action.Action#perform()
 	 */
 	@Override
 	public String perform() {
 		String result = fileName;
-		
+
 		try {
 			String separator = File.separator;
-			
+
 			fileName = fileName.replaceAll("\\\\", separator);
-			
-			String path = fileName.substring(0, fileName.lastIndexOf(separator));
-			String name = fileName.substring(fileName.lastIndexOf(separator) + 1);
-			
+
+			String path = fileName
+					.substring(0, fileName.lastIndexOf(separator));
+			String name = fileName
+					.substring(fileName.lastIndexOf(separator) + 1);
+
 			File dir = new File(path);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			
+
 			FileOutputStream fos = new FileOutputStream(new File(path, name));
-			
+
 			if (StringUtils.isNotEmpty(permission)) {
-				Files.setPosixFilePermissions(Paths.get(fileName), PosixFilePermissions.fromString(permission));	
+				Files.setPosixFilePermissions(Paths.get(fileName),
+						PosixFilePermissions.fromString(permission));
 			}
-			
+
 			IOUtils.write(contents, fos, "UTF-8");
 			IOUtils.closeQuietly(fos);
-			
+
 			result += " saved.\n";
 		} catch (FileNotFoundException e) {
 			LOGGER.error("FileNotFoundException has occurred. : ", e);
@@ -137,9 +147,9 @@ public class FileWriteAction extends Action {
 			LOGGER.error("IOException has occurred. : ", e);
 			result += " does not saved.\n";
 		}
-		
+
 		return result;
 	}
 
 }
-//end of FileWriteAction.java
+// end of FileWriteAction.java

@@ -24,6 +24,7 @@
  */
 package com.athena.meerkat.controller.web.tomcat.instance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,8 +42,10 @@ import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.datasource.Datasource;
+import com.athena.meerkat.controller.web.datasource.DatasourceService;
 import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.domain.DomainService;
+import com.athena.meerkat.controller.web.machine.Machine;
 import com.athena.meerkat.controller.web.machine.MachineService;
 
 /**
@@ -63,6 +66,8 @@ public class TomcatInstanceController {
 	private MachineService machineService;
 	@Autowired
 	private DomainService domainService;
+	@Autowired
+	private DatasourceService dsService;
 	@Inject
 	@Named("provisioningHandler")
 	private ProvisioningHandler provisioningHandler;
@@ -188,12 +193,47 @@ public class TomcatInstanceController {
 	@ResponseBody
 	// add more param later
 	public SimpleJsonResponse save(SimpleJsonResponse json,
-			TomcatInstance tomcat, int machineId, int domainId, String dsIds, boolean autoRestart) {
-		System.out.println(tomcat.getName());
-		System.out.println(machineId);
-		System.out.println(domainId);
-		// boolean result = false;
-		// Machine machine = machineService.retrieve(machineId);
+			TomcatInstance tomcat, int machineId, int domainId, String dsIds,
+			boolean autoRestart) {
+
+		Machine machine = machineService.retrieve(machineId);
+		Domain domain = domainService.getDomain(domainId);
+		if (machine != null) {
+			tomcat.setMachine(machine);
+		}
+		if (domain != null) {
+			tomcat.setDomain(domain);
+		}
+
+		List<Datasource> datasources = new ArrayList<Datasource>();
+		String[] idStrings = dsIds.split("#", 0);
+		for (int i = 1; i < idStrings.length; i++) { // the first element is
+														// empty
+			Datasource ds = dsService.findOne(Integer.parseInt(idStrings[i]));
+			if (ds != null) {
+				datasources.add(ds);
+			}
+		}
+		tomcat.associateDatasources(datasources);
+
+		boolean provisioning_result = true; // change to false when implement
+											// provisioning
+		// provisioning section
+		// ....
+		//
+
+		if (provisioning_result) {
+			if (service.save(tomcat) != null) {
+				json.setSuccess(true);
+			} else {
+				json.setSuccess(false);
+				json.setMsg("An error occurred while saving tomcat instance to database.");
+			}
+		} else {
+			json.setSuccess(false);
+			json.setMsg("An error occurred while provisioning to target server.");
+		}
+
 		// String repoAddr = DollyConstants.MEERKAT_REPO;
 		/* sample data */
 		// String user = "root";
@@ -213,8 +253,6 @@ public class TomcatInstanceController {
 		// String other_bind_address = "";
 		// boolean is_start_service = true;
 
-		json.setMsg("false");
-		json.setSuccess(false);
 		return json;
 	}
 }

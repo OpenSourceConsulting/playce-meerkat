@@ -25,12 +25,15 @@
 package com.athena.meerkat.controller.web.tomcat.instance;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -68,6 +71,7 @@ public class TomcatInstance implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
 	@Column(name = "name", nullable = false)
@@ -187,10 +191,16 @@ public class TomcatInstance implements Serializable {
 	}
 
 	public void associateDatasource(Datasource ds) {
+		if (this.datasources == null) {
+			this.datasources = new ArrayList<Datasource>();
+		}
 		this.datasources.add(ds);
 	}
 
 	public void associateDatasources(List<Datasource> dss) {
+		if (this.datasources == null) {
+			this.datasources = new ArrayList<Datasource>();
+		}
 		this.datasources.addAll(dss);
 	}
 
