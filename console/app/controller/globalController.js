@@ -109,7 +109,7 @@ Ext.define('webapp.controller.globalController', {
 
             }else if(response.status == 403){
 
-                if(options.url.indexOf("user/onAfterLogin") > -1){
+                if(options.url.indexOf("auth/onAfterLogin") > -1){
                     return;
                 }
 
