@@ -130,7 +130,7 @@
                     "        if(options.url.indexOf(\"auth/onAfterLogin\") > -1){",
                     "            return;",
                     "        }",
-                    "",
+                    "        ",
                     "        Ext.Msg.show({",
                     "            title:'Access Deny',",
                     "            msg: options.url + \": \" + Ext.JSON.decode(response.responseText).msg,",
