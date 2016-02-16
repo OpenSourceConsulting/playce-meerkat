@@ -184,7 +184,7 @@ Ext.define('webapp.controller.MenuController', {
                                 webapp.app.getController("TomcatController").changeState(tomcatId, 2);
                                 break;
                             case 'edit-tomcat':
-                                alert("Edit tomcat");
+                                webapp.app.getController("TomcatController").showTomcatWindow("edit", tomcatId, 0);
                                 break;
                             case 'delete-tomcat':
                                 alert("Delete tomcat");

@@ -35,6 +35,9 @@ public class DatagridServerGroup implements Serializable {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "type")
+	private String type;
+
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonBackReference
 	private Collection<DatagridServer> datagridServers;
@@ -73,6 +76,28 @@ public class DatagridServerGroup implements Serializable {
 
 	public void setDatagridServers(Collection<DatagridServer> datagridServers) {
 		this.datagridServers = datagridServers;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getServerNo() {
+		if (datagridServers != null) {
+			return datagridServers.size();
+		}
+		return 0;
 	}
 
 }

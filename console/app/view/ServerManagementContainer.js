@@ -21,16 +21,16 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.grid.Panel',
-        'Ext.grid.column.Number',
         'Ext.grid.column.Date',
         'Ext.grid.column.Boolean',
         'Ext.grid.View',
-        'Ext.toolbar.Paging',
         'Ext.form.field.ComboBox',
         'Ext.toolbar.Separator',
+        'Ext.grid.column.Number',
         'Ext.form.FieldSet',
         'Ext.form.RadioGroup',
-        'Ext.form.field.Radio'
+        'Ext.form.field.Radio',
+        'Ext.toolbar.Paging'
     ],
 
     layout: {
@@ -74,16 +74,17 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     xtype: 'gridpanel',
                                     flex: 1,
                                     dock: 'top',
+                                    id: 'tomcatServerGrid',
                                     title: '',
                                     forceFit: true,
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'name',
                                             text: 'Name'
                                         },
                                         {
-                                            xtype: 'numbercolumn',
+                                            xtype: 'gridcolumn',
                                             dataIndex: 'number',
                                             text: 'Operating System'
                                         },
@@ -101,14 +102,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                             xtype: 'booleancolumn',
                                             dataIndex: 'bool',
                                             text: 'Tomcat Instances'
-                                        }
-                                    ],
-                                    dockedItems: [
-                                        {
-                                            xtype: 'pagingtoolbar',
-                                            dock: 'bottom',
-                                            width: 360,
-                                            displayInfo: true
                                         }
                                     ]
                                 },
@@ -597,6 +590,10 @@ Ext.define('webapp.view.ServerManagementContainer', {
                         {
                             xtype: 'panel',
                             title: 'Datagrid Servers',
+                            tabConfig: {
+                                xtype: 'tab',
+                                tabIndex: 1
+                            },
                             dockedItems: [
                                 {
                                     xtype: 'toolbar',
@@ -612,36 +609,35 @@ Ext.define('webapp.view.ServerManagementContainer', {
                             items: [
                                 {
                                     xtype: 'gridpanel',
+                                    id: 'datagridServerGroupGrid',
                                     title: 'Datagrid Server Group',
                                     forceFit: true,
+                                    store: 'DatagridServerGroupStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'string',
+                                            dataIndex: 'name',
                                             text: 'Name'
                                         },
                                         {
-                                            xtype: 'numbercolumn',
-                                            dataIndex: 'number',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'type',
                                             text: 'Type'
                                         },
                                         {
-                                            xtype: 'datecolumn',
-                                            dataIndex: 'date',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'serverNo',
                                             text: 'Servers'
-                                        },
-                                        {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
-                                            text: 'Action'
                                         }
                                     ],
                                     dockedItems: [
                                         {
                                             xtype: 'pagingtoolbar',
                                             dock: 'bottom',
+                                            id: 'datagridServerGroupPaging',
                                             width: 360,
-                                            displayInfo: true
+                                            displayInfo: true,
+                                            store: 'DatagridServerGroupStore'
                                         }
                                     ]
                                 },
@@ -651,6 +647,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                 },
                                 {
                                     xtype: 'gridpanel',
+                                    id: 'datagirdServerGrid',
                                     title: '',
                                     forceFit: true,
                                     columns: [
@@ -718,12 +715,27 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    listeners: {
+                        tabchange: {
+                            fn: me.onTabpanelTabChange,
+                            scope: me
+                        }
+                    }
                 }
             ]
         });
 
         me.callParent(arguments);
+    },
+
+    onTabpanelTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+        var activeTab = tabPanel.getActiveTab();
+        var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
+        if(activeTabIndex === 1) {//datagrid server tab
+            Ext.getCmp("datagridServerGroupGrid").getStore().reload();
+        }
+
     }
 
 });

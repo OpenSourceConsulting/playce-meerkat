@@ -123,15 +123,6 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             margin: '10 0 10 10',
                             items: [
                                 {
-                                    xtype: 'textfield',
-                                    id: 'javaHomeField',
-                                    width: 399,
-                                    fieldLabel: 'JAVA_HOME',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                },
-                                {
                                     xtype: 'numberfield',
                                     id: 'httpPortField',
                                     width: 400,

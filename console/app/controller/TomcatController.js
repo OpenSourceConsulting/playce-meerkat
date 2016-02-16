@@ -71,7 +71,6 @@ Ext.define('webapp.controller.TomcatController', {
         var server = form.getForm().findField("serverComboBox");
         var _id = form.getForm().findField("tomcatHiddenField");
 
-        var javaHome = form.getForm().findField("javaHomeField");
         var httpPort = form.getForm().findField("httpPortField");
         var ajpPort = form.getForm().findField("ajpPortField");
         var redirectPort = form.getForm().findField("redirectPortField");
@@ -81,7 +80,6 @@ Ext.define('webapp.controller.TomcatController', {
         var nameVal = name.getValue();
         var serverVal = server.getValue();
         var _idVal = _id.getValue();
-        var javaHomeVal = javaHome.getValue();
         var httpPortVal = httpPort.getValue();
         var ajpPortVal = ajpPort.getValue();
         var redirectPortVal = redirectPort.getValue();
@@ -94,17 +92,21 @@ Ext.define('webapp.controller.TomcatController', {
             }
         });
 
-        if(!this.validate(nameVal, serverVal, javaHomeVal, httpPortVal, ajpPortVal,redirectPortVal)){
+        if(!this.validate(nameVal, serverVal, httpPortVal, ajpPortVal,redirectPortVal)){
             return;
         }
         if(_idVal === ""){
             _idVal = 0;
         }
 
-        var params = {"id":_idVal, "name": nameVal, "machineId": serverVal, "javaHome":javaHomeVal, "httpPort":httpPortVal, "ajpPort":ajpPortVal,
+        var params = {"id":_idVal, "name": nameVal, "machineId": serverVal, "httpPort":httpPortVal, "ajpPort":ajpPortVal,
                       "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId , "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
         this. save(params, function(data){
-            Ext.getCmp("associatedTomcatListView").getStore().loadData(data);
+            Ext.getCmp("associatedTomcatListView").getStore().loadData(new Array(data), true);
+            var dsGrid = Ext.getCmp("tomcatDatasourcesGrid");
+            if(dsGrid !== null){
+                dsGrid.getStore().loadData(data.datasources);
+            }
             webapp.app.getController("MenuController").loadTomcatList(GlobalData.lastSelectedMenuId);
             button.up("window").close();
         });
@@ -223,7 +225,7 @@ Ext.define('webapp.controller.TomcatController', {
         var domain = form.getForm().findField("domainField");
         var domainType = form.getForm().findField("domainTypeDisplayField");
 
-        if(domainId !== null) {
+        if(domainId !== 0) {
             Ext.Ajax.request({
                 url: GlobalData.urlPrefix + "domain/get",
                 params: {"id": domainId},
@@ -235,6 +237,9 @@ Ext.define('webapp.controller.TomcatController', {
                 method:"GET"
             });
         }
+
+        var url  = "";
+        var params= {};
         if (type === "edit"){
             tomcatWindow.setTitle("Edit Tomcat instance");
             submitButton.setText("Save");
@@ -242,40 +247,49 @@ Ext.define('webapp.controller.TomcatController', {
             var name = form.getForm().findField("newTomcatNameField");
             var server = form.getForm().findField("serverComboBox");
             var _id = form.getForm().findField("tomcatHiddenField");
-
-            var javaHome = form.getForm().findField("javaHomeField");
+            Ext.getStore("MachineStore").load();
             var httpPort = form.getForm().findField("httpPortField");
             var ajpPort = form.getForm().findField("ajpPortField");
             var redirectPort = form.getForm().findField("redirectPortField");
-        /*
-             Ext.Ajax.request({
-                    url: GlobalData.urlPrefix + "domain/edit",
-                    params: {"id": id},
-                    success: function(resp, ops) {
-                        var response = Ext.decode(resp.responseText);
+            //get tomcat info
+            Ext.Ajax.request({
+                url: GlobalData.urlPrefix + "tomcat/instance/get",
+                params:{"id":id},
+                success:function(resp, ops){
+                    var response = Ext.decode(resp.responseText);
+                    if(response.success === true){
                         name.setValue(response.data.name);
-                        if(response.data.isClustering) {
-                            domainTypeClustering.setValue(true);
-                            domainTypeNoneClustering.setValue(false);
-                        } else{
-                            domainTypeClustering.setValue(false);
-                            domainTypeNoneClustering.setValue(true);
-                            var comboBox = Ext.getCmp("dataGridServerGroupComboBoxField");
-                            if (comboBox.isVisible()){
-                                comboBox.hide();
-                            }
-                        }
-                        if(response.data.serverGroup !== null){
-                            serverGroup.setValue(response.data.serverGroup.id);
-                        }
-                        _id.setValue(id);
+                        httpPort.setValue(response.data.httpPort);
+                        ajpPort.setValue(response.data.ajpPort);
+                        redirectPort.setValue(response.data.redirectPort);
+                        domain.setValue(response.data.domainName);
+                        domainType.setValue(response.data.domainStatus);
+                        server.setValue(response.data.machineId);
+                        _id.setValue(response.data.id);
                     }
-                });*/
+                    else {
+                        Ext.Msg.show({
+                            title: "Message",
+                            msg: response.msg,
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.WARNING
+                        });
+                    }
+                }
+            });
+
+            url = GlobalData.urlPrefix + "datasource/tomcat/link/list";
+            params = {"tomcatId":id};
         }
         else {
-            var url = GlobalData.urlPrefix + "datasource/tomcat/link/list/all";
+            url = GlobalData.urlPrefix + "datasource/tomcat/link/list/all";
+        }
+
+        //get datasource list info
+        if(url !== ""){
             Ext.Ajax.request({
                 url: url,
+                params:params,
                 success: function(resp, ops) {
                     var response = Ext.decode(resp.responseText);
                     if(response.success === true){
@@ -292,14 +306,13 @@ Ext.define('webapp.controller.TomcatController', {
                     }
                 }
             });
-
         }
 
         tomcatWindow.show();
     },
 
-    validate: function(name, server, javaHome, httpPort, ajpPort, redirectPort) {
-        if(name === "" || javaHome === "" || httpPort === "" ||  redirectPort === "" || ajpPort === "" || server <= 0){
+    validate: function(name, server, httpPort, ajpPort, redirectPort) {
+        if(name === "" || httpPort === "" ||  redirectPort === "" || ajpPort === "" || server <= 0){
             Ext.Msg.show({
                 title: "Message",
                 msg: "Invalid data.",

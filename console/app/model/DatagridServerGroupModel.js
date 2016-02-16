@@ -28,6 +28,12 @@ Ext.define('webapp.model.DatagridServerGroupModel', {
         {
             name: 'name',
             type: 'string'
+        },
+        {
+            name: 'type'
+        },
+        {
+            name: 'serverNo'
         }
     ]
 });

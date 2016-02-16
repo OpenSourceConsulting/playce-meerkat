@@ -97,6 +97,7 @@
                             "userConfig": {
                                 "dock": "top",
                                 "forceFit": true,
+                                "id": "tomcatServerGrid",
                                 "layout|flex": 1,
                                 "title": ""
                             },
@@ -111,14 +112,14 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "string",
+                                        "dataIndex": "name",
                                         "text": "Name"
                                     },
                                     "name": "MyColumn17",
                                     "designerId": "fbca23fa-8b73-4731-adb8-f9655d20d3de"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Number",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
@@ -128,7 +129,7 @@
                                         "dataIndex": "number",
                                         "text": "Operating System"
                                     },
-                                    "name": "MyNumberColumn13",
+                                    "name": "MyColumn41",
                                     "designerId": "f9439419-d04c-4816-b316-e4880b24ab6d"
                                 },
                                 {
@@ -182,21 +183,6 @@
                                     "codeClass": null,
                                     "name": "MyGridView14",
                                     "designerId": "3f0f917e-66ee-4b99-a376-0f1468927f6b"
-                                },
-                                {
-                                    "type": "Ext.toolbar.Paging",
-                                    "reference": {
-                                        "name": "dockedItems",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "displayInfo": true,
-                                        "dock": "bottom",
-                                        "width": 360
-                                    },
-                                    "name": "MyPagingToolbar4",
-                                    "designerId": "9a7ccae3-2329-4f06-a9d4-b8e50c408cdd"
                                 }
                             ]
                         },
@@ -1572,6 +1558,9 @@
                                 "type": "object"
                             },
                             "codeClass": null,
+                            "userConfig": {
+                                "tabIndex": 1
+                            },
                             "name": "TabConfig28",
                             "designerId": "ae7ffd51-87d2-4bd1-86df-24fb719accac"
                         },
@@ -1613,6 +1602,8 @@
                             "codeClass": null,
                             "userConfig": {
                                 "forceFit": true,
+                                "id": "datagridServerGroupGrid",
+                                "store": "DatagridServerGroupStore",
                                 "title": "Datagrid Server Group"
                             },
                             "name": "MyGridPanel16",
@@ -1626,53 +1617,39 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "string",
+                                        "dataIndex": "name",
                                         "text": "Name"
                                     },
                                     "name": "MyColumn19",
                                     "designerId": "5503cf3f-e6a9-46ca-821a-76d2598f7bba"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Number",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "number",
+                                        "dataIndex": "type",
                                         "text": "Type"
                                     },
-                                    "name": "MyNumberColumn15",
+                                    "name": "MyColumn42",
                                     "designerId": "d6f54e67-b707-43fd-9269-be1ed98bc9f6"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Date",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "date",
+                                        "dataIndex": "serverNo",
                                         "text": "Servers"
                                     },
-                                    "name": "MyDateColumn9",
+                                    "name": "MyColumn57",
                                     "designerId": "10375863-609f-4667-9ec5-3f7633884138"
-                                },
-                                {
-                                    "type": "Ext.grid.column.Boolean",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "bool",
-                                        "text": "Action"
-                                    },
-                                    "name": "MyBooleanColumn30",
-                                    "designerId": "739e3d92-3416-445d-9163-6c3ef886a811"
                                 },
                                 {
                                     "type": "Ext.grid.View",
@@ -1694,6 +1671,8 @@
                                     "userConfig": {
                                         "displayInfo": true,
                                         "dock": "bottom",
+                                        "id": "datagridServerGroupPaging",
+                                        "store": "DatagridServerGroupStore",
                                         "width": 360
                                     },
                                     "name": "MyPagingToolbar5",
@@ -1723,6 +1702,7 @@
                             "codeClass": null,
                             "userConfig": {
                                 "forceFit": true,
+                                "id": "datagirdServerGrid",
                                 "title": ""
                             },
                             "name": "MyGridPanel17",
@@ -1910,6 +1890,29 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onTabpanelTabChange",
+                        "implHandler": [
+                            "var activeTab = tabPanel.getActiveTab();",
+                            "var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);",
+                            "if(activeTabIndex === 1) {//datagrid server tab",
+                            "    Ext.getCmp(\"datagridServerGroupGrid\").getStore().reload();",
+                            "}",
+                            ""
+                        ],
+                        "name": "tabchange",
+                        "scope": "me"
+                    },
+                    "name": "onTabpanelTabChange",
+                    "designerId": "ea9ac0e4-45a4-4474-93de-6a8ab99e8545"
                 }
             ]
         }
