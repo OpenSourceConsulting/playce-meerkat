@@ -204,24 +204,6 @@
                     "designerId": "b9098196-d038-41df-8d84-768aa2f7d86c",
                     "cn": [
                         {
-                            "type": "Ext.form.field.Text",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "allowBlank": false,
-                                "allowOnlyWhitespace": false,
-                                "fieldLabel": "JAVA_HOME",
-                                "id": "javaHomeField",
-                                "labelWidth": 150,
-                                "width": 399
-                            },
-                            "name": "MyTextField29",
-                            "designerId": "c83ed18c-0817-4a20-a0e9-d8350f0d6549"
-                        },
-                        {
                             "type": "Ext.form.field.Number",
                             "reference": {
                                 "name": "items",

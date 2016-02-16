@@ -233,7 +233,7 @@ public class TomcatInstanceController {
 		if (provisioning_result) {
 			TomcatInstance tc = service.save(tomcat);
 			if (tc != null) {
-				json.setData(service.getTomcatListByDomainId(domainId));
+				json.setData(tc);
 				json.setSuccess(true);
 
 			} else {

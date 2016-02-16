@@ -260,4 +260,19 @@ public class TomcatInstance implements Serializable {
 		return "";
 	}
 
+	public int getMachineId() {
+		if (machine != null) {
+			return machine.getId();
+		}
+		return 0;
+	}
+
+	public String getDomainStatus() {
+		if (domain != null) {
+			return domain.getIsClustering() == true ? "Clustering"
+					: "Non-clustering";
+		}
+		return "";
+	}
+
 }
