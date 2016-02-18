@@ -175,6 +175,25 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onLoginWindowAfterRender",
+                "implHandler": [
+                    "        // 이후부터 globalController에 의한 ajax request exception 을 보여준다. ",
+                    "        GlobalData.viewAjaxException = true;"
+                ],
+                "name": "afterrender",
+                "scope": "me"
+            },
+            "name": "onLoginWindowAfterRender",
+            "designerId": "6712ed17-056f-4802-9fa7-71740be1bacb"
         }
     ]
 }

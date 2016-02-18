@@ -120,8 +120,8 @@ Ext.define('webapp.controller.LoginController', {
                         failureCallback(response, ops);
                     }
 
-                },
-                failure: failureCallback
+                }
+                //,failure: failureCallback
             });
 
         }

@@ -82,7 +82,8 @@ Ext.define('webapp.controller.globalController', {
             memoryStore: memoryStore,
             cpuStore: cpuStore,
             serverSize: serverSize,
-            isLogined: false
+            isLogined: false,
+            viewAjaxException: false
         });
 
 
@@ -109,15 +110,23 @@ Ext.define('webapp.controller.globalController', {
 
             }else if(response.status == 403){
 
-                if(options.url.indexOf("auth/onAfterLogin") > -1){
+                //if(options.url.indexOf("auth/onAfterLogin") > -1){
+                if (GlobalData.viewAjaxException === false) {
                     return;
                 }
 
+                var resJson = Ext.JSON.decode(response.responseText);
+
                 Ext.Msg.show({
                     title:'Access Deny',
-                    msg: options.url + ": " + Ext.JSON.decode(response.responseText).msg,
+                    msg: options.url + ": " + resJson.msg,
                     buttons: Ext.Msg.OK,
-                    icon: Ext.Msg.ERROR
+                    icon: Ext.Msg.ERROR,
+                    fn : function(btn) {
+                        if (resJson.data == "notLogin") {
+                            window.location.reload();
+                        }
+                    }
                 });
 
             }else{

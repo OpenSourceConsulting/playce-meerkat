@@ -111,8 +111,10 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 			http.anonymous()
 					.disable()
 				.authorizeRequests()
-					/*
+					
 					.expressionHandler(webExpressionHandler())
+					.antMatchers("/auth/onAfterLogin").fullyAuthenticated()
+					
                     .antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
                     .antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
                     .antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
@@ -126,9 +128,10 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
                     
                     .antMatchers(HttpMethod.POST, "/user/**").access("hasRole('ROLE_USER_ADMIN')")
                     .antMatchers(HttpMethod.GET, "/user/**").access("hasRole('ROLE_USER_USER')")
-                    */
-                    .anyRequest()
-                    .fullyAuthenticated()
+                    
+                    .anyRequest() // other request
+                    .access("hasRole('ROLE_ADMIN')")
+                    //.fullyAuthenticated()
 					.and()
 				.exceptionHandling()
 					.accessDeniedPage("/auth/accessDenied")
@@ -145,14 +148,12 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 					.and()
 				.csrf()
 					.disable();
-			// http.anonymous().and().csrf().disable();
-
 		}
 		
 		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-		    //auth.inMemoryAuthentication().withUser("dolly").password("dolly").roles("TOMCAT_USER");
+		    //auth.inMemoryAuthentication().withUser("dolly").password("dolly").roles("USER_USER");
 		}
 		
 		@Bean

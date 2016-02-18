@@ -1,6 +1,4 @@
 /* 
- * Athena Peacock Project - Server Provisioning Engine for IDC or Cloud
- * 
  * Copyright (C) 2013 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
  *
  * This program is free software; you can redistribute it and/or
@@ -30,7 +28,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,13 +74,13 @@ public class UserController {
 		return users;
 	}
 
-	@RequestMapping("/rolelist")
+	@RequestMapping(value = "/rolelist", method = RequestMethod.GET)
 	@ResponseBody
 	public List<UserRole> getRoleList() {
 		return service.getRoleList();
 	}
 
-	@RequestMapping("/save")
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean saveUser(User user) {
 		
@@ -113,19 +110,19 @@ public class UserController {
 		return false;
 	}
 
-	@RequestMapping("/edit")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public User editUser(int id) {
 		return service.findUser(id);
 	}
 
-	@RequestMapping("/search")
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> searchByUserName(String userName) {
 		return service.getUsers(userName);
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean delete(int id) {
 		User user = service.findUser(id);
@@ -138,7 +135,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping("/role/delete")
+	@RequestMapping(value = "/role/delete")
 	@ResponseBody
 	public boolean deleteRole(int id) {
 		UserRole userRole = service.getUserRole(id);
@@ -150,13 +147,13 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/role/edit")
+	@RequestMapping(value = "/role/edit")
 	@ResponseBody
 	public UserRole editUserRole(int id) {
 		return service.getUserRole(id);
 	}
 
-	@RequestMapping("/role/save")
+	@RequestMapping(value = "/role/save")
 	@ResponseBody
 	public boolean saveUserRole(UserRole userRole) {
 		UserRole role = null;

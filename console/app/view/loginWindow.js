@@ -124,10 +124,21 @@ Ext.define('webapp.view.loginWindow', {
                         }
                     ]
                 }
-            ]
+            ],
+            listeners: {
+                afterrender: {
+                    fn: me.onLoginWindowAfterRender,
+                    scope: me
+                }
+            }
         });
 
         me.callParent(arguments);
+    },
+
+    onLoginWindowAfterRender: function(component, eOpts) {
+                // 이후부터 globalController에 의한 ajax request exception 을 보여준다.
+                GlobalData.viewAjaxException = true;
     }
 
 });

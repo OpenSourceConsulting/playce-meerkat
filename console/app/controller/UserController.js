@@ -216,7 +216,7 @@ Ext.define('webapp.controller.UserController', {
 
              if(btn == "yes"){
                 Ext.Ajax.request({
-                    url: GlobalData.urlPrefix+ "/user/delete",
+                    url: GlobalData.urlPrefix+ "user/delete",
                     params: {"id":id},
                     success: function(resp, ops) {
 
@@ -301,7 +301,7 @@ Ext.define('webapp.controller.UserController', {
 
              if(btn == "yes"){
                 Ext.Ajax.request({
-                    url: GlobalData.urlPrefix+ "/user/role/delete",
+                    url: GlobalData.urlPrefix+ "user/role/delete",
                     params: {"id":id},
                     success: function(resp, ops) {
 
