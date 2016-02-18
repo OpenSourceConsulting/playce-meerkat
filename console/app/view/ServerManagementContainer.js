@@ -21,8 +21,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.grid.Panel',
-        'Ext.grid.column.Date',
-        'Ext.grid.column.Boolean',
         'Ext.grid.View',
         'Ext.form.field.ComboBox',
         'Ext.toolbar.Separator',
@@ -30,7 +28,9 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.form.FieldSet',
         'Ext.form.RadioGroup',
         'Ext.form.field.Radio',
-        'Ext.toolbar.Paging'
+        'Ext.toolbar.Paging',
+        'Ext.grid.column.Date',
+        'Ext.grid.column.Boolean'
     ],
 
     layout: {
@@ -77,6 +77,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     id: 'tomcatServerGrid',
                                     title: '',
                                     forceFit: true,
+                                    store: 'MachineStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
@@ -85,22 +86,17 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'number',
+                                            dataIndex: 'osName',
                                             text: 'Operating System'
                                         },
                                         {
-                                            xtype: 'datecolumn',
-                                            dataIndex: 'date',
-                                            text: 'Type'
-                                        },
-                                        {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'sshipaddr',
                                             text: 'IP Address'
                                         },
                                         {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
+                                            xtype: 'gridcolumn',
+                                            dataIndex: 'tomcatInstanceNo',
                                             text: 'Tomcat Instances'
                                         }
                                     ]
@@ -723,7 +719,13 @@ Ext.define('webapp.view.ServerManagementContainer', {
                         }
                     }
                 }
-            ]
+            ],
+            listeners: {
+                activate: {
+                    fn: me.onContainerActivate,
+                    scope: me
+                }
+            }
         });
 
         me.callParent(arguments);
@@ -732,10 +734,21 @@ Ext.define('webapp.view.ServerManagementContainer', {
     onTabpanelTabChange: function(tabPanel, newCard, oldCard, eOpts) {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
-        if(activeTabIndex === 1) {//datagrid server tab
+        if(activeTabIndex === 0) {//tomcat server tab
+            webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
+                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
+            });
+        }
+        else if(activeTabIndex === 1) {//datagrid server tab
             Ext.getCmp("datagridServerGroupGrid").getStore().reload();
         }
 
+    },
+
+    onContainerActivate: function(component, eOpts) {
+         webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
+                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
+            });
     }
 
 });

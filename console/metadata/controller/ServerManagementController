@@ -1,0 +1,54 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "ServerManagementController"
+    },
+    "name": "MyController",
+    "designerId": "00cff67e-2f7e-4695-88b1-cf64d01f6258",
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "callback"
+                ],
+                "fn": "loadTomcatServers",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"machine/tomcatserver\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success){",
+                    "            callback(response.data);",
+                    "        }",
+                    "        else{",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "",
+                    "",
+                    "",
+                    "    }",
+                    "});"
+                ]
+            },
+            "name": "loadTomcatServers",
+            "designerId": "5c766894-aa7b-4895-b6f8-4f02f30dd47f"
+        }
+    ]
+}

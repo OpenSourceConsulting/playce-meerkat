@@ -79,4 +79,19 @@ public class MachineController {
 		}
 		return false;
 	}
+
+	@RequestMapping("/tomcatserver")
+	@ResponseBody
+	public SimpleJsonResponse getTomcatServers(SimpleJsonResponse json) {
+		List<Machine> tomcatServers = service
+				.getListByType(MeerkatConstants.MACHINE_TOMCAT_SERVER_TYPE);
+		if (tomcatServers != null) {
+			json.setSuccess(true);
+			json.setData(tomcatServers);
+		} else {
+			json.setSuccess(false);
+			json.setMsg("Error occured.");
+		}
+		return json;
+	}
 }

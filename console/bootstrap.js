@@ -870,6 +870,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.controller.DomainController": [],
   "webapp.controller.LoginController": [],
   "webapp.controller.MenuController": [],
+  "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
   "webapp.controller.UserController": [],
   "webapp.controller.dashboardController": [],
@@ -1940,6 +1941,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.controller.DomainController": [],
   "webapp.controller.LoginController": [],
   "webapp.controller.MenuController": [],
+  "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
   "webapp.controller.UserController": [
     "controller.UserController"

@@ -78,6 +78,13 @@ public class Machine {
 	@Column(name = "ssh_ipaddr")
 	private String sshIPAddr;
 
+	@Column(name = "machine_server_type")
+	private int machineServerType;
+
+	@OneToOne
+	@JoinColumn(name = "datagrid_server_id")
+	private DatagridServer datagridServer;
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonManagedReference
@@ -94,10 +101,6 @@ public class Machine {
 	@OneToMany(mappedBy = "machine")
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcatInstances;
-
-	// @OneToOne
-	// @JoinColumn(name="datagrid_server_group_id")
-	// private DatagridServer datagridServer;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
 	private Collection<EnvironmentVariable> environmentVariables;
@@ -409,4 +412,40 @@ public class Machine {
 		this.environmentVariables = environmentVariables;
 	}
 
+	/**
+	 * @return the datagridServer
+	 */
+	public DatagridServer getDatagridServer() {
+		return datagridServer;
+	}
+
+	/**
+	 * @param datagridServer
+	 *            the datagridServer to set
+	 */
+	public void setDatagridServer(DatagridServer datagridServer) {
+		this.datagridServer = datagridServer;
+	}
+
+	/**
+	 * @return the machineServerType
+	 */
+	public int getMachineServerType() {
+		return machineServerType;
+	}
+
+	/**
+	 * @param machineServerType
+	 *            the machineServerType to set
+	 */
+	public void setMachineServerType(int machineServerType) {
+		this.machineServerType = machineServerType;
+	}
+
+	public int getTomcatInstanceNo() {
+		if (tomcatInstances != null) {
+			return tomcatInstances.size();
+		}
+		return 0;
+	}
 }

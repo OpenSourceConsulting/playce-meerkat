@@ -13,5 +13,6 @@ public interface MachineRepository extends JpaRepository<Machine, Integer>,
 		PagingAndSortingRepository<Machine, Integer> {
 	Page<Machine> findAll(Pageable pageable);
 
+	List<Machine> findByMachineServerType(int type);
 	List<Machine> findByNameOrSshIPAddr(String name, String sshIPAddr);
 }

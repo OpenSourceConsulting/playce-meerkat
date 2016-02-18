@@ -29,7 +29,13 @@ Ext.define('webapp.model.MachineModel', {
             name: 'name'
         },
         {
-            name: 'ipaddress'
+            name: 'osName'
+        },
+        {
+            name: 'sshipaddr'
+        },
+        {
+            name: 'tomcatInstanceNo'
         }
     ]
 });

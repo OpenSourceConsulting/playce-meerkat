@@ -99,6 +99,7 @@
                                 "forceFit": true,
                                 "id": "tomcatServerGrid",
                                 "layout|flex": 1,
+                                "store": "MachineStore",
                                 "title": ""
                             },
                             "name": "MyGridPanel14",
@@ -126,52 +127,38 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "number",
+                                        "dataIndex": "osName",
                                         "text": "Operating System"
                                     },
                                     "name": "MyColumn41",
                                     "designerId": "f9439419-d04c-4816-b316-e4880b24ab6d"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Date",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "date",
-                                        "text": "Type"
-                                    },
-                                    "name": "MyDateColumn8",
-                                    "designerId": "aa8aa32d-99d5-42ca-becf-7a29dc1373e3"
-                                },
-                                {
-                                    "type": "Ext.grid.column.Boolean",
-                                    "reference": {
-                                        "name": "columns",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "sshipaddr",
                                         "text": "IP Address"
                                     },
-                                    "name": "MyBooleanColumn28",
+                                    "name": "MyColumn61",
                                     "designerId": "e9e9cbae-7c9b-4db8-97cd-ab0b2d460f9b"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Boolean",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "tomcatInstanceNo",
                                         "text": "Tomcat Instances"
                                     },
-                                    "name": "MyBooleanColumn29",
+                                    "name": "MyColumn62",
                                     "designerId": "da077c65-2bf8-4b76-9106-fced2423a577"
                                 },
                                 {
@@ -1903,7 +1890,12 @@
                         "implHandler": [
                             "var activeTab = tabPanel.getActiveTab();",
                             "var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);",
-                            "if(activeTabIndex === 1) {//datagrid server tab",
+                            "if(activeTabIndex === 0) {//tomcat server tab",
+                            "    webapp.app.getController(\"ServerManagementController\").loadTomcatServers(function(data){",
+                            "        Ext.getCmp(\"tomcatServerGrid\").getStore().loadData(data);",
+                            "    });",
+                            "}",
+                            "else if(activeTabIndex === 1) {//datagrid server tab",
                             "    Ext.getCmp(\"datagridServerGroupGrid\").getStore().reload();",
                             "}",
                             ""
@@ -1915,6 +1907,26 @@
                     "designerId": "ea9ac0e4-45a4-4474-93de-6a8ab99e8545"
                 }
             ]
+        },
+        {
+            "type": "basiceventbinding",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "onContainerActivate",
+                "implHandler": [
+                    " webapp.app.getController(\"ServerManagementController\").loadTomcatServers(function(data){",
+                    "        Ext.getCmp(\"tomcatServerGrid\").getStore().loadData(data);",
+                    "    });"
+                ],
+                "name": "activate",
+                "scope": "me"
+            },
+            "name": "onContainerActivate",
+            "designerId": "542aad84-04b6-4b0e-b503-e45b885017a2"
         }
     ]
 }

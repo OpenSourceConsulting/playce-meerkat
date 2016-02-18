@@ -45,10 +45,36 @@
             },
             "codeClass": null,
             "userConfig": {
-                "name": "ipaddress"
+                "name": "osName"
             },
-            "name": "MyField31",
-            "designerId": "2d428ed8-db6b-49f0-a4fb-0d8195005038"
+            "name": "MyField66",
+            "designerId": "53f44f69-6755-46e8-989b-7072e8d8d884"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "sshipaddr"
+            },
+            "name": "MyField67",
+            "designerId": "782b005b-5001-414e-a64c-7d724b003c91"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "tomcatInstanceNo"
+            },
+            "name": "MyField68",
+            "designerId": "91b37010-5aaa-4f0e-bc12-64c8bb443a74"
         }
     ]
 }

@@ -46,7 +46,7 @@ public class Domain implements Serializable {
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 
-	@OneToMany(mappedBy = "domain")
+	@OneToMany(mappedBy = "domain", fetch=FetchType.LAZY)
 	@JsonManagedReference
 	private List<TomcatInstance> tomcats;
 

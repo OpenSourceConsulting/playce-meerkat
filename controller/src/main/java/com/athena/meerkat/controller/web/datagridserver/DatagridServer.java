@@ -25,6 +25,7 @@ public class DatagridServer {
 	@Column(name = "type")
 	private String type;
 	@OneToOne
+	@JoinColumn(name = "machine_id")
 	private Machine machine;
 
 	@ManyToOne

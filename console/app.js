@@ -87,7 +87,8 @@ Ext.application({
         'UserController',
         'ApplicationController',
         'CluteringConfigurationController',
-        'DatasourceController'
+        'DatasourceController',
+        'ServerManagementController'
     ],
     name: 'webapp',
 

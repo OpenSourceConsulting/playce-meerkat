@@ -18,7 +18,8 @@
             "UserController",
             "ApplicationController",
             "CluteringConfigurationController",
-            "DatasourceController"
+            "DatasourceController",
+            "ServerManagementController"
         ],
         "models": [
             "SessionKeyData",
