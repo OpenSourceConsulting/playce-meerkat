@@ -91,6 +91,10 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		if (userRole != null && authorities.size() == 0) {
+			addAuthority(new SimpleGrantedAuthority(userRole.getName()));
+		}
 
 		return this.authorities;
 	}
