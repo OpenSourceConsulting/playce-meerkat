@@ -131,7 +131,6 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
                     
                     .anyRequest() // other request
                     .access("hasRole('ROLE_ADMIN')")
-                    //.fullyAuthenticated()
 					.and()
 				.exceptionHandling()
 					.accessDeniedPage("/auth/accessDenied")

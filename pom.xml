@@ -260,7 +260,7 @@
 	<modules>
 		<module>common</module>
 		<module>core</module>
-		<module>console</module>
+		<!-- <module>console</module> -->
 		<module>controller</module>
 		<module>agent</module>
 	</modules>
