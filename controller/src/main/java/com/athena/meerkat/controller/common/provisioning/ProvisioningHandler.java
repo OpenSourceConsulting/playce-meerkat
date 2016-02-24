@@ -37,7 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
-import org.jboss.ews.dbcp.BlowfishEncrypter;
+//import org.jboss.ews.dbcp.BlowfishEncrypter;
 import org.picketbox.datasource.security.SecureIdentityLoginModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -534,7 +534,8 @@ public class ProvisioningHandler {
 	}
 
 	private String ewsPasswordEncrypt(String password) {
-		return BlowfishEncrypter.encrypt(password);
+		//return BlowfishEncrypter.encrypt(password);
+		return password;
 	}
 
 	private String eapPasswordEncrypt(String password) throws Exception {
