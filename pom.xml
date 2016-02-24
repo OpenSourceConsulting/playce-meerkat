@@ -21,7 +21,7 @@
 
 	<properties>
 		<spring.maven.artifact.version>3.2.9.RELEASE</spring.maven.artifact.version>
-		<slf4j.artifact.version>1.7.5</slf4j.artifact.version>
+		<slf4j.artifact.version>1.7.13</slf4j.artifact.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.compile.version>1.6</project.build.compile.version>
 		<project.build.source.version>1.6</project.build.source.version>
@@ -162,31 +162,22 @@
 			<version>1.9.2</version>
 		</dependency>
 		
-		<!-- logging -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.artifact.version}</version>
-		</dependency>
-            
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.artifact.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-            
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.artifact.version}</version>
-		</dependency>
+			<!-- logging -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.artifact.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>${slf4j.artifact.version}</version>
+			</dependency>
 
 		<!-- junit -->
 		<dependency>
