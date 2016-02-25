@@ -332,24 +332,28 @@
             "userConfig": {
                 "designer|controlQuery": "#mytextfield",
                 "designer|targetType": "Ext.form.field.Text",
-                "fn": "onTextfieldChange",
+                "fn": "onTextfieldSpecialkey",
                 "implHandler": [
-                    "var store = Ext.getStore(\"UserStore\");",
-                    "var url = GlobalData.urlPrefix + \"user/search\";",
-                    "Ext.Ajax.request({",
-                    "     url: url,",
-                    "    params: {\"userName\":newValue},",
-                    "     success: function(resp, ops) {",
                     "",
-                    "            var response = Ext.decode(resp.responseText);",
-                    "            Ext.getStore(\"UserStore\").loadData(response, false);",
-                    "     }",
-                    "    });"
+                    "if(e.getKey() === e.ENTER){",
+                    "    var store = Ext.getStore(\"UserStore\");",
+                    "    var url = GlobalData.urlPrefix + \"user/search\";",
+                    "    Ext.Ajax.request({",
+                    "         url: url,",
+                    "        params: {\"userName\":field.getValue()},",
+                    "         success: function(resp, ops) {",
+                    "",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                Ext.getStore(\"UserStore\").loadData(response, false);",
+                    "         },",
+                    "        method:\"GET\"",
+                    "        });",
+                    "}"
                 ],
-                "name": "change",
+                "name": "specialkey",
                 "scope": "me"
             },
-            "name": "onTextfieldChange",
+            "name": "onTextfieldSpecialkey",
             "designerId": "ef9bb9d5-3ad3-43be-bd3a-4a5ca55788dd"
         },
         {
