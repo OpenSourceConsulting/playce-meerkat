@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import com.athena.meerkat.controller.web.datagridserver.DatagridServer;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -81,8 +82,9 @@ public class Machine {
 	@Column(name = "machine_server_type")
 	private int machineServerType;
 
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "datagrid_server_id")
+	@JsonBackReference
 	private DatagridServer datagridServer;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")

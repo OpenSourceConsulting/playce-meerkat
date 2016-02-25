@@ -236,6 +236,9 @@
                                                 "type": "array"
                                             },
                                             "codeClass": null,
+                                            "userConfig": {
+                                                "margin": "10 10 10 10"
+                                            },
                                             "name": "MyContainer21",
                                             "designerId": "83afde09-1647-4923-91a1-8292137def8e",
                                             "cn": [
@@ -247,7 +250,9 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "fieldLabel": "IP Address:"
+                                                        "fieldLabel": "IP Address:",
+                                                        "id": "tomcatSSHIPAddressTextField",
+                                                        "readOnly": true
                                                     },
                                                     "name": "MyTextField4",
                                                     "designerId": "55a78de8-d406-45de-bc2f-252f8b865ba1"
@@ -260,7 +265,9 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "fieldLabel": "Port"
+                                                        "fieldLabel": "Port",
+                                                        "id": "tomcatSSHPortTextField",
+                                                        "readOnly": true
                                                     },
                                                     "name": "MyTextField5",
                                                     "designerId": "7767fcf4-5dfc-4618-a0cf-a1b105f8ede0"
@@ -273,24 +280,76 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "fieldLabel": "User ID"
+                                                        "fieldLabel": "User ID",
+                                                        "id": "tomcatSSHUserIDTextField",
+                                                        "readOnly": true
                                                     },
                                                     "name": "MyTextField6",
                                                     "designerId": "9bc73eb9-7d2b-46f6-a473-642bf287476e"
                                                 },
                                                 {
-                                                    "type": "Ext.form.field.Text",
+                                                    "type": "Ext.container.Container",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "fieldLabel": "Password",
-                                                        "inputType": "password"
+                                                        "container|align": "stretch",
+                                                        "layout": "hbox"
                                                     },
-                                                    "name": "MyTextField7",
-                                                    "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
+                                                    "name": "MyContainer33",
+                                                    "designerId": "8b74b006-d195-431b-8bf3-eaa94e5991e7",
+                                                    "cn": [
+                                                        {
+                                                            "type": "Ext.form.field.Text",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "fieldLabel": "Password",
+                                                                "id": "tomcatSSHPasswordTextField",
+                                                                "inputType": "password",
+                                                                "readOnly": true,
+                                                                "width": 255
+                                                            },
+                                                            "name": "MyTextField7",
+                                                            "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
+                                                        },
+                                                        {
+                                                            "type": "Ext.form.field.Checkbox",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "boxLabel": "Show password",
+                                                                "fieldLabel": "",
+                                                                "itemId": "showPasswordCheckbox",
+                                                                "margin": "0 0 0 10"
+                                                            },
+                                                            "name": "MyCheckbox2",
+                                                            "designerId": "3660572f-8aa0-4be3-9ebd-8415dee816c2"
+                                                        },
+                                                        {
+                                                            "type": "Ext.form.field.Hidden",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "fieldLabel": "Label",
+                                                                "id": "serverIDHiddenField",
+                                                                "layout|flex": 1
+                                                            },
+                                                            "name": "MyHiddenField4",
+                                                            "designerId": "e5a94f97-d58b-4a97-9e22-febed000ab08"
+                                                        }
+                                                    ]
                                                 },
                                                 {
                                                     "type": "Ext.button.Button",
@@ -300,6 +359,7 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "id": "tbnServerSSHTestConnection",
                                                         "text": "Test"
                                                     },
                                                     "name": "MyButton17",
@@ -313,6 +373,8 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "itemId": "btnServerSSHEdit",
+                                                        "margin": "10 10 10 10",
                                                         "text": "Edit"
                                                     },
                                                     "name": "MyButton18",
@@ -326,6 +388,24 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "hidden": true,
+                                                        "id": "btnServerSSHSave",
+                                                        "itemId": "",
+                                                        "margin": "10 10 10 10",
+                                                        "text": "Save"
+                                                    },
+                                                    "name": "MyButton39",
+                                                    "designerId": "d0c37d44-c7c6-4769-b018-dcc09b10903c"
+                                                },
+                                                {
+                                                    "type": "Ext.button.Button",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "btnServerSSHReset",
                                                         "text": "Reset"
                                                     },
                                                     "name": "MyButton19",
@@ -1690,6 +1770,7 @@
                             "userConfig": {
                                 "forceFit": true,
                                 "id": "datagirdServerGrid",
+                                "store": "DatagridServerStore",
                                 "title": ""
                             },
                             "name": "MyGridPanel17",
@@ -1703,80 +1784,80 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "string",
+                                        "dataIndex": "serverName",
                                         "text": "Server Name"
                                     },
                                     "name": "MyColumn20",
                                     "designerId": "1665d27c-ec72-46c7-a76d-cdccc415e046"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Number",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "number",
+                                        "dataIndex": "groupName",
                                         "text": "Group"
                                     },
-                                    "name": "MyNumberColumn16",
+                                    "name": "MyColumn",
                                     "designerId": "74e23661-4714-493e-b514-16f12b76e36a"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Date",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "date",
+                                        "dataIndex": "ipAddress",
                                         "text": "IP Address"
                                     },
-                                    "name": "MyDateColumn10",
+                                    "name": "MyColumn1",
                                     "designerId": "23d0549d-3ddb-4b3d-92bc-569e4f838ba1"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Boolean",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "hostName",
                                         "text": "Hostname"
                                     },
-                                    "name": "MyBooleanColumn31",
+                                    "name": "MyColumn2",
                                     "designerId": "32909919-6a8c-4a03-8418-3a12d56a0bfe"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Boolean",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "sessions",
                                         "text": "Sessions"
                                     },
-                                    "name": "MyBooleanColumn32",
+                                    "name": "MyColumn3",
                                     "designerId": "2cea6d79-b225-407e-be7f-aa6d7fbf0e60"
                                 },
                                 {
-                                    "type": "Ext.grid.column.Boolean",
+                                    "type": "Ext.grid.column.Column",
                                     "reference": {
                                         "name": "columns",
                                         "type": "array"
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "bool",
+                                        "dataIndex": "status",
                                         "text": "Status"
                                     },
-                                    "name": "MyBooleanColumn33",
+                                    "name": "MyColumn4",
                                     "designerId": "ee65dd36-691a-4814-bd79-df3faa7196ed"
                                 },
                                 {
@@ -1802,21 +1883,6 @@
                                     "codeClass": null,
                                     "name": "MyGridView17",
                                     "designerId": "b6e71ca4-c9c7-49f0-899b-bfe0ee5c47f5"
-                                },
-                                {
-                                    "type": "Ext.toolbar.Paging",
-                                    "reference": {
-                                        "name": "dockedItems",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "displayInfo": true,
-                                        "dock": "bottom",
-                                        "width": 360
-                                    },
-                                    "name": "MyPagingToolbar6",
-                                    "designerId": "42a73116-0de6-4130-94de-bccf7832bd28"
                                 },
                                 {
                                     "type": "Ext.toolbar.Toolbar",

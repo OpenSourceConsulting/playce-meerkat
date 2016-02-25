@@ -1,0 +1,60 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "DatagridServerController"
+    },
+    "name": "MyController",
+    "designerId": "9ddad544-21a8-426b-a38c-7e1cb46eecf7",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#datagridServerGroupGrid",
+                "designer|params": [
+                    "rowmodel",
+                    "record",
+                    "index",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.grid.Panel",
+                "fn": "onDatagridServerGroupGridSelect",
+                "implHandler": [
+                    "var id = record.get(\"id\");",
+                    "var url = GlobalData.urlPrefix + \"res/datagrid/list\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"groupId\": id},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if (response.success === true){",
+                    "            Ext.getCmp(\"datagirdServerGrid\").getStore().loadData(response.data);",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    },",
+                    "    method: \"GET\"",
+                    "});"
+                ],
+                "name": "select"
+            },
+            "name": "onDatagridServerGroupGridSelect",
+            "designerId": "95ed04e9-c463-4220-a96a-b0426eb08e43"
+        }
+    ]
+}

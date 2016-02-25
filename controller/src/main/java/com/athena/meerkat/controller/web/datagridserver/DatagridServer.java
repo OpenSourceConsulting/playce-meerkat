@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.datagridserver;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
@@ -24,13 +25,14 @@ public class DatagridServer {
 	private int Id;
 	@Column(name = "type")
 	private String type;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "machine_id")
+	@JsonBackReference
 	private Machine machine;
 
 	@ManyToOne
 	@JoinColumn(name = "server_group_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private DatagridServerGroup datagridServerGroup;
 
 	public int getId() {
@@ -57,4 +59,52 @@ public class DatagridServer {
 		this.machine = machine;
 	}
 
+	/**
+	 * @return the datagridServerGroup
+	 */
+	public DatagridServerGroup getDatagridServerGroup() {
+		return datagridServerGroup;
+	}
+
+	/**
+	 * @param datagridServerGroup
+	 *            the datagridServerGroup to set
+	 */
+	public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
+		this.datagridServerGroup = datagridServerGroup;
+	}
+
+	public String getIpAddress() {
+		if (machine != null) {
+			return machine.getSSHIPAddr();
+		}
+		return "";
+	}
+
+	public int getStatus() {
+		if (machine != null) {
+			return machine.getState();
+		}
+		return 0;
+	}
+
+	public String getHostName() {
+		if (machine != null) {
+			return machine.getHostName();
+		}
+		return "";
+	}
+
+	public String getGroupName() {
+		if (datagridServerGroup != null) {
+			return datagridServerGroup.getName();
+		}
+		return "";
+	}
+	public String getServerName(){
+		if(machine !=null){
+			return machine.getName();
+		}
+		return "";
+	}
 }

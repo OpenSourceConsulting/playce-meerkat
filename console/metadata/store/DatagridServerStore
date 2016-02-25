@@ -1,0 +1,39 @@
+{
+    "type": "jsonpstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "DatagridServerStore",
+        "model": "DatagridModel",
+        "storeId": "DatagridServerStore"
+    },
+    "name": "MyJsonPStore",
+    "designerId": "9ad0518e-4276-4bf8-926e-f1dbb5c4ea18",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.JsonP",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "name": "MyJsonPProxy",
+            "designerId": "7f37170c-c555-4c9b-9b52-0749f87ad674",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyJsonReader8",
+                    "designerId": "d53dfdc7-91cb-4fde-8bfc-5ba0c8648e7f"
+                }
+            ]
+        }
+    ]
+}

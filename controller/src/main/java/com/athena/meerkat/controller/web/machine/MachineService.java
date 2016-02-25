@@ -261,4 +261,16 @@ public class MachineService {
 		return new ServiceResult(Status.DONE, "", list);
 	}
 
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * 
+	 * @param machine
+	 */
+	public Machine save(Machine machine) {
+		// TODO Auto-generated method stub
+		return machineRepo.save(machine);
+	}
+
 }

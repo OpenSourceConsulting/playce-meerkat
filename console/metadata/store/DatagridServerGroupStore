@@ -20,7 +20,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "url": "datagrid/group/list"
+                "url": "res/datagrid/group/list"
             },
             "name": "MyAjaxProxy4",
             "designerId": "63e20427-d665-4db4-b9fe-d1a984ebcc84",
@@ -32,6 +32,9 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "userConfig": {
+                        "root": "data"
+                    },
                     "name": "MyJsonReader4",
                     "designerId": "aad81c89-31da-40df-890f-83a5ea41c4af"
                 }

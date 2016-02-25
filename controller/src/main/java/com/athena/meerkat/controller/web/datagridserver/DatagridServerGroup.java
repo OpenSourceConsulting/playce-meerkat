@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.datagridserver;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,8 +40,8 @@ public class DatagridServerGroup implements Serializable {
 	private String type;
 
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonBackReference
-	private Collection<DatagridServer> datagridServers;
+	@JsonManagedReference
+	private List<DatagridServer> datagridServers;
 
 	@OneToOne
 	@JsonBackReference
@@ -70,11 +71,11 @@ public class DatagridServerGroup implements Serializable {
 		this.domain = domain;
 	}
 
-	public Collection<DatagridServer> getDatagridServers() {
+	public List<DatagridServer> getDatagridServers() {
 		return datagridServers;
 	}
 
-	public void setDatagridServers(Collection<DatagridServer> datagridServers) {
+	public void setDatagridServers(List<DatagridServer> datagridServers) {
 		this.datagridServers = datagridServers;
 	}
 
