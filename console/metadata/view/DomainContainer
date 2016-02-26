@@ -840,6 +840,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "fieldLabel": "Filtering",
+                                        "itemId": "mytextfield3",
                                         "layout|flex": null
                                     },
                                     "name": "MyTextField3",

@@ -91,39 +91,43 @@ Ext.define('webapp.controller.ServerManagementController', {
     },
 
     onBtnServerSSHSaveClick: function(button, e, eOpts) {
-                var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
-                var portField = Ext.getCmp("tomcatSSHPortTextField");
-                var userIDField = Ext.getCmp("tomcatSSHUserIDTextField");
-                var passwordField = Ext.getCmp("tomcatSSHPasswordTextField");
-                var _idField = Ext.getCmp("serverIDHiddenField");
-                var url = GlobalData.urlPrefix + "updatessh";
-                Ext.Ajax.request({
-                    url: url,
-                    params: {"sshIpAddr":ipaddrField.getValue, "sshPort":portField.getValue(),
-                             "sshUserName":userIDField.getValue(),"sshPassword":passwordField.getValue(),
-                             "machineId":_idField.getValue()
-                            },
-                      success: function(resp, ops) {
-                        var response = Ext.decode(resp.responseText);
-                        if (response.success === true){
-                            Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.INFO
-                            });
-                        }
-                        else {
-                            Ext.Msg.show({
-                                title: "Message",
-                                msg: response.msg,
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.WARNING
-                            });
-                        }
+        var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
+        var portField = Ext.getCmp("tomcatSSHPortTextField");
+        var userIDField = Ext.getCmp("tomcatSSHUserIDTextField");
+        var passwordField = Ext.getCmp("tomcatSSHPasswordTextField");
+        var _idField = Ext.getCmp("serverIDHiddenField");
+        var url = GlobalData.urlPrefix + "res/machine/updatessh";
+
+         Ext.Ajax.request({
+            url: url,
+            params: {"sshIpAddr":ipaddrField.getValue(), "sshPort":portField.getValue(),
+                     "sshUserName":userIDField.getValue(),"sshPassword":passwordField.getValue(),
+                     "machineId":_idField.getValue()
                     },
-                    method: "POST"
-                });
+            clientValidation:true,
+            waitMsg:"Waiting...",
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+
+                if (response.success){
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.INFO
+                    });
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            },
+            method: "POST"
+        });
 
     },
 
@@ -138,6 +142,59 @@ Ext.define('webapp.controller.ServerManagementController', {
             passwordField.inputEl.addCls('x-form-text');
             passwordField.inputEl.removeCls('x-form-password');
         }
+    },
+
+    onBtnServerSSHResetClick: function(button, e, eOpts) {
+        var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
+        var portField = Ext.getCmp("tomcatSSHPortTextField");
+        var userIDField = Ext.getCmp("tomcatSSHUserIDTextField");
+        var passwordField = Ext.getCmp("tomcatSSHPasswordTextField");
+        ipaddrField.setValue("");
+        portField.setValue("");
+        userIDField.setValue("");
+        passwordField.setValue("");
+
+    },
+
+    onTbnServerSSHTestConnectionClick: function(button, e, eOpts) {
+        var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
+        var portField = Ext.getCmp("tomcatSSHPortTextField");
+        var userIDField = Ext.getCmp("tomcatSSHUserIDTextField");
+        var passwordField = Ext.getCmp("tomcatSSHPasswordTextField");
+        var url = GlobalData.urlPrefix + "res/machine/testssh";
+        Ext.Ajax.request({
+            url: url,
+            method:"GET",
+            params: {"sshIpAddr":ipaddrField.getValue(), "sshPort":portField.getValue(),
+                     "sshUserName":userIDField.getValue(),"sshPassword":passwordField.getValue()
+                    },
+            success: function(resp, ops) {
+
+                var response = Ext.decode(resp.responseText);
+
+                if (response.success){
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.INFO
+                    });
+
+                    Ext.getCmp("btnServerSSHSave").setDisabled(false);
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                      Ext.getCmp("btnServerSSHSave").setDisabled(true);
+                }
+            }
+
+        });
+
     },
 
     loadTomcatServers: function(callback) {
@@ -180,6 +237,12 @@ Ext.define('webapp.controller.ServerManagementController', {
             },
             "#showPasswordCheckbox": {
                 change: this.onShowPasswordCheckboxChange
+            },
+            "#btnServerSSHReset": {
+                click: this.onBtnServerSSHResetClick
+            },
+            "#tbnServerSSHTestConnection": {
+                click: this.onTbnServerSSHTestConnectionClick
             }
         });
     }

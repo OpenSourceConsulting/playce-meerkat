@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 
@@ -99,9 +100,28 @@ public class MachineController {
 		return json;
 	}
 
+	@RequestMapping(value = "/testssh", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse updateSSH(SimpleJsonResponse json,
+			String sshIpAddr, int sshPort, String sshUserName,
+			String sshPassword) {
+		SSHManager sshMng = new SSHManager(sshUserName, sshPassword, sshIpAddr,
+				"", sshPort, 1000);
+		String errorMsg = sshMng.connect();
+		if (errorMsg == null || errorMsg == "") {
+			sshMng.close();
+			json.setSuccess(true);
+			json.setMsg("Ping successfully.");
+		} else {
+			json.setSuccess(false);
+			json.setMsg("Connection fail");
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/updatessh", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatServers(SimpleJsonResponse json,
+	public SimpleJsonResponse updateSSH(SimpleJsonResponse json,
 			String sshIpAddr, int sshPort, String sshUserName,
 			String sshPassword, int machineId) {
 		Machine machine = service.retrieve(machineId);
@@ -109,17 +129,23 @@ public class MachineController {
 			json.setMsg("Server does not exist.");
 			json.setSuccess(false);
 		} else {
-			machine.setSSHIPAddr(sshIpAddr);
-			machine.setSshPort(sshPort);
-			machine.setSshUsername(sshUserName);
-			machine.setSshPassword(sshPassword);
-			if (service.save(machine) != null) {
-				json.setMsg("Edit successfully.");
-				json.setSuccess(true);
-			} else {
-				json.setMsg("Edit failed.");
+			if (!MeerkatUtils.validateIPAddress(sshIpAddr)) {
+				json.setMsg("IP Address is invalid.");
 				json.setSuccess(false);
+			} else {
+				machine.setSSHIPAddr(sshIpAddr);
+				machine.setSshPort(sshPort);
+				machine.setSshUsername(sshUserName);
+				machine.setSshPassword(sshPassword);
+				if (service.save(machine) != null) {
+					json.setMsg("Edit successfully.");
+					json.setSuccess(true);
+				} else {
+					json.setMsg("Edit failed.");
+					json.setSuccess(false);
+				}
 			}
+
 		}
 		return json;
 	}

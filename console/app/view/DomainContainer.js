@@ -341,6 +341,7 @@ Ext.define('webapp.view.DomainContainer', {
                                         },
                                         {
                                             xtype: 'textfield',
+                                            itemId: 'mytextfield3',
                                             fieldLabel: 'Filtering'
                                         },
                                         {

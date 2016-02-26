@@ -243,63 +243,19 @@
                                             "designerId": "83afde09-1647-4923-91a1-8292137def8e",
                                             "cn": [
                                                 {
-                                                    "type": "Ext.form.field.Text",
+                                                    "type": "Ext.form.Panel",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "fieldLabel": "IP Address:",
-                                                        "id": "tomcatSSHIPAddressTextField",
-                                                        "readOnly": true
+                                                        "bodyPadding": 10,
+                                                        "id": "sshFormPanel",
+                                                        "title": ""
                                                     },
-                                                    "name": "MyTextField4",
-                                                    "designerId": "55a78de8-d406-45de-bc2f-252f8b865ba1"
-                                                },
-                                                {
-                                                    "type": "Ext.form.field.Text",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "fieldLabel": "Port",
-                                                        "id": "tomcatSSHPortTextField",
-                                                        "readOnly": true
-                                                    },
-                                                    "name": "MyTextField5",
-                                                    "designerId": "7767fcf4-5dfc-4618-a0cf-a1b105f8ede0"
-                                                },
-                                                {
-                                                    "type": "Ext.form.field.Text",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "fieldLabel": "User ID",
-                                                        "id": "tomcatSSHUserIDTextField",
-                                                        "readOnly": true
-                                                    },
-                                                    "name": "MyTextField6",
-                                                    "designerId": "9bc73eb9-7d2b-46f6-a473-642bf287476e"
-                                                },
-                                                {
-                                                    "type": "Ext.container.Container",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "container|align": "stretch",
-                                                        "layout": "hbox"
-                                                    },
-                                                    "name": "MyContainer33",
-                                                    "designerId": "8b74b006-d195-431b-8bf3-eaa94e5991e7",
+                                                    "name": "MyForm",
+                                                    "designerId": "e0996408-683a-450e-a974-e775d492793d",
                                                     "cn": [
                                                         {
                                                             "type": "Ext.form.field.Text",
@@ -309,107 +265,173 @@
                                                             },
                                                             "codeClass": null,
                                                             "userConfig": {
-                                                                "fieldLabel": "Password",
-                                                                "id": "tomcatSSHPasswordTextField",
-                                                                "inputType": "password",
-                                                                "readOnly": true,
-                                                                "width": 255
+                                                                "allowBlank": false,
+                                                                "fieldLabel": "IP Address:",
+                                                                "id": "tomcatSSHIPAddressTextField",
+                                                                "readOnly": true
                                                             },
-                                                            "name": "MyTextField7",
-                                                            "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
+                                                            "name": "MyTextField4",
+                                                            "designerId": "55a78de8-d406-45de-bc2f-252f8b865ba1"
                                                         },
                                                         {
-                                                            "type": "Ext.form.field.Checkbox",
+                                                            "type": "Ext.form.field.Text",
                                                             "reference": {
                                                                 "name": "items",
                                                                 "type": "array"
                                                             },
                                                             "codeClass": null,
                                                             "userConfig": {
-                                                                "boxLabel": "Show password",
-                                                                "fieldLabel": "",
-                                                                "itemId": "showPasswordCheckbox",
-                                                                "margin": "0 0 0 10"
+                                                                "allowBlank": false,
+                                                                "fieldLabel": "Port",
+                                                                "id": "tomcatSSHPortTextField",
+                                                                "readOnly": true
                                                             },
-                                                            "name": "MyCheckbox2",
-                                                            "designerId": "3660572f-8aa0-4be3-9ebd-8415dee816c2"
+                                                            "name": "MyTextField5",
+                                                            "designerId": "7767fcf4-5dfc-4618-a0cf-a1b105f8ede0"
                                                         },
                                                         {
-                                                            "type": "Ext.form.field.Hidden",
+                                                            "type": "Ext.form.field.Text",
                                                             "reference": {
                                                                 "name": "items",
                                                                 "type": "array"
                                                             },
                                                             "codeClass": null,
                                                             "userConfig": {
-                                                                "fieldLabel": "Label",
-                                                                "id": "serverIDHiddenField",
-                                                                "layout|flex": 1
+                                                                "allowBlank": false,
+                                                                "fieldLabel": "User ID",
+                                                                "id": "tomcatSSHUserIDTextField",
+                                                                "readOnly": true
                                                             },
-                                                            "name": "MyHiddenField4",
-                                                            "designerId": "e5a94f97-d58b-4a97-9e22-febed000ab08"
+                                                            "name": "MyTextField6",
+                                                            "designerId": "9bc73eb9-7d2b-46f6-a473-642bf287476e"
+                                                        },
+                                                        {
+                                                            "type": "Ext.container.Container",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "container|align": "stretch",
+                                                                "layout": "hbox"
+                                                            },
+                                                            "name": "MyContainer33",
+                                                            "designerId": "8b74b006-d195-431b-8bf3-eaa94e5991e7",
+                                                            "cn": [
+                                                                {
+                                                                    "type": "Ext.form.field.Text",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "allowBlank": false,
+                                                                        "fieldLabel": "Password",
+                                                                        "id": "tomcatSSHPasswordTextField",
+                                                                        "inputType": "password",
+                                                                        "readOnly": true,
+                                                                        "width": 255
+                                                                    },
+                                                                    "name": "MyTextField7",
+                                                                    "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
+                                                                },
+                                                                {
+                                                                    "type": "Ext.form.field.Checkbox",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "boxLabel": "Show password",
+                                                                        "fieldLabel": "",
+                                                                        "itemId": "showPasswordCheckbox",
+                                                                        "margin": "0 0 0 10"
+                                                                    },
+                                                                    "name": "MyCheckbox2",
+                                                                    "designerId": "3660572f-8aa0-4be3-9ebd-8415dee816c2"
+                                                                },
+                                                                {
+                                                                    "type": "Ext.form.field.Hidden",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "fieldLabel": "Label",
+                                                                        "id": "serverIDHiddenField",
+                                                                        "layout|flex": 1
+                                                                    },
+                                                                    "name": "MyHiddenField4",
+                                                                    "designerId": "e5a94f97-d58b-4a97-9e22-febed000ab08"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "id": "tbnServerSSHTestConnection",
+                                                                "text": "Test"
+                                                            },
+                                                            "name": "MyButton17",
+                                                            "designerId": "ef4e391e-bf05-4ad2-969c-d43af269dbb7"
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "itemId": "btnServerSSHEdit",
+                                                                "margin": "10 10 10 10",
+                                                                "text": "Edit"
+                                                            },
+                                                            "name": "MyButton18",
+                                                            "designerId": "7b796ebf-4efa-42e0-b20a-c9fb3b281ded"
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "disabled": true,
+                                                                "hidden": true,
+                                                                "id": "btnServerSSHSave",
+                                                                "itemId": "",
+                                                                "margin": "10 10 10 10",
+                                                                "text": "Save"
+                                                            },
+                                                            "name": "MyButton39",
+                                                            "designerId": "d0c37d44-c7c6-4769-b018-dcc09b10903c"
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "id": "btnServerSSHReset",
+                                                                "text": "Reset"
+                                                            },
+                                                            "name": "MyButton19",
+                                                            "designerId": "d2dc1bef-7c33-428f-8b8a-2c473f534cfc"
                                                         }
                                                     ]
-                                                },
-                                                {
-                                                    "type": "Ext.button.Button",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "id": "tbnServerSSHTestConnection",
-                                                        "text": "Test"
-                                                    },
-                                                    "name": "MyButton17",
-                                                    "designerId": "ef4e391e-bf05-4ad2-969c-d43af269dbb7"
-                                                },
-                                                {
-                                                    "type": "Ext.button.Button",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "itemId": "btnServerSSHEdit",
-                                                        "margin": "10 10 10 10",
-                                                        "text": "Edit"
-                                                    },
-                                                    "name": "MyButton18",
-                                                    "designerId": "7b796ebf-4efa-42e0-b20a-c9fb3b281ded"
-                                                },
-                                                {
-                                                    "type": "Ext.button.Button",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "hidden": true,
-                                                        "id": "btnServerSSHSave",
-                                                        "itemId": "",
-                                                        "margin": "10 10 10 10",
-                                                        "text": "Save"
-                                                    },
-                                                    "name": "MyButton39",
-                                                    "designerId": "d0c37d44-c7c6-4769-b018-dcc09b10903c"
-                                                },
-                                                {
-                                                    "type": "Ext.button.Button",
-                                                    "reference": {
-                                                        "name": "items",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "id": "btnServerSSHReset",
-                                                        "text": "Reset"
-                                                    },
-                                                    "name": "MyButton19",
-                                                    "designerId": "d2dc1bef-7c33-428f-8b8a-2c473f534cfc"
                                                 }
                                             ]
                                         }

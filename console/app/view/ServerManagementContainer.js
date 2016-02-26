@@ -22,6 +22,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Tab',
         'Ext.grid.Panel',
         'Ext.grid.View',
+        'Ext.form.Panel',
         'Ext.form.field.Hidden',
         'Ext.form.field.ComboBox',
         'Ext.toolbar.Separator',
@@ -124,76 +125,89 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                     margin: '10 10 10 10',
                                                     items: [
                                                         {
-                                                            xtype: 'textfield',
-                                                            id: 'tomcatSSHIPAddressTextField',
-                                                            fieldLabel: 'IP Address:',
-                                                            readOnly: true
-                                                        },
-                                                        {
-                                                            xtype: 'textfield',
-                                                            id: 'tomcatSSHPortTextField',
-                                                            fieldLabel: 'Port',
-                                                            readOnly: true
-                                                        },
-                                                        {
-                                                            xtype: 'textfield',
-                                                            id: 'tomcatSSHUserIDTextField',
-                                                            fieldLabel: 'User ID',
-                                                            readOnly: true
-                                                        },
-                                                        {
-                                                            xtype: 'container',
-                                                            layout: {
-                                                                type: 'hbox',
-                                                                align: 'stretch'
-                                                            },
+                                                            xtype: 'form',
+                                                            id: 'sshFormPanel',
+                                                            bodyPadding: 10,
+                                                            title: '',
                                                             items: [
                                                                 {
                                                                     xtype: 'textfield',
-                                                                    id: 'tomcatSSHPasswordTextField',
-                                                                    width: 255,
-                                                                    fieldLabel: 'Password',
-                                                                    inputType: 'password',
-                                                                    readOnly: true
+                                                                    id: 'tomcatSSHIPAddressTextField',
+                                                                    fieldLabel: 'IP Address:',
+                                                                    readOnly: true,
+                                                                    allowBlank: false
                                                                 },
                                                                 {
-                                                                    xtype: 'checkboxfield',
-                                                                    itemId: 'showPasswordCheckbox',
-                                                                    margin: '0 0 0 10',
-                                                                    fieldLabel: '',
-                                                                    boxLabel: 'Show password'
+                                                                    xtype: 'textfield',
+                                                                    id: 'tomcatSSHPortTextField',
+                                                                    fieldLabel: 'Port',
+                                                                    readOnly: true,
+                                                                    allowBlank: false
                                                                 },
                                                                 {
-                                                                    xtype: 'hiddenfield',
-                                                                    flex: 1,
-                                                                    id: 'serverIDHiddenField',
-                                                                    fieldLabel: 'Label'
+                                                                    xtype: 'textfield',
+                                                                    id: 'tomcatSSHUserIDTextField',
+                                                                    fieldLabel: 'User ID',
+                                                                    readOnly: true,
+                                                                    allowBlank: false
+                                                                },
+                                                                {
+                                                                    xtype: 'container',
+                                                                    layout: {
+                                                                        type: 'hbox',
+                                                                        align: 'stretch'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: 'tomcatSSHPasswordTextField',
+                                                                            width: 255,
+                                                                            fieldLabel: 'Password',
+                                                                            inputType: 'password',
+                                                                            readOnly: true,
+                                                                            allowBlank: false
+                                                                        },
+                                                                        {
+                                                                            xtype: 'checkboxfield',
+                                                                            itemId: 'showPasswordCheckbox',
+                                                                            margin: '0 0 0 10',
+                                                                            fieldLabel: '',
+                                                                            boxLabel: 'Show password'
+                                                                        },
+                                                                        {
+                                                                            xtype: 'hiddenfield',
+                                                                            flex: 1,
+                                                                            id: 'serverIDHiddenField',
+                                                                            fieldLabel: 'Label'
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: 'tbnServerSSHTestConnection',
+                                                                    text: 'Test'
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    itemId: 'btnServerSSHEdit',
+                                                                    margin: '10 10 10 10',
+                                                                    text: 'Edit'
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    disabled: true,
+                                                                    hidden: true,
+                                                                    id: 'btnServerSSHSave',
+                                                                    itemId: '',
+                                                                    margin: '10 10 10 10',
+                                                                    text: 'Save'
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: 'btnServerSSHReset',
+                                                                    text: 'Reset'
                                                                 }
                                                             ]
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            id: 'tbnServerSSHTestConnection',
-                                                            text: 'Test'
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            itemId: 'btnServerSSHEdit',
-                                                            margin: '10 10 10 10',
-                                                            text: 'Edit'
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            hidden: true,
-                                                            id: 'btnServerSSHSave',
-                                                            itemId: '',
-                                                            margin: '10 10 10 10',
-                                                            text: 'Save'
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            id: 'btnServerSSHReset',
-                                                            text: 'Reset'
                                                         }
                                                     ]
                                                 }
