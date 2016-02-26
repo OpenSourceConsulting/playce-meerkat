@@ -30,9 +30,10 @@ Ext.define('webapp.store.DatagridServerGroupStore', {
             storeId: 'DatagridServerGroupStore',
             proxy: {
                 type: 'ajax',
-                url: 'datagrid/group/list',
+                url: 'res/datagrid/group/list',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'data'
                 }
             }
         }, cfg)]);

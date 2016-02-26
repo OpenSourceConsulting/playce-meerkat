@@ -19,7 +19,8 @@
             "ApplicationController",
             "CluteringConfigurationController",
             "DatasourceController",
-            "ServerManagementController"
+            "ServerManagementController",
+            "DatagridServerController"
         ],
         "models": [
             "SessionKeyData",
@@ -30,7 +31,8 @@
             "DatagridServerGroupModel",
             "MachineModel",
             "ClusteringConfigurationModel",
-            "DatasourceModel"
+            "DatasourceModel",
+            "DatagridModel"
         ],
         "name": "webapp",
         "requires": [
@@ -49,7 +51,8 @@
             "ClusteringConfigurationStore",
             "ApplicationStore",
             "DatasourceStore",
-            "LinkingTomcatDatasourceStore"
+            "LinkingTomcatDatasourceStore",
+            "DatagridServerStore"
         ],
         "views": [
             "meerkatViewport",

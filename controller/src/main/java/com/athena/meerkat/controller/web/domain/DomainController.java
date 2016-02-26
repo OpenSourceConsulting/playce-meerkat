@@ -35,7 +35,7 @@ public class DomainController {
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
-	@RequestMapping("/save")
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
 	public @ResponseBody
 	SimpleJsonResponse save(SimpleJsonResponse json, Domain domain,
@@ -131,7 +131,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/edit")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public @ResponseBody
 	SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
 		Domain domain = domainService.getDomain(id);
@@ -145,7 +145,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public @ResponseBody
 	SimpleJsonResponse getDomainList(SimpleJsonResponse json) {
 		List<Domain> result = domainService.getAll();
@@ -163,7 +163,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/tomcatlist")
+	@RequestMapping(value = "/tomcatlist", method = RequestMethod.GET)
 	public @ResponseBody
 	SimpleJsonResponse getTomcatInstanceByDomain(SimpleJsonResponse json,
 			int domainId) {
@@ -180,7 +180,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/applications")
+	@RequestMapping(value = "/applications", method = RequestMethod.GET)
 	public @ResponseBody
 	SimpleJsonResponse getApplicationsByDomain(SimpleJsonResponse json,
 			int domainId) {
@@ -196,7 +196,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/clustering/config/save")
+	@RequestMapping(value = "/clustering/config/save", method = RequestMethod.POST)
 	public @ResponseBody
 	SimpleJsonResponse save(SimpleJsonResponse json,
 			ClusteringConfiguration config, int domainId) {
@@ -205,7 +205,9 @@ public class DomainController {
 		List<ClusteringConfiguration> existingConfigs = domainService
 				.getClusteringConfigurationByName(config.getName());
 		if (existingConfigs.size() > 0) {
-			if (!isEdit || (isEdit && existingConfigs.get(0).getId() != config.getId())) {
+			if (!isEdit
+					|| (isEdit && existingConfigs.get(0).getId() != config
+							.getId())) {
 				json.setSuccess(false);
 				json.setMsg("Config name is duplicated.");
 				return json;
@@ -218,7 +220,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/clustering/config/edit")
+	@RequestMapping(value = "/clustering/config/edit", method = RequestMethod.POST)
 	public @ResponseBody
 	SimpleJsonResponse editClusteringConfig(SimpleJsonResponse json, int id) {
 		ClusteringConfiguration config = domainService.getConfig(id);
@@ -232,7 +234,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/clustering/config/delete")
+	@RequestMapping(value = "/clustering/config/delete", method = RequestMethod.POST)
 	public @ResponseBody
 	SimpleJsonResponse deleteClusteringConfig(SimpleJsonResponse json, int id) {
 		ClusteringConfiguration config = domainService.getConfig(id);
@@ -246,7 +248,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/clustering/config/list")
+	@RequestMapping(value = "/clustering/config/list", method = RequestMethod.GET)
 	public @ResponseBody
 	GridJsonResponse getClusteringConfigList(GridJsonResponse json,
 			int domainId, int revision) {
@@ -257,7 +259,7 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody
 	SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {
 		if (domainService.delete(domainId)) {

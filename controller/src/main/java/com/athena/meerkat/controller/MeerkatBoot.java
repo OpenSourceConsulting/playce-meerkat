@@ -123,7 +123,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
                     .antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
                     .antMatchers("/dbmonitor/**").access("hasRole('ROLE_MONITOR_DB')")
                     
-                    .antMatchers(HttpMethod.POST, "/res/**").access("hasRole('ROLE_RES_ADMIN')")
+                    .antMatchers(HttpMethod.POST, "/res/**").access("hasRole('	')")
                     .antMatchers(HttpMethod.GET, "/res/**").access("hasRole('ROLE_RES_USER')")
                     
                     .antMatchers(HttpMethod.POST, "/user/**").access("hasRole('ROLE_USER_ADMIN')")

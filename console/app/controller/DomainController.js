@@ -112,7 +112,7 @@ Ext.define('webapp.controller.DomainController', {
 
     validate: function(name, domainType, groupId) {
         if (name === "" || (domainType ===true && groupId <=0)){
-             Ext.Msg.show({
+            Ext.Msg.show({
                 title: "Message",
                 msg: "Invalid data.",
                 buttons: Ext.Msg.OK,

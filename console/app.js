@@ -33,7 +33,8 @@ Ext.application({
         'DatagridServerGroupModel',
         'MachineModel',
         'ClusteringConfigurationModel',
-        'DatasourceModel'
+        'DatasourceModel',
+        'DatagridModel'
     ],
     stores: [
         'sessionDataStore',
@@ -48,7 +49,8 @@ Ext.application({
         'ClusteringConfigurationStore',
         'ApplicationStore',
         'DatasourceStore',
-        'LinkingTomcatDatasourceStore'
+        'LinkingTomcatDatasourceStore',
+        'DatagridServerStore'
     ],
     views: [
         'meerkatViewport',
@@ -88,7 +90,8 @@ Ext.application({
         'ApplicationController',
         'CluteringConfigurationController',
         'DatasourceController',
-        'ServerManagementController'
+        'ServerManagementController',
+        'DatagridServerController'
     ],
     name: 'webapp',
 

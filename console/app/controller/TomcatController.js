@@ -40,7 +40,7 @@ Ext.define('webapp.controller.TomcatController', {
         var form = Ext.getCmp('tomcatForm');
         var server = form.getForm().findField("serverComboBox");
         var serverId = server.getValue();
-        var url = GlobalData.urlPrefix + "machine/testConnection";
+        var url = GlobalData.urlPrefix + "res/machine/testConnection";
         var serverStatus = Ext.getCmp("serverStatusDisplayField");
         var btnSubmit = Ext.getCmp("btnTomcatSubmit");
          Ext.Ajax.request({

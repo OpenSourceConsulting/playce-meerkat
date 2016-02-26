@@ -45,18 +45,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UserController.class);
 
 	public static final String SESSION_USER_KEY = "loginUser";
-	
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	private PasswordEncoder passEncoder;
-	
 
 	/**
 	 * <pre>
@@ -83,27 +82,25 @@ public class UserController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean saveUser(User user) {
-		
-		
+
 		if (user.getId() == 0) {
 			User existingUser = service.getUser(user.getUsername());
 			if (existingUser != null) {
 				return false;
-			} 
-			
+			}
+
 			user.setCreatedDate(new Date());
-		} 
-		
-		
+		}
+
 		UserRole role = service.getUserRole(user.getUserRoleId());
-		
+
 		LOGGER.debug("user fullname is {}", user.getFullName());
-		LOGGER.debug("passEncoder is {}", passEncoder.getClass().getCanonicalName());
-		
+		LOGGER.debug("passEncoder is {}", passEncoder.getClass()
+				.getCanonicalName());
+
 		user.setPassword(passEncoder.encode(user.getPassword()));
 		user.setUserRole(role);
 
-		
 		if (service.saveUser(user) != null) {
 			return true;
 		}
@@ -135,7 +132,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/role/delete")
+	@RequestMapping(value = "/role/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean deleteRole(int id) {
 		UserRole userRole = service.getUserRole(id);
@@ -147,13 +144,13 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/role/edit")
+	@RequestMapping(value = "/role/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public UserRole editUserRole(int id) {
 		return service.getUserRole(id);
 	}
 
-	@RequestMapping(value = "/role/save")
+	@RequestMapping(value = "/role/save", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean saveUserRole(UserRole userRole) {
 		UserRole role = null;

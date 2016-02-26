@@ -24,7 +24,7 @@
                 ],
                 "fn": "loadTomcatServers",
                 "implHandler": [
-                    "var url = GlobalData.urlPrefix + \"machine/tomcatserver\";",
+                    "var url = GlobalData.urlPrefix + \"res/machine/tomcatserver\";",
                     "Ext.Ajax.request({",
                     "    url: url,",
                     "    success: function(resp, ops) {",
@@ -49,6 +49,233 @@
             },
             "name": "loadTomcatServers",
             "designerId": "5c766894-aa7b-4895-b6f8-4f02f30dd47f"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#datagridServerGroupGrid",
+                "designer|params": [
+                    "rowmodel",
+                    "record",
+                    "index",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.grid.Panel",
+                "fn": "onDatagridServerGroupGridSelect",
+                "implHandler": [
+                    " var id = record.get(\"id\");",
+                    "        var url = GlobalData.urlPrefix + \"res/datagrid/list\";",
+                    "        Ext.Ajax.request({",
+                    "            url: url,",
+                    "            params: {\"groupId\": id},",
+                    "            success: function(resp, ops) {",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                if (response.success === true){",
+                    "                    Ext.getCmp(\"datagirdServerGrid\").getStore().loadData(response.data);",
+                    "                }",
+                    "                else {",
+                    "                    Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: response.msg,",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.WARNING",
+                    "                    });",
+                    "                }",
+                    "            },",
+                    "            method: \"GET\"",
+                    "        });"
+                ],
+                "name": "select"
+            },
+            "name": "onDatagridServerGroupGridSelect",
+            "designerId": "59907c99-8479-4306-8713-dbbb30cbb047"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#tomcatServerGrid",
+                "designer|params": [
+                    "rowmodel",
+                    "record",
+                    "index",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.grid.Panel",
+                "fn": "onTomcatServerGridSelect",
+                "implHandler": [
+                    "var id = record.get(\"id\");",
+                    "var url = GlobalData.urlPrefix + \"res/machine/get\";",
+                    "var ipaddrField = Ext.getCmp(\"tomcatSSHIPAddressTextField\");",
+                    "var portField = Ext.getCmp(\"tomcatSSHPortTextField\");",
+                    "var userIDField = Ext.getCmp(\"tomcatSSHUserIDTextField\");",
+                    "var passwordField = Ext.getCmp(\"tomcatSSHPasswordTextField\");",
+                    "var _idField = Ext.getCmp(\"serverIDHiddenField\");",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params: {\"id\": id},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if (response.success === true){",
+                    "            ipaddrField.setValue(response.data.sshipaddr);",
+                    "            portField.setValue(response.data.sshPort);",
+                    "            userIDField.setValue(response.data.sshUsername);",
+                    "            passwordField.setValue(response.data.sshPassword);",
+                    "            _idField.setValue(id);",
+                    "        }",
+                    "        else {",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    },",
+                    "    method: \"GET\"",
+                    "});",
+                    ""
+                ],
+                "name": "select"
+            },
+            "name": "onTomcatServerGridSelect",
+            "designerId": "3b6881e0-ad15-44e3-a6a6-f81f46de112b"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnServerSSHEdit",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onEditSSHClick",
+                "implHandler": [
+                    "var ipaddrField = Ext.getCmp(\"tomcatSSHIPAddressTextField\");",
+                    "var portField = Ext.getCmp(\"tomcatSSHPortTextField\");",
+                    "var userIDField = Ext.getCmp(\"tomcatSSHUserIDTextField\");",
+                    "var passwordField = Ext.getCmp(\"tomcatSSHPasswordTextField\");",
+                    "var btnSave = Ext.getCmp(\"btnServerSSHSave\");",
+                    "if(ipaddrField.readOnly){",
+                    "    ipaddrField.setReadOnly(false);",
+                    "    portField.setReadOnly(false);",
+                    "    userIDField.setReadOnly(false);",
+                    "    passwordField.setReadOnly(false);",
+                    "    btnSave.show();",
+                    "    button.hide();",
+                    "}"
+                ],
+                "name": "click"
+            },
+            "name": "onEditSSHClick",
+            "designerId": "fff8c943-82a3-4fae-a241-41943ef49a26"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#btnServerSSHSave",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onBtnServerSSHSaveClick",
+                "implHandler": [
+                    "        var ipaddrField = Ext.getCmp(\"tomcatSSHIPAddressTextField\");",
+                    "        var portField = Ext.getCmp(\"tomcatSSHPortTextField\");",
+                    "        var userIDField = Ext.getCmp(\"tomcatSSHUserIDTextField\");",
+                    "        var passwordField = Ext.getCmp(\"tomcatSSHPasswordTextField\");",
+                    "        var _idField = Ext.getCmp(\"serverIDHiddenField\");",
+                    "        var url = GlobalData.urlPrefix + \"updatessh\";",
+                    "        Ext.Ajax.request({",
+                    "            url: url,",
+                    "            params: {\"sshIpAddr\":ipaddrField.getValue, \"sshPort\":portField.getValue(),",
+                    "                     \"sshUserName\":userIDField.getValue(),\"sshPassword\":passwordField.getValue(),",
+                    "                     \"machineId\":_idField.getValue()",
+                    "                    },",
+                    "              success: function(resp, ops) {",
+                    "                var response = Ext.decode(resp.responseText);",
+                    "                if (response.success === true){",
+                    "                    Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: response.msg,",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.INFO",
+                    "                    });",
+                    "                }",
+                    "                else {",
+                    "                    Ext.Msg.show({",
+                    "                        title: \"Message\",",
+                    "                        msg: response.msg,",
+                    "                        buttons: Ext.Msg.OK,",
+                    "                        icon: Ext.Msg.WARNING",
+                    "                    });",
+                    "                }",
+                    "            },",
+                    "            method: \"POST\"",
+                    "        });",
+                    ""
+                ],
+                "name": "click"
+            },
+            "name": "onBtnServerSSHSaveClick",
+            "designerId": "e2febb6a-673a-4b99-b970-de3438d20d15"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#showPasswordCheckbox",
+                "designer|params": [
+                    "field",
+                    "newValue",
+                    "oldValue",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.form.field.Checkbox",
+                "fn": "onShowPasswordCheckboxChange",
+                "implHandler": [
+                    " var passwordField = Ext.getCmp(\"tomcatSSHPasswordTextField\");",
+                    "if(!newValue){",
+                    "    passwordField.inputEl.dom.setAttribute('type', 'password');",
+                    "    passwordField.inputEl.addCls('x-form-password');",
+                    "}",
+                    "else{",
+                    "    passwordField.inputEl.dom.setAttribute('type', 'text');",
+                    "    passwordField.inputEl.addCls('x-form-text');",
+                    "    passwordField.inputEl.removeCls('x-form-password');",
+                    "}"
+                ],
+                "name": "change"
+            },
+            "name": "onShowPasswordCheckboxChange",
+            "designerId": "7902c39e-8dc8-4619-ab33-facb64e36604"
         }
     ]
 }
