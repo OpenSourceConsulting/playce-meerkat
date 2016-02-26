@@ -25,9 +25,10 @@ public class DatagridServer {
 	private int Id;
 	@Column(name = "type")
 	private String type;
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "machine_id")
-	@JsonBackReference
+	//@JsonBackReference
 	private Machine machine;
 
 	@ManyToOne
