@@ -18,7 +18,8 @@
 
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.hibernate.SQL" level="DEBUG" /> <!-- sql log -->
-    <logger name="org.hibernate.type" level="TRACE" /> <!-- parameters & result -->
+	<logger name="org.hibernate.type" level="WARN" /> <!-- parameters & result -->
+    <logger name="org.hibernate.type.CollectionType" level="TRACE" /> <!-- parameters & result -->
     <logger name="org.hibernate.type.BasicTypeRegistry" level="WARN" />
 	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
 	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />
