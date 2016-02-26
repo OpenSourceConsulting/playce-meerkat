@@ -101,8 +101,9 @@ public class DatagridServer {
 		}
 		return "";
 	}
-	public String getServerName(){
-		if(machine !=null){
+
+	public String getServerName() {
+		if (machine != null) {
 			return machine.getName();
 		}
 		return "";

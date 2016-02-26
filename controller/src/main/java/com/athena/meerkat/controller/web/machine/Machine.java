@@ -84,7 +84,7 @@ public class Machine {
 
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "datagrid_server_id")
-	@JsonBackReference
+	@JsonManagedReference
 	private DatagridServer datagridServer;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
