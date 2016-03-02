@@ -221,6 +221,29 @@ Ext.define('webapp.controller.ServerManagementController', {
         });
     },
 
+    loadEnvironmentVariables: function(machineId, callBack) {
+        var url = GlobalData.urlPrefix + "res/machine/evlist";
+        Ext.Ajax.request({
+            url: url,
+            params:{"machineId":machineId},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success){
+                    callBack(response.data);
+                }
+                else{
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            },
+            method:"GET"
+        });
+    },
+
     init: function(application) {
         this.control({
             "#datagridServerGroupGrid": {

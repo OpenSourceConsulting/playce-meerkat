@@ -21,10 +21,9 @@ import com.athena.meerkat.controller.common.SSHManager;
 
 @Service
 public class MachineService {
-	// public class MachineService {
 	@Autowired
 	private MachineRepository machineRepo;
-
+	
 	public MachineService() {
 
 	}

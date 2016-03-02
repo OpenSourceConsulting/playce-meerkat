@@ -198,6 +198,7 @@
                                 "activeTab": 0,
                                 "dock": null,
                                 "height": null,
+                                "id": "detailTomcatServerTab",
                                 "layout|flex": 7,
                                 "manageHeight": false
                             },
@@ -445,6 +446,207 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
+                                        "autoScroll": true,
+                                        "designer|displayName": "Agent",
+                                        "height": null,
+                                        "title": "Agent"
+                                    },
+                                    "name": "MyPanel",
+                                    "designerId": "6302ada1-456a-4744-8abf-06b9128bd4b0",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.tab.Tab",
+                                            "reference": {
+                                                "name": "tabConfig",
+                                                "type": "object"
+                                            },
+                                            "codeClass": null,
+                                            "name": "TabConfig20",
+                                            "designerId": "25a4e9ce-4e17-4baf-af26-955cbaad5e9b"
+                                        },
+                                        {
+                                            "type": "Ext.container.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "margin": "10 10 10 10"
+                                            },
+                                            "name": "MyContainer21",
+                                            "designerId": "d775650d-1895-4ecd-9987-a119958a672f",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.form.Panel",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "bodyPadding": 10,
+                                                        "id": "agentFormPanel",
+                                                        "title": "",
+                                                        "width": 659
+                                                    },
+                                                    "name": "MyForm",
+                                                    "designerId": "876e2f19-b5d1-4f40-a253-a309512f84f8",
+                                                    "cn": [
+                                                        {
+                                                            "type": "Ext.form.field.File",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "fieldLabel": "Agent (*.jar)",
+                                                                "layout|anchor": "100%",
+                                                                "width": 1243
+                                                            },
+                                                            "name": "MyFileUpload",
+                                                            "designerId": "67afd166-236a-4a7b-9dce-b41f491171f7"
+                                                        },
+                                                        {
+                                                            "type": "Ext.container.Container",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "container|align": "stretch",
+                                                                "layout": "hbox"
+                                                            },
+                                                            "name": "MyContainer33",
+                                                            "designerId": "0cdc2605-c571-41ce-9dd9-4a747c495037",
+                                                            "cn": [
+                                                                {
+                                                                    "type": "Ext.form.field.Hidden",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "fieldLabel": "Label",
+                                                                        "id": "serverIDHiddenField1",
+                                                                        "layout|flex": 1
+                                                                    },
+                                                                    "name": "MyHiddenField4",
+                                                                    "designerId": "91a834a0-32d2-49b0-beac-98c4661334fd"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "Ext.form.FieldSet",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "title": "Agent configurations",
+                                                                "width": 643
+                                                            },
+                                                            "name": "MyFieldSet5",
+                                                            "designerId": "fb972cf0-3b55-4e90-a403-fef150e6a1b9",
+                                                            "cn": [
+                                                                {
+                                                                    "type": "Ext.form.field.Text",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "allowBlank": false,
+                                                                        "fieldLabel": "Installation path",
+                                                                        "id": "tomcatSSHUserIDTextField1",
+                                                                        "readOnly": true,
+                                                                        "width": 418
+                                                                    },
+                                                                    "name": "MyTextField6",
+                                                                    "designerId": "9cc740cf-8516-4965-aa52-07d590b2c62d"
+                                                                },
+                                                                {
+                                                                    "type": "Ext.form.field.Text",
+                                                                    "reference": {
+                                                                        "name": "items",
+                                                                        "type": "array"
+                                                                    },
+                                                                    "codeClass": null,
+                                                                    "userConfig": {
+                                                                        "allowBlank": false,
+                                                                        "fieldLabel": "$PATH",
+                                                                        "id": "tomcatSSHPortTextField1",
+                                                                        "readOnly": true,
+                                                                        "width": 418
+                                                                    },
+                                                                    "name": "MyTextField5",
+                                                                    "designerId": "ade3819a-ef2c-4320-8499-c35147b21468"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "id": "tbnServerSSHTestConnection1",
+                                                                "text": "Test"
+                                                            },
+                                                            "name": "MyButton17",
+                                                            "designerId": "67ab20fa-1b7d-4e65-88a3-143a552b01a5"
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "id": "btnServerSSHSave1",
+                                                                "itemId": "",
+                                                                "margin": "10 10 10 10",
+                                                                "text": "Save"
+                                                            },
+                                                            "name": "MyButton39",
+                                                            "designerId": "642797a4-ad37-4c47-8856-ef5829d3e343"
+                                                        },
+                                                        {
+                                                            "type": "Ext.button.Button",
+                                                            "reference": {
+                                                                "name": "items",
+                                                                "type": "array"
+                                                            },
+                                                            "codeClass": null,
+                                                            "userConfig": {
+                                                                "id": "btnServerSSHReset1",
+                                                                "text": "Reset"
+                                                            },
+                                                            "name": "MyButton19",
+                                                            "designerId": "ef4f9bd5-3e83-4fb9-9cc9-2abda392f6c8"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.panel.Panel",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
                                         "title": "Environment Variables"
                                     },
                                     "name": "MyPanel78",
@@ -482,7 +684,8 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "fieldLabel": "Select revision:",
-                                                        "layout|flex": null
+                                                        "layout|flex": null,
+                                                        "store": "RevisionStore"
                                                     },
                                                     "name": "MyComboBox4",
                                                     "designerId": "5d4b3193-c35c-4f68-b239-d60ef003f6e1"
@@ -552,6 +755,8 @@
                                             "codeClass": null,
                                             "userConfig": {
                                                 "forceFit": true,
+                                                "id": "environmentVariablesGridPanel",
+                                                "store": "EnvironmentVariableStore",
                                                 "title": ""
                                             },
                                             "name": "MyGridPanel15",
@@ -565,24 +770,24 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "dataIndex": "string",
+                                                        "dataIndex": "name",
                                                         "text": "Variable name"
                                                     },
                                                     "name": "MyColumn18",
                                                     "designerId": "6d3e5fb0-1382-4379-8561-174aa1af9d95"
                                                 },
                                                 {
-                                                    "type": "Ext.grid.column.Number",
+                                                    "type": "Ext.grid.column.Column",
                                                     "reference": {
                                                         "name": "columns",
                                                         "type": "array"
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "dataIndex": "number",
+                                                        "dataIndex": "value",
                                                         "text": "Value"
                                                     },
-                                                    "name": "MyNumberColumn14",
+                                                    "name": "MyColumn60",
                                                     "designerId": "358022e8-4216-4f85-9943-6254443b47b8"
                                                 },
                                                 {
@@ -1622,6 +1827,47 @@
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onDetailTomcatServerTabTabChange",
+                                        "implHandler": [
+                                            "",
+                                            "",
+                                            "var activeTab = tabPanel.getActiveTab();",
+                                            "var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);",
+                                            "if(activeTabIndex === 2) { //env tab",
+                                            "    var selectedRecords;",
+                                            "    selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();",
+                                            "    ",
+                                            "    if (selectedRecords === \"\") {",
+                                            "        Ext.Msg.show({",
+                                            "            title: \"Message\",",
+                                            "            msg: \"Please choose tomcat server\",",
+                                            "            buttons: Ext.Msg.OK,",
+                                            "            icon: Ext.Msg.WARNING",
+                                            "        });",
+                                            "        return;",
+                                            "    }",
+                                            "",
+                                            "    var serverId = selectedRecords[0].get(\"id\");",
+                                            "",
+                                            "    webapp.app.getController(\"ServerManagementController\").loadEnvironmentVariables(serverId, function(data){",
+                                            "           Ext.getCmp(\"environmentVariablesGridPanel\").getStore().loadData(data);",
+                                            "    });",
+                                            "}"
+                                        ],
+                                        "name": "tabchange",
+                                        "scope": "me"
+                                    },
+                                    "name": "onDetailTomcatServerTabTabChange",
+                                    "designerId": "640361ad-4f6e-412d-82b1-014e873425e7"
                                 }
                             ]
                         }

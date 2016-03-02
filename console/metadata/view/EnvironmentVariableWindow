@@ -1,0 +1,198 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "EnvironmentVariableWindow",
+        "height": 153,
+        "id": "environmentVariableWindow",
+        "title": "New environment variable",
+        "width": 440
+    },
+    "name": "UserWindow1",
+    "designerId": "601abab6-646c-4cab-b4dd-6b724f56aca5",
+    "cn": [
+        {
+            "type": "Ext.form.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "bodyPadding": 10,
+                "designer|createAlias": "",
+                "designer|displayName": "UserForm",
+                "frameHeader": false,
+                "header": false,
+                "height": 154,
+                "id": "userForm1",
+                "title": "My Form"
+            },
+            "name": "MyForm2",
+            "designerId": "5baea2cc-4f4c-412c-a806-e780fa1ce5ff",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "allowOnlyWhitespace": false,
+                        "designer|displayName": "NameEnvironmentVariableTextField",
+                        "emptyText": "",
+                        "fieldLabel": "Name",
+                        "id": "nameEnvironmentVariableTextField",
+                        "itemId": "userIDTextField",
+                        "maxLength": 20,
+                        "minLength": 3,
+                        "name": "NameEnvironmentVariableTextField",
+                        "validateBlank": true,
+                        "width": 388
+                    },
+                    "name": "MyTextField33",
+                    "designerId": "e2599871-3e8e-49ee-95c7-069239532609"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "designer|displayName": "ValueEnvironmentVariableTextField",
+                        "fieldLabel": "Value",
+                        "id": "valueEnvironmentVariableTextField",
+                        "maxLength": 20,
+                        "minLength": 5,
+                        "name": "ValueEnvironmentVariableTextField",
+                        "width": 389
+                    },
+                    "name": "MyTextField36",
+                    "designerId": "5727688b-1ff1-4a3a-913d-5e35324bfd92"
+                },
+                {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "id": "serverIDEnvironmentVariableHiddenField",
+                        "layout|anchor": "100%",
+                        "name": "ServerIDHiddenField"
+                    },
+                    "name": "MyHiddenField",
+                    "designerId": "4fffc31f-d97b-4f99-9a32-f9fcb387f038"
+                },
+                {
+                    "type": "Ext.form.field.Hidden",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "Label",
+                        "id": "environmentVariableIDHiddenField",
+                        "layout|anchor": "100%",
+                        "name": "IDHiddenField"
+                    },
+                    "name": "MyHiddenField5",
+                    "designerId": "595fbd01-01d8-478f-8dfc-6064e2de7bae"
+                },
+                {
+                    "type": "Ext.container.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "middle",
+                        "container|defaultMargins": [
+                            "{\"top\":0,\"right\":10,\"bottom\":10,\"left\":0}"
+                        ],
+                        "container|pack": "center",
+                        "dock": null,
+                        "height": 38,
+                        "layout": "hbox"
+                    },
+                    "name": "MyContainer36",
+                    "designerId": "340a79a9-c580-48dd-8090-b1d0f2699435",
+                    "cn": [
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|createAlias": "",
+                                "designer|displayName": "BtnSubmit",
+                                "id": "btnSubmit1",
+                                "itemId": "btnSubmit",
+                                "layout|margins": "10 10 10 10",
+                                "text": "Create"
+                            },
+                            "name": "MyButton40",
+                            "designerId": "3193626f-34c8-4efe-bc0c-b24c28861af6"
+                        },
+                        {
+                            "type": "Ext.button.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "CancelBtn",
+                                "text": "Cancel"
+                            },
+                            "name": "MyButton41",
+                            "designerId": "79e19516-301f-4feb-8ab9-7452587a2896",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            " Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){",
+                                            "",
+                                            "     if(btn == \"yes\"){",
+                                            "        button.up(\"window\").close();",
+                                            "     }",
+                                            " });"
+                                        ]
+                                    },
+                                    "name": "handler",
+                                    "designerId": "57040c4d-f6ef-4db0-9e0e-cab848e222ec"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -14,6 +14,8 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.env.EnvironmentVariable;
+import com.athena.meerkat.controller.web.env.EnvironmentVariableService;
 
 @Controller
 @RequestMapping("/res/machine")
@@ -21,6 +23,8 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 public class MachineController {
 	@Autowired
 	private MachineService service;
+	@Autowired
+	private EnvironmentVariableService evService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -145,7 +149,23 @@ public class MachineController {
 					json.setSuccess(false);
 				}
 			}
+		}
+		return json;
+	}
 
+	@RequestMapping(value = "/evlist", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getEVList(SimpleJsonResponse json, int machineId) {
+
+		Machine machine = service.retrieve(machineId);
+
+		if (machine == null) {
+			json.setSuccess(false);
+			json.setMsg("Machine does not exist.");
+		} else {
+			List<EnvironmentVariable> list = evService.getByMachine(machine);
+			json.setData(list);
+			json.setSuccess(true);
 		}
 		return json;
 	}

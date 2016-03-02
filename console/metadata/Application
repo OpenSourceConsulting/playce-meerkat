@@ -32,7 +32,9 @@
             "MachineModel",
             "ClusteringConfigurationModel",
             "DatasourceModel",
-            "DatagridModel"
+            "DatagridModel",
+            "EnvironmentVariableModel",
+            "RevisionModel"
         ],
         "name": "webapp",
         "requires": [
@@ -52,7 +54,9 @@
             "ApplicationStore",
             "DatasourceStore",
             "LinkingTomcatDatasourceStore",
-            "DatagridServerStore"
+            "DatagridServerStore",
+            "EnvironmentVariableStore",
+            "RevisionStore"
         ],
         "views": [
             "meerkatViewport",
@@ -77,7 +81,8 @@
             "ClusteringConfigurationWindow",
             "ClusteringConfigurationComparingWindow",
             "DomainWindow",
-            "UserRoleWindow"
+            "UserRoleWindow",
+            "EnvironmentVariableWindow"
         ]
     },
     "name": "Application",
