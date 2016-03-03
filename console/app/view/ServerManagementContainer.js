@@ -883,24 +883,23 @@ Ext.define('webapp.view.ServerManagementContainer', {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
         if(activeTabIndex === 2) { //env tab
-            var selectedRecords;
-            selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();
+            try{
+                var selectedRecords;
+                selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();
+                var serverId = selectedRecords[0].get("id");
+                webapp.app.getController("ServerManagementController").loadEnvironmentVariables(serverId, function(data){
+                    Ext.getCmp("environmentVariablesGridPanel").getStore().loadData(data);
+                });
+            }catch(e){
 
-            if (selectedRecords === "") {
                 Ext.Msg.show({
                     title: "Message",
                     msg: "Please choose tomcat server",
                     buttons: Ext.Msg.OK,
                     icon: Ext.Msg.WARNING
                 });
-                return;
             }
 
-            var serverId = selectedRecords[0].get("id");
-
-            webapp.app.getController("ServerManagementController").loadEnvironmentVariables(serverId, function(data){
-                   Ext.getCmp("environmentVariablesGridPanel").getStore().loadData(data);
-            });
         }
     },
 
