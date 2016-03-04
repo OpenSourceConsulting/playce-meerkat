@@ -8,8 +8,9 @@
     "userConfig": {
         "designer|userAlias": "usermntcontainer",
         "designer|userClassName": "UserMntContainer",
-        "height": 757,
+        "height": null,
         "itemId": "mycontainer38",
+        "layout": "fit",
         "width": 1111
     },
     "designerId": "f223e421-6df8-4d2a-89c8-0499ee72e378",
@@ -35,6 +36,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "User"
                     },
                     "name": "MyPanel93",
@@ -322,6 +324,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "layout": "fit",
                         "title": "User Role"
                     },
                     "name": "MyPanel94",

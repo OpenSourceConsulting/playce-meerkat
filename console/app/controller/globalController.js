@@ -130,10 +130,12 @@ Ext.define('webapp.controller.globalController', {
                 });
 
             }else{
+                var resJson = Ext.JSON.decode(response.responseText);
 
                 Ext.Msg.show({
                     title:'Server Error',
-                    msg: 'server-side failure with status code ' + response.status,
+                    //msg: 'server-side failure with status code ' + response.status,
+                    msg: resJson.msg,
                     buttons: Ext.Msg.OK,
                     icon: Ext.Msg.ERROR
                 });
