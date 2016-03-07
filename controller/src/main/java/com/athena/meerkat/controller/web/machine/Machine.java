@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.datagridserver.DatagridServer;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
+import com.athena.meerkat.controller.web.env.EnvironmentVariableValue;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -82,7 +83,7 @@ public class Machine {
 	@Column(name = "machine_server_type")
 	private int machineServerType;
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "datagrid_server_id")
 	@JsonManagedReference
 	private DatagridServer datagridServer;
@@ -105,7 +106,7 @@ public class Machine {
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
-	private Collection<EnvironmentVariable> environmentVariables;
+	private Collection<EnvironmentVariableValue> environmentVariables;
 
 	public String getName() {
 		return name;
@@ -405,12 +406,12 @@ public class Machine {
 	// this.datagridServer = datagridServer;
 	// }
 
-	public Collection<EnvironmentVariable> getEnvironmentVariables() {
+	public Collection<EnvironmentVariableValue> getEnvironmentVariables() {
 		return environmentVariables;
 	}
 
 	public void setEnvironmentVariables(
-			Collection<EnvironmentVariable> environmentVariables) {
+			Collection<EnvironmentVariableValue> environmentVariables) {
 		this.environmentVariables = environmentVariables;
 	}
 

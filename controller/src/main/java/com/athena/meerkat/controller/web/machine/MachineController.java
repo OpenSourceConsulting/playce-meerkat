@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.machine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,15 +157,30 @@ public class MachineController {
 	@RequestMapping(value = "/evlist", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getEVList(SimpleJsonResponse json, int machineId) {
-
 		Machine machine = service.retrieve(machineId);
-
 		if (machine == null) {
 			json.setSuccess(false);
 			json.setMsg("Machine does not exist.");
 		} else {
 			List<EnvironmentVariable> list = evService.getByMachine(machine);
 			json.setData(list);
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/ev/revisions", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getEVRevision(SimpleJsonResponse json,
+			int machineId) {
+		Machine machine = service.retrieve(machineId);
+		if (machine == null) {
+			json.setSuccess(false);
+			json.setMsg("Machine does not exist.");
+		} else {
+			// List<EnvRevision> revisions = new ArrayList<EnvRevision>();
+			// revision = evService.getRevisions(machine);
+			// json.setData(revisions);
 			json.setSuccess(true);
 		}
 		return json;

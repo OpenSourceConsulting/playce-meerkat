@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 
 import com.athena.meerkat.controller.web.datagridserver.DatagridServerGroup;
+import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.athena.meerkat.controller.web.user.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -38,63 +40,42 @@ public class ClusteringConfiguration implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
-	private int id;
+	private int Id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "value")
-	private String value;
-	@Column(name = "revision")
-	private int revision;
-
-	@ManyToOne
-	@JsonBackReference
-	private Domain domain;
+	@OneToMany
+	private List<ClusteringConfigurationValue> clusteringConfigValues;
 
 	public String getName() {
 		return name;
 	}
 
 	public int getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+		this.Id = id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getRevision() {
-		return revision;
+	/**
+	 * @return the clusteringConfigValues
+	 */
+	public List<ClusteringConfigurationValue> getClusteringConfigValues() {
+		return clusteringConfigValues;
 	}
 
-	public void setRevision(int revision) {
-		this.revision = revision;
-	}
-
-	public int getDomainId() {
-		if (getDomain() != null) {
-			return getDomain().getId();
-		}
-		return 0;
-	}
-
-	public Domain getDomain() {
-		return domain;
-	}
-
-	public void setDomain(Domain domain) {
-		this.domain = domain;
+	/**
+	 * @param clusteringConfigValues
+	 *            the clusteringConfigValues to set
+	 */
+	public void setClusteringConfigValues(
+			List<ClusteringConfigurationValue> clusteringConfigValues) {
+		this.clusteringConfigValues = clusteringConfigValues;
 	}
 
 }

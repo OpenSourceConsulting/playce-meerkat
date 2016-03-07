@@ -1,66 +1,78 @@
 package com.athena.meerkat.controller.web.env;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Id;
+
+import org.springframework.data.history.Revision;
 
 import com.athena.meerkat.controller.web.machine.Machine;
 
 @Entity
 @Table(name = "environment_variable")
-public class EnvironmentVariable {
+public class EnvironmentVariable implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
-	private int Id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
+	private int id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "value")
-	private String value;
-	@Column(name = "revision")
-	private int revision;
-	@Column(name = "is_nested")
-	private boolean isNested;
-	@ManyToOne
-	Machine machine;
+	@OneToMany
+	private List<EnvironmentVariable> environmentVariableValues;
 
-	public int getId() {
-		return Id;
-	}
-
-	public void setId(int id) {
-		Id = id;
-	}
-
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 *            the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getValue() {
-		return value;
+	/**
+	 * @return the environmentVariableValues
+	 */
+	public List<EnvironmentVariable> getEnvironmentVariableValues() {
+		return environmentVariableValues;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	/**
+	 * @param environmentVariableValues
+	 *            the environmentVariableValues to set
+	 */
+	public void setEnvironmentVariableValues(
+			List<EnvironmentVariable> environmentVariableValues) {
+		this.environmentVariableValues = environmentVariableValues;
 	}
 
-	public int getRevision() {
-		return revision;
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
-	public void setRevision(int revision) {
-		this.revision = revision;
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public boolean isNested() {
-		return isNested;
-	}
-
-	public void setNested(boolean isNested) {
-		this.isNested = isNested;
-	}
 }
