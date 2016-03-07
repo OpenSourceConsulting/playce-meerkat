@@ -28,9 +28,9 @@ Ext.define('webapp.view.UserMntContainer', {
         'Ext.toolbar.Paging'
     ],
 
-    height: 757,
     itemId: 'mycontainer38',
     width: 1111,
+    layout: 'fit',
 
     initComponent: function() {
         var me = this;
@@ -43,6 +43,7 @@ Ext.define('webapp.view.UserMntContainer', {
                     items: [
                         {
                             xtype: 'panel',
+                            layout: 'fit',
                             title: 'User',
                             items: [
                                 {
@@ -135,6 +136,7 @@ Ext.define('webapp.view.UserMntContainer', {
                         },
                         {
                             xtype: 'panel',
+                            layout: 'fit',
                             title: 'User Role',
                             items: [
                                 {
