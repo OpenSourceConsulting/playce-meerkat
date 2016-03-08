@@ -288,8 +288,15 @@ Ext.define('webapp.controller.MenuController', {
             is_child_leaf = true;
             prefix_child_menu_id = parentId + "_server_";
         }
-        else if (parentId.indexOf("monitoring_tomcats") >= 0) {
-            url+="tomcat/list";
+        else if (parentId.indexOf("monitoring_tomcats") >= 0 && parentId.length =="monitoring_tomcats".length) {
+            url+="domain/list";
+            is_child_leaf = false;
+            prefix_child_menu_id = parentId + "_domain_";
+        }
+        else if(parentId.indexOf("monitoring_tomcats") >= 0 && parentId.indexOf("_domain_") > 0){
+            var domainId = parentId.substr(parentId.lastIndexOf("_") + 1);
+            params = {"domainId":domainId};
+            url+="domain/tomcatlist";
             is_child_leaf = true;
             prefix_child_menu_id = parentId + "_tomcat_";
         }
@@ -335,7 +342,7 @@ Ext.define('webapp.controller.MenuController', {
     },
 
     loadMonitoringTomcatList: function() {
-        alert("Monitoring tomcat list is loading");
+        this.loadChildMenus("tomcatMng");
     },
 
     init: function(application) {
