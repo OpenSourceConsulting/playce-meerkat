@@ -15,7 +15,7 @@
             }
         },
         "urlPrefix": "http://localhost:8080/controller",
-        "exportPath": "G:/project/AthenaMeerkat/pubpath",
+        "exportPath": "D:/project/AthenaMeerkat/pubpath",
         "spacesToIndent": 4,
         "sdkPath": "",
         "lineEnding": "LF",
@@ -31,8 +31,7 @@
         "lockUrlPrefix": false,
         "installStatus": "Not Installed",
         "displayfield-ExtBox1-1193-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1119-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available"
     },
     "xdsVersion": "3.2.0",
     "xdsBuild": 339,

@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.machine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -23,7 +24,7 @@ import com.athena.meerkat.controller.common.SSHManager;
 public class MachineService {
 	@Autowired
 	private MachineRepository machineRepo;
-	
+
 	public MachineService() {
 
 	}
@@ -254,10 +255,21 @@ public class MachineService {
 		return new ServiceResult(Status.DONE, "", machineRepo.count());
 	}
 
-	public ServiceResult getList() {
+	public List<Machine> getList() {
 
 		List<Machine> list = machineRepo.findAll();
-		return new ServiceResult(Status.DONE, "", list);
+		return list;
+	}
+
+	public List<Machine> getSimpleMachineList() {
+		List<Machine> list = getList();
+		List<Machine> simpleList = new ArrayList<Machine>();
+		for (Machine m : list) {
+			final String _name = m.getName();
+			final int _id = m.getId();
+			simpleList.add(new Machine(_id, _name));
+		}
+		return simpleList;
 	}
 
 	/**

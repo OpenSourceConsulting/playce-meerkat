@@ -64,18 +64,27 @@ Ext.define('webapp.controller.TomcatController', {
     },
 
     onBtnTomcatSubmitClick: function(button, e, eOpts) {
-
         var form = Ext.getCmp("tomcatForm");			// domain form
 
         var name = form.getForm().findField("newTomcatNameField");
         var server = form.getForm().findField("serverComboBox");
         var _id = form.getForm().findField("tomcatHiddenField");
 
+        var tomcatVersion = form.getForm().findField("tomcatVersionTextField");
+        var javaHome = form.getForm().findField("tomcatJavaHomeTextField");
+        var catalinaHome = form.getForm().findField("tomcatCatalinaHomeTextField");
+        var catalinaBase = form.getForm().findField("tomcatCatalinaBaseTextField");
+        var encoding = form.getForm().findField("tomcatEncodingTextField");
+        var heapSize = form.getForm().findField("tomcatHeapSizeTextField");
+        var permgenSize = form.getForm().findField("tomcatPermgenSizeTextField");
+        var httpEnable = form.getForm().findField("tomcatHttpEnableCheckBox");
+        var highAvailability = form.getForm().findField("tomcatHighAvailabilityCheckBox");
+        var jmxPort = form.getForm().findField("jmxPortField");
+
+        var autoRestart =  Ext.getCmp("autoRestartTomcatCheckbox");
         var httpPort = form.getForm().findField("httpPortField");
         var ajpPort = form.getForm().findField("ajpPortField");
         var redirectPort = form.getForm().findField("redirectPortField");
-        var autoRestart =  Ext.getCmp("autoRestartTomcatCheckbox");
-
 
         var nameVal = name.getValue();
         var serverVal = server.getValue();
@@ -84,6 +93,18 @@ Ext.define('webapp.controller.TomcatController', {
         var ajpPortVal = ajpPort.getValue();
         var redirectPortVal = redirectPort.getValue();
         var autoRestartVal = autoRestart.getValue();
+
+        var tomcatVersionVal = tomcatVersion.getValue();
+        var javaHomeVal = javaHome.getValue();
+        var catalinaHomeVal = catalinaHome.getValue();
+        var catalinaBaseVal = catalinaBase.getValue();
+        var encodingVal = encoding.getValue();
+        var heapSizeVal = heapSize.getValue();
+        var permgenSizeVal = permgenSize.getValue();
+        var httpEnableVal = httpEnable.getValue();
+        var highAvailabilityVal = highAvailability.getValue();
+        var jmxPortVal = jmxPort.getValue();
+
         var selectedDsIds = "";
         var items = Ext.getCmp("datasourceGrid").getStore();
         items.each(function(rec){
@@ -100,7 +121,9 @@ Ext.define('webapp.controller.TomcatController', {
         }
 
         var params = {"id":_idVal, "name": nameVal, "machineId": serverVal, "httpPort":httpPortVal, "ajpPort":ajpPortVal,
-                      "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId , "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
+                      "redirectPort":redirectPortVal, "domainId":GlobalData.lastSelectedMenuId ,"version":tomcatVersionVal, "javaHome": javaHomeVal,"catalinaHome":catalinaHomeVal,
+                      "catalinaBase":catalinaBaseVal,"encoding":encodingVal, "heapSize":heapSizeVal, "permgenSize":permgenSizeVal,"httpEnable":httpEnableVal,"highAvailability":highAvailabilityVal,
+                      "jmxPort":jmxPortVal, "dsIds": selectedDsIds, "autoRestart":autoRestartVal};
         this. save(params, function(data){
             Ext.getCmp("associatedTomcatListView").getStore().loadData(new Array(data), true);
             var dsGrid = Ext.getCmp("tomcatDatasourcesGrid");
@@ -109,6 +132,22 @@ Ext.define('webapp.controller.TomcatController', {
             }
             webapp.app.getController("MenuController").loadTomcatList(GlobalData.lastSelectedMenuId);
             button.up("window").close();
+        });
+
+    },
+
+    onServerComboBoxSelect: function(combo, records, eOpts) {
+        var testConnectionButton = Ext.getCmp("btnTestConnection");
+        var sshUserDisplayField = Ext.getCmp("sshUserDisplayField");
+        var bindIPAddressDisplayField = Ext.getCmp("bindIPAddressDisplayField");
+        var otherBindIPAddressDisplayField = Ext.getCmp("otherBindIPAddressDisplayField");
+        var id = combo.getValue();
+
+        webapp.app.getController("ServerManagementController").getServer(id,function(data){
+            testConnectionButton.setDisabled(false);
+            sshUserDisplayField.setValue(data.sshUsername);
+            bindIPAddressDisplayField.setValue(data.sshipaddr);
+            otherBindIPAddressDisplayField.setValue(data.sshipaddr);
         });
 
     },
@@ -232,7 +271,7 @@ Ext.define('webapp.controller.TomcatController', {
                 success: function(resp, ops) {
                     var response = Ext.decode(resp.responseText);
                     domain.setValue(response.data.name);
-                    domainType.setValue(response.data.isClustering == 1?"Clustering":"Non-clustering");
+                    domainType.setValue(response.data.clusteringString);
                 },
                 method:"GET"
             });
@@ -251,6 +290,17 @@ Ext.define('webapp.controller.TomcatController', {
             var httpPort = form.getForm().findField("httpPortField");
             var ajpPort = form.getForm().findField("ajpPortField");
             var redirectPort = form.getForm().findField("redirectPortField");
+
+            var tomcatVersion = form.getForm().findField("tomcatVersionTextField");
+            var javaHome = form.getForm().findField("tomcatJavaHomeTextField");
+            var catalinaHome = form.getForm().findField("tomcatCatalinaHomeTextField");
+            var catalinaBase = form.getForm().findField("tomcatCatalinaBaseTextField");
+            var encoding = form.getForm().findField("tomcatEncodingTextField");
+            var heapSize = form.getForm().findField("tomcatHeapSizeTextField");
+            var permgenSize = form.getForm().findField("tomcatPermgenSizeTextField");
+            var httpEnable = form.getForm().findField("tomcatHttpEnableCheckBox");
+            var highAvailability = form.getForm().findField("tomcatHighAvailabilityCheckBox");
+            var jmxPort = form.getForm().findField("jmxPortField");
             //get tomcat info
             Ext.Ajax.request({
                 url: GlobalData.urlPrefix + "tomcat/instance/get",
@@ -266,6 +316,26 @@ Ext.define('webapp.controller.TomcatController', {
                         domainType.setValue(response.data.domainStatus);
                         server.setValue(response.data.machineId);
                         _id.setValue(response.data.id);
+
+                        tomcatVersion.setValue(response.data.version);
+                        javaHome.setValue(response.data.javaHome);
+                        catalinaHome.setValue(response.data.catalinaHome);
+                        catalinaBase.setValue(response.data.catalinaBase);
+                        encoding.setValue(response.data.encoding);
+                        heapSize.setValue(response.data.heapSize);
+                        permgenSize.setValue(response.data.permgenSize);
+                        httpEnable.setValue(response.data.httpEnable);
+                        highAvailability.setValue(response.data.highAvailability);
+                        jmxPort.setValue(response.data.jmxPort);
+
+                        webapp.app.getController("ServerManagementController").getServer( response.data.machineId,function(data){
+                            //testConnectionButton.setDisabled(false);
+                             Ext.getCmp("sshUserDisplayField").setValue(data.sshUsername);
+                            Ext.getCmp("bindIPAddressDisplayField").setValue(data.sshipaddr);
+                            Ext.getCmp("otherBindIPAddressDisplayField").setValue(data.sshipaddr);
+                        });
+
+
                     }
                     else {
                         Ext.Msg.show({
@@ -277,6 +347,8 @@ Ext.define('webapp.controller.TomcatController', {
                     }
                 }
             });
+
+
 
             url = GlobalData.urlPrefix + "datasource/tomcat/link/list";
             params = {"tomcatId":id};
@@ -371,6 +443,9 @@ Ext.define('webapp.controller.TomcatController', {
             },
             "#btnTomcatSubmit": {
                 click: this.onBtnTomcatSubmitClick
+            },
+            "#serverComboBox": {
+                select: this.onServerComboBoxSelect
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.athena.meerkat.controller.web.machine;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,7 +17,6 @@ import javax.persistence.Table;
 import com.athena.meerkat.controller.web.datagridserver.DatagridServer;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -82,29 +79,29 @@ public class Machine {
 	@Column(name = "machine_server_type")
 	private int machineServerType;
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "datagrid_server_id")
 	@JsonManagedReference
 	private DatagridServer datagridServer;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonManagedReference
 	private Collection<Disk> disks;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
 	@JsonManagedReference
 	private Collection<Memory> memories;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
 	@JsonManagedReference
 	private Collection<NetworkInterface> networkInterfaces;
 
-	@OneToMany(mappedBy = "machine")
+	@OneToMany(mappedBy = "machine", fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private Collection<TomcatInstance> tomcatInstances;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "machine")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
 	private Collection<EnvironmentVariable> environmentVariables;
 
 	public String getName() {
@@ -297,6 +294,11 @@ public class Machine {
 	 */
 	public Machine() {
 
+	}
+
+	public Machine(int _id, String _name) {
+		Id = _id;
+		name = _name;
 	}
 
 	public Collection<Disk> getDisks() {

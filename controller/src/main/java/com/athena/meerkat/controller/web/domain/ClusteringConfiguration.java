@@ -46,7 +46,7 @@ public class ClusteringConfiguration implements Serializable {
 	@Column(name = "revision")
 	private int revision;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Domain domain;
 

@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.env;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class EnvironmentVariable {
 	private int revision;
 	@Column(name = "is_nested")
 	private boolean isNested;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	Machine machine;
 
 	public int getId() {

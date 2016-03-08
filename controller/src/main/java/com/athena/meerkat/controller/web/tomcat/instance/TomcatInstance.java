@@ -84,12 +84,32 @@ public class TomcatInstance implements Serializable {
 	private int redirectPort;
 	@Column(nullable = false, name = "web_server")
 	private String webServer;
+	@Column(name = "version")
+	private String version;
+	@Column(name = "java_home")
+	private String javaHome;
+	@Column(name = "catalina_home")
+	private String catalinaHome;
+	@Column(name = "catalina_base")
+	private String catalinaBase;
+	@Column(name = "encoding")
+	private String encoding;
+	@Column(name = "heap_size")
+	private int heapSize;
+	@Column(name = "permgen_size")
+	private int permgenSize;
+	@Column(name = "http_enable")
+	private boolean httpEnable;
+	@Column(name = "high_availability")
+	private boolean highAvailability;
+	@Column(name = "jmx_port")
+	private int jmxPort;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
 	private Machine machine;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
 	@JoinColumn(name = "domain_id")
@@ -273,6 +293,86 @@ public class TomcatInstance implements Serializable {
 					: "Non-clustering";
 		}
 		return "";
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getJavaHome() {
+		return javaHome;
+	}
+
+	public void setJavaHome(String javaHome) {
+		this.javaHome = javaHome;
+	}
+
+	public String getCatalinaHome() {
+		return catalinaHome;
+	}
+
+	public void setCatalinaHome(String catalinaHome) {
+		this.catalinaHome = catalinaHome;
+	}
+
+	public String getCatalinaBase() {
+		return catalinaBase;
+	}
+
+	public void setCatalinaBase(String catalinaBase) {
+		this.catalinaBase = catalinaBase;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	public int getHeapSize() {
+		return heapSize;
+	}
+
+	public void setHeapSize(int heapSize) {
+		this.heapSize = heapSize;
+	}
+
+	public int getPermgenSize() {
+		return permgenSize;
+	}
+
+	public void setPermgenSize(int permgenSize) {
+		this.permgenSize = permgenSize;
+	}
+
+	public boolean isHttpEnable() {
+		return httpEnable;
+	}
+
+	public void setHttpEnable(boolean httpEnable) {
+		this.httpEnable = httpEnable;
+	}
+
+	public boolean isHighAvailability() {
+		return highAvailability;
+	}
+
+	public void setHighAvailability(boolean highAvailability) {
+		this.highAvailability = highAvailability;
+	}
+
+	public int getJmxPort() {
+		return jmxPort;
+	}
+
+	public void setJmxPort(int jmxPort) {
+		this.jmxPort = jmxPort;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
@@ -34,7 +35,7 @@ public class NetworkInterface implements Serializable {
 	private String default_gateway;
 	@Column(name = "netmask")
 	private String netmask;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
 	private Machine machine;

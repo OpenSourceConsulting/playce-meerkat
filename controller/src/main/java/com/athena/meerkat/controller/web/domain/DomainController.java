@@ -37,9 +37,8 @@ public class DomainController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
-	public @ResponseBody
-	SimpleJsonResponse save(SimpleJsonResponse json, Domain domain,
-			int datagridServerGroupId) {
+	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json,
+			Domain domain, int datagridServerGroupId) {
 		boolean isEdit = !(domain.getId() == 0);
 		try {
 			List<Domain> existingDomains = domainService.getDomainByName(domain
@@ -132,8 +131,7 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public @ResponseBody
-	SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
+	public @ResponseBody SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
 		Domain domain = domainService.getDomain(id);
 		if (domain == null) {
 			json.setSuccess(false);
@@ -146,8 +144,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public @ResponseBody
-	SimpleJsonResponse getDomainList(SimpleJsonResponse json) {
+	public @ResponseBody SimpleJsonResponse getDomainList(
+			SimpleJsonResponse json) {
 		List<Domain> result = domainService.getAll();
 		json.setData(result);
 		json.setSuccess(true);
@@ -155,18 +153,22 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	SimpleJsonResponse getDomain(SimpleJsonResponse json, int id) {
+	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json,
+			int id) {
 		Domain result = domainService.getDomain(id);
-		json.setSuccess(true);
-		json.setData(result);
+		if (result == null) {
+			json.setSuccess(false);
+			json.setMsg("Domain does not exist");
+		} else {
+			json.setSuccess(true);
+			json.setData(result);
+		}
 		return json;
 	}
 
 	@RequestMapping(value = "/tomcatlist", method = RequestMethod.GET)
-	public @ResponseBody
-	SimpleJsonResponse getTomcatInstanceByDomain(SimpleJsonResponse json,
-			int domainId) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstanceByDomain(
+			SimpleJsonResponse json, int domainId) {
 		// ServiceResult result =
 		// tomcatService.getTomcatListByDomainId(domainId);
 		// if (result.getStatus() == Status.DONE) {
@@ -181,9 +183,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/applications", method = RequestMethod.GET)
-	public @ResponseBody
-	SimpleJsonResponse getApplicationsByDomain(SimpleJsonResponse json,
-			int domainId) {
+	public @ResponseBody SimpleJsonResponse getApplicationsByDomain(
+			SimpleJsonResponse json, int domainId) {
 		List<Application> apps = domainService
 				.getApplicationListByDomain(domainId);
 		if (apps != null) {
@@ -197,8 +198,7 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/clustering/config/save", method = RequestMethod.POST)
-	public @ResponseBody
-	SimpleJsonResponse save(SimpleJsonResponse json,
+	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json,
 			ClusteringConfiguration config, int domainId) {
 		boolean isEdit = !(config.getId() == 0);
 
@@ -221,8 +221,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/clustering/config/edit", method = RequestMethod.POST)
-	public @ResponseBody
-	SimpleJsonResponse editClusteringConfig(SimpleJsonResponse json, int id) {
+	public @ResponseBody SimpleJsonResponse editClusteringConfig(
+			SimpleJsonResponse json, int id) {
 		ClusteringConfiguration config = domainService.getConfig(id);
 		if (config == null) {
 			json.setSuccess(false);
@@ -235,8 +235,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/clustering/config/delete", method = RequestMethod.POST)
-	public @ResponseBody
-	SimpleJsonResponse deleteClusteringConfig(SimpleJsonResponse json, int id) {
+	public @ResponseBody SimpleJsonResponse deleteClusteringConfig(
+			SimpleJsonResponse json, int id) {
 		ClusteringConfiguration config = domainService.getConfig(id);
 		if (config == null) {
 			json.setSuccess(false);
@@ -249,9 +249,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/clustering/config/list", method = RequestMethod.GET)
-	public @ResponseBody
-	GridJsonResponse getClusteringConfigList(GridJsonResponse json,
-			int domainId, int revision) {
+	public @ResponseBody GridJsonResponse getClusteringConfigList(
+			GridJsonResponse json, int domainId, int revision) {
 		List<ClusteringConfiguration> configList = domainService
 				.getClusteringConfigurationList(domainId, revision);
 		json.setList(configList);
@@ -260,8 +259,8 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody
-	SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse delete(SimpleJsonResponse json,
+			int domainId) {
 		if (domainService.delete(domainId)) {
 			json.setMsg("Domain is deleted successfully.");
 			json.setSuccess(true);

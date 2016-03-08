@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Memory implements Serializable {
 	@Column(name = "type")
 	private String type;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
 	@JsonBackReference
 	private Machine machine;

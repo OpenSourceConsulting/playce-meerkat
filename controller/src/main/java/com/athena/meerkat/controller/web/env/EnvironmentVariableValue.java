@@ -28,6 +28,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,11 +60,11 @@ public class EnvironmentVariableValue {
 	@Column(name = "created_time")
 	private Date createdTime;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private EnvironmentVariable env;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Revision revision;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	Machine machine;
 
 	public int getId() {

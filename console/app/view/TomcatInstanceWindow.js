@@ -22,18 +22,18 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         'Ext.form.field.Display',
         'Ext.form.field.ComboBox',
         'Ext.button.Button',
+        'Ext.form.field.Checkbox',
         'Ext.form.field.Number',
         'Ext.grid.Panel',
         'Ext.grid.column.CheckColumn',
         'Ext.grid.View',
-        'Ext.form.field.Checkbox',
         'Ext.form.field.Hidden'
     ],
 
-    height: 591,
     id: 'TomcatInstanceWindow',
     itemId: 'TomcatInstanceWindow',
     width: 565,
+    autoScroll: true,
     title: 'New Tomcat Instance',
 
     layout: {
@@ -85,13 +85,7 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                     editable: false,
                                     displayField: 'name',
                                     store: 'MachineStore',
-                                    valueField: 'id',
-                                    listeners: {
-                                        select: {
-                                            fn: me.onServerComboBoxSelect,
-                                            scope: me
-                                        }
-                                    }
+                                    valueField: 'id'
                                 },
                                 {
                                     xtype: 'container',
@@ -123,6 +117,104 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             margin: '10 0 10 10',
                             items: [
                                 {
+                                    xtype: 'displayfield',
+                                    id: 'sshUserDisplayField',
+                                    width: 399,
+                                    fieldLabel: 'SSH User',
+                                    labelWidth: 150
+                                },
+                                {
+                                    xtype: 'displayfield',
+                                    id: 'bindIPAddressDisplayField',
+                                    width: 399,
+                                    fieldLabel: 'Bind Address',
+                                    labelWidth: 150
+                                },
+                                {
+                                    xtype: 'displayfield',
+                                    id: 'otherBindIPAddressDisplayField',
+                                    width: 399,
+                                    fieldLabel: 'Other Bind Address',
+                                    labelWidth: 150
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatVersionTextField',
+                                    width: 399,
+                                    fieldLabel: 'Version',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatJavaHomeTextField',
+                                    width: 399,
+                                    fieldLabel: 'JAVA_HOME',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatCatalinaHomeTextField',
+                                    width: 399,
+                                    fieldLabel: 'CATALINA_HOME',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatCatalinaBaseTextField',
+                                    width: 399,
+                                    fieldLabel: 'CATALINA_BASE',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatEncodingTextField',
+                                    width: 399,
+                                    fieldLabel: 'Encoding',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatHeapSizeTextField',
+                                    width: 399,
+                                    fieldLabel: 'Heap size (MB)',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: 'tomcatPermgenSizeTextField',
+                                    width: 399,
+                                    fieldLabel: 'Permgen Size (MB)',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    validateBlank: true
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: 'tomcatHttpEnableCheckBox',
+                                    fieldLabel: 'HTTP Enable',
+                                    labelWidth: 150,
+                                    boxLabel: 'Check when using HTTP Connector'
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: 'tomcatHighAvailabilityCheckBox',
+                                    fieldLabel: 'High availability',
+                                    labelWidth: 150,
+                                    boxLabel: 'Check when using clustering'
+                                },
+                                {
                                     xtype: 'numberfield',
                                     id: 'httpPortField',
                                     width: 400,
@@ -145,6 +237,15 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                     id: 'redirectPortField',
                                     width: 399,
                                     fieldLabel: 'REDIRECT_PORT',
+                                    labelWidth: 150,
+                                    allowBlank: false,
+                                    allowOnlyWhitespace: false
+                                },
+                                {
+                                    xtype: 'numberfield',
+                                    id: 'jmxPortField',
+                                    width: 399,
+                                    fieldLabel: 'JMX_SERVER_PORT',
                                     labelWidth: 150,
                                     allowBlank: false,
                                     allowOnlyWhitespace: false
@@ -228,14 +329,6 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         });
 
         me.callParent(arguments);
-    },
-
-    onServerComboBoxSelect: function(combo, records, eOpts) {
-        if(combo.getValue() > 0 ){
-          Ext.getCmp("btnTestConnection").enable();
-        }else {
-            Ext.getCmp("btnTestConnection").disable();
-        }
     },
 
     onBtnCancelTomcatClick: function(button, e, eOpts) {

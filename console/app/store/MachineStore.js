@@ -30,9 +30,10 @@ Ext.define('webapp.store.MachineStore', {
             storeId: 'MachineStore',
             proxy: {
                 type: 'ajax',
-                url: '/machine/list',
+                url: 'res/machine/simplelist',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'data'
                 }
             }
         }, cfg)]);

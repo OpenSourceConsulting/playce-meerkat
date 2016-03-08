@@ -6,10 +6,11 @@
     },
     "codeClass": null,
     "userConfig": {
+        "autoScroll": true,
         "container|align": "stretch",
         "designer|userAlias": "TomcatInstanceWindow",
         "designer|userClassName": "TomcatInstanceWindow",
-        "height": 591,
+        "height": null,
         "id": "TomcatInstanceWindow",
         "itemId": "TomcatInstanceWindow",
         "layout": "vbox",
@@ -111,31 +112,7 @@
                                 "width": 399
                             },
                             "name": "MyComboBox8",
-                            "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f",
-                            "cn": [
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onServerComboBoxSelect",
-                                        "implHandler": [
-                                            "if(combo.getValue() > 0 ){",
-                                            "  Ext.getCmp(\"btnTestConnection\").enable();",
-                                            "}else {",
-                                            "    Ext.getCmp(\"btnTestConnection\").disable();",
-                                            "}"
-                                        ],
-                                        "name": "select",
-                                        "scope": "me"
-                                    },
-                                    "name": "onServerComboBoxSelect",
-                                    "designerId": "472f5482-a1a8-473c-a887-fa877c02e7d6"
-                                }
-                            ]
+                            "designerId": "40629778-92d3-4e10-9486-ee2ebf9fc61f"
                         },
                         {
                             "type": "Ext.container.Container",
@@ -204,6 +181,212 @@
                     "designerId": "b9098196-d038-41df-8d84-768aa2f7d86c",
                     "cn": [
                         {
+                            "type": "Ext.form.field.Display",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "SSH User",
+                                "id": "sshUserDisplayField",
+                                "labelWidth": 150,
+                                "width": 399
+                            },
+                            "name": "MyDisplayField26",
+                            "designerId": "e0c09e17-eded-4ac1-95d9-e86490011290"
+                        },
+                        {
+                            "type": "Ext.form.field.Display",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Bind Address",
+                                "id": "bindIPAddressDisplayField",
+                                "labelWidth": 150,
+                                "width": 399
+                            },
+                            "name": "MyDisplayField29",
+                            "designerId": "77608a38-b69c-4a1d-b39e-0f154c6db7ec"
+                        },
+                        {
+                            "type": "Ext.form.field.Display",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Other Bind Address",
+                                "id": "otherBindIPAddressDisplayField",
+                                "labelWidth": 150,
+                                "width": 399
+                            },
+                            "name": "MyDisplayField30",
+                            "designerId": "c4bb3f8d-f664-4181-b000-73b3ca133916"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "Version",
+                                "id": "tomcatVersionTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField29",
+                            "designerId": "8682d5ba-bdb4-471f-958b-dee3ac40bf0e"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "JAVA_HOME",
+                                "id": "tomcatJavaHomeTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField30",
+                            "designerId": "01c2b456-3ab7-48cf-a125-2c4b17622a9c"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "CATALINA_HOME",
+                                "id": "tomcatCatalinaHomeTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField31",
+                            "designerId": "ab38a521-c6c8-4530-a46d-795c115a3e83"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "CATALINA_BASE",
+                                "id": "tomcatCatalinaBaseTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField32",
+                            "designerId": "beecd8ed-0130-46d2-9c90-6dc245cc1726"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "Encoding",
+                                "id": "tomcatEncodingTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField49",
+                            "designerId": "fdd830b0-4ca6-498b-9d41-3cc28887f8a3"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "Heap size (MB)",
+                                "id": "tomcatHeapSizeTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField50",
+                            "designerId": "520e4a9a-1e49-45e9-9a06-4e0eb0dfe80c"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "fieldLabel": "Permgen Size (MB)",
+                                "id": "tomcatPermgenSizeTextField",
+                                "labelWidth": 150,
+                                "validateBlank": true,
+                                "width": 399
+                            },
+                            "name": "MyTextField51",
+                            "designerId": "214feab3-567a-4c9f-a304-a4e8b5a1088b"
+                        },
+                        {
+                            "type": "Ext.form.field.Checkbox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "Check when using HTTP Connector",
+                                "fieldLabel": "HTTP Enable",
+                                "id": "tomcatHttpEnableCheckBox",
+                                "labelWidth": 150
+                            },
+                            "name": "MyCheckbox3",
+                            "designerId": "b84fbb10-2d14-445e-aa09-8b8e57310df1"
+                        },
+                        {
+                            "type": "Ext.form.field.Checkbox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "Check when using clustering",
+                                "fieldLabel": "High availability",
+                                "id": "tomcatHighAvailabilityCheckBox",
+                                "labelWidth": 150
+                            },
+                            "name": "MyCheckbox4",
+                            "designerId": "e3c4cb0c-5e75-4064-abf0-b27c25467fef"
+                        },
+                        {
                             "type": "Ext.form.field.Number",
                             "reference": {
                                 "name": "items",
@@ -256,6 +439,24 @@
                             },
                             "name": "MyNumberField3",
                             "designerId": "34dbea0e-50fc-49b6-8ccb-cad0d15d76f1"
+                        },
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "JMX_SERVER_PORT",
+                                "id": "jmxPortField",
+                                "labelWidth": 150,
+                                "width": 399
+                            },
+                            "name": "MyNumberField4",
+                            "designerId": "275dda39-dece-4a4d-af0b-222da5b4ebf2"
                         }
                     ]
                 },

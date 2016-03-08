@@ -29,6 +29,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,16 +65,16 @@ public class ClusteringConfigurationValue implements Serializable {
 	private int Id;
 	@Column(name = "value")
 	private String value;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private ClusteringConfiguration clusteringConfiguration;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Domain domain;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private DatagridServerGroup serverGroup;
 
 	@Column(name = "created_time")
 	private Date createdTime;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Revision revision;
 
 	/**
