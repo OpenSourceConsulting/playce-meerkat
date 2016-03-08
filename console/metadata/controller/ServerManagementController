@@ -412,6 +412,45 @@
             },
             "name": "loadEnvironmentVariables",
             "designerId": "2446f37a-6cdd-4409-a1ce-1f4a791413ae"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "machineId",
+                    "callback"
+                ],
+                "fn": "loadEVRevisions",
+                "implHandler": [
+                    "var url = GlobalData.urlPrefix + \"res/machine/evlist\";",
+                    "Ext.Ajax.request({",
+                    "    url: url,",
+                    "    params:{\"machineId\":machineId},",
+                    "    success: function(resp, ops) {",
+                    "        var response = Ext.decode(resp.responseText);",
+                    "        if(response.success){",
+                    "            callback(response.data);",
+                    "        }",
+                    "        else{",
+                    "            Ext.Msg.show({",
+                    "                title: \"Message\",",
+                    "                msg: response.msg,",
+                    "                buttons: Ext.Msg.OK,",
+                    "                icon: Ext.Msg.WARNING",
+                    "            });",
+                    "        }",
+                    "    },",
+                    "    method:\"GET\"",
+                    "});"
+                ]
+            },
+            "name": "loadEVRevisions",
+            "designerId": "867b394b-c0d5-45ad-ba90-a14e7ba3ae8b"
         }
     ]
 }

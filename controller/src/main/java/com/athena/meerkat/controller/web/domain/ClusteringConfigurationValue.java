@@ -48,7 +48,7 @@ import com.athena.meerkat.controller.web.revision.Revision;
  * @version 1.0
  */
 @Entity
-@Table(name = "clustering_configuration")
+@Table(name = "clustering_configuration_value")
 public class ClusteringConfigurationValue implements Serializable {
 
 	/**

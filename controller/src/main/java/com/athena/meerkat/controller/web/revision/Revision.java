@@ -66,9 +66,10 @@ public class Revision implements Serializable {
 	private boolean isActive;
 
 	@OneToMany
-	List<ClusteringConfigurationValue> clusteringConfigs;
+	private List<ClusteringConfigurationValue> clusteringConfigs;
+
 	@OneToMany
-	List<EnvironmentVariableValue> environmentVariables;
+	private List<EnvironmentVariableValue> environmentVariables;
 
 	/**
 	 * @return the isActive
@@ -128,6 +129,38 @@ public class Revision implements Serializable {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the environmentVariables
+	 */
+	public List<EnvironmentVariableValue> getEnvironmentVariables() {
+		return environmentVariables;
+	}
+
+	/**
+	 * @param environmentVariables
+	 *            the environmentVariables to set
+	 */
+	public void setEnvironmentVariables(
+			List<EnvironmentVariableValue> environmentVariables) {
+		this.environmentVariables = environmentVariables;
+	}
+
+	/**
+	 * @return the clusteringConfigs
+	 */
+	public List<ClusteringConfigurationValue> getClusteringConfigs() {
+		return clusteringConfigs;
+	}
+
+	/**
+	 * @param clusteringConfigs
+	 *            the clusteringConfigs to set
+	 */
+	public void setClusteringConfigs(
+			List<ClusteringConfigurationValue> clusteringConfigs) {
+		this.clusteringConfigs = clusteringConfigs;
 	}
 }
 // end of Revision.java

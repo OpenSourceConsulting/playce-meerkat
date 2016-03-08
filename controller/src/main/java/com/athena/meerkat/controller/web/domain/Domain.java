@@ -52,7 +52,7 @@ public class Domain implements Serializable {
 
 	@OneToMany(mappedBy = "domain")
 	@JsonManagedReference
-	private Collection<ClusteringConfiguration> clusteringConfig;
+	private Collection<ClusteringConfigurationValue> clusteringConfig;
 
 	public String getName() {
 		return name;
@@ -123,12 +123,12 @@ public class Domain implements Serializable {
 		this.serverGroup = serverGroup;
 	}
 
-	public Collection<ClusteringConfiguration> getClusteringConfig() {
+	public Collection<ClusteringConfigurationValue> getClusteringConfig() {
 		return clusteringConfig;
 	}
 
 	public void setClusteringConfig(
-			Collection<ClusteringConfiguration> clusteringConfig) {
+			Collection<ClusteringConfigurationValue> clusteringConfig) {
 		this.clusteringConfig = clusteringConfig;
 	}
 }

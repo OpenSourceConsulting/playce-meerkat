@@ -22,7 +22,7 @@ Ext.define('webapp.model.RevisionModel', {
 
     fields: [
         {
-            name: 'Id'
+            name: 'id'
         },
         {
             name: 'name'

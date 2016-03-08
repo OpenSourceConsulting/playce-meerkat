@@ -14,13 +14,16 @@
     "designerId": "16b1cfe7-b21b-453b-ae2a-b87195833895",
     "cn": [
         {
-            "type": "Ext.data.proxy.JsonP",
+            "type": "Ext.data.proxy.Ajax",
             "reference": {
                 "name": "proxy",
                 "type": "object"
             },
             "codeClass": null,
-            "name": "MyJsonPProxy2",
+            "userConfig": {
+                "url": "res/machine/ev/revisions?machineId=1"
+            },
+            "name": "MyAjaxProxy8",
             "designerId": "8aca5293-2aca-4820-adb3-c86d0606b698",
             "cn": [
                 {
@@ -30,6 +33,9 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "userConfig": {
+                        "root": "data"
+                    },
                     "name": "MyJsonReader10",
                     "designerId": "1d35077e-0b55-4b6d-8491-584eaccdc7ea"
                 }

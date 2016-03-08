@@ -307,8 +307,11 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                     items: [
                                                         {
                                                             xtype: 'combobox',
+                                                            id: 'evRevisionComboBox',
                                                             fieldLabel: 'Select revision:',
-                                                            store: 'RevisionStore'
+                                                            displayField: 'name',
+                                                            store: 'RevisionStore',
+                                                            valueField: 'id'
                                                         },
                                                         {
                                                             xtype: 'tbseparator'
@@ -887,6 +890,12 @@ Ext.define('webapp.view.ServerManagementContainer', {
                 var selectedRecords;
                 selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();
                 var serverId = selectedRecords[0].get("id");
+
+                //load EV revisions
+                webapp.app.getController("ServerManagementController").loadEVRevisions(serverId, function(data){
+                        Ext.getCmp("evRevisionComboBox").getStore().loadData(data);
+                    });
+
                 webapp.app.getController("ServerManagementController").loadEnvironmentVariables(serverId, function(data){
                     Ext.getCmp("environmentVariablesGridPanel").getStore().loadData(data);
                 });

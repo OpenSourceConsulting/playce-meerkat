@@ -18,7 +18,7 @@ Ext.define('webapp.store.RevisionStore', {
 
     requires: [
         'webapp.model.RevisionModel',
-        'Ext.data.proxy.JsonP',
+        'Ext.data.proxy.Ajax',
         'Ext.data.reader.Json'
     ],
 
@@ -29,9 +29,11 @@ Ext.define('webapp.store.RevisionStore', {
             model: 'webapp.model.RevisionModel',
             storeId: 'RevisionStore',
             proxy: {
-                type: 'jsonp',
+                type: 'ajax',
+                url: 'res/machine/ev/revisions?machineId=1',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'data'
                 }
             }
         }, cfg)]);

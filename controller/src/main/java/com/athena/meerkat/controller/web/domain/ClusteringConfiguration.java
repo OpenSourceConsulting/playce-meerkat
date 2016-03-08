@@ -18,6 +18,7 @@ import javax.persistence.Id;
 
 import com.athena.meerkat.controller.web.datagridserver.DatagridServerGroup;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
+import com.athena.meerkat.controller.web.revision.Revision;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.athena.meerkat.controller.web.user.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -43,7 +44,7 @@ public class ClusteringConfiguration implements Serializable {
 	private int Id;
 	@Column(name = "name")
 	private String name;
-	@OneToMany
+	@OneToMany(mappedBy = "clustering_configuration")
 	private List<ClusteringConfigurationValue> clusteringConfigValues;
 
 	public String getName() {

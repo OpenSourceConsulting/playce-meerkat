@@ -214,7 +214,7 @@ public class DomainController {
 			}
 		}
 		Domain domain = domainService.getDomain(domainId);
-		config.setDomain(domain);
+		//config.setDomain(domain);
 		domainService.saveConfig(config);
 		json.setSuccess(true);
 		return json;

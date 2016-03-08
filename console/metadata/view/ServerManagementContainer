@@ -683,9 +683,12 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "displayField": "name",
                                                         "fieldLabel": "Select revision:",
+                                                        "id": "evRevisionComboBox",
                                                         "layout|flex": null,
-                                                        "store": "RevisionStore"
+                                                        "store": "RevisionStore",
+                                                        "valueField": "id"
                                                     },
                                                     "name": "MyComboBox4",
                                                     "designerId": "5d4b3193-c35c-4f68-b239-d60ef003f6e1"
@@ -1847,6 +1850,12 @@
                                             "        var selectedRecords;",
                                             "        selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();",
                                             "        var serverId = selectedRecords[0].get(\"id\");",
+                                            "",
+                                            "        //load EV revisions",
+                                            "        webapp.app.getController(\"ServerManagementController\").loadEVRevisions(serverId, function(data){",
+                                            "                Ext.getCmp(\"evRevisionComboBox\").getStore().loadData(data);",
+                                            "            });",
+                                            "",
                                             "        webapp.app.getController(\"ServerManagementController\").loadEnvironmentVariables(serverId, function(data){",
                                             "            Ext.getCmp(\"environmentVariablesGridPanel\").getStore().loadData(data);",
                                             "        });",
@@ -1857,9 +1866,9 @@
                                             "            msg: \"Please choose tomcat server\",",
                                             "            buttons: Ext.Msg.OK,",
                                             "            icon: Ext.Msg.WARNING",
-                                            "        });            ",
-                                            "    }    ",
-                                            "    ",
+                                            "        });",
+                                            "    }",
+                                            "",
                                             "}"
                                         ],
                                         "name": "tabchange",

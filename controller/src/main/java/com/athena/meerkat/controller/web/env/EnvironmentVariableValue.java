@@ -27,10 +27,12 @@ package com.athena.meerkat.controller.web.env;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.machine.Machine;
 import com.athena.meerkat.controller.web.revision.Revision;
@@ -43,6 +45,8 @@ import com.athena.meerkat.controller.web.revision.Revision;
  * @author Tran
  * @version 1.0
  */
+@Entity
+@Table(name="environment_variable_value")
 public class EnvironmentVariableValue {
 
 	@Id
