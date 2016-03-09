@@ -1,0 +1,43 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "data": null,
+        "designer|userClassName": "TomcatBusyThreadStore",
+        "model": "TomcatBusyThreadModel",
+        "storeId": "TomcatBusyThreadStore"
+    },
+    "name": "MyJsonStore",
+    "designerId": "7f972a30-4889-4ac8-8c5c-024dc4a78545",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": "tomcat/monitoring/busythreads?tomcatId=1"
+            },
+            "name": "MyAjaxProxy9",
+            "designerId": "0949c1c2-4dfe-43a4-b300-4701c4a9a6b8",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyJsonReader11",
+                    "designerId": "21e23166-5267-4cc4-b40f-c21534732404"
+                }
+            ]
+        }
+    ]
+}

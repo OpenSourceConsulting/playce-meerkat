@@ -1,0 +1,41 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "TomcatBusyThreadModel"
+    },
+    "name": "MyModel",
+    "designerId": "023c9681-841a-498f-a13d-6f0fe872d831",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "time"
+            },
+            "name": "MyField81",
+            "designerId": "97d28d5e-212d-4fed-80a4-1805f4020987"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "value"
+            },
+            "name": "MyField82",
+            "designerId": "e1ab6026-be55-481b-bdd3-ae032d3d8885"
+        }
+    ]
+}

@@ -802,6 +802,11 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                     series: [
                                                         {
                                                             type: 'line',
+                                                            highlight: true,
+                                                            label: {
+                                                                field: 'value',
+                                                                display: 'over'
+                                                            },
                                                             title: 'Busy threads',
                                                             xField: 'time',
                                                             yField: 'value',

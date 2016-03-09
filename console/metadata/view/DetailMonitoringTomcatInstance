@@ -1611,6 +1611,10 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "highlight": true,
+                                                        "label": [
+                                                            "{field:'value', display: 'over'}"
+                                                        ],
                                                         "smooth": 3,
                                                         "title": [
                                                             "Busy threads"
@@ -1621,6 +1625,9 @@
                                                         ]
                                                     },
                                                     "name": "MyLineSeries31",
+                                                    "configAlternates": {
+                                                        "highlight": "boolean"
+                                                    },
                                                     "designerId": "62148dd2-9b3e-430c-9369-70663567c498"
                                                 }
                                             ]
