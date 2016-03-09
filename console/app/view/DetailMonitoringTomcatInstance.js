@@ -719,7 +719,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             flex: 1,
                                             margin: '5 5 5 5',
                                             layout: 'fit',
-                                            title: 'Thread Pool Utilization',
+                                            title: '',
                                             titleAlign: 'center',
                                             dockedItems: [
                                                 {
@@ -769,34 +769,34 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             flex: 1,
                                             margin: '5 5 5 5',
                                             layout: 'fit',
-                                            title: 'Busy Threads',
+                                            title: 'Busy threads',
                                             titleAlign: 'center',
                                             dockedItems: [
                                                 {
                                                     xtype: 'chart',
                                                     dock: 'top',
+                                                    autoRender: true,
                                                     height: 250,
                                                     id: 'tomcatBusyThreadChart',
                                                     width: 400,
-                                                    animate: true,
                                                     insetPadding: 20,
                                                     store: 'TomcatBusyThreadStore',
+                                                    theme: 'Yellow',
                                                     axes: [
                                                         {
                                                             type: 'Category',
                                                             fields: [
                                                                 'time'
                                                             ],
-                                                            title: 'Timestamp',
+                                                            title: 'Time',
                                                             position: 'bottom'
                                                         },
                                                         {
                                                             type: 'Numeric',
                                                             fields: [
-                                                                'value',
-                                                                'value2'
+                                                                'value'
                                                             ],
-                                                            title: 'Value',
+                                                            grid: 'odd: {\n                        opacity: 1,\n                        fill: \'#ddd\',\n                        stroke: \'#bbb\',\n                        \'stroke-width\': 0.5\n                    }',
                                                             position: 'left'
                                                         }
                                                     ],
@@ -804,25 +804,12 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                         {
                                                             type: 'line',
                                                             highlight: true,
-                                                            label: {
-                                                                field: 'value',
-                                                                display: 'over'
-                                                            },
                                                             title: 'Busy threads',
                                                             xField: 'time',
                                                             yField: 'value',
-                                                            smooth: 3
-                                                        },
-                                                        {
-                                                            type: 'line',
-                                                            label: {
-                                                                field: 'value2',
-                                                                display: 'over'
-                                                            },
-                                                            title: 'Thread 2',
-                                                            xField: 'time',
-                                                            yField: 'value2',
-                                                            smooth: 3
+                                                            fill: true,
+                                                            showMarkers: false,
+                                                            smooth: true
                                                         }
                                                     ]
                                                 }
@@ -1205,13 +1192,12 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
         if(activeTabIndex == 2) {//thread tab
              interVal = setInterval(function(){
                 webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
-         }, 5000);
+         }, 1000);
             webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
 
         }
         else {
             clearInterval(interVal);
-            alert("clear");
         }
     }
 

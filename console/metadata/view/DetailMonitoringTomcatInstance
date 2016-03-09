@@ -1446,7 +1446,7 @@
                                         "layout": "fit",
                                         "layout|flex": 1,
                                         "margin": "5 5 5 5",
-                                        "title": "Thread Pool Utilization",
+                                        "title": "",
                                         "titleAlign": "center"
                                     },
                                     "name": "MyPanel67",
@@ -1541,7 +1541,7 @@
                                         "layout": "fit",
                                         "layout|flex": 1,
                                         "margin": "5 5 5 5",
-                                        "title": "Busy Threads",
+                                        "title": "Busy threads",
                                         "titleAlign": "center"
                                     },
                                     "name": "MyPanel68",
@@ -1555,14 +1555,13 @@
                                             },
                                             "codeClass": null,
                                             "userConfig": {
-                                                "animate": [
-                                                    "true"
-                                                ],
+                                                "autoRender": true,
                                                 "dock": "top",
                                                 "height": 250,
                                                 "id": "tomcatBusyThreadChart",
                                                 "insetPadding": 20,
                                                 "store": "TomcatBusyThreadStore",
+                                                "theme": "Yellow",
                                                 "width": 400
                                             },
                                             "name": "LineChart23",
@@ -1582,7 +1581,7 @@
                                                         "fields": [
                                                             "time"
                                                         ],
-                                                        "title": "Timestamp"
+                                                        "title": "Time"
                                                     },
                                                     "name": "MyCategoryAxis30",
                                                     "designerId": "704c4010-01a7-43ab-9a4e-d220af7277d7"
@@ -1596,10 +1595,17 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "fields": [
-                                                            "value",
-                                                            "value2"
+                                                            "value"
                                                         ],
-                                                        "title": "Value"
+                                                        "grid": [
+                                                            "odd: {",
+                                                            "                        opacity: 1,",
+                                                            "                        fill: '#ddd',",
+                                                            "                        stroke: '#bbb',",
+                                                            "                        'stroke-width': 0.5",
+                                                            "                    }"
+                                                        ],
+                                                        "title": null
                                                     },
                                                     "name": "MyNumericAxis30",
                                                     "designerId": "d31b84e6-faa9-4787-a8f3-110ba06dfd67"
@@ -1612,11 +1618,11 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "fill": true,
                                                         "highlight": true,
-                                                        "label": [
-                                                            "{field:'value', display: 'over'}"
-                                                        ],
-                                                        "smooth": 3,
+                                                        "label": null,
+                                                        "showMarkers": false,
+                                                        "smooth": true,
                                                         "title": [
                                                             "Busy threads"
                                                         ],
@@ -1627,35 +1633,10 @@
                                                     },
                                                     "name": "MyLineSeries31",
                                                     "configAlternates": {
-                                                        "highlight": "boolean"
+                                                        "highlight": "boolean",
+                                                        "smooth": "boolean"
                                                     },
                                                     "designerId": "62148dd2-9b3e-430c-9369-70663567c498"
-                                                },
-                                                {
-                                                    "type": "Ext.chart.series.Line",
-                                                    "reference": {
-                                                        "name": "series",
-                                                        "type": "array"
-                                                    },
-                                                    "codeClass": null,
-                                                    "userConfig": {
-                                                        "label": [
-                                                            "{",
-                                                            "field: 'value2',",
-                                                            "display: 'over'",
-                                                            "}"
-                                                        ],
-                                                        "smooth": 3,
-                                                        "title": [
-                                                            "Thread 2"
-                                                        ],
-                                                        "xField": "time",
-                                                        "yField": [
-                                                            "value2"
-                                                        ]
-                                                    },
-                                                    "name": "MyLineSeries33",
-                                                    "designerId": "f2e42b87-ea08-44de-b8e6-d4254823101c"
                                                 }
                                             ]
                                         }
@@ -2507,13 +2488,12 @@
                             "if(activeTabIndex == 2) {//thread tab",
                             "     interVal = setInterval(function(){",
                             "        webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
-                            " }, 5000);",
+                            " }, 1000);",
                             "    webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
                             "",
                             "}",
                             "else {",
                             "    clearInterval(interVal);",
-                            "    alert(\"clear\");",
                             "}"
                         ],
                         "name": "tabchange",
