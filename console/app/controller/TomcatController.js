@@ -421,6 +421,29 @@ Ext.define('webapp.controller.TomcatController', {
 
     },
 
+    loadDataBusyThreadChart: function(tomcatId) {
+         var busyThread= GlobalData.urlPrefix + "/tomcat//monitoring/busythreads";
+        Ext.Ajax.request({
+                url: busyThread,
+                params: {"tomcatId": tomcatId},
+                success: function(resp, ops) {
+                    var response = Ext.decode(resp.responseText);
+                    if (response.success === true){
+                        Ext.getCmp("tomcatBusyThreadChart").getStore().loadData(response.data);
+                    }
+                    else {
+                        Ext.Msg.show({
+                            title: "Message",
+                            msg: response.msg,
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.WARNING
+                        });
+                    }
+                },
+                method: "GET"
+            });
+    },
+
     init: function(application) {
         this.control({
             "#btnNewTomcat": {

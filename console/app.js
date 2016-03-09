@@ -36,7 +36,8 @@ Ext.application({
         'DatasourceModel',
         'DatagridModel',
         'EnvironmentVariableModel',
-        'RevisionModel'
+        'RevisionModel',
+        'TomcatBusyThreadModel'
     ],
     stores: [
         'sessionDataStore',
@@ -54,7 +55,8 @@ Ext.application({
         'LinkingTomcatDatasourceStore',
         'DatagridServerStore',
         'EnvironmentVariableStore',
-        'RevisionStore'
+        'RevisionStore',
+        'TomcatBusyThreadStore'
     ],
     views: [
         'meerkatViewport',

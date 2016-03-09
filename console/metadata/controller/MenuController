@@ -115,7 +115,7 @@
                     "if(activeItem > -1){",
                     "    Ext.getCmp(\"subCenterContainer\").layout.setActiveItem(activeItem);",
                     "}",
-                    ""
+                    "    "
                 ]
             },
             "name": "showMenu",

@@ -2446,6 +2446,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.model.MachineModel": [],
   "webapp.model.RevisionModel": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatBusyThreadModel": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [],
   "webapp.model.UserRoleModel": [],
@@ -2461,6 +2462,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.RevisionStore": [],
   "webapp.store.TempoStore": [],
+  "webapp.store.TomcatBusyThreadStore": [],
   "webapp.store.TomcatInstanceListStore": [],
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],
@@ -3527,6 +3529,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.model.MachineModel": [],
   "webapp.model.RevisionModel": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatBusyThreadModel": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [
     "model.UserModel"
@@ -3544,6 +3547,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.RevisionStore": [],
   "webapp.store.TempoStore": [],
+  "webapp.store.TomcatBusyThreadStore": [],
   "webapp.store.TomcatInstanceListStore": [],
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],

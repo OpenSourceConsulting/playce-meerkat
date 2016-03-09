@@ -50,7 +50,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                 {
                     xtype: 'tabpanel',
                     flex: 10,
-                    id: 'tabPanel3',
+                    id: 'detailTomcatMonitoringTab',
                     itemId: 'tabPanel',
                     activeTab: 0,
                     items: [
@@ -776,33 +776,35 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                     xtype: 'chart',
                                                     dock: 'top',
                                                     height: 250,
+                                                    id: 'tomcatBusyThreadChart',
                                                     width: 400,
                                                     animate: true,
                                                     insetPadding: 20,
-                                                    store: 'TempoStore',
+                                                    store: 'TomcatBusyThreadStore',
                                                     axes: [
                                                         {
                                                             type: 'Category',
                                                             fields: [
-                                                                'x'
+                                                                'time'
                                                             ],
-                                                            title: 'Category Axis',
+                                                            title: 'Timestamp',
                                                             position: 'bottom'
                                                         },
                                                         {
                                                             type: 'Numeric',
                                                             fields: [
-                                                                'y'
+                                                                'value'
                                                             ],
-                                                            title: 'Numeric Axis',
+                                                            title: 'Value',
                                                             position: 'left'
                                                         }
                                                     ],
                                                     series: [
                                                         {
                                                             type: 'line',
-                                                            xField: 'x',
-                                                            yField: 'y',
+                                                            title: 'Busy threads',
+                                                            xField: 'time',
+                                                            yField: 'value',
                                                             smooth: 3
                                                         }
                                                     ]
@@ -1163,12 +1165,37 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    listeners: {
+                        tabchange: {
+                            fn: me.onDetailTomcatMonitoringTabTabChange,
+                            scope: me
+                        }
+                    }
                 }
             ]
         });
 
         me.callParent(arguments);
+    },
+
+    onDetailTomcatMonitoringTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+        var activeTab = tabPanel.getActiveTab();
+        var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);
+        var tomcatId = 1;
+        var interVal = setInterval(function(){
+                webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
+         }, 5000);
+
+        if(activeTabIndex == 2) {//thread tab
+            webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
+
+        }
+        else {
+
+            clearInterval(interVal);
+
+        }
     }
 
 });

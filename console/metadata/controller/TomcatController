@@ -665,6 +665,44 @@
             },
             "name": "onServerComboBoxSelect",
             "designerId": "ca7e8ad0-0d7d-428a-84f5-41a12f95355b"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "tomcatId"
+                ],
+                "fn": "loadDataBusyThreadChart",
+                "implHandler": [
+                    " var busyThread= GlobalData.urlPrefix + \"/tomcat//monitoring/busythreads\";",
+                    "Ext.Ajax.request({",
+                    "        url: busyThread,",
+                    "        params: {\"tomcatId\": tomcatId},",
+                    "        success: function(resp, ops) {",
+                    "            var response = Ext.decode(resp.responseText);",
+                    "            if (response.success === true){",
+                    "                Ext.getCmp(\"tomcatBusyThreadChart\").getStore().loadData(response.data);",
+                    "            }",
+                    "            else {",
+                    "                Ext.Msg.show({",
+                    "                    title: \"Message\",",
+                    "                    msg: response.msg,",
+                    "                    buttons: Ext.Msg.OK,",
+                    "                    icon: Ext.Msg.WARNING",
+                    "                });",
+                    "            }",
+                    "        },",
+                    "        method: \"GET\"",
+                    "    });"
+                ]
+            },
+            "name": "loadDataBusyThreadChart",
+            "designerId": "239f0b28-13d4-4de1-96c2-e02ca77d2320"
         }
     ]
 }

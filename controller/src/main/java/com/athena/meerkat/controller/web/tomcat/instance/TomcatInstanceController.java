@@ -26,6 +26,7 @@ package com.athena.meerkat.controller.web.tomcat.instance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,6 +48,7 @@ import com.athena.meerkat.controller.web.domain.Domain;
 import com.athena.meerkat.controller.web.domain.DomainService;
 import com.athena.meerkat.controller.web.machine.Machine;
 import com.athena.meerkat.controller.web.machine.MachineService;
+import com.athena.meerkat.monitoring.obj.SimpleMonitoringObject;
 
 /**
  * <pre>
@@ -150,8 +152,8 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/instance/list")
-	public @ResponseBody
-	SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstance(
+			SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
 		json.setSuccess(true);
@@ -159,8 +161,8 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/instance/listbydomain")
-	public @ResponseBody
-	SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstances(
+			SimpleJsonResponse json, int domainId) {
 		Domain domain = domainService.getDomain(domainId);
 		if (domain == null) {
 			json.setSuccess(false);
@@ -173,9 +175,8 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/instance/datasource")
-	public @ResponseBody
-	SimpleJsonResponse getDatasourceByTomcat(SimpleJsonResponse json,
-			int tomcatId) {
+	public @ResponseBody SimpleJsonResponse getDatasourceByTomcat(
+			SimpleJsonResponse json, int tomcatId) {
 		TomcatInstance tomcat = service.findOne(tomcatId);
 		if (tomcat == null) {
 			json.setSuccess(false);
@@ -227,9 +228,9 @@ public class TomcatInstanceController {
 
 		boolean provisioning_result = true; // change to false when implement
 											// provisioning
-			// provisioning section
-			// ....
-			//
+		// provisioning section
+		// ....
+		//
 		if (provisioning_result) {
 			TomcatInstance tc = service.save(tomcat);
 			if (tc != null) {
@@ -268,6 +269,22 @@ public class TomcatInstanceController {
 		// String other_bind_address = "";
 		// boolean is_start_service = true;
 
+		return json;
+	}
+
+	// monitoring section
+	@RequestMapping("/monitoring/busythreads")
+	@ResponseBody
+	public SimpleJsonResponse monitoringBusyThread(SimpleJsonResponse json,
+			int tomcatId) {
+		List<SimpleMonitoringObject> result = new ArrayList<SimpleMonitoringObject>();
+		final Random r = new Random();
+		
+		for (int j = 0; j < 20; j++) {
+			result.add(new SimpleMonitoringObject(j, r.nextInt(100)));
+		}
+		json.setData(result);
+		json.setSuccess(true);
 		return json;
 	}
 }

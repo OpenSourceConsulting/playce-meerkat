@@ -67,14 +67,7 @@ Ext.define('webapp.store.MenuTreeStore', {
                                 menuId: 'monitoring_tomcats',
                                 expanded: true,
                                 children: [
-                                    {
-                                        text: 'Tomcat 1',
-                                        menuId: 'monitoring_tomcats_tomcat_1',
-                                        expanded: true,
-                                        children: [
-                                            
-                                        ]
-                                    }
+                                    
                                 ]
                             },
                             

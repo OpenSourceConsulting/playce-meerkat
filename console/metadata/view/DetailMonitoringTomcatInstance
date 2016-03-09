@@ -26,7 +26,7 @@
             "userConfig": {
                 "activeTab": 0,
                 "height": null,
-                "id": "tabPanel3",
+                "id": "detailTomcatMonitoringTab",
                 "itemId": "tabPanel",
                 "layout|flex": 10
             },
@@ -1560,8 +1560,9 @@
                                                 ],
                                                 "dock": "top",
                                                 "height": 250,
+                                                "id": "tomcatBusyThreadChart",
                                                 "insetPadding": 20,
-                                                "store": "TempoStore",
+                                                "store": "TomcatBusyThreadStore",
                                                 "width": 400
                                             },
                                             "name": "LineChart23",
@@ -1579,9 +1580,9 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "fields": [
-                                                            "x"
+                                                            "time"
                                                         ],
-                                                        "title": "Category Axis"
+                                                        "title": "Timestamp"
                                                     },
                                                     "name": "MyCategoryAxis30",
                                                     "designerId": "704c4010-01a7-43ab-9a4e-d220af7277d7"
@@ -1595,9 +1596,9 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "fields": [
-                                                            "y"
+                                                            "value"
                                                         ],
-                                                        "title": "Numeric Axis"
+                                                        "title": "Value"
                                                     },
                                                     "name": "MyNumericAxis30",
                                                     "designerId": "d31b84e6-faa9-4787-a8f3-110ba06dfd67"
@@ -1611,9 +1612,12 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "smooth": 3,
-                                                        "xField": "x",
+                                                        "title": [
+                                                            "Busy threads"
+                                                        ],
+                                                        "xField": "time",
                                                         "yField": [
-                                                            "y"
+                                                            "value"
                                                         ]
                                                     },
                                                     "name": "MyLineSeries31",
@@ -2450,6 +2454,39 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onDetailTomcatMonitoringTabTabChange",
+                        "implHandler": [
+                            "var activeTab = tabPanel.getActiveTab();",
+                            "var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);",
+                            "var tomcatId = 1;",
+                            "var interVal = setInterval(function(){",
+                            "        webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
+                            " }, 5000);",
+                            "",
+                            "if(activeTabIndex == 2) {//thread tab",
+                            "    webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
+                            "",
+                            "}",
+                            "else {",
+                            "",
+                            "    clearInterval(interVal);",
+                            "",
+                            "}"
+                        ],
+                        "name": "tabchange",
+                        "scope": "me"
+                    },
+                    "name": "onDetailTomcatMonitoringTabTabChange",
+                    "designerId": "96ad934e-0af3-40e0-9d76-3bf8c225927f"
                 }
             ]
         }
