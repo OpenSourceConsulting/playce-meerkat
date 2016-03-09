@@ -74,7 +74,7 @@ public class JMXMonitorController {
 			chartDataMap.put(tinstId, chartDatas);
 		}
 		
-		if (chartDatas.size() > 50) {
+		if (chartDatas.size() > 30) {
 			chartDatas.remove(0);
 		}
 		

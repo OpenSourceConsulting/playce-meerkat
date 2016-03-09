@@ -1188,17 +1188,17 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);
         var tomcatId = 1;
-        var interVal;
 
         if(activeTabIndex == 2) {//thread tab
-             interVal = setInterval(function(){
+        GlobalData.busyThreadsChartInterval = setInterval(function(){
                 webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
          }, 1000);
             webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
 
         }
         else {
-            clearInterval(interVal);
+            clearInterval(GlobalData.busyThreadsChartInterval);
+            GlobalData.busyThreadsChartInterval = -1;
         }
     }
 

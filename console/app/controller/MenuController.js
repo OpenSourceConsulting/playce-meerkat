@@ -37,7 +37,11 @@ Ext.define('webapp.controller.MenuController', {
             }
 
             this.showMenu(menuId, menuText);
-
+            // turn off live busy threads chart on monitoring part
+            if(GlobalData.busyThreadsChartInterval > -1){
+                clearInterval(GlobalData.busyThreadsChartInterval);
+                GlobalData.busyThreadsChartInterval = -1;
+            }
         }
 
     },

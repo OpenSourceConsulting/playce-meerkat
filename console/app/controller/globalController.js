@@ -83,7 +83,8 @@ Ext.define('webapp.controller.globalController', {
             cpuStore: cpuStore,
             serverSize: serverSize,
             isLogined: false,
-            viewAjaxException: false
+            viewAjaxException: false,
+            busyThreadsChartInterval:-1
         });
 
 
