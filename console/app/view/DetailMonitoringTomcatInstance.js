@@ -1187,7 +1187,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
     onDetailTomcatMonitoringTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);
-        var tomcatId = 1;
+        var tomcatId = GlobalData.lastSelectedMenuId;
 
         if(activeTabIndex == 2) {//thread tab
         GlobalData.busyThreadsChartInterval = setInterval(function(){

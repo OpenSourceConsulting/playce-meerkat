@@ -26,14 +26,14 @@ Ext.define('webapp.controller.MenuController', {
         //    navigationText = navField.getValue() + " > " + menuText;
         //
         //else {
-            //vigationText = menuText;
+        //vigationText = menuText;
         //}
 
         navField.setText(menuText);
 
         if(menuId !== undefined){
             if (!is_leaf){
-               this.loadChildMenus(menuId);
+                this.loadChildMenus(menuId);
             }
 
             this.showMenu(menuId, menuText);
