@@ -26,6 +26,9 @@ Ext.define('webapp.model.TomcatBusyThreadModel', {
         },
         {
             name: 'value'
+        },
+        {
+            name: 'value2'
         }
     ]
 });

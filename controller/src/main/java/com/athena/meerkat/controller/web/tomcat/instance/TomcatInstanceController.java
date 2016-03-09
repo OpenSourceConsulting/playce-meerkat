@@ -279,9 +279,10 @@ public class TomcatInstanceController {
 			int tomcatId) {
 		List<SimpleMonitoringObject> result = new ArrayList<SimpleMonitoringObject>();
 		final Random r = new Random();
-		
+
 		for (int j = 0; j < 20; j++) {
-			result.add(new SimpleMonitoringObject(j, r.nextInt(100)));
+			result.add(new SimpleMonitoringObject(j, r.nextInt(100), r
+					.nextInt(100)));
 		}
 		json.setData(result);
 		json.setSuccess(true);

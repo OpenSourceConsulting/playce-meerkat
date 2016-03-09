@@ -793,7 +793,8 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                         {
                                                             type: 'Numeric',
                                                             fields: [
-                                                                'value'
+                                                                'value',
+                                                                'value2'
                                                             ],
                                                             title: 'Value',
                                                             position: 'left'
@@ -810,6 +811,17 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                             title: 'Busy threads',
                                                             xField: 'time',
                                                             yField: 'value',
+                                                            smooth: 3
+                                                        },
+                                                        {
+                                                            type: 'line',
+                                                            label: {
+                                                                field: 'value2',
+                                                                display: 'over'
+                                                            },
+                                                            title: 'Thread 2',
+                                                            xField: 'time',
+                                                            yField: 'value2',
                                                             smooth: 3
                                                         }
                                                     ]
@@ -1188,18 +1200,18 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);
         var tomcatId = 1;
-        var interVal = setInterval(function(){
-                webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
-         }, 5000);
+        var interVal;
 
         if(activeTabIndex == 2) {//thread tab
+             interVal = setInterval(function(){
+                webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
+         }, 5000);
             webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
 
         }
         else {
-
             clearInterval(interVal);
-
+            alert("clear");
         }
     }
 

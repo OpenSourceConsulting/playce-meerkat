@@ -1596,7 +1596,8 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "fields": [
-                                                            "value"
+                                                            "value",
+                                                            "value2"
                                                         ],
                                                         "title": "Value"
                                                     },
@@ -1629,6 +1630,32 @@
                                                         "highlight": "boolean"
                                                     },
                                                     "designerId": "62148dd2-9b3e-430c-9369-70663567c498"
+                                                },
+                                                {
+                                                    "type": "Ext.chart.series.Line",
+                                                    "reference": {
+                                                        "name": "series",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "label": [
+                                                            "{",
+                                                            "field: 'value2',",
+                                                            "display: 'over'",
+                                                            "}"
+                                                        ],
+                                                        "smooth": 3,
+                                                        "title": [
+                                                            "Thread 2"
+                                                        ],
+                                                        "xField": "time",
+                                                        "yField": [
+                                                            "value2"
+                                                        ]
+                                                    },
+                                                    "name": "MyLineSeries33",
+                                                    "designerId": "f2e42b87-ea08-44de-b8e6-d4254823101c"
                                                 }
                                             ]
                                         }
@@ -2475,18 +2502,18 @@
                             "var activeTab = tabPanel.getActiveTab();",
                             "var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);",
                             "var tomcatId = 1;",
-                            "var interVal = setInterval(function(){",
-                            "        webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
-                            " }, 5000);",
+                            "var interVal;",
                             "",
                             "if(activeTabIndex == 2) {//thread tab",
+                            "     interVal = setInterval(function(){",
+                            "        webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
+                            " }, 5000);",
                             "    webapp.app.getController(\"TomcatController\").loadDataBusyThreadChart(tomcatId);",
                             "",
                             "}",
                             "else {",
-                            "",
                             "    clearInterval(interVal);",
-                            "",
+                            "    alert(\"clear\");",
                             "}"
                         ],
                         "name": "tabchange",
