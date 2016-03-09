@@ -17,7 +17,7 @@ Ext.define('webapp.controller.TomcatController', {
     extend: 'Ext.app.Controller',
 
     onNewTomcatClick: function(button, e, eOpts) {
-        this.showTomcatWindow("new",0);
+        this.showTomcatWindow("new",0, GlobalData.lastSelectedMenuId);
     },
 
     onDomainTomcatTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {

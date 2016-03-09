@@ -22,7 +22,7 @@
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onNewTomcatClick",
                 "implHandler": [
-                    "this.showTomcatWindow(\"new\",0);"
+                    "this.showTomcatWindow(\"new\",0, GlobalData.lastSelectedMenuId);"
                 ],
                 "name": "click",
                 "scope": "me"
