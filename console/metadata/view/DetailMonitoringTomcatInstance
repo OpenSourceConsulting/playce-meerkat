@@ -1581,9 +1581,13 @@
                                                         "fields": [
                                                             "time"
                                                         ],
+                                                        "grid": true,
                                                         "title": "Time"
                                                     },
                                                     "name": "MyCategoryAxis30",
+                                                    "configAlternates": {
+                                                        "grid": "boolean"
+                                                    },
                                                     "designerId": "704c4010-01a7-43ab-9a4e-d220af7277d7"
                                                 },
                                                 {
@@ -1597,17 +1601,13 @@
                                                         "fields": [
                                                             "value"
                                                         ],
-                                                        "grid": [
-                                                            "odd: {",
-                                                            "                        opacity: 1,",
-                                                            "                        fill: '#ddd',",
-                                                            "                        stroke: '#bbb',",
-                                                            "                        'stroke-width': 0.5",
-                                                            "                    }"
-                                                        ],
+                                                        "grid": true,
                                                         "title": null
                                                     },
                                                     "name": "MyNumericAxis30",
+                                                    "configAlternates": {
+                                                        "grid": "boolean"
+                                                    },
                                                     "designerId": "d31b84e6-faa9-4787-a8f3-110ba06dfd67"
                                                 },
                                                 {

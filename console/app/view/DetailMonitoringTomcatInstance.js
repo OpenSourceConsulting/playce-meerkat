@@ -788,6 +788,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                             fields: [
                                                                 'time'
                                                             ],
+                                                            grid: true,
                                                             title: 'Time',
                                                             position: 'bottom'
                                                         },
@@ -796,7 +797,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                                             fields: [
                                                                 'value'
                                                             ],
-                                                            grid: 'odd: {\n                        opacity: 1,\n                        fill: \'#ddd\',\n                        stroke: \'#bbb\',\n                        \'stroke-width\': 0.5\n                    }',
+                                                            grid: true,
                                                             position: 'left'
                                                         }
                                                     ],
