@@ -245,7 +245,7 @@ Ext.define('webapp.controller.ServerManagementController', {
     },
 
     loadEVRevisions: function(machineId, callback) {
-        var url = GlobalData.urlPrefix + "res/machine/evlist";
+        var url = GlobalData.urlPrefix + "res/machine/envrevisions";
         Ext.Ajax.request({
             url: url,
             params:{"machineId":machineId},

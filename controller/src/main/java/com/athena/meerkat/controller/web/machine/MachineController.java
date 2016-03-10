@@ -2,12 +2,7 @@ package com.athena.meerkat.controller.web.machine;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
-import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.env.EnvironmentVariableService;
+import com.athena.meerkat.controller.web.env.EnvironmentVariableValue;
+import com.athena.meerkat.controller.web.revision.Revision;
 
 @Controller
 @RequestMapping("/res/machine")
@@ -177,7 +172,27 @@ public class MachineController {
 			json.setSuccess(false);
 			json.setMsg("Machine does not exist.");
 		} else {
-			List<EnvironmentVariable> list = evService.getByMachine(machine);
+			List<EnvironmentVariableValue> list = evService
+					.getByMachine(machine);
+			json.setData(list);
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/envrevisions", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getEVRevisions(SimpleJsonResponse json,
+			int machineId) {
+
+		Machine machine = service.retrieve(machineId);
+
+		if (machine == null) {
+			json.setSuccess(false);
+			json.setMsg("Machine does not exist.");
+		} else {
+			List<Revision> list = machine
+					.getRevisions(MeerkatConstants.REVISION_ENV_CONFIG_TYPE);
 			json.setData(list);
 			json.setSuccess(true);
 		}

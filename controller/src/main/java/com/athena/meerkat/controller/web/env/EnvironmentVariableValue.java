@@ -32,11 +32,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.machine.Machine;
 import com.athena.meerkat.controller.web.revision.Revision;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * <pre>
@@ -47,7 +50,7 @@ import com.athena.meerkat.controller.web.revision.Revision;
  * @version 1.0
  */
 @Entity
-@Table(name="environment_variable_value")
+@Table(name = "environment_variable_value")
 public class EnvironmentVariableValue {
 
 	@Id
@@ -60,11 +63,14 @@ public class EnvironmentVariableValue {
 	@Column(name = "created_time")
 	private Date createdTime;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private EnvironmentVariable env;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Revision revision;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	Machine machine;
 
 	public int getId() {
@@ -93,6 +99,13 @@ public class EnvironmentVariableValue {
 
 	public Revision getRevision() {
 		return revision;
+	}
+
+	public String getEnvName() {
+		if (env != null) {
+			return env.getName();
+		}
+		return "";
 	}
 }
 // end of EnvironmentVariableValue.java

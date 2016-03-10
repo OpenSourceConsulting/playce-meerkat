@@ -30,15 +30,21 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.domain.ClusteringConfigurationValue;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.env.EnvironmentVariableValue;
+import com.athena.meerkat.controller.web.machine.Machine;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * <pre>
@@ -65,11 +71,20 @@ public class Revision implements Serializable {
 	@Column(name = "is_active")
 	private boolean isActive;
 
-	@OneToMany
+	@OneToMany(mappedBy = "revision", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<ClusteringConfigurationValue> clusteringConfigs;
 
-	@OneToMany
+	@OneToMany(mappedBy = "revision", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<EnvironmentVariableValue> environmentVariables;
+
+	@ManyToOne
+	@JsonBackReference
+	private Machine machine;
+
+	@Column(name = "revision_type")
+	private int revisionType;
 
 	/**
 	 * @return the isActive
@@ -161,6 +176,22 @@ public class Revision implements Serializable {
 	public void setClusteringConfigs(
 			List<ClusteringConfigurationValue> clusteringConfigs) {
 		this.clusteringConfigs = clusteringConfigs;
+	}
+
+	public Machine getMachine() {
+		return machine;
+	}
+
+	public void setMachine(Machine machine) {
+		this.machine = machine;
+	}
+
+	public int getRevisionType() {
+		return revisionType;
+	}
+
+	public void setRevisionType(int revisionType) {
+		this.revisionType = revisionType;
 	}
 }
 // end of Revision.java

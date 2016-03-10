@@ -427,7 +427,7 @@
                 ],
                 "fn": "loadEVRevisions",
                 "implHandler": [
-                    "var url = GlobalData.urlPrefix + \"res/machine/evlist\";",
+                    "var url = GlobalData.urlPrefix + \"res/machine/envrevisions\";",
                     "Ext.Ajax.request({",
                     "    url: url,",
                     "    params:{\"machineId\":machineId},",
