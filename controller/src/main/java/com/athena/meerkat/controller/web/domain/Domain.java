@@ -49,7 +49,7 @@ public class Domain {
 
 	@OneToMany(mappedBy = "domain")
 	@JsonManagedReference
-	private Collection<ClusteringConfiguration> clusteringConfig;
+	private Collection<ClusteringConfigurationValue> clusteringConfigVals;
 
 	public String getName() {
 		return name;
@@ -124,12 +124,12 @@ public class Domain {
 		this.serverGroup = serverGroup;
 	}
 
-	public Collection<ClusteringConfiguration> getClusteringConfig() {
-		return clusteringConfig;
+	public Collection<ClusteringConfigurationValue> getClusteringConfigVals() {
+		return clusteringConfigVals;
 	}
 
-	public void setClusteringConfig(
-			Collection<ClusteringConfiguration> clusteringConfig) {
-		this.clusteringConfig = clusteringConfig;
+	public void setClusteringConfigVals(
+			Collection<ClusteringConfigurationValue> clusteringConfigs) {
+		this.clusteringConfigVals = clusteringConfigs;
 	}
 }

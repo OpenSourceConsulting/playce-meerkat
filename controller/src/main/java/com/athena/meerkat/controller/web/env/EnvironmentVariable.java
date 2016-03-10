@@ -16,14 +16,6 @@ public class EnvironmentVariable {
 	private int Id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "value")
-	private String value;
-	@Column(name = "revision")
-	private int revision;
-	@Column(name = "is_nested")
-	private boolean isNested;
-	@ManyToOne(fetch=FetchType.LAZY)
-	Machine machine;
 
 	public int getId() {
 		return Id;
@@ -41,27 +33,4 @@ public class EnvironmentVariable {
 		this.name = name;
 	}
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public int getRevision() {
-		return revision;
-	}
-
-	public void setRevision(int revision) {
-		this.revision = revision;
-	}
-
-	public boolean isNested() {
-		return isNested;
-	}
-
-	public void setNested(boolean isNested) {
-		this.isNested = isNested;
-	}
 }

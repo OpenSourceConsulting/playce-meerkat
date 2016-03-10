@@ -13,6 +13,7 @@ public class EnvironmentVariableService {
 	private EnvironmentVariableRepository envRepo;
 	
 	public List<EnvironmentVariable> getByMachine(Machine machine){
-		return envRepo.findByMachine(machine);
+	//	return envRepo.findByMachine(machine);
+		return null;
 	}
 }

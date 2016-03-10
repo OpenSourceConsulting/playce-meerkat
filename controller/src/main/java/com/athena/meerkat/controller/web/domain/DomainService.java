@@ -87,8 +87,9 @@ public class DomainService {
 
 	public List<ClusteringConfiguration> getClusteringConfigurationList(
 			int domainId, int revision) {
-		return clusteringConfigRepo.findByDomain_IdAndRevision(domainId,
-				revision);
+		return null;
+		// return clusteringConfigRepo.findByDomain_IdAndRevision(domainId,
+		// revision);
 	}
 
 	public List<ClusteringConfiguration> getClusteringConfigurationByName(

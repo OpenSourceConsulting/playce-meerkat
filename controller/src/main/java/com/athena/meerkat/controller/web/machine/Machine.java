@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.datagridserver.DatagridServer;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
+import com.athena.meerkat.controller.web.env.EnvironmentVariableValue;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -102,7 +103,7 @@ public class Machine {
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
-	private Collection<EnvironmentVariable> environmentVariables;
+	private Collection<EnvironmentVariableValue> environmentVariableValues;
 
 	public String getName() {
 		return name;
@@ -407,13 +408,13 @@ public class Machine {
 	// this.datagridServer = datagridServer;
 	// }
 
-	public Collection<EnvironmentVariable> getEnvironmentVariables() {
-		return environmentVariables;
+	public Collection<EnvironmentVariableValue> getEnvironmentVariableValues() {
+		return environmentVariableValues;
 	}
 
-	public void setEnvironmentVariables(
-			Collection<EnvironmentVariable> environmentVariables) {
-		this.environmentVariables = environmentVariables;
+	public void setEnvironmentVariableValues(
+			Collection<EnvironmentVariableValue> environmentVariableValues) {
+		this.environmentVariableValues = environmentVariableValues;
 	}
 
 	/**

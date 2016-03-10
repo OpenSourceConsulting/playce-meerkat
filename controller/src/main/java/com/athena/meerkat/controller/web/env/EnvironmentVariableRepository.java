@@ -19,6 +19,6 @@ public interface EnvironmentVariableRepository extends
 	 * @param machineId
 	 * @return
 	 */
-	List<EnvironmentVariable> findByMachine(Machine machine);
+	//List<EnvironmentVariable> findByMachine(Machine machine);
 
 }
