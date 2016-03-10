@@ -99,6 +99,7 @@
                                 "forceFit": true,
                                 "id": "tomcatServerGrid",
                                 "layout|flex": 1,
+                                "margin": "",
                                 "store": "MachineStore",
                                 "title": ""
                             },

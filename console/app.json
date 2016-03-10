@@ -3,5 +3,7 @@
    "requires": [],
    "id": "1d809131-0d44-4ea9-ad56-a44cc469630a",
    "theme": "ext-theme-neptune",
-   "resources": []
+   "resources": [
+      "resources/css/meerkat.css"
+   ]
 }

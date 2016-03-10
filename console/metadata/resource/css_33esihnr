@@ -1,0 +1,15 @@
+{
+    "type": "cssresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "css_33esihnr",
+        "id": "meerkat",
+        "url": "resources/css/meerkat.css"
+    },
+    "name": "css",
+    "designerId": "eb7115fe-41ac-4f7e-b8d6-6bca0bbee681"
+}
