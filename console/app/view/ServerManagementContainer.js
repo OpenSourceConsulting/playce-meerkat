@@ -76,6 +76,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     flex: 1,
                                     dock: 'top',
                                     id: 'tomcatServerGrid',
+                                    margin: '',
                                     title: '',
                                     forceFit: true,
                                     store: 'MachineStore',
