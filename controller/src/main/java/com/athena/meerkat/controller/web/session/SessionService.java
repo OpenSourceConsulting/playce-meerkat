@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.web.machine.Machine;
+import com.athena.meerkat.controller.web.resources.entities.Server;
 
 @Service
 public class SessionService {

@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Id;
 
-import com.athena.meerkat.controller.web.application.Application;
+import com.athena.meerkat.controller.web.tomcat.entities.TomcatApplication;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity

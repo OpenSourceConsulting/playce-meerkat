@@ -18,11 +18,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 
+
+
+
+
+
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.web.machine.Machine;
-import com.athena.meerkat.controller.web.machine.MachineRepository;
-import com.athena.meerkat.controller.web.machine.MachineService;
+import com.athena.meerkat.controller.web.resources.entities.Server;
+import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
+import com.athena.meerkat.controller.web.resources.services.ServerService;
 
 //@ContextConfiguration("file:./src/test/resources/TestContext.xml")
 @ComponentScan(basePackages = { "com.athena.dolly.controller" })
@@ -36,7 +41,7 @@ public class MachineTest {
 	// // service = new MachineService();
 	// }
 	@Autowired
-	private MachineRepository machineRepo;
+	private ServerRepository machineRepo;
 
 	// @Test
 	// public void testAddMachine() {
