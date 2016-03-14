@@ -33,12 +33,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.web.datagridserver.DatagridServerGroup;
 import com.athena.meerkat.controller.web.revision.Revision;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * <pre>
@@ -65,16 +67,22 @@ public class ClusteringConfigurationValue implements Serializable {
 	private int Id;
 	@Column(name = "value")
 	private String value;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clustering_configuration_id")
+	@JsonBackReference
 	private ClusteringConfiguration clusteringConfiguration;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Domain domain;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "datagrid_server_group_id")
+	@JsonBackReference
 	private DatagridServerGroup serverGroup;
 
 	@Column(name = "created_time")
 	private Date createdTime;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Revision revision;
 
 	/**

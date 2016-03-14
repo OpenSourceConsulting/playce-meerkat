@@ -103,4 +103,10 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int MACHINE_TOMCAT_SERVER_TYPE = 1;
 	public static final int MACHINE_DATAGRID_SERVER_TYPE = 2;
+
+	/**
+	 * Revision type
+	 */
+	public static final int REVISION_CLUSTERING_CONFIG_TYPE = 1;
+	public static final int REVISION_ENV_CONFIG_TYPE = 2;
 }

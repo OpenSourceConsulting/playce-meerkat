@@ -2,6 +2,7 @@ package com.athena.meerkat.controller.web.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +42,11 @@ public class ClusteringConfiguration implements Serializable {
 	private int id;
 	@Column(name = "name")
 	private String name;
+
+	@OneToMany
+	// (mappedBy = "clustering_configuration")
+	@JsonManagedReference
+	private List<ClusteringConfigurationValue> configValues;
 
 	public String getName() {
 		return name;

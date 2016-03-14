@@ -1,7 +1,9 @@
 package com.athena.meerkat.controller.web.machine;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import javax.persistence.Table;
 import com.athena.meerkat.controller.web.datagridserver.DatagridServer;
 import com.athena.meerkat.controller.web.env.EnvironmentVariable;
 import com.athena.meerkat.controller.web.env.EnvironmentVariableValue;
+import com.athena.meerkat.controller.web.revision.Revision;
 import com.athena.meerkat.controller.web.tomcat.instance.TomcatInstance;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -103,7 +106,11 @@ public class Machine {
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
+	@JsonManagedReference
 	private Collection<EnvironmentVariableValue> environmentVariableValues;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "machine")
+	@JsonManagedReference
+	private Collection<Revision> revisions;
 
 	public String getName() {
 		return name;
@@ -452,5 +459,23 @@ public class Machine {
 			return tomcatInstances.size();
 		}
 		return 0;
+	}
+
+	public Collection<Revision> getRevisions() {
+		return revisions;
+	}
+
+	public List<Revision> getRevisions(int type) {
+		List<Revision> list = new ArrayList<Revision>();
+		for (Revision revision : revisions) {
+			if (revision.getRevisionType() == type) {
+				list.add(revision);
+			}
+		}
+		return list;
+	}
+
+	public void setRevisions(Collection<Revision> revisions) {
+		this.revisions = revisions;
 	}
 }
