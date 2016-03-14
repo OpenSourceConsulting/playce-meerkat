@@ -102,6 +102,10 @@ Ext.define('webapp.controller.MenuController', {
                 text: 'New Tomcat'
             },
             {
+                id: 'create-wizard',
+                text: 'Wizard'
+            },
+            {
                 id: 'edit-domain',
                 text: 'Edit'
             },
@@ -125,6 +129,9 @@ Ext.define('webapp.controller.MenuController', {
                    switch (_item.id) {
                         case 'new-tomcat':
                             webapp.app.getController("TomcatController").showTomcatWindow("new", 0, domainId);
+                            break;
+                        case 'create-wizard':
+                            Ext.create('widget.ticWizard').show();
                             break;
                         case 'edit-domain':
                             webapp.app.getController("DomainController").showDomainWindow("edit", domainId);

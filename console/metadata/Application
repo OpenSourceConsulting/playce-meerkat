@@ -84,7 +84,10 @@
             "ClusteringConfigurationComparingWindow",
             "DomainWindow",
             "UserRoleWindow",
-            "EnvironmentVariableWindow"
+            "EnvironmentVariableWindow",
+            "TomcatInstanceCreateWizard",
+            "DomainForm",
+            "TomcatForm"
         ]
     },
     "name": "Application",

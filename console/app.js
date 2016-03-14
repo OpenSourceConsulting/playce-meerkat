@@ -82,7 +82,10 @@ Ext.application({
         'ClusteringConfigurationComparingWindow',
         'DomainWindow',
         'UserRoleWindow',
-        'EnvironmentVariableWindow'
+        'EnvironmentVariableWindow',
+        'TomcatInstanceCreateWizard',
+        'DomainForm',
+        'TomcatForm'
     ],
     controllers: [
         'headerController',

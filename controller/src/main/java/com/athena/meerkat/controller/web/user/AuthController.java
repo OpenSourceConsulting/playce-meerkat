@@ -22,13 +22,17 @@
  */
 package com.athena.meerkat.controller.web.user;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,13 +112,23 @@ public class AuthController {
 
 	@RequestMapping("/loginFail")
 	@ResponseBody
-	public SimpleJsonResponse loginFail(SimpleJsonResponse jsonRes) {
-
+	public SimpleJsonResponse loginFail(HttpServletRequest request, SimpleJsonResponse jsonRes) {
+		
+		
 		jsonRes.setSuccess(false);
-		jsonRes.setMsg("login ID 또는 password 가 잘못되었습니다.");
+		
+		AuthenticationException ex = (AuthenticationException)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		
+		if (ex instanceof AuthenticationServiceException) {
+			jsonRes.setMsg(ex.toString());
+		} else {
+			jsonRes.setMsg("login ID 또는 password 가 잘못되었습니다.");
+		}
+		
 
 		return jsonRes;
 	}
+	
 
 }
 // end of UserController.java

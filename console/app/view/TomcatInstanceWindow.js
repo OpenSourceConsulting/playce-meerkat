@@ -18,21 +18,21 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
     alias: 'widget.TomcatInstanceWindow',
 
     requires: [
-        'Ext.form.Panel',
+        'webapp.view.TomcatForm',
         'Ext.form.field.Display',
         'Ext.form.field.ComboBox',
         'Ext.button.Button',
-        'Ext.form.field.Checkbox',
-        'Ext.form.field.Number',
+        'Ext.form.Panel',
         'Ext.grid.Panel',
         'Ext.grid.column.CheckColumn',
         'Ext.grid.View',
-        'Ext.form.field.Hidden'
+        'Ext.form.field.Checkbox',
+        'Ext.toolbar.Toolbar'
     ],
 
     id: 'TomcatInstanceWindow',
     itemId: 'TomcatInstanceWindow',
-    width: 565,
+    width: 732,
     autoScroll: true,
     title: 'New Tomcat Instance',
 
@@ -47,281 +47,130 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'form',
+                    xtype: 'container',
                     flex: 1,
-                    id: 'tomcatForm',
-                    bodyPadding: 10,
-                    title: '',
-                    dockedItems: [
+                    margin: '10 0 10 10',
+                    items: [
                         {
-                            xtype: 'container',
-                            dock: 'top',
-                            margin: '10 0 10 10',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    id: 'domainField',
-                                    width: 399,
-                                    fieldLabel: 'Domain'
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    id: 'domainTypeDisplayField',
-                                    fieldLabel: 'Domain type:'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'newTomcatNameField',
-                                    width: 400,
-                                    fieldLabel: 'Instance name',
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    id: 'serverComboBox',
-                                    width: 399,
-                                    fieldLabel: 'Server',
-                                    editable: false,
-                                    displayField: 'name',
-                                    store: 'MachineStore',
-                                    valueField: 'id'
-                                },
-                                {
-                                    xtype: 'container',
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'stretch'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            disabled: true,
-                                            id: 'btnTestConnection',
-                                            itemId: '',
-                                            text: 'Test server connection'
-                                        },
-                                        {
-                                            xtype: 'displayfield',
-                                            id: 'serverStatusDisplayField',
-                                            margin: '0 0 0 20',
-                                            fieldLabel: 'Server status'
-                                        }
-                                    ]
-                                }
-                            ]
+                            xtype: 'displayfield',
+                            id: 'domainField',
+                            width: 399,
+                            fieldLabel: 'Domain'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            id: 'domainTypeDisplayField',
+                            fieldLabel: 'Domain type:'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: 'newTomcatNameField',
+                            width: 400,
+                            fieldLabel: 'Instance name',
+                            allowBlank: false,
+                            allowOnlyWhitespace: false
+                        },
+                        {
+                            xtype: 'combobox',
+                            id: 'serverComboBox',
+                            width: 399,
+                            fieldLabel: 'Server',
+                            editable: false,
+                            displayField: 'name',
+                            store: 'MachineStore',
+                            valueField: 'id'
                         },
                         {
                             xtype: 'container',
-                            dock: 'top',
-                            margin: '10 0 10 10',
-                            items: [
-                                {
-                                    xtype: 'displayfield',
-                                    id: 'sshUserDisplayField',
-                                    width: 399,
-                                    fieldLabel: 'SSH User',
-                                    labelWidth: 150
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    id: 'bindIPAddressDisplayField',
-                                    width: 399,
-                                    fieldLabel: 'Bind Address',
-                                    labelWidth: 150
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    id: 'otherBindIPAddressDisplayField',
-                                    width: 399,
-                                    fieldLabel: 'Other Bind Address',
-                                    labelWidth: 150
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatVersionTextField',
-                                    width: 399,
-                                    fieldLabel: 'Version',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatJavaHomeTextField',
-                                    width: 399,
-                                    fieldLabel: 'JAVA_HOME',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatCatalinaHomeTextField',
-                                    width: 399,
-                                    fieldLabel: 'CATALINA_HOME',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatCatalinaBaseTextField',
-                                    width: 399,
-                                    fieldLabel: 'CATALINA_BASE',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatEncodingTextField',
-                                    width: 399,
-                                    fieldLabel: 'Encoding',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatHeapSizeTextField',
-                                    width: 399,
-                                    fieldLabel: 'Heap size (MB)',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: 'tomcatPermgenSizeTextField',
-                                    width: 399,
-                                    fieldLabel: 'Permgen Size (MB)',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    validateBlank: true
-                                },
-                                {
-                                    xtype: 'checkboxfield',
-                                    id: 'tomcatHttpEnableCheckBox',
-                                    fieldLabel: 'HTTP Enable',
-                                    labelWidth: 150,
-                                    boxLabel: 'Check when using HTTP Connector'
-                                },
-                                {
-                                    xtype: 'checkboxfield',
-                                    id: 'tomcatHighAvailabilityCheckBox',
-                                    fieldLabel: 'High availability',
-                                    labelWidth: 150,
-                                    boxLabel: 'Check when using clustering'
-                                },
-                                {
-                                    xtype: 'numberfield',
-                                    id: 'httpPortField',
-                                    width: 400,
-                                    fieldLabel: 'HTTP_PORT',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                },
-                                {
-                                    xtype: 'numberfield',
-                                    id: 'ajpPortField',
-                                    width: 399,
-                                    fieldLabel: 'AJP_PORT',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                },
-                                {
-                                    xtype: 'numberfield',
-                                    id: 'redirectPortField',
-                                    width: 399,
-                                    fieldLabel: 'REDIRECT_PORT',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                },
-                                {
-                                    xtype: 'numberfield',
-                                    id: 'jmxPortField',
-                                    width: 399,
-                                    fieldLabel: 'JMX_SERVER_PORT',
-                                    labelWidth: 150,
-                                    allowBlank: false,
-                                    allowOnlyWhitespace: false
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'gridpanel',
-                            dock: 'top',
-                            id: 'datasourceGrid',
-                            margin: '10 10 10 10',
-                            title: 'Data sources',
-                            forceFit: true,
-                            store: 'LinkingTomcatDatasourceStore',
-                            columns: [
-                                {
-                                    xtype: 'checkcolumn',
-                                    dataIndex: 'selected',
-                                    text: 'Select'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'name',
-                                    text: 'Name'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'jdbcUrl',
-                                    text: 'JDBC Url'
-                                },
-                                {
-                                    xtype: 'gridcolumn',
-                                    dataIndex: 'dbType',
-                                    text: 'Servers'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'checkboxfield',
-                            dock: 'top',
-                            id: 'autoRestartTomcatCheckbox',
-                            fieldLabel: '',
-                            boxLabel: 'Automatically start tomcat after being created'
-                        },
-                        {
-                            xtype: 'container',
-                            dock: 'top',
-                            layout: 'column',
+                            layout: {
+                                type: 'hbox',
+                                align: 'stretch'
+                            },
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: 'btnTomcatSubmit',
-                                    margin: '0 0 0 200',
-                                    text: 'Create'
+                                    disabled: true,
+                                    id: 'btnTestConnection',
+                                    itemId: '',
+                                    text: 'Test server connection'
                                 },
                                 {
-                                    xtype: 'button',
-                                    id: 'btnCancelTomcat',
-                                    margin: '0 0 0 10',
-                                    text: 'Cancel',
-                                    listeners: {
-                                        click: {
-                                            fn: me.onBtnCancelTomcatClick,
-                                            scope: me
-                                        }
-                                    }
+                                    xtype: 'displayfield',
+                                    id: 'serverStatusDisplayField',
+                                    margin: '0 0 0 20',
+                                    fieldLabel: 'Server status'
                                 }
                             ]
                         }
-                    ],
+                    ]
+                },
+                {
+                    xtype: 'tomcatform',
+                    flex: 1
+                },
+                {
+                    xtype: 'gridpanel',
+                    flex: 1,
+                    id: 'datasourceGrid',
+                    margin: '10 10 10 10',
+                    title: 'Data sources',
+                    forceFit: true,
+                    store: 'LinkingTomcatDatasourceStore',
+                    columns: [
+                        {
+                            xtype: 'checkcolumn',
+                            dataIndex: 'selected',
+                            text: 'Select'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'name',
+                            text: 'Name'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'jdbcUrl',
+                            text: 'JDBC Url'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'dbType',
+                            text: 'Servers'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'checkboxfield',
+                    flex: 1,
+                    id: 'autoRestartTomcatCheckbox',
+                    fieldLabel: '',
+                    boxLabel: 'Automatically start tomcat after being created'
+                }
+            ],
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    flex: 1,
+                    dock: 'bottom',
+                    ui: 'footer',
                     items: [
                         {
-                            xtype: 'hiddenfield',
-                            anchor: '100%',
-                            id: 'tomcatHiddenField',
-                            fieldLabel: 'Label'
+                            xtype: 'button',
+                            id: 'btnTomcatSubmit',
+                            margin: '0 0 0 200',
+                            text: 'Create'
+                        },
+                        {
+                            xtype: 'button',
+                            id: 'btnCancelTomcat',
+                            margin: '0 0 0 10',
+                            text: 'Cancel',
+                            listeners: {
+                                click: {
+                                    fn: me.onBtnCancelTomcatClick,
+                                    scope: me
+                                }
+                            }
                         }
                     ]
                 }

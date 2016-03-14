@@ -1,0 +1,297 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "ticWizard",
+        "designer|userAliasPrefix": null,
+        "designer|userClassName": "TomcatInstanceCreateWizard",
+        "height": 577,
+        "layout": "card",
+        "title": "Tomcat Instance Create Wizard",
+        "width": 720
+    },
+    "name": "MyWindow",
+    "designerId": "e31face7-e797-4a44-83ff-e5dd8a4a17e4",
+    "cn": [
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "autoScroll": true,
+                "container|align": "stretch",
+                "container|padding": 10,
+                "designer|displayName": "Step1",
+                "layout": "vbox"
+            },
+            "name": "MyContainer38",
+            "designerId": "dca4131f-cd76-466b-adf4-08af6ee03042",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "layout|margins": "0 0 10 0",
+                        "style": [
+                            "font-weight: bold"
+                        ],
+                        "text": "1/3 Step : Create Domain"
+                    },
+                    "name": "MyLabel20",
+                    "designerId": "cea00e97-1260-48dc-8dd6-bd84385fa5ac"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "layout|margins": "0 0 10 20",
+                        "text": "Domain을 생성합니다."
+                    },
+                    "name": "MyLabel22",
+                    "designerId": "a77b06bd-b321-4462-80d7-123035f02169"
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null
+                    },
+                    "name": "domainform3",
+                    "designerId": "2ba310bc-1c11-4acc-a329-0c47d626de1c",
+                    "masterInstanceId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e"
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null
+                    },
+                    "name": "tomcatform3",
+                    "designerId": "437f671c-a8ef-4b47-a0bb-e43e8e4efe6f",
+                    "masterInstanceId": "65465c05-02a3-4947-85fb-817111f473e9"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "container|padding": 10,
+                "designer|displayName": "Step2",
+                "layout": "vbox"
+            },
+            "name": "MyContainer21",
+            "designerId": "e61760ef-0771-459d-9701-4bcfe58bc7f4",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": 1,
+                        "style": [
+                            "font-weight: bold"
+                        ],
+                        "text": "2/3 Step : Select Datasource"
+                    },
+                    "name": "MyLabel14",
+                    "designerId": "e4514dc2-e94d-4447-90bd-fc58375f9d22"
+                }
+            ]
+        },
+        {
+            "type": "Ext.container.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "stretch",
+                "container|padding": 10,
+                "designer|displayName": "Step3",
+                "layout": "vbox"
+            },
+            "name": "MyContainer24",
+            "designerId": "9eb79750-b8bb-44b7-a3db-d3cf04a9af8b",
+            "cn": [
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "style": [
+                            "font-weight: bold"
+                        ],
+                        "text": "3/3 Step : Select Servers"
+                    },
+                    "name": "MyLabel15",
+                    "designerId": "5d4f04f7-26e5-46a5-9a80-2923d633a22b"
+                }
+            ]
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|pack": "center",
+                "dock": "bottom"
+            },
+            "name": "MyToolbar",
+            "designerId": "51ad6b50-0195-41fd-ae3c-cee75d769bdd",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "disabled": true,
+                        "id": "prev-btn",
+                        "layout|flex": null,
+                        "text": "PreButton"
+                    },
+                    "name": "MyButton",
+                    "designerId": "eae9a3e1-7318-49c0-8b7f-1859bac3ba4e",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "me.navigate(button.up(\"panel\"), \"prev\");"
+                                ]
+                            },
+                            "name": "handler",
+                            "designerId": "e18f3cd8-8256-46b8-a6d0-f86d8750a77c"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.toolbar.Fill",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null
+                    },
+                    "name": "MyFill",
+                    "designerId": "1f5773b3-8cd6-4948-bda4-e6c40f220329"
+                },
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "next-btn",
+                        "layout|flex": null,
+                        "text": "NextButton"
+                    },
+                    "name": "MyButton1",
+                    "designerId": "8b604b25-f0f1-4094-be11-59a194f253fa",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "me.navigate(button.up(\"panel\"), \"next\");"
+                                ]
+                            },
+                            "name": "handler",
+                            "designerId": "0ae1166d-6d81-46cb-a326-106ccc4c7458"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "panel",
+                    "direction"
+                ],
+                "fn": "navigate",
+                "implHandler": [
+                    "var layout = panel.getLayout();",
+                    "layout[direction]();",
+                    "Ext.getCmp('prev-btn').setDisabled(!layout.getPrev());",
+                    "Ext.getCmp('next-btn').setDisabled(!layout.getNext());"
+                ]
+            },
+            "name": "navigate",
+            "designerId": "7c0ac1f3-1bc7-4a81-9d7c-f04c934ae201"
+        }
+    ]
+}

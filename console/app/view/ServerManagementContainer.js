@@ -735,6 +735,13 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                             scope: me
                                         }
                                     }
+                                },
+                                {
+                                    xtype: 'fieldcontainer',
+                                    flex: 1,
+                                    height: 120,
+                                    width: 400,
+                                    fieldLabel: 'Label'
                                 }
                             ]
                         },
