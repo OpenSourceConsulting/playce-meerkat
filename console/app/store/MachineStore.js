@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.store.MachineStore', {
+Ext.define('MyApp.store.MachineStore', {
     extend: 'Ext.data.Store',
 
     requires: [
-        'webapp.model.MachineModel',
+        'MyApp.model.MachineModel',
         'Ext.data.proxy.Ajax',
         'Ext.data.reader.Json'
     ],
@@ -26,7 +26,7 @@ Ext.define('webapp.store.MachineStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            model: 'webapp.model.MachineModel',
+            model: 'MyApp.model.MachineModel',
             storeId: 'MachineStore',
             proxy: {
                 type: 'ajax',

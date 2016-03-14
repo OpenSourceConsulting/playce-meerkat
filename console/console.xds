@@ -14,8 +14,8 @@
                 "width": null
             }
         },
-        "urlPrefix": "http://localhost:8080/controller",
-        "exportPath": "D:/project/AthenaMeerkat/pubpath",
+        "urlPrefix": "http://localhost:1841",
+        "exportPath": "C:/Users/Tran/Desktop/1/",
         "spacesToIndent": 4,
         "sdkPath": "",
         "lineEnding": "LF",
@@ -27,11 +27,13 @@
             "value": "webBuild",
             "display": "Build web app"
         },
-        "projectHasEnabledWebServer": false,
-        "lockUrlPrefix": false,
+        "projectHasEnabledWebServer": true,
+        "lockUrlPrefix": true,
         "installStatus": "Not Installed",
         "displayfield-ExtBox1-1193-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1204-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1259-inputEl": "a new version of the framework is available"
     },
     "xdsVersion": "3.2.0",
     "xdsBuild": 339,

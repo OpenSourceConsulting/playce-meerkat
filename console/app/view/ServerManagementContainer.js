@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.view.ServerManagementContainer', {
+Ext.define('MyApp.view.ServerManagementContainer', {
     extend: 'Ext.container.Container',
     alias: 'widget.servermanagementcontainer',
 

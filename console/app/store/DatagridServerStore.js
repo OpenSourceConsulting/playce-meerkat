@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.store.DatagridServerStore', {
+Ext.define('MyApp.store.DatagridServerStore', {
     extend: 'Ext.data.Store',
 
     requires: [
-        'webapp.model.DatagridModel',
+        'MyApp.model.DatagridModel',
         'Ext.data.proxy.JsonP',
         'Ext.data.reader.Json'
     ],
@@ -26,7 +26,7 @@ Ext.define('webapp.store.DatagridServerStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            model: 'webapp.model.DatagridModel',
+            model: 'MyApp.model.DatagridModel',
             storeId: 'DatagridServerStore',
             proxy: {
                 type: 'jsonp',
