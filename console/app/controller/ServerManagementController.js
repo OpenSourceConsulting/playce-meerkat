@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.controller.ServerManagementController', {
+Ext.define('MyApp.controller.ServerManagementController', {
     extend: 'Ext.app.Controller',
 
     onDatagridServerGroupGridSelect: function(rowmodel, record, index, eOpts) {
@@ -245,7 +245,7 @@ Ext.define('webapp.controller.ServerManagementController', {
     },
 
     loadEVRevisions: function(machineId, callback) {
-        var url = GlobalData.urlPrefix + "res/machine/evlist";
+        var url = GlobalData.urlPrefix + "res/machine/envrevisions";
         Ext.Ajax.request({
             url: url,
             params:{"machineId":machineId},
@@ -255,6 +255,29 @@ Ext.define('webapp.controller.ServerManagementController', {
                     callback(response.data);
                 }
                 else{
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            },
+            method:"GET"
+        });
+    },
+
+    getServer: function(id, callback) {
+        var url = GlobalData.urlPrefix + "res/machine/get";
+        Ext.Ajax.request({
+            url: url,
+            params: {"id" : id},
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    callback(response.data);
+                }
+                else {
                     Ext.Msg.show({
                         title: "Message",
                         msg: response.msg,

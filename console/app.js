@@ -36,7 +36,8 @@ Ext.application({
         'DatasourceModel',
         'DatagridModel',
         'EnvironmentVariableModel',
-        'RevisionModel'
+        'RevisionModel',
+        'TomcatBusyThreadModel'
     ],
     stores: [
         'sessionDataStore',
@@ -54,7 +55,8 @@ Ext.application({
         'LinkingTomcatDatasourceStore',
         'DatagridServerStore',
         'EnvironmentVariableStore',
-        'RevisionStore'
+        'RevisionStore',
+        'TomcatBusyThreadStore'
     ],
     views: [
         'meerkatViewport',
@@ -80,7 +82,10 @@ Ext.application({
         'ClusteringConfigurationComparingWindow',
         'DomainWindow',
         'UserRoleWindow',
-        'EnvironmentVariableWindow'
+        'EnvironmentVariableWindow',
+        'TomcatInstanceCreateWizard',
+        'DomainForm',
+        'TomcatForm'
     ],
     controllers: [
         'headerController',
@@ -96,7 +101,8 @@ Ext.application({
         'CluteringConfigurationController',
         'DatasourceController',
         'ServerManagementController',
-        'DatagridServerController'
+        'DatagridServerController',
+        'TomcatInstWizardController'
     ],
     name: 'webapp',
 
@@ -105,3 +111,4 @@ Ext.application({
     }
 
 });
+>>>>>>> refs/remotes/origin/master
