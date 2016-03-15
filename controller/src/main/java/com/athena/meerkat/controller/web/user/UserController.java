@@ -34,6 +34,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.user.entities.User;
+import com.athena.meerkat.controller.web.user.entities.UserRole;
+import com.athena.meerkat.controller.web.user.services.UserService;
+
 /**
  * <pre>
  * 사용자 관리 컨트롤러.

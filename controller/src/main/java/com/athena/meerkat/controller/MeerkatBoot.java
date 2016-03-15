@@ -49,7 +49,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.athena.meerkat.controller.web.user.UserService;
+import com.athena.meerkat.controller.web.user.services.UserService;
 
 /**
  * Main class with Spring Boot

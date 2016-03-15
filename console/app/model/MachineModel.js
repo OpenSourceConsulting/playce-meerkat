@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.model.MachineModel', {
+Ext.define('MyApp.model.MachineModel', {
     extend: 'Ext.data.Model',
 
     requires: [

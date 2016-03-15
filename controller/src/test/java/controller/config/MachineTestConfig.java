@@ -3,15 +3,15 @@ package controller.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.athena.meerkat.controller.web.machine.MachineRepository;
-import com.athena.meerkat.controller.web.machine.MachineService;
+import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
+import com.athena.meerkat.controller.web.resources.services.ServerService;
 
 @Configuration
 public class MachineTestConfig {
 
 	@Bean
-	public MachineService machineService() {
-		MachineService service = new MachineService();
+	public ServerService machineService() {
+		ServerService service = new ServerService();
 		return service;
 	}
 }

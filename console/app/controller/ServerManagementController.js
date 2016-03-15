@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.controller.ServerManagementController', {
+Ext.define('MyApp.controller.ServerManagementController', {
     extend: 'Ext.app.Controller',
 
     onDatagridServerGroupGridSelect: function(rowmodel, record, index, eOpts) {
@@ -245,7 +245,7 @@ Ext.define('webapp.controller.ServerManagementController', {
     },
 
     loadEVRevisions: function(machineId, callback) {
-        var url = GlobalData.urlPrefix + "res/machine/evlist";
+        var url = GlobalData.urlPrefix + "res/machine/envrevisions";
         Ext.Ajax.request({
             url: url,
             params:{"machineId":machineId},
