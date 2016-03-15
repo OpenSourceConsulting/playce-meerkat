@@ -37,7 +37,8 @@ Ext.application({
         'EnvironmentVariableModel',
         'RevisionModel',
         'TomcatBusyThreadModel',
-        'ServerModel'
+        'ServerModel',
+        'NetworkInterfaceModel'
     ],
     stores: [
         'sessionDataStore',
@@ -56,7 +57,8 @@ Ext.application({
         'EnvironmentVariableStore',
         'RevisionStore',
         'TomcatBusyThreadStore',
-        'ServerStore'
+        'ServerStore',
+        'NetworkInterfaceStore'
     ],
     views: [
         'meerkatViewport',

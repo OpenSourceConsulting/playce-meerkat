@@ -36,7 +36,8 @@
             "EnvironmentVariableModel",
             "RevisionModel",
             "TomcatBusyThreadModel",
-            "ServerModel"
+            "ServerModel",
+            "NetworkInterfaceModel"
         ],
         "name": "webapp",
         "requires": [
@@ -59,7 +60,8 @@
             "EnvironmentVariableStore",
             "RevisionStore",
             "TomcatBusyThreadStore",
-            "ServerStore"
+            "ServerStore",
+            "NetworkInterfaceStore"
         ],
         "views": [
             "meerkatViewport",

@@ -205,7 +205,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "activeTab": 1,
+                                "activeTab": 0,
                                 "dock": null,
                                 "height": null,
                                 "id": "detailTomcatServerTab",
@@ -301,7 +301,7 @@
                                                     "designerId": "1502eba7-1c67-4788-908d-135056b5082b"
                                                 },
                                                 {
-                                                    "type": "Ext.form.field.Text",
+                                                    "type": "Ext.form.field.ComboBox",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
@@ -311,9 +311,10 @@
                                                         "fieldLabel": "SSH IPAddress",
                                                         "id": "serverSSHIPAddressCombobox",
                                                         "layout|anchor": "100%",
-                                                        "readOnly": true
+                                                        "readOnly": true,
+                                                        "store": "NetworkInterfaceStore"
                                                     },
-                                                    "name": "MyTextField8",
+                                                    "name": "MyComboBox4",
                                                     "designerId": "366df445-20b8-42ad-a481-640646a16f1d"
                                                 },
                                                 {
@@ -368,6 +369,7 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "hidden": true,
                                                         "text": "Save"
                                                     },
                                                     "name": "MyButton4",
@@ -381,6 +383,7 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "hidden": true,
                                                         "text": "Cancel"
                                                     },
                                                     "name": "MyButton20",

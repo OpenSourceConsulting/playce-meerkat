@@ -25,7 +25,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.form.Panel',
-        'Ext.form.field.Text',
+        'Ext.form.field.ComboBox',
         'Ext.form.field.Display',
         'Ext.form.field.Hidden',
         'Ext.form.field.Checkbox'
@@ -121,7 +121,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     flex: 7,
                                     id: 'detailTomcatServerTab',
                                     manageHeight: false,
-                                    activeTab: 1,
+                                    activeTab: 0,
                                     items: [
                                         {
                                             xtype: 'panel',
@@ -152,11 +152,12 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                             readOnly: true
                                                         },
                                                         {
-                                                            xtype: 'textfield',
+                                                            xtype: 'combobox',
                                                             anchor: '100%',
                                                             id: 'serverSSHIPAddressCombobox',
                                                             fieldLabel: 'SSH IPAddress',
-                                                            readOnly: true
+                                                            readOnly: true,
+                                                            store: 'NetworkInterfaceStore'
                                                         },
                                                         {
                                                             xtype: 'textfield',
@@ -177,10 +178,12 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                         },
                                                         {
                                                             xtype: 'button',
+                                                            hidden: true,
                                                             text: 'Save'
                                                         },
                                                         {
                                                             xtype: 'button',
+                                                            hidden: true,
                                                             text: 'Cancel'
                                                         },
                                                         {

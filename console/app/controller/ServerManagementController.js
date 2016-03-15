@@ -46,7 +46,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         var hostName = record.get("hostName");
         var sshPort = record.get("sshPort");
         var sshIpaddress = record.get("sshipaddr");
-
+        var osName = record.get("osName");
         //var url = GlobalData.urlPrefix + "res/machine/get";
         //var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
         var sshPortField = Ext.getCmp("serverSSHPortTextField");
@@ -58,7 +58,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         nameField.setValue(name);
         hostNameField.setValue(hostName);
         sshPortField.setValue(sshPort);
-
+        osNameField.setValue(osName);
         /*Ext.Ajax.request({
             url: url,
             params: {"id": id},
