@@ -62,6 +62,19 @@
             },
             "name": "MyField67",
             "designerId": "782b005b-5001-414e-a64c-7d724b003c91"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "sshPort"
+            },
+            "name": "MyField31",
+            "designerId": "a0e5b5cb-02c6-46c4-904d-7e2a5f33d556"
         }
     ]
 }

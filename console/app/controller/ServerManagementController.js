@@ -40,15 +40,26 @@ Ext.define('webapp.controller.ServerManagementController', {
                 });
     },
 
-    onTomcatServerGridSelect: function(rowmodel, record, index, eOpts) {
+    onServerGridSelect: function(rowmodel, record, index, eOpts) {
         var id = record.get("id");
-        var url = GlobalData.urlPrefix + "res/machine/get";
-        var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
-        var portField = Ext.getCmp("tomcatSSHPortTextField");
-        var userIDField = Ext.getCmp("tomcatSSHUserIDTextField");
-        var passwordField = Ext.getCmp("tomcatSSHPasswordTextField");
-        var _idField = Ext.getCmp("serverIDHiddenField");
-        Ext.Ajax.request({
+        var name = record.get("name");
+        var hostName = record.get("hostName");
+        var sshPort = record.get("sshPort");
+        var sshIpaddress = record.get("sshipaddr");
+
+        //var url = GlobalData.urlPrefix + "res/machine/get";
+        //var ipaddrField = Ext.getCmp("tomcatSSHIPAddressTextField");
+        var sshPortField = Ext.getCmp("serverSSHPortTextField");
+        var nameField = Ext.getCmp("serverNameTextField");
+        var osNameField = Ext.getCmp("serverOSNameDisplayField");
+        var hostNameField = Ext.getCmp("serverHostNameTextField");
+        var _idField = Ext.getCmp("serverIDHiddenField_");
+        _idField.setValue(id);
+        nameField.setValue(name);
+        hostNameField.setValue(hostName);
+        sshPortField.setValue(sshPort);
+
+        /*Ext.Ajax.request({
             url: url,
             params: {"id": id},
             success: function(resp, ops) {
@@ -71,7 +82,7 @@ Ext.define('webapp.controller.ServerManagementController', {
             },
             method: "GET"
         });
-
+        */
     },
 
     onEditSSHClick: function(button, e, eOpts) {
@@ -300,7 +311,7 @@ Ext.define('webapp.controller.ServerManagementController', {
                 select: this.onDatagridServerGroupGridSelect
             },
             "#tomcatServerGrid": {
-                select: this.onTomcatServerGridSelect
+                select: this.onServerGridSelect
             },
             "#btnServerSSHEdit": {
                 click: this.onEditSSHClick

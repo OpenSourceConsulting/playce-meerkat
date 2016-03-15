@@ -26,7 +26,7 @@ Ext.define('webapp.store.ServerStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            autoLoad: true,
+            autoLoad: false,
             model: 'webapp.model.ServerModel',
             storeId: 'ServerStore',
             proxy: {

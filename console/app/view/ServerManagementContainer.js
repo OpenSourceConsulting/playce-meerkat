@@ -25,8 +25,9 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.form.Panel',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Display',
         'Ext.form.field.Hidden',
-        'Ext.form.field.Text',
         'Ext.form.field.Checkbox'
     ],
 
@@ -129,31 +130,64 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                             items: [
                                                 {
                                                     xtype: 'container',
-                                                    margin: '10 10 10 10',
+                                                    margin: '10 10 10 10'
+                                                },
+                                                {
+                                                    xtype: 'form',
+                                                    height: 228,
+                                                    bodyPadding: 10,
+                                                    title: '',
                                                     items: [
                                                         {
-                                                            xtype: 'form',
-                                                            id: 'agentFormPanel',
-                                                            width: 659,
-                                                            bodyPadding: 10,
-                                                            title: '',
-                                                            items: [
-                                                                {
-                                                                    xtype: 'container',
-                                                                    layout: {
-                                                                        type: 'hbox',
-                                                                        align: 'stretch'
-                                                                    },
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'hiddenfield',
-                                                                            flex: 1,
-                                                                            id: 'serverIDHiddenField1',
-                                                                            fieldLabel: 'Label'
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
+                                                            xtype: 'textfield',
+                                                            anchor: '100%',
+                                                            id: 'serverNameTextField',
+                                                            fieldLabel: 'Server name'
+                                                        },
+                                                        {
+                                                            xtype: 'textfield',
+                                                            anchor: '100%',
+                                                            id: 'serverHostNameTextField',
+                                                            fieldLabel: 'Host name',
+                                                            readOnly: true
+                                                        },
+                                                        {
+                                                            xtype: 'combobox',
+                                                            anchor: '100%',
+                                                            id: 'serverSSHIPAddressCombobox',
+                                                            fieldLabel: 'SSH IPAddress',
+                                                            readOnly: true,
+                                                            store: 'TempoStore'
+                                                        },
+                                                        {
+                                                            xtype: 'textfield',
+                                                            anchor: '100%',
+                                                            id: 'serverSSHPortTextField',
+                                                            fieldLabel: 'SSH Port',
+                                                            readOnly: true
+                                                        },
+                                                        {
+                                                            xtype: 'displayfield',
+                                                            anchor: '100%',
+                                                            id: 'serverOSNameDisplayField',
+                                                            fieldLabel: 'OS Name'
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            text: 'Edit'
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            text: 'Save'
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            text: 'Cancel'
+                                                        },
+                                                        {
+                                                            xtype: 'hiddenfield',
+                                                            id: 'serverIDHiddenField_',
+                                                            fieldLabel: 'Label'
                                                         }
                                                     ]
                                                 }

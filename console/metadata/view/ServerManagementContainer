@@ -15,7 +15,7 @@
         "width": null
     },
     "name": "MyContainer31",
-    "designerId": "294eb71a-5ed2-4b1e-b20d-5c73d966c7fb",
+    "designerId": "db57d9c4-7e18-4ca2-8061-ebc9adf18f15",
     "cn": [
         {
             "type": "Ext.panel.Panel",
@@ -29,7 +29,7 @@
                 "layout|flex": 9
             },
             "name": "MyPanel98",
-            "designerId": "91a99ce0-d9c7-402b-a3b4-d7380cacb70e",
+            "designerId": "4ec67f6a-a656-4116-9695-8e12db664616",
             "cn": [
                 {
                     "type": "Ext.panel.Panel",
@@ -46,7 +46,7 @@
                         "title": "Tomcat servers"
                     },
                     "name": "MyPanel76",
-                    "designerId": "91fb1c79-8a09-46c1-9868-22e2a9d9df72",
+                    "designerId": "439eb128-568f-4f25-9024-4b3f481606f2",
                     "cn": [
                         {
                             "type": "Ext.toolbar.Toolbar",
@@ -60,7 +60,7 @@
                                 "layout|flex": 1
                             },
                             "name": "MyToolbar15",
-                            "designerId": "d394cbea-1762-48cf-8f18-c74d125fad96",
+                            "designerId": "c3da9897-71e3-4222-9023-12566bc2093a",
                             "cn": [
                                 {
                                     "type": "Ext.button.Button",
@@ -74,7 +74,7 @@
                                         "text": "New Server"
                                     },
                                     "name": "MyButton16",
-                                    "designerId": "0a014c76-86cd-4fec-81af-d72dea72534b"
+                                    "designerId": "5791e001-b117-4aa4-98fe-2d92d9de24db"
                                 }
                             ]
                         },
@@ -95,7 +95,7 @@
                                 "title": ""
                             },
                             "name": "MyGridPanel14",
-                            "designerId": "fd9113f9-36ca-4e62-a5a0-735bed27457f",
+                            "designerId": "53b7327e-c719-4b40-bec9-9dde62e5c28a",
                             "cn": [
                                 {
                                     "type": "Ext.grid.column.Column",
@@ -109,7 +109,7 @@
                                         "text": "Server name"
                                     },
                                     "name": "MyColumn17",
-                                    "designerId": "fbca23fa-8b73-4731-adb8-f9655d20d3de"
+                                    "designerId": "63636ccc-159e-484e-a925-28cad72d9605"
                                 },
                                 {
                                     "type": "Ext.grid.column.Column",
@@ -123,7 +123,7 @@
                                         "text": "Operating System"
                                     },
                                     "name": "MyColumn41",
-                                    "designerId": "f9439419-d04c-4816-b316-e4880b24ab6d"
+                                    "designerId": "f1d9018b-1fde-4b61-8bab-876a60020d6e"
                                 },
                                 {
                                     "type": "Ext.grid.column.Column",
@@ -137,7 +137,7 @@
                                         "text": "IP Address"
                                     },
                                     "name": "MyColumn61",
-                                    "designerId": "e9e9cbae-7c9b-4db8-97cd-ab0b2d460f9b"
+                                    "designerId": "bf56709d-6711-410f-baeb-30d46a4db994"
                                 },
                                 {
                                     "type": "Ext.grid.column.Action",
@@ -151,7 +151,7 @@
                                         "text": "Action"
                                     },
                                     "name": "MyActionColumn",
-                                    "designerId": "24d2cc41-ae1f-48ad-afd0-cace08b5f1c9"
+                                    "designerId": "59ae0122-018d-4f22-8784-f651b0caa057"
                                 },
                                 {
                                     "type": "Ext.grid.View",
@@ -161,7 +161,7 @@
                                     },
                                     "codeClass": null,
                                     "name": "MyGridView14",
-                                    "designerId": "3f0f917e-66ee-4b99-a376-0f1468927f6b"
+                                    "designerId": "0104afc0-57aa-4b97-ad1f-d54aa71e0ef9"
                                 }
                             ]
                         },
@@ -177,7 +177,7 @@
                                 "layout|flex": 1
                             },
                             "name": "MyToolbar16",
-                            "designerId": "d6e76c71-9325-4fb8-a0a6-0a9932b9513c",
+                            "designerId": "e98045ed-16e1-4841-b961-b024e4c444c5",
                             "cn": [
                                 {
                                     "type": "Ext.toolbar.Paging",
@@ -193,7 +193,7 @@
                                         "width": 1125
                                     },
                                     "name": "MyPagingToolbar",
-                                    "designerId": "81a4c992-40f7-4408-8e0f-9d6007835cf6"
+                                    "designerId": "d1735689-0edf-4638-be0c-0a62c62e2dcd"
                                 }
                             ]
                         },
@@ -213,7 +213,7 @@
                                 "manageHeight": false
                             },
                             "name": "MyTabPanel6",
-                            "designerId": "e39f13dd-575d-4dc0-8d1c-527c16d03e02",
+                            "designerId": "15a66ebc-dd6a-4e96-bdaf-838bbf6614cf",
                             "cn": [
                                 {
                                     "type": "Ext.panel.Panel",
@@ -229,7 +229,7 @@
                                         "title": "Information"
                                     },
                                     "name": "MyPanel",
-                                    "designerId": "6302ada1-456a-4744-8abf-06b9128bd4b0",
+                                    "designerId": "75fc8a90-9ebc-433e-a1cc-d8b3a20b1779",
                                     "cn": [
                                         {
                                             "type": "Ext.tab.Tab",
@@ -239,7 +239,7 @@
                                             },
                                             "codeClass": null,
                                             "name": "TabConfig20",
-                                            "designerId": "25a4e9ce-4e17-4baf-af26-955cbaad5e9b"
+                                            "designerId": "93af8043-4956-4b00-953e-8f146303e15d"
                                         },
                                         {
                                             "type": "Ext.container.Container",
@@ -252,56 +252,154 @@
                                                 "margin": "10 10 10 10"
                                             },
                                             "name": "MyContainer21",
-                                            "designerId": "d775650d-1895-4ecd-9987-a119958a672f",
+                                            "designerId": "89b58461-a271-410b-b77c-593311f1860a"
+                                        },
+                                        {
+                                            "type": "Ext.form.Panel",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "bodyPadding": 10,
+                                                "height": 228,
+                                                "title": ""
+                                            },
+                                            "name": "MyForm1",
+                                            "designerId": "56342937-f892-48de-9fed-81c9f58850ca",
                                             "cn": [
                                                 {
-                                                    "type": "Ext.form.Panel",
+                                                    "type": "Ext.form.field.Text",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
-                                                        "bodyPadding": 10,
-                                                        "id": "agentFormPanel",
-                                                        "title": "",
-                                                        "width": 659
+                                                        "fieldLabel": "Server name",
+                                                        "id": "serverNameTextField",
+                                                        "layout|anchor": "100%"
                                                     },
-                                                    "name": "MyForm",
-                                                    "designerId": "876e2f19-b5d1-4f40-a253-a309512f84f8",
-                                                    "cn": [
-                                                        {
-                                                            "type": "Ext.container.Container",
-                                                            "reference": {
-                                                                "name": "items",
-                                                                "type": "array"
-                                                            },
-                                                            "codeClass": null,
-                                                            "userConfig": {
-                                                                "container|align": "stretch",
-                                                                "layout": "hbox"
-                                                            },
-                                                            "name": "MyContainer33",
-                                                            "designerId": "0cdc2605-c571-41ce-9dd9-4a747c495037",
-                                                            "cn": [
-                                                                {
-                                                                    "type": "Ext.form.field.Hidden",
-                                                                    "reference": {
-                                                                        "name": "items",
-                                                                        "type": "array"
-                                                                    },
-                                                                    "codeClass": null,
-                                                                    "userConfig": {
-                                                                        "fieldLabel": "Label",
-                                                                        "id": "serverIDHiddenField1",
-                                                                        "layout|flex": 1
-                                                                    },
-                                                                    "name": "MyHiddenField4",
-                                                                    "designerId": "91a834a0-32d2-49b0-beac-98c4661334fd"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
+                                                    "name": "MyTextField",
+                                                    "designerId": "6815dcea-1472-41c8-8452-566d00dc9f7c"
+                                                },
+                                                {
+                                                    "type": "Ext.form.field.Text",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fieldLabel": "Host name",
+                                                        "id": "serverHostNameTextField",
+                                                        "layout|anchor": "100%",
+                                                        "readOnly": true
+                                                    },
+                                                    "name": "MyTextField1",
+                                                    "designerId": "1502eba7-1c67-4788-908d-135056b5082b"
+                                                },
+                                                {
+                                                    "type": "Ext.form.field.ComboBox",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fieldLabel": "SSH IPAddress",
+                                                        "id": "serverSSHIPAddressCombobox",
+                                                        "layout|anchor": "100%",
+                                                        "readOnly": true,
+                                                        "store": "TempoStore"
+                                                    },
+                                                    "name": "MyComboBox",
+                                                    "designerId": "366df445-20b8-42ad-a481-640646a16f1d"
+                                                },
+                                                {
+                                                    "type": "Ext.form.field.Text",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fieldLabel": "SSH Port",
+                                                        "id": "serverSSHPortTextField",
+                                                        "layout|anchor": "100%",
+                                                        "readOnly": true
+                                                    },
+                                                    "name": "MyTextField3",
+                                                    "designerId": "b4072555-9133-439e-93ab-f3c4f4d73c01"
+                                                },
+                                                {
+                                                    "type": "Ext.form.field.Display",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fieldLabel": "OS Name",
+                                                        "id": "serverOSNameDisplayField",
+                                                        "layout|anchor": "100%"
+                                                    },
+                                                    "name": "MyDisplayField",
+                                                    "designerId": "c31c0984-7dd1-4765-95b6-a2ce740888f5"
+                                                },
+                                                {
+                                                    "type": "Ext.button.Button",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "text": "Edit"
+                                                    },
+                                                    "name": "MyButton",
+                                                    "designerId": "c4370813-8734-4b3e-aa20-7a2fc7b10f55"
+                                                },
+                                                {
+                                                    "type": "Ext.button.Button",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "text": "Save"
+                                                    },
+                                                    "name": "MyButton4",
+                                                    "designerId": "f2e25007-0dd6-4de0-bb41-a413871b3f8c"
+                                                },
+                                                {
+                                                    "type": "Ext.button.Button",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "text": "Cancel"
+                                                    },
+                                                    "name": "MyButton20",
+                                                    "designerId": "7c9ff825-1f73-423a-af9b-f2a9492c94fb"
+                                                },
+                                                {
+                                                    "type": "Ext.form.field.Hidden",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "fieldLabel": "Label",
+                                                        "id": "serverIDHiddenField_"
+                                                    },
+                                                    "name": "MyHiddenField",
+                                                    "designerId": "c80bb726-11ea-43d3-82d3-5dabbd4c5aac"
                                                 }
                                             ]
                                         }
@@ -320,7 +418,7 @@
                                         "title": "SSH Account"
                                     },
                                     "name": "MyPanel77",
-                                    "designerId": "72880519-2159-432f-9734-64534c59ecbb",
+                                    "designerId": "ce251ceb-81cf-44dd-ae2e-abdfe47c8683",
                                     "cn": [
                                         {
                                             "type": "Ext.tab.Tab",
@@ -330,7 +428,7 @@
                                             },
                                             "codeClass": null,
                                             "name": "TabConfig20",
-                                            "designerId": "a738f3f6-6859-4a3f-ae74-c173a1002004"
+                                            "designerId": "6b217a02-80be-404e-b562-461b1aaba0fb"
                                         },
                                         {
                                             "type": "Ext.container.Container",
@@ -343,7 +441,7 @@
                                                 "margin": "10 10 10 10"
                                             },
                                             "name": "MyContainer21",
-                                            "designerId": "83afde09-1647-4923-91a1-8292137def8e",
+                                            "designerId": "45ba73a8-aa81-48b9-bca8-fd416b2f6ac4",
                                             "cn": [
                                                 {
                                                     "type": "Ext.form.Panel",
@@ -358,7 +456,7 @@
                                                         "title": ""
                                                     },
                                                     "name": "MyForm",
-                                                    "designerId": "e0996408-683a-450e-a974-e775d492793d",
+                                                    "designerId": "6fca4be3-c3e0-45da-9fdb-f12141433ca9",
                                                     "cn": [
                                                         {
                                                             "type": "Ext.form.field.Text",
@@ -374,7 +472,7 @@
                                                                 "readOnly": true
                                                             },
                                                             "name": "MyTextField4",
-                                                            "designerId": "55a78de8-d406-45de-bc2f-252f8b865ba1"
+                                                            "designerId": "fc993a32-21ce-46d4-be02-c64f56905d8c"
                                                         },
                                                         {
                                                             "type": "Ext.form.field.Text",
@@ -390,7 +488,7 @@
                                                                 "readOnly": true
                                                             },
                                                             "name": "MyTextField5",
-                                                            "designerId": "7767fcf4-5dfc-4618-a0cf-a1b105f8ede0"
+                                                            "designerId": "27cc417a-3250-4e95-b884-3b22a4d2a334"
                                                         },
                                                         {
                                                             "type": "Ext.form.field.Text",
@@ -406,7 +504,7 @@
                                                                 "readOnly": true
                                                             },
                                                             "name": "MyTextField6",
-                                                            "designerId": "9bc73eb9-7d2b-46f6-a473-642bf287476e"
+                                                            "designerId": "8fda8f32-3413-493c-9efd-ef313bc0949d"
                                                         },
                                                         {
                                                             "type": "Ext.container.Container",
@@ -420,7 +518,7 @@
                                                                 "layout": "hbox"
                                                             },
                                                             "name": "MyContainer33",
-                                                            "designerId": "8b74b006-d195-431b-8bf3-eaa94e5991e7",
+                                                            "designerId": "bdef2472-18d0-4ca8-8550-95d5e2d2e6dd",
                                                             "cn": [
                                                                 {
                                                                     "type": "Ext.form.field.Text",
@@ -438,7 +536,7 @@
                                                                         "width": 255
                                                                     },
                                                                     "name": "MyTextField7",
-                                                                    "designerId": "02721dd8-d80c-4394-a285-170aaad01339"
+                                                                    "designerId": "a1cb7626-7430-4e05-a95b-27e3f28cf3c5"
                                                                 },
                                                                 {
                                                                     "type": "Ext.form.field.Checkbox",
@@ -454,7 +552,7 @@
                                                                         "margin": "0 0 0 10"
                                                                     },
                                                                     "name": "MyCheckbox2",
-                                                                    "designerId": "3660572f-8aa0-4be3-9ebd-8415dee816c2"
+                                                                    "designerId": "2f8b8ff8-96d8-4fc5-8677-ad2a284359e2"
                                                                 },
                                                                 {
                                                                     "type": "Ext.form.field.Hidden",
@@ -469,7 +567,7 @@
                                                                         "layout|flex": 1
                                                                     },
                                                                     "name": "MyHiddenField4",
-                                                                    "designerId": "e5a94f97-d58b-4a97-9e22-febed000ab08"
+                                                                    "designerId": "f6f39045-2f36-4722-a566-5ae14133e390"
                                                                 }
                                                             ]
                                                         },
@@ -485,7 +583,7 @@
                                                                 "text": "Test"
                                                             },
                                                             "name": "MyButton17",
-                                                            "designerId": "ef4e391e-bf05-4ad2-969c-d43af269dbb7"
+                                                            "designerId": "8b804a71-53b4-424c-9e02-baaa81070107"
                                                         },
                                                         {
                                                             "type": "Ext.button.Button",
@@ -500,7 +598,7 @@
                                                                 "text": "Edit"
                                                             },
                                                             "name": "MyButton18",
-                                                            "designerId": "7b796ebf-4efa-42e0-b20a-c9fb3b281ded"
+                                                            "designerId": "fa13db3e-6509-42be-9385-e2707536d3b7"
                                                         },
                                                         {
                                                             "type": "Ext.button.Button",
@@ -518,7 +616,7 @@
                                                                 "text": "Save"
                                                             },
                                                             "name": "MyButton39",
-                                                            "designerId": "d0c37d44-c7c6-4769-b018-dcc09b10903c"
+                                                            "designerId": "5aefef3b-0fc7-40a5-9146-c90d0a3f6bba"
                                                         },
                                                         {
                                                             "type": "Ext.button.Button",
@@ -532,7 +630,7 @@
                                                                 "text": "Reset"
                                                             },
                                                             "name": "MyButton19",
-                                                            "designerId": "d2dc1bef-7c33-428f-8b8a-2c473f534cfc"
+                                                            "designerId": "12cb3696-badd-4485-91d6-b4e970736425"
                                                         }
                                                     ]
                                                 }
@@ -584,7 +682,7 @@
                                         "scope": "me"
                                     },
                                     "name": "onDetailTomcatServerTabTabChange",
-                                    "designerId": "640361ad-4f6e-412d-82b1-014e873425e7"
+                                    "designerId": "19072c23-d819-4b4e-b91f-09f243000a43"
                                 }
                             ]
                         }
@@ -616,7 +714,7 @@
                         "scope": "me"
                     },
                     "name": "onTabpanelTabChange",
-                    "designerId": "ea9ac0e4-45a4-4474-93de-6a8ab99e8545"
+                    "designerId": "56be281b-8d2b-499b-a067-b3382e323ab1"
                 }
             ]
         }

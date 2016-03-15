@@ -25,7 +25,6 @@ Ext.define('webapp.view.meerkatViewport', {
         'webapp.view.MonitoringTomcatInstance',
         'webapp.view.DetailMonitoringMachineContainer',
         'webapp.view.DetailMonitoringTomcatInstance',
-        'webapp.view.ServerManagementContainer',
         'webapp.view.ResourceManagementContainer',
         'webapp.view.UserMntContainer',
         'Ext.toolbar.Toolbar',
@@ -117,9 +116,6 @@ Ext.define('webapp.view.meerkatViewport', {
                                         },
                                         {
                                             xtype: 'detailmonitoringtomcatinstance'
-                                        },
-                                        {
-                                            xtype: 'servermanagementcontainer'
                                         },
                                         {
                                             xtype: 'resourcemanagementcontainer'

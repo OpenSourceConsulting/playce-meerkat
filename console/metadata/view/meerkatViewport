@@ -208,17 +208,6 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
-                                    "name": "servermanagementcontainer",
-                                    "designerId": "0d8b7d41-40a0-485a-b69e-bd72d3b32cd6",
-                                    "masterInstanceId": "294eb71a-5ed2-4b1e-b20d-5c73d966c7fb"
-                                },
-                                {
-                                    "type": "linkedinstance",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
                                     "name": "resourcemanagementcontainer",
                                     "designerId": "85942721-e926-4cae-84d2-581c02bbac48",
                                     "masterInstanceId": "0cf5471d-a4d3-45a6-b177-3019f1fbe80f"
