@@ -47,6 +47,7 @@ Ext.define('webapp.view.ClusteringConfigurationComparingWindow', {
                     margin: '10 10 10 10',
                     title: '',
                     forceFit: true,
+                    store: 'TempoStore',
                     columns: [
                         {
                             xtype: 'gridcolumn',

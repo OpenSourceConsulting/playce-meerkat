@@ -57,6 +57,7 @@
                     "userConfig": {
                         "fieldLabel": "Type",
                         "margin": "0 0 10 50",
+                        "store": "TempoStore",
                         "width": 414
                     },
                     "name": "MyComboBox11",

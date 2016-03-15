@@ -278,6 +278,7 @@ Ext.define('webapp.view.DomainContainer', {
                                     id: 'domainSessionGridView',
                                     title: '',
                                     forceFit: true,
+                                    store: 'TempoStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',

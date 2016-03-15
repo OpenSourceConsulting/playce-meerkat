@@ -655,6 +655,7 @@
                                 "dock": "top",
                                 "forceFit": true,
                                 "id": "domainSessionGridView",
+                                "store": "TempoStore",
                                 "title": ""
                             },
                             "name": "MyGridPanel2",

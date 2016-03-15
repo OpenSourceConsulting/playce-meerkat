@@ -28,6 +28,7 @@
                 "forceFit": true,
                 "layout|flex": 9,
                 "margin": "10 10 10 10",
+                "store": "TempoStore",
                 "title": ""
             },
             "name": "MyGridPanel27",

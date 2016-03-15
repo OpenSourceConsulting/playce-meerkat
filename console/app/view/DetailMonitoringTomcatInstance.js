@@ -602,6 +602,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             collapsible: true,
                                             title: 'Memory Usage',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -830,6 +831,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             collapsible: true,
                                             title: 'Thread pool details',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -1103,6 +1105,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             margin: '5 5 5 5',
                                             title: 'Application Summary',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',

@@ -79,7 +79,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "domainform1",
+                    "name": "domainform",
                     "designerId": "2ba310bc-1c11-4acc-a329-0c47d626de1c",
                     "masterInstanceId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e"
                 },
@@ -93,7 +93,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "tomcatform1",
+                    "name": "tomcatform",
                     "designerId": "437f671c-a8ef-4b47-a0bb-e43e8e4efe6f",
                     "masterInstanceId": "65465c05-02a3-4947-85fb-817111f473e9"
                 }

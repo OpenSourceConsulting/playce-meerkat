@@ -4678,6 +4678,51 @@ svg, vml {
 .x-form-display-field-body {
   vertical-align: top; }
 
+/* line 1, ../../../../ext/packages/ext-theme-base/sass/src/form/field/Checkbox.scss */
+.x-form-cb-wrap {
+  vertical-align: top; }
+
+/* line 5, ../../../../ext/packages/ext-theme-base/sass/src/form/field/Checkbox.scss */
+.x-form-cb {
+  vertical-align: top;
+  overflow: hidden;
+  padding: 0;
+  border: 0; }
+  /* line 10, ../../../../ext/packages/ext-theme-base/sass/src/form/field/Checkbox.scss */
+  .x-form-cb::-moz-focus-inner {
+    padding: 0;
+    border: 0; }
+
+/* line 16, ../../../../ext/packages/ext-theme-base/sass/src/form/field/Checkbox.scss */
+.x-form-cb-label {
+  display: inline-block;
+  zoom: 1; }
+
+/* line 1, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+.x-fieldset {
+  display: block;
+  /* preserve margins in IE */
+  position: relative; }
+
+/* line 6, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+.x-fieldset-header {
+  overflow: hidden; }
+  /* line 10, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+  .x-fieldset-header .x-form-item,
+  .x-fieldset-header .x-tool {
+    float: left; }
+  /* line 14, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+  .x-fieldset-header .x-form-cb-wrap {
+    font-size: 0;
+    line-height: 0; }
+  /* line 19, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+  .x-fieldset-header .x-form-cb {
+    margin: 0; }
+
+/* line 33, ../../../../ext/packages/ext-theme-base/sass/src/form/FieldSet.scss */
+.x-fieldset-header-text {
+  float: left; }
+
 /*misc*/
 /* line 4, ../../../../ext/packages/ext-theme-base/sass/src/form/Panel.scss */
 .x-webkit *:focus {
@@ -4718,6 +4763,34 @@ svg, vml {
 .x-form-spinner-up,
 .x-form-spinner-down {
   font-size: 0; }
+
+/* line 1, ../../../../ext/packages/ext-theme-base/sass/src/form/field/File.scss */
+.x-form-file-btn {
+  overflow: hidden; }
+
+/* line 5, ../../../../ext/packages/ext-theme-base/sass/src/form/field/File.scss */
+.x-form-file-input {
+  border: 0;
+  position: absolute;
+  cursor: pointer;
+  top: -2px;
+  right: -2px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  /* Yes, there's actually a good reason for this...
+   * If the configured buttonText is set to something longer than the default,
+   * then it will quickly exceed the width of the hidden file input's "Browse..."
+   * button, so part of the custom button's clickable area will be covered by
+   * the hidden file input's text box instead. This results in a text-selection
+   * mouse cursor over that part of the button, at least in Firefox, which is
+   * confusing to a user. Giving the hidden file input a huge font-size makes
+   * the native button part very large so it will cover the whole clickable area.
+   */
+  font-size: 1000px; }
+
+/* line 1, ../../../../ext/packages/ext-theme-base/sass/src/form/field/Hidden.scss */
+.x-form-item-hidden {
+  margin: 0; }
 
 /* line 2, ../../../../ext/packages/ext-theme-base/sass/src/panel/Table.scss */
 .x-grid-row,
@@ -4811,6 +4884,15 @@ svg, vml {
 
 /* line 68, ../../../../ext/packages/ext-theme-base/sass/src/grid/column/Column.scss */
 .x-column-header-align-center {
+  text-align: center; }
+
+/* line 1, ../../../../ext/packages/ext-theme-base/sass/src/grid/column/CheckColumn.scss */
+.x-grid-cell-inner-checkcolumn {
+  line-height: 0;
+  font-size: 0; }
+
+/* line 2, ../../../../ext/packages/ext-theme-base/sass/src/grid/plugin/Editing.scss */
+.x-grid-editor .x-form-cb-wrap {
   text-align: center; }
 
 /* line 9, ../../../../ext/packages/ext-theme-base/sass/src/grid/plugin/Editing.scss */
@@ -11699,6 +11781,220 @@ textarea.x-form-empty-field {
 .x-message-box-error {
   background-image: url(images/shared/icon-error.png); }
 
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-wrap {
+  height: 24px; }
+
+/* line 10, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb {
+  margin-top: 5px; }
+
+/* line 19, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-checkbox {
+  width: 15px;
+  height: 15px;
+  background: url(images/form/checkbox.png) no-repeat; }
+
+/* line 25, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-checked .x-form-checkbox {
+  background-position: 0 -15px; }
+
+/* Focused */
+/* line 30, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-checkbox-focus {
+  background-position: -15px 0; }
+
+/* line 34, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-checked .x-form-checkbox-focus {
+  background-position: -15px -15px; }
+
+/* boxLabel */
+/* line 40, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-label {
+  margin-top: 4px;
+  font: normal 13px/17px helvetica, arial, verdana, sans-serif; }
+
+/* line 53, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-label-before {
+  margin-right: 4px; }
+
+/* line 64, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Checkbox.scss */
+.x-form-cb-label-after {
+  margin-left: 4px; }
+
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/CheckboxGroup.scss */
+.x-form-checkboxgroup-body {
+  padding: 0 4px; }
+
+/* line 6, ../../../../ext/packages/ext-theme-neutral/sass/src/form/CheckboxGroup.scss */
+.x-form-invalid .x-form-checkboxgroup-body {
+  border: 1px solid #cf4c35; }
+
+/* line 16, ../../../../ext/packages/ext-theme-neutral/sass/src/form/CheckboxGroup.scss */
+.x-check-group-alt {
+  background: #f5f5f5;
+  border-top: 1px dotted #f5f5f5;
+  border-bottom: 1px dotted #f5f5f5; }
+
+/* line 22, ../../../../ext/packages/ext-theme-neutral/sass/src/form/CheckboxGroup.scss */
+.x-form-check-group-label {
+  color: black;
+  padding: 2px;
+  margin: 0 30px 5px 0;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: black; }
+
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset {
+  border: 1px solid #b5b8c8;
+  padding: 0 10px;
+  margin: 0 0 10px; }
+
+/* line 11, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-ie8m .x-fieldset,
+.x-quirks .x-ie .x-fieldset {
+  padding-top: 0; }
+  /* line 13, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+  .x-ie8m .x-fieldset .x-fieldset-body,
+  .x-quirks .x-ie .x-fieldset .x-fieldset-body {
+    padding-top: 0; }
+
+/* line 19, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-header-checkbox {
+  line-height: 16px;
+  margin: 1px 3px 0 0; }
+
+/* line 24, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-header {
+  padding: 0 3px 1px; }
+  /* line 27, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+  .x-fieldset-header .x-tool {
+    margin-top: 1px;
+    padding: 0; }
+
+/* line 39, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-header-text {
+  font: 12px/16px bold helvetica, arial, verdana, sans-serif;
+  color: black;
+  padding: 1px 0; }
+
+/* line 44, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-header-text-collapsible {
+  cursor: pointer; }
+
+/* line 50, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-with-title .x-fieldset-header-checkbox,
+.x-fieldset-with-title .x-tool {
+  margin: 1px 3px 0 0; }
+
+/* line 66, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-webkit .x-fieldset-header {
+  -webkit-padding-start: 3px;
+  -webkit-padding-end: 3px; }
+
+/* line 76, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-opera .x-fieldset-with-legend {
+  margin-top: -1px; }
+/* line 79, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-opera.x-mac .x-fieldset-header-text {
+  padding: 2px 0 0; }
+
+/* line 87, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-strict .x-ie8 .x-fieldset-header {
+  margin-bottom: -1px; }
+  /* line 91, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+  .x-strict .x-ie8 .x-fieldset-header .x-tool,
+  .x-strict .x-ie8 .x-fieldset-header .x-fieldset-header-text,
+  .x-strict .x-ie8 .x-fieldset-header .x-fieldset-header-checkbox {
+    position: relative;
+    top: -1px; }
+
+/* line 101, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-quirks .x-ie .x-fieldset-header,
+.x-ie8m .x-fieldset-header {
+  padding-left: 1px;
+  padding-right: 1px; }
+
+/* line 109, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-collapsed .x-fieldset-body {
+  display: none; }
+
+/* line 114, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-collapsed {
+  padding-bottom: 0 !important;
+  border-width: 1px 1px 0 1px !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important; }
+
+/* line 123, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-ie6 .x-fieldset-collapsed {
+  border-width: 1px 0 0 0 !important;
+  padding-bottom: 0 !important;
+  margin-left: 1px;
+  margin-right: 1px; }
+
+/* line 131, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-ie .x-fieldset-bwrap {
+  zoom: 1; }
+
+/* line 137, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset .x-tool-toggle {
+  background-image: url(images/fieldset/collapse-tool.png);
+  background-position: 0 0; }
+/* line 144, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset .x-tool-over .x-tool-toggle {
+  background-position: 0 -15px; }
+
+/* line 151, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-collapsed .x-tool-toggle {
+  background-position: -15px 0; }
+/* line 156, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-collapsed .x-tool-over .x-tool-toggle {
+  background-position: -15px -15px; }
+
+/* IE legend positioning bug */
+/* line 164, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-ie .x-fieldset-noborder legend {
+  position: relative;
+  margin-bottom: 23px; }
+
+/* line 170, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-ie .x-fieldset-noborder legend span {
+  position: absolute;
+  left: 16px; }
+
+/* line 176, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset {
+  overflow: hidden; }
+
+/* line 180, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-bwrap {
+  overflow: hidden;
+  zoom: 1; }
+
+/* line 186, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
+.x-fieldset-body {
+  overflow: hidden; }
+
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Radio.scss */
+.x-form-radio {
+  width: 15px;
+  height: 15px;
+  background: url(images/form/radio.png) no-repeat; }
+
+/* line 7, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Radio.scss */
+.x-form-cb-checked .x-form-radio {
+  background-position: 0 -15px; }
+
+/* line 11, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Radio.scss */
+.x-form-radio-focus {
+  background-position: -15px 0; }
+
+/* line 15, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Radio.scss */
+.x-form-cb-checked .x-form-radio-focus {
+  background-position: -15px -15px; }
+
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/Trigger.scss */
 .x-form-trigger {
   background: url(images/form/trigger.png);
@@ -11835,6 +12131,10 @@ div.x-form-spinner-down {
 .x-boundlist-above {
   border-top-width: 1px;
   border-bottom-width: 1px; }
+
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/field/File.scss */
+.x-form-file-wrap .x-form-text {
+  color: gray; }
 
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/panel/Table.scss */
 .x-grid-body {
@@ -12050,6 +12350,24 @@ div.x-form-spinner-down {
 .x-column-header-sort-DESC .x-column-header-text {
   background-image: url(images/grid/sort_desc.png); }
 
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/column/CheckColumn.scss */
+.x-grid-cell-inner-checkcolumn {
+  padding: 5px 10px 4px 10px; }
+
+/* line 12, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/column/CheckColumn.scss */
+.x-grid-checkcolumn {
+  width: 15px;
+  height: 15px;
+  background: url(images/form/checkbox.png) 0 0 no-repeat; }
+  /* line 17, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/column/CheckColumn.scss */
+  .x-item-disabled .x-grid-checkcolumn {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    opacity: 0.3; }
+
+/* line 22, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/column/CheckColumn.scss */
+.x-grid-checkcolumn-checked {
+  background-position: 0 -15px; }
+
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/locking/Lockable.scss */
 .x-grid-locked .x-grid-inner-locked {
   border-width: 0 1px 0 0;
@@ -12104,6 +12422,9 @@ div.x-form-spinner-down {
   border-bottom: 1px solid #e1e1e1 !important;
   padding: 5px 0 5px 0;
   background-color: #dfeaf2; }
+/* line 48, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/plugin/RowEditing.scss */
+.x-grid-with-col-lines .x-grid-row-editor .x-form-cb {
+  margin-right: 1px; }
 
 /* line 137, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
 .x-grid-row-editor-buttons-default-bottom {
@@ -17345,6 +17666,19 @@ body.x-nbr .x-panel-header-light-framed-collapsed-left-frameInfo {
   /* line 26, ../../../../ext/packages/ext-theme-neptune/sass/src/form/field/Trigger.scss */
   .x-form-invalid .x-form-trigger-wrap {
     border-color: #cf4c35; }
+
+/* line 3, ../../../../ext/packages/ext-theme-neptune/sass/src/form/field/File.scss */
+.x-form-file-wrap .x-form-trigger-wrap {
+  border: 0; }
+
+/* line 7, ../../../../ext/packages/ext-theme-neptune/sass/src/form/field/File.scss */
+.x-form-file-wrap .x-form-trigger-wrap .x-form-text {
+  border: 1px solid;
+  border-color: silver #d9d9d9 #d9d9d9;
+  height: 24px; }
+  /* line 13, ../../../../ext/packages/ext-theme-neptune/sass/src/form/field/File.scss */
+  .x-content-box .x-form-file-wrap .x-form-trigger-wrap .x-form-text {
+    height: 15px; }
 
 /* line 1, ../../../../ext/packages/ext-theme-neptune/sass/src/grid/header/Container.scss */
 .x-grid-header-ct {

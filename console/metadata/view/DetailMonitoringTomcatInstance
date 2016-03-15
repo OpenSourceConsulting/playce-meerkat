@@ -1166,6 +1166,7 @@
                                         "collapsible": true,
                                         "forceFit": true,
                                         "margin": "5 5 5 5",
+                                        "store": "TempoStore",
                                         "title": "Memory Usage"
                                     },
                                     "name": "MyGridPanel11",
@@ -1668,6 +1669,7 @@
                                         "collapsible": true,
                                         "forceFit": true,
                                         "margin": "5 5 5 5",
+                                        "store": "TempoStore",
                                         "title": "Thread pool details"
                                     },
                                     "name": "MyGridPanel12",
@@ -2281,6 +2283,7 @@
                                     "userConfig": {
                                         "forceFit": true,
                                         "margin": "5 5 5 5",
+                                        "store": "TempoStore",
                                         "title": "Application Summary"
                                     },
                                     "name": "MyGridPanel13",

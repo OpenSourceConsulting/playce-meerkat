@@ -37,6 +37,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "forceFit": true,
+                        "store": "TempoStore",
                         "title": "Data source List"
                     },
                     "name": "MyGridPanel18",
@@ -324,6 +325,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "forceFit": true,
+                        "store": "TempoStore",
                         "title": ""
                     },
                     "name": "MyGridPanel19",

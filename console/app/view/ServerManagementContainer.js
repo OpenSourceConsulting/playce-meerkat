@@ -25,7 +25,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Panel',
         'Ext.tab.Tab',
         'Ext.form.Panel',
-        'Ext.form.field.ComboBox',
+        'Ext.form.field.Text',
         'Ext.form.field.Display',
         'Ext.form.field.Hidden',
         'Ext.form.field.Checkbox'
@@ -152,12 +152,11 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                             readOnly: true
                                                         },
                                                         {
-                                                            xtype: 'combobox',
+                                                            xtype: 'textfield',
                                                             anchor: '100%',
                                                             id: 'serverSSHIPAddressCombobox',
                                                             fieldLabel: 'SSH IPAddress',
-                                                            readOnly: true,
-                                                            store: 'TempoStore'
+                                                            readOnly: true
                                                         },
                                                         {
                                                             xtype: 'textfield',

@@ -2485,7 +2485,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.MonitoringTomcatInstance": [],
   "webapp.view.ResourceManagementContainer": [],
   "webapp.view.ServerManagementContainer": [],
-  "webapp.view.ServerManagementContainer1": [],
+  "webapp.view.SessionServerGroupContainer": [],
   "webapp.view.SeverDataGridWindow": [],
   "webapp.view.TomcatForm": [],
   "webapp.view.TomcatInstanceContainer": [],
@@ -3603,7 +3603,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.ServerManagementContainer": [
     "widget.servermanagementcontainer"
   ],
-  "webapp.view.ServerManagementContainer1": [],
+  "webapp.view.SessionServerGroupContainer": [],
   "webapp.view.SeverDataGridWindow": [],
   "webapp.view.TomcatForm": [
     "widget.tomcatform"

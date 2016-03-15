@@ -636,6 +636,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                     flex: 1,
                                     title: 'Network interfaces',
                                     forceFit: true,
+                                    store: 'TempoStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
@@ -696,6 +697,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             title: 'Fan',
                                             titleAlign: 'center',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -716,6 +718,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             title: 'Power',
                                             titleAlign: 'center',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -736,6 +739,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             title: 'Temperature',
                                             titleAlign: 'center',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -775,6 +779,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             title: 'Fan',
                                             titleAlign: 'center',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',
@@ -795,6 +800,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
                                             title: 'Power',
                                             titleAlign: 'center',
                                             forceFit: true,
+                                            store: 'TempoStore',
                                             columns: [
                                                 {
                                                     xtype: 'gridcolumn',

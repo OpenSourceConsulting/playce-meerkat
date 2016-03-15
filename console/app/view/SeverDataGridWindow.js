@@ -54,7 +54,8 @@ Ext.define('webapp.view.SeverDataGridWindow', {
                             xtype: 'combobox',
                             margin: '0 0 10 50',
                             width: 414,
-                            fieldLabel: 'Type'
+                            fieldLabel: 'Type',
+                            store: 'TempoStore'
                         },
                         {
                             xtype: 'textfield',

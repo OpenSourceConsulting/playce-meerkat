@@ -48,6 +48,7 @@ Ext.define('webapp.view.ResourceManagementContainer', {
                             xtype: 'gridpanel',
                             title: 'Data source List',
                             forceFit: true,
+                            store: 'TempoStore',
                             columns: [
                                 {
                                     xtype: 'gridcolumn',
@@ -143,6 +144,7 @@ Ext.define('webapp.view.ResourceManagementContainer', {
                             xtype: 'gridpanel',
                             title: '',
                             forceFit: true,
+                            store: 'TempoStore',
                             columns: [
                                 {
                                     xtype: 'gridcolumn',

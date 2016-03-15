@@ -301,7 +301,7 @@
                                                     "designerId": "1502eba7-1c67-4788-908d-135056b5082b"
                                                 },
                                                 {
-                                                    "type": "Ext.form.field.ComboBox",
+                                                    "type": "Ext.form.field.Text",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
@@ -311,10 +311,9 @@
                                                         "fieldLabel": "SSH IPAddress",
                                                         "id": "serverSSHIPAddressCombobox",
                                                         "layout|anchor": "100%",
-                                                        "readOnly": true,
-                                                        "store": "TempoStore"
+                                                        "readOnly": true
                                                     },
-                                                    "name": "MyComboBox",
+                                                    "name": "MyTextField8",
                                                     "designerId": "366df445-20b8-42ad-a481-640646a16f1d"
                                                 },
                                                 {
