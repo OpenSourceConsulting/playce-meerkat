@@ -23,6 +23,8 @@
     <logger name="org.hibernate.type.BasicTypeRegistry" level="WARN" />
 	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
 	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />
+	
+	<logger name="org.apache.tomcat.jdbc.pool" level="DEBUG" />
 
 	<!-- 
 	<logger name="java.sql.Connection" level="DEBUG" />

@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "autoLoad": null,
         "designer|userClassName": "DatasourceStore",
         "model": "DatasourceModel",
         "storeId": "DatasourceStore"
@@ -20,6 +21,9 @@
                 "type": "object"
             },
             "codeClass": null,
+            "userConfig": {
+                "url": "resources/ds-list.json"
+            },
             "name": "MyAjaxProxy4",
             "designerId": "4f1e1fd2-423c-4b3d-82df-46954b8650be",
             "cn": [
@@ -30,6 +34,9 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "userConfig": {
+                        "root": "list"
+                    },
                     "name": "MyJsonReader4",
                     "designerId": "df195797-2e24-4dff-8c15-8ad07f4fd87d"
                 }

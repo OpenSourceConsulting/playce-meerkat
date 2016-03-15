@@ -49,7 +49,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.athena.meerkat.controller.web.user.UserService;
+import com.athena.meerkat.controller.web.user.services.UserService;
 
 /**
  * Main class with Spring Boot
@@ -96,6 +96,8 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 					"/index.html", 
 					"/app.js",
 					"/resources/**",
+					"/monitor/**",
+					"/tomcat/**",
 
 					"/getServerList", 
 					"/auth/notLogin*",
@@ -120,7 +122,8 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
                     .antMatchers(HttpMethod.GET, "/tomcat/**").access("hasRole('ROLE_TOMCAT_USER')")
                     
-                    .antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
+                    //.antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
+                    
                     .antMatchers("/dbmonitor/**").access("hasRole('ROLE_MONITOR_DB')")
                     
                     .antMatchers(HttpMethod.POST, "/res/**").access("hasRole('ROLE_RES_ADMIN')")

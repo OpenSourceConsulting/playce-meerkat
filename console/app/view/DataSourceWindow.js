@@ -15,113 +15,97 @@
 
 Ext.define('webapp.view.DataSourceWindow', {
     extend: 'Ext.window.Window',
+    alias: 'widget.dsWin',
 
     requires: [
-        'Ext.form.FieldSet',
+        'Ext.form.Panel',
         'Ext.form.field.ComboBox',
+        'Ext.form.FieldSet',
+        'Ext.toolbar.Toolbar',
         'Ext.button.Button'
     ],
 
-    height: 500,
-    width: 503,
+    height: 395,
+    width: 600,
+    bodyPadding: 15,
     title: 'New Datasource',
-
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
 
     initComponent: function() {
         var me = this;
 
         Ext.applyIf(me, {
-            dockedItems: [
+            items: [
                 {
-                    xtype: 'fieldset',
-                    flex: 1,
-                    dock: 'top',
-                    height: 485,
-                    layout: 'column',
+                    xtype: 'form',
                     title: '',
                     items: [
                         {
                             xtype: 'textfield',
-                            margin: '30 0 10 30',
-                            width: 414,
                             fieldLabel: 'Name'
                         },
                         {
                             xtype: 'combobox',
-                            margin: '0 0 10 30',
-                            width: 414,
                             fieldLabel: 'Database Type'
                         },
                         {
                             xtype: 'textfield',
-                            margin: '0 0 10 30',
-                            width: 414,
+                            width: 555,
                             fieldLabel: 'JDBC URL'
                         },
                         {
                             xtype: 'textfield',
-                            margin: '0 0 10 30',
-                            width: 414,
                             fieldLabel: 'Username'
                         },
                         {
                             xtype: 'textfield',
-                            margin: '0 0 10 30',
-                            width: 414,
-                            fieldLabel: 'Pasword'
-                        },
-                        {
-                            xtype: 'textfield',
-                            margin: '0 0 10 30',
-                            width: 414,
-                            fieldLabel: 'Retype Password'
+                            fieldLabel: 'Pasword',
+                            inputType: 'password'
                         },
                         {
                             xtype: 'fieldset',
-                            height: 122,
-                            width: 464,
+                            padding: 10,
+                            fieldDefaults: {
+                                labelWidth: 130
+                            },
                             title: 'Connection Pool',
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    margin: '0 0 10 30',
-                                    width: 414,
-                                    fieldLabel: 'Max Connection Pool',
-                                    labelWidth: 130
+                                    fieldLabel: 'Max Connection Pool'
                                 },
                                 {
                                     xtype: 'textfield',
-                                    margin: '0 0 10 30',
-                                    width: 414,
-                                    fieldLabel: 'Min Connetion Pool',
-                                    labelWidth: 130
+                                    fieldLabel: 'Min Connetion Pool'
                                 },
                                 {
                                     xtype: 'textfield',
-                                    margin: '0 0 10 30',
-                                    width: 414,
-                                    fieldLabel: 'Max Timeout(ms)',
-                                    labelWidth: 130
+                                    fieldLabel: 'Max Timeout(ms)'
                                 }
                             ]
-                        },
+                        }
+                    ]
+                }
+            ],
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    ui: 'footer',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'center'
+                    },
+                    items: [
                         {
                             xtype: 'button',
-                            margin: '0 0 0 120',
                             text: 'Test Connection'
                         },
                         {
                             xtype: 'button',
-                            margin: '0 0 0 10',
                             text: 'Create'
                         },
                         {
                             xtype: 'button',
-                            margin: '0 0 0 10',
                             text: 'Canel'
                         }
                     ]

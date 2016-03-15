@@ -1,0 +1,199 @@
+{
+    "type": "Ext.form.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyPadding": 10,
+        "bodyStyle": null,
+        "designer|userAlias": "domainform",
+        "designer|userClassName": "DomainForm",
+        "fieldDefaults": [
+            "{",
+            "   msgTarget: 'side',",
+            "   labelWidth: 140,",
+            "   labelAlign : 'right'",
+            "}"
+        ],
+        "frameHeader": false,
+        "header": false,
+        "height": null,
+        "id": "domainForm",
+        "itemId": "domainForm",
+        "title": "My Form"
+    },
+    "name": "MyForm3",
+    "designerId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e",
+    "cn": [
+        {
+            "type": "Ext.form.field.Text",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "allowOnlyWhitespace": false,
+                "designer|displayName": "DomainNameTextField",
+                "emptyText": "",
+                "fieldLabel": "Name",
+                "id": "domainNameTextField",
+                "itemId": "domainNameTextField",
+                "name": "UserIDTextField",
+                "validateBlank": true,
+                "width": 400
+            },
+            "name": "MyTextField38",
+            "designerId": "22ac5c8c-3dfb-4b4b-a158-98c6ede2638c"
+        },
+        {
+            "type": "Ext.form.RadioGroup",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "DomainTypeField",
+                "fieldLabel": "Type",
+                "id": "domainTypeRadioButtonField",
+                "width": 400
+            },
+            "name": "MyRadioGroup8",
+            "designerId": "9329d607-e9d9-4696-9d97-534ef09108a2",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Clustering",
+                        "designer|displayName": "DomainType",
+                        "fieldLabel": null,
+                        "id": "domainTypeClustering",
+                        "name": "DomainType",
+                        "value": [
+                            "true"
+                        ]
+                    },
+                    "name": "MyRadio16",
+                    "designerId": "57eca5a3-530a-4f02-b41d-3664e1bdbd41",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onDomainTypeClusteringChange",
+                                "implHandler": [
+                                    "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
+                                    "if (comboBox.isVisible()){",
+                                    "    comboBox.hide();",
+                                    "}",
+                                    ""
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "name": "onDomainTypeClusteringChange",
+                            "designerId": "a41f437e-3b45-4a81-b778-b6eeb7b877ba"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.Radio",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "boxLabel": "Non-clustering",
+                        "checked": true,
+                        "designer|displayName": "DomainType",
+                        "fieldLabel": null,
+                        "id": "domainTypeNoneClustering",
+                        "name": "DomainType",
+                        "value": [
+                            "false"
+                        ],
+                        "width": null
+                    },
+                    "name": "MyRadio17",
+                    "designerId": "4a6c21fb-7291-4fb2-8485-ae4476cfee00",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onDomainTypeNoneClusteringChange",
+                                "implHandler": [
+                                    "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
+                                    "if (comboBox.isHidden){",
+                                    "    comboBox.show();",
+                                    "}"
+                                ],
+                                "name": "change",
+                                "scope": "me"
+                            },
+                            "name": "onDomainTypeNoneClusteringChange",
+                            "designerId": "5dd83237-5014-426c-b769-97b406258ce5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.field.ComboBox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "allowBlank": false,
+                "allowOnlyWhitespace": false,
+                "designer|createAlias": "",
+                "designer|displayName": "DatagridServerGroupComboBox",
+                "displayField": "name",
+                "emptyText": null,
+                "fieldLabel": "Session Server Group",
+                "id": "dataGridServerGroupComboBoxField",
+                "name": "DatagridServerGroupComboBox",
+                "store": "DatagridServerGroupStore",
+                "valueField": "id",
+                "width": 400
+            },
+            "name": "MyComboBox10",
+            "designerId": "2e241f61-a366-4b9e-8623-ef6f579c36be"
+        },
+        {
+            "type": "Ext.form.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Label",
+                "id": "domainIdHiddenField",
+                "name": "IDHiddenField"
+            },
+            "name": "MyHiddenField1",
+            "designerId": "becf5bd7-dc10-46b1-ae4b-f2365d160955"
+        }
+    ]
+}

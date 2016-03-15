@@ -30,8 +30,10 @@ Ext.define('webapp.store.DatasourceStore', {
             storeId: 'DatasourceStore',
             proxy: {
                 type: 'ajax',
+                url: 'resources/ds-list.json',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'list'
                 }
             }
         }, cfg)]);

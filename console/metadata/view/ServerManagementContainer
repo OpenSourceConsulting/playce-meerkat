@@ -99,6 +99,7 @@
                                 "forceFit": true,
                                 "id": "tomcatServerGrid",
                                 "layout|flex": 1,
+                                "margin": "",
                                 "store": "MachineStore",
                                 "title": ""
                             },
@@ -1878,6 +1879,22 @@
                                     "designerId": "640361ad-4f6e-412d-82b1-014e873425e7"
                                 }
                             ]
+                        },
+                        {
+                            "type": "Ext.form.FieldContainer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Label",
+                                "height": 120,
+                                "layout|flex": 1,
+                                "width": 400
+                            },
+                            "name": "MyFieldContainer",
+                            "designerId": "d70fb597-4074-46ef-93b5-d6d0ae1acb3a"
                         }
                     ]
                 },

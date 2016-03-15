@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.store.EnvironmentVariableStore', {
+Ext.define('MyApp.store.EnvironmentVariableStore', {
     extend: 'Ext.data.Store',
 
     requires: [
-        'webapp.model.EnvironmentVariableModel',
+        'MyApp.model.EnvironmentVariableModel',
         'Ext.data.proxy.JsonP',
         'Ext.data.reader.Json'
     ],
@@ -26,7 +26,7 @@ Ext.define('webapp.store.EnvironmentVariableStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            model: 'webapp.model.EnvironmentVariableModel',
+            model: 'MyApp.model.EnvironmentVariableModel',
             storeId: 'EnvironmentVariableStore',
             proxy: {
                 type: 'jsonp',

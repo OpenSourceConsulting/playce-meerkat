@@ -20,7 +20,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "url": "/machine/list"
+                "url": "res/machine/simplelist"
             },
             "name": "MyAjaxProxy3",
             "designerId": "81285acb-ef88-4019-b332-1a75418da875",
@@ -32,6 +32,9 @@
                         "type": "object"
                     },
                     "codeClass": null,
+                    "userConfig": {
+                        "root": "data"
+                    },
                     "name": "MyJsonReader3",
                     "designerId": "6a8871a1-eaea-408b-b199-063304aaf3ed"
                 }

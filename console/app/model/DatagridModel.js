@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('webapp.model.DatagridModel', {
+Ext.define('MyApp.model.DatagridModel', {
     extend: 'Ext.data.Model',
 
     requires: [

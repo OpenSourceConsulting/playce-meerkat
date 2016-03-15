@@ -50,7 +50,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                 {
                     xtype: 'tabpanel',
                     flex: 10,
-                    id: 'tabPanel3',
+                    id: 'detailTomcatMonitoringTab',
                     itemId: 'tabPanel',
                     activeTab: 0,
                     items: [
@@ -719,7 +719,7 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             flex: 1,
                                             margin: '5 5 5 5',
                                             layout: 'fit',
-                                            title: 'Thread Pool Utilization',
+                                            title: '',
                                             titleAlign: 'center',
                                             dockedItems: [
                                                 {
@@ -769,41 +769,48 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                             flex: 1,
                                             margin: '5 5 5 5',
                                             layout: 'fit',
-                                            title: 'Busy Threads',
+                                            title: 'Busy threads',
                                             titleAlign: 'center',
                                             dockedItems: [
                                                 {
                                                     xtype: 'chart',
                                                     dock: 'top',
+                                                    autoRender: true,
                                                     height: 250,
+                                                    id: 'tomcatBusyThreadChart',
                                                     width: 400,
-                                                    animate: true,
                                                     insetPadding: 20,
-                                                    store: 'TempoStore',
+                                                    store: 'TomcatBusyThreadStore',
+                                                    theme: 'Yellow',
                                                     axes: [
                                                         {
                                                             type: 'Category',
                                                             fields: [
-                                                                'x'
+                                                                'time'
                                                             ],
-                                                            title: 'Category Axis',
+                                                            grid: true,
+                                                            title: 'Time',
                                                             position: 'bottom'
                                                         },
                                                         {
                                                             type: 'Numeric',
                                                             fields: [
-                                                                'y'
+                                                                'value'
                                                             ],
-                                                            title: 'Numeric Axis',
+                                                            grid: true,
                                                             position: 'left'
                                                         }
                                                     ],
                                                     series: [
                                                         {
                                                             type: 'line',
-                                                            xField: 'x',
-                                                            yField: 'y',
-                                                            smooth: 3
+                                                            highlight: true,
+                                                            title: 'Busy threads',
+                                                            xField: 'time',
+                                                            yField: 'value',
+                                                            fill: true,
+                                                            showMarkers: false,
+                                                            smooth: true
                                                         }
                                                     ]
                                                 }
@@ -1163,12 +1170,36 @@ Ext.define('webapp.view.DetailMonitoringTomcatInstance', {
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    listeners: {
+                        tabchange: {
+                            fn: me.onDetailTomcatMonitoringTabTabChange,
+                            scope: me
+                        }
+                    }
                 }
             ]
         });
 
         me.callParent(arguments);
+    },
+
+    onDetailTomcatMonitoringTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+        var activeTab = tabPanel.getActiveTab();
+        var activeTabIndex =tabPanel.items.findIndex('id', activeTab.id);
+        var tomcatId = GlobalData.lastSelectedMenuId;
+
+        if(activeTabIndex == 2) {//thread tab
+        GlobalData.busyThreadsChartInterval = setInterval(function(){
+                webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
+         }, 1000);
+            webapp.app.getController("TomcatController").loadDataBusyThreadChart(tomcatId);
+
+        }
+        else {
+            clearInterval(GlobalData.busyThreadsChartInterval);
+            GlobalData.busyThreadsChartInterval = -1;
+        }
     }
 
 });

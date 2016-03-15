@@ -203,7 +203,7 @@ Ext.define('webapp.view.dashboardPanel', {
                                             xtype: 'chart',
                                             dock: 'top',
                                             height: 184,
-                                            html: 'SERVER RESPONE TIME',
+                                            html: '<span style="color:red;valign:center;">SERVER RESPONE TIME</span>',
                                             style: 'border: 5px;',
                                             width: 598,
                                             animate: true,

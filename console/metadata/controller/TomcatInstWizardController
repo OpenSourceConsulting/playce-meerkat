@@ -1,0 +1,55 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "TomcatInstWizardController"
+    },
+    "name": "MyController",
+    "designerId": "84e611dd-513f-4792-b7ef-b8e646eb335d",
+    "cn": [
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "ticWizard #step2",
+                "designer|targetType": "Ext.container.Container",
+                "fn": "onStep2Activate",
+                "implHandler": [
+                    "component.down('gridpanel').getStore().load();"
+                ],
+                "name": "activate",
+                "scope": "me"
+            },
+            "name": "onStep2Activate",
+            "designerId": "6bb76ac2-f822-43f5-b63c-ebb9969e6790"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "ticWizard #btnWCreateDs",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onDSCreateButtonClick",
+                "implHandler": [
+                    "        Ext.create('widget.dsWin').show();"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "name": "onDSCreateButtonClick",
+            "designerId": "31ce20b4-1802-47f2-962e-33437c2b09ab"
+        }
+    ]
+}

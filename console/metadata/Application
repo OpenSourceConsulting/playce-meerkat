@@ -20,7 +20,8 @@
             "CluteringConfigurationController",
             "DatasourceController",
             "ServerManagementController",
-            "DatagridServerController"
+            "DatagridServerController",
+            "TomcatInstWizardController"
         ],
         "models": [
             "SessionKeyData",
@@ -34,7 +35,8 @@
             "DatasourceModel",
             "DatagridModel",
             "EnvironmentVariableModel",
-            "RevisionModel"
+            "RevisionModel",
+            "TomcatBusyThreadModel"
         ],
         "name": "webapp",
         "requires": [
@@ -56,7 +58,8 @@
             "LinkingTomcatDatasourceStore",
             "DatagridServerStore",
             "EnvironmentVariableStore",
-            "RevisionStore"
+            "RevisionStore",
+            "TomcatBusyThreadStore"
         ],
         "views": [
             "meerkatViewport",
@@ -82,7 +85,10 @@
             "ClusteringConfigurationComparingWindow",
             "DomainWindow",
             "UserRoleWindow",
-            "EnvironmentVariableWindow"
+            "EnvironmentVariableWindow",
+            "TomcatInstanceCreateWizard",
+            "DomainForm",
+            "TomcatForm"
         ]
     },
     "name": "Application",

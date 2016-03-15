@@ -2693,6 +2693,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.controller.MenuController": [],
   "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
+  "webapp.controller.TomcatInstWizardController": [],
   "webapp.controller.UserController": [],
   "webapp.controller.dashboardController": [],
   "webapp.controller.footerController": [],
@@ -2708,6 +2709,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.model.MachineModel": [],
   "webapp.model.RevisionModel": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatBusyThreadModel": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [],
   "webapp.model.UserRoleModel": [],
@@ -2723,6 +2725,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.RevisionStore": [],
   "webapp.store.TempoStore": [],
+  "webapp.store.TomcatBusyThreadStore": [],
   "webapp.store.TomcatInstanceListStore": [],
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],
@@ -2736,6 +2739,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.DetailMonitoringMachineContainer": [],
   "webapp.view.DetailMonitoringTomcatInstance": [],
   "webapp.view.DomainContainer": [],
+  "webapp.view.DomainForm": [],
   "webapp.view.DomainWindow": [],
   "webapp.view.EnvironmentVariableWindow": [],
   "webapp.view.LinkNewDataSourceWindow": [],
@@ -2744,7 +2748,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.ResourceManagementContainer": [],
   "webapp.view.ServerManagementContainer": [],
   "webapp.view.SeverDataGridWindow": [],
+  "webapp.view.TomcatForm": [],
   "webapp.view.TomcatInstanceContainer": [],
+  "webapp.view.TomcatInstanceCreateWizard": [],
   "webapp.view.TomcatInstanceWindow": [],
   "webapp.view.UserMntContainer": [],
   "webapp.view.UserRoleWindow": [],
@@ -3772,6 +3778,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.controller.MenuController": [],
   "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
+  "webapp.controller.TomcatInstWizardController": [],
   "webapp.controller.UserController": [
     "controller.UserController"
   ],
@@ -3789,6 +3796,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.model.MachineModel": [],
   "webapp.model.RevisionModel": [],
   "webapp.model.SessionKeyData": [],
+  "webapp.model.TomcatBusyThreadModel": [],
   "webapp.model.TomcatInstanceModel": [],
   "webapp.model.UserModel": [
     "model.UserModel"
@@ -3806,6 +3814,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.RevisionStore": [],
   "webapp.store.TempoStore": [],
+  "webapp.store.TomcatBusyThreadStore": [],
   "webapp.store.TomcatInstanceListStore": [],
   "webapp.store.UserRoleStore": [],
   "webapp.store.UserStore": [],
@@ -3817,7 +3826,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.ClusteringConfigurationWindow"
   ],
   "webapp.view.DataSourceServerWindow": [],
-  "webapp.view.DataSourceWindow": [],
+  "webapp.view.DataSourceWindow": [
+    "widget.dsWin"
+  ],
   "webapp.view.DatagridServerGroupWindow": [],
   "webapp.view.DeployWindow": [
     "widget.DeployWindow"
@@ -3830,6 +3841,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "webapp.view.DomainContainer": [
     "widget.domaincontainer"
+  ],
+  "webapp.view.DomainForm": [
+    "widget.domainform"
   ],
   "webapp.view.DomainWindow": [
     "widget.DomainWindow"
@@ -3851,8 +3865,14 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.servermanagementcontainer"
   ],
   "webapp.view.SeverDataGridWindow": [],
+  "webapp.view.TomcatForm": [
+    "widget.tomcatform"
+  ],
   "webapp.view.TomcatInstanceContainer": [
     "widget.tomcatinstancecontainer"
+  ],
+  "webapp.view.TomcatInstanceCreateWizard": [
+    "widget.ticWizard"
   ],
   "webapp.view.TomcatInstanceWindow": [
     "widget.TomcatInstanceWindow"

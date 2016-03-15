@@ -43,9 +43,13 @@
                         "itemId": "mycombobox",
                         "layout|flex": null,
                         "store": "DomainStore",
+                        "style": null,
                         "valueField": "id"
                     },
                     "name": "MyComboBox",
+                    "configAlternates": {
+                        "style": "string"
+                    },
                     "designerId": "7081b1ed-6bfa-4fdb-a2e0-b2e63370505f",
                     "cn": [
                         {
@@ -356,9 +360,7 @@
                                         ],
                                         "dock": "top",
                                         "height": 184,
-                                        "html": [
-                                            "SERVER RESPONE TIME"
-                                        ],
+                                        "html": "<span style=\"color:red;valign:center;\">SERVER RESPONE TIME</span>",
                                         "insetPadding": 20,
                                         "store": "DomainStore",
                                         "style": "border: 5px;",
@@ -366,7 +368,8 @@
                                     },
                                     "name": "LineChart",
                                     "configAlternates": {
-                                        "style": "string"
+                                        "style": "string",
+                                        "html": "string"
                                     },
                                     "designerId": "973ab27d-ff5e-4f2d-ac09-17d9388e3c96",
                                     "isBuiltIn": true,
@@ -384,6 +387,7 @@
                                                 "fields": [
                                                     "x"
                                                 ],
+                                                "position": null,
                                                 "title": "Response Time"
                                             },
                                             "name": "MyCategoryAxis",
