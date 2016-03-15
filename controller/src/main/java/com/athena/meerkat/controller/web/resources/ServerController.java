@@ -12,9 +12,8 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.resources.entities.Server;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
-import com.athena.meerkat.controller.web.tomcat.services.EnvironmentVariableService;
 
 @Controller
 @RequestMapping("/res/machine")
@@ -22,8 +21,6 @@ import com.athena.meerkat.controller.web.tomcat.services.EnvironmentVariableServ
 public class ServerController {
 	@Autowired
 	private ServerService service;
-	@Autowired
-	private EnvironmentVariableService evService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody

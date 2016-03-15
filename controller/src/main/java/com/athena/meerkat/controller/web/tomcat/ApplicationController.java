@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatApplication;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 
@@ -36,7 +36,7 @@ public class ApplicationController {
 		}
 		app.setState(State.APP_STATE_STOPPED);
 		// app.setLastModifiedDate(new Date());
-		app.setDeployedDate(new Date());
+		//app.setDeployedDate(new Date());
 		appService.deploy(app, domain);
 		return json;
 	}
@@ -143,11 +143,11 @@ public class ApplicationController {
 			json.setSuccess(false);
 			json.setMsg("Domain does not exist");
 		}
-		List<TomcatInstance> tomcats = domain.getTomcats();
-		if (tomcats.size() > 0) {
-			json.setSuccess(true);
-			// json.setData(tomcats.get(0).getApplications());
-		}
+//		List<TomcatInstance> tomcats = domain.getTomcats();
+//		if (tomcats.size() > 0) {
+//			json.setSuccess(true);
+//			// json.setData(tomcats.get(0).getApplications());
+//		}
 		return json;
 	}
 }

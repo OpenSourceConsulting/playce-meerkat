@@ -28,7 +28,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+
 
 /**
  * <pre>

@@ -21,7 +21,8 @@ Ext.define('webapp.view.UserRoleWindow', {
         'Ext.form.Panel',
         'Ext.form.field.Text',
         'Ext.form.field.Hidden',
-        'Ext.button.Button'
+        'Ext.button.Button',
+        'Ext.form.Label'
     ],
 
     height: 124,
@@ -65,6 +66,11 @@ Ext.define('webapp.view.UserRoleWindow', {
                             xtype: 'hiddenfield',
                             fieldLabel: 'Label',
                             name: 'IDHiddenField'
+                        },
+                        {
+                            xtype: 'label',
+                            flex: 1,
+                            text: 'My Label'
                         }
                     ],
                     dockedItems: [

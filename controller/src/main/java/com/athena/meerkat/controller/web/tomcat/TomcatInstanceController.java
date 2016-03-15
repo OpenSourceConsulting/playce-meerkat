@@ -40,12 +40,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.resources.entities.Datasource;
-import com.athena.meerkat.controller.web.resources.entities.Server;
-import com.athena.meerkat.controller.web.resources.services.DatasourceService;
+import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -68,7 +68,7 @@ public class TomcatInstanceController {
 	@Autowired
 	private TomcatDomainService domainService;
 	@Autowired
-	private DatasourceService dsService;
+	private DataSourceService dsService;
 	@Inject
 	@Named("provisioningHandler")
 	private ProvisioningHandler provisioningHandler;
@@ -181,8 +181,8 @@ public class TomcatInstanceController {
 			json.setSuccess(false);
 			json.setMsg("Tomcat does not exist");
 		} else {
-			List<Datasource> datasources = service
-					.getDatasourceListByTomcat(tomcat);
+			List<DataSource> datasources = service
+					.getDataSourceListByTomcat(tomcat);
 			json.setSuccess(true);
 			json.setData(datasources);
 		}
@@ -214,11 +214,11 @@ public class TomcatInstanceController {
 		// tomcat.setDomain(domain);
 		// }
 
-		List<Datasource> datasources = new ArrayList<Datasource>();
+		List<DataSource> datasources = new ArrayList<DataSource>();
 		String[] idStrings = dsIds.split("#", 0);
 		for (int i = 1; i < idStrings.length; i++) { // the first element is
 														// empty
-			Datasource ds = dsService.findOne(Integer.parseInt(idStrings[i]));
+			DataSource ds = dsService.findOne(Integer.parseInt(idStrings[i]));
 			if (ds != null) {
 				datasources.add(ds);
 			}

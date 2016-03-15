@@ -8,7 +8,7 @@
     "userConfig": {
         "designer|userAlias": "DomainWindow",
         "designer|userClassName": "DomainWindow",
-        "height": 193,
+        "height": 201,
         "id": "domainWindow",
         "layout": "fit",
         "modal": true,
@@ -18,270 +18,93 @@
     "designerId": "51e3c970-6dde-4e47-ac74-0e9304537613",
     "cn": [
         {
-            "type": "Ext.form.Panel",
+            "type": "linkedinstance",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
-            "userConfig": {
-                "bodyPadding": 10,
-                "designer|createAlias": "",
-                "designer|displayName": "DomainForm",
-                "frameHeader": false,
-                "header": false,
-                "height": 168,
-                "id": "domainForm",
-                "itemId": "domainForm",
-                "title": "My Form"
+            "name": "domainform1",
+            "designerId": "a2e303b3-5d0b-40ed-a351-51eead1633f6",
+            "masterInstanceId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
             },
-            "name": "MyForm3",
-            "designerId": "653dfb48-8bda-4cc5-9e65-ea85b22eb171",
+            "codeClass": null,
+            "userConfig": {
+                "container|pack": "center",
+                "designer|uiInterfaceName": "footer",
+                "dock": "bottom",
+                "height": null,
+                "ui": "footer"
+            },
+            "name": "MyToolbar32",
+            "designerId": "11a8bdd0-9101-40d6-b065-c054ca697994",
             "cn": [
                 {
-                    "type": "Ext.form.field.Text",
+                    "type": "Ext.button.Button",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "allowBlank": false,
-                        "allowOnlyWhitespace": false,
-                        "designer|displayName": "DomainNameTextField",
-                        "emptyText": "",
-                        "fieldLabel": "Name",
-                        "id": "domainNameTextField",
-                        "itemId": "domainNameTextField",
-                        "name": "UserIDTextField",
-                        "validateBlank": true,
-                        "width": 388
-                    },
-                    "name": "MyTextField38",
-                    "designerId": "22ac5c8c-3dfb-4b4b-a158-98c6ede2638c"
-                },
-                {
-                    "type": "Ext.form.RadioGroup",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "designer|displayName": "DomainTypeField",
-                        "fieldLabel": "Type",
-                        "id": "domainTypeRadioButtonField"
-                    },
-                    "name": "MyRadioGroup8",
-                    "designerId": "9329d607-e9d9-4696-9d97-534ef09108a2",
-                    "cn": [
-                        {
-                            "type": "Ext.form.field.Radio",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "boxLabel": "Clustering",
-                                "checked": true,
-                                "designer|displayName": "DomainType",
-                                "fieldLabel": null,
-                                "id": "domainTypeClustering",
-                                "name": "DomainType",
-                                "value": [
-                                    "true"
-                                ]
-                            },
-                            "name": "MyRadio16",
-                            "designerId": "57eca5a3-530a-4f02-b41d-3664e1bdbd41",
-                            "cn": [
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDomainTypeClusteringChange",
-                                        "implHandler": [
-                                            "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
-                                            "if (comboBox.isVisible()){",
-                                            "    comboBox.hide();",
-                                            "}",
-                                            ""
-                                        ],
-                                        "name": "change",
-                                        "scope": "me"
-                                    },
-                                    "name": "onDomainTypeClusteringChange",
-                                    "designerId": "a41f437e-3b45-4a81-b778-b6eeb7b877ba"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Ext.form.field.Radio",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "boxLabel": "Non-clustering",
-                                "designer|displayName": "DomainType",
-                                "fieldLabel": null,
-                                "id": "domainTypeNoneClustering",
-                                "name": "DomainType",
-                                "value": [
-                                    "false"
-                                ]
-                            },
-                            "name": "MyRadio17",
-                            "designerId": "4a6c21fb-7291-4fb2-8485-ae4476cfee00",
-                            "cn": [
-                                {
-                                    "type": "basiceventbinding",
-                                    "reference": {
-                                        "name": "listeners",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "fn": "onDomainTypeNoneClusteringChange",
-                                        "implHandler": [
-                                            "var comboBox = Ext.getCmp(\"dataGridServerGroupComboBoxField\");",
-                                            "if (comboBox.isHidden){",
-                                            "    comboBox.show();",
-                                            "}"
-                                        ],
-                                        "name": "change",
-                                        "scope": "me"
-                                    },
-                                    "name": "onDomainTypeNoneClusteringChange",
-                                    "designerId": "5dd83237-5014-426c-b769-97b406258ce5"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.form.field.ComboBox",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "allowBlank": false,
-                        "allowOnlyWhitespace": false,
                         "designer|createAlias": "",
-                        "designer|displayName": "DatagridServerGroupComboBox",
-                        "displayField": "name",
-                        "emptyText": null,
-                        "fieldLabel": "Datagrid server group",
-                        "id": "dataGridServerGroupComboBoxField",
-                        "name": "DatagridServerGroupComboBox",
-                        "store": "DatagridServerGroupStore",
-                        "valueField": "id",
-                        "width": 390
+                        "designer|displayName": "BtnSubmit",
+                        "id": "btnSubmitNewDomain",
+                        "itemId": "btnSubmitNewDomain",
+                        "layout|flex": null,
+                        "layout|margins": null,
+                        "padding": null,
+                        "text": "Create"
                     },
-                    "name": "MyComboBox10",
-                    "designerId": "2e241f61-a366-4b9e-8623-ef6f579c36be"
+                    "name": "MyButton43",
+                    "designerId": "bd8d622f-14ba-47fc-883d-2ec1d2f8ffdb"
                 },
                 {
-                    "type": "Ext.form.field.Hidden",
+                    "type": "Ext.button.Button",
                     "reference": {
                         "name": "items",
                         "type": "array"
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "fieldLabel": "Label",
-                        "id": "domainIdHiddenField",
-                        "name": "IDHiddenField"
+                        "designer|displayName": "CancelBtn",
+                        "layout|flex": null,
+                        "padding": null,
+                        "text": "Cancel"
                     },
-                    "name": "MyHiddenField1",
-                    "designerId": "becf5bd7-dc10-46b1-ae4b-f2365d160955"
-                },
-                {
-                    "type": "Ext.container.Container",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "container|align": "middle",
-                        "container|defaultMargins": [
-                            "{\"top\":0,\"right\":10,\"bottom\":10,\"left\":0}"
-                        ],
-                        "container|pack": "center",
-                        "dock": null,
-                        "height": 38,
-                        "layout": "hbox"
-                    },
-                    "name": "MyContainer37",
-                    "designerId": "5c01ff55-6f68-4ae7-9f82-f9a8488a0191",
+                    "name": "MyButton44",
+                    "designerId": "ef4413d7-7cc7-478f-b7fe-91a8019a0a41",
                     "cn": [
                         {
-                            "type": "Ext.button.Button",
+                            "type": "fixedfunction",
                             "reference": {
                                 "name": "items",
                                 "type": "array"
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "designer|createAlias": "",
-                                "designer|displayName": "BtnSubmit",
-                                "id": "btnSubmitNewDomain",
-                                "itemId": "btnSubmitNewDomain",
-                                "layout|margins": "10 10 10 10",
-                                "text": "Create"
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    " Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){",
+                                    "",
+                                    "     if(btn == \"yes\"){",
+                                    "        button.up(\"window\").close();",
+                                    "     }",
+                                    " });"
+                                ]
                             },
-                            "name": "MyButton43",
-                            "designerId": "bd8d622f-14ba-47fc-883d-2ec1d2f8ffdb"
-                        },
-                        {
-                            "type": "Ext.button.Button",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "designer|displayName": "CancelBtn",
-                                "text": "Cancel"
-                            },
-                            "name": "MyButton44",
-                            "designerId": "ef4413d7-7cc7-478f-b7fe-91a8019a0a41",
-                            "cn": [
-                                {
-                                    "type": "fixedfunction",
-                                    "reference": {
-                                        "name": "items",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "designer|params": [
-                                            "button",
-                                            "e"
-                                        ],
-                                        "fn": "handler",
-                                        "implHandler": [
-                                            " Ext.MessageBox.confirm('Confirm', '작업을 취소하시겠습니까?', function(btn){",
-                                            "",
-                                            "     if(btn == \"yes\"){",
-                                            "        button.up(\"window\").close();",
-                                            "     }",
-                                            " });"
-                                        ]
-                                    },
-                                    "name": "handler",
-                                    "designerId": "0bfbad77-f0c0-40a8-8471-a2afec12fc70"
-                                }
-                            ]
+                            "name": "handler",
+                            "designerId": "0bfbad77-f0c0-40a8-8471-a2afec12fc70"
                         }
                     ]
                 }

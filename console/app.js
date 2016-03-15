@@ -20,10 +20,95 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
-    name: 'MyApp',
+
+    requires: [
+        'Ext.window.MessageBox'
+    ],
+    models: [
+        'SessionKeyData',
+        'UserModel',
+        'TomcatInstanceModel',
+        'UserRoleModel',
+        'DomainModel',
+        'DatagridServerGroupModel',
+        'MachineModel',
+        'ClusteringConfigurationModel',
+        'DatasourceModel',
+        'DatagridModel',
+        'EnvironmentVariableModel',
+        'RevisionModel',
+        'TomcatBusyThreadModel'
+    ],
+    stores: [
+        'sessionDataStore',
+        'MenuTreeStore',
+        'TomcatInstanceListStore',
+        'TempoStore',
+        'UserStore',
+        'UserRoleStore',
+        'DomainStore',
+        'DatagridServerGroupStore',
+        'MachineStore',
+        'ClusteringConfigurationStore',
+        'ApplicationStore',
+        'DatasourceStore',
+        'LinkingTomcatDatasourceStore',
+        'DatagridServerStore',
+        'EnvironmentVariableStore',
+        'RevisionStore',
+        'TomcatBusyThreadStore'
+    ],
+    views: [
+        'meerkatViewport',
+        'loginWindow',
+        'dashboardPanel',
+        'DomainContainer',
+        'TomcatInstanceWindow',
+        'DeployWindow',
+        'TomcatInstanceContainer',
+        'LinkNewDataSourceWindow',
+        'UserWindow',
+        'DatagridServerGroupWindow',
+        'DataSourceServerWindow',
+        'DetailMonitoringTomcatInstance',
+        'MonitoringMachineContainer',
+        'UserMntContainer',
+        'DetailMonitoringMachineContainer',
+        'SeverDataGridWindow',
+        'DataSourceWindow',
+        'ResourceManagementContainer',
+        'MonitoringTomcatInstance',
+        'ClusteringConfigurationWindow',
+        'ClusteringConfigurationComparingWindow',
+        'DomainWindow',
+        'UserRoleWindow',
+        'EnvironmentVariableWindow',
+        'TomcatInstanceCreateWizard',
+        'DomainForm',
+        'TomcatForm'
+    ],
+    controllers: [
+        'headerController',
+        'footerController',
+        'dashboardController',
+        'globalController',
+        'LoginController',
+        'MenuController',
+        'DomainController',
+        'TomcatController',
+        'UserController',
+        'ApplicationController',
+        'CluteringConfigurationController',
+        'DatasourceController',
+        'ServerManagementController',
+        'DatagridServerController',
+        'TomcatInstWizardController'
+    ],
+    name: 'webapp',
 
     launch: function() {
-        Ext.create('MyApp.view.meerkatViewport');
+        Ext.create('webapp.view.meerkatViewport');
     }
 
 });
+>>>>>>> refs/remotes/origin/master

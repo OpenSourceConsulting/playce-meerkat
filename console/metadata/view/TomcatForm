@@ -1,0 +1,385 @@
+{
+    "type": "Ext.form.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyPadding": 10,
+        "bodyStyle": null,
+        "designer|userAlias": "tomcatform",
+        "designer|userClassName": "TomcatForm",
+        "fieldDefaults": [
+            "{",
+            "    labelWidth: 150,",
+            "    labelAlign: 'right'",
+            "}"
+        ],
+        "id": "tomcatForm",
+        "title": ""
+    },
+    "name": "MyForm1",
+    "designerId": "65465c05-02a3-4947-85fb-817111f473e9",
+    "cn": [
+        {
+            "type": "Ext.form.field.Hidden",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "Label",
+                "id": "tomcatHiddenField",
+                "layout|anchor": "100%"
+            },
+            "name": "MyHiddenField3",
+            "designerId": "22bc3fa2-bc62-4ac2-8dbb-3f55a9007fa5"
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "title": "Tomcat Config"
+            },
+            "name": "MyFieldSet10",
+            "designerId": "2e1600a0-128e-4d74-891c-1314f28cc577",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "Tomcat Version",
+                        "id": "tomcatVersionTextField",
+                        "labelWidth": null,
+                        "validateBlank": true,
+                        "value": [
+                            "7.0.67"
+                        ],
+                        "width": 399
+                    },
+                    "name": "MyTextField29",
+                    "designerId": "8682d5ba-bdb4-471f-958b-dee3ac40bf0e"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "JAVA_HOME",
+                        "id": "tomcatJavaHomeTextField",
+                        "labelWidth": null,
+                        "validateBlank": true,
+                        "width": 399
+                    },
+                    "name": "MyTextField30",
+                    "designerId": "01c2b456-3ab7-48cf-a125-2c4b17622a9c"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "CATALINA_HOME",
+                        "id": "tomcatCatalinaHomeTextField",
+                        "labelWidth": null,
+                        "validateBlank": true,
+                        "value": [
+                            "/home/meerkat/servers"
+                        ],
+                        "width": 399
+                    },
+                    "name": "MyTextField31",
+                    "designerId": "ab38a521-c6c8-4530-a46d-795c115a3e83"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "CATALINA_BASE",
+                        "id": "tomcatCatalinaBaseTextField",
+                        "labelWidth": null,
+                        "validateBlank": true,
+                        "value": [
+                            "/home/meerkat/apps/instance1"
+                        ],
+                        "width": 399
+                    },
+                    "name": "MyTextField32",
+                    "designerId": "beecd8ed-0130-46d2-9c90-6dc245cc1726"
+                },
+                {
+                    "type": "Ext.form.FieldContainer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "fieldLabel": null,
+                        "height": null,
+                        "layout": "hbox"
+                    },
+                    "name": "MyFieldContainer1",
+                    "designerId": "d54e2b95-113f-4dc7-b672-39abc0837558",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "Http Port",
+                                "id": "httpPortField",
+                                "labelWidth": null,
+                                "layout|flex": 1,
+                                "value": [
+                                    "8080"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyNumberField",
+                            "designerId": "1185205c-30b7-4236-823b-045afccc3f6a"
+                        },
+                        {
+                            "type": "Ext.form.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fieldLabel": "Session Timeout",
+                                "layout|flex": 1,
+                                "value": [
+                                    "30"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyTextField50",
+                            "designerId": "6ba84d8d-122c-46e6-81a6-cb79b84e1c22"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.FieldSet",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapsible": true,
+                "title": "Adanced Config"
+            },
+            "name": "MyFieldSet11",
+            "designerId": "b6c408ed-b251-4708-9355-48905364bbbf",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "fieldLabel": "Encoding",
+                        "id": "tomcatEncodingTextField",
+                        "labelWidth": null,
+                        "validateBlank": true,
+                        "value": [
+                            "UTF-8"
+                        ],
+                        "width": null
+                    },
+                    "name": "MyTextField49",
+                    "designerId": "fdd830b0-4ca6-498b-9d41-3cc28887f8a3"
+                },
+                {
+                    "type": "Ext.form.FieldContainer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "fieldLabel": null,
+                        "height": null,
+                        "layout": "hbox"
+                    },
+                    "name": "MyFieldContainer2",
+                    "designerId": "e7ba3945-108f-4025-bb20-626decc9c7b4",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "AJP Port",
+                                "id": "ajpPortField",
+                                "labelWidth": null,
+                                "layout|flex": 1,
+                                "value": [
+                                    "8009"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyNumberField1",
+                            "designerId": "8baee28f-8746-49f3-ac57-b9d0ddc8a7fc"
+                        },
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "Redirect Port",
+                                "id": "redirectPortField",
+                                "labelWidth": null,
+                                "layout|flex": 1,
+                                "value": [
+                                    "8443"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyNumberField3",
+                            "designerId": "34dbea0e-50fc-49b6-8ccb-cad0d15d76f1"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.FieldContainer",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|align": "stretch",
+                        "fieldLabel": null,
+                        "height": null,
+                        "layout": "hbox"
+                    },
+                    "name": "MyFieldContainer3",
+                    "designerId": "9b97db45-1dbc-4adb-a6f3-eb78933d7b42",
+                    "cn": [
+                        {
+                            "type": "Ext.form.field.Checkbox",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "boxLabel": "Enable",
+                                "fieldLabel": "JMX Enable",
+                                "layout|flex": 2
+                            },
+                            "name": "MyCheckbox3",
+                            "designerId": "262ead8a-4f49-401c-b416-f47061fc8814"
+                        },
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "RMI Registry Port",
+                                "id": "jmxPortField",
+                                "labelWidth": 120,
+                                "layout|flex": 2,
+                                "value": [
+                                    "8225"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyNumberField4",
+                            "designerId": "275dda39-dece-4a4d-af0b-222da5b4ebf2"
+                        },
+                        {
+                            "type": "Ext.form.field.Number",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "allowBlank": false,
+                                "allowOnlyWhitespace": false,
+                                "fieldLabel": "RMI Server Port",
+                                "id": "jmxPortField1",
+                                "labelWidth": 120,
+                                "layout|flex": 2,
+                                "value": [
+                                    "8226"
+                                ],
+                                "width": null
+                            },
+                            "name": "MyNumberField5",
+                            "designerId": "a5238e3f-4b54-4f7e-aa7e-827ab3d2f1c3"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.field.TextArea",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldLabel": "CATALINA_OPTS",
+                        "layout|anchor": "100%"
+                    },
+                    "name": "MyTextArea",
+                    "designerId": "a9ed7295-a667-43d8-8539-52eca414547d"
+                }
+            ]
+        }
+    ]
+}

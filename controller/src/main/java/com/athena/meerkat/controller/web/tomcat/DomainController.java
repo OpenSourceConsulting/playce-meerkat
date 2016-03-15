@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.resources.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerService;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatApplication;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
