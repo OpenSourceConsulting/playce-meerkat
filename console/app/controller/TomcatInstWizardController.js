@@ -14,5 +14,25 @@
  */
 
 Ext.define('webapp.controller.TomcatInstWizardController', {
-    extend: 'Ext.app.Controller'
+    extend: 'Ext.app.Controller',
+
+    onStep2Activate: function(component, eOpts) {
+        component.down('gridpanel').getStore().load();
+    },
+
+    onDSCreateButtonClick: function(button, e, eOpts) {
+                Ext.create('widget.dsWin').show();
+    },
+
+    init: function(application) {
+        this.control({
+            "ticWizard #step2": {
+                activate: this.onStep2Activate
+            },
+            "ticWizard #btnWCreateDs": {
+                click: this.onDSCreateButtonClick
+            }
+        });
+    }
+
 });

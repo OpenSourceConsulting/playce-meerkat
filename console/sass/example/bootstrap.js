@@ -3826,7 +3826,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.ClusteringConfigurationWindow"
   ],
   "webapp.view.DataSourceServerWindow": [],
-  "webapp.view.DataSourceWindow": [],
+  "webapp.view.DataSourceWindow": [
+    "widget.dsWin"
+  ],
   "webapp.view.DatagridServerGroupWindow": [],
   "webapp.view.DeployWindow": [
     "widget.DeployWindow"

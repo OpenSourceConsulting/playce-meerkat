@@ -6,30 +6,29 @@
     },
     "codeClass": null,
     "userConfig": {
-        "container|align": "stretch",
+        "bodyPadding": 15,
+        "designer|userAlias": "dsWin",
         "designer|userClassName": "DataSourceWindow",
-        "height": 500,
-        "layout": "vbox",
+        "height": 395,
+        "padding": null,
         "title": "New Datasource",
-        "width": 503
+        "width": 600
     },
     "designerId": "691fac19-b4e1-419d-81c8-ff2a7444d199",
     "cn": [
         {
-            "type": "Ext.form.FieldSet",
+            "type": "Ext.form.Panel",
             "reference": {
-                "name": "dockedItems",
+                "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "dock": "top",
-                "height": 485,
-                "layout": "column",
-                "layout|flex": 1,
+                "dock": null,
+                "height": null,
                 "title": ""
             },
-            "name": "MyFieldSet8",
+            "name": "MyForm1",
             "designerId": "bcffb60a-922a-4d1f-a86e-1308ab3c3fd0",
             "cn": [
                 {
@@ -41,8 +40,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Name",
-                        "margin": "30 0 10 30",
-                        "width": 414
+                        "margin": null,
+                        "width": null
                     },
                     "name": "MyTextField37",
                     "designerId": "ac3fa9e6-8bfc-46f9-810e-4290f381db32"
@@ -56,8 +55,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Database Type",
-                        "margin": "0 0 10 30",
-                        "width": 414
+                        "margin": null,
+                        "width": null
                     },
                     "name": "MyComboBox12",
                     "designerId": "4932194f-7431-45b7-b2ca-566be9199045"
@@ -71,8 +70,10 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "JDBC URL",
-                        "margin": "0 0 10 30",
-                        "width": 414
+                        "fieldStyle": null,
+                        "labelWidth": null,
+                        "margin": null,
+                        "width": 555
                     },
                     "name": "MyTextField38",
                     "designerId": "a2eff24a-e46a-437d-bcce-dd5450b349dd"
@@ -86,8 +87,8 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Username",
-                        "margin": "0 0 10 30",
-                        "width": 414
+                        "margin": null,
+                        "width": null
                     },
                     "name": "MyTextField39",
                     "designerId": "28d183a1-63b6-4b23-a4e2-968a9f6981c1"
@@ -101,26 +102,12 @@
                     "codeClass": null,
                     "userConfig": {
                         "fieldLabel": "Pasword",
-                        "margin": "0 0 10 30",
-                        "width": 414
+                        "inputType": "password",
+                        "margin": null,
+                        "width": null
                     },
                     "name": "MyTextField40",
                     "designerId": "7f7a8af1-9aab-47e0-be07-a2dd83f6499c"
-                },
-                {
-                    "type": "Ext.form.field.Text",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fieldLabel": "Retype Password",
-                        "margin": "0 0 10 30",
-                        "width": 414
-                    },
-                    "name": "MyTextField41",
-                    "designerId": "5f8638d1-0ac9-4149-bc42-2403124ed4e2"
                 },
                 {
                     "type": "Ext.form.FieldSet",
@@ -130,9 +117,15 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "height": 122,
+                        "fieldDefaults": [
+                            "{",
+                            "    labelWidth: 130",
+                            "}"
+                        ],
+                        "height": null,
+                        "padding": 10,
                         "title": "Connection Pool",
-                        "width": 464
+                        "width": null
                     },
                     "name": "MyFieldSet9",
                     "designerId": "a7814d94-f323-4f65-9b45-ba58243cdd53",
@@ -146,9 +139,9 @@
                             "codeClass": null,
                             "userConfig": {
                                 "fieldLabel": "Max Connection Pool",
-                                "labelWidth": 130,
-                                "margin": "0 0 10 30",
-                                "width": 414
+                                "labelWidth": null,
+                                "margin": null,
+                                "width": null
                             },
                             "name": "MyTextField42",
                             "designerId": "4dbe4fec-6be3-41b4-bf31-b78bbdf0bab7"
@@ -162,9 +155,9 @@
                             "codeClass": null,
                             "userConfig": {
                                 "fieldLabel": "Min Connetion Pool",
-                                "labelWidth": 130,
-                                "margin": "0 0 10 30",
-                                "width": 414
+                                "labelWidth": null,
+                                "margin": null,
+                                "width": null
                             },
                             "name": "MyTextField43",
                             "designerId": "c46fc1df-3e48-42c0-b296-9b04d9cf9442"
@@ -178,15 +171,33 @@
                             "codeClass": null,
                             "userConfig": {
                                 "fieldLabel": "Max Timeout(ms)",
-                                "labelWidth": 130,
-                                "margin": "0 0 10 30",
-                                "width": 414
+                                "labelWidth": null,
+                                "margin": null,
+                                "width": null
                             },
                             "name": "MyTextField44",
                             "designerId": "738b94f9-4b8c-4b15-88f7-9726e355e6bd"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|pack": "center",
+                "designer|uiInterfaceName": "footer",
+                "dock": "bottom",
+                "ui": "footer"
+            },
+            "name": "MyToolbar35",
+            "designerId": "2d7cad66-3112-425b-bae3-fae8e5e76299",
+            "cn": [
                 {
                     "type": "Ext.button.Button",
                     "reference": {
@@ -195,7 +206,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "margin": "0 0 0 120",
+                        "layout|flex": null,
+                        "margin": null,
                         "text": "Test Connection"
                     },
                     "name": "MyButton51",
@@ -209,7 +221,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "margin": "0 0 0 10",
+                        "layout|flex": null,
+                        "margin": null,
                         "text": "Create"
                     },
                     "name": "MyButton52",
@@ -223,7 +236,8 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "margin": "0 0 0 10",
+                        "layout|flex": null,
+                        "margin": null,
                         "text": "Canel"
                     },
                     "name": "MyButton53",

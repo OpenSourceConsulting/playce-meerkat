@@ -110,7 +110,9 @@
                 "autoScroll": true,
                 "container|align": "stretch",
                 "container|padding": 10,
+                "designer|createAlias": null,
                 "designer|displayName": "Step2",
+                "itemId": "step2",
                 "layout": "vbox",
                 "style": null
             },
@@ -195,6 +197,7 @@
                         "bodyStyle": [
                             "background: #fff"
                         ],
+                        "designer|createAlias": null,
                         "header": false,
                         "iconCls": "icon-grid",
                         "layout|flex": 1,
@@ -290,6 +293,7 @@
                                     "codeClass": null,
                                     "userConfig": {
                                         "iconCls": "add",
+                                        "itemId": "btnWCreateDs",
                                         "layout|flex": null,
                                         "text": "Create Datasource"
                                     },

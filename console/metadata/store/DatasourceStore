@@ -6,7 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "autoLoad": true,
+        "autoLoad": null,
         "designer|userClassName": "DatasourceStore",
         "model": "DatasourceModel",
         "storeId": "DatasourceStore"

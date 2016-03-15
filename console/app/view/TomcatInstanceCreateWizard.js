@@ -72,6 +72,7 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                 },
                 {
                     xtype: 'container',
+                    itemId: 'step2',
                     autoScroll: true,
                     layout: {
                         type: 'vbox',
@@ -141,6 +142,7 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                                     items: [
                                         {
                                             xtype: 'button',
+                                            itemId: 'btnWCreateDs',
                                             iconCls: 'add',
                                             text: 'Create Datasource'
                                         }
