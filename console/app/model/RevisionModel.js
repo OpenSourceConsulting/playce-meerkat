@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.RevisionModel', {
+Ext.define('webapp.model.RevisionModel', {
     extend: 'Ext.data.Model',
 
     requires: [

@@ -84,6 +84,11 @@ Ext.define('webapp.store.MenuTreeStore', {
                                 leaf: true
                             },
                             {
+                                text: 'Session server groups',
+                                menuId: 'resourcemng_servers_groups',
+                                leaf: true
+                            },
+                            {
                                 text: 'Datasources',
                                 menuId: 'resourcemng_datasources',
                                 leaf: true

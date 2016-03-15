@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.common.SSHManager;
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 
 @Controller
-@RequestMapping("/res/machine")
+@RequestMapping("/res/server")
 // public class MachineController implements InitializingBean {
 public class ServerController {
 	@Autowired
@@ -38,11 +39,11 @@ public class ServerController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getList(SimpleJsonResponse json) {
+	public GridJsonResponse getList(GridJsonResponse json) {
 		List<Server> result = service.getList();
 		json.setSuccess(true);
-
-		json.setData(result);
+		json.setList(result);
+		json.setTotal(result.size());
 		return json;
 	}
 

@@ -77,7 +77,7 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                             fieldLabel: 'Server',
                             editable: false,
                             displayField: 'name',
-                            store: 'MachineStore',
+                            store: 'ServerStore',
                             valueField: 'id'
                         },
                         {

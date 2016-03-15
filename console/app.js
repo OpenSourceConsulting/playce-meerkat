@@ -31,7 +31,7 @@ Ext.application({
         'UserRoleModel',
         'DomainModel',
         'DatagridServerGroupModel',
-        'MachineModel',
+        'ServerModel',
         'ClusteringConfigurationModel',
         'DatasourceModel',
         'DatagridModel',
@@ -48,7 +48,7 @@ Ext.application({
         'UserRoleStore',
         'DomainStore',
         'DatagridServerGroupStore',
-        'MachineStore',
+        'ServerStore',
         'ClusteringConfigurationStore',
         'ApplicationStore',
         'DatasourceStore',
@@ -85,7 +85,8 @@ Ext.application({
         'EnvironmentVariableWindow',
         'TomcatInstanceCreateWizard',
         'DomainForm',
-        'TomcatForm'
+        'TomcatForm',
+        'ServerManagementContainer1'
     ],
     controllers: [
         'headerController',
@@ -111,4 +112,3 @@ Ext.application({
     }
 
 });
->>>>>>> refs/remotes/origin/master

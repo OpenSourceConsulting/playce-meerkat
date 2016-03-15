@@ -66,6 +66,10 @@ public class Server implements Serializable {
 	private boolean isVm;
 	@Column(name = "jvm")
 	private String jvmVersion;
+	@Column(name = "ssh_port")
+	private int sshPort;
+	@Column(name = "ssh_ipaddr")
+	private String sshIpaddr;
 	@Column(name = "state")
 	private int state;
 
@@ -305,6 +309,22 @@ public class Server implements Serializable {
 
 	public void setSshAccounts(Collection<SshAccount> sshAccounts) {
 		this.sshAccounts = sshAccounts;
+	}
+
+	public int getSshPort() {
+		return sshPort;
+	}
+
+	public void setSshPort(int sshPort) {
+		this.sshPort = sshPort;
+	}
+
+	public String getSshIpaddr() {
+		return sshIpaddr;
+	}
+
+	public void setSshIpaddr(String sshIpaddr) {
+		this.sshIpaddr = sshIpaddr;
 	}
 
 }

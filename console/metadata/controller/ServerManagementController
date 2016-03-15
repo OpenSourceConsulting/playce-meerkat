@@ -490,6 +490,26 @@
             },
             "name": "getServer",
             "designerId": "e3ee78ed-79e8-4d16-a6dc-9957308130ed"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#mycontainer31",
+                "designer|params": [
+                    "component",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.container.Container",
+                "fn": "onLoadServers",
+                "name": "activate"
+            },
+            "name": "onLoadServers",
+            "designerId": "b2c330ad-0b05-48a2-96bc-8627130682b4"
         }
     ]
 }

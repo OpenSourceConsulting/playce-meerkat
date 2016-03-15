@@ -30,7 +30,7 @@
             "UserRoleModel",
             "DomainModel",
             "DatagridServerGroupModel",
-            "MachineModel",
+            "ServerModel",
             "ClusteringConfigurationModel",
             "DatasourceModel",
             "DatagridModel",
@@ -51,7 +51,7 @@
             "UserRoleStore",
             "DomainStore",
             "DatagridServerGroupStore",
-            "MachineStore",
+            "ServerStore",
             "ClusteringConfigurationStore",
             "ApplicationStore",
             "DatasourceStore",
@@ -88,7 +88,8 @@
             "EnvironmentVariableWindow",
             "TomcatInstanceCreateWizard",
             "DomainForm",
-            "TomcatForm"
+            "TomcatForm",
+            "ServerManagementContainer1"
         ]
     },
     "name": "Application",
