@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * File: app/controller/MenuController.js
  *
@@ -733,4 +732,3 @@ Ext.define('webapp.controller.MenuController', {
     }
 
 });
->>>>>>> refs/remotes/origin/master
