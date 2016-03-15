@@ -1,0 +1,13 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "NetworkInterfaceModel"
+    },
+    "name": "MyModel",
+    "designerId": "b56cdc0f-4c27-481f-ac4e-0b03c36f66ea"
+}
