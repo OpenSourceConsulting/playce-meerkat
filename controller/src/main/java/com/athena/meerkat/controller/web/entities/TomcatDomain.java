@@ -18,8 +18,8 @@ public class TomcatDomain {
 	@Id
 	private int id;
 	private String name;
-	private int datagridServerGroupId;
-	private int createUserId;
+	private Integer datagridServerGroupId;
+	private Integer createUserId;
 
 	/**
 	 * 
@@ -59,28 +59,28 @@ public class TomcatDomain {
 	/**
 	 * @return the datagridServerGroupId
 	 */
-	public int getDatagridServerGroupId() {
+	public Integer getDatagridServerGroupId() {
 		return datagridServerGroupId;
 	}
 
 	/**
 	 * @param datagridServerGroupId the datagridServerGroupId to set
 	 */
-	public void setDatagridServerGroupId(int datagridServerGroupId) {
+	public void setDatagridServerGroupId(Integer datagridServerGroupId) {
 		this.datagridServerGroupId = datagridServerGroupId;
 	}
 
 	/**
 	 * @return the createUserId
 	 */
-	public int getCreateUserId() {
+	public Integer getCreateUserId() {
 		return createUserId;
 	}
 
 	/**
 	 * @param createUserId the createUserId to set
 	 */
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}
 
