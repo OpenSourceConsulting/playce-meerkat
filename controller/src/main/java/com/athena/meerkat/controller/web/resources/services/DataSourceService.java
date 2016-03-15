@@ -2,8 +2,6 @@ package com.athena.meerkat.controller.web.resources.services;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +10,16 @@ import org.springframework.stereotype.Service;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.web.resources.entities.Datasource;
-import com.athena.meerkat.controller.web.resources.repositories.DatasourceRepository;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 import com.mysql.jdbc.Connection;
 
 @Service
-public class DatasourceService {
+public class DataSourceService {
 	@Autowired
-	private DatasourceRepository datasourceRepo;
+	private DataSourceRepository datasourceRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
 
@@ -34,13 +32,13 @@ public class DatasourceService {
 				|| maxConnectionPool < minConnectionPool || jdbcUrl.isEmpty()) {
 			return new ServiceResult(Status.FAILED, "Invalid data");
 		}
-		Datasource ds = datasourceRepo.findByNameOrJdbcUrl(name, jdbcUrl);
+		DataSource ds = datasourceRepo.findByNameOrJdbcUrl(name, jdbcUrl);
 		if (ds != null) {
 			return new ServiceResult(Status.FAILED, "Duplicated");
 		}
-		ds = new Datasource();
+		ds = new DataSource();
 		ds.setName(name);
-		ds.setUserName(userName);
+		// ds.setUserName(userName);
 		ds.setPassword(pwd);
 		ds.setTimeout(timeOut);
 		ds.setMaxConnection(maxConnectionPool);
@@ -51,7 +49,7 @@ public class DatasourceService {
 	}
 
 	public ServiceResult delete(int datasource_id) {
-		Datasource ds = datasourceRepo.findOne(datasource_id);
+		DataSource ds = datasourceRepo.findOne(datasource_id);
 		if (ds == null) {
 			return new ServiceResult(Status.FAILED, "Not exist");
 		}
@@ -87,8 +85,8 @@ public class DatasourceService {
 	}
 
 	public ServiceResult search(String keyword) {
-		List<Datasource> datasourcesByName = datasourceRepo.findByName(keyword);
-		List<Datasource> datasourcesByJdbc = datasourceRepo
+		List<DataSource> datasourcesByName = datasourceRepo.findByName(keyword);
+		List<DataSource> datasourcesByJdbc = datasourceRepo
 				.findByJdbcUrl(keyword);
 
 		if (datasourcesByJdbc == null && datasourcesByName == null) {
@@ -101,7 +99,7 @@ public class DatasourceService {
 	public ServiceResult edit(int id, String name, String dbType,
 			String userName, String password, int timeout,
 			int maxConnectionPool, int minConnectionPool, String jdbcUrl) {
-		Datasource ds = datasourceRepo.findOne(id);
+		DataSource ds = datasourceRepo.findOne(id);
 		if (ds == null) {
 			return new ServiceResult(Status.FAILED, "Not exist");
 		} else {
@@ -114,7 +112,7 @@ public class DatasourceService {
 			}
 			ds.setName(name);
 
-			ds.setUserName(userName);
+			// ds.setUserName(userName);
 			ds.setPassword(password);
 			ds.setTimeout(timeout);
 			ds.setMaxConnection(maxConnectionPool);
@@ -125,39 +123,39 @@ public class DatasourceService {
 		}
 	}
 
-	public List<Datasource> getAll() {
-		List<Datasource> list = datasourceRepo.findAll();
+	public List<DataSource> getAll() {
+		List<DataSource> list = datasourceRepo.findAll();
 		return list;
 
 	}
 
-	public Datasource findOne(int id) {
+	public DataSource findOne(int id) {
 		return datasourceRepo.findOne(id);
 	}
 
 	public void associateTomcat(TomcatInstance tomcat,
-			List<Datasource> datasources) {
-		// for (Datasource ds : datasources) {
+			List<DataSource> datasources) {
+		// for (DataSource ds : datasources) {
 		// if (!ds.getTomcatInstances().contains(tomcat)) {
 		// ds.associateTomcat(tomcat);
 		// }
 		//
 		// }
-//		List<Datasource> currentDatasources = (List<Datasource>) tomcat
-//				.getDatasources();
-//		List<Datasource> deletingDatasources = new ArrayList<Datasource>();
-//		for (Datasource ds : currentDatasources) {
-//			if (!datasources.contains(ds)) {
-//				// remove from current list if user want to remove
-//				deletingDatasources.add(ds);
-//			} else {
-//				// if user still keep this datasource, dont remove in the
-//				// current list, ju st remove in the new list
-//				datasources.remove(ds);
-//			}
-//		}
-//		tomcat.removeDatasources(deletingDatasources);
-//		tomcat.associateDatasources(datasources);
-		tomcatRepo.save(tomcat);
+		// List<DataSource> currentDataSources = (List<DataSource>) tomcat
+		// .getDataSources();
+		// List<DataSource> deletingDataSources = new ArrayList<DataSource>();
+		// for (DataSource ds : currentDataSources) {
+		// if (!datasources.contains(ds)) {
+		// // remove from current list if user want to remove
+		// deletingDataSources.add(ds);
+		// } else {
+		// // if user still keep this datasource, dont remove in the
+		// // current list, ju st remove in the new list
+		// datasources.remove(ds);
+		// }
+		// }
+		// tomcat.removeDataSources(deletingDataSources);
+		// tomcat.associateDataSources(datasources);
+		// tomcatRepo.save(tomcat);
 	}
 }

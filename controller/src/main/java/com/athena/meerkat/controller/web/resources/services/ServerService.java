@@ -13,7 +13,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
-import com.athena.meerkat.controller.web.resources.entities.Server;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
 
 /**
@@ -41,17 +41,19 @@ public class ServerService {
 	public ServiceResult add(String name, String description, String sshAddr,
 			int sshPort, String sshUserName, String sshPassword) {
 		// check existing
-		List<Server> existingMachines = machineRepo.findByNameOrSshIPAddr(name,
-				sshAddr);
-		if (existingMachines != null) {
-			if (existingMachines.size() > 0) {
-				return new ServiceResult(Status.FAILED, "Duplicate machine");
-			}
-		}
+		// List<Server> existingMachines =
+		// machineRepo.findByNameOrSshIPAddr(name,
+		// sshAddr);
+		// if (existingMachines != null) {
+		// if (existingMachines.size() > 0) {
+		// return new ServiceResult(Status.FAILED, "Duplicate machine");
+		// }
+		// }
 
 		try {
-			Server m = new Server(name, sshAddr, sshUserName, sshPassword,
-					sshPort, description);
+			// Server m = new Server(name, sshAddr, sshUserName, sshPassword,
+			// sshPort, description);
+			Server m = new Server();
 			ServiceResult result = getMachineInfoBySSH(m);
 			if (result.getStatus() != Status.DONE) {
 				return result;
@@ -87,8 +89,9 @@ public class ServerService {
 
 	public List<Server> getListByType(int type) {
 
-		List<Server> list = machineRepo.findByMachineServerType(type);
-		return list;
+		//List<Server> list = machineRepo.findByMachineServerType(type);
+		//return list;
+		return null;
 	}
 
 	/**
@@ -275,7 +278,7 @@ public class ServerService {
 		for (Server m : list) {
 			final String _name = m.getName();
 			final int _id = m.getId();
-			simpleList.add(new Server(_id, _name));
+			// simpleList.add(new Server(_id, _name));
 		}
 		return simpleList;
 	}

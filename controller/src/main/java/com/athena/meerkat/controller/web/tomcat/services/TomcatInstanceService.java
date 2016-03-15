@@ -42,9 +42,9 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
-import com.athena.meerkat.controller.web.resources.entities.Datasource;
-import com.athena.meerkat.controller.web.resources.repositories.DatasourceRepository;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
 /**
@@ -66,7 +66,7 @@ public class TomcatInstanceService {
 	private TomcatInstanceRepository repo;
 
 	@Autowired
-	private DatasourceRepository datasourceRepo;
+	private DataSourceRepository datasourceRepo;
 
 	@Autowired
 	private ConfigFileVersionRepository configRepo;
@@ -83,7 +83,8 @@ public class TomcatInstanceService {
 	}
 
 	public List<TomcatInstance> getTomcatListByDomainId(int domainId) {
-		return repo.findByDomainId(domainId);
+		//return repo.findByDomainId(domainId);
+		return null;
 	}
 
 	/**
@@ -103,8 +104,8 @@ public class TomcatInstanceService {
 		repo.delete(id);
 	}
 
-	public List<Datasource> getDatasourceListByTomcat(TomcatInstance tomcat) {
-		// List<Datasource> list = (List<Datasource>) tomcat.getDatasources();
+	public List<DataSource> getDataSourceListByTomcat(TomcatInstance tomcat) {
+		// List<DataSource> list = (List<DataSource>) tomcat.getDataSources();
 		// return list;
 		return null;
 	}
@@ -233,7 +234,7 @@ public class TomcatInstanceService {
 	}
 
 	public ServiceResult getAssociatedTomcatList(int dataSourceId) {
-		Datasource ds = datasourceRepo.findOne(dataSourceId);
+		DataSource ds = datasourceRepo.findOne(dataSourceId);
 		if (ds != null) {
 			// return new ServiceResult(Status.DONE, "",
 			// ds.getTomcatInstances());
@@ -243,7 +244,7 @@ public class TomcatInstanceService {
 
 	public ServiceResult editAssoicateTomcatList(int dataSourceId,
 			List<Integer> removedAssociatedTomcatId) {
-		Datasource ds = datasourceRepo.findOne(dataSourceId);
+		DataSource ds = datasourceRepo.findOne(dataSourceId);
 		if (ds != null) {
 
 		}
@@ -264,8 +265,8 @@ public class TomcatInstanceService {
 	 * @return
 	 */
 	public TomcatInstance findByNameAndDomain(String name, int domainId) {
-
-		return repo.findByNameAndDomainId(name, domainId);
+		//return repo.findByNameAndDomainId(name, domainId);
+		return null;
 	}
 
 }

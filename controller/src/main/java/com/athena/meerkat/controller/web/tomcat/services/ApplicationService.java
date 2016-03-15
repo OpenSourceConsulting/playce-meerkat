@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.common.State;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatApplication;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.tomcat.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 
 @Service
@@ -19,6 +19,7 @@ public class ApplicationService {
 	private ApplicationRepository appRepo;
 
 	public boolean deploy(TomcatApplication app, TomcatDomain domain) {
+		/*
 		// Deploy an application to a domain means deploy to all tomcat
 		// assoicated to that domain.
 		Collection<TomcatInstance> tomcats = domain.getTomcats();
@@ -27,6 +28,7 @@ public class ApplicationService {
 		//	newApp.setTomcat(tomcat);
 			appRepo.save(newApp);
 		}
+		*/
 		return true;
 
 	}
