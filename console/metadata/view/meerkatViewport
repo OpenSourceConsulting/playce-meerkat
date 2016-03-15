@@ -208,6 +208,34 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "userConfig": {
+                                        "designer|displayName": "serverManagementContainer"
+                                    },
+                                    "name": "servermanagementcontainer",
+                                    "designerId": "afe18f1b-76b9-4a76-a2b5-2f5ee1193857",
+                                    "masterInstanceId": "db57d9c4-7e18-4ca2-8061-ebc9adf18f15"
+                                },
+                                {
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|displayName": "sessionServerManagementContainer"
+                                    },
+                                    "name": "sessionservergroupcontainer1",
+                                    "designerId": "f8b54c86-39ec-44c6-b4e2-6b36ba404c47",
+                                    "masterInstanceId": "c76d988f-b98d-4ecc-83ae-e1ed375f60b1"
+                                },
+                                {
+                                    "type": "linkedinstance",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
                                     "name": "resourcemanagementcontainer",
                                     "designerId": "85942721-e926-4cae-84d2-581c02bbac48",
                                     "masterInstanceId": "0cf5471d-a4d3-45a6-b177-3019f1fbe80f"
@@ -219,6 +247,9 @@
                                         "type": "array"
                                     },
                                     "codeClass": null,
+                                    "userConfig": {
+                                        "designer|displayName": "userManagementContainer"
+                                    },
                                     "name": "usermntcontainer",
                                     "designerId": "b9a9c5e9-9c0d-4c20-a077-af51809ef4ef",
                                     "masterInstanceId": "f223e421-6df8-4d2a-89c8-0499ee72e378"

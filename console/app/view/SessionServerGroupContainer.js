@@ -15,6 +15,7 @@
 
 Ext.define('webapp.view.SessionServerGroupContainer', {
     extend: 'Ext.container.Container',
+    alias: 'widget.sessionservergroupcontainer',
 
     requires: [
         'Ext.button.Button',

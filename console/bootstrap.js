@@ -2045,7 +2045,9 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.ServerManagementContainer": [
     "widget.servermanagementcontainer"
   ],
-  "webapp.view.SessionServerGroupContainer": [],
+  "webapp.view.SessionServerGroupContainer": [
+    "widget.sessionservergroupcontainer"
+  ],
   "webapp.view.SeverDataGridWindow": [],
   "webapp.view.TomcatForm": [
     "widget.tomcatform"

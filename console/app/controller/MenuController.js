@@ -224,7 +224,6 @@ Ext.define('webapp.controller.MenuController', {
     },
 
     showMenu: function(menuId, menuText) {
-
         var activeItem = -1;
         var objectId = -1;
         if(menuId === "dashboard"){
@@ -257,11 +256,15 @@ Ext.define('webapp.controller.MenuController', {
         }else if (menuId === "resourcemng_servers") {
             activeItem = 7;
             //navigationText = "Resource Management > Servers";
-        }else if (menuId === "resourcemng_datasources") {
+
+        }else if (menuId === "resourcemng_servers_groups") {
             activeItem = 8;
+            //navigationText = "Resource Management > Servers";
+        }else if (menuId === "resourcemng_datasources") {
+            activeItem = 9;
             //navigationText = "Resource Management > Datasources";
         }else if (menuId === "usermnt"){
-            activeItem = 9;
+            activeItem = 10;
             //navigationText = "User Management";
             is_child = false;
         }else if (menuId ==="logmnt"){
