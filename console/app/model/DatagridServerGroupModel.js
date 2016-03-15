@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.DatagridServerGroupModel', {
+Ext.define('webapp.model.DatagridServerGroupModel', {
     extend: 'Ext.data.Model',
 
     requires: [

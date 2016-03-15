@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.model.EnvironmentVariableModel', {
+Ext.define('webapp.model.EnvironmentVariableModel', {
     extend: 'Ext.data.Model',
 
     requires: [

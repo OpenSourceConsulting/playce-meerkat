@@ -13,11 +13,11 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.store.RevisionStore', {
+Ext.define('webapp.store.RevisionStore', {
     extend: 'Ext.data.Store',
 
     requires: [
-        'MyApp.model.RevisionModel',
+        'webapp.model.RevisionModel',
         'Ext.data.proxy.Ajax',
         'Ext.data.reader.Json'
     ],
@@ -26,7 +26,7 @@ Ext.define('MyApp.store.RevisionStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
-            model: 'MyApp.model.RevisionModel',
+            model: 'webapp.model.RevisionModel',
             storeId: 'RevisionStore',
             proxy: {
                 type: 'ajax',

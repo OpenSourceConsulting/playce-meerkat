@@ -18,21 +18,19 @@ Ext.define('webapp.view.ServerManagementContainer', {
     alias: 'widget.servermanagementcontainer',
 
     requires: [
+        'Ext.grid.Panel',
+        'Ext.grid.column.Action',
+        'Ext.grid.View',
+        'Ext.toolbar.Paging',
         'Ext.tab.Panel',
         'Ext.tab.Tab',
-        'Ext.grid.Panel',
-        'Ext.grid.View',
         'Ext.form.Panel',
         'Ext.form.field.Hidden',
-        'Ext.form.field.File',
-        'Ext.form.FieldSet',
-        'Ext.form.field.ComboBox',
-        'Ext.toolbar.Separator',
-        'Ext.form.RadioGroup',
-        'Ext.form.field.Radio',
-        'Ext.toolbar.Paging',
-        'Ext.grid.column.Boolean'
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox'
     ],
+
+    itemId: 'mycontainer31',
 
     layout: {
         type: 'vbox',
@@ -45,10 +43,9 @@ Ext.define('webapp.view.ServerManagementContainer', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'tabpanel',
+                    xtype: 'panel',
                     flex: 9,
                     height: 597,
-                    activeTab: 0,
                     items: [
                         {
                             xtype: 'panel',
@@ -79,12 +76,12 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     margin: '',
                                     title: '',
                                     forceFit: true,
-                                    store: 'MachineStore',
+                                    store: 'ServerStore',
                                     columns: [
                                         {
                                             xtype: 'gridcolumn',
                                             dataIndex: 'name',
-                                            text: 'Name'
+                                            text: 'Server name'
                                         },
                                         {
                                             xtype: 'gridcolumn',
@@ -97,16 +94,24 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                             text: 'IP Address'
                                         },
                                         {
-                                            xtype: 'gridcolumn',
+                                            xtype: 'actioncolumn',
                                             dataIndex: 'tomcatInstanceNo',
-                                            text: 'Tomcat Instances'
+                                            text: 'Action'
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'toolbar',
                                     flex: 1,
-                                    dock: 'top'
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'pagingtoolbar',
+                                            width: 1125,
+                                            displayInfo: true,
+                                            store: 'ServerStore'
+                                        }
+                                    ]
                                 }
                             ],
                             items: [
@@ -115,8 +120,45 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     flex: 7,
                                     id: 'detailTomcatServerTab',
                                     manageHeight: false,
-                                    activeTab: 0,
+                                    activeTab: 1,
                                     items: [
+                                        {
+                                            xtype: 'panel',
+                                            autoScroll: true,
+                                            title: 'Information',
+                                            items: [
+                                                {
+                                                    xtype: 'container',
+                                                    margin: '10 10 10 10',
+                                                    items: [
+                                                        {
+                                                            xtype: 'form',
+                                                            id: 'agentFormPanel',
+                                                            width: 659,
+                                                            bodyPadding: 10,
+                                                            title: '',
+                                                            items: [
+                                                                {
+                                                                    xtype: 'container',
+                                                                    layout: {
+                                                                        type: 'hbox',
+                                                                        align: 'stretch'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            xtype: 'hiddenfield',
+                                                                            flex: 1,
+                                                                            id: 'serverIDHiddenField1',
+                                                                            fieldLabel: 'Label'
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
                                         {
                                             xtype: 'panel',
                                             autoScroll: true,
@@ -214,519 +256,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                     ]
                                                 }
                                             ]
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            autoScroll: true,
-                                            title: 'Agent',
-                                            items: [
-                                                {
-                                                    xtype: 'container',
-                                                    margin: '10 10 10 10',
-                                                    items: [
-                                                        {
-                                                            xtype: 'form',
-                                                            id: 'agentFormPanel',
-                                                            width: 659,
-                                                            bodyPadding: 10,
-                                                            title: '',
-                                                            items: [
-                                                                {
-                                                                    xtype: 'filefield',
-                                                                    anchor: '100%',
-                                                                    width: 1243,
-                                                                    fieldLabel: 'Agent (*.jar)'
-                                                                },
-                                                                {
-                                                                    xtype: 'container',
-                                                                    layout: {
-                                                                        type: 'hbox',
-                                                                        align: 'stretch'
-                                                                    },
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'hiddenfield',
-                                                                            flex: 1,
-                                                                            id: 'serverIDHiddenField1',
-                                                                            fieldLabel: 'Label'
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    width: 643,
-                                                                    title: 'Agent configurations',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            id: 'tomcatSSHUserIDTextField1',
-                                                                            width: 418,
-                                                                            fieldLabel: 'Installation path',
-                                                                            readOnly: true,
-                                                                            allowBlank: false
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            id: 'tomcatSSHPortTextField1',
-                                                                            width: 418,
-                                                                            fieldLabel: '$PATH',
-                                                                            readOnly: true,
-                                                                            allowBlank: false
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: 'tbnServerSSHTestConnection1',
-                                                                    text: 'Test'
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: 'btnServerSSHSave1',
-                                                                    itemId: '',
-                                                                    margin: '10 10 10 10',
-                                                                    text: 'Save'
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: 'btnServerSSHReset1',
-                                                                    text: 'Reset'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            title: 'Environment Variables',
-                                            dockedItems: [
-                                                {
-                                                    xtype: 'toolbar',
-                                                    dock: 'top',
-                                                    items: [
-                                                        {
-                                                            xtype: 'combobox',
-                                                            id: 'evRevisionComboBox',
-                                                            fieldLabel: 'Select revision:',
-                                                            displayField: 'name',
-                                                            store: 'RevisionStore',
-                                                            valueField: 'id'
-                                                        },
-                                                        {
-                                                            xtype: 'tbseparator'
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            text: 'Active'
-                                                        },
-                                                        {
-                                                            xtype: 'tbseparator'
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            text: 'New'
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            items: [
-                                                {
-                                                    xtype: 'gridpanel',
-                                                    id: 'environmentVariablesGridPanel',
-                                                    title: '',
-                                                    forceFit: true,
-                                                    store: 'EnvironmentVariableStore',
-                                                    columns: [
-                                                        {
-                                                            xtype: 'gridcolumn',
-                                                            dataIndex: 'name',
-                                                            text: 'Variable name'
-                                                        },
-                                                        {
-                                                            xtype: 'gridcolumn',
-                                                            dataIndex: 'value',
-                                                            text: 'Value'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            layout: 'fit',
-                                            manageHeight: false,
-                                            title: 'Server.xml',
-                                            items: [
-                                                {
-                                                    xtype: 'tabpanel',
-                                                    width: 100,
-                                                    activeTab: 0,
-                                                    items: [
-                                                        {
-                                                            xtype: 'panel',
-                                                            collapseDirection: 'top',
-                                                            title: 'GUI',
-                                                            dockedItems: [
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    dock: 'top',
-                                                                    margin: '10 0 0 0 0',
-                                                                    layout: 'column',
-                                                                    title: 'GlobalNamingResources',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Auth'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 20 10 10 ',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Description',
-                                                                            labelWidth: 120
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    dock: 'top',
-                                                                    layout: 'column',
-                                                                    title: 'Executor.Service',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Max Threads'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 10 10 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Min Spare Threads',
-                                                                            labelWidth: 120
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Max Idle Time'
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    dock: 'top',
-                                                                    height: 151,
-                                                                    layout: 'column',
-                                                                    title: 'Connector.Service',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 0 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Port',
-                                                                            labelWidth: 120
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 10 10 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Executor'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 0 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Connection Timeout',
-                                                                            labelWidth: 120
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 0 10 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Redirect Port'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '',
-                                                                            width: 414,
-                                                                            fieldLabel: 'URI Encoding',
-                                                                            labelWidth: 120
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 0 0 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Max Post Size'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Use Body Encoding For URI',
-                                                                            labelWidth: 200,
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    dock: 'top',
-                                                                    height: 78,
-                                                                    layout: 'column',
-                                                                    title: 'Host',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 0 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'AppBase'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '0 10 10 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'XmlBase'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '0 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Use Body Encoding For URI',
-                                                                            labelWidth: 200,
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'toolbar',
-                                                                    dock: 'top',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'button',
-                                                                            margin: '0 0 0 400',
-                                                                            text: 'Save'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'button',
-                                                                            margin: '0 0 0 50',
-                                                                            text: 'Reset'
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            title: 'XML Editor'
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            dockedItems: [
-                                                {
-                                                    xtype: 'toolbar',
-                                                    dock: 'top',
-                                                    items: [
-                                                        {
-                                                            xtype: 'combobox',
-                                                            fieldLabel: 'Select revision'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            layout: 'fit',
-                                            manageHeight: false,
-                                            title: 'Context.xml',
-                                            items: [
-                                                {
-                                                    xtype: 'tabpanel',
-                                                    width: 100,
-                                                    activeTab: 0,
-                                                    items: [
-                                                        {
-                                                            xtype: 'panel',
-                                                            collapseDirection: 'top',
-                                                            manageHeight: false,
-                                                            title: 'GUI',
-                                                            dockedItems: [
-                                                                {
-                                                                    xtype: 'fieldset',
-                                                                    dock: 'top',
-                                                                    height: 244,
-                                                                    layout: 'column',
-                                                                    title: '',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '10 0 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'DocBase'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            margin: '10 0 10 10',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Path'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Reloadable',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'CrossContext',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'Privileged',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'TldValidation',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'UseHttpOnly',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'radiogroup',
-                                                                            margin: '10 10 10 0',
-                                                                            width: 414,
-                                                                            fieldLabel: 'XmlValidation',
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'Yes'
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'radiofield',
-                                                                                    boxLabel: 'No'
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    xtype: 'toolbar',
-                                                                    dock: 'top',
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'button',
-                                                                            margin: '0 0 0 400',
-                                                                            text: 'Save'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'button',
-                                                                            margin: '0 0 0 50',
-                                                                            text: 'Reset'
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            title: 'XML Editor'
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            dockedItems: [
-                                                {
-                                                    xtype: 'toolbar',
-                                                    dock: 'top',
-                                                    items: [
-                                                        {
-                                                            xtype: 'combobox',
-                                                            fieldLabel: 'Select revision'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
                                         }
                                     ],
                                     listeners: {
@@ -735,136 +264,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                             scope: me
                                         }
                                     }
-                                },
-                                {
-                                    xtype: 'fieldcontainer',
-                                    flex: 1,
-                                    height: 120,
-                                    width: 400,
-                                    fieldLabel: 'Label'
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            title: 'Datagrid Servers',
-                            tabConfig: {
-                                xtype: 'tab',
-                                tabIndex: 1
-                            },
-                            dockedItems: [
-                                {
-                                    xtype: 'toolbar',
-                                    dock: 'top',
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            text: 'New Group'
-                                        }
-                                    ]
-                                }
-                            ],
-                            items: [
-                                {
-                                    xtype: 'gridpanel',
-                                    id: 'datagridServerGroupGrid',
-                                    title: 'Datagrid Server Group',
-                                    forceFit: true,
-                                    store: 'DatagridServerGroupStore',
-                                    columns: [
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'name',
-                                            text: 'Name'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'type',
-                                            text: 'Type'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'serverNo',
-                                            text: 'Servers'
-                                        }
-                                    ],
-                                    dockedItems: [
-                                        {
-                                            xtype: 'pagingtoolbar',
-                                            dock: 'bottom',
-                                            id: 'datagridServerGroupPaging',
-                                            width: 360,
-                                            displayInfo: true,
-                                            store: 'DatagridServerGroupStore'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    title: 'Detail'
-                                },
-                                {
-                                    xtype: 'gridpanel',
-                                    id: 'datagirdServerGrid',
-                                    title: '',
-                                    forceFit: true,
-                                    store: 'DatagridServerStore',
-                                    columns: [
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'serverName',
-                                            text: 'Server Name'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'groupName',
-                                            text: 'Group'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'ipAddress',
-                                            text: 'IP Address'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'hostName',
-                                            text: 'Hostname'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'sessions',
-                                            text: 'Sessions'
-                                        },
-                                        {
-                                            xtype: 'gridcolumn',
-                                            dataIndex: 'status',
-                                            text: 'Status'
-                                        },
-                                        {
-                                            xtype: 'booleancolumn',
-                                            dataIndex: 'bool',
-                                            text: 'Actions'
-                                        }
-                                    ],
-                                    dockedItems: [
-                                        {
-                                            xtype: 'toolbar',
-                                            dock: 'top',
-                                            items: [
-                                                {
-                                                    xtype: 'button',
-                                                    text: 'Add'
-                                                },
-                                                {
-                                                    xtype: 'tbseparator'
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    fieldLabel: 'Filtering'
-                                                }
-                                            ]
-                                        }
-                                    ]
                                 }
                             ]
                         }
@@ -876,13 +275,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                         }
                     }
                 }
-            ],
-            listeners: {
-                activate: {
-                    fn: me.onContainerActivate,
-                    scope: me
-                }
-            }
+            ]
         });
 
         me.callParent(arguments);
@@ -920,7 +313,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         }
     },
 
-    onTabpanelTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+    onTabpanelTabChange: function() {
         var activeTab = tabPanel.getActiveTab();
         var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
         if(activeTabIndex === 0) {//tomcat server tab
@@ -932,12 +325,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
             Ext.getCmp("datagridServerGroupGrid").getStore().reload();
         }
 
-    },
-
-    onContainerActivate: function(component, eOpts) {
-         webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
-                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
-            });
     }
 
 });

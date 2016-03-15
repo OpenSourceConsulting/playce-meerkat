@@ -13,7 +13,7 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('MyApp.controller.ServerManagementController', {
+Ext.define('webapp.controller.ServerManagementController', {
     extend: 'Ext.app.Controller',
 
     onDatagridServerGroupGridSelect: function(rowmodel, record, index, eOpts) {
@@ -197,6 +197,10 @@ Ext.define('MyApp.controller.ServerManagementController', {
 
     },
 
+    onLoadServers: function(component, eOpts) {
+
+    },
+
     loadTomcatServers: function(callback) {
         var url = GlobalData.urlPrefix + "res/machine/tomcatserver";
         Ext.Ajax.request({
@@ -312,6 +316,9 @@ Ext.define('MyApp.controller.ServerManagementController', {
             },
             "#tbnServerSSHTestConnection": {
                 click: this.onTbnServerSSHTestConnectionClick
+            },
+            "#mycontainer31": {
+                activate: this.onLoadServers
             }
         });
     }

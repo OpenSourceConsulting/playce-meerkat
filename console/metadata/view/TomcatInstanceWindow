@@ -93,7 +93,7 @@
                         "editable": false,
                         "fieldLabel": "Server",
                         "id": "serverComboBox",
-                        "store": "MachineStore",
+                        "store": "ServerStore",
                         "valueField": "id",
                         "width": 399
                     },
