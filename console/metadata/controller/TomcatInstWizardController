@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "TomcatInstWizardController"
+    },
+    "name": "MyController",
+    "designerId": "84e611dd-513f-4792-b7ef-b8e646eb335d"
+}
