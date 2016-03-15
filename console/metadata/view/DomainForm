@@ -7,6 +7,7 @@
     "codeClass": null,
     "userConfig": {
         "bodyPadding": 10,
+        "bodyStyle": null,
         "designer|userAlias": "domainform",
         "designer|userClassName": "DomainForm",
         "fieldDefaults": [

@@ -26,12 +26,15 @@ Ext.define('webapp.store.DatasourceStore', {
         var me = this;
         cfg = cfg || {};
         me.callParent([Ext.apply({
+            autoLoad: true,
             model: 'webapp.model.DatasourceModel',
             storeId: 'DatasourceStore',
             proxy: {
                 type: 'ajax',
+                url: 'resources/ds-list.json',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'list'
                 }
             }
         }, cfg)]);

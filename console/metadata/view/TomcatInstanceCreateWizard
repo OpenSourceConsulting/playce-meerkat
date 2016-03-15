@@ -6,11 +6,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "bodyStyle": null,
         "designer|userAlias": "ticWizard",
         "designer|userAliasPrefix": null,
         "designer|userClassName": "TomcatInstanceCreateWizard",
         "height": 577,
         "layout": "card",
+        "modal": true,
         "title": "Tomcat Instance Create Wizard",
         "width": 720
     },
@@ -43,7 +45,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "layout|flex": null,
-                        "layout|margins": "0 0 10 0",
+                        "layout|margins": null,
                         "style": [
                             "font-weight: bold"
                         ],
@@ -61,7 +63,7 @@
                     "codeClass": null,
                     "userConfig": {
                         "layout|flex": null,
-                        "layout|margins": "0 0 10 20",
+                        "layout|margins": "10 0 10 20",
                         "text": "Domain을 생성합니다."
                     },
                     "name": "MyLabel22",
@@ -77,7 +79,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "domainform3",
+                    "name": "domainform2",
                     "designerId": "2ba310bc-1c11-4acc-a329-0c47d626de1c",
                     "masterInstanceId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e"
                 },
@@ -91,7 +93,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "tomcatform3",
+                    "name": "tomcatform2",
                     "designerId": "437f671c-a8ef-4b47-a0bb-e43e8e4efe6f",
                     "masterInstanceId": "65465c05-02a3-4947-85fb-817111f473e9"
                 }
@@ -105,10 +107,12 @@
             },
             "codeClass": null,
             "userConfig": {
+                "autoScroll": true,
                 "container|align": "stretch",
                 "container|padding": 10,
                 "designer|displayName": "Step2",
-                "layout": "vbox"
+                "layout": "vbox",
+                "style": null
             },
             "name": "MyContainer21",
             "designerId": "e61760ef-0771-459d-9701-4bcfe58bc7f4",
@@ -121,14 +125,180 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "layout|flex": 1,
-                        "style": [
-                            "font-weight: bold"
-                        ],
+                        "cls": "osc-bold",
+                        "layout|flex": null,
+                        "layout|margins": null,
+                        "style": null,
                         "text": "2/3 Step : Select Datasource"
                     },
                     "name": "MyLabel14",
                     "designerId": "e4514dc2-e94d-4447-90bd-fc58375f9d22"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": "osc-panel-tip",
+                        "layout|flex": null,
+                        "layout|margins": "10 0 10 20",
+                        "text": "Datasource를 선택 또는 생성합니다."
+                    },
+                    "name": "MyLabel",
+                    "designerId": "b3b526e9-e59a-4d48-a947-3886eff1b7f0"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldCls": "x-form-display-field osc-bold",
+                        "fieldLabel": "Domain Name",
+                        "labelAlign": "right",
+                        "layout|flex": null,
+                        "value": "API Product Domain"
+                    },
+                    "name": "MyDisplayField",
+                    "designerId": "3fb21270-48c0-454b-bae0-029930140eb8"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": "osc-h3",
+                        "layout|flex": null,
+                        "text": "Datasources :"
+                    },
+                    "name": "MyLabel24",
+                    "designerId": "3bcac48f-0446-4483-905d-d58fa23da461"
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "autoScroll": true,
+                        "bodyBorder": true,
+                        "bodyStyle": [
+                            "background: #fff"
+                        ],
+                        "header": false,
+                        "iconCls": "icon-grid",
+                        "layout|flex": 1,
+                        "store": "DatasourceStore",
+                        "title": "Datasources"
+                    },
+                    "name": "MyGridPanel",
+                    "designerId": "6f891aca-d633-4050-b90b-654f67002e0f",
+                    "cn": [
+                        {
+                            "type": "Ext.selection.CheckboxModel",
+                            "reference": {
+                                "name": "selModel",
+                                "type": "object"
+                            },
+                            "codeClass": "Ext.selection.CheckboxModel",
+                            "name": "MyCheckboxSelectionModel",
+                            "designerId": "addd089f-4dc3-4bfb-a243-388853e5ee1a"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "name",
+                                "text": "Datasource Name",
+                                "width": 170
+                            },
+                            "name": "MyColumn",
+                            "designerId": "9b7f3139-4efa-4e4b-b80f-7171402a19fc"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "jdbcUrl",
+                                "text": "JDBC Url",
+                                "width": 350
+                            },
+                            "name": "MyColumn1",
+                            "designerId": "a62b0caf-7577-4208-b3e1-f0e960ac4ae8"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "dbType",
+                                "text": "Server"
+                            },
+                            "name": "MyColumn2",
+                            "designerId": "0e5a86b4-64d7-419d-a7d9-8ed7eb4fcf48"
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "MyGridView",
+                            "designerId": "8f88f836-9843-4a23-869d-35a6f3f1c9a6"
+                        },
+                        {
+                            "type": "Ext.toolbar.Toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dock": "top"
+                            },
+                            "name": "MyToolbar1",
+                            "designerId": "0a32ad1a-b541-48cf-989f-764cac4fdd23",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "iconCls": "add",
+                                        "layout|flex": null,
+                                        "text": "Create Datasource"
+                                    },
+                                    "name": "MyButton2",
+                                    "designerId": "2f6a6fc5-bb39-45f8-a668-2139877851fe"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -140,6 +310,7 @@
             },
             "codeClass": null,
             "userConfig": {
+                "autoScroll": true,
                 "container|align": "stretch",
                 "container|padding": 10,
                 "designer|displayName": "Step3",

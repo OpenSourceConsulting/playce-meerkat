@@ -1,3 +1,8 @@
+
+.x-window-body, .x-panel-body {
+    background: #f5f5f5;
+}
+
 /**
  * Tree Menu Style Sheet
  */
@@ -77,4 +82,28 @@ span.x-tree-node-text {
 }
 .x-tip-body span {
     width: auto !important;
+}
+
+/**
+ * text cls
+ */
+.osc-bold {
+    font-weight: bold;
+}
+.osc-h3 {
+	margin: 15px 0px 5px 14px;
+	font-weight: bold;
+}
+.osc-panel-tip {
+	color: #CC2EFA;
+}
+
+/**
+ * icons cls
+ */
+.icon-grid {
+    background-image:url(../images/icons/fam/grid.png) !important;
+}
+.add {
+    background-image:url(../images/icons/fam/add.gif) !important;
 }

@@ -873,6 +873,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.controller.MenuController": [],
   "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
+  "webapp.controller.TomcatInstWizardController": [],
   "webapp.controller.UserController": [],
   "webapp.controller.dashboardController": [],
   "webapp.controller.footerController": [],
@@ -1957,6 +1958,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.controller.MenuController": [],
   "webapp.controller.ServerManagementController": [],
   "webapp.controller.TomcatController": [],
+  "webapp.controller.TomcatInstWizardController": [],
   "webapp.controller.UserController": [
     "controller.UserController"
   ],

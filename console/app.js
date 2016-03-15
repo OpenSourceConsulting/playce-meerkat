@@ -101,7 +101,8 @@ Ext.application({
         'CluteringConfigurationController',
         'DatasourceController',
         'ServerManagementController',
-        'DatagridServerController'
+        'DatagridServerController',
+        'TomcatInstWizardController'
     ],
     name: 'webapp',
 

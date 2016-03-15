@@ -20,7 +20,8 @@
             "CluteringConfigurationController",
             "DatasourceController",
             "ServerManagementController",
-            "DatagridServerController"
+            "DatagridServerController",
+            "TomcatInstWizardController"
         ],
         "models": [
             "SessionKeyData",
