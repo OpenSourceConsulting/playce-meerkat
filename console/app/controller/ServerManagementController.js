@@ -48,6 +48,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         var sshIpaddress = record.get("sshipaddr");
         var osName = record.get("osName");
 
+        var sshIPAddrField = Ext.getCmp("serverSSHIPAddressCombobox");
         var sshPortField = Ext.getCmp("serverSSHPortTextField");
         var nameField = Ext.getCmp("serverNameTextField");
         var osNameField = Ext.getCmp("serverOSNameDisplayField");
@@ -60,8 +61,14 @@ Ext.define('webapp.controller.ServerManagementController', {
         sshPortField.setValue(sshPort);
         osNameField.setValue(osName);
 
-        var ipaddrUrl = GlobalData.urlPrefix + "res/server/nis";
-        Ext.getCmp("serverSSHIPAddressCombobox").getStore().load({url:ipaddrUrl+"?serverId="+id});
+        var ipaddrUrl = GlobalData.urlPrefix + "res/server/"+id+"/nis";
+        //Ext.getCmp("serverSSHIPAddressCombobox").getStore().load({url:ipaddrUrl});
+        //var store = Ext.getStore("NetworkInterfaceStore");
+        //store.getProxy().url = ipaddrUrl;
+        sshIPAddrField.clearValue();
+        sshIPAddrField.getStore().getProxy().url = ipaddrUrl;
+        sshIPAddrField.getStore().load();
+
         /*
         Ext.Ajax.request({
             url: url,

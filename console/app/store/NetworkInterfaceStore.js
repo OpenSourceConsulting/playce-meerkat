@@ -32,7 +32,7 @@ Ext.define('webapp.store.NetworkInterfaceStore', {
                 type: 'ajax',
                 reader: {
                     type: 'json',
-                    root: 'data'
+                    root: 'list'
                 }
             }
         }, cfg)]);

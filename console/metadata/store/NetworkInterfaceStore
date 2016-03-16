@@ -31,7 +31,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "root": "data"
+                        "root": "list"
                     },
                     "name": "MyJsonReader12",
                     "designerId": "e9ba780c-9b27-4a7c-8285-2f55e5d0da24"

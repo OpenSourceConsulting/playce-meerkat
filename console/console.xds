@@ -2,7 +2,7 @@
     "name": "console",
     "settings": {
         "cmd": {
-            "cmdVersion": "6.0.2.14",
+            "cmdVersion": "5.1.3.61",
             "license": "commercial",
             "frameworkVersion": "4.2.1.883"
         },
