@@ -29,10 +29,16 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
         'Ext.grid.View',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button',
+        'Ext.toolbar.Separator',
+        'Ext.form.field.ComboBox',
+        'Ext.toolbar.TextItem',
+        'Ext.grid.plugin.CellEditing',
+        'Ext.form.FieldSet',
+        'Ext.form.field.File',
         'Ext.toolbar.Fill'
     ],
 
-    height: 577,
+    height: 504,
     width: 720,
     layout: 'card',
     title: 'Tomcat Instance Create Wizard',
@@ -154,6 +160,7 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                 },
                 {
                     xtype: 'container',
+                    itemId: 'step3',
                     autoScroll: true,
                     layout: {
                         type: 'vbox',
@@ -165,6 +172,146 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                             xtype: 'label',
                             style: 'font-weight: bold',
                             text: '3/3 Step : Select Servers'
+                        },
+                        {
+                            xtype: 'label',
+                            margins: '10 0 10 20',
+                            cls: 'osc-panel-tip',
+                            text: 'Tomcat Instance를 생성할 Server를 선택 또는 생성합니다.'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            fieldLabel: 'Domain Name',
+                            labelAlign: 'right',
+                            value: 'API Product Domain',
+                            fieldCls: 'x-form-display-field osc-bold'
+                        },
+                        {
+                            xtype: 'label',
+                            cls: 'osc-h3',
+                            text: 'Servers :'
+                        },
+                        {
+                            xtype: 'gridpanel',
+                            flex: 4,
+                            autoScroll: true,
+                            bodyBorder: true,
+                            bodyStyle: 'background: #fff',
+                            header: false,
+                            iconCls: 'icon-grid',
+                            store: 'ServerStore',
+                            selModel: Ext.create('Ext.selection.CheckboxModel', {
+
+                            }),
+                            columns: [
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 150,
+                                    dataIndex: 'instName',
+                                    text: 'Instance Name',
+                                    editor: {
+                                        xtype: 'textfield',
+                                        allowBlank: false
+                                    }
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 150,
+                                    dataIndex: 'name',
+                                    text: 'Server Name'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    width: 150,
+                                    dataIndex: 'instName',
+                                    text: 'Host Name'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'sshipaddr',
+                                    text: 'IP Address'
+                                },
+                                {
+                                    xtype: 'gridcolumn',
+                                    dataIndex: 'result',
+                                    text: 'Result'
+                                }
+                            ],
+                            dockedItems: [
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'top',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            itemId: 'btnWCreateSvr',
+                                            iconCls: 'add',
+                                            text: 'Create Server'
+                                        },
+                                        {
+                                            xtype: 'tbseparator'
+                                        },
+                                        {
+                                            xtype: 'combobox',
+                                            margin: '0 5 0 10',
+                                            fieldLabel: '생성계정',
+                                            labelWidth: 60,
+                                            store: [
+                                                {
+                                                    value: '1',
+                                                    text: 'meerkat'
+                                                },
+                                                {
+                                                    value: '2',
+                                                    text: 'osc'
+                                                }
+                                            ],
+                                            valueField: 'value'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            text: 'Test Connect'
+                                        },
+                                        {
+                                            xtype: 'tbtext',
+                                            cls: 'osc-status-valid',
+                                            text: 'Connection success.'
+                                        }
+                                    ]
+                                }
+                            ],
+                            plugins: [
+                                Ext.create('Ext.grid.plugin.CellEditing', {
+                                    clicksToEdit: 1
+                                })
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            flex: 1,
+                            collapsed: true,
+                            collapsible: true,
+                            title: 'Deploy War',
+                            items: [
+                                {
+                                    xtype: 'form',
+                                    bodyPadding: 10,
+                                    header: false,
+                                    title: 'My Form',
+                                    items: [
+                                        {
+                                            xtype: 'filefield',
+                                            anchor: '70%',
+                                            fieldLabel: 'WAR File'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            anchor: '70%',
+                                            fieldLabel: 'Context Path'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

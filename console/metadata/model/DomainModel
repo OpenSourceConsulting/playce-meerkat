@@ -46,6 +46,7 @@
             "userConfig": {
                 "name": "tomcatInstancesCount"
             },
+            "name": "MyField4",
             "designerId": "874506a8-ddf2-4045-86ba-c20e68ed4770"
         },
         {
@@ -58,6 +59,7 @@
             "userConfig": {
                 "name": "datagridServerGroupName"
             },
+            "name": "MyField5",
             "designerId": "8d74e84d-a114-48ff-af61-e6e00ce60257"
         },
         {
@@ -70,6 +72,7 @@
             "userConfig": {
                 "name": "clustering"
             },
+            "name": "MyField6",
             "designerId": "897076ee-eeb5-45d4-921c-1bd77cd0364e"
         }
     ]

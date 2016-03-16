@@ -39,6 +39,9 @@ Ext.define('webapp.model.ServerModel', {
         },
         {
             name: 'hostName'
+        },
+        {
+            name: 'instName'
         }
     ]
 });

@@ -20,6 +20,10 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
         component.down('gridpanel').getStore().load();
     },
 
+    onStep3Activate: function(component, eOpts) {
+        component.down('gridpanel').getStore().load();
+    },
+
     onDSCreateButtonClick: function(button, e, eOpts) {
                 Ext.create('widget.dsWin').show();
     },
@@ -28,6 +32,9 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
         this.control({
             "ticWizard #step2": {
                 activate: this.onStep2Activate
+            },
+            "ticWizard #step3": {
+                activate: this.onStep3Activate
             },
             "ticWizard #btnWCreateDs": {
                 click: this.onDSCreateButtonClick

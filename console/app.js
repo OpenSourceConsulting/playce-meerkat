@@ -87,7 +87,8 @@ Ext.application({
         'EnvironmentVariableWindow',
         'TomcatInstanceCreateWizard',
         'DomainForm',
-        'TomcatForm'
+        'TomcatForm',
+        'TomcatInstallLogWindow'
     ],
     controllers: [
         'headerController',

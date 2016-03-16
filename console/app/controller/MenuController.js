@@ -55,6 +55,10 @@ Ext.define('webapp.controller.MenuController', {
             mnuContext = Ext.create("Ext.menu.Menu",{
 
             items: [{
+                id: 'create-wizard',
+                text: 'Create Wizard'
+            },
+            {
                 id: 'new-domain',
                 text: 'New Domain'
             },
@@ -72,6 +76,9 @@ Ext.define('webapp.controller.MenuController', {
 
                 click: function( _menu, _item, _e, _eOpts ) {
                    switch (_item.id) {
+                        case 'create-wizard':
+                            Ext.create('widget.ticWizard').show();
+                            break;
                         case 'new-domain':
                             webapp.app.getController("DomainController").showDomainWindow("new", 0);
                             break;
@@ -102,10 +109,6 @@ Ext.define('webapp.controller.MenuController', {
                 text: 'New Tomcat'
             },
             {
-                id: 'create-wizard',
-                text: 'Wizard'
-            },
-            {
                 id: 'edit-domain',
                 text: 'Edit'
             },
@@ -129,9 +132,6 @@ Ext.define('webapp.controller.MenuController', {
                    switch (_item.id) {
                         case 'new-tomcat':
                             webapp.app.getController("TomcatController").showTomcatWindow("new", 0, domainId);
-                            break;
-                        case 'create-wizard':
-                            Ext.create('widget.ticWizard').show();
                             break;
                         case 'edit-domain':
                             webapp.app.getController("DomainController").showDomainWindow("edit", domainId);

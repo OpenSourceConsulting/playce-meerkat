@@ -10,7 +10,7 @@
         "designer|userAlias": "ticWizard",
         "designer|userAliasPrefix": null,
         "designer|userClassName": "TomcatInstanceCreateWizard",
-        "height": 577,
+        "height": 504,
         "layout": "card",
         "modal": true,
         "title": "Tomcat Instance Create Wizard",
@@ -318,6 +318,7 @@
                 "container|align": "stretch",
                 "container|padding": 10,
                 "designer|displayName": "Step3",
+                "itemId": "step3",
                 "layout": "vbox"
             },
             "name": "MyContainer24",
@@ -338,6 +339,367 @@
                     },
                     "name": "MyLabel15",
                     "designerId": "5d4f04f7-26e5-46a5-9a80-2923d633a22b"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": "osc-panel-tip",
+                        "layout|flex": null,
+                        "layout|margins": "10 0 10 20",
+                        "text": "Tomcat Instance를 생성할 Server를 선택 또는 생성합니다."
+                    },
+                    "name": "MyLabel19",
+                    "designerId": "3b0d3be1-7f3a-4f31-aaf1-8e50c6edd79a"
+                },
+                {
+                    "type": "Ext.form.field.Display",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fieldCls": "x-form-display-field osc-bold",
+                        "fieldLabel": "Domain Name",
+                        "labelAlign": "right",
+                        "layout|flex": null,
+                        "value": "API Product Domain"
+                    },
+                    "name": "MyDisplayField21",
+                    "designerId": "4578a758-4112-4937-b6b2-e34d708cdc3d"
+                },
+                {
+                    "type": "Ext.form.Label",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "cls": "osc-h3",
+                        "layout|flex": null,
+                        "text": "Servers :"
+                    },
+                    "name": "MyLabel21",
+                    "designerId": "1c4ffe50-88f6-4043-b727-6cb1843f6883"
+                },
+                {
+                    "type": "Ext.grid.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "autoScroll": true,
+                        "bodyBorder": true,
+                        "bodyStyle": [
+                            "background: #fff"
+                        ],
+                        "designer|createAlias": null,
+                        "designer|displayName": "Servers",
+                        "header": false,
+                        "iconCls": "icon-grid",
+                        "layout|flex": 4,
+                        "store": "ServerStore",
+                        "title": null
+                    },
+                    "name": "MyGridPanel15",
+                    "designerId": "c11e1e94-e1c2-4c30-bba7-3e2f6fa324dc",
+                    "cn": [
+                        {
+                            "type": "Ext.selection.CheckboxModel",
+                            "reference": {
+                                "name": "selModel",
+                                "type": "object"
+                            },
+                            "codeClass": "Ext.selection.CheckboxModel",
+                            "name": "MyCheckboxSelectionModel",
+                            "designerId": "9903dd42-bc7b-4778-854f-f442a171f058"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "instName",
+                                "text": "Instance Name",
+                                "width": 150
+                            },
+                            "name": "MyColumn",
+                            "designerId": "3d2032f8-bd9c-4f5d-b297-7299a99edeaf",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "editor",
+                                        "type": "object"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "allowBlank": false
+                                    },
+                                    "name": "MyTextField8",
+                                    "designerId": "25bb5000-fa0e-45ab-8a1d-48ee3ae37cdb"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "name",
+                                "text": "Server Name",
+                                "width": 150
+                            },
+                            "name": "MyColumn18",
+                            "designerId": "4a7d95b4-1f4c-4a30-b57b-c87b340e59c6"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "instName",
+                                "text": "Host Name",
+                                "width": 150
+                            },
+                            "name": "MyColumn1",
+                            "designerId": "44f68d98-0065-4200-acbb-60aff8025879"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "sshipaddr",
+                                "text": "IP Address"
+                            },
+                            "name": "MyColumn2",
+                            "designerId": "b41f6249-86c5-431a-b516-98aea42b87af"
+                        },
+                        {
+                            "type": "Ext.grid.column.Column",
+                            "reference": {
+                                "name": "columns",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dataIndex": "result",
+                                "text": "Result"
+                            },
+                            "name": "MyColumn31",
+                            "designerId": "f86a35d6-05f8-4cd1-b80d-4e91b2a2cb6b"
+                        },
+                        {
+                            "type": "Ext.grid.View",
+                            "reference": {
+                                "name": "viewConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "MyGridView",
+                            "designerId": "dfbf5c4a-d7f2-4f7a-be24-9592515bc1a7"
+                        },
+                        {
+                            "type": "Ext.toolbar.Toolbar",
+                            "reference": {
+                                "name": "dockedItems",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "dock": "top"
+                            },
+                            "name": "MyToolbar1",
+                            "designerId": "80b0a4a5-e875-4b6f-adb4-2822894ff85c",
+                            "cn": [
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "iconCls": "add",
+                                        "itemId": "btnWCreateSvr",
+                                        "layout|flex": null,
+                                        "text": "Create Server"
+                                    },
+                                    "name": "MyButton2",
+                                    "designerId": "657d6e1b-a55b-4b9e-a14b-00a48004c9e9"
+                                },
+                                {
+                                    "type": "Ext.toolbar.Separator",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "layout|flex": null
+                                    },
+                                    "name": "MySeparator2",
+                                    "designerId": "c3a0dbda-fdfe-4964-8f45-197a0088a5f8"
+                                },
+                                {
+                                    "type": "Ext.form.field.ComboBox",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|displayName": "accountCombo",
+                                        "fieldLabel": "생성계정",
+                                        "labelWidth": 60,
+                                        "layout|flex": null,
+                                        "margin": "0 5 0 10",
+                                        "store": [
+                                            "[{'value':'1', 'text': 'meerkat'},{'value':'2', 'text': 'osc'}]"
+                                        ],
+                                        "valueField": "value",
+                                        "width": null
+                                    },
+                                    "name": "MyComboBox5",
+                                    "configAlternates": {
+                                        "store": "array"
+                                    },
+                                    "designerId": "8c417fbe-0ec2-4350-8bd3-cc972789f2e6"
+                                },
+                                {
+                                    "type": "Ext.button.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "layout|flex": null,
+                                        "text": "Test Connect"
+                                    },
+                                    "name": "MyButton21",
+                                    "designerId": "aadee90e-381a-4354-a688-45d65d27e8a6"
+                                },
+                                {
+                                    "type": "Ext.toolbar.TextItem",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "cls": "osc-status-valid",
+                                        "layout|flex": null,
+                                        "text": "Connection success."
+                                    },
+                                    "name": "MyTextItem",
+                                    "designerId": "16a868a8-4395-44f5-b40e-38bdbc515417"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.grid.plugin.CellEditing",
+                            "reference": {
+                                "name": "plugins",
+                                "type": "array"
+                            },
+                            "codeClass": "Ext.grid.plugin.CellEditing",
+                            "userConfig": {
+                                "clicksToEdit": 1
+                            },
+                            "name": "MyCellEditingPlugin",
+                            "designerId": "281f15ef-0987-410c-82e9-35faaf60466a"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.form.FieldSet",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "collapsed": true,
+                        "collapsible": true,
+                        "layout|flex": 1,
+                        "title": "Deploy War"
+                    },
+                    "name": "MyFieldSet",
+                    "designerId": "e9c4a7b3-f3e5-4c69-8088-52846521ac01",
+                    "cn": [
+                        {
+                            "type": "Ext.form.Panel",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "bodyPadding": 10,
+                                "designer|displayName": "DeployForm",
+                                "fieldDefaults": null,
+                                "header": false,
+                                "title": "My Form"
+                            },
+                            "name": "MyForm3",
+                            "designerId": "8913dba3-e29f-4d0c-aaeb-ea040d7f6912",
+                            "cn": [
+                                {
+                                    "type": "Ext.form.field.File",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fieldLabel": "WAR File",
+                                        "labelWidth": null,
+                                        "layout|anchor": "70%",
+                                        "width": null
+                                    },
+                                    "name": "MyFileUpload1",
+                                    "designerId": "431f1f9c-0a3b-4b50-ba1e-52706f59d211"
+                                },
+                                {
+                                    "type": "Ext.form.field.Text",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fieldLabel": "Context Path",
+                                        "layout|anchor": "70%",
+                                        "width": null
+                                    },
+                                    "name": "MyTextField9",
+                                    "designerId": "9915dff1-e1e2-4674-a821-11b921efe1d6"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },

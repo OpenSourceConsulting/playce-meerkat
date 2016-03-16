@@ -112,6 +112,7 @@ Ext.define('webapp.view.TomcatForm', {
                 },
                 {
                     xtype: 'fieldset',
+                    collapsed: true,
                     collapsible: true,
                     title: 'Adanced Config',
                     items: [

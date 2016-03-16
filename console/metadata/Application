@@ -90,7 +90,8 @@
             "EnvironmentVariableWindow",
             "TomcatInstanceCreateWizard",
             "DomainForm",
-            "TomcatForm"
+            "TomcatForm",
+            "TomcatInstallLogWindow"
         ]
     },
     "name": "Application",

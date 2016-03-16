@@ -1,0 +1,104 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyPadding": 15,
+        "designer|userClassName": "TomcatInstallLogWindow",
+        "height": 592,
+        "layout": "anchor",
+        "title": "Tomcat Instance Install Logs",
+        "width": 894
+    },
+    "name": "MyWindow",
+    "designerId": "01a32e83-c5fb-4ecb-8358-2b6a8c44c344",
+    "cn": [
+        {
+            "type": "Ext.form.Label",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "cls": "osc-h3",
+                "text": "Install Logs"
+            },
+            "name": "MyLabel23",
+            "designerId": "c193eb12-5ba3-4388-815b-94c8e688389a"
+        },
+        {
+            "type": "Ext.form.field.TextArea",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "TextArea",
+                "fieldLabel": "Label",
+                "hideLabel": true,
+                "layout|anchor": "100% 100%"
+            },
+            "name": "MyTextArea1",
+            "designerId": "5a2e38e8-b0ec-411a-9c57-55597e5bedba"
+        },
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|pack": "center",
+                "designer|uiInterfaceName": "footer",
+                "dock": "bottom",
+                "ui": "footer"
+            },
+            "name": "MyToolbar17",
+            "designerId": "eeef82c4-ba5d-4068-8922-eeceaabc2cd6",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Close"
+                    },
+                    "name": "MyButton22",
+                    "designerId": "22f1447c-7e90-4336-bf8b-efbd074a8827",
+                    "cn": [
+                        {
+                            "type": "fixedfunction",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|params": [
+                                    "button",
+                                    "e"
+                                ],
+                                "fn": "handler",
+                                "implHandler": [
+                                    "button.up(\"window\").close();"
+                                ]
+                            },
+                            "name": "handler",
+                            "designerId": "f5ade047-d6ff-4c71-a61a-7af51d6e7d71"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

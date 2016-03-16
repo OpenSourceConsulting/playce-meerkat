@@ -39,6 +39,26 @@
             },
             "codeClass": null,
             "userConfig": {
+                "designer|controlQuery": "ticWizard #step3",
+                "designer|targetType": "Ext.container.Container",
+                "fn": "onStep3Activate",
+                "implHandler": [
+                    "component.down('gridpanel').getStore().load();"
+                ],
+                "name": "activate",
+                "scope": "me"
+            },
+            "name": "onStep3Activate",
+            "designerId": "de5f0648-0e8a-42ef-a415-937adf3e729f"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
                 "designer|controlQuery": "ticWizard #btnWCreateDs",
                 "designer|targetType": "Ext.button.Button",
                 "fn": "onDSCreateButtonClick",

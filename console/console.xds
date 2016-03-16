@@ -2,7 +2,7 @@
     "name": "console",
     "settings": {
         "cmd": {
-            "cmdVersion": "5.1.3.61",
+            "cmdVersion": "6.0.2.14",
             "license": "commercial",
             "frameworkVersion": "4.2.1.883"
         },
@@ -68,7 +68,8 @@
             "0afcedfc-3608-44cf-99fe-5381e06ae2ff",
             "9d12f157-7685-4c94-9a8d-eb37d190bb6e",
             "65465c05-02a3-4947-85fb-817111f473e9",
-            "e31face7-e797-4a44-83ff-e5dd8a4a17e4"
+            "e31face7-e797-4a44-83ff-e5dd8a4a17e4",
+            "01a32e83-c5fb-4ecb-8358-2b6a8c44c344"
         ],
         "store": [
             "4c2bc173-1fa6-41fb-9f51-1e615e29ba62",
