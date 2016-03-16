@@ -31,7 +31,8 @@
         "lockUrlPrefix": false,
         "installStatus": "Not Installed",
         "displayfield-ExtBox1-1193-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available",
+        "displayfield-ExtBox1-1270-inputEl": "a new version of the framework is available"
     },
     "xdsVersion": "3.2.0",
     "xdsBuild": 339,

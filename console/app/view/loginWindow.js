@@ -81,6 +81,7 @@ Ext.define('webapp.view.loginWindow', {
                                     labelStyle: 'search',
                                     labelWidth: 90,
                                     name: 'username',
+                                    value: 'admin',
                                     fieldStyle: '',
                                     allowBlank: false,
                                     blankText: '사용자아이디는 필수 입력 항목입니다.'
@@ -94,6 +95,7 @@ Ext.define('webapp.view.loginWindow', {
                                     labelAlign: 'right',
                                     labelWidth: 90,
                                     name: 'password',
+                                    value: 'admin',
                                     inputType: 'password',
                                     allowBlank: false,
                                     blankText: '비밀번호는 필수 입력 항목입니다.'

@@ -105,6 +105,9 @@
                                 "layout|anchor": "100%",
                                 "name": "username",
                                 "style": null,
+                                "value": [
+                                    "admin"
+                                ],
                                 "width": null
                             },
                             "name": "MyTextField26",
@@ -130,7 +133,10 @@
                                 "labelAlign": "right",
                                 "labelWidth": 90,
                                 "layout|anchor": "100%",
-                                "name": "password"
+                                "name": "password",
+                                "value": [
+                                    "admin"
+                                ]
                             },
                             "name": "MyTextField27",
                             "designerId": "06ea6889-b7bf-470d-b156-c8fe18dff9e5"

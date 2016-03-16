@@ -36,8 +36,11 @@ Ext.define('webapp.controller.LoginController', {
 
                 // Show window
                 login.show();
-
-                Ext.getCmp("loginForm").getForm().findField("userName").focus();
+                //auto login
+                //Ext.getCmp("loginForm").getForm().findField("userName").focus();
+                Ext.getCmp("userName").setValue("admin");
+                Ext.getCmp("password").setValue("admin");
+                Ext.getCmp("loginBtn").fireEvent("click");
             }
         });
 
