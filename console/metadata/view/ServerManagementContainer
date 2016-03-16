@@ -308,11 +308,13 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "displayField": "nameAndIPAddr",
+                                                        "editable": false,
                                                         "fieldLabel": "SSH IPAddress",
                                                         "id": "serverSSHIPAddressCombobox",
                                                         "layout|anchor": "100%",
-                                                        "readOnly": true,
-                                                        "store": "NetworkInterfaceStore"
+                                                        "store": "NetworkInterfaceStore",
+                                                        "valueField": "id"
                                                     },
                                                     "name": "MyComboBox4",
                                                     "designerId": "366df445-20b8-42ad-a481-640646a16f1d"

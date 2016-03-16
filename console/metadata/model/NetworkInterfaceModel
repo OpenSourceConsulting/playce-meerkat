@@ -9,5 +9,98 @@
         "designer|userClassName": "NetworkInterfaceModel"
     },
     "name": "MyModel",
-    "designerId": "b56cdc0f-4c27-481f-ac4e-0b03c36f66ea"
+    "designerId": "b56cdc0f-4c27-481f-ac4e-0b03c36f66ea",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name"
+            },
+            "name": "MyField",
+            "designerId": "61d1d7a7-9144-47e6-8685-bc3958d01ce7"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ipv4"
+            },
+            "name": "MyField1",
+            "designerId": "124a9dd2-8ac0-4bf8-95ae-f04ac6e0a8d3"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ipv6"
+            },
+            "name": "MyField2",
+            "designerId": "586e1646-3a2a-4f51-b2f3-74ee2f1212f1"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "netmask"
+            },
+            "name": "MyField3",
+            "designerId": "7e1a420f-2d15-46ad-a169-729cfd406059"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "id"
+            },
+            "name": "MyField4",
+            "designerId": "27fac1c9-2c42-4bee-9ef5-991b52542d90"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "defaultGateway"
+            },
+            "name": "MyField5",
+            "designerId": "ed962092-5a23-4274-b173-665bedba97bb"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "nameAndIPAddr"
+            },
+            "name": "MyField6",
+            "designerId": "ef24c5b8-b6a6-413d-9b78-69bc5a96fbf2"
+        }
+    ]
 }

@@ -31,7 +31,8 @@ Ext.define('webapp.store.NetworkInterfaceStore', {
             proxy: {
                 type: 'ajax',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'data'
                 }
             }
         }, cfg)]);

@@ -156,8 +156,10 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                             anchor: '100%',
                                                             id: 'serverSSHIPAddressCombobox',
                                                             fieldLabel: 'SSH IPAddress',
-                                                            readOnly: true,
-                                                            store: 'NetworkInterfaceStore'
+                                                            editable: false,
+                                                            displayField: 'nameAndIPAddr',
+                                                            store: 'NetworkInterfaceStore',
+                                                            valueField: 'id'
                                                         },
                                                         {
                                                             xtype: 'textfield',
