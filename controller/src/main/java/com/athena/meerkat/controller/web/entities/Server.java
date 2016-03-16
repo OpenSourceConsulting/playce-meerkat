@@ -68,8 +68,8 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
-	@Column(name = "ssh_ipaddr")
-	private String sshIpaddr;
+	@Column(name = "ssh_ni_id")
+	private int sshNiId;
 	@Column(name = "state")
 	private int state;
 
