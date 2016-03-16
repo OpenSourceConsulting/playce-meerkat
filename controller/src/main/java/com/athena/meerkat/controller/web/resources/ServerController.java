@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,13 +71,13 @@ public class ServerController {
 		}
 		return json;
 	}
-
-	@RequestMapping(value = "/nis", method = RequestMethod.GET)
+	@RequestMapping(value = "/{serverId}/nis", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getNIs(SimpleJsonResponse json, Integer serverId) {
+	public GridJsonResponse getNIs(GridJsonResponse json, @PathVariable Integer serverId) {
 		Server m = service.retrieve(serverId);
 		if (m != null) {
-			json.setData(m.getNetworkInterfaces());
+			json.setList((List<?>) m.getNetworkInterfaces());
+			json.setTotal(m.getNetworkInterfaces().size());
 			json.setSuccess(true);
 		} else {
 			json.setMsg("Server does not exist.");
