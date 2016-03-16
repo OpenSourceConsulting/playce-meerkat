@@ -105,4 +105,8 @@ public class NetworkInterface implements Serializable {
 	public void setServer(Server server) {
 		this.server = server;
 	}
+
+	public String getNameAndIPAddr() {
+		return name + " - " + ipv4;
+	}
 }

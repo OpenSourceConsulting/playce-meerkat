@@ -71,6 +71,20 @@ public class ServerController {
 		return json;
 	}
 
+	@RequestMapping(value = "/nis", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getNIs(SimpleJsonResponse json, Integer serverId) {
+		Server m = service.retrieve(serverId);
+		if (m != null) {
+			json.setData(m.getNetworkInterfaces());
+			json.setSuccess(true);
+		} else {
+			json.setMsg("Server does not exist.");
+			json.setSuccess(false);
+		}
+		return json;
+	}
+
 	// for testing bean creation
 	// @Override
 	// public void afterPropertiesSet() throws Exception {
