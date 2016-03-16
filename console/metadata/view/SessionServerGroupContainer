@@ -358,56 +358,8 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onTabpanelTabChange",
-                        "implHandler": [
-                            "var activeTab = tabPanel.getActiveTab();",
-                            "var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);",
-                            "if(activeTabIndex === 0) {//tomcat server tab",
-                            "    webapp.app.getController(\"ServerManagementController\").loadTomcatServers(function(data){",
-                            "        Ext.getCmp(\"tomcatServerGrid\").getStore().loadData(data);",
-                            "    });",
-                            "}",
-                            "else if(activeTabIndex === 1) {//datagrid server tab",
-                            "    Ext.getCmp(\"datagridServerGroupGrid\").getStore().reload();",
-                            "}",
-                            ""
-                        ],
-                        "name": "tabchange",
-                        "scope": "me"
-                    },
-                    "name": "onTabpanelTabChange",
-                    "designerId": "19438f33-e957-4062-81fe-87bcfb6307bf"
                 }
             ]
-        },
-        {
-            "type": "basiceventbinding",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onContainerActivate",
-                "implHandler": [
-                    " webapp.app.getController(\"ServerManagementController\").loadTomcatServers(function(data){",
-                    "        Ext.getCmp(\"tomcatServerGrid\").getStore().loadData(data);",
-                    "    });"
-                ],
-                "name": "activate",
-                "scope": "me"
-            },
-            "name": "onContainerActivate",
-            "designerId": "758c2b3c-2234-4311-bdbd-7cef46ddd4b8"
         }
     ]
 }

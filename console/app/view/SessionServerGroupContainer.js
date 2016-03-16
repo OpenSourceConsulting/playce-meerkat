@@ -164,44 +164,12 @@ Ext.define('webapp.view.SessionServerGroupContainer', {
                                 }
                             ]
                         }
-                    ],
-                    listeners: {
-                        tabchange: {
-                            fn: me.onTabpanelTabChange,
-                            scope: me
-                        }
-                    }
+                    ]
                 }
-            ],
-            listeners: {
-                activate: {
-                    fn: me.onContainerActivate,
-                    scope: me
-                }
-            }
+            ]
         });
 
         me.callParent(arguments);
-    },
-
-    onTabpanelTabChange: function() {
-        var activeTab = tabPanel.getActiveTab();
-        var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
-        if(activeTabIndex === 0) {//tomcat server tab
-            webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
-                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
-            });
-        }
-        else if(activeTabIndex === 1) {//datagrid server tab
-            Ext.getCmp("datagridServerGroupGrid").getStore().reload();
-        }
-
-    },
-
-    onContainerActivate: function(component, eOpts) {
-         webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
-                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
-            });
     }
 
 });

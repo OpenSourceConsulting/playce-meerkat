@@ -490,7 +490,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
-                                "dataIndex": "sshipaddr",
+                                "dataIndex": "sshNiId",
                                 "text": "IP Address"
                             },
                             "name": "MyColumn2",

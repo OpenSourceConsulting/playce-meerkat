@@ -255,6 +255,7 @@ Ext.define('webapp.controller.MenuController', {
             //navigationText = "Monitoring > Tomcat Instances > ...";
         }else if (menuId === "resourcemng_servers") {
             activeItem = 7;
+             webapp.app.getStore("ServerStore").reload();
             //navigationText = "Resource Management > Servers";
 
         }else if (menuId === "resourcemng_servers_groups") {

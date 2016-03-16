@@ -26,6 +26,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.tab.Tab',
         'Ext.form.Panel',
         'Ext.form.field.ComboBox',
+        'Ext.form.field.Number',
         'Ext.form.field.Display',
         'Ext.form.field.Hidden',
         'Ext.form.field.Checkbox'
@@ -73,7 +74,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     xtype: 'gridpanel',
                                     flex: 1,
                                     dock: 'top',
-                                    id: 'tomcatServerGrid',
+                                    id: 'serverGrid',
                                     margin: '',
                                     title: '',
                                     forceFit: true,
@@ -91,7 +92,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'sshipaddr',
+                                            dataIndex: 'sshNiId',
                                             text: 'IP Address'
                                         },
                                         {
@@ -142,31 +143,39 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                             xtype: 'textfield',
                                                             anchor: '100%',
                                                             id: 'serverNameTextField',
-                                                            fieldLabel: 'Server name'
+                                                            fieldLabel: 'Server name',
+                                                            readOnly: true,
+                                                            allowBlank: false,
+                                                            allowOnlyWhitespace: false
                                                         },
                                                         {
                                                             xtype: 'textfield',
                                                             anchor: '100%',
                                                             id: 'serverHostNameTextField',
                                                             fieldLabel: 'Host name',
-                                                            readOnly: true
+                                                            readOnly: true,
+                                                            allowBlank: false,
+                                                            allowOnlyWhitespace: false
                                                         },
                                                         {
                                                             xtype: 'combobox',
                                                             anchor: '100%',
                                                             id: 'serverSSHIPAddressCombobox',
                                                             fieldLabel: 'SSH IPAddress',
+                                                            readOnly: true,
                                                             editable: false,
                                                             displayField: 'nameAndIPAddr',
                                                             store: 'NetworkInterfaceStore',
                                                             valueField: 'id'
                                                         },
                                                         {
-                                                            xtype: 'textfield',
+                                                            xtype: 'numberfield',
                                                             anchor: '100%',
                                                             id: 'serverSSHPortTextField',
                                                             fieldLabel: 'SSH Port',
-                                                            readOnly: true
+                                                            readOnly: true,
+                                                            allowBlank: false,
+                                                            allowOnlyWhitespace: false
                                                         },
                                                         {
                                                             xtype: 'displayfield',
@@ -176,16 +185,20 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                         },
                                                         {
                                                             xtype: 'button',
+                                                            id: 'serverEditBtn',
+                                                            itemId: 'serverEditBtn',
                                                             text: 'Edit'
                                                         },
                                                         {
                                                             xtype: 'button',
                                                             hidden: true,
+                                                            id: 'serverSaveBtn',
                                                             text: 'Save'
                                                         },
                                                         {
                                                             xtype: 'button',
                                                             hidden: true,
+                                                            id: 'serverCancelBtn',
                                                             text: 'Cancel'
                                                         },
                                                         {
@@ -305,13 +318,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                 }
                             ]
                         }
-                    ],
-                    listeners: {
-                        tabchange: {
-                            fn: me.onTabpanelTabChange,
-                            scope: me
-                        }
-                    }
+                    ]
                 }
             ]
         });
@@ -327,7 +334,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         if(activeTabIndex === 2) { //env tab
             try{
                 var selectedRecords;
-                selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();
+                selectedRecords = Ext.getCmp('serverGrid').getSelectionModel().getSelection();
                 var serverId = selectedRecords[0].get("id");
 
                 //load EV revisions
@@ -349,20 +356,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
             }
 
         }
-    },
-
-    onTabpanelTabChange: function() {
-        var activeTab = tabPanel.getActiveTab();
-        var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);
-        if(activeTabIndex === 0) {//tomcat server tab
-            webapp.app.getController("ServerManagementController").loadTomcatServers(function(data){
-                Ext.getCmp("tomcatServerGrid").getStore().loadData(data);
-            });
-        }
-        else if(activeTabIndex === 1) {//datagrid server tab
-            Ext.getCmp("datagridServerGroupGrid").getStore().reload();
-        }
-
     }
 
 });

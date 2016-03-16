@@ -88,7 +88,7 @@
                             "userConfig": {
                                 "dock": "top",
                                 "forceFit": true,
-                                "id": "tomcatServerGrid",
+                                "id": "serverGrid",
                                 "layout|flex": 1,
                                 "margin": "",
                                 "store": "ServerStore",
@@ -133,7 +133,7 @@
                                     },
                                     "codeClass": null,
                                     "userConfig": {
-                                        "dataIndex": "sshipaddr",
+                                        "dataIndex": "sshNiId",
                                         "text": "IP Address"
                                     },
                                     "name": "MyColumn61",
@@ -277,9 +277,12 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "allowBlank": false,
+                                                        "allowOnlyWhitespace": false,
                                                         "fieldLabel": "Server name",
                                                         "id": "serverNameTextField",
-                                                        "layout|anchor": "100%"
+                                                        "layout|anchor": "100%",
+                                                        "readOnly": true
                                                     },
                                                     "name": "MyTextField",
                                                     "designerId": "6815dcea-1472-41c8-8452-566d00dc9f7c"
@@ -292,6 +295,8 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "allowBlank": false,
+                                                        "allowOnlyWhitespace": false,
                                                         "fieldLabel": "Host name",
                                                         "id": "serverHostNameTextField",
                                                         "layout|anchor": "100%",
@@ -313,6 +318,7 @@
                                                         "fieldLabel": "SSH IPAddress",
                                                         "id": "serverSSHIPAddressCombobox",
                                                         "layout|anchor": "100%",
+                                                        "readOnly": true,
                                                         "store": "NetworkInterfaceStore",
                                                         "valueField": "id"
                                                     },
@@ -320,19 +326,21 @@
                                                     "designerId": "366df445-20b8-42ad-a481-640646a16f1d"
                                                 },
                                                 {
-                                                    "type": "Ext.form.field.Text",
+                                                    "type": "Ext.form.field.Number",
                                                     "reference": {
                                                         "name": "items",
                                                         "type": "array"
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "allowBlank": false,
+                                                        "allowOnlyWhitespace": false,
                                                         "fieldLabel": "SSH Port",
                                                         "id": "serverSSHPortTextField",
                                                         "layout|anchor": "100%",
                                                         "readOnly": true
                                                     },
-                                                    "name": "MyTextField3",
+                                                    "name": "MyNumberField2",
                                                     "designerId": "b4072555-9133-439e-93ab-f3c4f4d73c01"
                                                 },
                                                 {
@@ -358,6 +366,8 @@
                                                     },
                                                     "codeClass": null,
                                                     "userConfig": {
+                                                        "id": "serverEditBtn",
+                                                        "itemId": "serverEditBtn",
                                                         "text": "Edit"
                                                     },
                                                     "name": "MyButton",
@@ -372,6 +382,7 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "hidden": true,
+                                                        "id": "serverSaveBtn",
                                                         "text": "Save"
                                                     },
                                                     "name": "MyButton4",
@@ -386,6 +397,7 @@
                                                     "codeClass": null,
                                                     "userConfig": {
                                                         "hidden": true,
+                                                        "id": "serverCancelBtn",
                                                         "text": "Cancel"
                                                     },
                                                     "name": "MyButton20",
@@ -659,7 +671,7 @@
                                             "if(activeTabIndex === 2) { //env tab",
                                             "    try{",
                                             "        var selectedRecords;",
-                                            "        selectedRecords = Ext.getCmp('tomcatServerGrid').getSelectionModel().getSelection();",
+                                            "        selectedRecords = Ext.getCmp('serverGrid').getSelectionModel().getSelection();",
                                             "        var serverId = selectedRecords[0].get(\"id\");",
                                             "",
                                             "        //load EV revisions",
@@ -691,34 +703,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "type": "basiceventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onTabpanelTabChange",
-                        "implHandler": [
-                            "var activeTab = tabPanel.getActiveTab();",
-                            "var activeTabIndex = tabPanel.items.findIndex('id', activeTab.id);",
-                            "if(activeTabIndex === 0) {//tomcat server tab",
-                            "    webapp.app.getController(\"ServerManagementController\").loadTomcatServers(function(data){",
-                            "        Ext.getCmp(\"tomcatServerGrid\").getStore().loadData(data);",
-                            "    });",
-                            "}",
-                            "else if(activeTabIndex === 1) {//datagrid server tab",
-                            "    Ext.getCmp(\"datagridServerGroupGrid\").getStore().reload();",
-                            "}",
-                            ""
-                        ],
-                        "name": "tabchange",
-                        "scope": "me"
-                    },
-                    "name": "onTabpanelTabChange",
-                    "designerId": "56be281b-8d2b-499b-a067-b3382e323ab1"
                 }
             ]
         }

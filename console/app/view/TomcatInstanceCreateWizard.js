@@ -228,7 +228,7 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                                 },
                                 {
                                     xtype: 'gridcolumn',
-                                    dataIndex: 'sshipaddr',
+                                    dataIndex: 'sshNiId',
                                     text: 'IP Address'
                                 },
                                 {

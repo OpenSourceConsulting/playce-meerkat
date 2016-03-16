@@ -47,6 +47,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         var sshPort = record.get("sshPort");
         var sshIpaddress = record.get("sshipaddr");
         var osName = record.get("osName");
+        var sshNiId = record.get("sshNiId");
 
         var sshIPAddrField = Ext.getCmp("serverSSHIPAddressCombobox");
         var sshPortField = Ext.getCmp("serverSSHPortTextField");
@@ -68,6 +69,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         sshIPAddrField.clearValue();
         sshIPAddrField.getStore().getProxy().url = ipaddrUrl;
         sshIPAddrField.getStore().load();
+        sshIPAddrField.setValue(sshNiId);
 
         /*
         Ext.Ajax.request({
@@ -219,6 +221,62 @@ Ext.define('webapp.controller.ServerManagementController', {
 
     },
 
+    onServerEditBtnClick: function(button, e, eOpts) {
+
+        var sshIPAddrField = Ext.getCmp("serverSSHIPAddressCombobox");
+        var sshPortField = Ext.getCmp("serverSSHPortTextField");
+        var nameField = Ext.getCmp("serverNameTextField");
+        var osNameField = Ext.getCmp("serverOSNameDisplayField");
+        var hostNameField = Ext.getCmp("serverHostNameTextField");
+        var _idField = Ext.getCmp("serverIDHiddenField_");
+        var cancelBtn = Ext.getCmp("serverCancelBtn");
+        var saveBtn = Ext.getCmp("serverSaveBtn");
+
+        button.hide();
+        saveBtn.setVisible(true);
+        cancelBtn.setVisible(true);
+
+        sshIPAddrField.setReadOnly(false);
+        sshPortField.setReadOnly(false);
+        nameField.setReadOnly(false);
+        hostNameField.setReadOnly(false);
+
+    },
+
+    onServerCancelBtnClick: function(button, e, eOpts) {
+
+        var sshIPAddrField = Ext.getCmp("serverSSHIPAddressCombobox");
+        var sshPortField = Ext.getCmp("serverSSHPortTextField");
+        var nameField = Ext.getCmp("serverNameTextField");
+        var hostNameField = Ext.getCmp("serverHostNameTextField");
+
+        var editBtn = Ext.getCmp("serverEditBtn");
+        var saveBtn = Ext.getCmp("serverSaveBtn");
+
+
+        button.hide();
+        saveBtn.hide();
+        editBtn.setVisible(true);
+
+        //reset value
+        var selectedRecords=Ext.getCmp('serverGrid').getSelectionModel().getSelection();
+        var sshIPAddr = selectedRecords[0].get("sshNiId");
+        var sshPort = selectedRecords[0].get("sshPort");
+        var hostName = selectedRecords[0].get("hostName");
+        var name = selectedRecords[0].get("name");
+
+        sshIPAddrField.setValue(sshIPAddr);
+        sshPortField.setValue(sshPort);
+        hostNameField.setValue(hostName);
+        nameField.setValue(name);
+
+        sshIPAddrField.setReadOnly(true);
+        sshPortField.setReadOnly(true);
+        nameField.setReadOnly(true);
+        hostNameField.setReadOnly(true);
+
+    },
+
     loadTomcatServers: function(callback) {
         var url = GlobalData.urlPrefix + "res/machine/tomcatserver";
         Ext.Ajax.request({
@@ -317,7 +375,7 @@ Ext.define('webapp.controller.ServerManagementController', {
             "#datagridServerGroupGrid": {
                 select: this.onDatagridServerGroupGridSelect
             },
-            "#tomcatServerGrid": {
+            "#serverGrid": {
                 select: this.onServerGridSelect
             },
             "#btnServerSSHEdit": {
@@ -337,6 +395,12 @@ Ext.define('webapp.controller.ServerManagementController', {
             },
             "#mycontainer31": {
                 activate: this.onLoadServers
+            },
+            "#serverEditBtn": {
+                click: this.onServerEditBtnClick
+            },
+            "#serverCancelBtn": {
+                click: this.onServerCancelBtnClick
             }
         });
     }

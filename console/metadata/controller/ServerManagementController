@@ -103,7 +103,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "designer|controlQuery": "#tomcatServerGrid",
+                "designer|controlQuery": "#serverGrid",
                 "designer|params": [
                     "rowmodel",
                     "record",
@@ -119,6 +119,7 @@
                     "var sshPort = record.get(\"sshPort\");",
                     "var sshIpaddress = record.get(\"sshipaddr\");",
                     "var osName = record.get(\"osName\");",
+                    "var sshNiId = record.get(\"sshNiId\");",
                     "",
                     "var sshIPAddrField = Ext.getCmp(\"serverSSHIPAddressCombobox\");",
                     "var sshPortField = Ext.getCmp(\"serverSSHPortTextField\");",
@@ -140,6 +141,7 @@
                     "sshIPAddrField.clearValue();",
                     "sshIPAddrField.getStore().getProxy().url = ipaddrUrl;",
                     "sshIPAddrField.getStore().load();",
+                    "sshIPAddrField.setValue(sshNiId);",
                     "",
                     "/*",
                     "Ext.Ajax.request({",
@@ -528,6 +530,102 @@
             },
             "name": "onLoadServers",
             "designerId": "b2c330ad-0b05-48a2-96bc-8627130682b4"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#serverEditBtn",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onServerEditBtnClick",
+                "implHandler": [
+                    "",
+                    "var sshIPAddrField = Ext.getCmp(\"serverSSHIPAddressCombobox\");",
+                    "var sshPortField = Ext.getCmp(\"serverSSHPortTextField\");",
+                    "var nameField = Ext.getCmp(\"serverNameTextField\");",
+                    "var osNameField = Ext.getCmp(\"serverOSNameDisplayField\");",
+                    "var hostNameField = Ext.getCmp(\"serverHostNameTextField\");",
+                    "var _idField = Ext.getCmp(\"serverIDHiddenField_\");",
+                    "var cancelBtn = Ext.getCmp(\"serverCancelBtn\");",
+                    "var saveBtn = Ext.getCmp(\"serverSaveBtn\");",
+                    "",
+                    "button.hide();",
+                    "saveBtn.setVisible(true);",
+                    "cancelBtn.setVisible(true);",
+                    "",
+                    "sshIPAddrField.setReadOnly(false);",
+                    "sshPortField.setReadOnly(false);",
+                    "nameField.setReadOnly(false);",
+                    "hostNameField.setReadOnly(false);",
+                    ""
+                ],
+                "name": "click"
+            },
+            "name": "onServerEditBtnClick",
+            "designerId": "2b392482-25e4-48eb-a110-0d38fb9dc315"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "#serverCancelBtn",
+                "designer|params": [
+                    "button",
+                    "e",
+                    "eOpts"
+                ],
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onServerCancelBtnClick",
+                "implHandler": [
+                    "",
+                    "var sshIPAddrField = Ext.getCmp(\"serverSSHIPAddressCombobox\");",
+                    "var sshPortField = Ext.getCmp(\"serverSSHPortTextField\");",
+                    "var nameField = Ext.getCmp(\"serverNameTextField\");",
+                    "var hostNameField = Ext.getCmp(\"serverHostNameTextField\");",
+                    "",
+                    "var editBtn = Ext.getCmp(\"serverEditBtn\");",
+                    "var saveBtn = Ext.getCmp(\"serverSaveBtn\");",
+                    "",
+                    "",
+                    "button.hide();",
+                    "saveBtn.hide();",
+                    "editBtn.setVisible(true);",
+                    "",
+                    "//reset value",
+                    "var selectedRecords=Ext.getCmp('serverGrid').getSelectionModel().getSelection();",
+                    "var sshIPAddr = selectedRecords[0].get(\"sshNiId\");",
+                    "var sshPort = selectedRecords[0].get(\"sshPort\");",
+                    "var hostName = selectedRecords[0].get(\"hostName\");",
+                    "var name = selectedRecords[0].get(\"name\");",
+                    "",
+                    "sshIPAddrField.setValue(sshIPAddr);",
+                    "sshPortField.setValue(sshPort);",
+                    "hostNameField.setValue(hostName);",
+                    "nameField.setValue(name);",
+                    "",
+                    "sshIPAddrField.setReadOnly(true);",
+                    "sshPortField.setReadOnly(true);",
+                    "nameField.setReadOnly(true);",
+                    "hostNameField.setReadOnly(true);",
+                    ""
+                ],
+                "name": "click"
+            },
+            "name": "onServerCancelBtnClick",
+            "designerId": "65f47cc8-e1ac-4b12-86e9-322b492d0b06"
         }
     ]
 }
