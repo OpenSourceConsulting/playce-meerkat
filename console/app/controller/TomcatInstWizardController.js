@@ -17,15 +17,42 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
     extend: 'Ext.app.Controller',
 
     onStep2Activate: function(component, eOpts) {
+        Ext.getCmp('next-btn').setText('Save & Next');
         component.down('gridpanel').getStore().load();
     },
 
     onStep3Activate: function(component, eOpts) {
+        Ext.getCmp('next-btn').setText('Install');
         component.down('gridpanel').getStore().load();
     },
 
     onDSCreateButtonClick: function(button, e, eOpts) {
                 Ext.create('widget.dsWin').show();
+    },
+
+    onNextButtonClick: function(button, e, eOpts) {
+
+        var layout = button.up("panel").getLayout();//must be CardLayout
+
+        if (layout.getNext()) {
+            layout.next();
+        }
+
+        if (!layout.getNext()) {
+            this.setDisabledButton(layout);
+        }
+    },
+
+    onPrevButtonClick: function(button, e, eOpts) {
+
+        var layout = button.up("panel").getLayout();
+        layout.prev();
+        this.setDisabledButton(layout);
+    },
+
+    setDisabledButton: function(layout) {
+        Ext.getCmp('prev-btn').setDisabled(!layout.getPrev());
+        Ext.getCmp('next-btn').setDisabled(!layout.getNext());
     },
 
     init: function(application) {
@@ -38,6 +65,12 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
             },
             "ticWizard #btnWCreateDs": {
                 click: this.onDSCreateButtonClick
+            },
+            "ticWizard #next-btn": {
+                click: this.onNextButtonClick
+            },
+            "ticWizard #prev-btn": {
+                click: this.onPrevButtonClick
             }
         });
     }

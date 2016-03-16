@@ -23,6 +23,7 @@
                 "designer|targetType": "Ext.container.Container",
                 "fn": "onStep2Activate",
                 "implHandler": [
+                    "Ext.getCmp('next-btn').setText('Save & Next');",
                     "component.down('gridpanel').getStore().load();"
                 ],
                 "name": "activate",
@@ -43,6 +44,7 @@
                 "designer|targetType": "Ext.container.Container",
                 "fn": "onStep3Activate",
                 "implHandler": [
+                    "Ext.getCmp('next-btn').setText('Install');",
                     "component.down('gridpanel').getStore().load();"
                 ],
                 "name": "activate",
@@ -70,6 +72,78 @@
             },
             "name": "onDSCreateButtonClick",
             "designerId": "31ce20b4-1802-47f2-962e-33437c2b09ab"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "ticWizard #next-btn",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onNextButtonClick",
+                "implHandler": [
+                    "",
+                    "var layout = button.up(\"panel\").getLayout();//must be CardLayout",
+                    "",
+                    "if (layout.getNext()) {",
+                    "    layout.next();",
+                    "}",
+                    "",
+                    "if (!layout.getNext()) {",
+                    "    this.setDisabledButton(layout);",
+                    "}"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "name": "onNextButtonClick",
+            "designerId": "78788186-2739-4998-9277-db8129b154fb"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|controlQuery": "ticWizard #prev-btn",
+                "designer|targetType": "Ext.button.Button",
+                "fn": "onPrevButtonClick",
+                "implHandler": [
+                    "",
+                    "var layout = button.up(\"panel\").getLayout();",
+                    "layout.prev();",
+                    "this.setDisabledButton(layout);"
+                ],
+                "name": "click",
+                "scope": "me"
+            },
+            "name": "onPrevButtonClick",
+            "designerId": "39af4865-4ab6-48fc-9937-a93b9251408d"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "layout"
+                ],
+                "fn": "setDisabledButton",
+                "implHandler": [
+                    "Ext.getCmp('prev-btn').setDisabled(!layout.getPrev());",
+                    "Ext.getCmp('next-btn').setDisabled(!layout.getNext());"
+                ]
+            },
+            "name": "setDisabledButton",
+            "designerId": "669cd4ff-0bb9-4295-8474-dda9201ed40f"
         }
     ]
 }
