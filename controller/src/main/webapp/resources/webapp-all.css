@@ -1,3 +1,4 @@
+/* ======================== ETC ======================== */
 /* including package ext-theme-base */
 /**
  * Creates a background gradient.
@@ -62,6 +63,7 @@
  */
 /* including package ext-theme-neutral */
 /* including package ext-theme-neptune */
+/* ======================== VAR ======================== */
 /* including package ext-theme-neptune */
 /**
  * @var {boolean}
@@ -3965,6 +3967,7 @@
  * paths in the CSS output to be generated correctly. By default this is the same as the
  * CSS output directory.
  */
+/* ======================== RULE ======================== */
 /* including package ext-theme-base */
 /* line 1, ../../../../ext/packages/ext-theme-base/sass/src/Component.scss */
 .x-body {
@@ -4143,6 +4146,10 @@ img {
   position: absolute !important;
   left: 0;
   top: 0; }
+
+/* line 4, ../../../../ext/packages/ext-theme-base/sass/src/Editor.scss */
+div.x-editor {
+  overflow: visible; }
 
 /* line 1, ../../../../ext/packages/ext-theme-base/sass/src/LoadMask.scss */
 .x-mask {
@@ -5212,6 +5219,10 @@ a.x-tab {
 .x-animating-size,
 .x-collapsed {
   overflow: hidden!important; }
+
+/* line 2, ../../../../ext/packages/ext-theme-neutral/sass/src/Editor.scss */
+.x-editor .x-form-item-body {
+  padding-bottom: 0; }
 
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/FocusManager.scss */
 .x-focus-element {
@@ -12428,6 +12439,15 @@ div.x-form-spinner-down {
 /* line 73, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/plugin/Editing.scss */
 .x-grid-editor .x-form-action-col-field {
   padding: 4px 4px 4px 4px; }
+
+/* line 3, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/plugin/CellEditing.scss */
+.x-tree-cell-editor .x-form-text {
+  padding-left: 3px;
+  padding-right: 3px; }
+  /* line 8, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/plugin/CellEditing.scss */
+  .x-gecko .x-tree-cell-editor .x-form-text {
+    padding-left: 2px;
+    padding-right: 2px; }
 
 /* line 2, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/plugin/RowEditing.scss */
 .x-grid-row-editor .x-field {
