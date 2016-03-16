@@ -319,12 +319,14 @@ public class Server implements Serializable {
 		this.sshPort = sshPort;
 	}
 
-	public String getSshIpaddr() {
-		return sshIpaddr;
+	public int getSshNiId() {
+		return sshNiId;
 	}
 
-	public void setSshIpaddr(String sshIpaddr) {
-		this.sshIpaddr = sshIpaddr;
+	public void setSshNiId(int sshNiId) {
+		this.sshNiId = sshNiId;
 	}
+
+
 
 }
