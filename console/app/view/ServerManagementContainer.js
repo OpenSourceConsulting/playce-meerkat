@@ -193,6 +193,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                             xtype: 'button',
                                                             hidden: true,
                                                             id: 'serverSaveBtn',
+                                                            margin: '0 10 0 0',
                                                             text: 'Save'
                                                         },
                                                         {

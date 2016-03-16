@@ -383,6 +383,7 @@
                                                     "userConfig": {
                                                         "hidden": true,
                                                         "id": "serverSaveBtn",
+                                                        "margin": "0 10 0 0",
                                                         "text": "Save"
                                                     },
                                                     "name": "MyButton4",
