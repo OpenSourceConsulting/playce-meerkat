@@ -28,8 +28,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         'Ext.form.field.ComboBox',
         'Ext.form.field.Number',
         'Ext.form.field.Display',
-        'Ext.form.field.Hidden',
-        'Ext.form.field.Checkbox'
+        'Ext.form.field.Hidden'
     ],
 
     itemId: 'mycontainer31',
@@ -92,7 +91,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                         },
                                         {
                                             xtype: 'gridcolumn',
-                                            dataIndex: 'sshNiId',
+                                            dataIndex: 'sshIPAddr',
                                             text: 'IP Address'
                                         },
                                         {
@@ -120,7 +119,8 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                 {
                                     xtype: 'tabpanel',
                                     flex: 7,
-                                    id: 'detailTomcatServerTab',
+                                    id: 'detailServerTab',
+                                    hideCollapseTool: true,
                                     manageHeight: false,
                                     activeTab: 0,
                                     items: [
@@ -214,94 +214,59 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                         {
                                             xtype: 'panel',
                                             autoScroll: true,
+                                            layout: 'fit',
                                             title: 'SSH Account',
                                             items: [
                                                 {
                                                     xtype: 'container',
-                                                    margin: '10 10 10 10',
+                                                    layout: {
+                                                        type: 'hbox',
+                                                        align: 'stretch'
+                                                    },
                                                     items: [
                                                         {
-                                                            xtype: 'form',
-                                                            id: 'sshFormPanel',
-                                                            bodyPadding: 10,
+                                                            xtype: 'gridpanel',
+                                                            flex: 2,
+                                                            height: 277,
+                                                            id: 'sshAccountGrid',
+                                                            title: '',
+                                                            forceFit: true,
+                                                            store: 'SSHAccountStore',
+                                                            columns: [
+                                                                {
+                                                                    xtype: 'gridcolumn',
+                                                                    align: 'center',
+                                                                    dataIndex: 'username',
+                                                                    text: 'SSH Accounts'
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            xtype: 'panel',
+                                                            flex: 5,
+                                                            layout: 'vbox',
                                                             title: '',
                                                             items: [
                                                                 {
-                                                                    xtype: 'textfield',
-                                                                    id: 'tomcatSSHIPAddressTextField',
-                                                                    fieldLabel: 'IP Address:',
-                                                                    readOnly: true,
-                                                                    allowBlank: false
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: 'tomcatSSHPortTextField',
-                                                                    fieldLabel: 'Port',
-                                                                    readOnly: true,
-                                                                    allowBlank: false
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: 'tomcatSSHUserIDTextField',
-                                                                    fieldLabel: 'User ID',
-                                                                    readOnly: true,
-                                                                    allowBlank: false
-                                                                },
-                                                                {
-                                                                    xtype: 'container',
-                                                                    layout: {
-                                                                        type: 'hbox',
-                                                                        align: 'stretch'
-                                                                    },
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'textfield',
-                                                                            id: 'tomcatSSHPasswordTextField',
-                                                                            width: 255,
-                                                                            fieldLabel: 'Password',
-                                                                            inputType: 'password',
-                                                                            readOnly: true,
-                                                                            allowBlank: false
-                                                                        },
-                                                                        {
-                                                                            xtype: 'checkboxfield',
-                                                                            itemId: 'showPasswordCheckbox',
-                                                                            margin: '0 0 0 10',
-                                                                            fieldLabel: '',
-                                                                            boxLabel: 'Show password'
-                                                                        },
-                                                                        {
-                                                                            xtype: 'hiddenfield',
-                                                                            flex: 1,
-                                                                            id: 'serverIDHiddenField',
-                                                                            fieldLabel: 'Label'
-                                                                        }
-                                                                    ]
+                                                                    xtype: 'button',
+                                                                    itemId: 'serverAddSSHAccountBtn',
+                                                                    margin: '50 0 0 5',
+                                                                    text: '추가'
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: 'tbnServerSSHTestConnection',
-                                                                    text: 'Test'
+                                                                    margin: 5,
+                                                                    text: '비밀번호 변경'
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    itemId: 'btnServerSSHEdit',
-                                                                    margin: '10 10 10 10',
-                                                                    text: 'Edit'
+                                                                    margin: 5,
+                                                                    text: '삭제'
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    disabled: true,
-                                                                    hidden: true,
-                                                                    id: 'btnServerSSHSave',
-                                                                    itemId: '',
-                                                                    margin: '10 10 10 10',
-                                                                    text: 'Save'
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: 'btnServerSSHReset',
-                                                                    text: 'Reset'
+                                                                    margin: 5,
+                                                                    text: 'Test  connection'
                                                                 }
                                                             ]
                                                         }
@@ -312,7 +277,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                     ],
                                     listeners: {
                                         tabchange: {
-                                            fn: me.onDetailTomcatServerTabTabChange,
+                                            fn: me.onDetailServerTabTabChange,
                                             scope: me
                                         }
                                     }
@@ -327,7 +292,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
         me.callParent(arguments);
     },
 
-    onDetailTomcatServerTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
+    onDetailServerTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
 
 
         var activeTab = tabPanel.getActiveTab();

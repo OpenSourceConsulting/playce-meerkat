@@ -473,6 +473,7 @@
                                                     "userConfig": {
                                                         "forceFit": true,
                                                         "height": 277,
+                                                        "id": "sshAccountGrid",
                                                         "layout|flex": 2,
                                                         "store": "SSHAccountStore",
                                                         "title": ""
@@ -530,7 +531,8 @@
                                                             },
                                                             "codeClass": null,
                                                             "userConfig": {
-                                                                "margin": 5,
+                                                                "itemId": "serverAddSSHAccountBtn",
+                                                                "margin": "50 0 0 5",
                                                                 "text": "추가"
                                                             },
                                                             "name": "MyButton1",
