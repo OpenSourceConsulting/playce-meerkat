@@ -294,7 +294,6 @@ Ext.define('webapp.view.ServerManagementContainer', {
                                                                     disabled: true,
                                                                     hidden: true,
                                                                     id: 'btnServerSSHSave',
-                                                                    itemId: '',
                                                                     margin: '10 10 10 10',
                                                                     text: 'Save'
                                                                 },

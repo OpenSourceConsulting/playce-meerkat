@@ -123,7 +123,6 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                                 {
                                     xtype: 'button',
                                     id: 'btnTomcatStop',
-                                    itemId: '',
                                     text: 'Stop'
                                 },
                                 {
