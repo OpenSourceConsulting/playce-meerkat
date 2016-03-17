@@ -29,16 +29,17 @@ Ext.define('webapp.view.meerkatViewport', {
         'webapp.view.SessionServerGroupContainer',
         'webapp.view.ResourceManagementContainer',
         'webapp.view.UserMntContainer',
+        'webapp.view.NewMenuPanel',
         'Ext.toolbar.Toolbar',
         'Ext.form.Label',
+        'Ext.panel.Panel',
         'Ext.Img',
         'Ext.toolbar.Spacer',
         'Ext.toolbar.Separator',
         'Ext.button.Button',
-        'Ext.tree.Panel',
-        'Ext.tree.View',
         'Ext.layout.container.Border',
         'Ext.layout.container.Card',
+        'Ext.layout.container.Accordion',
         'Ext.ux.GMapPanel',
         'Ext.util.Point',
         'Ext.chart.*',
@@ -185,7 +186,7 @@ Ext.define('webapp.view.meerkatViewport', {
                                                     xtype: 'label',
                                                     id: 'topUsername',
                                                     itemId: 'topUsername',
-                                                    text: '홍길동'
+                                                    text: 'admin'
                                                 },
                                                 {
                                                     xtype: 'tbseparator'
@@ -204,45 +205,9 @@ Ext.define('webapp.view.meerkatViewport', {
                         },
                         {
                             xtype: 'panel',
-                            region: 'west',
-                            split: true,
-                            itemId: 'menuPanel',
-                            width: 250,
-                            resizable: false,
-                            layout: 'fit',
-                            bodyBorder: false,
-                            collapsible: true,
-                            title: 'MENU',
-                            titleAlign: 'left',
-                            titleCollapse: false,
-                            items: [
-                                {
-                                    xtype: 'treepanel',
-                                    id: 'menuTreePanel',
-                                    itemId: 'menuTreePanel',
-                                    header: false,
-                                    title: 'My Tree Panel',
-                                    hideHeaders: true,
-                                    store: 'MenuTreeStore',
-                                    rootVisible: false,
-                                    dockedItems: [
-                                        {
-                                            xtype: 'toolbar',
-                                            dock: 'top'
-                                        }
-                                    ],
-                                    viewConfig: {
-
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            margins: '5 0 0 0',
                             region: 'south',
-                            height: 50,
-                            hidden: true,
+                            split: true,
+                            height: 30,
                             itemId: 'southPanel',
                             layout: {
                                 type: 'vbox',
@@ -252,14 +217,14 @@ Ext.define('webapp.view.meerkatViewport', {
                             items: [
                                 {
                                     xtype: 'label',
-                                    flex: 1,
                                     itemId: 'footerLabel1',
                                     style: '{text-align: center;}',
-                                    text: '© 2014 , Open Source Consulting, Inc. All rights reserved.'
+                                    text: '© 2016 , Open Source Consulting, Inc. All rights reserved.'
                                 },
                                 {
                                     xtype: 'label',
                                     flex: 1,
+                                    hidden: true,
                                     itemId: 'footerLabel2',
                                     style: '{text-align: center;}',
                                     text: 'Gangnam Mirae Tower 805, Saimdang-ro 174(Seocho-dong), Seocho-gu, Seoul, Korea'
@@ -267,11 +232,18 @@ Ext.define('webapp.view.meerkatViewport', {
                                 {
                                     xtype: 'label',
                                     flex: 1,
+                                    hidden: true,
                                     itemId: 'footerLabel3',
                                     style: '{text-align: center;}',
                                     text: '+ 82 (2) 516-0711, sales@osci.kr'
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'newmenupanel',
+                            collapsible: true,
+                            region: 'west',
+                            split: true
                         }
                     ]
                 }

@@ -924,9 +924,11 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.DomainForm": [],
   "webapp.view.DomainWindow": [],
   "webapp.view.EnvironmentVariableWindow": [],
+  "webapp.view.LeftMenuPanel": [],
   "webapp.view.LinkNewDataSourceWindow": [],
   "webapp.view.MonitoringMachineContainer": [],
   "webapp.view.MonitoringTomcatInstance": [],
+  "webapp.view.NewMenuPanel": [],
   "webapp.view.ResourceManagementContainer": [],
   "webapp.view.ServerManagementContainer": [],
   "webapp.view.SessionServerGroupContainer": [],
@@ -2035,6 +2037,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.DomainWindow"
   ],
   "webapp.view.EnvironmentVariableWindow": [],
+  "webapp.view.LeftMenuPanel": [],
   "webapp.view.LinkNewDataSourceWindow": [
     "widget.LinkNewDataSourceWindow"
   ],
@@ -2043,6 +2046,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "webapp.view.MonitoringTomcatInstance": [
     "widget.monitoringtomcatinstance"
+  ],
+  "webapp.view.NewMenuPanel": [
+    "widget.newmenupanel"
   ],
   "webapp.view.ResourceManagementContainer": [
     "widget.resourcemanagementcontainer"

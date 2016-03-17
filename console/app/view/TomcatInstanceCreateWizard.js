@@ -66,6 +66,7 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                         {
                             xtype: 'label',
                             margins: '10 0 10 20',
+                            cls: 'osc-panel-tip',
                             text: 'Domain을 생성합니다.'
                         },
                         {
@@ -327,23 +328,17 @@ Ext.define('webapp.view.TomcatInstanceCreateWizard', {
                     items: [
                         {
                             xtype: 'button',
-                            handler: function(button, e) {
-                                me.navigate(button.up("panel"), "prev");
-                            },
                             disabled: true,
                             id: 'prev-btn',
-                            text: 'PreButton'
+                            text: '&laquo; Pre'
                         },
                         {
                             xtype: 'tbfill'
                         },
                         {
                             xtype: 'button',
-                            handler: function(button, e) {
-                                me.navigate(button.up("panel"), "next");
-                            },
                             id: 'next-btn',
-                            text: 'NextButton'
+                            text: 'Create & Next &raquo;'
                         }
                     ]
                 }

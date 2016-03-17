@@ -15,6 +15,7 @@
         "requires": [
             "Ext.layout.container.Border",
             "Ext.layout.container.Card",
+            "Ext.layout.container.Accordion",
             "Ext.ux.GMapPanel",
             "Ext.util.Point",
             "Ext.chart.*",
@@ -382,7 +383,7 @@
                                                 "id": "topUsername",
                                                 "itemId": "topUsername",
                                                 "layout|flex": null,
-                                                "text": "홍길동"
+                                                "text": "admin"
                                             },
                                             "name": "MyLabel15",
                                             "designerId": "755b8a3b-d13e-4f60-bcf4-cb1900833e9e"
@@ -430,93 +431,16 @@
                     },
                     "codeClass": null,
                     "userConfig": {
-                        "bodyBorder": false,
-                        "collapsible": true,
-                        "itemId": "menuPanel",
-                        "layout": "fit",
-                        "layout|region": "west",
-                        "layout|split": true,
-                        "resizable": false,
-                        "title": "MENU",
-                        "titleAlign": "left",
-                        "titleCollapse": false,
-                        "width": 250
-                    },
-                    "name": "MyPanel90",
-                    "configAlternates": {
-                        "resizable": "boolean"
-                    },
-                    "designerId": "6d982375-8215-4696-ace0-dfe170e9c5bd",
-                    "cn": [
-                        {
-                            "type": "Ext.tree.Panel",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "header": false,
-                                "hideHeaders": true,
-                                "id": "menuTreePanel",
-                                "itemId": "menuTreePanel",
-                                "margin": null,
-                                "padding": null,
-                                "rootVisible": false,
-                                "store": "MenuTreeStore",
-                                "title": "My Tree Panel"
-                            },
-                            "name": "MyTreePanel",
-                            "designerId": "b8ff9769-2ace-491f-97a0-bd35ed91b8b5",
-                            "cn": [
-                                {
-                                    "type": "Ext.toolbar.Toolbar",
-                                    "reference": {
-                                        "name": "dockedItems",
-                                        "type": "array"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "dock": "top"
-                                    },
-                                    "name": "MyToolbar31",
-                                    "designerId": "05a27ef2-972b-4f55-ac98-e94f41bdbb02"
-                                },
-                                {
-                                    "type": "Ext.tree.View",
-                                    "reference": {
-                                        "name": "viewConfig",
-                                        "type": "object"
-                                    },
-                                    "codeClass": null,
-                                    "userConfig": {
-                                        "data": null,
-                                        "id": null,
-                                        "itemId": null
-                                    },
-                                    "name": "MyTreeView",
-                                    "designerId": "08f46b7b-177a-41f9-8d96-cc63d648e1ba"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "Ext.panel.Panel",
-                    "reference": {
-                        "name": "items",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
                         "container|align": "stretch",
                         "container|pack": "center",
-                        "height": 50,
-                        "hidden": true,
+                        "height": 30,
+                        "hidden": null,
                         "itemId": "southPanel",
                         "layout": "vbox",
-                        "layout|margins": "5 0 0 0",
+                        "layout|margins": null,
                         "layout|region": "south",
+                        "layout|split": true,
+                        "layout|splitterResize": null,
                         "title": null
                     },
                     "name": "MyPanel91",
@@ -535,10 +459,10 @@
                             "userConfig": {
                                 "dock": null,
                                 "itemId": "footerLabel1",
-                                "layout|flex": 1,
+                                "layout|flex": null,
                                 "layout|margins": null,
                                 "style": "{text-align: center;}",
-                                "text": "© 2014 , Open Source Consulting, Inc. All rights reserved."
+                                "text": "© 2016 , Open Source Consulting, Inc. All rights reserved."
                             },
                             "name": "MyLabel16",
                             "configAlternates": {
@@ -554,6 +478,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "hidden": true,
                                 "itemId": "footerLabel2",
                                 "layout|flex": 1,
                                 "layout|margins": null,
@@ -574,6 +499,7 @@
                             },
                             "codeClass": null,
                             "userConfig": {
+                                "hidden": true,
                                 "itemId": "footerLabel3",
                                 "layout|flex": 1,
                                 "layout|margins": null,
@@ -587,6 +513,22 @@
                             "designerId": "41e74b0c-10c5-4f75-8820-55e8f328678c"
                         }
                     ]
+                },
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "collapsible": true,
+                        "layout|region": "west",
+                        "layout|split": true
+                    },
+                    "name": "newmenupanel",
+                    "designerId": "207bcb4c-43c1-49ff-b466-64581177d78c",
+                    "masterInstanceId": "261f4315-1eab-4c57-88d8-1986c38bbc1b"
                 }
             ]
         }

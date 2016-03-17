@@ -17,7 +17,7 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
     extend: 'Ext.app.Controller',
 
     onStep2Activate: function(component, eOpts) {
-        Ext.getCmp('next-btn').setText('Save & Next');
+        Ext.getCmp('next-btn').setText('Save & Next &raquo;');
         component.down('gridpanel').getStore().load();
     },
 
@@ -38,21 +38,13 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
             layout.next();
         }
 
-        if (!layout.getNext()) {
-            this.setDisabledButton(layout);
-        }
     },
 
     onPrevButtonClick: function(button, e, eOpts) {
 
         var layout = button.up("panel").getLayout();
         layout.prev();
-        this.setDisabledButton(layout);
-    },
-
-    setDisabledButton: function(layout) {
-        Ext.getCmp('prev-btn').setDisabled(!layout.getPrev());
-        Ext.getCmp('next-btn').setDisabled(!layout.getNext());
+        button.setDisabled(!layout.getPrev());
     },
 
     init: function(application) {

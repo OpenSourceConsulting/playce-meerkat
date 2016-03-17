@@ -33,7 +33,7 @@ Ext.define('webapp.controller.MenuController', {
 
         if(menuId !== undefined){
             if (!is_leaf){
-                this.loadChildMenus(menuId);
+                this.loadChildMenus(menuId, dataview.up('treepanel'));
             }
 
             this.showMenu(menuId, menuText);
@@ -280,7 +280,7 @@ Ext.define('webapp.controller.MenuController', {
 
     },
 
-    loadChildMenus: function(parentId) {
+    loadChildMenus: function(parentId, treePanel) {
         var url = GlobalData.urlPrefix;
         var is_child_leaf = false;
         var prefix_child_menu_id = "";
@@ -319,7 +319,7 @@ Ext.define('webapp.controller.MenuController', {
             return;
         }
 
-        var treePanel = Ext.getCmp("menuTreePanel");
+        //var treePanel = Ext.getCmp("menuTreePanel");
         var parentNode = treePanel.getRootNode().findChild("menuId", parentId, true);
         if (parentNode === undefined || parentNode === null) {
             return;
@@ -362,7 +362,7 @@ Ext.define('webapp.controller.MenuController', {
 
     init: function(application) {
         this.control({
-            "#menuTreePanel": {
+            "#menuTreePanel2": {
                 itemclick: this.onTreepanelItemClick
             },
             "treepanel": {

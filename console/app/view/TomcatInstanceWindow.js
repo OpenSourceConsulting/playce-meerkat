@@ -91,6 +91,7 @@ Ext.define('webapp.view.TomcatInstanceWindow', {
                                     xtype: 'button',
                                     disabled: true,
                                     id: 'btnTestConnection',
+                                    itemId: '',
                                     text: 'Test server connection'
                                 },
                                 {

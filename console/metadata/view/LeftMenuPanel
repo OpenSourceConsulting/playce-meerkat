@@ -1,0 +1,80 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "bodyBorder": false,
+        "collapsible": true,
+        "designer|userClassName": "LeftMenuPanel",
+        "itemId": "menuPanel",
+        "layout": "fit",
+        "layout|region": "west",
+        "layout|split": true,
+        "resizable": false,
+        "title": "MENU",
+        "titleAlign": "left",
+        "titleCollapse": false,
+        "width": 250
+    },
+    "name": "MyPanel90",
+    "configAlternates": {
+        "resizable": "boolean"
+    },
+    "designerId": "0b074906-f004-4286-a4f7-b27f99c5bdce",
+    "cn": [
+        {
+            "type": "Ext.tree.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "header": false,
+                "hideHeaders": true,
+                "id": "menuTreePanel1",
+                "itemId": "menuTreePanel",
+                "margin": null,
+                "padding": null,
+                "rootVisible": false,
+                "store": null,
+                "title": "My Tree Panel"
+            },
+            "name": "MyTreePanel",
+            "designerId": "b8ff9769-2ace-491f-97a0-bd35ed91b8b5",
+            "cn": [
+                {
+                    "type": "Ext.toolbar.Toolbar",
+                    "reference": {
+                        "name": "dockedItems",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dock": "top"
+                    },
+                    "name": "MyToolbar31",
+                    "designerId": "05a27ef2-972b-4f55-ac98-e94f41bdbb02"
+                },
+                {
+                    "type": "Ext.tree.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "data": null,
+                        "id": null,
+                        "itemId": null
+                    },
+                    "name": "MyTreeView",
+                    "designerId": "08f46b7b-177a-41f9-8d96-cc63d648e1ba"
+                }
+            ]
+        }
+    ]
+}

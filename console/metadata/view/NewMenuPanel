@@ -1,0 +1,215 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "newmenupanel",
+        "designer|userClassName": "NewMenuPanel",
+        "height": 362,
+        "layout": "accordion",
+        "title": "Menu",
+        "width": 250
+    },
+    "name": "MyPanel78",
+    "designerId": "261f4315-1eab-4c57-88d8-1986c38bbc1b",
+    "cn": [
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapsed": true,
+                "hideCollapseTool": true,
+                "title": "Dashboard"
+            },
+            "name": "MyPanel78",
+            "designerId": "54e83c21-d221-4fe9-894f-0cc97fa4a56b",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onPanelBeforeExpand",
+                        "implHandler": [
+                            "return false;"
+                        ],
+                        "name": "beforeexpand",
+                        "scope": "me"
+                    },
+                    "name": "onPanelBeforeExpand",
+                    "designerId": "e53c1fc6-1d43-4c08-a6a7-84e453913e5f"
+                }
+            ]
+        },
+        {
+            "type": "Ext.tree.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseFirst": false,
+                "collapsed": false,
+                "id": "menuTreePanel2",
+                "root": null,
+                "rootVisible": false,
+                "store": "MenuTreeStore",
+                "title": "Tomcat Management"
+            },
+            "name": "MyTreePanel2",
+            "designerId": "25db8a21-4971-46f0-b971-524f68f34097",
+            "cn": [
+                {
+                    "type": "Ext.tree.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTreeView1",
+                    "designerId": "8e0b2548-eac8-4385-baab-eb5f68adac0a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.tree.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseFirst": false,
+                "collapsed": false,
+                "id": null,
+                "root": null,
+                "rootVisible": false,
+                "store": null,
+                "title": "Monitoring"
+            },
+            "name": "MyTreePanel",
+            "designerId": "755ee922-afe5-48ae-bf25-fa7bd54cb3f9",
+            "cn": [
+                {
+                    "type": "Ext.tree.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTreeView1",
+                    "designerId": "549bce75-f801-4c48-b879-2c4e085410a0"
+                }
+            ]
+        },
+        {
+            "type": "Ext.tree.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseFirst": false,
+                "collapsed": false,
+                "id": null,
+                "root": null,
+                "rootVisible": false,
+                "store": null,
+                "title": "Resource Management"
+            },
+            "name": "MyTreePanel1",
+            "designerId": "a010eecc-625e-44c5-933d-d7bbfe3cd8f5",
+            "cn": [
+                {
+                    "type": "Ext.tree.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTreeView1",
+                    "designerId": "841780be-5a8c-4796-a611-63ff9525e006"
+                }
+            ]
+        },
+        {
+            "type": "Ext.tree.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapseFirst": false,
+                "collapsed": false,
+                "id": null,
+                "root": null,
+                "rootVisible": false,
+                "store": null,
+                "title": "Log Management"
+            },
+            "name": "MyTreePanel3",
+            "designerId": "ae566fcd-0a2c-4b8b-a95b-f344beb5f4a5",
+            "cn": [
+                {
+                    "type": "Ext.tree.View",
+                    "reference": {
+                        "name": "viewConfig",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "name": "MyTreeView1",
+                    "designerId": "cd4b1168-90d7-4fcc-b534-feafb5311d7c"
+                }
+            ]
+        },
+        {
+            "type": "Ext.panel.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapsed": true,
+                "collapsible": null,
+                "hideCollapseTool": true,
+                "title": "User Management"
+            },
+            "name": "MyPanel79",
+            "designerId": "5e1c42ca-8492-4bea-92d9-05171afb277a",
+            "cn": [
+                {
+                    "type": "basiceventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onPanelBeforeExpand1",
+                        "implHandler": [
+                            "return false;"
+                        ],
+                        "name": "beforeexpand",
+                        "scope": "me"
+                    },
+                    "name": "onPanelBeforeExpand1",
+                    "designerId": "1823c7f6-bdab-47fd-b42f-d1804bf0ca84"
+                }
+            ]
+        }
+    ]
+}

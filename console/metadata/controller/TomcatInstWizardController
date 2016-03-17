@@ -23,7 +23,7 @@
                 "designer|targetType": "Ext.container.Container",
                 "fn": "onStep2Activate",
                 "implHandler": [
-                    "Ext.getCmp('next-btn').setText('Save & Next');",
+                    "Ext.getCmp('next-btn').setText('Save & Next &raquo;');",
                     "component.down('gridpanel').getStore().load();"
                 ],
                 "name": "activate",
@@ -91,10 +91,7 @@
                     "if (layout.getNext()) {",
                     "    layout.next();",
                     "}",
-                    "",
-                    "if (!layout.getNext()) {",
-                    "    this.setDisabledButton(layout);",
-                    "}"
+                    ""
                 ],
                 "name": "click",
                 "scope": "me"
@@ -117,33 +114,13 @@
                     "",
                     "var layout = button.up(\"panel\").getLayout();",
                     "layout.prev();",
-                    "this.setDisabledButton(layout);"
+                    "button.setDisabled(!layout.getPrev());"
                 ],
                 "name": "click",
                 "scope": "me"
             },
             "name": "onPrevButtonClick",
             "designerId": "39af4865-4ab6-48fc-9937-a93b9251408d"
-        },
-        {
-            "type": "basicfunction",
-            "reference": {
-                "name": "items",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "designer|params": [
-                    "layout"
-                ],
-                "fn": "setDisabledButton",
-                "implHandler": [
-                    "Ext.getCmp('prev-btn').setDisabled(!layout.getPrev());",
-                    "Ext.getCmp('next-btn').setDisabled(!layout.getNext());"
-                ]
-            },
-            "name": "setDisabledButton",
-            "designerId": "669cd4ff-0bb9-4295-8474-dda9201ed40f"
         }
     ]
 }

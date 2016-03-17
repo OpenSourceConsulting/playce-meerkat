@@ -88,7 +88,9 @@ Ext.application({
         'TomcatInstanceCreateWizard',
         'DomainForm',
         'TomcatForm',
-        'TomcatInstallLogWindow'
+        'TomcatInstallLogWindow',
+        'LeftMenuPanel',
+        'NewMenuPanel'
     ],
     controllers: [
         'headerController',

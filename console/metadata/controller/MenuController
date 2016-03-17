@@ -18,7 +18,7 @@
             },
             "codeClass": null,
             "userConfig": {
-                "designer|controlQuery": "#menuTreePanel",
+                "designer|controlQuery": "#menuTreePanel2",
                 "designer|targetType": "Ext.tree.Panel",
                 "fn": "onTreepanelItemClick",
                 "implHandler": [
@@ -38,7 +38,7 @@
                     "",
                     "if(menuId !== undefined){",
                     "    if (!is_leaf){",
-                    "        this.loadChildMenus(menuId);",
+                    "        this.loadChildMenus(menuId, dataview.up('treepanel'));",
                     "    }",
                     "",
                     "    this.showMenu(menuId, menuText);",
@@ -138,7 +138,8 @@
             "codeClass": null,
             "userConfig": {
                 "designer|params": [
-                    "parentId"
+                    "parentId",
+                    "treePanel"
                 ],
                 "fn": "loadChildMenus",
                 "implHandler": [
@@ -180,7 +181,7 @@
                     "    return;",
                     "}",
                     "",
-                    "var treePanel = Ext.getCmp(\"menuTreePanel\");",
+                    "//var treePanel = Ext.getCmp(\"menuTreePanel\");",
                     "var parentNode = treePanel.getRootNode().findChild(\"menuId\", parentId, true);",
                     "if (parentNode === undefined || parentNode === null) {",
                     "    return;",

@@ -62,6 +62,7 @@
                     },
                     "codeClass": null,
                     "userConfig": {
+                        "cls": "osc-panel-tip",
                         "layout|flex": null,
                         "layout|margins": "10 0 10 20",
                         "text": "Domain을 생성합니다."
@@ -79,7 +80,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "domainform1",
+                    "name": "domainform",
                     "designerId": "2ba310bc-1c11-4acc-a329-0c47d626de1c",
                     "masterInstanceId": "9d12f157-7685-4c94-9a8d-eb37d190bb6e"
                 },
@@ -93,7 +94,7 @@
                     "userConfig": {
                         "layout|flex": null
                     },
-                    "name": "tomcatform1",
+                    "name": "tomcatform",
                     "designerId": "437f671c-a8ef-4b47-a0bb-e43e8e4efe6f",
                     "masterInstanceId": "65465c05-02a3-4947-85fb-817111f473e9"
                 }
@@ -728,32 +729,10 @@
                         "disabled": true,
                         "id": "prev-btn",
                         "layout|flex": null,
-                        "text": "PreButton"
+                        "text": "&laquo; Pre"
                     },
                     "name": "MyButton",
-                    "designerId": "eae9a3e1-7318-49c0-8b7f-1859bac3ba4e",
-                    "cn": [
-                        {
-                            "type": "fixedfunction",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "designer|params": [
-                                    "button",
-                                    "e"
-                                ],
-                                "fn": "handler",
-                                "implHandler": [
-                                    "me.navigate(button.up(\"panel\"), \"prev\");"
-                                ]
-                            },
-                            "name": "handler",
-                            "designerId": "e18f3cd8-8256-46b8-a6d0-f86d8750a77c"
-                        }
-                    ]
+                    "designerId": "eae9a3e1-7318-49c0-8b7f-1859bac3ba4e"
                 },
                 {
                     "type": "Ext.toolbar.Fill",
@@ -778,32 +757,10 @@
                     "userConfig": {
                         "id": "next-btn",
                         "layout|flex": null,
-                        "text": "NextButton"
+                        "text": "Create & Next &raquo;"
                     },
                     "name": "MyButton1",
-                    "designerId": "8b604b25-f0f1-4094-be11-59a194f253fa",
-                    "cn": [
-                        {
-                            "type": "fixedfunction",
-                            "reference": {
-                                "name": "items",
-                                "type": "array"
-                            },
-                            "codeClass": null,
-                            "userConfig": {
-                                "designer|params": [
-                                    "button",
-                                    "e"
-                                ],
-                                "fn": "handler",
-                                "implHandler": [
-                                    "me.navigate(button.up(\"panel\"), \"next\");"
-                                ]
-                            },
-                            "name": "handler",
-                            "designerId": "0ae1166d-6d81-46cb-a326-106ccc4c7458"
-                        }
-                    ]
+                    "designerId": "8b604b25-f0f1-4094-be11-59a194f253fa"
                 }
             ]
         },
