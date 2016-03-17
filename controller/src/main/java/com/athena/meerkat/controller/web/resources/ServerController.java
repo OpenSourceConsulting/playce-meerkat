@@ -1,10 +1,12 @@
 package com.athena.meerkat.controller.web.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,8 +16,10 @@ import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
+import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/res/server")
@@ -71,9 +75,11 @@ public class ServerController {
 		}
 		return json;
 	}
+
 	@RequestMapping(value = "/{serverId}/nis", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getNIs(GridJsonResponse json, @PathVariable Integer serverId) {
+	public GridJsonResponse getNIs(GridJsonResponse json,
+			@PathVariable Integer serverId) {
 		Server m = service.retrieve(serverId);
 		if (m != null) {
 			json.setList((List<?>) m.getNetworkInterfaces());
@@ -83,6 +89,46 @@ public class ServerController {
 			json.setMsg("Server does not exist.");
 			json.setSuccess(false);
 		}
+		return json;
+	}
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveSeverInfo(SimpleJsonResponse json,
+			Server server) {
+		Server currentServer;
+		if (server.getName().trim() == "" || server.getSshPort() < 0
+				|| server.getHostName() == "" || server.getSshNiId() <= 0) {
+			json.setMsg("The input data is invalid.");
+			json.setSuccess(false);
+			return json;
+		}
+
+		if (server.getId() == 0) {
+			Server existingServer = service.getServerByName(server.getName());
+			if (existingServer != null) {
+				json.setMsg("Server name is duplicated.");
+				json.setSuccess(false);
+				return json;
+			}
+			currentServer = server;
+		} else { // edit case
+			currentServer = service.retrieve(server.getId());
+			if (currentServer == null) {
+				json.setMsg("Server does not exist.");
+				json.setSuccess(false);
+				return json;
+			}
+			currentServer.setName(server.getName());
+			currentServer.setHostName(server.getHostName());
+			currentServer.setSshPort(server.getSshPort());
+		}
+
+		NetworkInterface ni = service.getNiById(server.getSshNiId());
+		currentServer.setSshNi(ni);
+
+		service.save(currentServer);
+		json.setSuccess(true);
 		return json;
 	}
 

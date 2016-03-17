@@ -12294,6 +12294,14 @@ div.x-form-spinner-down {
   border-bottom-color: #f5f5f5;
   background-color: #f5f5f5; }
 
+/* line 14, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/header/Container.scss */
+.x-accordion-item .x-grid-header-ct {
+  border-width: 0 0 1px !important; }
+
+/* line 19, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/header/Container.scss */
+.x-accordion-item .x-grid-header-ct-hidden {
+  border: 0 !important; }
+
 /* line 28, ../../../../ext/packages/ext-theme-neutral/sass/src/grid/header/Container.scss */
 .x-grid-body {
   border-top-color: silver; }
@@ -12743,6 +12751,49 @@ body.x-nbr .x-grid-row-editor-buttons-default-top-frameInfo {
 .x-grid-row-editor-errors-item {
   list-style: disc;
   margin-left: 15px; }
+
+/* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-layout-ct {
+  background-color: white;
+  padding: 5px 5px 0; }
+
+/* line 6, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-hd .x-panel-header-text-container {
+  color: #666666;
+  font-weight: bold;
+  font-family: helvetica, arial, verdana, sans-serif;
+  text-transform: none; }
+
+/* line 13, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-item {
+  margin: 0 0 5px; }
+  /* line 16, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+  .x-accordion-item .x-accordion-hd {
+    background: #dfeaf2;
+    border-top-color: white;
+    padding: 8px 10px; }
+  /* line 22, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+  .x-accordion-item .x-accordion-hd-sibling-expanded {
+    border-top-color: #157fcc; }
+  /* line 26, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+  .x-accordion-item .x-accordion-hd-last-collapsed {
+    border-bottom-color: #dfeaf2; }
+  /* line 30, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+  .x-accordion-item .x-accordion-body {
+    border-width: 0; }
+
+/* line 37, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-hd .x-tool-collapse-top,
+.x-accordion-hd .x-tool-collapse-bottom {
+  background-position: 0 -272px; }
+/* line 42, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-hd .x-tool-expand-top,
+.x-accordion-hd .x-tool-expand-bottom {
+  background-position: 0 -256px; }
+/* line 61, ../../../../ext/packages/ext-theme-neutral/sass/src/layout/container/Accordion.scss */
+.x-accordion-hd .x-tool-img {
+  background-image: url(images/tools/tool-sprites-dark.png);
+  background-color: #dfeaf2; }
 
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/resizer/Splitter.scss */
 .x-collapse-el {
@@ -17748,6 +17799,14 @@ body.x-nbr .x-panel-header-light-framed-collapsed-left-frameInfo {
 /* line 25, ../../../../ext/packages/ext-theme-neptune/sass/src/grid/column/Column.scss */
 .x-column-header-last {
   border-right: 0 none; }
+
+/* line 2, ../../../../ext/packages/ext-theme-neptune/sass/src/layout/container/Accordion.scss */
+.x-accordion-hd .x-tool-img {
+  background-image: url(images/tools/tool-sprites-dark.png); }
+
+/* line 6, ../../../../ext/packages/ext-theme-neptune/sass/src/layout/container/Accordion.scss */
+.x-accordion-item .x-accordion-hd-over {
+  background-color: #e6f1f9; }
 
 /* line 1, ../../../../ext/packages/ext-theme-neptune/sass/src/resizer/Resizer.scss */
 .x-resizable-handle {

@@ -13,7 +13,9 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
+import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.resources.repositories.NetworkInterfaceRepository;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
 
 /**
@@ -25,7 +27,9 @@ import com.athena.meerkat.controller.web.resources.repositories.ServerRepository
 @Service
 public class ServerService {
 	@Autowired
-	private ServerRepository machineRepo;
+	private ServerRepository serverRepo;
+	@Autowired
+	private NetworkInterfaceRepository niRepo;
 
 	public ServerService() {
 
@@ -58,7 +62,7 @@ public class ServerService {
 			if (result.getStatus() != Status.DONE) {
 				return result;
 			}
-			machineRepo.save((Server) result.getReturnedVal());
+			serverRepo.save((Server) result.getReturnedVal());
 		} catch (Exception e) {
 			return new ServiceResult(Status.ERROR, e.getMessage());
 		}
@@ -75,8 +79,7 @@ public class ServerService {
 	 * @return ServiceStatus
 	 */
 	public ServiceResult retrieve(int page, int size) {
-		Page<Server> machines = machineRepo
-				.findAll(new PageRequest(page, size));
+		Page<Server> machines = serverRepo.findAll(new PageRequest(page, size));
 		return new ServiceResult(Status.DONE, "Done", machines);
 	}
 
@@ -84,13 +87,13 @@ public class ServerService {
 	// return new ServiceResult(Status.DONE, "", machineRepo.findOne(id));
 	// }
 	public Server retrieve(int id) {
-		return machineRepo.findOne(id);
+		return serverRepo.findOne(id);
 	}
 
 	public List<Server> getListByType(int type) {
 
-		//List<Server> list = machineRepo.findByMachineServerType(type);
-		//return list;
+		// List<Server> list = machineRepo.findByMachineServerType(type);
+		// return list;
 		return null;
 	}
 
@@ -251,11 +254,11 @@ public class ServerService {
 	 * @return Service Result
 	 */
 	public ServiceResult remove(int machineId) {
-		Server m = machineRepo.getOne(machineId);
+		Server m = serverRepo.getOne(machineId);
 		if (m == null) {
 			return new ServiceResult(Status.FAILED, "Machine does not exist");
 		}
-		machineRepo.delete(m);
+		serverRepo.delete(m);
 		return new ServiceResult(Status.DONE, "Removed");
 	}
 
@@ -263,12 +266,12 @@ public class ServerService {
 	 * Count machine in db
 	 */
 	public ServiceResult count() {
-		return new ServiceResult(Status.DONE, "", machineRepo.count());
+		return new ServiceResult(Status.DONE, "", serverRepo.count());
 	}
 
 	public List<Server> getList() {
 
-		List<Server> list = machineRepo.findAll();
+		List<Server> list = serverRepo.findAll();
 		return list;
 	}
 
@@ -292,7 +295,16 @@ public class ServerService {
 	 */
 	public Server save(Server machine) {
 		// TODO Auto-generated method stub
-		return machineRepo.save(machine);
+		return serverRepo.save(machine);
+	}
+
+	public Server getServerByName(String name) {
+		// TODO Auto-generated method stub
+		return serverRepo.findByName(name);
+	}
+
+	public NetworkInterface getNiById(int sshNiId) {
+		return niRepo.findOne(sshNiId);
 	}
 
 }

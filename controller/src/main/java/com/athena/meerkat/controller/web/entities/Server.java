@@ -10,11 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 /**
  * Represent the machine information
@@ -68,8 +69,9 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
-	@Column(name = "ssh_ni_id")
-	private int sshNiId;
+	@OneToOne
+	@JoinColumn(name = "ssh_ni_id")
+	private NetworkInterface sshNi;
 	@Column(name = "state")
 	private int state;
 
@@ -248,7 +250,7 @@ public class Server implements Serializable {
 	}
 
 	public Server(int _id, String _name) {
-		Id = _id;
+		setId(_id);
 		name = _name;
 	}
 
@@ -319,14 +321,29 @@ public class Server implements Serializable {
 		this.sshPort = sshPort;
 	}
 
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public NetworkInterface getSshNi() {
+		return sshNi;
+	}
+
+	public void setSshNi(NetworkInterface sshNi) {
+		this.sshNi = sshNi;
+	}
+
+	public String getSshIPAddr() {
+		if (sshNi != null) {
+			return sshNi.getIpv4();
+		}
+		return "";
+	}
+
 	public int getSshNiId() {
-		return sshNiId;
+		if (sshNi != null) {
+			return sshNi.getId();
+		}
+		return 0;
 	}
-
-	public void setSshNiId(int sshNiId) {
-		this.sshNiId = sshNiId;
-	}
-
-
-
 }

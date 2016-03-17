@@ -10,11 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import com.athena.meerkat.controller.web.entities.Server;
 
-@Repository("machineRepository")
+@Repository("serverRepository")
 public interface ServerRepository extends JpaRepository<Server, Integer>,
 		PagingAndSortingRepository<Server, Integer> {
 	Page<Server> findAll(Pageable pageable);
 
-	//List<Server> findByMachineServerType(int type);
-	//List<Server> findByNameOrSshIPAddr(String name, String sshIPAddr);
+	Server findByName(String name);
+
+	// List<Server> findByMachineServerType(int type);
+	// List<Server> findByNameOrSshIPAddr(String name, String sshIPAddr);
 }
