@@ -22,6 +22,7 @@ Ext.define('webapp.view.NewMenuPanel', {
         'Ext.tree.View'
     ],
 
+    cls: 'osc-menu',
     height: 362,
     width: 250,
     layout: 'accordion',

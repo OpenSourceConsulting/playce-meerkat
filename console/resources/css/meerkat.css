@@ -32,3 +32,10 @@
 .add {
     background-image:url(../images/icons/fam/add.gif) !important;
 }
+
+/*
+ * menu css
+ */
+.osc-menu .x-tree-node-text, .osc-menu .x-accordion-hd {
+    cursor: pointer;
+}

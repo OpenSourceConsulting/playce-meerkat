@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "cls": "osc-menu",
         "designer|userAlias": "newmenupanel",
         "designer|userClassName": "NewMenuPanel",
         "height": 362,

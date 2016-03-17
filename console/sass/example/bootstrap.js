@@ -2746,7 +2746,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.DomainForm": [],
   "webapp.view.DomainWindow": [],
   "webapp.view.EnvironmentVariableWindow": [],
-  "webapp.view.LeftMenuPanel": [],
   "webapp.view.LinkNewDataSourceWindow": [],
   "webapp.view.MonitoringMachineContainer": [],
   "webapp.view.MonitoringTomcatInstance": [],
@@ -3862,7 +3861,6 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.DomainWindow"
   ],
   "webapp.view.EnvironmentVariableWindow": [],
-  "webapp.view.LeftMenuPanel": [],
   "webapp.view.LinkNewDataSourceWindow": [
     "widget.LinkNewDataSourceWindow"
   ],

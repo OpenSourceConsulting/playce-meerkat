@@ -29,6 +29,12 @@ Ext.define('webapp.store.MenuTreeStore', {
                 expanded: true,
                 children: [
                     {
+                        text: 'Create Wizard',
+                        menuId: 'create-wizard',
+                        leaf: true,
+                        
+                    },
+                    {
                         text: 'TomcatManagement',
                         menuId: 'tomcatMng',
                         expanded: true,

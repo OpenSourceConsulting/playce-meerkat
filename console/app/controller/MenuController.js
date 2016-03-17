@@ -22,25 +22,26 @@ Ext.define('webapp.controller.MenuController', {
         var is_leaf = record.get("leaf");
         var navField = Ext.getCmp("navigationField");
 
-        //if (is_leaf){
-        //    navigationText = navField.getValue() + " > " + menuText;
-        //
-        //else {
-        //vigationText = menuText;
-        //}
 
-        navField.setText(menuText);
+        if (menuId != 'create-wizard') {
+            navField.setText(menuText);
+        }
+
 
         if(menuId !== undefined){
             if (!is_leaf){
                 this.loadChildMenus(menuId, dataview.up('treepanel'));
             }
 
-            this.showMenu(menuId, menuText);
-            // turn off live busy threads chart on monitoring part
-            if(GlobalData.busyThreadsChartInterval > -1){
-                clearInterval(GlobalData.busyThreadsChartInterval);
-                GlobalData.busyThreadsChartInterval = -1;
+            if (menuId != 'create-wizard') {
+                this.showMenu(menuId, menuText);
+                // turn off live busy threads chart on monitoring part
+                if(GlobalData.busyThreadsChartInterval > -1){
+                    clearInterval(GlobalData.busyThreadsChartInterval);
+                    GlobalData.busyThreadsChartInterval = -1;
+                }
+            } else {
+                Ext.create('widget.ticWizard').show();
             }
         }
 
