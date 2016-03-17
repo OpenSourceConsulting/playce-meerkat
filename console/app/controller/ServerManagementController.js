@@ -55,7 +55,8 @@ Ext.define('webapp.controller.ServerManagementController', {
         var osNameField = Ext.getCmp("serverOSNameDisplayField");
         var hostNameField = Ext.getCmp("serverHostNameTextField");
         var _idField = Ext.getCmp("serverIDHiddenField_");
-
+        var detailTab = Ext.getCmp("detailServerTab");
+        detailTab.setVisible(true);
         _idField.setValue(id);
         nameField.setValue(name);
         hostNameField.setValue(hostName);
@@ -63,35 +64,12 @@ Ext.define('webapp.controller.ServerManagementController', {
         osNameField.setValue(osName);
 
         var ipaddrUrl = GlobalData.urlPrefix + "res/server/"+id+"/nis";
-        //Ext.getCmp("serverSSHIPAddressCombobox").getStore().load({url:ipaddrUrl});
-        //var store = Ext.getStore("NetworkInterfaceStore");
-        //store.getProxy().url = ipaddrUrl;
+
         sshIPAddrField.clearValue();
         sshIPAddrField.getStore().getProxy().url = ipaddrUrl;
         sshIPAddrField.getStore().load();
         sshIPAddrField.setValue(sshNiId);
 
-        /*
-        Ext.Ajax.request({
-            url: url,
-            params: {"serverId": id},
-            success: function(resp, ops) {
-                var response = Ext.decode(resp.responseText);
-                if (response.success === true){
-
-                }
-                else {
-                    Ext.Msg.show({
-                        title: "Message",
-                        msg: response.msg,
-                        buttons: Ext.Msg.OK,
-                        icon: Ext.Msg.WARNING
-                    });
-                }
-            },
-            method: "GET"
-        });
-        */
     },
 
     onEditSSHClick: function(button, e, eOpts) {
@@ -277,6 +255,39 @@ Ext.define('webapp.controller.ServerManagementController', {
 
     },
 
+    onServerSaveBtnClick: function(button, e, eOpts) {
+        var sshIPAddrField = Ext.getCmp("serverSSHIPAddressCombobox");
+        var sshPortField = Ext.getCmp("serverSSHPortTextField");
+        var nameField = Ext.getCmp("serverNameTextField");
+        var hostNameField = Ext.getCmp("serverHostNameTextField");
+        var _idField = Ext.getCmp("serverIDHiddenField_");
+        var params = {"Id":_idField.getValue(),"name":nameField.getValue(), "hostName":hostNameField.getValue(), "sshPort": sshPortField.getValue(),"sshNi":sshIPAddrField.getValue()};
+        this.saveServerInfo(_idField, params, function(data){
+            if(data){
+                var editBtn = Ext.getCmp("serverEditBtn");
+                var saveBtn = Ext.getCmp("serverSaveBtn");
+                var cancelBtn = Ext.getCmp("serverCancelBtn");
+                editBtn.setVisible(true);
+                saveBtn.hide();
+                cancelBtn.hide();
+
+                sshIPAddrField.setReadOnly(true);
+                sshPortField.setReadOnly(true);
+                nameField.setReadOnly(true);
+                hostNameField.setReadOnly(true);
+                webapp.app.getStore("ServerStore").reload();
+                Ext.Msg.show({
+                    title: "Message",
+                    msg: "Update successfully.",
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.WARNING
+                });
+            }
+        });
+
+
+    },
+
     loadTomcatServers: function(callback) {
         var url = GlobalData.urlPrefix + "res/machine/tomcatserver";
         Ext.Ajax.request({
@@ -370,6 +381,32 @@ Ext.define('webapp.controller.ServerManagementController', {
         });
     },
 
+    saveServerInfo: function(id, params, callback) {
+        var url = GlobalData.urlPrefix + "res/server/save";
+
+        //Ext.Ajax.cors = true;
+        //Ext.Ajax.useDefaultXhrHeader = false;
+        Ext.Ajax.request({
+            url: url,
+            params: params,
+            method:"POST",
+            success: function(resp, ops) {
+                var response = Ext.decode(resp.responseText);
+                if(response.success === true){
+                    callback(response.success);
+                }
+                else {
+                    Ext.Msg.show({
+                        title: "Message",
+                        msg: response.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.WARNING
+                    });
+                }
+            }
+        });
+    },
+
     init: function(application) {
         this.control({
             "#datagridServerGroupGrid": {
@@ -401,6 +438,9 @@ Ext.define('webapp.controller.ServerManagementController', {
             },
             "#serverCancelBtn": {
                 click: this.onServerCancelBtnClick
+            },
+            "#serverSaveBtn": {
+                click: this.onServerSaveBtnClick
             }
         });
     }
