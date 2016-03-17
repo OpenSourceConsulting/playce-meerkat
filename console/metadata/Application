@@ -37,7 +37,8 @@
             "RevisionModel",
             "TomcatBusyThreadModel",
             "ServerModel",
-            "NetworkInterfaceModel"
+            "NetworkInterfaceModel",
+            "SSHAccountModel"
         ],
         "name": "webapp",
         "requires": [
@@ -61,7 +62,8 @@
             "RevisionStore",
             "TomcatBusyThreadStore",
             "ServerStore",
-            "NetworkInterfaceStore"
+            "NetworkInterfaceStore",
+            "SSHAccountStore"
         ],
         "views": [
             "meerkatViewport",
@@ -91,7 +93,8 @@
             "TomcatInstanceCreateWizard",
             "DomainForm",
             "TomcatForm",
-            "TomcatInstallLogWindow"
+            "TomcatInstallLogWindow",
+            "SSHFormPanel"
         ]
     },
     "name": "Application",

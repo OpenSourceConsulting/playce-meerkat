@@ -38,7 +38,8 @@ Ext.application({
         'RevisionModel',
         'TomcatBusyThreadModel',
         'ServerModel',
-        'NetworkInterfaceModel'
+        'NetworkInterfaceModel',
+        'SSHAccountModel'
     ],
     stores: [
         'sessionDataStore',
@@ -58,7 +59,8 @@ Ext.application({
         'RevisionStore',
         'TomcatBusyThreadStore',
         'ServerStore',
-        'NetworkInterfaceStore'
+        'NetworkInterfaceStore',
+        'SSHAccountStore'
     ],
     views: [
         'meerkatViewport',
@@ -89,8 +91,7 @@ Ext.application({
         'DomainForm',
         'TomcatForm',
         'TomcatInstallLogWindow',
-        'LeftMenuPanel',
-        'NewMenuPanel'
+        'SSHFormPanel'
     ],
     controllers: [
         'headerController',

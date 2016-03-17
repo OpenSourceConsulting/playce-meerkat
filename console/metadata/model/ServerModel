@@ -101,6 +101,19 @@
             },
             "name": "MyField34",
             "designerId": "1f24f8b6-e653-439f-b020-eced50f893bb"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "sshIPAddr"
+            },
+            "name": "MyField84",
+            "designerId": "fe9fc603-03f5-492d-8745-91804004f8a5"
         }
     ]
 }

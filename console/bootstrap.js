@@ -888,6 +888,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.model.EnvironmentVariableModel": [],
   "webapp.model.NetworkInterfaceModel": [],
   "webapp.model.RevisionModel": [],
+  "webapp.model.SSHAccountModel": [],
   "webapp.model.ServerModel": [],
   "webapp.model.SessionKeyData": [],
   "webapp.model.TomcatBusyThreadModel": [],
@@ -905,6 +906,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.NetworkInterfaceStore": [],
   "webapp.store.RevisionStore": [],
+  "webapp.store.SSHAccountStore": [],
   "webapp.store.ServerStore": [],
   "webapp.store.TempoStore": [],
   "webapp.store.TomcatBusyThreadStore": [],
@@ -930,6 +932,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.MonitoringTomcatInstance": [],
   "webapp.view.NewMenuPanel": [],
   "webapp.view.ResourceManagementContainer": [],
+  "webapp.view.SSHFormPanel": [],
   "webapp.view.ServerManagementContainer": [],
   "webapp.view.SessionServerGroupContainer": [],
   "webapp.view.SeverDataGridWindow": [],
@@ -1981,6 +1984,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.model.EnvironmentVariableModel": [],
   "webapp.model.NetworkInterfaceModel": [],
   "webapp.model.RevisionModel": [],
+  "webapp.model.SSHAccountModel": [],
   "webapp.model.ServerModel": [],
   "webapp.model.SessionKeyData": [],
   "webapp.model.TomcatBusyThreadModel": [],
@@ -2000,6 +2004,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.store.MenuTreeStore": [],
   "webapp.store.NetworkInterfaceStore": [],
   "webapp.store.RevisionStore": [],
+  "webapp.store.SSHAccountStore": [],
   "webapp.store.ServerStore": [],
   "webapp.store.TempoStore": [],
   "webapp.store.TomcatBusyThreadStore": [],
@@ -2053,6 +2058,7 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.ResourceManagementContainer": [
     "widget.resourcemanagementcontainer"
   ],
+  "webapp.view.SSHFormPanel": [],
   "webapp.view.ServerManagementContainer": [
     "widget.servermanagementcontainer"
   ],
