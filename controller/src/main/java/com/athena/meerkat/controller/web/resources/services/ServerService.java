@@ -316,4 +316,12 @@ public class ServerService {
 		return sshRepo.findOne(id);
 	}
 
+	public SshAccount getSSHAccountByUserName(String username) {
+		return sshRepo.findByUsername(username);
+	}
+
+	public SshAccount saveSSHAccount(SshAccount account) {
+		return sshRepo.save(account);
+	}
+
 }

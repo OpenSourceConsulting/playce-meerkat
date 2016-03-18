@@ -82,4 +82,11 @@ public class SshAccount implements Serializable {
 	public void setServer(Server server) {
 		this.server = server;
 	}
+
+	public int getServerId() {
+		if (server != null) {
+			return server.getId();
+		}
+		return 0;
+	}
 }

@@ -6,5 +6,7 @@ import com.athena.meerkat.controller.web.entities.SshAccount;
 
 public interface SSHAccountRepository extends
 		JpaRepository<SshAccount, Integer> {
+
+	SshAccount findByUsername(String username);
 	
 }
