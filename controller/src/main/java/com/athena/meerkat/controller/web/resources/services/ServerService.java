@@ -15,7 +15,9 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.resources.repositories.NetworkInterfaceRepository;
+import com.athena.meerkat.controller.web.resources.repositories.SSHAccountRepository;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
 
 /**
@@ -30,6 +32,9 @@ public class ServerService {
 	private ServerRepository serverRepo;
 	@Autowired
 	private NetworkInterfaceRepository niRepo;
+
+	@Autowired
+	private SSHAccountRepository sshRepo;
 
 	public ServerService() {
 
@@ -305,6 +310,10 @@ public class ServerService {
 
 	public NetworkInterface getNiById(int sshNiId) {
 		return niRepo.findOne(sshNiId);
+	}
+
+	public SshAccount getSSHAccount(Integer id) {
+		return sshRepo.findOne(id);
 	}
 
 }

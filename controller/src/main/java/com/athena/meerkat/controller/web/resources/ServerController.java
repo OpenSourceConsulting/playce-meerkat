@@ -18,6 +18,7 @@ import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.user.entities.User;
 
@@ -88,6 +89,36 @@ public class ServerController {
 		} else {
 			json.setMsg("Server does not exist.");
 			json.setSuccess(false);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{serverId}/sshAccounts", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getSSHAccounts(GridJsonResponse json,
+			@PathVariable Integer serverId) {
+		Server m = service.retrieve(serverId);
+		if (m != null) {
+			json.setList((List<?>) m.getSshAccounts());
+			json.setTotal(m.getSshAccounts().size());
+			json.setSuccess(true);
+		} else {
+			json.setMsg("Server does not exist.");
+			json.setSuccess(false);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/sshAcc", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getSSHAccount(SimpleJsonResponse json, Integer id) {
+		SshAccount ssh = service.getSSHAccount(id);
+		if (ssh == null) {
+			json.setSuccess(false);
+			json.setMsg("SSH Account does not exist.");
+		} else {
+			json.setData(ssh);
+			json.setSuccess(true);
 		}
 		return json;
 	}
