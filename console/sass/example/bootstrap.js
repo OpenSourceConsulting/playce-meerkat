@@ -2751,6 +2751,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "webapp.view.MonitoringTomcatInstance": [],
   "webapp.view.NewMenuPanel": [],
   "webapp.view.ResourceManagementContainer": [],
+  "webapp.view.SSHAccountWindow": [],
   "webapp.view.SSHFormPanel": [],
   "webapp.view.ServerManagementContainer": [],
   "webapp.view.SessionServerGroupContainer": [],
@@ -3876,7 +3877,12 @@ Ext.ClassManager.addNameAliasMappings({
   "webapp.view.ResourceManagementContainer": [
     "widget.resourcemanagementcontainer"
   ],
-  "webapp.view.SSHFormPanel": [],
+  "webapp.view.SSHAccountWindow": [
+    "widget.SSHAccountWindow"
+  ],
+  "webapp.view.SSHFormPanel": [
+    "widget.sshformpanel"
+  ],
   "webapp.view.ServerManagementContainer": [
     "widget.servermanagementcontainer"
   ],

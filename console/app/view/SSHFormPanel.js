@@ -15,8 +15,10 @@
 
 Ext.define('webapp.view.SSHFormPanel', {
     extend: 'Ext.form.Panel',
+    alias: 'widget.sshformpanel',
 
     requires: [
+        'Ext.form.field.Display',
         'Ext.form.field.Text',
         'Ext.container.Container',
         'Ext.form.field.Checkbox',
@@ -34,24 +36,27 @@ Ext.define('webapp.view.SSHFormPanel', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'textfield',
-                    id: 'tomcatSSHIPAddressTextField',
-                    fieldLabel: 'IP Address:',
-                    readOnly: true,
-                    allowBlank: false
+                    xtype: 'displayfield',
+                    id: 'serverNameDisplayField',
+                    width: 335,
+                    fieldLabel: 'Server name'
+                },
+                {
+                    xtype: 'displayfield',
+                    id: 'serverSSHIPAddressDisplayField',
+                    width: 372,
+                    fieldLabel: 'SSH IP Address:'
+                },
+                {
+                    xtype: 'displayfield',
+                    id: 'serverSSHPortDisplayField',
+                    width: 297,
+                    fieldLabel: 'SSH Port'
                 },
                 {
                     xtype: 'textfield',
-                    id: 'tomcatSSHPortTextField',
-                    fieldLabel: 'Port',
-                    readOnly: true,
-                    allowBlank: false
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'tomcatSSHUserIDTextField',
+                    id: 'serverSSHUserIDTextField',
                     fieldLabel: 'User ID',
-                    readOnly: true,
                     allowBlank: false
                 },
                 {
@@ -63,15 +68,15 @@ Ext.define('webapp.view.SSHFormPanel', {
                     items: [
                         {
                             xtype: 'textfield',
-                            id: 'tomcatSSHPasswordTextField',
+                            id: 'serverSSHPasswordTextField',
                             width: 255,
                             fieldLabel: 'Password',
                             inputType: 'password',
-                            readOnly: true,
                             allowBlank: false
                         },
                         {
                             xtype: 'checkboxfield',
+                            flex: 1,
                             itemId: 'showPasswordCheckbox',
                             margin: '0 0 0 10',
                             fieldLabel: '',
@@ -86,15 +91,23 @@ Ext.define('webapp.view.SSHFormPanel', {
                     ]
                 },
                 {
+                    xtype: 'checkboxfield',
+                    anchor: '100%',
+                    id: 'rootCheckBox',
+                    fieldLabel: 'Root permission',
+                    boxLabel: ''
+                },
+                {
                     xtype: 'button',
-                    id: 'tbnServerSSHTestConnection',
+                    id: 'serverTestSSHConnectionBtn',
+                    margin: '0 0 0 50',
                     text: 'Test'
                 },
                 {
                     xtype: 'button',
-                    itemId: 'btnServerSSHEdit',
+                    itemId: 'serverSubmitSSHBtn',
                     margin: '10 10 10 10',
-                    text: 'Edit'
+                    text: 'Add'
                 },
                 {
                     xtype: 'button',
@@ -107,8 +120,8 @@ Ext.define('webapp.view.SSHFormPanel', {
                 },
                 {
                     xtype: 'button',
-                    id: 'btnServerSSHReset',
-                    text: 'Reset'
+                    id: 'serverCancelSSHBtn',
+                    text: 'Cancel'
                 }
             ]
         });

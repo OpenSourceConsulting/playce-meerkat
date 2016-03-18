@@ -1,0 +1,30 @@
+{
+    "type": "Ext.window.Window",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "SSHAccountWindow",
+        "designer|userClassName": "SSHAccountWindow",
+        "height": 270,
+        "title": "SSH Account",
+        "width": 432
+    },
+    "name": "MyWindow",
+    "designerId": "d21af2e3-3098-4b12-9f9f-5a1d1910a237",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "name": "sshformpanel1",
+            "designerId": "ace0b424-6256-4e25-9c46-019a57435265",
+            "masterInstanceId": "15fef371-cc3e-4c74-9bc2-578619539ee8"
+        }
+    ]
+}

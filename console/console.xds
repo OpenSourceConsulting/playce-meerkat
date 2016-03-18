@@ -15,14 +15,14 @@
             }
         },
         "urlPrefix": "http://localhost:8080/controller",
-        "exportPath": "G:/project/AthenaMeerkat/pubpath/",
+        "exportPath": "D:/project/AthenaMeerkat/pubpath",
         "spacesToIndent": 4,
         "sdkPath": "",
         "lineEnding": "LF",
         "genTimestamps": false,
         "cacheBust": false,
         "buildShouldOverwriteIndex": true,
-        "generateArchitectVersion": false,
+        "generateArchitectVersion": true,
         "lastBuildSelection": {
             "value": "webBuild",
             "display": "Build web app"
@@ -32,10 +32,7 @@
         "installStatus": "Not Installed",
         "displayfield-ExtBox1-1193-inputEl": "a new version of the framework is available",
         "displayfield-ExtBox1-1129-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1270-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1134-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1189-inputEl": "a new version of the framework is available",
-        "displayfield-ExtBox1-1244-inputEl": "a new version of the framework is available"
+        "displayfield-ExtBox1-1270-inputEl": "a new version of the framework is available"
     },
     "xdsVersion": "3.2.0",
     "xdsBuild": 339,
@@ -75,7 +72,8 @@
             "e31face7-e797-4a44-83ff-e5dd8a4a17e4",
             "01a32e83-c5fb-4ecb-8358-2b6a8c44c344",
             "261f4315-1eab-4c57-88d8-1986c38bbc1b",
-            "15fef371-cc3e-4c74-9bc2-578619539ee8"
+            "15fef371-cc3e-4c74-9bc2-578619539ee8",
+            "d21af2e3-3098-4b12-9f9f-5a1d1910a237"
         ],
         "store": [
             "4c2bc173-1fa6-41fb-9f51-1e615e29ba62",
@@ -138,6 +136,9 @@
             "eb7115fe-41ac-4f7e-b8d6-6bca0bbee681"
         ],
         "app": [
+            "application",
+            "application",
+            "application",
             "application"
         ]
     }

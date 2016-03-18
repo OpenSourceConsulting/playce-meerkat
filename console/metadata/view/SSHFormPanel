@@ -7,6 +7,7 @@
     "codeClass": null,
     "userConfig": {
         "bodyPadding": 10,
+        "designer|userAlias": "sshformpanel",
         "designer|userClassName": "SSHFormPanel",
         "id": "sshFormPanel",
         "title": ""
@@ -15,35 +16,48 @@
     "designerId": "15fef371-cc3e-4c74-9bc2-578619539ee8",
     "cn": [
         {
-            "type": "Ext.form.field.Text",
+            "type": "Ext.form.field.Display",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "allowBlank": false,
-                "fieldLabel": "IP Address:",
-                "id": "tomcatSSHIPAddressTextField",
-                "readOnly": true
+                "fieldLabel": "Server name",
+                "id": "serverNameDisplayField",
+                "width": 335
             },
-            "name": "MyTextField4",
+            "name": "MyDisplayField26",
             "designerId": "fc993a32-21ce-46d4-be02-c64f56905d8c"
         },
         {
-            "type": "Ext.form.field.Text",
+            "type": "Ext.form.field.Display",
             "reference": {
                 "name": "items",
                 "type": "array"
             },
             "codeClass": null,
             "userConfig": {
-                "allowBlank": false,
-                "fieldLabel": "Port",
-                "id": "tomcatSSHPortTextField",
-                "readOnly": true
+                "fieldLabel": "SSH IP Address:",
+                "id": "serverSSHIPAddressDisplayField",
+                "width": 372
             },
-            "name": "MyTextField5",
+            "name": "MyDisplayField27",
+            "designerId": "ef2b66a9-909f-40e2-8cab-fbbf675d15ca"
+        },
+        {
+            "type": "Ext.form.field.Display",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fieldLabel": "SSH Port",
+                "id": "serverSSHPortDisplayField",
+                "width": 297
+            },
+            "name": "MyDisplayField28",
             "designerId": "27cc417a-3250-4e95-b884-3b22a4d2a334"
         },
         {
@@ -56,8 +70,7 @@
             "userConfig": {
                 "allowBlank": false,
                 "fieldLabel": "User ID",
-                "id": "tomcatSSHUserIDTextField",
-                "readOnly": true
+                "id": "serverSSHUserIDTextField"
             },
             "name": "MyTextField6",
             "designerId": "8fda8f32-3413-493c-9efd-ef313bc0949d"
@@ -86,9 +99,8 @@
                     "userConfig": {
                         "allowBlank": false,
                         "fieldLabel": "Password",
-                        "id": "tomcatSSHPasswordTextField",
+                        "id": "serverSSHPasswordTextField",
                         "inputType": "password",
-                        "readOnly": true,
                         "width": 255
                     },
                     "name": "MyTextField7",
@@ -105,6 +117,7 @@
                         "boxLabel": "Show password",
                         "fieldLabel": "",
                         "itemId": "showPasswordCheckbox",
+                        "layout|flex": 1,
                         "margin": "0 0 0 10"
                     },
                     "name": "MyCheckbox2",
@@ -128,6 +141,22 @@
             ]
         },
         {
+            "type": "Ext.form.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "boxLabel": "",
+                "fieldLabel": "Root permission",
+                "id": "rootCheckBox",
+                "layout|anchor": "100%"
+            },
+            "name": "MyCheckbox4",
+            "designerId": "2e5a74c5-5e1b-496e-933a-1e1ef62387f7"
+        },
+        {
             "type": "Ext.button.Button",
             "reference": {
                 "name": "items",
@@ -135,7 +164,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "id": "tbnServerSSHTestConnection",
+                "id": "serverTestSSHConnectionBtn",
+                "margin": "0 0 0 50",
                 "text": "Test"
             },
             "name": "MyButton17",
@@ -149,9 +179,9 @@
             },
             "codeClass": null,
             "userConfig": {
-                "itemId": "btnServerSSHEdit",
+                "itemId": "serverSubmitSSHBtn",
                 "margin": "10 10 10 10",
-                "text": "Edit"
+                "text": "Add"
             },
             "name": "MyButton18",
             "designerId": "fa13db3e-6509-42be-9385-e2707536d3b7"
@@ -182,8 +212,8 @@
             },
             "codeClass": null,
             "userConfig": {
-                "id": "btnServerSSHReset",
-                "text": "Reset"
+                "id": "serverCancelSSHBtn",
+                "text": "Cancel"
             },
             "name": "MyButton19",
             "designerId": "12cb3696-badd-4485-91d6-b4e970736425"

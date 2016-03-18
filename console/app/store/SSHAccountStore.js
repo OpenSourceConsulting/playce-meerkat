@@ -31,7 +31,8 @@ Ext.define('webapp.store.SSHAccountStore', {
             proxy: {
                 type: 'ajax',
                 reader: {
-                    type: 'json'
+                    type: 'json',
+                    root: 'list'
                 }
             }
         }, cfg)]);
