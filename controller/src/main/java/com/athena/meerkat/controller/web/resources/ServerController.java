@@ -111,6 +111,25 @@ public class ServerController {
 		return json;
 	}
 
+	@RequestMapping(value = "/delssh", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse delSSHAccount(SimpleJsonResponse json, Integer id) {
+		SshAccount ssh = service.getSSHAccount(id);
+		if (ssh == null) {
+			json.setSuccess(false);
+			json.setMsg("SSH Account does not exist.");
+		} else {
+			Server server = ssh.getServer();
+			server.removeSSHAccount(ssh);
+			ssh.setServer(null);
+			service.save(server);
+			service.deleteSSHAccount(ssh);
+			json.setData(ssh);
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveSeverInfo(SimpleJsonResponse json,
@@ -128,10 +147,15 @@ public class ServerController {
 			currentServer = service.save(currentServer);
 
 			NetworkInterface ni = new NetworkInterface();
+			if(!MeerkatUtils.validateIPAddress(sshIPAddr)){
+				json.setMsg("SSH IP Address is invalid.");
+				json.setSuccess(false);
+				return json;
+			}
 			ni.setIpv4(sshIPAddr);
 			ni = service.saveNI(ni);
 			ni.setServer(currentServer);
-			
+
 			currentServer.setSshNi(ni);
 			currentServer.addNetworkInterface(ni);
 			SshAccount sshAccount = service.getSSHAccountByUserNameAndServerId(

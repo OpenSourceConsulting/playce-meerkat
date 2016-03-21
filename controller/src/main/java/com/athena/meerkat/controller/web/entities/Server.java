@@ -361,4 +361,11 @@ public class Server implements Serializable {
 		}
 		return 0;
 	}
+
+	public void removeSSHAccount(SshAccount ssh) {
+		if (sshAccounts != null) {
+			sshAccounts.remove(ssh);
+		}
+
+	}
 }

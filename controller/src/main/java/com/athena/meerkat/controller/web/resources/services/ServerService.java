@@ -338,4 +338,9 @@ public class ServerService {
 		return sshRepo.findByUsernameAndServer_Id(sshUserName, serverId);
 	}
 
+	public void deleteSSHAccount(SshAccount ssh) {
+		sshRepo.delete(ssh);
+
+	}
+
 }
