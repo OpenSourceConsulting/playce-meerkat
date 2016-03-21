@@ -324,4 +324,18 @@ public class ServerService {
 		return sshRepo.save(account);
 	}
 
+	public NetworkInterface getNiByIp4(String sshIPAddr) {
+		// TODO Auto-generated method stub
+		return niRepo.findByIpv4(sshIPAddr);
+	}
+
+	public NetworkInterface saveNI(NetworkInterface ni) {
+		return niRepo.save(ni);
+	}
+
+	public SshAccount getSSHAccountByUserNameAndServerId(String sshUserName,
+			int serverId) {
+		return sshRepo.findByUsernameAndServer_Id(sshUserName, serverId);
+	}
+
 }

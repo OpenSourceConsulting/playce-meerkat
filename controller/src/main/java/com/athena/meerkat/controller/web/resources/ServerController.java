@@ -32,20 +32,6 @@ public class ServerController {
 	@Autowired
 	private ServerService service;
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	@ResponseBody
-	public String add() {
-		String mName = "Example";// retrive from form
-		String ip4Addr = "192.168.0.88";// retrieve from form;
-		String sshUserName = "root";// retrieve from form;
-		String sshPassword = "test123";// retrieve from form;
-		int sshPort = MeerkatConstants.DEFAULT_SSH_PORT;
-		String desciprtion = "";
-		ServiceResult status = service.add(mName, desciprtion, ip4Addr,
-				sshPort, sshUserName, sshPassword);
-		return status.getMessage();
-	}
-
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getList(GridJsonResponse json) {
@@ -61,7 +47,6 @@ public class ServerController {
 	public SimpleJsonResponse getSimpleList(SimpleJsonResponse json) {
 		List<Server> result = service.getSimpleMachineList();
 		json.setSuccess(true);
-
 		json.setData(result);
 		return json;
 	}
@@ -129,15 +114,9 @@ public class ServerController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveSeverInfo(SimpleJsonResponse json,
-			Server server) {
+			Server server, String sshIPAddr, String sshUserName,
+			String sshPassword) {
 		Server currentServer;
-		if (server.getName().trim() == "" || server.getSshPort() < 0
-				|| server.getHostName() == "" || server.getSshNiId() <= 0) {
-			json.setMsg("The input data is invalid.");
-			json.setSuccess(false);
-			return json;
-		}
-
 		if (server.getId() == 0) {
 			Server existingServer = service.getServerByName(server.getName());
 			if (existingServer != null) {
@@ -146,7 +125,37 @@ public class ServerController {
 				return json;
 			}
 			currentServer = server;
+			currentServer = service.save(currentServer);
+
+			NetworkInterface ni = new NetworkInterface();
+			ni.setIpv4(sshIPAddr);
+			ni = service.saveNI(ni);
+			ni.setServer(currentServer);
+			
+			currentServer.setSshNi(ni);
+			currentServer.addNetworkInterface(ni);
+			SshAccount sshAccount = service.getSSHAccountByUserNameAndServerId(
+					sshUserName, server.getId());
+			if (sshAccount == null) {
+				sshAccount = new SshAccount();
+				sshAccount.setUsername(sshUserName);
+				sshAccount.setPassword(sshPassword);
+				sshAccount = service.saveSSHAccount(sshAccount);
+			}
+
+			sshAccount.setServer(currentServer);
+			server.addSshAccounts(sshAccount);
+			service.saveNI(ni);
+			service.saveSSHAccount(sshAccount);
+			service.save(currentServer);
+
 		} else { // edit case
+			if (server.getName().trim() == "" || server.getSshPort() < 0
+					|| server.getHostName() == "" || server.getSshNiId() <= 0) {
+				json.setMsg("The input data is invalid.");
+				json.setSuccess(false);
+				return json;
+			}
 			currentServer = service.retrieve(server.getId());
 			if (currentServer == null) {
 				json.setMsg("Server does not exist.");
@@ -156,12 +165,11 @@ public class ServerController {
 			currentServer.setName(server.getName());
 			currentServer.setHostName(server.getHostName());
 			currentServer.setSshPort(server.getSshPort());
+			NetworkInterface ni = service.getNiById(server.getSshNiId());
+			currentServer.setSshNi(ni);
+			service.save(currentServer);
 		}
 
-		NetworkInterface ni = service.getNiById(server.getSshNiId());
-		currentServer.setSshNi(ni);
-
-		service.save(currentServer);
 		json.setSuccess(true);
 		return json;
 	}
@@ -192,7 +200,8 @@ public class ServerController {
 			SshAccount account) {
 		if (account.getId() == 0) {
 			SshAccount existingAccount = service
-					.getSSHAccountByUserName(account.getUsername());
+					.getSSHAccountByUserNameAndServerId(account.getUsername(),
+							account.getServerId());
 			if (existingAccount != null) {
 				json.setMsg("User ID is duplicated.");
 				json.setSuccess(false);
