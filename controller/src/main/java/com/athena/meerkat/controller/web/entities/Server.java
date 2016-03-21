@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -32,7 +33,7 @@ public class Server implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
-	private int Id;
+	private int id;
 	@Column(name = "name", nullable = false)
 	private String name;
 	@Column(name = "host_name")
@@ -278,7 +279,7 @@ public class Server implements Serializable {
 	}
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public Collection<NetworkInterface> getNetworkInterfaces() {
@@ -313,6 +314,13 @@ public class Server implements Serializable {
 		this.sshAccounts = sshAccounts;
 	}
 
+	public void addSshAccounts(SshAccount acc) {
+		if (this.sshAccounts == null) {
+			this.sshAccounts = new ArrayList<SshAccount>();
+		}
+		sshAccounts.add(acc);
+	}
+
 	public int getSshPort() {
 		return sshPort;
 	}
@@ -322,7 +330,7 @@ public class Server implements Serializable {
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public NetworkInterface getSshNi() {
@@ -331,6 +339,13 @@ public class Server implements Serializable {
 
 	public void setSshNi(NetworkInterface sshNi) {
 		this.sshNi = sshNi;
+	}
+
+	public void addNis(NetworkInterface ni) {
+		if (this.networkInterfaces == null) {
+			networkInterfaces = new ArrayList<NetworkInterface>();
+		}
+		networkInterfaces.add(ni);
 	}
 
 	public String getSshIPAddr() {
@@ -345,5 +360,12 @@ public class Server implements Serializable {
 			return sshNi.getId();
 		}
 		return 0;
+	}
+
+	public void removeSSHAccount(SshAccount ssh) {
+		if (sshAccounts != null) {
+			sshAccounts.remove(ssh);
+		}
+
 	}
 }

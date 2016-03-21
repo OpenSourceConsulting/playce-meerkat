@@ -7,4 +7,6 @@ import com.athena.meerkat.controller.web.entities.NetworkInterface;
 public interface NetworkInterfaceRepository extends
 		JpaRepository<NetworkInterface, Integer> {
 
+	NetworkInterface findByIpv4(String ipv4);
+
 }
