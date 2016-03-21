@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- ============================== -->
+	<!-- Append messages to the console -->
+	<!-- ============================== -->
+
+	<appender name="ATHENA_MEERKAT_CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out"/>
+		<param name="Threshold" value="DEBUG"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%c{1}.%M():%L] - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="ATHENA_MEERKAT_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="log/athena-meerkat-agent.log"/>
+		<param name="Threshold" value="DEBUG"/>
+		<param name="Append" value="true"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%c{1}.%M():%L] - %m%n"/>
+		</layout>
+	</appender>
+
+	<!-- ================ -->
+	<!-- Limit categories -->
+	<!-- ================ -->
+	<category name="com.athena.meerkat">
+		<priority value="DEBUG"/>
+	</category>
+
+	<category name="org.apache.commons.beanutils">
+		<priority value="INFO"/>
+	</category>
+
+	<category name="org.springframework">
+		<priority value="INFO"/>
+	</category>
+	
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="ATHENA_MEERKAT_CONSOLE"/>
+		<appender-ref ref="ATHENA_MEERKAT_FILE"/>
+	</root>
+
+</log4j:configuration>
