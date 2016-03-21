@@ -1,0 +1,97 @@
+<project name="pilot fris build" basedir="." default="deploy.all">
+
+
+	<property name="user.id" value="meerkat" />
+	<property name="user.passwd" value="meerkat" />
+
+	<target name="deploy.all">
+		<!--
+		<setproxy socksproxyhost="localhost" socksproxyport="20024"/> -->
+
+		<property name="deploy.dir" value="/home/meerkat" />
+
+		<property name="filename" value="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz" />
+		<property name="ssh.command" value="tar xvfz ./${filename}" />
+		<property name="ssh.command2" value="cd ./athena-meerkat-agent-1.0.0-SNAPSHOT" />
+		<property name="ssh.command3" value="chmod 755 ./apache-ant-1.9.6/bin/*" />
+		<property name="ssh.command4" value="./installTomcat.sh" />
+
+		<antcall target="deploy.agent" description="api server1">
+			<param name="server.ip" value="192.168.0.87" />
+			<param name="server.port" value="22" />
+		</antcall>
+
+		<!-- other server
+		<antcall target="deploy.agent" description="presence server1">
+			<param name="server.ip" value="54.243.169.136" />
+	    	<param name="server.port" value="10022" />
+		</antcall>
+		-->
+	</target>
+
+	<target name="deploy.agent" description="deploy to server">
+
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}/${filename}" trust="true" password="${user.passwd}" file="${basedir}/target/${filename}">
+		</scp>
+
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" command="${ssh.command}; ${ssh.command2}; ${ssh.command3}; ${ssh.command4}" trust="true" failonerror="false" />
+
+	</target>
+
+	<taskdef resource="cargo.tasks">
+		<classpath>
+			<pathelement location="${basedir}/lib/cargo-core-uberjar-1.4.19.jar" />
+			<pathelement location="${basedir}/lib/cargo-ant-1.4.19.jar" />
+		</classpath>
+	</taskdef>
+
+
+
+	<target name="install">
+
+		<property name="tomcat.unzip.pah" value="/home/meerkat/tmp" />
+		<property name="catalina.base" value="/home/meerkat/tmp/instance1" />
+		<property name="instance.log.dir" value="${catalina.base}/logs" />
+		<!--
+		<delete dir="${catalina.base}" />
+		-->
+		<mkdir dir="${catalina.base}" />
+
+		<echo message="Starting Cargo..." />
+		<echo message="Using tomcat.unzip.pah = ${tomcat.unzip.pah} " />
+
+		<cargo containerId="tomcat7x" action="configure">
+			<zipUrlInstaller 
+					installUrl="http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip" 
+					downloadDir="${basedir}/downloads" 
+					extractDir="${tomcat.unzip.pah}" />
+			
+			<configuration home="${catalina.base}">
+				<property name="cargo.port.offset" value="1" />
+				<!--
+					  <property name="cargo.servlet.port" value="8086"/>
+					  <property name="cargo.tomcat.ajp.port" value="8209"/>
+					-->
+			</configuration>
+		</cargo>
+
+		<cargo containerId="tomcat7x" action="configure">
+			
+			<configuration home="${catalina.base}">
+				<property name="cargo.port.offset" value="1" />
+			</configuration>
+		</cargo>
+
+	</target>
+
+	<target name="clean.all">
+
+		<property name="server.ip" value="192.168.0.87" />
+		<property name="server.port" value="22" />
+
+		<!-- <setproxy socksproxyhost="localhost" socksproxyport="20024"/> -->
+
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" command="rm -rf ./athena-meerkat-agent-1.0.0-SNAPSHOT*; rm -rf ./tmp/instance*" trust="true" failonerror="false" />
+	</target>
+
+</project>

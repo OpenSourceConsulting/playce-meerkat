@@ -253,6 +253,6 @@
 		<module>core</module>
 		<!-- <module>console</module> -->
 		<module>controller</module>
-		<module>agent</module>
+		<!-- <module>agent</module> -->
 	</modules>
 </project>
