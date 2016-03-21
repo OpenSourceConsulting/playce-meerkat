@@ -30,13 +30,6 @@
             <fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>${project.build.directory}</directory>
-			<outputDirectory>/lib</outputDirectory>
-			<includes>
-				<include>*.jar</include>
-			</includes>
-		</fileSet>
-		<fileSet>
 			<directory>${project.build.directory}/site</directory>
 			<outputDirectory>docs</outputDirectory>
 		</fileSet>

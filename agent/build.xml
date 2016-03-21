@@ -1,40 +1,29 @@
-<project name="pilot fris build" basedir="." default="deploy.all">
+<project name="pilot fris build" basedir="." default="deploy.agent">
 
-
-	<property name="user.id" value="meerkat" />
-	<property name="user.passwd" value="meerkat" />
-
-	<target name="deploy.all">
-		<!--
-		<setproxy socksproxyhost="localhost" socksproxyport="20024"/> -->
-
-		<property name="deploy.dir" value="/home/meerkat" />
-
-		<property name="filename" value="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz" />
-		<property name="ssh.command" value="tar xvfz ./${filename}" />
-		<property name="ssh.command2" value="cd ./athena-meerkat-agent-1.0.0-SNAPSHOT" />
-		<property name="ssh.command3" value="chmod 755 ./apache-ant-1.9.6/bin/*" />
-		<property name="ssh.command4" value="./installTomcat.sh" />
-
-		<antcall target="deploy.agent" description="api server1">
-			<param name="server.ip" value="192.168.0.87" />
-			<param name="server.port" value="22" />
-		</antcall>
-
-		<!-- other server
-		<antcall target="deploy.agent" description="presence server1">
-			<param name="server.ip" value="54.243.169.136" />
-	    	<param name="server.port" value="10022" />
-		</antcall>
-		-->
-	</target>
+	<property file="${basedir}/build.properties" />
 
 	<target name="deploy.agent" description="deploy to server">
+		
+		<!--
+		<setproxy socksproxyhost="localhost" socksproxyport="20024"/>
+		<property name="server.ip" value="192.168.0.87" />
+		<property name="server.port" value="22" />
+		<property name="user.id" value="meerkat" />
+		<property name="user.passwd" value="meerkat" />
+		<property name="deploy.dir" value="/home/meerkat" />
+		 -->
+
+		<property name="filename" value="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz" />
+		<property name="install.cmd1" value="tar xvfz ./${filename}" />
+		<property name="install.cmd2" value="cd ./athena-meerkat-agent-1.0.0-SNAPSHOT" />
+		<property name="install.cmd3" value="chmod 755 ./apache-ant-1.9.6/bin/*" />
+		<property name="install.cmd4" value="./installTomcat.sh" />
 
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}/${filename}" trust="true" password="${user.passwd}" file="${basedir}/target/${filename}">
 		</scp>
 
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" command="${ssh.command}; ${ssh.command2}; ${ssh.command3}; ${ssh.command4}" trust="true" failonerror="false" />
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" 
+			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}" trust="true" failonerror="false" />
 
 	</target>
 
@@ -57,7 +46,7 @@
 		-->
 		<mkdir dir="${catalina.base}" />
 
-		<echo message="Starting Cargo..." />
+		<echo message="Installing Tomcat..." />
 		<echo message="Using tomcat.unzip.pah = ${tomcat.unzip.pah} " />
 
 		<cargo containerId="tomcat7x" action="configure">
@@ -75,13 +64,6 @@
 			</configuration>
 		</cargo>
 
-		<cargo containerId="tomcat7x" action="configure">
-			
-			<configuration home="${catalina.base}">
-				<property name="cargo.port.offset" value="1" />
-			</configuration>
-		</cargo>
-
 	</target>
 
 	<target name="clean.all">
@@ -93,5 +75,23 @@
 
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" command="rm -rf ./athena-meerkat-agent-1.0.0-SNAPSHOT*; rm -rf ./tmp/instance*" trust="true" failonerror="false" />
 	</target>
+	
+	<target name="deploy.all">
+			
+
+			<antcall target="deploy.agent" description="api server1">
+				<!--
+				<param name="server.ip" value="192.168.0.87" />
+				<param name="server.port" value="22" />
+				-->
+			</antcall>
+
+			<!-- other server
+			<antcall target="deploy.agent" description="presence server1">
+				<param name="server.ip" value="54.243.169.136" />
+		    	<param name="server.port" value="10022" />
+			</antcall>
+			-->
+		</target>
 
 </project>

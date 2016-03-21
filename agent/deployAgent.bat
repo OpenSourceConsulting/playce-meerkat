@@ -9,4 +9,4 @@ set ANT_HOME=%~dp0apache-ant-1.9.6
 echo ANT_HOME: %ANT_HOME%
 
 
-%ANT_HOME%\bin\ant deploy.all
+%ANT_HOME%\bin\ant deploy.agent
