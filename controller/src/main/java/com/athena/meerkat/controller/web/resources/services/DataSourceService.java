@@ -61,7 +61,7 @@ public class DataSourceService {
 		return new ServiceResult(Status.DONE, "Deleted", true);
 	}
 
-	public ServiceResult testConnection(String jdbcUrl, String userName,
+	public boolean testConnection(String jdbcUrl, String userName,
 			String password, String dbType) {
 		String driver = MeerkatConstants.MYSQL_DRIVER;
 		if (dbType.toLowerCase().equals("mysql")) {
@@ -73,17 +73,17 @@ public class DataSourceService {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			return new ServiceResult(Status.FAILED, "No JDBC driver");
+			return false;
 		}
 		try {
 			Connection conn = (Connection) DriverManager.getConnection(jdbcUrl,
 					userName, password);
 			if (conn == null) {
-				return new ServiceResult(Status.FAILED, "Connection failed");
+				return false;
 			}
-			return new ServiceResult(Status.DONE, "Successful connection");
+			return true;
 		} catch (SQLException e) {
-			return new ServiceResult(Status.FAILED, "Connection failed");
+			return false;
 		}
 
 	}

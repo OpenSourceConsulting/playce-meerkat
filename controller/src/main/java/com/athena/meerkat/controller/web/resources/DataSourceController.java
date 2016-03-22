@@ -50,21 +50,6 @@ public class DataSourceController {
 		return false;
 	}
 
-	@RequestMapping("/test")
-	@ResponseBody
-	public boolean testConnection() {
-		String jdbcUrl = "jdbc://localhost:3306/test";
-		String userName = "root";
-		String password = "admin";
-		String dbType = "MySQL";
-		ServiceResult result = service.testConnection(jdbcUrl, userName,
-				password, dbType);
-		if (result.getStatus() == Status.FAILED) {
-			return false;
-		}
-		return true;
-	}
-
 	@RequestMapping("/search")
 	@ResponseBody
 	public List<DataSource> search() {
@@ -161,6 +146,21 @@ public class DataSourceController {
 		json.setList(tomcatInstances);
 		json.setTotal(tomcatInstances.size());
 		json.setSuccess(true);
+		return json;
+	}
+
+	@RequestMapping("/testConnection")
+	@ResponseBody
+	public SimpleJsonResponse testConnection(SimpleJsonResponse json,
+			String jdbcUrl, String username, String password, String dbType) {
+		// String jdbcUrl = "jdbc://localhost:3306/test";
+		// String userName = "root";
+		// String password = "admin";
+		// String dbType = "MySQL";
+		boolean result = service.testConnection(jdbcUrl, username, password,
+				dbType);
+		json.setSuccess(result);
+		json.setMsg(result ? "Connection is OK." : "Fail connection.");
 		return json;
 	}
 
