@@ -37,12 +37,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.infinispan.client.hotrod.exceptions.TransportException;
 
-import com.athena.dolly.common.cache.DollyConfig;
-import com.athena.dolly.common.cache.DollyManager;
-import com.athena.dolly.common.cache.SessionKey;
-import com.athena.dolly.common.cache.client.DollyClient;
-import com.athena.dolly.common.exception.ConfigurationException;
-import com.athena.dolly.common.stats.DollyStats;
+import com.athena.meerkat.common.cache.DollyConfig;
+import com.athena.meerkat.common.cache.DollyManager;
+import com.athena.meerkat.common.cache.SessionKey;
+import com.athena.meerkat.common.cache.client.DollyClient;
+import com.athena.meerkat.common.exception.ConfigurationException;
+import com.athena.meerkat.common.stats.DollyStats;
 import com.couchbase.client.protocol.views.DesignDocument;
 import com.couchbase.client.protocol.views.Query;
 import com.couchbase.client.protocol.views.Stale;

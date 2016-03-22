@@ -25,8 +25,8 @@ package com.athena.meerkat.common.cache.client;
 import java.util.Enumeration;
 import java.util.List;
 
-import com.athena.dolly.common.cache.SessionKey;
-import com.athena.dolly.common.stats.DollyStats;
+import com.athena.meerkat.common.cache.SessionKey;
+import com.athena.meerkat.common.stats.DollyStats;
 
 /**
  * <pre>

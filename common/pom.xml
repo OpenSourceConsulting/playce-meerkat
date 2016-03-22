@@ -7,13 +7,44 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>athena-meerkat-common</artifactId>
+	<packaging>jar</packaging>
 	
 	<properties>
+		<spring.maven.artifact.version>4.1.9.RELEASE</spring.maven.artifact.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.compile.version>1.7</project.build.compile.version>
 		<project.build.source.version>1.7</project.build.source.version>
 		<project.build.target.version>1.7</project.build.target.version>
 	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.maven.artifact.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.maven.artifact.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.maven.artifact.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.maven.artifact.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.maven.artifact.version}</version>
+		</dependency>
+		
+	</dependencies>
 	
 	<build>
 		<plugins>

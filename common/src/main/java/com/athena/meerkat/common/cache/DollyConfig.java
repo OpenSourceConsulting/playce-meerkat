@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.athena.dolly.common.exception.ConfigurationException;
+import com.athena.meerkat.common.exception.ConfigurationException;
+
 
 /**
  * <pre>
