@@ -36,7 +36,7 @@ public class DataSourceService {
 				|| maxConnectionPool < minConnectionPool || jdbcUrl.isEmpty()) {
 			return new ServiceResult(Status.FAILED, "Invalid data");
 		}
-		DataSource ds = datasourceRepo.findByNameOrJdbcUrl(name, jdbcUrl);
+		DataSource ds = datasourceRepo.findByNameContainingOrJdbcUrlContaining(name, jdbcUrl);
 		if (ds != null) {
 			return new ServiceResult(Status.FAILED, "Duplicated");
 		}
@@ -52,13 +52,8 @@ public class DataSourceService {
 		return new ServiceResult(Status.DONE, "Done", ds);
 	}
 
-	public ServiceResult delete(int datasource_id) {
-		DataSource ds = datasourceRepo.findOne(datasource_id);
-		if (ds == null) {
-			return new ServiceResult(Status.FAILED, "Not exist");
-		}
+	public void delete(DataSource ds) {
 		datasourceRepo.delete(ds);
-		return new ServiceResult(Status.DONE, "Deleted", true);
 	}
 
 	public boolean testConnection(String jdbcUrl, String userName,
@@ -86,18 +81,6 @@ public class DataSourceService {
 			return false;
 		}
 
-	}
-
-	public ServiceResult search(String keyword) {
-		List<DataSource> datasourcesByName = datasourceRepo.findByName(keyword);
-		List<DataSource> datasourcesByJdbc = datasourceRepo
-				.findByJdbcUrl(keyword);
-
-		if (datasourcesByJdbc == null && datasourcesByName == null) {
-			return new ServiceResult(Status.FAILED, "Null");
-		}
-		datasourcesByJdbc.addAll(datasourcesByName);
-		return new ServiceResult(Status.DONE, "Done", datasourcesByJdbc);
 	}
 
 	public ServiceResult edit(int id, String name, String dbType,
@@ -185,6 +168,17 @@ public class DataSourceService {
 
 	public DataSource save(DataSource ds) {
 		return datasourceRepo.save(ds);
+	}
 
+	public List<DataSource> search(String keyword) {
+		List<DataSource> datasourcesByName = datasourceRepo.findByName(keyword);
+		List<DataSource> datasourcesByJdbc = datasourceRepo
+				.findByJdbcUrl(keyword);
+
+		if (datasourcesByJdbc == null && datasourcesByName == null) {
+			return null;
+		}
+		datasourcesByJdbc.addAll(datasourcesByName);
+		return datasourcesByJdbc;
 	}
 }

@@ -12,7 +12,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
 
 public interface DataSourceRepository extends
 		JpaRepository<DataSource, Integer> {
-	DataSource findByNameOrJdbcUrl(String name, String jdbcUrl);
+	DataSource findByNameContainingOrJdbcUrlContaining(String name, String jdbcUrl);
 
 	List<DataSource> findByName(String name);
 

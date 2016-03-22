@@ -52,17 +52,6 @@ public class DataSourceController {
 		return false;
 	}
 
-	@RequestMapping("/search")
-	@ResponseBody
-	public List<DataSource> search() {
-		String keyword = "test";
-		ServiceResult result = service.search(keyword);
-		if (result.getStatus() == Status.FAILED) {
-			return null;
-		}
-		return (List<DataSource>) result.getReturnedVal();
-	}
-
 	@RequestMapping("/edit")
 	@ResponseBody
 	public boolean edit() {
@@ -83,17 +72,6 @@ public class DataSourceController {
 			return true;
 		}
 		return false;
-	}
-
-	@RequestMapping("/delete")
-	@ResponseBody
-	public boolean delete() {
-		int id = 1;// get from form UI later
-		ServiceResult result = service.delete(id);
-		if (result.getStatus() == Status.FAILED) {
-			return false;
-		}
-		return true;
 	}
 
 	@RequestMapping("/tomcat/link/list")
@@ -180,6 +158,30 @@ public class DataSourceController {
 			json.setMsg("Datasource is updated successfully.");
 		}
 
+		return json;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deleteDS(SimpleJsonResponse json, int id) {
+		DataSource ds = service.findOne(id);
+		if (ds == null) {
+			json.setSuccess(false);
+			json.setMsg("Datasource does not exist.");
+		} else {
+			service.delete(ds);
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse search(GridJsonResponse json, String keyword) {
+		List<DataSource> result = service.search(keyword);
+		json.setSuccess(true);
+		json.setTotal(result.size());
+		json.setList(result);
 		return json;
 	}
 
