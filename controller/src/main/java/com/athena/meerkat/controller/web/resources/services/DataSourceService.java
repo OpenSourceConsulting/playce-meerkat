@@ -140,6 +140,10 @@ public class DataSourceService {
 		return datasourceRepo.getAssocicatedTomcatInstancesNo(datasourceId);
 	}
 
+	public List<TomcatInstance> getAssocicatedTomcatInstances(int datasourceId) {
+		return datasourceRepo.getAssocicatedTomcatInstances(datasourceId);
+	}
+
 	public DataSource findOne(int id) {
 		return datasourceRepo.findOne(id);
 	}

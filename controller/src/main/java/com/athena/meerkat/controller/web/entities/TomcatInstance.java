@@ -76,7 +76,7 @@ public class TomcatInstance implements Serializable {
 
 	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
 	// @JsonManagedReference
-	//private List<TomcatConfigFile> tomcatConfigFiles;
+	// private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
@@ -89,10 +89,14 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@JoinColumn(name = "network_interface_id")
+	private NetworkInterface networkInterface;
+
 	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
 	// @JsonManagedReference
-	//private List<TomcatApplication> tomcatApplications;
-
+	// private List<TomcatApplication> tomcatApplications;
 	public TomcatInstance() {
 	}
 
@@ -228,4 +232,18 @@ public class TomcatInstance implements Serializable {
 		this.createdTime = createdTime;
 	}
 
+	public NetworkInterface getNetworkInterface() {
+		return networkInterface;
+	}
+
+	public void setNetworkInterface(NetworkInterface networkInterface) {
+		this.networkInterface = networkInterface;
+	}
+
+	public String getIpaddress() {
+		if (networkInterface != null) {
+			return networkInterface.getIpv4();
+		}
+		return "";
+	}
 }

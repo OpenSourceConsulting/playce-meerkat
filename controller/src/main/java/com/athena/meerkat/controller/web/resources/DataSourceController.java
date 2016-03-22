@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.ServiceResult;
@@ -146,6 +148,18 @@ public class DataSourceController {
 		List<CommonCode> dbTypes = service.getDBTypes();
 		json.setList(dbTypes);
 		json.setTotal(dbTypes.size());
+		json.setSuccess(true);
+		return json;
+	}
+
+	@RequestMapping(value = "/{dsId}/tomcatlist", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getAssociatedTomcatInstances(GridJsonResponse json,
+			@PathVariable Integer dsId) {
+		List<TomcatInstance> tomcatInstances = service
+				.getAssocicatedTomcatInstances(dsId);
+		json.setList(tomcatInstances);
+		json.setTotal(tomcatInstances.size());
 		json.setSuccess(true);
 		return json;
 	}
