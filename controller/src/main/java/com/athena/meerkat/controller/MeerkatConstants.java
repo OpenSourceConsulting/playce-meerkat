@@ -109,4 +109,6 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int REVISION_CLUSTERING_CONFIG_TYPE = 1;
 	public static final int REVISION_ENV_CONFIG_TYPE = 2;
+
+	public static final String DBTYPE_PARENT_CODE_VALUE = "dbType";
 }

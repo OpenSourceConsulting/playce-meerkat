@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
@@ -22,6 +24,8 @@ public class DataSourceService {
 	private DataSourceRepository datasourceRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
+	@Autowired
+	private CommonCodeRepository commonRepo;
 
 	public ServiceResult add(String name, String dbType, String userName,
 			String pwd, int timeOut, int maxConnectionPool,
@@ -164,5 +168,10 @@ public class DataSourceService {
 		// tomcat.removeDataSources(deletingDataSources);
 		// tomcat.associateDataSources(datasources);
 		// tomcatRepo.save(tomcat);
+	}
+
+	public List<CommonCode> getDBTypes() {
+		return commonRepo
+				.findByParentCodeName(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE);
 	}
 }

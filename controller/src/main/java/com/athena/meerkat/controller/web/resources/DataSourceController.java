@@ -12,6 +12,7 @@ import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -135,6 +136,16 @@ public class DataSourceController {
 		List<DataSource> datasources = service.getAll();
 		json.setList(datasources);
 		json.setTotal(datasources.size());
+		json.setSuccess(true);
+		return json;
+	}
+
+	@RequestMapping("/dbtype/list")
+	@ResponseBody
+	public GridJsonResponse getDBTypes(GridJsonResponse json) {
+		List<CommonCode> dbTypes = service.getDBTypes();
+		json.setList(dbTypes);
+		json.setTotal(dbTypes.size());
 		json.setSuccess(true);
 		return json;
 	}
