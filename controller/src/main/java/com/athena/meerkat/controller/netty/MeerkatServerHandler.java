@@ -31,9 +31,7 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
@@ -43,27 +41,16 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
-import com.athena.meerkat.common.core.action.ShellAction;
-import com.athena.meerkat.common.core.command.Command;
 import com.athena.meerkat.common.netty.MeerkatDatagram;
 import com.athena.meerkat.common.netty.message.AbstractMessage;
-import com.athena.meerkat.common.netty.message.AgentSystemStatusMessage;
 import com.athena.meerkat.common.netty.message.MessageType;
 import com.athena.meerkat.common.netty.message.ProvisioningResponseMessage;
-import com.redhat.rhevm.api.model.Cluster;
-import com.redhat.rhevm.api.model.IP;
-import com.redhat.rhevm.api.model.VM;
-import com.redhat.rhevm.api.model.VMs;
+
 
 /**
  * <pre>

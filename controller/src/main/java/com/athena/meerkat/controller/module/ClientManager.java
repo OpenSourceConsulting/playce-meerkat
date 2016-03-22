@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
-import com.athena.dolly.common.cache.DollyConfig;
-import com.athena.dolly.common.exception.ConfigurationException;
-import com.athena.meerkat.controller.module.infinispan.InfinispanClient;
+import com.athena.meerkat.common.cache.DollyConfig;
+import com.athena.meerkat.common.exception.ConfigurationException;
 import com.athena.meerkat.controller.module.couchbase.CouchbaseClient;
+import com.athena.meerkat.controller.module.infinispan.InfinispanClient;
 import com.athena.meerkat.controller.module.vo.DesignDocumentVo;
 import com.athena.meerkat.controller.module.vo.MemoryVo;
 

@@ -98,6 +98,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 					"/resources/**",
 					"/monitor/**",
 					"/tomcat/**",
+					"/provi/**",
 
 					"/getServerList", 
 					"/auth/notLogin*",

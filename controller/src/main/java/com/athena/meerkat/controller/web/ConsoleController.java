@@ -42,9 +42,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.athena.dolly.common.cache.DollyManager;
-import com.athena.dolly.common.cache.SessionKey;
-import com.athena.dolly.common.stats.DollyStats;
+import com.athena.meerkat.common.cache.DollyManager;
+import com.athena.meerkat.common.cache.SessionKey;
+import com.athena.meerkat.common.stats.DollyStats;
 import com.athena.meerkat.controller.module.ClientManager;
 import com.athena.meerkat.controller.module.vo.DesignDocumentVo;
 import com.athena.meerkat.controller.module.vo.MemoryVo;

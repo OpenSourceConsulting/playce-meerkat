@@ -65,6 +65,22 @@
 					<artifactId>javassist</artifactId>
 					<groupId>javassist</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>rhevm-api</artifactId>
+					<groupId>com.redhat.rhevm.api</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ant-compress</artifactId>
+					<groupId>org.apache.ant</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ant-jsch</artifactId>
+					<groupId>org.apache.ant</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -105,7 +121,12 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/encrypt-dbcp-1.0.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		 -->
-		 
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.9.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>
