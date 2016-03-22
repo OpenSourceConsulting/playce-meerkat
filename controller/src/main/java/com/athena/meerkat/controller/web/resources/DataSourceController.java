@@ -3,6 +3,7 @@ package com.athena.meerkat.controller.web.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.ExitStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/res/ds")
@@ -161,6 +163,23 @@ public class DataSourceController {
 				dbType);
 		json.setSuccess(result);
 		json.setMsg(result ? "Connection is OK." : "Fail connection.");
+		return json;
+	}
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveDS(SimpleJsonResponse json, DataSource ds) {
+		List<DataSource> existingDSs = service.getDatasources(ds.getName());
+
+		if (existingDSs.size() > 0 && ds.getId() == 0) {
+			json.setSuccess(false);
+			json.setMsg("Datasource name is duplicated.");
+		}
+		if (service.save(ds) != null) {
+			json.setSuccess(true);
+			json.setMsg("Datasource is updated successfully.");
+		}
+
 		return json;
 	}
 

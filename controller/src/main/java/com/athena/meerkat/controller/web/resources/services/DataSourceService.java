@@ -178,4 +178,13 @@ public class DataSourceService {
 		return commonRepo
 				.findByParentCodeName(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE);
 	}
+
+	public List<DataSource> getDatasources(String name) {
+		return datasourceRepo.findByName(name);
+	}
+
+	public DataSource save(DataSource ds) {
+		return datasourceRepo.save(ds);
+
+	}
 }
