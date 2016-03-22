@@ -125,8 +125,15 @@ public class DataSourceService {
 
 	public List<DataSource> getAll() {
 		List<DataSource> list = datasourceRepo.findAll();
+		for (DataSource ds : list) {
+			ds.setTomcatInstancesNo(this.getAssocicatedTomcatInstancesNo(ds
+					.getId()));
+		}
 		return list;
+	}
 
+	public int getAssocicatedTomcatInstancesNo(int datasourceId) {
+		return datasourceRepo.getAssocicatedTomcatInstancesNo(datasourceId);
 	}
 
 	public DataSource findOne(int id) {

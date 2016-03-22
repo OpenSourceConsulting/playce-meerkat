@@ -1,186 +1,161 @@
-/**
- * 
- */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+import java.util.Collection;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
- * @author Tran
- *
+ * <pre>
+ * 
+ * </pre>
+ * 
+ * @author Tran Ho
+ * @version 2.0
  */
+
 @Entity
-@Table
-public class DataSource {
+@Table(name = "data_source")
+public class DataSource implements Serializable {
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
+	private int Id;
+	@Column(name = "name")
 	private String name;
-	private String username;
+	@Column(name = "username")
+	private String userName;
+	@Column(name = "password")
 	private String password;
+	@Column(name = "max_connection")
 	private int maxConnection;
+	@Column(name = "timeout")
 	private int timeout;
+	@Column(name = "max_connection_pool")
 	private int maxConnectionPool;
+	@Column(name = "min_connection_pool")
 	private int minConnectionPool;
+	@Column(name = "jdbc_url")
 	private String jdbcUrl;
-	private int dbtypeCdId;
+	@Column(name = "dbtype_cd_id")
+	private int dbType;
 
-	/**
-	 * 
-	 */
-	public DataSource() {
-		// TODO Auto-generated constructor stub
-	}
+	@Transient
+	private boolean selected;
+	@Transient
+	private int tomcatInstancesNo;
 
-	/**
-	 * @return the id
-	 */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"))
+	@JsonBackReference
+	private Collection<TomcatDomain> tomcatDomains;
+
 	public int getId() {
-		return id;
+		return Id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
 	public void setId(int id) {
-		this.id = id;
+		Id = id;
 	}
 
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	/**
-	 * @return the password
-	 */
 	public String getPassword() {
 		return password;
 	}
 
-	/**
-	 * @param password
-	 *            the password to set
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * @return the maxConnection
-	 */
 	public int getMaxConnection() {
 		return maxConnection;
 	}
 
-	/**
-	 * @param maxConnection
-	 *            the maxConnection to set
-	 */
 	public void setMaxConnection(int maxConnection) {
 		this.maxConnection = maxConnection;
 	}
 
-	/**
-	 * @return the timeout
-	 */
 	public int getTimeout() {
 		return timeout;
 	}
 
-	/**
-	 * @param timeout
-	 *            the timeout to set
-	 */
 	public void setTimeout(int timeout) {
 		this.timeout = timeout;
 	}
 
-	/**
-	 * @return the maxConnectionPool
-	 */
 	public int getMaxConnectionPool() {
 		return maxConnectionPool;
 	}
 
-	/**
-	 * @param maxConnectionPool
-	 *            the maxConnectionPool to set
-	 */
 	public void setMaxConnectionPool(int maxConnectionPool) {
 		this.maxConnectionPool = maxConnectionPool;
 	}
 
-	/**
-	 * @return the minConnectionPool
-	 */
 	public int getMinConnectionPool() {
 		return minConnectionPool;
 	}
 
-	/**
-	 * @param minConnectionPool
-	 *            the minConnectionPool to set
-	 */
 	public void setMinConnectionPool(int minConnectionPool) {
 		this.minConnectionPool = minConnectionPool;
 	}
 
-	/**
-	 * @return the jdbcUrl
-	 */
 	public String getJdbcUrl() {
 		return jdbcUrl;
 	}
 
-	/**
-	 * @param jdbcUrl
-	 *            the jdbcUrl to set
-	 */
 	public void setJdbcUrl(String jdbcUrl) {
 		this.jdbcUrl = jdbcUrl;
 	}
 
-	/**
-	 * @return the dbtypeCdId
-	 */
-	public int getDbtypeCdId() {
-		return dbtypeCdId;
+	public boolean getSelected() {
+		return selected;
 	}
 
-	/**
-	 * @param dbtypeCdId
-	 *            the dbtypeCdId to set
-	 */
-	public void setDbtypeCdId(int dbtypeCdId) {
-		this.dbtypeCdId = dbtypeCdId;
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public int getDbType() {
+		return dbType;
+	}
+
+	public void setDbType(int dbType) {
+		this.dbType = dbType;
+	}
+
+	public int getTomcatInstancesNo() {
+		return tomcatInstancesNo;
+	}
+
+	public void setTomcatInstancesNo(int tomcatInstancesNo) {
+		this.tomcatInstancesNo = tomcatInstancesNo;
 	}
 
 }

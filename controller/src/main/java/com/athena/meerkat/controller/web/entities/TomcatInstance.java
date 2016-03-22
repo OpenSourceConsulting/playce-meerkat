@@ -1,201 +1,231 @@
-/**
+/* 
+ * Athena Peacock Dolly - DataGrid based Clustering 
  * 
+ * Copyright (C) 2014 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Revision History
+ * Author			Date				Description
+ * ---------------	----------------	------------
+ * Bong-Jin Kwon	2015. 1. 9.		First Draft.
  */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
- * @author Tran
- *
+ * <pre>
+ * 
+ * </pre>
+ * 
+ * @author Tran Ho
+ * @version 2.0
  */
 @Entity
 @Table(name = "tomcat_instance")
-public class TomcatInstance {
-
-	@Id
-	private int id;
-	private int domainId;
-	private int serverId;
-	private int state;
-	private String name;
-	private int networkInterfaceId;
-	private int sshAccountId;
-	private java.sql.Timestamp createdTime;
-	private int createUserId;
-	private String version;
-	@ManyToOne
-	@JsonBackReference
-	private Server server;
+public class TomcatInstance implements Serializable {
 
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
+	private int Id;
+	@Column(name = "name", nullable = false)
+	private String name;
+	@Column(name = "version")
+	private String version;
+	@Column(name = "state")
+	private int state;
+	@Column(name = "created_time")
+	private Date createdTime;
+	@Column(name = "create_user_id")
+	private int createUserId;
+
+	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	// @JsonManagedReference
+	//private List<TomcatConfigFile> tomcatConfigFiles;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	// using this annotation to prevent Infinite recursion json mapping
+	@JsonBackReference
+	private Server server;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	// using this annotation to prevent Infinite recursion json mapping
+	@JsonBackReference
+	@JoinColumn(name = "domain_id")
+	private TomcatDomain tomcatDomain;
+
+	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	// @JsonManagedReference
+	//private List<TomcatApplication> tomcatApplications;
+
 	public TomcatInstance() {
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @return the id
-	 */
 	public int getId() {
-		return id;
+		return Id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
 	public void setId(int id) {
-		this.id = id;
+		this.Id = id;
 	}
 
-	/**
-	 * @return the domainId
-	 */
-	public int getDomainId() {
-		return domainId;
-	}
-
-	/**
-	 * @param domainId
-	 *            the domainId to set
-	 */
-	public void setDomainId(int domainId) {
-		this.domainId = domainId;
-	}
-
-	/**
-	 * @return the serverId
-	 */
-	public int getServerId() {
-		return serverId;
-	}
-
-	/**
-	 * @param serverId
-	 *            the serverId to set
-	 */
-	public void setServerId(int serverId) {
-		this.serverId = serverId;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public int getState() {
-		return state;
-	}
-
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * @return the networkInterfaceId
-	 */
-	public int getNetworkInterfaceId() {
-		return networkInterfaceId;
-	}
-
-	/**
-	 * @param networkInterfaceId
-	 *            the networkInterfaceId to set
-	 */
-	public void setNetworkInterfaceId(int networkInterfaceId) {
-		this.networkInterfaceId = networkInterfaceId;
-	}
-
-	/**
-	 * @return the sshAccountId
-	 */
-	public int getSshAccountId() {
-		return sshAccountId;
-	}
-
-	/**
-	 * @param sshAccountId
-	 *            the sshAccountId to set
-	 */
-	public void setSshAccountId(int sshAccountId) {
-		this.sshAccountId = sshAccountId;
-	}
-
-	/**
-	 * @return the createdTime
-	 */
-	public java.sql.Timestamp getCreatedTime() {
-		return createdTime;
-	}
-
-	/**
-	 * @param createdTime
-	 *            the createdTime to set
-	 */
-	public void setCreatedTime(java.sql.Timestamp createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	/**
-	 * @return the createUserId
-	 */
-	public int getCreateUserId() {
-		return createUserId;
-	}
-
-	/**
-	 * @param createUserId
-	 *            the createUserId to set
-	 */
-	public void setCreateUserId(int createUserId) {
-		this.createUserId = createUserId;
-	}
-
-	/**
-	 * @return the version
-	 */
-	public String getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version
-	 *            the version to set
-	 */
-	public void setVersion(String version) {
-		this.version = version;
+	public void setName(String instanceName) {
+		this.name = instanceName;
 	}
 
 	public Server getServer() {
 		return server;
 	}
 
-	public void setServer(Server server) {
-		this.server = server;
+	public void setServer(Server machine) {
+		this.server = machine;
+	}
+
+	public TomcatDomain getTomcatDomain() {
+		return tomcatDomain;
+	}
+
+	public void setTomcatDomain(TomcatDomain domain) {
+		this.tomcatDomain = domain;
+	}
+
+	// public Collection<TomcatApplication> getTomcatApplications() {
+	// return tomcatApplications;
+	// }
+	//
+	// public void setTomcatApplications(List<TomcatApplication> applications) {
+	// this.tomcatApplications = applications;
+	// }
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public String getHostName() {
+		return server.getHostName();
+	}
+
+	public String getStatusString() {
+		switch (this.state) {
+		case MeerkatConstants.TOMCAT_STATUS_RUNNING:
+			return "Running";
+		case MeerkatConstants.TOMCAT_STATUS_SHUTDOWN:
+			return "Stopped";
+		default:
+			return "Unknown";
+		}
+	}
+
+	public String getOSName() {
+		if (server != null) {
+			return server.getOsName();
+		}
+		return "";
+	}
+
+	public String getJvm() {
+		if (server != null) {
+			return server.getJvmVersion();
+		}
+		return "";
+	}
+
+	public String getDomainName() {
+		if (tomcatDomain != null) {
+			return tomcatDomain.getName();
+		}
+		return "";
+	}
+
+	public int getMachineId() {
+		if (server != null) {
+			return server.getId();
+		}
+		return 0;
+	}
+
+	// public String getDomainStatus() {
+	// if (tomcatDomain != null) {
+	// return tomcatDomain.getIsClustering() == true ? "Clustering"
+	// : "Non-clustering";
+	// }
+	// return "";
+	// }
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	// public List<TomcatConfigFile> getTomcatConfigFiles() {
+	// return tomcatConfigFiles;
+	// }
+	//
+	// public void setTomcatConfigFiles(List<TomcatConfigFile>
+	// tomcatConfigFiles) {
+	// this.tomcatConfigFiles = tomcatConfigFiles;
+	// }
+
+	public int getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(int createUserId) {
+		this.createUserId = createUserId;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
 	}
 
 }

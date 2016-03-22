@@ -1,87 +1,161 @@
-/**
- * 
- */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * @author Tran
- *
+ * A domain is used for grouping one or more tomcat instance. It is associated
+ * to domain table in database
+ * 
+ * @author Tran Ho
+ * 
  */
 @Entity
-@Table(name="tomcat_domain")
+@Table(name = "tomcat_domain")
 public class TomcatDomain {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
 	private int id;
+	@Column(name = "name")
 	private String name;
-	private Integer datagridServerGroupId;
-	private Integer createUserId;
 
-	/**
-	 * 
-	 */
-	public TomcatDomain() {
-		// TODO Auto-generated constructor stub
-	}
+	// @OneToOne
+	// @JoinColumn(name = "datagrid_server_group_id")
+	// private DatagridServerGroup serverGroup;
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<TomcatInstance> tomcatInstances;
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+	// @OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	// @JsonManagedReference
+	// private List<ClusteringConfiguration> clusteringConfigurations;
 
-	/**
-	 * @return the name
-	 */
+	// @OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	// @JsonManagedReference
+	// private List<TomcatConfigFile> tomcatConfigFiles;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
+	@JsonManagedReference
+	private Collection<DataSource> datasources;
+
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name the name to set
-	 */
+//	public String getClusteringString() {
+//		return this.isClustering ? "Clustering" : "Non-clustering";
+//	}
+
+	// public int getDatagridServerGroupId() {
+	// if (serverGroup != null) {
+	// return serverGroup.getId();
+	// }
+	// return 0;
+	// }
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the datagridServerGroupId
-	 */
-	public Integer getDatagridServerGroupId() {
-		return datagridServerGroupId;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+//
+//	public boolean getIsClustering() {
+//		return isClustering;
+//	}
+//
+//	public void setIsClustering(boolean isClustering) {
+//		this.isClustering = isClustering;
+//	}
+
+	public List<TomcatInstance> getTomcats() {
+		return tomcatInstances;
+	}
+
+	public void setTomcats(List<TomcatInstance> tomcats) {
+		this.tomcatInstances = tomcats;
 	}
 
 	/**
-	 * @param datagridServerGroupId the datagridServerGroupId to set
+	 * Constructor
 	 */
-	public void setDatagridServerGroupId(Integer datagridServerGroupId) {
-		this.datagridServerGroupId = datagridServerGroupId;
+	public TomcatDomain() {
 	}
 
-	/**
-	 * @return the createUserId
-	 */
-	public Integer getCreateUserId() {
-		return createUserId;
+//	public TomcatDomain(String name, boolean is_clustering) {
+//		this.name = name;
+//		this.isClustering = is_clustering;
+//	}
+
+	public int getTomcatInstancesCount() {
+		return tomcatInstances.size();
 	}
 
-	/**
-	 * @param createUserId the createUserId to set
-	 */
-	public void setCreateUserId(Integer createUserId) {
-		this.createUserId = createUserId;
+	public Collection<DataSource> getDatasources() {
+		return datasources;
 	}
 
+	public void setDatasources(Collection<DataSource> datasources) {
+		this.datasources = datasources;
+	}
+
+	// public String getDatagridServerGroupName() {
+	// if (getServerGroup() != null) {
+	// return this.getServerGroup().getName();
+	// }
+	// return "";
+	// }
+
+	// public DatagridServerGroup getServerGroup() {
+	// return serverGroup;
+	// }
+	//
+	// public void setServerGroup(DatagridServerGroup serverGroup) {
+	// this.serverGroup = serverGroup;
+	// }
+	//
+	// public List<TomcatConfigFile> getTomcatConfigFiles() {
+	// return tomcatConfigFiles;
+	// }
+	//
+	// public void setTomcatConfigFiles(List<TomcatConfigFile>
+	// tomcatConfigFiles) {
+	// this.tomcatConfigFiles = tomcatConfigFiles;
+	// }
+
+	// public Collection<ClusteringConfigurationValue> getClusteringConfigVals()
+	// {
+	// return clusteringConfigVals;
+	// }
+	//
+	// public void setClusteringConfigVals(
+	// Collection<ClusteringConfigurationValue> clusteringConfigs) {
+	// this.clusteringConfigVals = clusteringConfigs;
+	// }
 }

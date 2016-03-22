@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
@@ -17,7 +18,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 @Controller
-@RequestMapping("/datasource")
+@RequestMapping("/res/ds")
 public class DataSourceController {
 
 	@Autowired
@@ -128,11 +129,12 @@ public class DataSourceController {
 		return json;
 	}
 
-	@RequestMapping("/tomcat/link/list/all")
+	@RequestMapping("/list")
 	@ResponseBody
-	public SimpleJsonResponse getAvailableDataSource(SimpleJsonResponse json) {
+	public GridJsonResponse getAvailableDataSource(GridJsonResponse json) {
 		List<DataSource> datasources = service.getAll();
-		json.setData(datasources);
+		json.setList(datasources);
+		json.setTotal(datasources.size());
 		json.setSuccess(true);
 		return json;
 	}
