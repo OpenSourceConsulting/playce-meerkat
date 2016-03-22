@@ -20,7 +20,6 @@
 	</organization>
 
 	<properties>
-		<spring.maven.artifact.version>3.2.9.RELEASE</spring.maven.artifact.version>
 		<slf4j.artifact.version>1.7.13</slf4j.artifact.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.compile.version>1.6</project.build.compile.version>
@@ -63,63 +62,6 @@
 			<version>${lib.infinispan.version}</version>
 		</dependency>
 		
-		<!-- Spring Framework -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.maven.artifact.version}</version>
-		</dependency>
-		
 		<!-- Quartz -->
 		<dependency>
 			<groupId>org.opensymphony.quartz</groupId>
@@ -129,21 +71,35 @@
 
 		<dependency>
 			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-server-core</artifactId>
+			<artifactId>infinispan-server-hotrod</artifactId>
 			<version>${lib.infinispan.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-server-hotrod</artifactId>
+			<artifactId>infinispan-server-core</artifactId>
 			<version>${lib.infinispan.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>io.netty</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+		
 
 		<!-- couchbase -->
 		<dependency>
 			<groupId>com.couchbase.client</groupId>
 			<artifactId>couchbase-client</artifactId>
 			<version>1.4.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>io.netty</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -226,11 +182,13 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.0.29.Final</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>com.redhat.rhevm.api</groupId>
 			<artifactId>rhevm-api</artifactId>
 			<version>1.0-rc1.21</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>

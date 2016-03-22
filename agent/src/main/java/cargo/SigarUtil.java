@@ -18,7 +18,7 @@
  * ---------------	----------------	------------
  * Sang-cheon Park	2013. 8. 2.		First Draft.
  */
-package com.athena.meerkat.agent.util;
+package cargo;
 
 import java.io.File;
 
@@ -29,6 +29,7 @@ import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.NetInfo;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+
 
 /**
  * <pre>
@@ -202,6 +203,7 @@ public final class SigarUtil {
 	
 	public static void main(String[] args)throws Exception {
 		System.out.println(SigarUtil.getCpuPerc());
+		System.out.println(SigarUtil.getNetInfo().getHostName());
 	}
 }
 //end of SigarUtil.java

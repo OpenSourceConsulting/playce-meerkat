@@ -1,0 +1,42 @@
+<project name="athena-meerkat cmd" basedir="." default="cmd">
+
+	<property name="meerkat.agent.home" value="/home/meerkat/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT" />
+
+	<taskdef resource="cargo.tasks">
+		<classpath>
+			<pathelement location="${meerkat.agent.home}/lib/cargo-core-uberjar-1.4.19.jar" />
+			<pathelement location="${meerkat.agent.home}/lib/cargo-ant-1.4.19.jar" />
+		</classpath>
+	</taskdef>
+
+	<target name="cmd">
+
+		<property name="tomcat.unzip.pah" value="/home/meerkat/tmp" />
+		<property name="catalina.base" value="/home/meerkat/tmp/instance1" />
+		<property name="instance.log.dir" value="${catalina.base}/logs" />
+		<!--
+		<delete dir="${catalina.base}" />
+		-->
+		<mkdir dir="${catalina.base}" />
+
+		<echo message="Installing Tomcat..." />
+		<echo message="Using tomcat.unzip.pah = ${tomcat.unzip.pah} " />
+
+		<cargo containerId="tomcat7x" action="configure">
+			<zipUrlInstaller 
+					installUrl="http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip" 
+					downloadDir="${basedir}/downloads" 
+					extractDir="${tomcat.unzip.pah}" />
+			
+			<configuration home="${catalina.base}">
+				<property name="cargo.port.offset" value="1" />
+				<!--
+				  <property name="cargo.servlet.port" value="8086"/>
+				  <property name="cargo.tomcat.ajp.port" value="8209"/>
+				-->
+			</configuration>
+		</cargo>
+
+	</target>
+
+</project>
