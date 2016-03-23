@@ -1,26 +1,31 @@
 package com.athena.meerkat.controller.web.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.resources.services.DataGridServerService;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 
 @Controller
 @RequestMapping("/res/datagrid")
-public class DatagridServerController {
+public class DatagridServerGroupController {
 	@Autowired
-	private DataGridServerService service;
+	private DataGridServerGroupService service;
 
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse list(SimpleJsonResponse json) {
-		// List<DatagridServerGroup> result = service.getAll();
-		// json.setData(result);
-		// json.setSuccess(true);
+	public GridJsonResponse list(GridJsonResponse json) {
+		List<DatagridServerGroup> result = service.getAll();
+		json.setList(result);
+		json.setTotal(result.size());
+		json.setSuccess(true);
 		return json;
 	}
 
