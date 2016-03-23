@@ -7,18 +7,24 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
-import com.athena.meerkat.controller.web.resources.services.DataGridServerService;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/domain")
@@ -28,102 +34,57 @@ public class DomainController {
 	@Autowired
 	private TomcatDomainService domainService;
 	@Autowired
-	private DataGridServerService datagridService;
+	private DataGridServerGroupService datagridGroupService;
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
 	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json,
-			TomcatDomain domain, int datagridServerGroupId) {
+			TomcatDomain domain) {
 		boolean isEdit = !(domain.getId() == 0);
 		try {
-			// List<Domain> existingDomains =
-			// domainService.getDomainByName(domain
-			// .getName());
-			// if (existingDomains.size() > 0) {
-			// if (!isEdit) { // add new domain
-			// json.setSuccess(false);
-			// json.setMsg("Domain name is already used.");
-			// return json;
-			// } else {
-			// if (domain.getId() != existingDomains.get(0).getId()) {
-			// json.setSuccess(false);
-			// json.setMsg("Domain name is already used.");
-			// return json;
-			// }
-			// }
-			// } else {
-			// if (isEdit) { // edit domain
-			// json.setSuccess(false);
-			// json.setMsg("Domain does not exist.");
-			// return json;
-			// }
-			// }
-			// if (!domain.getIsClustering()) {
-			// if (isEdit) { // set domain for associated server is null
-			// DatagridServerGroup group = existingDomains.get(0)
-			// .getServerGroup();
-			// if (group != null) {
-			// group.setDomain(null);
-			// }
-			// datagridService.saveGroup(group);
-			// }
-			// domain.setServerGroup(null);
-			// domainService.save(domain);
-			//
-			// } else {
-			// DatagridServerGroup group = datagridService
-			// .getGroup(datagridServerGroupId);
-			// if (group == null) {
-			// json.setSuccess(false);
-			// json.setMsg("Datagrid server group does not exist.");
-			// return json;
-			// }
-			// if (group.getDomain() != null) {// already map to domain
-			// json.setSuccess(false);
-			// json.setMsg("Datagrid server group has already mapped to another domain.");
-			// return json;
-			// }
-			// domain.setServerGroup(group);
-			// domainService.save(domain);
-			//
-			// // update on server group
-			// group.setDomain(domainService.getDomainByName(domain.getName())
-			// .get(0));
-			// datagridService.saveGroup(group);
-			// }
+			List<TomcatDomain> existingDomains = domainService
+					.getDomainByName(domain.getName());
+			if (existingDomains.size() > 0) {
+				if (!isEdit) { // add new domain
+					json.setSuccess(false);
+					json.setMsg("Domain name is already used.");
+					return json;
+				} else {
+					if (domain.getId() != existingDomains.get(0).getId()) {
+						json.setSuccess(false);
+						json.setMsg("Domain name is already used.");
+						return json;
+					}
+				}
+			}
+			if (isEdit) {
+				TomcatDomain dbDomain = domainService.getDomain(domain.getId());
+				if (dbDomain == null) { // edit domain
+					json.setSuccess(false);
+					json.setMsg("Domain does not exist.");
+					return json;
+				}
+			}
+			if (domain.getServerGroup() != null) {
+				DatagridServerGroup group = datagridGroupService
+						.getGroup(domain.getServerGroup().getId());
+				if (group == null) {
+					json.setSuccess(false);
+					json.setMsg("Datagrid server group does not exist.");
+					return json;
+				}
+				domain.setServerGroup(group);
+			}
+
+			User loginUser = (User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			domain.setCreateUser(loginUser.getId());
+			domainService.save(domain);
 		} catch (Exception ex) {
 			LOGGER.debug(ex.getMessage());
 		}
-		// Domain domain = domainService.getDomainByName(name);
-		// if (domain != null) {
-		// if (domain.getId() != id) {// domain exist but not in edit
-		// // case.
-		// return false;
-		// }
-		// }
-		// if (id > 0) { // edit
-		// domain = domainService.getDomain(id);
-		// if (domain == null) {
-		// return false;
-		// }
-		// domain.setName(name);
-		// domain.setClustering(isClustering);
-		// } else {
-		// domain = new Domain(name, isClustering);
-		// }
-		//
-		// DatagridServerGroup group = datagridService
-		// .getGroup(datagridServerGroupId);
-		// if (group == null) {
-		// return false;
-		// }
-		// domain.setServerGroup(group);
-		// domainService.save(domain);
-		// // update on server group
-		// group.setDomain(domainService.getDomainByName(name));
-		// datagridService.saveGroup(group);
 		json.setSuccess(true);
 		return json;
 	}
@@ -147,6 +108,35 @@ public class DomainController {
 		List<TomcatDomain> result = domainService.getAll();
 		json.setData(result);
 		json.setSuccess(true);
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/ds/list", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getDatasourceList(
+			GridJsonResponse json, @PathVariable int domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			List<DataSource> dss = (List<DataSource>) td.getDatasources();
+			json.setList(dss);
+			json.setTotal(dss.size());
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/config", method = RequestMethod.GET)
+	public @ResponseBody SimpleJsonResponse getConfig(SimpleJsonResponse json,
+			@PathVariable int domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			json.setData(td.getDomainTomcatConfig());
+			json.setData(false);
+		}
 		return json;
 	}
 
