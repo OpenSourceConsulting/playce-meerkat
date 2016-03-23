@@ -34,7 +34,7 @@ import org.infinispan.server.hotrod.HotRodServer;
 import org.infinispan.server.hotrod.configuration.HotRodServerConfiguration;
 import org.infinispan.server.hotrod.configuration.HotRodServerConfigurationBuilder;
 
-import com.athena.dolly.common.cache.DollyConfig;
+import com.athena.meerkat.common.cache.DollyConfig;
 
 /**
  * <pre>
