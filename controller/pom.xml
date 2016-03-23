@@ -127,6 +127,10 @@
 			<artifactId>ant</artifactId>
 			<version>1.9.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

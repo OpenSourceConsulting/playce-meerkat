@@ -72,6 +72,7 @@ public class CommandUtil {
 		String result = null;
 		try {
 			
+			bld.redirectErrorStream(true);
 			bld.directory(workingDir);
 			p = bld.start();
 			
