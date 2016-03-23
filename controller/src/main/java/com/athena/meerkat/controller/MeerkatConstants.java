@@ -109,6 +109,9 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int REVISION_CLUSTERING_CONFIG_TYPE = 1;
 	public static final int REVISION_ENV_CONFIG_TYPE = 2;
-
+	/**
+	 * Common code
+	 */
 	public static final String DBTYPE_PARENT_CODE_VALUE = "dbType";
+	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "TomCatConfigType";
 }

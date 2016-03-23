@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -136,6 +138,23 @@ public class DomainController {
 		} else {
 			json.setData(td.getDomainTomcatConfig());
 			json.setData(false);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/configfile/{type}/", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getConfigVersionList(
+			GridJsonResponse json, @PathVariable int domainId, @PathVariable String type) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			List<TomcatConfigFile> confVersions = domainService
+					.getConfigFileVersions(td, type);
+			json.setList(confVersions);
+			json.setTotal(confVersions.size());
+			json.setSuccess(true);
 		}
 		return json;
 	}

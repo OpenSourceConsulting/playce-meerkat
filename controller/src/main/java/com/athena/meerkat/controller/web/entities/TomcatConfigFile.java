@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +43,7 @@ public class TomcatConfigFile implements Serializable {
 	@Column(name = "file_path")
 	private String filePath;
 	@Column(name = "created_time")
-	private String createdTime;
+	private Date createdTime;
 	@Column(name = "create_user_id")
 	private int createUserId;
 
@@ -61,6 +62,58 @@ public class TomcatConfigFile implements Serializable {
 
 	public void setTomcatDomain(TomcatDomain tomcatDomain) {
 		this.tomcatDomain = tomcatDomain;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public int getFileTypeCdId() {
+		return fileTypeCdId;
+	}
+
+	public void setFileTypeCdId(int fileTypeCdId) {
+		this.fileTypeCdId = fileTypeCdId;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public int getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(int createUserId) {
+		this.createUserId = createUserId;
+	}
+
+	public String getVersionAndTime() {
+		return String.valueOf(version) + " - " + createdTime.toString();
 	}
 
 }

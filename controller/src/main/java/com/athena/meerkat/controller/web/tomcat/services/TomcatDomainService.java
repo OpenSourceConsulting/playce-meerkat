@@ -9,12 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
+import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
 @Service
@@ -25,6 +30,10 @@ public class TomcatDomainService {
 	private DomainRepository domainRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
+	@Autowired
+	private CommonCodeRepository commonRepo;
+	@Autowired
+	private TomcatConfigFileRepository tomcatConfigFileRepo;
 
 	// @Autowired
 	// private ClusteringConfigurationRepository clusteringConfigRepo;
@@ -40,7 +49,7 @@ public class TomcatDomainService {
 			return new ServiceResult(Status.FAILED, "Domain does not exist");
 		}
 		domain.setName(name);
-		//domain.setIsClustering(is_clustering);
+		// domain.setIsClustering(is_clustering);
 		domainRepo.save(domain);
 		return new ServiceResult(Status.DONE, "Done", true);
 	}
@@ -51,11 +60,11 @@ public class TomcatDomainService {
 			return false;
 		}
 		// delete all associated tomcats
-		//tomcatRepo.delete(domain.getTomcats());
+		// tomcatRepo.delete(domain.getTomcats());
 		// delete relation between domain and datagridgroup
-		//if (domain.getServerGroup() != null) {
-			// domain.getServerGroup().setDomain(null);
-		//}
+		// if (domain.getServerGroup() != null) {
+		// domain.getServerGroup().setDomain(null);
+		// }
 		domainRepo.delete(domain);
 		return true;
 	}
@@ -73,7 +82,8 @@ public class TomcatDomainService {
 		// Tomcat instances that are belonged to same domain have same
 		// applications. Only retrieve these application for specified domain
 		if (domain != null) {
-			//List<TomcatInstance> tomcats = (List<TomcatInstance>) domain.getTomcats();
+			// List<TomcatInstance> tomcats = (List<TomcatInstance>)
+			// domain.getTomcats();
 			// return (List<TomcatApplication>)
 			// tomcats.get(0).getApplications();
 		}
@@ -96,6 +106,14 @@ public class TomcatDomainService {
 		// revision);
 	}
 
+	public List<TomcatConfigFile> getConfigFileVersions(TomcatDomain td,
+			String type) {
+		CommonCode codeValue = commonRepo.findByCodeValue(type);
+		List<TomcatConfigFile> configs = tomcatConfigFileRepo
+				.findByTomcatDomainAndFileTypeCdId(td, codeValue.getId());
+
+		return configs;
+	}
 	// public List<ClusteringConfiguration> getClusteringConfigurationByName(
 	// String name) {
 	// return clusteringConfigRepo.findByName(name);
