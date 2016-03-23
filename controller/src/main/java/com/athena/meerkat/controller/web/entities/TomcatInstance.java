@@ -37,10 +37,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * <pre>
@@ -74,9 +76,9 @@ public class TomcatInstance implements Serializable {
 	@Column(name = "create_user_id")
 	private int createUserId;
 
-	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	// @JsonManagedReference
-	// private List<TomcatConfigFile> tomcatConfigFiles;
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
@@ -94,9 +96,10 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "network_interface_id")
 	private NetworkInterface networkInterface;
 
-	// @OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	// @JsonManagedReference
-	// private List<TomcatApplication> tomcatApplications;
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<TomcatApplication> tomcatApplications;
+
 	public TomcatInstance() {
 	}
 
@@ -245,5 +248,13 @@ public class TomcatInstance implements Serializable {
 			return networkInterface.getIpv4();
 		}
 		return "";
+	}
+
+	public List<TomcatApplication> getTomcatApplications() {
+		return tomcatApplications;
+	}
+
+	public void setTomcatApplications(List<TomcatApplication> tomcatApplications) {
+		this.tomcatApplications = tomcatApplications;
 	}
 }
