@@ -12,10 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -72,6 +74,7 @@ public class Server implements Serializable {
 	private int sshPort;
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
+	@JsonManagedReference
 	private NetworkInterface sshNi;
 	@Column(name = "state")
 	private int state;
@@ -87,6 +90,10 @@ public class Server implements Serializable {
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private Collection<SshAccount> sshAccounts;
+
+	@ManyToOne
+	@JsonBackReference
+	private DatagridServerGroup datagridServerGroup;
 
 	public String getName() {
 		return name;
@@ -367,5 +374,13 @@ public class Server implements Serializable {
 			sshAccounts.remove(ssh);
 		}
 
+	}
+
+	public DatagridServerGroup getDatagridServerGroup() {
+		return datagridServerGroup;
+	}
+
+	public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
+		this.datagridServerGroup = datagridServerGroup;
 	}
 }
