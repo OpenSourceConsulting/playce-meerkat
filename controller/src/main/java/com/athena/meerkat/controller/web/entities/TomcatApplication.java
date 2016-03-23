@@ -1,163 +1,182 @@
-/**
- * 
- */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * @author Tran
- *
- */
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+//
 @Entity
 @Table(name = "tomcat_application")
-public class TomcatApplication {
-
-	@Id
-	private int id;
-	
-	private String contextPath;
-	private int state;
-	private java.sql.Date deployedTime;
-	private String version;
-	private String warPath;
-	private java.sql.Date lastModifiedTime;
-	private int domainId;
-	private int tomcatInstanceId;
+public class TomcatApplication implements Serializable, Cloneable {
 
 	/**
 	 * 
 	 */
-	public TomcatApplication() {
-		// TODO Auto-generated constructor stub
-	}
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+	@Id
+	@Column(name = "Id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int Id;
+	@Column(name = "context_path")
+	private String contextPath;
+	@Column(name = "deployed_time")
+	private Date deployedTime;
+	@Column(name = "version")
+	private String version;
+	@Column(name = "war_path")
+	private String warPath;
+	@Column(name = "last_modified_time")
+	private Date lastModifiedTime;
+	private int state;
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	// using this annotation to prevent Infinite recursion json mapping
+	@JsonBackReference
+	private TomcatInstance tomcatInstance;
 
-	/**
-	 * @return the contextPath
-	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	// using this annotation to prevent Infinite recursion json mapping
+	@JsonBackReference
+	@JoinColumn(name = "domain_id")
+	private TomcatDomain tomcatDomain;
+
+	//
+	// @OneToMany(mappedBy = "application")
+	// @JsonManagedReference
+	// private Collection<Session> sessions;
+
 	public String getContextPath() {
 		return contextPath;
 	}
 
-	/**
-	 * @param contextPath the contextPath to set
-	 */
+	public String getTomcatName() {
+		return tomcatInstance.getName();
+	}
+
 	public void setContextPath(String contextPath) {
 		this.contextPath = contextPath;
 	}
 
-	/**
-	 * @return the state
-	 */
-	public int getState() {
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the deployedTime
-	 */
-	public java.sql.Date getDeployedTime() {
+	public Date getDeployedTime() {
 		return deployedTime;
 	}
 
-	/**
-	 * @param deployedTime the deployedTime to set
-	 */
-	public void setDeployedTime(java.sql.Date deployedTime) {
+	public String getDeployTimeString() {
+		if (deployedTime == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(deployedTime);
+	}
+
+	public void setDeployedDate(Date deployedTime) {
 		this.deployedTime = deployedTime;
 	}
 
-	/**
-	 * @return the version
-	 */
 	public String getVersion() {
 		return version;
 	}
 
-	/**
-	 * @param version the version to set
-	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
 
-	/**
-	 * @return the warPath
-	 */
 	public String getWarPath() {
 		return warPath;
 	}
 
-	/**
-	 * @param warPath the warPath to set
-	 */
 	public void setWarPath(String warPath) {
 		this.warPath = warPath;
 	}
 
-	/**
-	 * @return the lastModifiedTime
-	 */
-	public java.sql.Date getLastModifiedTime() {
+	public Date getLastModifiedTime() {
 		return lastModifiedTime;
 	}
 
-	/**
-	 * @param lastModifiedTime the lastModifiedTime to set
-	 */
-	public void setLastModifiedTime(java.sql.Date lastModifiedTime) {
+	public String getLastModifiedTimeString() {
+		if (lastModifiedTime == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return df.format(lastModifiedTime);
+	}
+
+	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
 	}
 
-	/**
-	 * @return the domainId
-	 */
-	public int getDomainId() {
-		return domainId;
+	public int getState() {
+		return state;
 	}
 
-	/**
-	 * @param domainId the domainId to set
-	 */
-	public void setDomainId(int domainId) {
-		this.domainId = domainId;
+	public void setState(int state) {
+		this.state = state;
 	}
 
-	/**
-	 * @return the tomcatInstanceId
-	 */
-	public int getTomcatInstanceId() {
-		return tomcatInstanceId;
+	public TomcatInstance getTomcatInstance() {
+		return tomcatInstance;
 	}
 
-	/**
-	 * @param tomcatInstanceId the tomcatInstanceId to set
-	 */
-	public void setTomcatInstanceId(int tomcatInstanceId) {
-		this.tomcatInstanceId = tomcatInstanceId;
+	public void setTomcatInstance(TomcatInstance tomcat) {
+		this.tomcatInstance = tomcat;
 	}
 
+	// public Collection<Session> getSessions() {
+	// return sessions;
+	// }
+	//
+	// public void setSessions(Collection<Session> sessions) {
+	// this.sessions = sessions;
+	// }
+
+	/**
+	 * Constructor
+	 */
+	public TomcatApplication() {
+	}
+
+	public TomcatApplication(String context_path, String war_path,
+			String version) {
+		contextPath = context_path;
+		warPath = war_path;
+		this.version = version;
+	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public TomcatApplication clone() {
+		try {
+			return (TomcatApplication) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+
+	public TomcatDomain getTomcatDomain() {
+		return tomcatDomain;
+	}
+
+	public void setTomcatDomain(TomcatDomain tomcatDomain) {
+		this.tomcatDomain = tomcatDomain;
+	}
 }
