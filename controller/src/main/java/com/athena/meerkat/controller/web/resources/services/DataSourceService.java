@@ -36,7 +36,8 @@ public class DataSourceService {
 				|| maxConnectionPool < minConnectionPool || jdbcUrl.isEmpty()) {
 			return new ServiceResult(Status.FAILED, "Invalid data");
 		}
-		DataSource ds = datasourceRepo.findByNameContainingOrJdbcUrlContaining(name, jdbcUrl);
+		DataSource ds = datasourceRepo.findByNameContainingOrJdbcUrlContaining(
+				name, jdbcUrl);
 		if (ds != null) {
 			return new ServiceResult(Status.FAILED, "Duplicated");
 		}
