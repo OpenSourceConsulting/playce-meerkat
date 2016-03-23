@@ -1,74 +1,101 @@
-/**
- * 
- */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
- * @author Tran
- *
+ * <pre>
+ * 
+ * </pre>
+ * 
+ * @author Tran Ho
+ * @version 2.0
  */
 @Entity
-@Table
-public class DatagridServerGroup {
-	@Id
-	private int id;
-	private String name;
-	private int typeCdId;
+@Table(name = "datagrid_server_group")
+public class DatagridServerGroup implements Serializable {
 
 	/**
 	 * 
 	 */
-	public DatagridServerGroup() {
-		// TODO Auto-generated constructor stub
-	}
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
+	private int Id;
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+	@Column(name = "name")
+	private String name;
 
-	/**
-	 * @return the name
-	 */
+	@Column(name = "type_cd_id")
+	private int typeCdId;
+
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Server> servers;
+	//
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<ClusteringConfiguration> clusteringConfigurations;
+
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the typeCdId
-	 */
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
+	public List<Server> getServers() {
+		return servers;
+	}
+
+	public void setServers(List<Server> servers) {
+		this.servers = servers;
+	}
+
+	public int getServerNo() {
+		if (servers != null) {
+			return servers.size();
+		}
+		return 0;
+	}
+
 	public int getTypeCdId() {
 		return typeCdId;
 	}
 
-	/**
-	 * @param typeCdId
-	 *            the typeCdId to set
-	 */
 	public void setTypeCdId(int typeCdId) {
 		this.typeCdId = typeCdId;
+	}
+
+	public List<ClusteringConfiguration> getClusteringConfigurations() {
+		return clusteringConfigurations;
+	}
+
+	public void setClusteringConfigurations(
+			List<ClusteringConfiguration> clusteringConfigurations) {
+		this.clusteringConfigurations = clusteringConfigurations;
 	}
 
 }
