@@ -1,6 +1,7 @@
 <project name="athena-meerkat cmd" basedir="." default="cmd">
 
-	<property name="meerkat.agent.home" value="/home/meerkat/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT" />
+	<property file="${basedir}/build.properties" />
+	<property name="meerkat.agent.home" value="${deploy.dir}/${agent.name}" />
 
 	<taskdef resource="cargo.tasks">
 		<classpath>
@@ -11,9 +12,6 @@
 
 	<target name="cmd">
 
-		<property name="tomcat.unzip.pah" value="/home/meerkat/tmp" />
-		<property name="catalina.base" value="/home/meerkat/tmp/instance1" />
-		<property name="instance.log.dir" value="${catalina.base}/logs" />
 		<!--
 		<delete dir="${catalina.base}" />
 		-->

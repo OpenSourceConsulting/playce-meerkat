@@ -19,6 +19,7 @@
 				<include>NOTICE*</include>
 			</includes>
 		</fileSet>
+		<!-- 
 		<fileSet>
 			<directory>${project.basedir}</directory>
 			<outputDirectory>/</outputDirectory>
@@ -29,6 +30,7 @@
 			</includes>
             <fileMode>0755</fileMode>
 		</fileSet>
+		 -->
 		<fileSet>
 			<directory>${project.build.directory}/site</directory>
 			<outputDirectory>docs</outputDirectory>
@@ -42,7 +44,7 @@
             <fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>${project.build.directory}/classes</directory>
+			<directory>${project.basedir}/src/main/resources</directory>
 			<outputDirectory>conf</outputDirectory>
 			<includes>
 				<include>logback*.xml</include>
@@ -51,14 +53,22 @@
             <fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>${project.build.directory}/classes/config</directory>
+			<directory>${project.basedir}/src/main/resources/config</directory>
 			<outputDirectory>conf</outputDirectory>
             <fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
+			<directory>${project.basedir}/src/main/resources/scripts</directory>
+			<outputDirectory>scripts</outputDirectory>
+			<includes>
+				<include>*</include>
+			</includes>
+            <fileMode>0755</fileMode>
+		</fileSet>
+		<fileSet>
 			<directory>${project.basedir}/apache-ant-1.9.6</directory>
 			<outputDirectory>apache-ant-1.9.6</outputDirectory>
-            <fileMode>0644</fileMode>
+            <fileMode>0755</fileMode>
 		</fileSet>
 	</fileSets>
 </assembly>

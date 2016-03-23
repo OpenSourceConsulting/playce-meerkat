@@ -1,6 +1,7 @@
 <project name="pilot fris build" basedir="." default="deploy-agent">
 
 	<property file="${basedir}/build.properties" />
+	<property file="${basedir}/build-ssh.properties" />
 	
 
 	<target name="deploy-agent" description="deploy to server">
@@ -23,44 +24,67 @@
 		<property name="install.cmd4" value="chmod 755 ./*.sh" />
 
 		<echo>create ${deploy.dir}</echo>
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" 
-					command="mkdir ${deploy.dir}" trust="true" failonerror="false" />
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+					command="mkdir ${deploy.dir}" trust="true" failonerror="true" />
 		
 		<echo>send ${filename}</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" 
-			password="${user.passwd}" >
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+			password="${user.passwd}" failonerror="true">
 			<fileset dir="${basedir}/target" defaultexcludes="true">
 				<include name="${filename}"/>
 			</fileset>
 		</scp>
 		
 		<echo>send script file.</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" 
-			password="${user.passwd}" >
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+			password="${user.passwd}" failonerror="true">
 			<fileset dir="${basedir}" defaultexcludes="true">
-				<include name="env.sh"/>
+				<include name="agentenv.sh"/>
 				<include name="runCmd.sh"/>
 			</fileset>
 		</scp>
 		
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" 
-			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}" trust="true" failonerror="false" />
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}" trust="true" failonerror="true" />
 
 	</target>
 	
 	<target name="send-cmd" description="send cmd build file to server and exec">
 
 		<echo>send cmd.xml</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" 
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
+			<fileset dir="${basedir}" defaultexcludes="true">
+				<include name="build.properties"/>
+				<include name="cmd.xml"/>
+			</fileset>
+		</scp>
+		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="cd ${deploy.dir}; ./runCmd.sh" trust="true" failonerror="false" />
+
+	</target>
+	
+	<target name="test" description="test">
+		<property name="server.ip1" value="192.168.0.156" />
+		<property name="server.port1" value="22" />
+		<property name="user.id1" value="centos" />
+		<property name="user.passwd1" value="centos" />
+		<!--
+		<property name="key.file1" value="G:/svn_key.pem" />
+		-->
+		
+		<echo>test</echo>
+		<scp port="${server.port1}" todir="${user.id1}@${server.ip1}:" trust="true" 
+			keyfile="${key.file1}" password="${user.passwd1}">
 			<fileset dir="${basedir}" defaultexcludes="true">
 				<include name="cmd.xml"/>
 			</fileset>
 		</scp>
 		
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" 
-			command="cd ${deploy.dir}; ./runCmd.sh" trust="true" failonerror="false" />
-
+		<sshexec port="${server.port1}" host="${server.ip1}" username="${user.id1}" password="${user.passwd1}" keyfile="${key.file1}"
+			command="ls -al" trust="true" failonerror="false" />
+		
 	</target>
 
 
