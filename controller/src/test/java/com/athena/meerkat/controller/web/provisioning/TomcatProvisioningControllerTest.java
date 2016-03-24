@@ -167,7 +167,7 @@ public class TomcatProvisioningControllerTest {
 			IOUtils.closeQuietly(output);
 		}
 		
-	}*/
+	}
 	
 	@Test
 	public void testInstallCommander() {
@@ -180,7 +180,7 @@ public class TomcatProvisioningControllerTest {
 			fail(e.toString());
 		}
 	}
-	
+	*/
 	private DomainTomcatConfiguration createTomcatConfig() {
 		DomainTomcatConfiguration config = new DomainTomcatConfiguration();
 		config.setJavaHome("/usr/java/jdk1.7.0_80");
