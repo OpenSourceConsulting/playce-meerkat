@@ -182,7 +182,7 @@
 						<configuration>
 							<finalName>athena-meerkat-commander-${project.version}</finalName>
 							<descriptors>
-								<descriptor>/src/main/assembly/bin2.xml</descriptor>
+								<descriptor>/src/main/assembly/bin-commander.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>

@@ -83,8 +83,7 @@ public class TomcatInstanceService {
 	}
 
 	public List<TomcatInstance> getTomcatListByDomainId(int domainId) {
-		//return repo.findByDomainId(domainId);
-		return null;
+		return repo.findByTomcatDomain_Id(domainId);
 	}
 
 	/**

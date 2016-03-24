@@ -92,7 +92,7 @@ public class TomcatProvisioningControllerTest {
 	public void tearDown() throws Exception {
 	}
 
-	/*
+	
 	@Test
 	public void testInstall() {
 		
@@ -119,8 +119,9 @@ public class TomcatProvisioningControllerTest {
 			int jobNum = ProvisioningUtil.getJobNum(new File(workingDir.getAbsolutePath() + File.separator + "jobs" + File.separator + serverIp));
 			targetProps.setProperty("job.number", 	String.valueOf(jobNum));
 			
+			/*
 			 * 1. make job dir & copy build.xml.
-			 
+			 */
 			File jobDir = new File(workingDir.getAbsolutePath() + File.separator + "jobs" + File.separator + serverIp + File.separator + String.valueOf(jobNum));
 			if (jobDir.exists() == false) {
 				jobDir.mkdirs();
@@ -130,14 +131,16 @@ public class TomcatProvisioningControllerTest {
 			FileUtils.copyFileToDirectory(new File(workingDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
 			
 			
+			/*
 			 * 2. generate agentenv.sh
-			 
+			 */
 			createAgentEnvSHFile(jobDir, targetProps.getProperty("agent.deploy.dir"), targetProps.getProperty("agent.name"));
 			generateTomcatEnvFile(jobDir,  createTomcatConfig());
 			
 			
+			/*
 			 * 3. generate build properties
-			 
+			 */
 			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build-ssh.properties");
 			prop.store(output, "desc");
 			LOGGER.debug("generated build-ssh.properties");
@@ -149,20 +152,23 @@ public class TomcatProvisioningControllerTest {
 			LOGGER.debug("generated build.properties");
 			
 			
+			/*
 			 * 4. deploy agent
-			 
+			 */
 			ProvisioningUtil.deployAgent(workingDir, jobDir);
 			
 			
+			/*
 			 * 5. send cmd.
-			 
+			 */
 			ProvisioningUtil.sendCommand(workingDir, jobDir);
 			
 			
 			
 			
 		} catch (Exception e) {
-			fail(e.toString());
+			//fail(e.toString());
+			e.printStackTrace();
 		} finally {
 			IOUtils.closeQuietly(output);
 		}
@@ -177,10 +183,11 @@ public class TomcatProvisioningControllerTest {
 		try {
 			UnzipUtility.unzip(zipFilePath, commanderDir, true);
 		} catch (Exception e) {
-			fail(e.toString());
+			//fail(e.toString());
+			e.printStackTrace();
 		}
 	}
-	*/
+	
 	private DomainTomcatConfiguration createTomcatConfig() {
 		DomainTomcatConfiguration config = new DomainTomcatConfiguration();
 		config.setJavaHome("/usr/java/jdk1.7.0_80");

@@ -1,0 +1,52 @@
+<project name="athena-meerkat cmd" basedir="." default="cmd">
+
+	
+	<property file="${basedir}/build.properties" />
+	
+	<property name="meerkat.agent.home" value="${agent.deploy.dir}/${agent.name}" />
+	<property name="down.dir" value="${agent.deploy.dir}/${agent.name}/downloads" />
+
+	<taskdef resource="cargo.tasks">
+		<classpath>
+			<pathelement location="${meerkat.agent.home}/lib/cargo-core-uberjar-1.4.19.jar" />
+			<pathelement location="${meerkat.agent.home}/lib/cargo-ant-1.4.19.jar" />
+		</classpath>
+	</taskdef>
+
+	<target name="cmd">
+
+		<!--
+		<delete dir="${catalina.base}" />
+		-->
+		<mkdir dir="${catalina.base}" />
+
+		<echo message="Installing Tomcat..." />
+		<echo message="Using tomcat.unzip.pah = ${tomcat.unzip.pah} " />
+
+		<cargo containerId="tomcat7x" action="configure">
+			<zipUrlInstaller 
+					installUrl="http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip" 
+					downloadDir="${down.dir}" 
+					extractDir="${tomcat.unzip.pah}" />
+			
+			<configuration home="${catalina.base}">
+				<property name="cargo.port.offset" value="1" />
+				<!--
+				  <property name="cargo.servlet.port" value="8086"/>
+				  <property name="cargo.tomcat.ajp.port" value="8209"/>
+				-->
+			</configuration>
+		</cargo>
+
+		<copy todir="${catalina.base}" verbose="true">
+		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">
+		      <include name="*"/>
+		    </fileset>
+		</copy>
+
+		<chmod dir="${tomcat.unzip.pah}" perm="755" includes="**/*.sh"/>
+		<chmod dir="${catalina.base}" perm="755" includes="**/*.sh"/>
+
+	</target>
+
+</project>

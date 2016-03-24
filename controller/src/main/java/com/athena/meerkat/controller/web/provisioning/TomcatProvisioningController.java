@@ -29,6 +29,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,17 +51,14 @@ public class TomcatProvisioningController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningController.class);
 	
+	@Autowired
+	private TomcatProvisioningService proviService;
+	
 	@RequestMapping(value = "/install/{domainId}", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse install(@PathVariable("domainId") int domainId) {
 		
-		/*
-		File workingDir = new File("G:/project/git/athena-meerkat/agent");
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(workingDir.getAbsolutePath() + File.separator + "deployAgent.bat");
-		
-		CommandUtil.execWithLog(workingDir, cmds);
-		*/
+		proviService.installTomcatInstance(domainId);
 		
 		return new SimpleJsonResponse();
 	}

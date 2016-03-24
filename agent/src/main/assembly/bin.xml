@@ -19,24 +19,28 @@
 				<include>NOTICE*</include>
 			</includes>
 		</fileSet>
-		<!-- 
 		<fileSet>
-			<directory>${project.basedir}</directory>
-			<outputDirectory>/</outputDirectory>
+			<directory>${project.basedir}/src/main/resources/bin</directory>
+			<outputDirectory>bin</outputDirectory>
 			<includes>
-				<include>*.bat</include>
-				<include>*.sh</include>
-				<include>*.xml</include>
+				<include>*</include>
 			</includes>
             <fileMode>0755</fileMode>
 		</fileSet>
-		 -->
 		<fileSet>
 			<directory>${project.build.directory}/site</directory>
 			<outputDirectory>docs</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/dependency</directory>
+			<outputDirectory>lib</outputDirectory>
+			<includes>
+				<include>*.jar</include>
+			</includes>
+            <fileMode>0644</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/target</directory>
 			<outputDirectory>lib</outputDirectory>
 			<includes>
 				<include>*.jar</include>

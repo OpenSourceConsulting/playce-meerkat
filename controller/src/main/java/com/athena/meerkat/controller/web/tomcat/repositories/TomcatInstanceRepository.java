@@ -41,16 +41,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
  */
 public interface TomcatInstanceRepository extends
 		JpaRepository<TomcatInstance, Integer> {
-	// List<TomcatInstance> findByDomainId(int domainId);
+	
+	List<TomcatInstance> findByTomcatDomain_Id(int domainId);
 
-	/**
-	 * <pre>
-	 * 
-	 * </pre>
-	 * 
-	 * @param name
-	 * @param domainId
-	 * @return
-	 */
-	// TomcatInstance findByNameAndDomainId(String name, int domainId);
 }

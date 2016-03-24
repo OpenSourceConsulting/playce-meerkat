@@ -1,6 +1,8 @@
 <project name="pilot fris build" basedir="." default="deploy-agent">
 
 	<property file="${basedir}/build.properties" />
+	
+	<!--<property name="job.dir" value="${basedir}/jobs/${server.ip}/${job.number}" /> -->
 	<property file="${basedir}/build-ssh.properties" />
 	
 
@@ -12,56 +14,52 @@
 		<property name="server.port" value="22" />
 		<property name="user.id" value="meerkat" />
 		<property name="user.passwd" value="meerkat" />
-		<property name="deploy.dir" value="/home/meerkat/athena-meerkat-agent" />
+		<property name="agent.deploy.dir" value="/home/meerkat/athena-meerkat-agent" />
 		<property name="agent.name" value="athena-meerkat-agent-1.0.0-SNAPSHOT" />
 		 -->
 
 		<property name="filename" value="${agent.name}-bin.tar.gz" />
 		
-		<property name="install.cmd1" value="cd ${deploy.dir}" />
+		<property name="install.cmd1" value="cd ${agent.deploy.dir}" />
 		<property name="install.cmd2" value="tar xvfz ./${filename}" />
-		<property name="install.cmd3" value="chmod 755 ./${agent.name}/apache-ant-1.9.6/bin/*" />
-		<property name="install.cmd4" value="chmod 755 ./*.sh" />
+		<property name="install.cmd3" value="rm -f ./${filename}" />
+		<property name="install.cmd4" value="mv ./agentenv.sh ./${agent.name}/bin/" />
+		<property name="install.cmd5" value="mv ./env.sh ./${agent.name}/scripts/" />
 
-		<echo>create ${deploy.dir}</echo>
+		<echo>basedir : ${basedir}</echo>
+		<echo>create ${agent.deploy.dir}</echo>
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-					command="mkdir ${deploy.dir}" trust="true" failonerror="true" />
+					command="mkdir ${agent.deploy.dir}" trust="true" failonerror="false"/>
 		
 		<echo>send ${filename}</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}" trust="true" keyfile="${key.file}"
 			password="${user.passwd}" failonerror="true">
-			<fileset dir="${basedir}/target" defaultexcludes="true">
+			<fileset dir="${basedir}/../../.." defaultexcludes="true">
 				<include name="${filename}"/>
 			</fileset>
-		</scp>
-		
-		<echo>send script file.</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
-			password="${user.passwd}" failonerror="true">
 			<fileset dir="${basedir}" defaultexcludes="true">
 				<include name="agentenv.sh"/>
-				<include name="runCmd.sh"/>
+				<include name="env.sh"/>
 			</fileset>
 		</scp>
 		
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}" trust="true" failonerror="true" />
+			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}; ${install.cmd5}" trust="true" failonerror="true" />
 
 	</target>
 	
 	<target name="send-cmd" description="send cmd build file to server and exec">
 
-		<echo>send cmd.xml</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+		<echo>send build.properties</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
 			<fileset dir="${basedir}" defaultexcludes="true">
 				<include name="build.properties"/>
-				<include name="cmd.xml"/>
 			</fileset>
 		</scp>
 		
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="cd ${deploy.dir}; ./runCmd.sh" trust="true" failonerror="false" />
+			command="cd ${agent.deploy.dir}/${agent.name}/bin; ./runCmd.sh" trust="true" failonerror="false" />
 
 	</target>
 	
