@@ -24,6 +24,9 @@
  */
 package com.athena.meerkat.controller.common;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -39,6 +42,14 @@ public class MeerkatUtils {
 		Pattern pattern = Pattern
 				.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 		return pattern.matcher(ipAddr).matches();
+	}
+
+	public static String dateTimeToString(Date date, String formatter) {
+		if (date == null) {
+			return "";
+		}
+		DateFormat df = new SimpleDateFormat(formatter);
+		return df.format(date);
 	}
 }
 // end of MeerkatUtils.java

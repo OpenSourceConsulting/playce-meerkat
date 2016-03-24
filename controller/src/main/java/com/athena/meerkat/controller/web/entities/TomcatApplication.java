@@ -2,7 +2,6 @@ package com.athena.meerkat.controller.web.entities;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 //
@@ -79,11 +80,8 @@ public class TomcatApplication implements Serializable, Cloneable {
 	}
 
 	public String getDeployedTimeString() {
-		if (getDeployedTime() == null) {
-			return "";
-		}
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(getDeployedTime());
+		return MeerkatUtils.dateTimeToString(deployedTime,
+				MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
 	public void setDeployedDate(Date deployedTime) {
@@ -111,11 +109,8 @@ public class TomcatApplication implements Serializable, Cloneable {
 	}
 
 	public String getLastModifiedTimeString() {
-		if (lastModifiedTime == null) {
-			return "";
-		}
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(lastModifiedTime);
+		return MeerkatUtils.dateTimeToString(lastModifiedTime,
+				MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
 	public void setLastModifiedTime(Date lastModifiedTime) {

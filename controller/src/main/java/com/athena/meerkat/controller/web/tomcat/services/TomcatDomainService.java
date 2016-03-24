@@ -2,22 +2,22 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.util.List;
 
-import org.infinispan.configuration.cache.ClusteringConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
+import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
@@ -34,6 +34,9 @@ public class TomcatDomainService {
 	private CommonCodeRepository commonRepo;
 	@Autowired
 	private TomcatConfigFileRepository tomcatConfigFileRepo;
+
+	@Autowired
+	private ClusteringConfigurationReposiroty clusteringConfRepo;
 
 	// @Autowired
 	// private ClusteringConfigurationRepository clusteringConfigRepo;
@@ -139,5 +142,18 @@ public class TomcatDomainService {
 				.findByTomcatDomainAndFileTypeCdIdAndVersion(td,
 						codeValue.getId(), version);
 		return conf;
+	}
+
+	public List<ClusteringConfigurationVersion> getClusteringConfVersions(
+			TomcatDomain td) {
+		return clusteringConfRepo.getVersions(td.getId());
+	}
+
+	public List<ClusteringConfiguration> getClusteringConf(TomcatDomain td,
+			Integer version) {
+		List<ClusteringConfiguration> result = clusteringConfRepo
+				.findByTomcatDomainAndClusteringConfigurationVersion_Version(
+						td, version);
+		return result;
 	}
 }

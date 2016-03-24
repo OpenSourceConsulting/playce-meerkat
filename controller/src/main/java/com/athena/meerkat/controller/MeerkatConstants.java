@@ -114,4 +114,6 @@ public abstract class MeerkatConstants {
 	 */
 	public static final String DBTYPE_PARENT_CODE_VALUE = "dbType";
 	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "TomCatConfigType";
+
+	public static final String DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm:ss";
 }

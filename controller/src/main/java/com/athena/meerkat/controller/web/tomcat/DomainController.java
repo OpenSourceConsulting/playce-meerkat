@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
+import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
@@ -220,6 +222,41 @@ public class DomainController {
 
 			json.setList(sessions);
 			json.setTotal(sessions.size());
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/clusteringvers", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getClusteringVers(
+			GridJsonResponse json, @PathVariable Integer domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			List<ClusteringConfigurationVersion> versions = domainService
+					.getClusteringConfVersions(td);
+			json.setList(versions);
+			json.setTotal(versions.size());
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/clusteringconf/{version}", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getClusteringConf(
+			GridJsonResponse json, @PathVariable Integer domainId,
+			@PathVariable Integer version) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			List<ClusteringConfiguration> confs = domainService
+					.getClusteringConf(td, version);
+			json.setList(confs);
+			json.setTotal(confs.size());
 			json.setSuccess(true);
 		}
 		return json;

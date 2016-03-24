@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * <pre>
@@ -41,8 +42,6 @@ public class ClusteringConfiguration implements Serializable {
 	private String value;
 	@Column(name = "created_time")
 	private Date createdTime;
-	@Column(name = "version")
-	private int version;
 	@ManyToOne
 	@JsonBackReference
 	private DatagridServerGroup datagridServerGroup;
@@ -51,6 +50,11 @@ public class ClusteringConfiguration implements Serializable {
 	@JsonBackReference
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
+
+	@ManyToOne
+	@JoinColumn(name = "clustering_conf_version_id")
+	@JsonManagedReference
+	private ClusteringConfigurationVersion clusteringConfigurationVersion;
 
 	public String getName() {
 		return name;
@@ -76,14 +80,6 @@ public class ClusteringConfiguration implements Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
 	public DatagridServerGroup getDatagridServerGroup() {
 		return datagridServerGroup;
 	}
@@ -99,5 +95,4 @@ public class ClusteringConfiguration implements Serializable {
 	public void setTomcatDomain(TomcatDomain tomcatDomain) {
 		this.tomcatDomain = tomcatDomain;
 	}
-
 }

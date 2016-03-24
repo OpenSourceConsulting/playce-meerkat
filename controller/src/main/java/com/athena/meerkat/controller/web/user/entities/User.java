@@ -43,6 +43,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
@@ -195,19 +197,13 @@ public class User implements UserDetails {
 	}
 
 	public String getLastLoginDateString() {
-		if (lastLoginDate == null) {
-			return "";
-		}
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(lastLoginDate);
+		return MeerkatUtils.dateTimeToString(lastLoginDate,
+				MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
 	public String getCreatedDateString() {
-		if (createdDate == null) {
-			return "";
-		}
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(createdDate);
+		return MeerkatUtils.dateTimeToString(createdDate,
+				MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
 	public String getUserRoleString() {
