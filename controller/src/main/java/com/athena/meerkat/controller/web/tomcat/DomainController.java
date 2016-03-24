@@ -182,6 +182,22 @@ public class DomainController {
 		return json;
 	}
 
+	@RequestMapping(value = "/{domainId}/apps", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getApplications(
+			GridJsonResponse json, @PathVariable Integer domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			List<TomcatApplication> apps = td.getTomcatApplication();
+			json.setList(apps);
+			json.setTotal(apps.size());
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json,
 			int id) {

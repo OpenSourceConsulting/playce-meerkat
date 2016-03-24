@@ -175,4 +175,12 @@ public class TomcatDomain {
 			DomainTomcatConfiguration domainTomcatConfig) {
 		this.domainTomcatConfig = domainTomcatConfig;
 	}
+
+	public List<TomcatApplication> getTomcatApplication() {
+		return tomcatApplication;
+	}
+
+	public void setTomcatApplication(List<TomcatApplication> tomcatApplication) {
+		this.tomcatApplication = tomcatApplication;
+	}
 }

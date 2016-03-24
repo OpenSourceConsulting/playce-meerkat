@@ -64,7 +64,10 @@ public class TomcatApplication implements Serializable, Cloneable {
 	}
 
 	public String getTomcatName() {
-		return tomcatInstance.getName();
+		if (tomcatInstance != null) {
+			return tomcatInstance.getName();
+		}
+		return "";
 	}
 
 	public void setContextPath(String contextPath) {
@@ -75,16 +78,16 @@ public class TomcatApplication implements Serializable, Cloneable {
 		return deployedTime;
 	}
 
-	public String getDeployTimeString() {
-		if (deployedTime == null) {
+	public String getDeployedTimeString() {
+		if (getDeployedTime() == null) {
 			return "";
 		}
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return df.format(deployedTime);
+		return df.format(getDeployedTime());
 	}
 
 	public void setDeployedDate(Date deployedTime) {
-		this.deployedTime = deployedTime;
+		this.setDeployedTime(deployedTime);
 	}
 
 	public String getVersion() {
@@ -178,5 +181,9 @@ public class TomcatApplication implements Serializable, Cloneable {
 
 	public void setTomcatDomain(TomcatDomain tomcatDomain) {
 		this.tomcatDomain = tomcatDomain;
+	}
+
+	public void setDeployedTime(Date deployedTime) {
+		this.deployedTime = deployedTime;
 	}
 }

@@ -61,8 +61,8 @@ public class DomainTomcatConfiguration implements Serializable {
 	private int modifiedUserId;
 	@Column(name = "modified_date")
 	private Date modifiedDate;
-	@Column(name = "java_version")
-	private String javaVersion;
+	@Column(name = "tomcat_version")
+	private String tomcatVersion;
 	@Column(name = "encoding")
 	private String encoding;
 
@@ -191,19 +191,19 @@ public class DomainTomcatConfiguration implements Serializable {
 		Id = id;
 	}
 
-	public String getJavaVersion() {
-		return javaVersion;
-	}
-
-	public void setJavaVersion(String javaVersion) {
-		this.javaVersion = javaVersion;
-	}
-
 	public String getEncoding() {
 		return encoding;
 	}
 
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
+	}
+
+	public String getTomcatVersion() {
+		return tomcatVersion;
+	}
+
+	public void setTomcatVersion(String tomcatVersion) {
+		this.tomcatVersion = tomcatVersion;
 	}
 }
