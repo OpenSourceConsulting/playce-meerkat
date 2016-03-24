@@ -147,8 +147,8 @@ public class TomcatDomainService {
 		return conf;
 	}
 
-	public DomainTomcatConfiguration getTomcatConfig(TomcatDomain td) {
-		return domainTomcatConfRepo.findByTomcatDomain(td);
+	public DomainTomcatConfiguration getTomcatConfig(int domainId) {
+		return domainTomcatConfRepo.findByDomainId(domainId);
 	}
 
 	public List<ClusteringConfigurationVersion> getClusteringConfVersions(

@@ -203,16 +203,11 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/{domainId}/tomcatconfig", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getTomcatConfig(
-			SimpleJsonResponse json, @PathVariable Integer domainId) {
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
-			json.setData(domainService.getTomcatConfig(td));
-			json.setSuccess(true);
-		}
+	@ResponseBody
+	public SimpleJsonResponse getTomcatConfig(SimpleJsonResponse json, @PathVariable Integer domainId) {
+		
+		json.setData(domainService.getTomcatConfig(domainId));
+		
 		return json;
 	}
 

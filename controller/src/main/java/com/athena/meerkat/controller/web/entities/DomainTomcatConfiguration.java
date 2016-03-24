@@ -64,11 +64,23 @@ public class DomainTomcatConfiguration implements Serializable {
 	private String tomcatVersion;
 	@Column(name = "encoding")
 	private String encoding;
+	
+	@Column(name = "domain_id", insertable = false, updatable = false)
+	private Integer domainId;
 
 	@OneToOne
 	@JoinColumn(name = "domain_id")
 	@JsonBackReference
 	private TomcatDomain tomcatDomain;
+
+	
+	public Integer getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(Integer domainId) {
+		this.domainId = domainId;
+	}
 
 	public TomcatDomain getTomcatDomain() {
 		return tomcatDomain;
