@@ -13,12 +13,14 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
@@ -34,7 +36,8 @@ public class TomcatDomainService {
 	private CommonCodeRepository commonRepo;
 	@Autowired
 	private TomcatConfigFileRepository tomcatConfigFileRepo;
-
+	@Autowired
+	private DomainTomcatConfigurationRepository domainTomcatConfRepo;
 	@Autowired
 	private ClusteringConfigurationReposiroty clusteringConfRepo;
 
@@ -142,6 +145,10 @@ public class TomcatDomainService {
 				.findByTomcatDomainAndFileTypeCdIdAndVersion(td,
 						codeValue.getId(), version);
 		return conf;
+	}
+
+	public DomainTomcatConfiguration getTomcatConfig(TomcatDomain td) {
+		return domainTomcatConfRepo.findByTomcatDomain(td);
 	}
 
 	public List<ClusteringConfigurationVersion> getClusteringConfVersions(

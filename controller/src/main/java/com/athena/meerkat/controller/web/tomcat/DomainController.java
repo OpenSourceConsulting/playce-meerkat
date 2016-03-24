@@ -202,6 +202,20 @@ public class DomainController {
 		return json;
 	}
 
+	@RequestMapping(value = "/{domainId}/tomcatconfig", method = RequestMethod.GET)
+	public @ResponseBody SimpleJsonResponse getTomcatConfig(
+			SimpleJsonResponse json, @PathVariable Integer domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			json.setData(domainService.getTomcatConfig(td));
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/{domainId}/sessions", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getSessions(GridJsonResponse json,
 			@PathVariable Integer domainId) {
