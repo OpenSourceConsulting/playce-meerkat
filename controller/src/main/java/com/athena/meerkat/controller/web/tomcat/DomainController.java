@@ -204,10 +204,10 @@ public class DomainController {
 
 	@RequestMapping(value = "/{domainId}/tomcatconfig", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConfig(SimpleJsonResponse json, @PathVariable Integer domainId) {
-		
+	public SimpleJsonResponse getTomcatConfig(SimpleJsonResponse json,
+			@PathVariable Integer domainId) {
+
 		json.setData(domainService.getTomcatConfig(domainId));
-		
 		return json;
 	}
 
