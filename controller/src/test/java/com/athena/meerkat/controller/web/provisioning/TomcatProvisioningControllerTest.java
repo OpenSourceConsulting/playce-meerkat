@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,6 +45,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -57,6 +60,7 @@ public class TomcatProvisioningControllerTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningControllerTest.class);
 	
 	private Configuration cfg;
+	private String commanderDir = "G:/project/AthenaMeerkat/.aMeerkat";
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -88,55 +92,73 @@ public class TomcatProvisioningControllerTest {
 	public void tearDown() throws Exception {
 	}
 
+	/*
 	@Test
 	public void testInstall() {
 		
-		File workingDir = new File("G:/project/git/athena-meerkat/agent");
+		File workingDir = new File(commanderDir);
+		String serverIp = "192.168.0.156";
 		
 		Properties prop = new Properties(); //build-ssh.properties
-		prop.setProperty("server.ip", 	"192.168.0.156");
+		prop.setProperty("server.ip", 	serverIp);
 		prop.setProperty("server.port", "22");
 		prop.setProperty("user.id", 	"centos");
 		prop.setProperty("user.passwd", "centos");
-		prop.setProperty("key.file", 	"G:/svn_key.pem");
+		prop.setProperty("key.file", 	commanderDir + "/ssh/svn_key.pem");
 		
 		Properties targetProps = new Properties(); //build.properties
-		targetProps.setProperty("deploy.dir", 		"/home/centos/athena-meerkat-agent");
+		targetProps.setProperty("agent.deploy.dir", "/home/centos/athena-meerkat-agent");
 		targetProps.setProperty("agent.name", 		"athena-meerkat-agent-1.0.0-SNAPSHOT");
-		targetProps.setProperty("tomcat.unzip.pah", 	"/home/centos/tmp");
-		targetProps.setProperty("catalina.base", 		"/home/centos/tmp/instance1");
+		targetProps.setProperty("tomcat.unzip.pah", "/home/centos/tmp");
+		targetProps.setProperty("catalina.base", 	"/home/centos/tmp/instance1");
 		
 		
 		OutputStream output = null;
 		
 		try {
-			/*
-			 * 1. generate agentenv.sh
-			 */
-			createEnvSHFile(workingDir, targetProps.getProperty("deploy.dir"), targetProps.getProperty("agent.name"));
+			int jobNum = ProvisioningUtil.getJobNum(new File(workingDir.getAbsolutePath() + File.separator + "jobs" + File.separator + serverIp));
+			targetProps.setProperty("job.number", 	String.valueOf(jobNum));
 			
-			/*
-			 * 2. generate build properties
-			 */
-			output = new FileOutputStream(workingDir.getAbsolutePath() + File.separator + "build-ssh.properties");
+			 * 1. make job dir & copy build.xml.
+			 
+			File jobDir = new File(workingDir.getAbsolutePath() + File.separator + "jobs" + File.separator + serverIp + File.separator + String.valueOf(jobNum));
+			if (jobDir.exists() == false) {
+				jobDir.mkdirs();
+			}
+			LOGGER.debug("JOB_DIR : " + jobDir.getAbsolutePath());
+			
+			FileUtils.copyFileToDirectory(new File(workingDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
+			
+			
+			 * 2. generate agentenv.sh
+			 
+			createAgentEnvSHFile(jobDir, targetProps.getProperty("agent.deploy.dir"), targetProps.getProperty("agent.name"));
+			generateTomcatEnvFile(jobDir,  createTomcatConfig());
+			
+			
+			 * 3. generate build properties
+			 
+			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build-ssh.properties");
 			prop.store(output, "desc");
 			LOGGER.debug("generated build-ssh.properties");
 			
 			IOUtils.closeQuietly(output);
 			
-			output = new FileOutputStream(workingDir.getAbsolutePath() + File.separator + "build.properties");
+			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build.properties");
 			targetProps.store(output, "desc");
 			LOGGER.debug("generated build.properties");
 			
-			/*
-			 * 3. deploy agent
-			 */
-			deployAgent(workingDir);
 			
-			/*
-			 * 4. send cmd.
-			 */
-			sendCommand(workingDir);
+			 * 4. deploy agent
+			 
+			ProvisioningUtil.deployAgent(workingDir, jobDir);
+			
+			
+			 * 5. send cmd.
+			 
+			ProvisioningUtil.sendCommand(workingDir, jobDir);
+			
+			
 			
 			
 		} catch (Exception e) {
@@ -145,22 +167,45 @@ public class TomcatProvisioningControllerTest {
 			IOUtils.closeQuietly(output);
 		}
 		
+	}*/
+	
+	@Test
+	public void testInstallCommander() {
+		
+		String zipFilePath = "G:/project/git/athena-meerkat/agent/target/athena-meerkat-commander-1.0.0-SNAPSHOT-bin.zip";
+		
+		try {
+			UnzipUtility.unzip(zipFilePath, commanderDir, true);
+		} catch (Exception e) {
+			fail(e.toString());
+		}
 	}
 	
-	public void deployAgent(File workingDir) throws Exception {
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(workingDir.getAbsolutePath() + File.separator + "deployAgent.bat");
-				
-		CommandUtil.execWithLog(workingDir, cmds);
+	private DomainTomcatConfiguration createTomcatConfig() {
+		DomainTomcatConfiguration config = new DomainTomcatConfiguration();
+		config.setJavaHome("/usr/java/jdk1.7.0_80");
+		config.setCatalinaHome("/home/centos/tmp/apache-tomcat-7.0.68/apache-tomcat-7.0.68");
+		config.setCatalinaBase("/home/centos/tmp/instance1");
+		
+		return config;
 	}
 	
-	public void sendCommand(File workingDir) throws Exception {
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(workingDir.getAbsolutePath() + File.separator + "sendCommand.bat");
-		CommandUtil.execWithLog(workingDir, cmds);
+	private void generateTomcatEnvFile(File jobDir, DomainTomcatConfiguration tomcatConfig) throws IOException  {
+		Writer output = null;
+		
+		try{
+			output = new FileWriter(jobDir.getAbsolutePath() + File.separator + "env.sh");
+		
+			generate("env.sh.ftl", tomcatConfig, output);
+			
+			LOGGER.debug("generated env.sh");
+		} finally {
+			IOUtils.closeQuietly(output);
+		}
 	}
 	
-	private void createEnvSHFile(File workingDir, String deployDir, String agentName) throws IOException {
+	
+	private void createAgentEnvSHFile(File jobDir, String deployDir, String agentName) throws IOException {
 		Map<String, String> model = new HashMap<String, String>();
 		model.put("deployDir", deployDir);
 		model.put("agentName", agentName);
@@ -168,11 +213,11 @@ public class TomcatProvisioningControllerTest {
 		Writer output = null;
 		
 		try{
-			output = new FileWriter(workingDir.getAbsolutePath() + File.separator + "agentenv.sh");
+			output = new FileWriter(jobDir.getAbsolutePath() + File.separator + "agentenv.sh");
 		
 			generate("agentenv.sh.ftl", model, output);
 			
-			LOGGER.debug("generated env.sh");
+			LOGGER.debug("generated agentenv.sh");
 		} finally {
 			IOUtils.closeQuietly(output);
 		}
