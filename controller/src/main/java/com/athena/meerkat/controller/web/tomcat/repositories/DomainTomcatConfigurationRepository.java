@@ -10,5 +10,6 @@ import com.athena.meerkat.controller.web.entities.TomcatDomain;
 public interface DomainTomcatConfigurationRepository extends
 		JpaRepository<DomainTomcatConfiguration, Integer> {
 	DomainTomcatConfiguration findByTomcatDomain(TomcatDomain td);
-	DomainTomcatConfiguration findByDomainId(int domainId);
+
+	DomainTomcatConfiguration findByTomcatDomain_Id(int domainId);
 }
