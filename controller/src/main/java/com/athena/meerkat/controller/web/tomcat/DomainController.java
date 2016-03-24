@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,6 +21,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
@@ -193,6 +195,31 @@ public class DomainController {
 			List<TomcatApplication> apps = td.getTomcatApplication();
 			json.setList(apps);
 			json.setTotal(apps.size());
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/sessions", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getSessions(GridJsonResponse json,
+			@PathVariable Integer domainId) {
+
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			// get from session severs
+			List<Session> sessions = new ArrayList<Session>();
+			Session e = new Session();
+			e.setId(1);
+			e.setKey("Session 1");
+			e.setValue("Value session asdasdkjad kajdah dk");
+			e.setLocation("Server 1");
+			sessions.add(0, e);
+
+			json.setList(sessions);
+			json.setTotal(sessions.size());
 			json.setSuccess(true);
 		}
 		return json;
