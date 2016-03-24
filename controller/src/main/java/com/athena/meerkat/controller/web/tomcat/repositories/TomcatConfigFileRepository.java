@@ -14,4 +14,7 @@ public interface TomcatConfigFileRepository extends
 	List<TomcatConfigFile> findByTomcatDomainAndFileTypeCdId(
 			TomcatDomain tomcatDomain, int fileTypeCdId);
 
+	TomcatConfigFile findByTomcatDomainAndFileTypeCdIdAndVersion(
+			TomcatDomain td, int id, int version);
+
 }

@@ -114,6 +114,7 @@ public class TomcatDomainService {
 
 		return configs;
 	}
+
 	// public List<ClusteringConfiguration> getClusteringConfigurationByName(
 	// String name) {
 	// return clusteringConfigRepo.findByName(name);
@@ -131,4 +132,12 @@ public class TomcatDomainService {
 	// public void deleteClusteringConfig(ClusteringConfiguration config) {
 	// clusteringConfigRepo.delete(config);
 	// }
+
+	public TomcatConfigFile getConfig(TomcatDomain td, String type, int version) {
+		CommonCode codeValue = commonRepo.findByCodeValue(type);
+		TomcatConfigFile conf = tomcatConfigFileRepo
+				.findByTomcatDomainAndFileTypeCdIdAndVersion(td,
+						codeValue.getId(), version);
+		return conf;
+	}
 }

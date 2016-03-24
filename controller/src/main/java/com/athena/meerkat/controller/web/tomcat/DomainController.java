@@ -144,7 +144,8 @@ public class DomainController {
 
 	@RequestMapping(value = "/{domainId}/configfile/{type}/", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getConfigVersionList(
-			GridJsonResponse json, @PathVariable int domainId, @PathVariable String type) {
+			GridJsonResponse json, @PathVariable int domainId,
+			@PathVariable String type) {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td == null) {
 			json.setSuccess(false);
@@ -154,6 +155,28 @@ public class DomainController {
 					.getConfigFileVersions(td, type);
 			json.setList(confVersions);
 			json.setTotal(confVersions.size());
+			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{domainId}/configfile/{type}/{version}", method = RequestMethod.GET)
+	public @ResponseBody SimpleJsonResponse getConfigVersionList(
+			SimpleJsonResponse json, @PathVariable int domainId,
+			@PathVariable String type, @PathVariable int version) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		String content = "";
+		if (td == null) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat domain does not exist.");
+		} else {
+			TomcatConfigFile confFile = domainService.getConfig(td, type,
+					version);
+			if (confFile != null) {
+				// load by ssh ....
+				content = "load by ssh ....";
+			}
+			json.setData(content);
 			json.setSuccess(true);
 		}
 		return json;
