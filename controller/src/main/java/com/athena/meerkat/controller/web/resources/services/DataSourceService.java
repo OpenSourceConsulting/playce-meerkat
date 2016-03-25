@@ -172,14 +172,8 @@ public class DataSourceService {
 	}
 
 	public List<DataSource> search(String keyword) {
-		List<DataSource> datasourcesByName = datasourceRepo.findByName(keyword);
-		List<DataSource> datasourcesByJdbc = datasourceRepo
-				.findByJdbcUrl(keyword);
-
-		if (datasourcesByJdbc == null && datasourcesByName == null) {
-			return null;
-		}
-		datasourcesByJdbc.addAll(datasourcesByName);
-		return datasourcesByJdbc;
+		List<DataSource> datasourcesByName = datasourceRepo
+				.findByNameContaining(keyword);
+		return datasourcesByName;
 	}
 }

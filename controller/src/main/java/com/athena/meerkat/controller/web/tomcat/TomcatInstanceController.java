@@ -32,6 +32,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.Server;
@@ -196,8 +198,9 @@ public class TomcatInstanceController {
 			TomcatInstance tomcat, int machineId, int domainId, String dsIds,
 			boolean autoRestart) {
 		// check existing
-		TomcatInstance existingTomcat = service.findByNameAndDomain(
-				tomcat.getName(), domainId);
+		// TomcatInstance existingTomcat = service.findByNameAndDomain(
+		// tomcat.getName(), domainId);
+		TomcatInstance existingTomcat = new TomcatInstance();
 		if (existingTomcat != null) {
 			if (existingTomcat.getId() != tomcat.getId()) {
 				json.setSuccess(false);
@@ -271,21 +274,14 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	// monitoring section
-	@RequestMapping("/monitoring/busythreads")
+	@RequestMapping(value = "domain/{domainId}/search/{keyword}", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse monitoringBusyThread(SimpleJsonResponse json,
-			int tomcatId) {
-		// List<SimpleMonitoringObject> result = new
-		// ArrayList<SimpleMonitoringObject>();
-		// final Random r = new Random();
-		//
-		// for (int j = 0; j < 20; j++) {
-		// result.add(new SimpleMonitoringObject(j, r.nextInt(100), r
-		// .nextInt(100)));
-		// }
-		// json.setData(result);
-		// json.setSuccess(true);
+	public GridJsonResponse search(GridJsonResponse json,
+			@PathVariable Integer domainId, @PathVariable String keyword) {
+		List<TomcatInstance> result = service.findByNameAndDomain(keyword,
+				domainId);
+		json.setList(result);
+		json.setTotal(result.size());
 		return json;
 	}
 }

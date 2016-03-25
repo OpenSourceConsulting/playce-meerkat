@@ -263,9 +263,8 @@ public class TomcatInstanceService {
 	 * @param domainId
 	 * @return
 	 */
-	public TomcatInstance findByNameAndDomain(String name, int domainId) {
-		//return repo.findByNameAndDomainId(name, domainId);
-		return null;
+	public List<TomcatInstance> findByNameAndDomain(String name, int domainId) {
+		return repo.findByNameContainingAndTomcatDomain_Id(name, domainId);
 	}
 
 }
