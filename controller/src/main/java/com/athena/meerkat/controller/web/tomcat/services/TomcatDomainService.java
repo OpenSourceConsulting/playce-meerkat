@@ -2,6 +2,8 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 public class TomcatDomainService {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TomcatDomainService.class);
-	@Autowired
+	@Inject
 	private DomainRepository domainRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
@@ -162,5 +164,11 @@ public class TomcatDomainService {
 				.findByTomcatDomainAndClusteringConfigurationVersion_Version(
 						td, version);
 		return result;
+	}
+
+	public DomainTomcatConfiguration saveDomainTomcatConfig(
+			DomainTomcatConfiguration conf) {
+		return domainTomcatConfRepo.save(conf);
+
 	}
 }

@@ -34,6 +34,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -49,6 +51,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.athena.meerkat.controller.web.common.converter.StringToNumberConverter;
 import com.athena.meerkat.controller.web.user.services.UserService;
 
 /**
@@ -69,6 +72,13 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 		SpringApplication.run(MeerkatBoot.class, args);
 	}
 	
+	@Override
+	public void addFormatters(FormatterRegistry registry) {
+		
+		registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
+		registry.addConverter(new StringToNumberConverter());
+	}
+
 
 	/**
 	 * <pre>

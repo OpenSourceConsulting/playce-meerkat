@@ -58,6 +58,22 @@ public class TomcatProvisioningController {
 	@ResponseBody
 	public SimpleJsonResponse install(@PathVariable("domainId") int domainId) {
 		
+		//proviService.installTomcatInstance(domainId);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	/**
+	 * <pre>
+	 * for test.
+	 * </pre>
+	 * @param domainId
+	 * @return
+	 */
+	@RequestMapping(value = "/install2/{domainId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse install2(@PathVariable("domainId") int domainId) {
+		
 		proviService.installTomcatInstance(domainId);
 		
 		return new SimpleJsonResponse();

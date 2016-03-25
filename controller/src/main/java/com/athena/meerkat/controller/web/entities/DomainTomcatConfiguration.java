@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * <pre>
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @Entity
 @Table(name = "domain_tomcat_configuration")
+@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer" })
 public class DomainTomcatConfiguration implements Serializable {
 
 	/**
@@ -64,7 +66,7 @@ public class DomainTomcatConfiguration implements Serializable {
 	private String tomcatVersion;
 	@Column(name = "encoding")
 	private String encoding;
-	
+
 	@OneToOne
 	@JoinColumn(name = "domain_id")
 	@JsonBackReference

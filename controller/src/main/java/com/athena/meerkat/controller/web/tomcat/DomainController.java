@@ -1,8 +1,10 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -23,11 +25,13 @@ import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.user.entities.User;
@@ -37,7 +41,7 @@ import com.athena.meerkat.controller.web.user.entities.User;
 public class DomainController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(DomainController.class);
-	@Autowired
+	@Inject
 	private TomcatDomainService domainService;
 	@Autowired
 	private DataGridServerGroupService datagridGroupService;
@@ -267,6 +271,26 @@ public class DomainController {
 			json.setList(confs);
 			json.setTotal(confs.size());
 			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse saveTomcatConfig(
+			SimpleJsonResponse json,
+			DomainTomcatConfiguration domainTomcatConfig) {
+		DomainTomcatConfiguration currentConf = domainService
+				.getTomcatConfig(domainTomcatConfig.getTomcatDomain().getId());
+		int id = currentConf.getId();
+		currentConf = domainTomcatConfig;
+		currentConf.setId(id);
+		currentConf.setModifiedDate(new Date());
+		User loginUser = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		currentConf.setModifiedUserId(loginUser.getId());
+		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
+			json.setSuccess(false);
+			json.setMsg("Domain tomcat configuration is fail.");
 		}
 		return json;
 	}

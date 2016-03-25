@@ -46,20 +46,20 @@ public class ProvisioningUtil {
 		return jobNum;
 	}
 	
-	public static void deployAgent(File workingDir, File jobDir) throws Exception {
+	public static void deployAgent(File commanderDir, File jobDir) throws Exception {
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(workingDir.getAbsolutePath() + File.separator + "deployAgent.bat");
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + "deployAgent.bat");
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
 				
-		CommandUtil.execWithLog(workingDir, cmds);
+		CommandUtil.execWithLog(commanderDir, cmds);
 	}
 	
-	public static void sendCommand(File workingDir, File jobDir) throws Exception {
+	public static void sendCommand(File commanderDir, File jobDir) throws Exception {
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(workingDir.getAbsolutePath() + File.separator + "sendCommand.bat");
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + "sendCommand.bat");
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
 		
-		CommandUtil.execWithLog(workingDir, cmds);
+		CommandUtil.execWithLog(commanderDir, cmds);
 	}
 	
 	
