@@ -12,12 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.transaction.Transactional;
+
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+import org.springframework.context.annotation.Lazy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,6 +37,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @Table(name = "tomcat_domain")
+@Lazy
 public class TomcatDomain {
 
 	@Id
@@ -48,7 +55,6 @@ public class TomcatDomain {
 	private DatagridServerGroup serverGroup;
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
 	@JsonManagedReference
-	@Basic(fetch = FetchType.LAZY)
 	private List<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
@@ -89,6 +95,8 @@ public class TomcatDomain {
 		this.id = id;
 	}
 
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	public List<TomcatInstance> getTomcats() {
 		return tomcatInstances;
 	}
@@ -150,7 +158,7 @@ public class TomcatDomain {
 		return 0;
 
 	}
-	
+
 	public List<ClusteringConfiguration> getClusteringConfigurations() {
 		return clusteringConfigurations;
 	}
