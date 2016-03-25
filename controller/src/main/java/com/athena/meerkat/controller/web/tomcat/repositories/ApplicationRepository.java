@@ -11,5 +11,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 @Repository
 public interface ApplicationRepository extends
 		JpaRepository<TomcatApplication, Integer> {
+
+	List<TomcatApplication> findByTomcatDomain_Id(int domainId);
 	//List<TomcatApplication> findByDisplayNameAndTomcat_Domain_Id(String name, int domainId);
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
@@ -25,7 +27,7 @@ public class ApplicationController {
 	@Autowired
 	private TomcatDomainService domainService;
 
-	@RequestMapping("/deploy")
+	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse deploy(SimpleJsonResponse json,
 			TomcatApplication app, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
@@ -35,31 +37,27 @@ public class ApplicationController {
 			return json;
 		}
 		app.setState(State.APP_STATE_STOPPED);
-		// app.setLastModifiedDate(new Date());
-		//app.setDeployedDate(new Date());
-		appService.deploy(app, domain);
+		app.setLastModifiedTime(new Date());
+		app.setDeployedDate(new Date());
+		app.setTomcatDomain(domain);
+		app.setVersion("1.233"); // get by war fileF
+		// provisioning before save
+		appService.save(app);
 		return json;
 	}
 
 	@RequestMapping("/undeploy")
 	public @ResponseBody SimpleJsonResponse undeploy(SimpleJsonResponse json,
-			int Id, int domainId) {
+			int Id) {
 		TomcatApplication app = appService.getApplication(Id);
-		TomcatDomain domain = domainService.getDomain(domainId);
-		if (domain == null) {
-			json.setMsg("Domain does not exist.");
-			json.setSuccess(false);
-			return json;
-		}
+
 		if (app == null) {
 			json.setSuccess(false);
 			json.setMsg("Application does not exist.");
-			return json;
+
 		} else {
-			if (appService.undeploy(app, domain)) {
-				json.setSuccess(true);
-				return json;
-			}
+			appService.delete(app);
+
 		}
 		return json;
 	}
@@ -143,11 +141,11 @@ public class ApplicationController {
 			json.setSuccess(false);
 			json.setMsg("Domain does not exist");
 		}
-//		List<TomcatInstance> tomcats = domain.getTomcats();
-//		if (tomcats.size() > 0) {
-//			json.setSuccess(true);
-//			// json.setData(tomcats.get(0).getApplications());
-//		}
+		// List<TomcatInstance> tomcats = domain.getTomcats();
+		// if (tomcats.size() > 0) {
+		// json.setSuccess(true);
+		// // json.setData(tomcats.get(0).getApplications());
+		// }
 		return json;
 	}
 }

@@ -18,21 +18,6 @@ public class ApplicationService {
 	@Autowired
 	private ApplicationRepository appRepo;
 
-	public boolean deploy(TomcatApplication app, TomcatDomain domain) {
-		/*
-		// Deploy an application to a domain means deploy to all tomcat
-		// assoicated to that domain.
-		Collection<TomcatInstance> tomcats = domain.getTomcats();
-		for (TomcatInstance tomcat : tomcats) {
-			TomcatApplication newApp = app.clone();
-		//	newApp.setTomcat(tomcat);
-			appRepo.save(newApp);
-		}
-		*/
-		return true;
-
-	}
-
 	public TomcatApplication getApplication(int id) {
 		return appRepo.findOne(id);
 	}
@@ -42,7 +27,7 @@ public class ApplicationService {
 		// provisioning
 		// ....
 		app.setState(State.APP_STATE_STARTED);
-		//app.setLastStartedDate(new Date());
+		// app.setLastStartedDate(new Date());
 		this.save(app);
 		success = true;
 		return success;
@@ -53,7 +38,7 @@ public class ApplicationService {
 		// provisioning
 		// ....
 		app.setState(State.APP_STATE_STOPPED);
-		//app.setLastStoppedDate(new Date());
+		// app.setLastStoppedDate(new Date());
 		this.save(app);
 		success = true;
 		return success;
@@ -63,14 +48,8 @@ public class ApplicationService {
 		appRepo.save(app);
 	}
 
-	public boolean undeploy(TomcatApplication app, TomcatDomain domain) {
-		// List<TomcatApplication> apps =
-		// appRepo.findByDisplayNameAndTomcat_Domain_Id(
-		// app.getDisplayName(), domain.getId());
-		// for (TomcatApplication a : apps) {
-		// // app.setTomcat(null);
-		// appRepo.delete(a);
-		// }
+	public boolean delete(TomcatApplication app) {
+		appRepo.delete(app);
 		return true;
 
 	}

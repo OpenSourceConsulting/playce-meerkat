@@ -20,6 +20,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
+import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
@@ -42,6 +43,8 @@ public class TomcatDomainService {
 	private DomainTomcatConfigurationRepository domainTomcatConfRepo;
 	@Autowired
 	private ClusteringConfigurationReposiroty clusteringConfRepo;
+	@Autowired
+	private ApplicationRepository appRepo;
 
 	// @Autowired
 	// private ClusteringConfigurationRepository clusteringConfigRepo;
@@ -86,16 +89,8 @@ public class TomcatDomainService {
 	}
 
 	public List<TomcatApplication> getApplicationListByDomain(int domainId) {
-		TomcatDomain domain = domainRepo.findOne(domainId);
-		// Tomcat instances that are belonged to same domain have same
-		// applications. Only retrieve these application for specified domain
-		if (domain != null) {
-			// List<TomcatInstance> tomcats = (List<TomcatInstance>)
-			// domain.getTomcats();
-			// return (List<TomcatApplication>)
-			// tomcats.get(0).getApplications();
-		}
-		return null;
+
+		return appRepo.findByTomcatDomain_Id(domainId);
 	}
 
 	public TomcatDomain getDomain(int id) {
