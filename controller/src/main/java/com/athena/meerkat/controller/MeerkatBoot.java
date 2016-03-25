@@ -51,7 +51,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.athena.meerkat.controller.web.common.converter.StringToNumberConverter;
+import com.athena.meerkat.controller.web.common.converter.StringToNumberConverterFactory;
 import com.athena.meerkat.controller.web.user.services.UserService;
 
 /**
@@ -76,7 +76,7 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry registry) {
 		
 		registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
-		registry.addConverter(new StringToNumberConverter());
+		registry.addConverterFactory(new StringToNumberConverterFactory());
 	}
 
 

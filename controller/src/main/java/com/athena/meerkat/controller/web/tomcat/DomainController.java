@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
@@ -88,14 +89,29 @@ public class DomainController {
 				domain.setServerGroup(group);
 			}
 
-			User loginUser = (User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal();
-			domain.setCreateUser(loginUser.getId());
+			domain.setCreateUser(WebUtil.getLoginUserId());
 			domainService.save(domain);
 		} catch (Exception ex) {
 			LOGGER.debug(ex.getMessage());
 		}
 		json.setSuccess(true);
+		return json;
+	}
+	
+	@RequestMapping(value = "/saveWithConfig", method = RequestMethod.POST)
+	@Transactional
+	@ResponseBody
+	public SimpleJsonResponse saveWithConfig(SimpleJsonResponse json,
+			TomcatDomain domain, DomainTomcatConfiguration config) {
+		
+		int loginUserId = WebUtil.getLoginUserId();
+		
+		domain.setCreateUser(loginUserId);
+		
+		config.setModifiedUserId(loginUserId);
+		
+		domainService.saveWithConfig(domain, config);
+		
 		return json;
 	}
 
@@ -284,10 +300,9 @@ public class DomainController {
 		int id = currentConf.getId();
 		currentConf = domainTomcatConfig;
 		currentConf.setId(id);
-		currentConf.setModifiedDate(new Date());
-		User loginUser = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		currentConf.setModifiedUserId(loginUser.getId());
+
+		
+		currentConf.setModifiedUserId(WebUtil.getLoginUserId());
 		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
 			json.setSuccess(false);
 			json.setMsg("Domain tomcat configuration is fail.");
@@ -325,14 +340,15 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping(value = "/applications", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getApplicationsByDomain(
-			SimpleJsonResponse json, int domainId) {
+	@RequestMapping(value = "/{domainId}/applications", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getApplicationsByDomain(
+			GridJsonResponse json, @PathVariable Integer domainId) {
 		List<TomcatApplication> apps = domainService
 				.getApplicationListByDomain(domainId);
 		if (apps != null) {
 			json.setSuccess(true);
-			json.setData(apps);
+			json.setList(apps);
+			json.setTotal(apps.size());
 		} else {
 			json.setSuccess(false);
 			json.setMsg("Domain does not exist.");

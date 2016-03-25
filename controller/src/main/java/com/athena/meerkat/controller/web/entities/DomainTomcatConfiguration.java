@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -206,5 +207,10 @@ public class DomainTomcatConfiguration implements Serializable {
 
 	public void setTomcatVersion(String tomcatVersion) {
 		this.tomcatVersion = tomcatVersion;
+	}
+	
+	@PrePersist
+	public void onPreSave() {
+		this.modifiedDate = new Date();
 	}
 }
