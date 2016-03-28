@@ -37,7 +37,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.MeerkatConstants;
@@ -66,6 +65,7 @@ public class TomcatInstance implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+
 	@Column(name = "state")
 	private int state;
 	@Column(name = "created_time")
@@ -93,6 +93,10 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@JoinColumn(name = "network_interface_id")
+	private NetworkInterface networkInterface;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
 	@JsonManagedReference(value="inst-app")
@@ -241,16 +245,26 @@ public class TomcatInstance implements Serializable {
 		this.createdTime = createdTime;
 	}
 
+	public NetworkInterface getNetworkInterface() {
+		return networkInterface;
+	}
+
+	public void setNetworkInterface(NetworkInterface networkInterface) {
+		this.networkInterface = networkInterface;
+	}
+
+	public String getIpaddress() {
+		if (networkInterface != null) {
+			return networkInterface.getIpv4();
+		}
+		return "";
+	}
+
 	public List<TomcatApplication> getTomcatApplications() {
 		return tomcatApplications;
 	}
 
 	public void setTomcatApplications(List<TomcatApplication> tomcatApplications) {
 		this.tomcatApplications = tomcatApplications;
-	}
-	
-	@PrePersist
-	public void onPreSave() {
-		this.createdTime = new Date();
 	}
 }

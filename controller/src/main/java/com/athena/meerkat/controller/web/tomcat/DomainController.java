@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,8 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
@@ -30,8 +34,10 @@ import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/domain")
@@ -93,22 +99,22 @@ public class DomainController {
 		json.setSuccess(true);
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/saveWithConfig", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveWithConfig(SimpleJsonResponse json,
 			TomcatDomain domain, DomainTomcatConfiguration config) {
-		
+
 		int loginUserId = WebUtil.getLoginUserId();
-		
+
 		domain.setCreateUser(loginUserId);
-		
+
 		config.setModifiedUserId(loginUserId);
-		
+
 		domainService.saveWithConfig(domain, config);
-		
+
 		json.setData(domain);
-		
+
 		return json;
 	}
 
@@ -298,7 +304,6 @@ public class DomainController {
 		currentConf = domainTomcatConfig;
 		currentConf.setId(id);
 
-		
 		currentConf.setModifiedUserId(WebUtil.getLoginUserId());
 		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
 			json.setSuccess(false);
@@ -311,13 +316,17 @@ public class DomainController {
 	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json,
 			int id) {
 		TomcatDomain result = domainService.getDomain(id);
-		if (result == null) {
-			json.setSuccess(false);
-			json.setMsg("Domain does not exist");
-		} else {
-			json.setSuccess(true);
-			json.setData(result);
+		int latestVersionId = 0;
+		if (result != null) {
+			ClusteringConfigurationVersion latestVersion = domainService
+					.getLatestClusteringConfVersion(result.getId());
+			if (latestVersion != null) {
+				latestVersionId = latestVersion.getId();
+			}
 		}
+		result.setLatestConfVersionId(latestVersionId);
+		json.setData(result);
+
 		return json;
 	}
 
@@ -353,29 +362,59 @@ public class DomainController {
 		return json;
 	}
 
-	// @RequestMapping(value = "/clustering/config/save", method =
-	// RequestMethod.POST)
-	// public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json,
-	// ClusteringConfiguration config, int domainId) {
-	// boolean isEdit = !(config.getId() == 0);
-	//
-	// List<ClusteringConfiguration> existingConfigs = domainService
-	// .getClusteringConfigurationByName(config.getName());
-	// if (existingConfigs.size() > 0) {
-	// if (!isEdit
-	// || (isEdit && existingConfigs.get(0).getId() != config
-	// .getId())) {
-	// json.setSuccess(false);
-	// json.setMsg("Config name is duplicated.");
-	// return json;
-	// }
-	// }
-	// Domain domain = domainService.getDomain(domainId);
-	// // config.setDomain(domain);
-	// domainService.saveConfig(config);
-	// json.setSuccess(true);
-	// return json;
-	// }
+	@RequestMapping(value = "/clustering/config/save", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse saveClusteringConfig(
+			SimpleJsonResponse json, ClusteringConfiguration config,
+			Integer tomcatDomainId) {
+		boolean isEdit = !(config.getId() == 0);
+
+		List<ClusteringConfiguration> existingConfigs = domainService
+				.getClusteringConfigurationByName(config.getName());
+		if (existingConfigs.size() > 0) {
+			if (!isEdit
+					|| (isEdit && existingConfigs.get(0).getId() != config
+							.getId())) {
+				json.setSuccess(false);
+				json.setMsg("Config name is duplicated.");
+				return json;
+			}
+		}
+		if (tomcatDomainId > 0) {
+			TomcatDomain domain = domainService.getDomain(tomcatDomainId);
+			config.setTomcatDomain(domain);
+			List<ClusteringConfiguration> confs = null;
+			ClusteringConfigurationVersion latestVersion = domainService
+					.getLatestClusteringConfVersion(domain.getId());
+			ClusteringConfigurationVersion versionObj = new ClusteringConfigurationVersion();
+			versionObj.setCreatedTime(new Date());
+			if (latestVersion == null) {
+				versionObj.setVersion(1);
+			} else {
+				confs = domainService.getClusteringConf(domain,
+						latestVersion.getId());
+				versionObj.setVersion(latestVersion.getVersion() + 1);
+			}
+			domainService.saveCluteringConfVersion(versionObj);
+			List<ClusteringConfiguration> cloneConfs = new ArrayList<ClusteringConfiguration>();
+			if (confs != null) {
+				for (ClusteringConfiguration c : confs) {
+					ClusteringConfiguration clone = (ClusteringConfiguration) c
+							.clone();
+					if (clone != null) {
+						clone.setClusteringConfigurationVersion(versionObj);
+						cloneConfs.add(clone);
+					}
+				}
+				domainService.saveClusteringConfigs(cloneConfs);
+			}
+			config.setClusteringConfigurationVersion(versionObj);
+			domainService.saveClusteringConfig(config);
+			json.setData(versionObj.getVersion());
+			json.setSuccess(true);
+		}
+
+		return json;
+	}
 
 	// @RequestMapping(value = "/clustering/config/edit", method =
 	// RequestMethod.POST)
@@ -430,13 +469,14 @@ public class DomainController {
 		}
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/saveDatasources", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
-		
+	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json,
+			@RequestBody List<TomcatDomainDatasource> datasources) {
+
 		domainService.saveDatasources(datasources);
-		
+
 		return json;
 	}
 }

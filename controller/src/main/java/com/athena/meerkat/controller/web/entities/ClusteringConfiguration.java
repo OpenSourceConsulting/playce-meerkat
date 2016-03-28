@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @Table(name = "clustering_configuration")
-public class ClusteringConfiguration implements Serializable {
+public class ClusteringConfiguration implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -95,4 +95,41 @@ public class ClusteringConfiguration implements Serializable {
 	public void setTomcatDomain(TomcatDomain tomcatDomain) {
 		this.tomcatDomain = tomcatDomain;
 	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		this.Id = id;
+	}
+
+	public int getTomcatDomainId() {
+		if (tomcatDomain != null) {
+			return tomcatDomain.getId();
+		}
+		return 0;
+	}
+
+	public ClusteringConfigurationVersion getClusteringConfigurationVersion() {
+		return clusteringConfigurationVersion;
+	}
+
+	public void setClusteringConfigurationVersion(
+			ClusteringConfigurationVersion clusteringConfigurationVersion) {
+		this.clusteringConfigurationVersion = clusteringConfigurationVersion;
+	}
+
+	public ClusteringConfiguration clone() {
+		try {
+
+			ClusteringConfiguration clone = (ClusteringConfiguration) super
+					.clone();
+			clone.setId(0);// reset ID;
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+
 }

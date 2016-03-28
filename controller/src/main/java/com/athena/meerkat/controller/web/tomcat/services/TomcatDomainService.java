@@ -13,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.CommonCodeRepository;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
+import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
@@ -33,7 +34,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 public class TomcatDomainService {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TomcatDomainService.class);
-	@Inject
+	@Autowired
 	private DomainRepository domainRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
@@ -47,27 +48,27 @@ public class TomcatDomainService {
 	private ClusteringConfigurationReposiroty clusteringConfRepo;
 	@Autowired
 	private ApplicationRepository appRepo;
-	
 	@Autowired
 	private TomcatDomainDatasourceRepository tdDatasoureRepo;
 
-	// @Autowired
-	// private ClusteringConfigurationRepository clusteringConfigRepo;
+	@Autowired
+	private ClusteringConfigurationVersionRepository clusteringConfigVerRepo;
 
 	@Transactional
 	public TomcatDomain save(TomcatDomain domain) {
 		return domainRepo.save(domain);
 	}
-	
+
 	@Transactional
-	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain, DomainTomcatConfiguration config) {
+	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain,
+			DomainTomcatConfiguration config) {
 		domainRepo.save(domain);
-		
+
 		config.setTomcatDomain(domain);
-		
+
 		return saveDomainTomcatConfig(config);
 	}
-	
+
 	@Transactional
 	public void saveDatasources(List<TomcatDomainDatasource> datasources) {
 		tdDatasoureRepo.save(datasources);
@@ -137,11 +138,12 @@ public class TomcatDomainService {
 		return configs;
 	}
 
-	// public List<ClusteringConfiguration> getClusteringConfigurationByName(
-	// String name) {
-	// return clusteringConfigRepo.findByName(name);
-	// }
-	//
+	public List<ClusteringConfiguration> getClusteringConfigurationByName(
+			String name) {
+		return clusteringConfRepo.findByName(name);
+
+	}
+
 	// public ClusteringConfiguration saveConfig(ClusteringConfiguration config)
 	// {
 	// return clusteringConfigRepo.save(config);
@@ -175,8 +177,8 @@ public class TomcatDomainService {
 	public List<ClusteringConfiguration> getClusteringConf(TomcatDomain td,
 			Integer version) {
 		List<ClusteringConfiguration> result = clusteringConfRepo
-				.findByTomcatDomainAndClusteringConfigurationVersion_Version(
-						td, version);
+				.findByTomcatDomainAndClusteringConfigurationVersion_Id(td,
+						version);
 		return result;
 	}
 
@@ -185,4 +187,29 @@ public class TomcatDomainService {
 		return domainTomcatConfRepo.save(conf);
 
 	}
+
+	public ClusteringConfigurationVersion getClusteringConfigVersion(int id) {
+		return clusteringConfigVerRepo.findOne(id);
+	}
+
+	public void saveClusteringConfigs(List<ClusteringConfiguration> confs) {
+		clusteringConfRepo.save(confs);
+	}
+
+	public void saveClusteringConfig(ClusteringConfiguration config) {
+		clusteringConfRepo.save(config);
+	}
+
+	public ClusteringConfigurationVersion saveCluteringConfVersion(
+			ClusteringConfigurationVersion version) {
+		return clusteringConfigVerRepo.save(version);
+	}
+
+	public ClusteringConfigurationVersion getLatestClusteringConfVersion(
+			int domainId) {
+		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
+				.findFirstClusteringVersion(domainId);
+		return latestVersion.get(0);
+	}
+
 }

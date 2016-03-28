@@ -23,7 +23,7 @@ public class ClusteringConfigurationVersion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
-	private int Id;
+	private int id;
 
 	@Column(name = "version")
 	private int version;
@@ -32,11 +32,11 @@ public class ClusteringConfigurationVersion implements Serializable {
 	private Date createdTime;
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public int getVersion() {

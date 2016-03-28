@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
@@ -14,9 +15,12 @@ import com.athena.meerkat.controller.web.entities.TomcatDomain;
 public interface ClusteringConfigurationReposiroty extends
 		JpaRepository<ClusteringConfiguration, Integer> {
 
-	@Query("select distinct ccv from TomcatDomain td inner join td.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where td.id = ?1")
-	List<ClusteringConfigurationVersion> getVersions(int domainId);
+	@Query(value = "select distinct ccv from TomcatDomain td inner join td.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where td.id = :domainId group by ccv.version")
+	List<ClusteringConfigurationVersion> getVersions(
+			@Param("domainId") int domainId);
 
-	List<ClusteringConfiguration> findByTomcatDomainAndClusteringConfigurationVersion_Version(
+	List<ClusteringConfiguration> findByTomcatDomainAndClusteringConfigurationVersion_Id(
 			TomcatDomain td, Integer versionId);
+
+	List<ClusteringConfiguration> findByName(String name);
 }

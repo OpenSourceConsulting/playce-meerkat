@@ -49,12 +49,14 @@ public class TomcatDomain {
 	@Column(name = "create_user_id")
 	private int createUser;
 
+	@Transient
+	private int latestConfVersionId;
 	@OneToOne
 	@JsonBackReference
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="domain-inst")
+	@JsonManagedReference(value = "domain-inst")
 	private List<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
@@ -62,16 +64,16 @@ public class TomcatDomain {
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	@OneToOne
-	@JsonManagedReference(value="domain-config")
+	@JsonManagedReference(value = "domain-config")
 	@JoinColumn(name = "domain_tomcat_configuration_id")
 	private DomainTomcatConfiguration domainTomcatConfig;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="domain-configFile")
+	@JsonManagedReference(value = "domain-configFile")
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="domain-app")
+	@JsonManagedReference(value = "domain-app")
 	private List<TomcatApplication> tomcatApplication;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -193,4 +195,13 @@ public class TomcatDomain {
 	public void setTomcatApplication(List<TomcatApplication> tomcatApplication) {
 		this.tomcatApplication = tomcatApplication;
 	}
+
+	public int getLatestConfVersionId() {
+		return latestConfVersionId;
+	}
+
+	public void setLatestConfVersionId(int latestConfVersionId) {
+		this.latestConfVersionId = latestConfVersionId;
+	}
+
 }
