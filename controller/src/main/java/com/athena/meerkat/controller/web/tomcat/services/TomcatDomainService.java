@@ -217,4 +217,8 @@ public class TomcatDomainService {
 	public ClusteringConfiguration getClusteringConfig(int id) {
 		return clusteringConfRepo.findOne(id);
 	}
+
+	public void deleteClusteringConfig(ClusteringConfiguration config) {
+		clusteringConfRepo.delete(config);
+	}
 }

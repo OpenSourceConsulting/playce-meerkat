@@ -422,20 +422,46 @@ public class DomainController {
 		return json;
 	}
 
-	// @RequestMapping(value = "/clustering/config/delete", method =
-	// RequestMethod.POST)
-	// public @ResponseBody SimpleJsonResponse deleteClusteringConfig(
-	// SimpleJsonResponse json, int id) {
-	// ClusteringConfiguration config = domainService.getConfig(id);
-	// if (config == null) {
-	// json.setSuccess(false);
-	// json.setMsg("This configuration does not exist");
-	// } else {
-	// domainService.deleteClusteringConfig(config);
-	// json.setSuccess(true);
-	// }
-	// return json;
-	// }
+	@RequestMapping(value = "/clustering/config/delete", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse deleteClusteringConfig(
+			SimpleJsonResponse json, int id) {
+		ClusteringConfiguration config = domainService.getClusteringConfig(id);
+		ClusteringConfigurationVersion latestVersion = domainService
+				.getLatestClusteringConfVersion(config.getTomcatDomainId());
+		// if this is not latest version, just delete
+		if (config.getClusteringConfigurationVersion().getId() != latestVersion
+				.getId()) {
+			domainService.deleteClusteringConfig(config);
+			json.setData(latestVersion.getId());
+		} else {
+			ClusteringConfigurationVersion versionObj = new ClusteringConfigurationVersion();
+			versionObj.setCreatedTime(new Date());
+			versionObj.setVersion(latestVersion.getVersion() + 1);
+			versionObj = domainService.saveCluteringConfVersion(versionObj);
+			List<ClusteringConfiguration> confs = domainService
+					.getClusteringConf(config.getTomcatDomain(),
+							latestVersion.getId());
+			List<ClusteringConfiguration> cloneConfs = new ArrayList<ClusteringConfiguration>();
+			if (confs != null) {
+				for (ClusteringConfiguration c : confs) {
+					if (c.getId() != config.getId()) {
+						ClusteringConfiguration clone = (ClusteringConfiguration) c
+								.clone();
+						if (clone != null) {
+							clone.setClusteringConfigurationVersion(versionObj);
+							cloneConfs.add(clone);
+						}
+					}
+				}
+				domainService.saveClusteringConfigs(cloneConfs);
+			}
+			json.setData(versionObj.getId());
+		}
+
+		json.setSuccess(true);
+
+		return json;
+	}
 
 	// @RequestMapping(value = "/clustering/config/list", method =
 	// RequestMethod.GET)
