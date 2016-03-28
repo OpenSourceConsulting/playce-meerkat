@@ -368,17 +368,8 @@ public class DomainController {
 			Integer tomcatDomainId) {
 		boolean isEdit = !(config.getId() == 0);
 
-		List<ClusteringConfiguration> existingConfigs = domainService
-				.getClusteringConfigurationByName(config.getName());
-		if (existingConfigs.size() > 0) {
-			if (!isEdit
-					|| (isEdit && existingConfigs.get(0).getId() != config
-							.getId())) {
-				json.setSuccess(false);
-				json.setMsg("Config name is duplicated.");
-				return json;
-			}
-		}
+		ClusteringConfiguration currentConfig = domainService
+				.getClusteringConfig(config.getId());
 		if (tomcatDomainId > 0) {
 			TomcatDomain domain = domainService.getDomain(tomcatDomainId);
 			config.setTomcatDomain(domain);
@@ -394,42 +385,42 @@ public class DomainController {
 						latestVersion.getId());
 				versionObj.setVersion(latestVersion.getVersion() + 1);
 			}
-			domainService.saveCluteringConfVersion(versionObj);
+			versionObj = domainService.saveCluteringConfVersion(versionObj);
 			List<ClusteringConfiguration> cloneConfs = new ArrayList<ClusteringConfiguration>();
 			if (confs != null) {
 				for (ClusteringConfiguration c : confs) {
-					ClusteringConfiguration clone = (ClusteringConfiguration) c
-							.clone();
-					if (clone != null) {
-						clone.setClusteringConfigurationVersion(versionObj);
-						cloneConfs.add(clone);
+					if (c.getId() != config.getId()) { // dont clone the edited
+														// config
+						ClusteringConfiguration clone = (ClusteringConfiguration) c
+								.clone();
+						if (clone != null) {
+							clone.setClusteringConfigurationVersion(versionObj);
+							cloneConfs.add(clone);
+						}
 					}
 				}
 				domainService.saveClusteringConfigs(cloneConfs);
 			}
+			if (config.getId() != 0) {
+				// reset id for editing case
+				config.setId(0);
+			}
 			config.setClusteringConfigurationVersion(versionObj);
 			domainService.saveClusteringConfig(config);
-			json.setData(versionObj.getVersion());
+			json.setData(versionObj.getId());
 			json.setSuccess(true);
 		}
 
 		return json;
 	}
 
-	// @RequestMapping(value = "/clustering/config/edit", method =
-	// RequestMethod.POST)
-	// public @ResponseBody SimpleJsonResponse editClusteringConfig(
-	// SimpleJsonResponse json, int id) {
-	// ClusteringConfiguration config = domainService.getConfig(id);
-	// if (config == null) {
-	// json.setSuccess(false);
-	// json.setMsg("This configuration does not exist");
-	// } else {
-	// json.setSuccess(true);
-	// json.setData(config);
-	// }
-	// return json;
-	// }
+	@RequestMapping(value = "/clustering/config/edit", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse editClusteringConfig(
+			SimpleJsonResponse json, int id) {
+		ClusteringConfiguration config = domainService.getClusteringConfig(id);
+		json.setData(config);
+		return json;
+	}
 
 	// @RequestMapping(value = "/clustering/config/delete", method =
 	// RequestMethod.POST)

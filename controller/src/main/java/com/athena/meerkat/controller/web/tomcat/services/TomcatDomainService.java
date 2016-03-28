@@ -149,9 +149,7 @@ public class TomcatDomainService {
 	// return clusteringConfigRepo.save(config);
 	// }
 	//
-	// public ClusteringConfiguration getConfig(int id) {
-	// return clusteringConfigRepo.findOne(id);
-	// }
+
 	//
 	// public void deleteClusteringConfig(ClusteringConfiguration config) {
 	// clusteringConfigRepo.delete(config);
@@ -209,7 +207,14 @@ public class TomcatDomainService {
 			int domainId) {
 		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
 				.findFirstClusteringVersion(domainId);
+		if (latestVersion.size() == 0) {
+			return null;
+		}
+
 		return latestVersion.get(0);
 	}
 
+	public ClusteringConfiguration getClusteringConfig(int id) {
+		return clusteringConfRepo.findOne(id);
+	}
 }
