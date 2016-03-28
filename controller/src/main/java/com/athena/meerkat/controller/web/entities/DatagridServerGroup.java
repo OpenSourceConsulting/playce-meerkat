@@ -43,11 +43,11 @@ public class DatagridServerGroup implements Serializable {
 	private int typeCdId;
 
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="grid-server")
 	private List<Server> servers;
 	//
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="grid-configs")
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	public String getName() {

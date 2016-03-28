@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -72,19 +71,20 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
+	/*
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
-	@JsonManagedReference
 	private NetworkInterface sshNi;
+	*/
 	@Column(name = "state")
 	private int state;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "server")
-	@JsonManagedReference
-	private Collection<NetworkInterface> networkInterfaces;
+	@JsonManagedReference(value="server-nic")
+	private List<NetworkInterface> networkInterfaces;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="inst-server")
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
@@ -92,7 +92,7 @@ public class Server implements Serializable {
 	private Collection<SshAccount> sshAccounts;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="grid-server")
 	private DatagridServerGroup datagridServerGroup;
 
 	public String getName() {
@@ -294,7 +294,7 @@ public class Server implements Serializable {
 	}
 
 	public void setNetworkInterfaces(
-			Collection<NetworkInterface> networkInterfaces) {
+			List<NetworkInterface> networkInterfaces) {
 		this.networkInterfaces = networkInterfaces;
 	}
 
@@ -339,7 +339,7 @@ public class Server implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+/*
 	public NetworkInterface getSshNi() {
 		return sshNi;
 	}
@@ -347,7 +347,7 @@ public class Server implements Serializable {
 	public void setSshNi(NetworkInterface sshNi) {
 		this.sshNi = sshNi;
 	}
-
+*/
 	public void addNis(NetworkInterface ni) {
 		if (this.networkInterfaces == null) {
 			networkInterfaces = new ArrayList<NetworkInterface>();
@@ -356,15 +356,15 @@ public class Server implements Serializable {
 	}
 
 	public String getSshIPAddr() {
-		if (sshNi != null) {
-			return sshNi.getIpv4();
+		if (networkInterfaces != null && networkInterfaces.size() > 0) {
+			return networkInterfaces.get(0).getIpv4();
 		}
 		return "";
 	}
 
 	public int getSshNiId() {
-		if (sshNi != null) {
-			return sshNi.getId();
+		if (networkInterfaces != null && networkInterfaces.size() > 0) {
+			return networkInterfaces.get(0).getId();
 		}
 		return 0;
 	}

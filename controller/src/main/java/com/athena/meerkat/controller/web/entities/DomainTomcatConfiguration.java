@@ -70,7 +70,7 @@ public class DomainTomcatConfiguration implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "domain_id")
-	@JsonBackReference
+	@JsonBackReference(value="domain-config")
 	private TomcatDomain tomcatDomain;
 
 	public TomcatDomain getTomcatDomain() {

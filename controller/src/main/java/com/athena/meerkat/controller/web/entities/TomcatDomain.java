@@ -54,7 +54,7 @@ public class TomcatDomain {
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="domain-inst")
 	private List<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
@@ -62,22 +62,21 @@ public class TomcatDomain {
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	@OneToOne
-	@JsonManagedReference
+	@JsonManagedReference(value="domain-config")
 	@JoinColumn(name = "domain_tomcat_configuration_id")
 	private DomainTomcatConfiguration domainTomcatConfig;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="domain-configFile")
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="domain-app")
 	private List<TomcatApplication> tomcatApplication;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
-	@JsonManagedReference
-	private Collection<DataSource> datasources;
+	private List<DataSource> datasources;
 
 	public String getName() {
 		return name;
@@ -123,11 +122,11 @@ public class TomcatDomain {
 		return 0;
 	}
 
-	public Collection<DataSource> getDatasources() {
+	public List<DataSource> getDatasources() {
 		return datasources;
 	}
 
-	public void setDatasources(Collection<DataSource> datasources) {
+	public void setDatasources(List<DataSource> datasources) {
 		this.datasources = datasources;
 	}
 

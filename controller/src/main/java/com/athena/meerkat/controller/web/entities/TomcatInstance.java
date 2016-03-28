@@ -56,11 +56,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "tomcat_instance")
 public class TomcatInstance implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	
+	private static final long serialVersionUID = 1852609995878767410L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
@@ -74,32 +72,49 @@ public class TomcatInstance implements Serializable {
 	private Date createdTime;
 	@Column(name = "create_user_id")
 	private int createUserId;
+	
+	@Column(name = "domain_id", insertable=false, updatable=false)
+	private int domainId;
+	
+	@Column(name = "server_id", insertable=false, updatable=false)
+	private int serverId;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="inst-configFile")
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference
+	@JsonBackReference(value="inst-server")
 	private Server server;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference
+	@JsonBackReference(value="domain-inst")
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
-	@JoinColumn(name = "network_interface_id")
-	private NetworkInterface networkInterface;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="inst-app")
 	private List<TomcatApplication> tomcatApplications;
 
 	public TomcatInstance() {
+	}
+
+	public int getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(int domainId) {
+		this.domainId = domainId;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
 	}
 
 	public int getId() {
@@ -224,21 +239,6 @@ public class TomcatInstance implements Serializable {
 
 	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
-	}
-
-	public NetworkInterface getNetworkInterface() {
-		return networkInterface;
-	}
-
-	public void setNetworkInterface(NetworkInterface networkInterface) {
-		this.networkInterface = networkInterface;
-	}
-
-	public String getIpaddress() {
-		if (networkInterface != null) {
-			return networkInterface.getIpv4();
-		}
-		return "";
 	}
 
 	public List<TomcatApplication> getTomcatApplications() {

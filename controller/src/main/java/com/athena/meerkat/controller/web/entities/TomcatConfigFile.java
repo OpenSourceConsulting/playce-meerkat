@@ -48,12 +48,12 @@ public class TomcatConfigFile implements Serializable {
 	private int createUserId;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="domain-configFile")
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="inst-configFile")
 	private TomcatInstance tomcatInstance;
 
 	public TomcatDomain getTomcatDomain() {

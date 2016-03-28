@@ -46,12 +46,12 @@ public class TomcatApplication implements Serializable, Cloneable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference
+	@JsonBackReference(value="inst-app")
 	private TomcatInstance tomcatInstance;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference
+	@JsonBackReference(value="domain-app")
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 

@@ -43,7 +43,7 @@ public class ClusteringConfiguration implements Serializable {
 	@Column(name = "created_time")
 	private Date createdTime;
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="grid-configs")
 	private DatagridServerGroup datagridServerGroup;
 
 	@ManyToOne
@@ -53,7 +53,7 @@ public class ClusteringConfiguration implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "clustering_conf_version_id")
-	@JsonManagedReference
+	//@JsonManagedReference(value="grid-configVersion")
 	private ClusteringConfigurationVersion clusteringConfigurationVersion;
 
 	public String getName() {
