@@ -37,6 +37,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.athena.meerkat.controller.MeerkatConstants;
@@ -66,8 +67,7 @@ public class TomcatInstance implements Serializable {
 	private int Id;
 	@Column(name = "name", nullable = false)
 	private String name;
-	@Column(name = "version")
-	private String version;
+
 	@Column(name = "state")
 	private int state;
 	@Column(name = "created_time")
@@ -201,14 +201,6 @@ public class TomcatInstance implements Serializable {
 	// return "";
 	// }
 
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
 	// public List<TomcatConfigFile> getTomcatConfigFiles() {
 	// return tomcatConfigFiles;
 	// }
@@ -255,5 +247,10 @@ public class TomcatInstance implements Serializable {
 
 	public void setTomcatApplications(List<TomcatApplication> tomcatApplications) {
 		this.tomcatApplications = tomcatApplications;
+	}
+	
+	@PrePersist
+	public void onPreSave() {
+		this.createdTime = new Date();
 	}
 }

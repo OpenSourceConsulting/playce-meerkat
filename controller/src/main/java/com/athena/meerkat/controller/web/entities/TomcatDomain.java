@@ -117,7 +117,10 @@ public class TomcatDomain {
 	// }
 
 	public int getTomcatInstancesCount() {
-		return tomcatInstances.size();
+		if (tomcatInstances != null) {
+			return tomcatInstances.size();
+		}
+		return 0;
 	}
 
 	public Collection<DataSource> getDatasources() {
