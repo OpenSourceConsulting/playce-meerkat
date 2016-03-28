@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * <pre>
@@ -44,7 +45,7 @@ public class NetworkInterface implements Serializable {
 	private String netmask;
 	
 	@OneToOne
-	@JsonBackReference(value="server-nic")
+	@JsonIgnore
 	private Server server;
 
 	public String getNetmask() {

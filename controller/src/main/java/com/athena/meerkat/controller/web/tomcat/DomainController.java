@@ -1,7 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,10 +9,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +21,6 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
-import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
@@ -31,11 +28,10 @@ import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
-import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
-import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/domain")
@@ -99,7 +95,6 @@ public class DomainController {
 	}
 	
 	@RequestMapping(value = "/saveWithConfig", method = RequestMethod.POST)
-	@Transactional
 	@ResponseBody
 	public SimpleJsonResponse saveWithConfig(SimpleJsonResponse json,
 			TomcatDomain domain, DomainTomcatConfiguration config) {
@@ -111,6 +106,8 @@ public class DomainController {
 		config.setModifiedUserId(loginUserId);
 		
 		domainService.saveWithConfig(domain, config);
+		
+		json.setData(domain);
 		
 		return json;
 	}
@@ -431,6 +428,15 @@ public class DomainController {
 			json.setSuccess(false);
 			json.setMsg("Domain does not exist.");
 		}
+		return json;
+	}
+	
+	@RequestMapping(value = "/saveDatasources", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
+		
+		domainService.saveDatasources(datasources);
+		
 		return json;
 	}
 }

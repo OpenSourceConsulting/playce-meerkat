@@ -94,6 +94,10 @@ public class TomcatInstanceService {
 	public TomcatInstance save(TomcatInstance inst) {
 		return repo.save(inst);
 	}
+	
+	public void saveList(List<TomcatInstance> entities) {
+		repo.save(entities);
+	}
 
 	public TomcatInstance findOne(int id) {
 		return repo.findOne(id);

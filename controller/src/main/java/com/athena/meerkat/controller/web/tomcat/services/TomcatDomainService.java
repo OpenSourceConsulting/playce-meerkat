@@ -13,18 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
+import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TomcatDomainDatasourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
 @Service
@@ -45,6 +47,9 @@ public class TomcatDomainService {
 	private ClusteringConfigurationReposiroty clusteringConfRepo;
 	@Autowired
 	private ApplicationRepository appRepo;
+	
+	@Autowired
+	private TomcatDomainDatasourceRepository tdDatasoureRepo;
 
 	// @Autowired
 	// private ClusteringConfigurationRepository clusteringConfigRepo;
@@ -61,6 +66,11 @@ public class TomcatDomainService {
 		config.setTomcatDomain(domain);
 		
 		return saveDomainTomcatConfig(config);
+	}
+	
+	@Transactional
+	public void saveDatasources(List<TomcatDomainDatasource> datasources) {
+		tdDatasoureRepo.save(datasources);
 	}
 
 	public ServiceResult edit(int domainId, String name, boolean is_clustering) {

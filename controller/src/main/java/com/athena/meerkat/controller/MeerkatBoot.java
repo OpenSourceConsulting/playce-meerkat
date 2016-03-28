@@ -76,6 +76,8 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 	public void addFormatters(FormatterRegistry registry) {
 		
 		registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
+		
+		registry.removeConvertible(String.class, Number.class);
 		registry.addConverterFactory(new StringToNumberConverterFactory());
 	}
 
@@ -107,7 +109,6 @@ public class MeerkatBoot extends WebMvcConfigurerAdapter {
 					"/app.js",
 					"/resources/**",
 					"/monitor/**",
-					"/tomcat/**",
 					"/provi/**",
 
 					"/getServerList", 
