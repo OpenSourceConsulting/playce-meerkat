@@ -1,5 +1,8 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,6 +30,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigu
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatDomainDatasourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
 
 @Service
 public class TomcatDomainService {
@@ -218,5 +222,48 @@ public class TomcatDomainService {
 
 	public void deleteClusteringConfig(ClusteringConfiguration config) {
 		clusteringConfRepo.delete(config);
+	}
+
+	public List<ClusteringConfComparisionViewModel> getClusteringConfComparison(
+			Integer domainId, Integer firstVersion, Integer secondVersion) {
+		List<ClusteringConfComparisionViewModel> list = new ArrayList<ClusteringConfComparisionViewModel>();
+		TomcatDomain td = domainRepo.findOne(domainId);
+		if (td != null) {
+			List<ClusteringConfiguration> firstList = clusteringConfRepo
+					.findByTomcatDomainAndClusteringConfigurationVersion_Id(td,
+							firstVersion);
+			List<ClusteringConfiguration> secondList = clusteringConfRepo
+					.findByTomcatDomainAndClusteringConfigurationVersion_Id(td,
+							secondVersion);
+			// order by name
+			firstList.addAll(secondList);
+			Collections.sort(firstList);
+
+			for (int i = 0; i < firstList.size() - 1;) {
+				ClusteringConfiguration first = firstList.get(i);
+				ClusteringConfiguration second = firstList.get(i + 1);
+				if (first.getName().equals(second.getName())) {
+					list.add(new ClusteringConfComparisionViewModel(first
+							.getId(), first.getName(), first.getValue(), second
+							.getId(), second.getValue()));
+					i += 2;
+				} else {
+					i++;
+					if (first.getClusteringConfigurationVersion().getId() == firstVersion) {
+						list.add(new ClusteringConfComparisionViewModel(first
+								.getId(), first.getName(), first.getValue(), 0,
+								""));
+					} else if (first.getClusteringConfigurationVersion()
+							.getId() == secondVersion) {
+						list.add(new ClusteringConfComparisionViewModel(0,
+								first.getName(), "", first.getId(), first
+										.getValue()));
+					}
+				}
+				// last element
+			}
+
+		}
+		return list;
 	}
 }

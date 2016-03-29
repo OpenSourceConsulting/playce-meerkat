@@ -25,7 +25,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @Table(name = "clustering_configuration")
-public class ClusteringConfiguration implements Serializable, Cloneable {
+public class ClusteringConfiguration implements Serializable, Cloneable,
+		Comparable {
 
 	/**
 	 * 
@@ -43,7 +44,7 @@ public class ClusteringConfiguration implements Serializable, Cloneable {
 	@Column(name = "created_time")
 	private Date createdTime;
 	@ManyToOne
-	@JsonBackReference(value="grid-configs")
+	@JsonBackReference(value = "grid-configs")
 	private DatagridServerGroup datagridServerGroup;
 
 	@ManyToOne
@@ -53,7 +54,7 @@ public class ClusteringConfiguration implements Serializable, Cloneable {
 
 	@ManyToOne
 	@JoinColumn(name = "clustering_conf_version_id")
-	//@JsonManagedReference(value="grid-configVersion")
+	// @JsonManagedReference(value="grid-configVersion")
 	private ClusteringConfigurationVersion clusteringConfigurationVersion;
 
 	public String getName() {
@@ -132,4 +133,8 @@ public class ClusteringConfiguration implements Serializable, Cloneable {
 		}
 	}
 
+	@Override
+	public int compareTo(Object o) {
+		return this.name.compareTo(((ClusteringConfiguration) o).getName());
+	}
 }

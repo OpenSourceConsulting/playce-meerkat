@@ -37,6 +37,7 @@ import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupS
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
 import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
@@ -463,6 +464,19 @@ public class DomainController {
 		return json;
 	}
 
+	@RequestMapping(value = "/{domainId}/clustering/config/compare/{firstVersion}/to/{secondVersion}", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse compareClusteringConfig(
+			GridJsonResponse json, @PathVariable Integer domainId,
+			@PathVariable Integer firstVersion,
+			@PathVariable Integer secondVersion) {
+		List<ClusteringConfComparisionViewModel> viewmodels = domainService
+				.getClusteringConfComparison(domainId, firstVersion,
+						secondVersion);
+		json.setList(viewmodels);
+		json.setTotal(viewmodels.size());
+		return json;
+	}
+
 	// @RequestMapping(value = "/clustering/config/list", method =
 	// RequestMethod.GET)
 	// public @ResponseBody GridJsonResponse getClusteringConfigList(
@@ -496,4 +510,5 @@ public class DomainController {
 
 		return json;
 	}
+
 }
