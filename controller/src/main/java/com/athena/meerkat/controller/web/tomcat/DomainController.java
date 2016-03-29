@@ -10,8 +10,6 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +22,6 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
-import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
@@ -34,11 +31,9 @@ import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
-import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
-import com.athena.meerkat.controller.web.user.entities.User;
 
 @Controller
 @RequestMapping("/domain")
@@ -175,23 +170,35 @@ public class DomainController {
 			GridJsonResponse json, @PathVariable int domainId,
 			@PathVariable String type) {
 		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
-			List<TomcatConfigFile> confVersions = domainService
-					.getConfigFileVersions(td, type);
-			json.setList(confVersions);
-			json.setTotal(confVersions.size());
-			json.setSuccess(true);
-		}
+
+		List<TomcatConfigFile> confVersions = domainService
+				.getConfigFileVersions(td, type);
+		json.setList(confVersions);
+		json.setTotal(confVersions.size());
+		json.setSuccess(true);
 		return json;
 	}
 
+	// @RequestMapping(value = "/{domainId}/configfile/{type}/versions", method
+	// = RequestMethod.GET)
+	// public @ResponseBody GridJsonResponse getConfigVersions(
+	// GridJsonResponse json, @PathVariable int domainId,
+	// @PathVariable String type) {
+	// TomcatDomain td = domainService.getDomain(domainId);
+	//
+	// List<TomcatConfigFile> confVersions = domainService
+	// .getConfigFileVersions(td, type);
+	// json.setList(confVersions);
+	// json.setTotal(confVersions.size());
+	// json.setSuccess(true);
+	//
+	// return json;
+	// }
+
 	@RequestMapping(value = "/{domainId}/configfile/{type}/{version}", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getConfigVersionList(
-			SimpleJsonResponse json, @PathVariable int domainId,
-			@PathVariable String type, @PathVariable int version) {
+			SimpleJsonResponse json, @PathVariable Integer domainId,
+			@PathVariable String type, @PathVariable Integer version) {
 		TomcatDomain td = domainService.getDomain(domainId);
 		String content = "";
 		if (td == null) {
@@ -202,10 +209,23 @@ public class DomainController {
 					version);
 			if (confFile != null) {
 				// load by ssh ....
-				content = "load by ssh ....";
+				content = "load by ssh ...." + version;
 			}
 			json.setData(content);
 			json.setSuccess(true);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/configfile/{configFileId}", method = RequestMethod.GET)
+	public @ResponseBody SimpleJsonResponse getConfigVersionList(
+			SimpleJsonResponse json, @PathVariable Integer configFileId) {
+		TomcatConfigFile file = domainService
+				.getTomcatConfigFileById(configFileId);
+		if (file != null) {
+			// load content by provisioning
+			String content = "loading ....." + configFileId	.toString();
+			json.setData(content);
 		}
 		return json;
 	}
@@ -317,6 +337,7 @@ public class DomainController {
 	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json,
 			int id) {
 		TomcatDomain result = domainService.getDomain(id);
+
 		int latestVersionId = 0;
 		if (result != null) {
 			ClusteringConfigurationVersion latestVersion = domainService
@@ -325,7 +346,17 @@ public class DomainController {
 				latestVersionId = latestVersion.getId();
 			}
 		}
+
+		TomcatConfigFile latestServerXmlVersion = domainService
+				.getLatestConfVersion(id, "server.xml");
+		TomcatConfigFile latestContextXmlVersion = domainService
+				.getLatestConfVersion(id, "context.xml");
+		result.setLatestServerXmlVersion(latestServerXmlVersion == null ? 0
+				: latestServerXmlVersion.getId());
+		result.setLatestContextXmlVersion(latestContextXmlVersion == null ? 0
+				: latestContextXmlVersion.getId());
 		result.setLatestConfVersionId(latestVersionId);
+
 		json.setData(result);
 
 		return json;

@@ -34,14 +34,17 @@ import com.athena.meerkat.controller.web.entities.CommonCode;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
 @Repository
-public interface CommonCodeRepository extends JpaRepository<CommonCode, Integer> {
-	
+public interface CommonCodeRepository extends
+		JpaRepository<CommonCode, Integer> {
+
 	List<CommonCode> findByGropId(String gropId);
 
+	// get by name
 	CommonCode findByCodeNm(String codeNm);
 }
-//end of CommonCodeRepository.java
+// end of CommonCodeRepository.java

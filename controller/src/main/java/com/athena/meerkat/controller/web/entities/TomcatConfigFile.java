@@ -116,4 +116,12 @@ public class TomcatConfigFile implements Serializable {
 		return String.valueOf(version) + " - " + createdTime.toString();
 	}
 
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
 }

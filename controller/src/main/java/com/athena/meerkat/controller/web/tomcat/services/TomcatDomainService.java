@@ -260,7 +260,6 @@ public class TomcatDomainService {
 										.getValue()));
 					}
 				}
-				// last element
 			}
 
 		}
@@ -269,6 +268,21 @@ public class TomcatDomainService {
 
 	public List<ClusteringConfiguration> searchClusteringConfByDomainAndVersionAndName(
 			int domainId, int versionId, String keyword) {
-		return clusteringConfRepo.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(domainId,versionId, keyword);
+		return clusteringConfRepo
+				.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
+						domainId, versionId, keyword);
+	}
+
+	public TomcatConfigFile getLatestConfVersion(int domainId, String type) {
+		List<TomcatConfigFile> list = tomcatConfigFileRepo.getLatestVersion(
+				domainId, type);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	public TomcatConfigFile getTomcatConfigFileById(Integer id) {
+		return tomcatConfigFileRepo.findOne(id);
 	}
 }

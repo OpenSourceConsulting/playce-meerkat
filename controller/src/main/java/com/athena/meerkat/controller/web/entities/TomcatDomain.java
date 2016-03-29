@@ -51,6 +51,10 @@ public class TomcatDomain {
 
 	@Transient
 	private int latestConfVersionId;
+	@Transient
+	private int latestServerXmlVersion;
+	@Transient
+	private int latestContextXmlVersion;
 	@OneToOne
 	@JsonBackReference
 	@JoinColumn(name = "datagrid_server_group_id")
@@ -202,6 +206,22 @@ public class TomcatDomain {
 
 	public void setLatestConfVersionId(int latestConfVersionId) {
 		this.latestConfVersionId = latestConfVersionId;
+	}
+
+	public int getLatestServerXmlVersion() {
+		return latestServerXmlVersion;
+	}
+
+	public void setLatestServerXmlVersion(int latestServerXmlVersion) {
+		this.latestServerXmlVersion = latestServerXmlVersion;
+	}
+
+	public int getLatestContextXmlVersion() {
+		return latestContextXmlVersion;
+	}
+
+	public void setLatestContextXmlVersion(int latestContextXmlVersion) {
+		this.latestContextXmlVersion = latestContextXmlVersion;
 	}
 
 }
