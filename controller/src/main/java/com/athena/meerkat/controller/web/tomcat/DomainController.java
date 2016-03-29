@@ -477,6 +477,18 @@ public class DomainController {
 		return json;
 	}
 
+	@RequestMapping(value = "/{domainId}/clustering/config/{versionId}/search/{keyword}", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse compareClusteringConfig(
+			GridJsonResponse json, @PathVariable int domainId,
+			@PathVariable int versionId, @PathVariable String keyword) {
+		List<ClusteringConfiguration> list = domainService
+				.searchClusteringConfByDomainAndVersionAndName(domainId,
+						versionId, keyword);
+		json.setList(list);
+		json.setTotal(list.size());
+		return json;
+	}
+
 	// @RequestMapping(value = "/clustering/config/list", method =
 	// RequestMethod.GET)
 	// public @ResponseBody GridJsonResponse getClusteringConfigList(
