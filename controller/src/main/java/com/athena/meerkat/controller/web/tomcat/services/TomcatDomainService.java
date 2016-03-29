@@ -266,4 +266,9 @@ public class TomcatDomainService {
 		}
 		return list;
 	}
+
+	public List<ClusteringConfiguration> searchClusteringConfByDomainAndVersionAndName(
+			int domainId, int versionId, String keyword) {
+		return clusteringConfRepo.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(domainId,versionId, keyword);
+	}
 }
