@@ -23,4 +23,7 @@ public interface ClusteringConfigurationReposiroty extends
 			TomcatDomain td, Integer versionId);
 
 	List<ClusteringConfiguration> findByName(String name);
+
+	List<ClusteringConfiguration> findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
+			int domainId, int versionId, String keyword);
 }
