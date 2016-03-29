@@ -52,6 +52,9 @@ public class DataSource implements Serializable {
 	private String jdbcUrl;
 	@Column(name = "dbtype_cd_id")
 	private int dbType;
+	
+	@Transient
+	private String dbTypeName;
 
 	@Transient
 	private boolean selected;
@@ -65,6 +68,14 @@ public class DataSource implements Serializable {
 
 	public int getId() {
 		return Id;
+	}
+
+	public String getDbTypeName() {
+		return dbTypeName;
+	}
+
+	public void setDbTypeName(String dbTypeName) {
+		this.dbTypeName = dbTypeName;
 	}
 
 	public List<TomcatDomain> getTomcatDomains() {

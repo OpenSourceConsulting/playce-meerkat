@@ -1,27 +1,69 @@
-/**
+/* 
+ * Copyright (C) 2012-2015 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Revision History
+ * Author			Date				Description
+ * ---------------	----------------	------------
+ * BongJin Kwon		2016. 3. 29.		First Draft.
  */
 package com.athena.meerkat.controller.web.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Tran
- *
+ * <pre>
+ * 
+ * </pre>
+ * @author Bongjin Kwon
+ * @version 1.0
  */
 @Entity
-@Table
+@Table(name = "common_code")
 public class CommonCode {
+
 	@Id
-	private int id;
-	private String codeValue;
-	private int parentCodeId;
-	private int userId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private int id;//코드id
+	
+	@Column(name = "grop_id")
+	private String gropId;//그룹코드
+	
+	@Column(name = "code_nm")
+	private String codeNm;//코드명
+	
+	@Column(name = "prto_seq")
+	private short prtoSeq;//출력순서
+	
+	@Column(name = "cd_desc")
+	private String cdDesc;//코드설명
+	
+	@Column(name = "mng_yn")
+	private String mngYn;//관리여부
 
 	/**
+	 * <pre>
 	 * 
+	 * </pre>
 	 */
 	public CommonCode() {
 		// TODO Auto-generated constructor stub
@@ -35,56 +77,81 @@ public class CommonCode {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the codeValue
+	 * @return the gropId
 	 */
-	public String getCodeValue() {
-		return codeValue;
+	public String getGropId() {
+		return gropId;
 	}
 
 	/**
-	 * @param codeValue
-	 *            the codeValue to set
+	 * @param gropId the gropId to set
 	 */
-	public void setCodeValue(String codeValue) {
-		this.codeValue = codeValue;
+	public void setGropId(String gropId) {
+		this.gropId = gropId;
 	}
 
 	/**
-	 * @return the parentCodeId
+	 * @return the codeNm
 	 */
-	public int getParentCodeId() {
-		return parentCodeId;
+	public String getCodeNm() {
+		return codeNm;
 	}
 
 	/**
-	 * @param parentCodeId
-	 *            the parentCodeId to set
+	 * @param codeNm the codeNm to set
 	 */
-	public void setParentCodeId(int parentCodeId) {
-		this.parentCodeId = parentCodeId;
+	public void setCodeNm(String codeNm) {
+		this.codeNm = codeNm;
 	}
 
 	/**
-	 * @return the userId
+	 * @return the prtoSeq
 	 */
-	public int getUserId() {
-		return userId;
+	public short getPrtoSeq() {
+		return prtoSeq;
 	}
 
 	/**
-	 * @param userId
-	 *            the userId to set
+	 * @param prtoSeq the prtoSeq to set
 	 */
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setPrtoSeq(short prtoSeq) {
+		this.prtoSeq = prtoSeq;
+	}
+
+	/**
+	 * @return the cdDesc
+	 */
+	public String getCdDesc() {
+		return cdDesc;
+	}
+
+	/**
+	 * @param cdDesc the cdDesc to set
+	 */
+	public void setCdDesc(String cdDesc) {
+		this.cdDesc = cdDesc;
+	}
+
+	/**
+	 * @return the mngYn
+	 */
+	public String getMngYn() {
+		return mngYn;
+	}
+
+	/**
+	 * @param mngYn the mngYn to set
+	 */
+	public void setMngYn(String mngYn) {
+		this.mngYn = mngYn;
 	}
 
 }
+//end of CommonCode.java

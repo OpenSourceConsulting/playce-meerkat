@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -160,7 +160,7 @@ public class DataSourceService {
 
 	public List<CommonCode> getDBTypes() {
 		return commonRepo
-				.findByParentCodeName(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE);
+				.findByGropId(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE);
 	}
 
 	public List<DataSource> getDatasources(String name) {

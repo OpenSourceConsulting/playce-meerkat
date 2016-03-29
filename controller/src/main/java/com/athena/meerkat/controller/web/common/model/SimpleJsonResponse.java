@@ -33,7 +33,7 @@ package com.athena.meerkat.controller.web.common.model;
  * @author Bong-Jin Kwon
  * @version 1.0
  */
-public class SimpleJsonResponse {
+public class SimpleJsonResponse implements MeerkatResponse {
 	
 	/**
 	 * 서버 작업 성공여부

@@ -2,8 +2,6 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.common.CommonCodeRepository;
+import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
@@ -131,7 +129,7 @@ public class TomcatDomainService {
 
 	public List<TomcatConfigFile> getConfigFileVersions(TomcatDomain td,
 			String type) {
-		CommonCode codeValue = commonRepo.findByCodeValue(type);
+		CommonCode codeValue = commonRepo.findByCodeNm(type);
 		List<TomcatConfigFile> configs = tomcatConfigFileRepo
 				.findByTomcatDomainAndFileTypeCdId(td, codeValue.getId());
 
@@ -156,7 +154,7 @@ public class TomcatDomainService {
 	// }
 
 	public TomcatConfigFile getConfig(TomcatDomain td, String type, int version) {
-		CommonCode codeValue = commonRepo.findByCodeValue(type);
+		CommonCode codeValue = commonRepo.findByCodeNm(type);
 		TomcatConfigFile conf = tomcatConfigFileRepo
 				.findByTomcatDomainAndFileTypeCdIdAndVersion(td,
 						codeValue.getId(), version);

@@ -1,7 +1,5 @@
 /* 
- * Athena Peacock Dolly - DataGrid based Clustering 
- * 
- * Copyright (C) 2014 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
+ * Copyright (C) 2012-2015 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,32 +18,18 @@
  * Revision History
  * Author			Date				Description
  * ---------------	----------------	------------
- * Bong-Jin Kwon	2013. 9. 27.		First Draft.
+ * BongJin Kwon		2016. 3. 29.		First Draft.
  */
 package com.athena.meerkat.controller.web.common.model;
 
 /**
  * <pre>
- * Single Dto 를 json response 하기위한 클래스.
+ * 
  * </pre>
- * @author Bong-Jin Kwon
+ * @author Bongjin Kwon
  * @version 1.0
  */
-public class DtoJsonResponse extends SimpleJsonResponse {
-
-	private Object data;
-	
-	public DtoJsonResponse() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Object getData() {
-		return data;
-	}
-
-	public void setData(Object data) {
-		this.data = data;
-	}
+public interface MeerkatResponse {
 
 }
-//end of DtoJsonResponse.java
+//end of MeerkatModel.java

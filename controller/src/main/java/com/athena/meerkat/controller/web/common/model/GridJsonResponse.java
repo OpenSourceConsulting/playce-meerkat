@@ -34,7 +34,7 @@ import java.util.List;
  * @author Bong-Jin Kwon
  * @version 1.0
  */
-public class GridJsonResponse {
+public class GridJsonResponse implements MeerkatResponse {
 	
 	/**
 	 * 서버 작업 성공여부

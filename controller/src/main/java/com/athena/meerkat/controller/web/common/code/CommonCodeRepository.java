@@ -18,17 +18,17 @@
  * Revision History
  * Author			Date				Description
  * ---------------	----------------	------------
- * BongJin Kwon		2016. 3. 25.		First Draft.
+ * BongJin Kwon		2016. 3. 29.		First Draft.
  */
-package com.athena.meerkat.controller.web.common.util;
+package com.athena.meerkat.controller.web.common.code;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import com.athena.meerkat.controller.web.user.entities.User;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 
 /**
  * <pre>
@@ -37,21 +37,11 @@ import com.athena.meerkat.controller.web.user.entities.User;
  * @author Bongjin Kwon
  * @version 1.0
  */
-public class WebUtil {
+@Repository
+public interface CommonCodeRepository extends JpaRepository<CommonCode, Integer> {
+	
+	List<CommonCode> findByGropId(String gropId);
 
-	public static User getLoginUser() {
-		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	}
-	
-	public static int getLoginUserId() {
-		User user = getLoginUser();
-		return user.getId();
-	}
-	
-	public static WebApplicationContext getWebApplicationContext(HttpServletRequest request) {
-		return WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
-	}
-	
-
+	CommonCode findByCodeNm(String codeNm);
 }
-//end of WebUtil.java
+//end of CommonCodeRepository.java
