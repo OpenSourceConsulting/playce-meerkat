@@ -28,7 +28,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -98,6 +98,18 @@ public class TomcatProvisioningService implements InitializingBean{
         // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
         //cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
+	}
+	
+	@Async
+	public void installTomcatInstance2(int domainId) {
+		
+		try{
+			Thread.sleep(10000);
+			System.out.println("test ############################# test");
+		}catch(Exception e) {
+			
+		}
+		
 	}
 	
 	public void installTomcatInstance(int domainId) {

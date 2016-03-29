@@ -3,11 +3,11 @@ package com.athena.meerkat.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.athena.meerkat.controller.web.common.converter.JsonHttpMessageConverter;
@@ -19,6 +19,7 @@ import com.athena.meerkat.controller.web.common.converter.StringToNumberConverte
  * 
  */
 @Configuration
+@EnableAsync
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
