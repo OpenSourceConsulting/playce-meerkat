@@ -112,6 +112,7 @@ public abstract class MeerkatConstants {
 	/**
 	 * Common code
 	 */
+
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "configFileType";
