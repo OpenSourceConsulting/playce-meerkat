@@ -25,12 +25,9 @@ package com.athena.meerkat.controller.web.common.converter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -39,9 +36,9 @@ import org.springframework.stereotype.Component;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
-import com.athena.meerkat.controller.web.common.model.MeerkatResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -82,26 +79,68 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	protected void writeInternal(Object object, HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException {
 		
-		if(object instanceof DataSource) {
-			handleEntity((DataSource)object);
-		
-		} else if (object instanceof SimpleJsonResponse) {
-			LOGGER.debug("Skip convert for {}", object.getClass().getName());
+		if (object instanceof SimpleJsonResponse) {
+			handleResponse((SimpleJsonResponse)object);
 			
 		} else if (object instanceof GridJsonResponse) {
 			LOGGER.debug("Skip convert for {}", object.getClass().getName());
+		
+		} else if (object instanceof List) {
+			LOGGER.debug("Skip convert for {}", object.getClass().getName());
 			
 		} else {
-			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
+			
+			handleObject(object);
 		}
 		
 		super.writeInternal(object, outputMessage);
 	}
+	
+	protected void handleObject(Object object) {
+		
+		if(object instanceof DataSource) {
+			handleEntity((DataSource)object);
+		
+		} else if(object instanceof TomcatInstance) {
+			handleEntity((TomcatInstance)object);
+		
+		} else {
+			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
+		}
+	}
 
 	protected void handleEntity(DataSource entity) {
-		entity.setDbTypeName(codeHandler.getCodeNm(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE, entity.getDbType()));
+		entity.setDbTypeName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_DB_TYPE, entity.getDbType()));
 		
 		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+	
+	protected void handleEntity(TomcatInstance entity) {
+		entity.setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
+		
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+	
+	protected void handleResponse(SimpleJsonResponse jsRes) {
+		Object data = jsRes.getData();
+		
+		if (data == null) {
+			return;
+		}
+		
+		if (data instanceof List) {
+			List<Object> list = (List<Object>)data;
+			
+			if (list.size() > 0) {
+				
+				for (Object object : list) {
+					handleObject(object);
+				}
+			}
+		} else {
+			handleObject(data);
+		}
+		
 	}
 	
 	

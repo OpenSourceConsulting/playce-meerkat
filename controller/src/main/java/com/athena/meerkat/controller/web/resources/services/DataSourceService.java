@@ -160,7 +160,7 @@ public class DataSourceService {
 
 	public List<CommonCode> getDBTypes() {
 		return commonRepo
-				.findByGropId(MeerkatConstants.DBTYPE_PARENT_CODE_VALUE);
+				.findByGropId(MeerkatConstants.CODE_GROP_DB_TYPE);
 	}
 
 	public List<DataSource> getDatasources(String name) {

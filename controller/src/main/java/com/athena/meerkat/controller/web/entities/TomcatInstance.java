@@ -38,6 +38,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -68,6 +69,10 @@ public class TomcatInstance implements Serializable {
 
 	@Column(name = "state")
 	private int state;
+	
+	@Transient
+	private String stateNm;
+	
 	@Column(name = "created_time")
 	private Date createdTime;
 	@Column(name = "create_user_id")
@@ -167,6 +172,14 @@ public class TomcatInstance implements Serializable {
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	public String getStateNm() {
+		return stateNm;
+	}
+
+	public void setStateNm(String stateNm) {
+		this.stateNm = stateNm;
 	}
 
 	public String getHostName() {
