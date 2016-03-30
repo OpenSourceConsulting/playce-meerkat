@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
@@ -46,6 +49,9 @@ public class DomainController {
 	private DataGridServerGroupService datagridGroupService;
 	@Autowired
 	private TomcatInstanceService tomcatService;
+
+	@Autowired
+	private CommonCodeHandler commonHandler;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -179,21 +185,36 @@ public class DomainController {
 		return json;
 	}
 
-	// @RequestMapping(value = "/{domainId}/configfile/{type}/versions", method
-	// = RequestMethod.GET)
-	// public @ResponseBody GridJsonResponse getConfigVersions(
-	// GridJsonResponse json, @PathVariable int domainId,
-	// @PathVariable String type) {
-	// TomcatDomain td = domainService.getDomain(domainId);
-	//
-	// List<TomcatConfigFile> confVersions = domainService
-	// .getConfigFileVersions(td, type);
-	// json.setList(confVersions);
-	// json.setTotal(confVersions.size());
-	// json.setSuccess(true);
-	//
-	// return json;
-	// }
+	@RequestMapping(value = "/configfile/save", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse saveConfigFile(
+			SimpleJsonResponse json, String content, int id, int domainId,
+			String type) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		TomcatConfigFile dbConf = domainService.getTomcatConfigFileById(id);
+		if (td != null) {
+			TomcatConfigFile latestVersion = domainService
+					.getLatestConfVersion(domainId, type);
+			TomcatConfigFile conf = new TomcatConfigFile();
+			conf.setCreatedTime(new Date());
+			conf.setCreateUserId(WebUtil.getLoginUserId());
+			conf.setTomcatDomain(td);
+			CommonCode code = commonHandler.getCode(type);
+			if (code != null) {
+				conf.setFileTypeCdId(code.getId());
+			}
+			if (latestVersion != null) {
+				conf.setVersion(latestVersion.getVersion() + 1);
+			} else {
+				conf.setVersion(1);
+			}
+			// save by provisioning .... and get path
+			String path = conf.getVersion() + type;
+			conf.setFilePath(path);
+			conf = domainService.saveConfigFile(conf);
+			json.setData(conf.getId());
+		}
+		return json;
+	}
 
 	@RequestMapping(value = "/{domainId}/configfile/{type}/{version}", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getConfigVersionList(
@@ -224,7 +245,7 @@ public class DomainController {
 				.getTomcatConfigFileById(configFileId);
 		if (file != null) {
 			// load content by provisioning
-			String content = "loading ....." + configFileId	.toString();
+			String content = "loading ....." + configFileId.toString();
 			json.setData(content);
 		}
 		return json;
