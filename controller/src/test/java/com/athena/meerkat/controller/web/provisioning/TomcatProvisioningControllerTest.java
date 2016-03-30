@@ -97,20 +97,20 @@ public class TomcatProvisioningControllerTest {
 	public void testInstall() {
 		
 		File workingDir = new File(commanderDir);
-		String serverIp = "192.168.0.156";
+		String serverIp = "52.23.242.79";//192.168.0.156
 		
 		Properties prop = new Properties(); //build-ssh.properties
 		prop.setProperty("server.ip", 	serverIp);
 		prop.setProperty("server.port", "22");
-		prop.setProperty("user.id", 	"centos");
+		prop.setProperty("user.id", 	"ec2-user");
 		prop.setProperty("user.passwd", "centos");
-		prop.setProperty("key.file", 	commanderDir + "/ssh/svn_key.pem");
+		prop.setProperty("key.file", 	commanderDir + "/ssh/myaws.pem");
 		
 		Properties targetProps = new Properties(); //build.properties
-		targetProps.setProperty("agent.deploy.dir", "/home/centos/athena-meerkat-agent");
+		targetProps.setProperty("agent.deploy.dir", "/home/ec2-user/athena-meerkat-agent");
 		targetProps.setProperty("agent.name", 		"athena-meerkat-agent-1.0.0-SNAPSHOT");
-		targetProps.setProperty("tomcat.unzip.pah", "/home/centos/tmp");
-		targetProps.setProperty("catalina.base", 	"/home/centos/tmp/instance1");
+		targetProps.setProperty("tomcat.unzip.pah", "/home/ec2-user/app");
+		targetProps.setProperty("catalina.base", 	"/home/ec2-user/app/instance1");
 		
 		
 		OutputStream output = null;
