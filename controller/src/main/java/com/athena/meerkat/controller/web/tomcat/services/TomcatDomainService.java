@@ -285,4 +285,9 @@ public class TomcatDomainService {
 	public TomcatConfigFile getTomcatConfigFileById(Integer id) {
 		return tomcatConfigFileRepo.findOne(id);
 	}
+
+	public TomcatConfigFile saveConfigFile(TomcatConfigFile conf) {
+		return tomcatConfigFileRepo.save(conf);
+
+	}
 }
