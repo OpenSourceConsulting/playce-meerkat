@@ -31,10 +31,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -111,16 +111,18 @@
 			<artifactId>picketbox</artifactId>
 			<version>4.0.20.Final</version>
 		</dependency>
-
-		<!-- 
 		<dependency>
-			<groupId>ews</groupId>
-			<artifactId>encrypt-dbcp</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/encrypt-dbcp-1.0.0-SNAPSHOT.jar</systemPath>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>ews</groupId> <artifactId>encrypt-dbcp</artifactId> 
+			<version>1.0.0-SNAPSHOT</version> <scope>system</scope> <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/encrypt-dbcp-1.0.0-SNAPSHOT.jar</systemPath> 
+			</dependency> -->
 
 		<dependency>
 			<groupId>org.apache.ant</groupId>
