@@ -9,6 +9,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -19,37 +20,40 @@ import com.athena.meerkat.controller.web.common.converter.StringToNumberConverte
 
 /**
  * Spring MVC Configuration
+ * 
  * @author BongJin Kwon
  * 
  */
 @Configuration
 @EnableAsync
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-	
+
 	@Autowired
 	private JsonHttpMessageConverter jsonCustomConverter;
 
-	
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
-		
+
 		// 'yyyy-MM-dd' format string to Date converting.
 		registry.addFormatter(new DateFormatter("yyyy-MM-dd"));
-		
-		registry.removeConvertible(String.class, Number.class);// remove default converter.
+
+		registry.removeConvertible(String.class, Number.class);// remove default
+																// converter.
 		registry.addConverterFactory(new StringToNumberConverterFactory());
 	}
 
-
 	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		
+	public void configureMessageConverters(
+			List<HttpMessageConverter<?>> converters) {
+
 		converters.add(jsonCustomConverter);
 	}
-	
-	
-	
-	
 
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		return resolver;
+	}
 
 }
