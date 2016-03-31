@@ -348,7 +348,7 @@ public class DomainController {
 		int id = currentConf.getId();
 		currentConf = domainTomcatConfig;
 		currentConf.setId(id);
-
+		currentConf.setModifiedDate(new Date());
 		currentConf.setModifiedUserId(WebUtil.getLoginUserId());
 		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
 			json.setSuccess(false);
