@@ -1,6 +1,8 @@
 package com.athena.meerkat.controller.web.tomcat.viewmodels;
 
 public class ClusteringConfComparisionViewModel {
+	
+	
 	private int firstId;
 	private int secondId;
 	// private int firstVersion;

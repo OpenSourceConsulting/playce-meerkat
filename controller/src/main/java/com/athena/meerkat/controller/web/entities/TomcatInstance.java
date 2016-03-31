@@ -68,7 +68,7 @@ public class TomcatInstance implements Serializable {
 
 
 	@Column(name = "state")
-	private int state;
+	private int state = 5; //default value.
 	
 	@Transient
 	private String stateNm;

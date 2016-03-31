@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.ServiceResult;
@@ -103,7 +104,18 @@ public class DataSourceController {
 		List<DataSource> datasources = service.getAll();
 		json.setList(datasources);
 		json.setTotal(datasources.size());
-		json.setSuccess(true);
+
+		return json;
+	}
+	
+	@RequestMapping("/listna")
+	@ResponseBody
+	public GridJsonResponse getAvailableDataSource(GridJsonResponse json, @RequestParam(value="domainId") int domainId) {
+		
+		List<DataSource> datasources = service.listNotAssigned(domainId);
+		json.setList(datasources);
+		json.setTotal(datasources.size());
+		
 		return json;
 	}
 

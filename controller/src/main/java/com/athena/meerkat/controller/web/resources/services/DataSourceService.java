@@ -176,4 +176,8 @@ public class DataSourceService {
 				.findByNameContaining(keyword);
 		return datasourcesByName;
 	}
+	
+	public List<DataSource> listNotAssigned(int domainId) {
+		return datasourceRepo.listNotAssigned(domainId);
+	}
 }
