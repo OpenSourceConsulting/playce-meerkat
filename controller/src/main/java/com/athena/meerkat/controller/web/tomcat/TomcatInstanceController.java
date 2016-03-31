@@ -38,19 +38,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
+import com.couchbase.client.vbucket.config.Config;
 
 /**
  * <pre>
@@ -143,12 +148,28 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse getTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		if (tomcat == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat instance does not exist.");
-		} else {
-			json.setSuccess(true);
-			json.setData(tomcat);
+		if (tomcat != null) {
+			TomcatInstanceViewModel viewmodel = new TomcatInstanceViewModel(
+					tomcat);
+			// get configurations that are different to domain tomcat config
+			List<TomcatInstConfig> changedConfigs = service
+					.getTomcatInstConfigs(tomcat.getId());
+			if (changedConfigs == null || changedConfigs.size() <= 0) {
+				DomainTomcatConfiguration domainConf = domainService
+						.getTomcatConfig(tomcat.getDomainId());
+				viewmodel.setHttpPort(domainConf.getHttpPort());
+				viewmodel.setAjpPort(domainConf.getAjpPort());
+				viewmodel.setRedirectPort(domainConf.getRedirectPort());
+				viewmodel.setTomcatVersion(domainConf.getTomcatVersion());
+			} else {
+				for (TomcatInstConfig c : changedConfigs) {
+					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
+						viewmodel.setHttpPort(Integer.parseInt(c
+								.getConfigValue()));
+					}
+				}
+			}
+			json.setData(viewmodel);
 		}
 		return json;
 	}
@@ -270,30 +291,29 @@ public class TomcatInstanceController {
 
 		return json;
 	}
-	
-	@RequestMapping(value="/saveList", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/saveList", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
-		
+	public SimpleJsonResponse saveList(SimpleJsonResponse json,
+			@RequestBody List<TomcatInstance> tomcats) {
+
 		int loginUserId = WebUtil.getLoginUserId();
-		
+
 		for (TomcatInstance tomcatInstance : tomcats) {
-			
+
 			TomcatDomain domain = new TomcatDomain();
 			domain.setId(tomcatInstance.getDomainId());
-			
-			
-			
+
 			Server server = new Server();
 			server.setId(tomcatInstance.getServerId());
-			
+
 			tomcatInstance.setTomcatDomain(domain);
 			tomcatInstance.setServer(server);
 			tomcatInstance.setCreateUserId(loginUserId);
 		}
-		
+
 		service.saveList(tomcats);
-		
+
 		return json;
 	}
 

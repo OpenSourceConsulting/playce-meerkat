@@ -118,4 +118,11 @@ public abstract class MeerkatConstants {
 	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "configFileType";
 
 	public static final String DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm:ss";
+
+	/**
+	 * Configuration name
+	 */
+	public static final String TOMCAT_INST_CONFIG_JAVAHOME_NAME = "java_home";
+	public static final String TOMCAT_INST_CONFIG_HTTPPORT_NAME = "http_port";
+	public static final String TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME = "session_timeout";
 }

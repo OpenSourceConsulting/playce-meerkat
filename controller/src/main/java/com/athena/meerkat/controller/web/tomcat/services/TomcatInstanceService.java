@@ -42,9 +42,11 @@ import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
+import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
 /**
@@ -72,6 +74,9 @@ public class TomcatInstanceService {
 	private ConfigFileVersionRepository configRepo;
 
 	@Autowired
+	private TomcatInstConfigRepository tomcatInstConfigRepo;
+
+	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 
 	public TomcatInstanceService() {
@@ -94,7 +99,7 @@ public class TomcatInstanceService {
 	public TomcatInstance save(TomcatInstance inst) {
 		return repo.save(inst);
 	}
-	
+
 	public void saveList(List<TomcatInstance> entities) {
 		repo.save(entities);
 	}
@@ -271,4 +276,7 @@ public class TomcatInstanceService {
 		return repo.findByNameContainingAndTomcatDomain_Id(name, domainId);
 	}
 
+	public List<TomcatInstConfig> getTomcatInstConfigs(int tomcatId) {
+		return tomcatInstConfigRepo.findByTomcatInstance_Id(tomcatId);
+	}
 }

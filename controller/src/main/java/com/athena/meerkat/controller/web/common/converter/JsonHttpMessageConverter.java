@@ -83,10 +83,17 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleResponse((SimpleJsonResponse)object);
 			
 		} else if (object instanceof GridJsonResponse) {
-			LOGGER.debug("Skip convert for {}", object.getClass().getName());
+			handleResponse((GridJsonResponse)object);
 		
 		} else if (object instanceof List) {
-			LOGGER.debug("Skip convert for {}", object.getClass().getName());
+			List<Object> list = (List<Object>)object;
+			
+			if (list.size() > 0) {
+				
+				for (Object obj : list) {
+					handleObject(obj);
+				}
+			}
 			
 		} else {
 			
@@ -139,6 +146,19 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			}
 		} else {
 			handleObject(data);
+		}
+		
+	}
+	
+	protected void handleResponse(GridJsonResponse jsRes) {
+		
+		List<Object> list = (List<Object>) jsRes.getList();
+		
+		if (list.size() > 0) {
+			
+			for (Object object : list) {
+				handleObject(object);
+			}
 		}
 		
 	}

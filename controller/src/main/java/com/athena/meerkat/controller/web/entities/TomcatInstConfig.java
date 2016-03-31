@@ -3,8 +3,14 @@
  */
 package com.athena.meerkat.controller.web.entities;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -12,14 +18,21 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table
+@Table(name = "tomcat_inst_config")
 public class TomcatInstConfig {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
 	private int id;
-	private int tomcatInstanceId;
+	@Column(name = "config_name")
 	private String configName;
+	@Column(name = "config_value")
 	private String configValue;
-	private java.sql.Date createdDate;
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@ManyToOne
+	private TomcatInstance tomcatInstance;
 
 	/**
 	 * 
@@ -36,24 +49,11 @@ public class TomcatInstConfig {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the tomcatInstanceId
-	 */
-	public int getTomcatInstanceId() {
-		return tomcatInstanceId;
-	}
-
-	/**
-	 * @param tomcatInstanceId the tomcatInstanceId to set
-	 */
-	public void setTomcatInstanceId(int tomcatInstanceId) {
-		this.tomcatInstanceId = tomcatInstanceId;
 	}
 
 	/**
@@ -64,7 +64,8 @@ public class TomcatInstConfig {
 	}
 
 	/**
-	 * @param configName the configName to set
+	 * @param configName
+	 *            the configName to set
 	 */
 	public void setConfigName(String configName) {
 		this.configName = configName;
@@ -78,7 +79,8 @@ public class TomcatInstConfig {
 	}
 
 	/**
-	 * @param configValue the configValue to set
+	 * @param configValue
+	 *            the configValue to set
 	 */
 	public void setConfigValue(String configValue) {
 		this.configValue = configValue;
@@ -87,15 +89,24 @@ public class TomcatInstConfig {
 	/**
 	 * @return the createdDate
 	 */
-	public java.sql.Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(java.sql.Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public TomcatInstance getTomcatInstance() {
+		return tomcatInstance;
+	}
+
+	public void setTomcatInstance(TomcatInstance tomcatInstance) {
+		this.tomcatInstance = tomcatInstance;
 	}
 
 }

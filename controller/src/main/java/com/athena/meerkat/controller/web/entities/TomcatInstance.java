@@ -56,56 +56,53 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "tomcat_instance")
 public class TomcatInstance implements Serializable {
 
-	
 	private static final long serialVersionUID = 1852609995878767410L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
-	private int Id;
+	private int id;
 	@Column(name = "name", nullable = false)
 	private String name;
 
-
 	@Column(name = "state")
-	private int state;
-	
+	private int state = 5; //default value.
+
 	@Transient
 	private String stateNm;
-	
+
 	@Column(name = "created_time")
 	private Date createdTime;
 	@Column(name = "create_user_id")
 	private int createUserId;
-	
-	@Column(name = "domain_id", insertable=false, updatable=false)
+
+	@Column(name = "domain_id", insertable = false, updatable = false)
 	private int domainId;
-	
-	@Column(name = "server_id", insertable=false, updatable=false)
+
+	@Column(name = "server_id", insertable = false, updatable = false)
 	private int serverId;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="inst-configFile")
+	@JsonManagedReference(value = "inst-configFile")
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference(value="inst-server")
+	@JsonBackReference(value = "inst-server")
 	private Server server;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference(value="domain-inst")
+	@JsonBackReference(value = "domain-inst")
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
-	@JoinColumn(name = "network_interface_id")
-	private NetworkInterface networkInterface;
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "inst-app")
+	private List<TomcatApplication> tomcatApplications;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="inst-app")
-	private List<TomcatApplication> tomcatApplications;
+	@JsonManagedReference(value = "config-tomcat")
+	private List<TomcatInstConfig> tomcatConfigs;
 
 	public TomcatInstance() {
 	}
@@ -127,11 +124,11 @@ public class TomcatInstance implements Serializable {
 	}
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		this.Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -186,17 +183,6 @@ public class TomcatInstance implements Serializable {
 		return server.getHostName();
 	}
 
-	public String getStatusString() {
-		switch (this.state) {
-		case MeerkatConstants.TOMCAT_STATUS_RUNNING:
-			return "Running";
-		case MeerkatConstants.TOMCAT_STATUS_SHUTDOWN:
-			return "Stopped";
-		default:
-			return "Unknown";
-		}
-	}
-
 	public String getOSName() {
 		if (server != null) {
 			return server.getOsName();
@@ -225,23 +211,6 @@ public class TomcatInstance implements Serializable {
 		return 0;
 	}
 
-	// public String getDomainStatus() {
-	// if (tomcatDomain != null) {
-	// return tomcatDomain.getIsClustering() == true ? "Clustering"
-	// : "Non-clustering";
-	// }
-	// return "";
-	// }
-
-	// public List<TomcatConfigFile> getTomcatConfigFiles() {
-	// return tomcatConfigFiles;
-	// }
-	//
-	// public void setTomcatConfigFiles(List<TomcatConfigFile>
-	// tomcatConfigFiles) {
-	// this.tomcatConfigFiles = tomcatConfigFiles;
-	// }
-
 	public int getCreateUserId() {
 		return createUserId;
 	}
@@ -258,17 +227,9 @@ public class TomcatInstance implements Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public NetworkInterface getNetworkInterface() {
-		return networkInterface;
-	}
-
-	public void setNetworkInterface(NetworkInterface networkInterface) {
-		this.networkInterface = networkInterface;
-	}
-
 	public String getIpaddress() {
-		if (networkInterface != null) {
-			return networkInterface.getIpv4();
+		if (server != null) {
+			return server.getSshIPAddr();
 		}
 		return "";
 	}
@@ -279,5 +240,13 @@ public class TomcatInstance implements Serializable {
 
 	public void setTomcatApplications(List<TomcatApplication> tomcatApplications) {
 		this.tomcatApplications = tomcatApplications;
+	}
+
+	public List<TomcatInstConfig> getTomcatConfigs() {
+		return tomcatConfigs;
+	}
+
+	public void setTomcatConfigs(List<TomcatInstConfig> tomcatConfigs) {
+		this.tomcatConfigs = tomcatConfigs;
 	}
 }

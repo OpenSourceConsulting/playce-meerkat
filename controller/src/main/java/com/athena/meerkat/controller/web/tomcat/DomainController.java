@@ -387,9 +387,9 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/tomcatlist", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getTomcatInstanceByDomain(
-			SimpleJsonResponse json, int domainId) {
-		json.setData(tomcatService.getTomcatListByDomainId(domainId));
+	public @ResponseBody GridJsonResponse getTomcatInstanceByDomain(
+			GridJsonResponse json, int domainId) {
+		json.setList(tomcatService.getTomcatListByDomainId(domainId));
 		json.setSuccess(true);
 		return json;
 	}
