@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.State;
@@ -29,18 +31,20 @@ public class ApplicationController {
 
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse deploy(SimpleJsonResponse json,
-			TomcatApplication app, int domainId) {
-		TomcatDomain domain = domainService.getDomain(domainId);
-		if (domain == null) {
-			json.setMsg("Domain does not exist.");
-			json.setSuccess(false);
-			return json;
-		}
+			@RequestParam String contextPathTextField,
+			@RequestParam String installationRemotePathTextField,
+			@RequestParam Integer domainIdHiddenField,
+			@RequestParam MultipartFile warLocalPathFileField) {
+		TomcatDomain domain = domainService.getDomain(domainIdHiddenField);
+		TomcatApplication app = new TomcatApplication(contextPathTextField,
+				installationRemotePathTextField, "");
 		app.setState(State.APP_STATE_STOPPED);
 		app.setLastModifiedTime(new Date());
 		app.setDeployedDate(new Date());
 		app.setTomcatDomain(domain);
+		// TODO: idkjwon provisioning deploy application
 		app.setVersion("1.233"); // get by war fileF
+
 		// provisioning before save
 		appService.save(app);
 		return json;
