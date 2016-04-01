@@ -47,6 +47,7 @@ import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -342,4 +343,26 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	@RequestMapping(value = "/instance/{tomcatId}/configfile/{type}/", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getConfigFileVersions(GridJsonResponse json,
+			@PathVariable Integer tomcatId, @PathVariable String type) {
+		TomcatInstance tomcat = service.findOne(tomcatId);
+		List<TomcatConfigFile> confVersions = new ArrayList<TomcatConfigFile>();
+		if (tomcat != null) {
+			// list of config files modified in domain level
+			confVersions = domainService.getConfigFileVersions(
+					tomcat.getDomainId(), type);
+
+			List<TomcatConfigFile> modifiedConfigVersions = service
+					.getConfigFileVersions(tomcat, type);
+			if (modifiedConfigVersions != null) {
+				confVersions.addAll(modifiedConfigVersions);
+			}
+		}
+
+		json.setList(confVersions);
+		json.setTotal(confVersions.size());
+		return json;
+	}
 }

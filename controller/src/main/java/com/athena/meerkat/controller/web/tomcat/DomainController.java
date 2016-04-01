@@ -140,20 +140,11 @@ public class DomainController {
 		List<TomcatDomain> result = domainService.getAll();
 		json.setList(result);
 		json.setTotal(result.size());
+
 		json.setSuccess(true);
 		return json;
 	}
 
-	@RequestMapping(value = "/{domainId}/ds/list", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getDatasourceList(
-			GridJsonResponse json, @PathVariable Integer domainId) {
-
-		List<DataSource> dss = domainService.getDatasourceByDomainId(domainId);
-		json.setList(dss);
-		json.setTotal(dss.size());
-
-		return json;
-	}
 
 	@RequestMapping(value = "/{domainId}/config", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getConfig(SimpleJsonResponse json,
@@ -176,7 +167,7 @@ public class DomainController {
 		TomcatDomain td = domainService.getDomain(domainId);
 
 		List<TomcatConfigFile> confVersions = domainService
-				.getConfigFileVersions(td, type);
+				.getConfigFileVersions(td.getId(), type);
 		json.setList(confVersions);
 		json.setTotal(confVersions.size());
 		json.setSuccess(true);
@@ -570,13 +561,15 @@ public class DomainController {
 			// TODO idkbj get content of config file and put to model
 			content = "18:55:51.351 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - SecurityContextHolder now cleared, as request processing completed";
 			model.put("firstConfig", content);
-			model.put("firstConfigVersion", firstConfig.getVersionAndTime());
+			model.put("firstConfigVersion",
+					firstConfig.getVersionAndTimeAndTomcat());
 		}
 		if (secondConfig != null) {
 			// TODO idkbj get content of config file and put to model
 			content = "18:55:51.351 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityC3213123ntextPersistenceFilter - SecurityContextHolder now cleared, as request processing completed";
 			model.put("secondConfig", content);
-			model.put("secondConfigVersion", secondConfig.getVersionAndTime());
+			model.put("secondConfigVersion",
+					secondConfig.getVersionAndTimeAndTomcat());
 		}
 		return "configdiff";
 	}

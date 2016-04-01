@@ -36,16 +36,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
+import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
+import com.athena.meerkat.controller.web.entities.CommonCode;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
@@ -78,6 +83,10 @@ public class TomcatInstanceService {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
+	@Autowired
+	private CommonCodeRepository commonRepo;
+	@Autowired
+	private TomcatConfigFileRepository tomcatConfigFileRepo;
 
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
@@ -278,5 +287,14 @@ public class TomcatInstanceService {
 
 	public List<TomcatInstConfig> getTomcatInstConfigs(int tomcatId) {
 		return tomcatInstConfigRepo.findByTomcatInstance_Id(tomcatId);
+	}
+
+	public List<TomcatConfigFile> getConfigFileVersions(TomcatInstance tomcat,
+			String type) {
+		CommonCode codeValue = commonRepo.findByCodeNm(type);
+		List<TomcatConfigFile> configs = tomcatConfigFileRepo
+				.findByTomcatAndFileTypeCdId(tomcat.getId(), codeValue.getId());
+
+		return configs;
 	}
 }

@@ -135,11 +135,12 @@ public class TomcatDomainService {
 		// revision);
 	}
 
-	public List<TomcatConfigFile> getConfigFileVersions(TomcatDomain td,
+	public List<TomcatConfigFile> getConfigFileVersions(int domainId,
 			String type) {
 		CommonCode codeValue = commonRepo.findByCodeNm(type);
 		List<TomcatConfigFile> configs = tomcatConfigFileRepo
-				.findByTomcatDomainAndFileTypeCdId(td, codeValue.getId());
+				.findByTomcatDomain_IdAndFileTypeCdId(domainId,
+						codeValue.getId());
 
 		return configs;
 	}
