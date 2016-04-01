@@ -174,6 +174,35 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
+			@PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+
+		if (tomcat != null) {
+			DomainTomcatConfiguration conf = domainService
+					.getTomcatConfig(tomcat.getDomainId());
+			// get configurations that are different to domain tomcat config
+			List<TomcatInstConfig> changedConfigs = service
+					.getTomcatInstConfigs(tomcat.getId());
+			if (changedConfigs != null) {
+				for (TomcatInstConfig c : changedConfigs) {
+					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
+						conf.setHttpPort(Integer.parseInt(c.getConfigValue()));
+					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
+						conf.setJavaHome(c.getConfigValue());
+					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
+						conf.setSessionTimeout(Integer.parseInt(c
+								.getConfigValue()));
+					}
+				}
+			}
+			json.setData(conf);
+		}
+		return json;
+	}
+
 	@RequestMapping("/instance/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(
 			SimpleJsonResponse json) {

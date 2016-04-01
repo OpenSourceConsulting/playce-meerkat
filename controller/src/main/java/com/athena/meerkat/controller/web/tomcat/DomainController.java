@@ -135,10 +135,10 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getDomainList(
-			SimpleJsonResponse json) {
+	public @ResponseBody GridJsonResponse getDomainList(GridJsonResponse json) {
 		List<TomcatDomain> result = domainService.getAll();
-		json.setData(result);
+		json.setList(result);
+		json.setTotal(result.size());
 		json.setSuccess(true);
 		return json;
 	}

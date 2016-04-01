@@ -7,7 +7,7 @@ public class TomcatInstanceViewModel {
 	private Integer id;
 	private String name;
 	private String hostName;
-	private String stateString;
+	private String stateNm;
 	private int state;
 	private String ipAddress;
 	private String tomcatVersion;
@@ -124,7 +124,7 @@ public class TomcatInstanceViewModel {
 			osName = tc.getServer().getName();
 
 		}
-		stateString = tc.getStateNm();
+		stateNm = tc.getStateNm();
 		state = tc.getState();
 		if (tc.getTomcatDomain() != null) {
 			domainName = tc.getTomcatDomain().getName();
@@ -147,19 +147,19 @@ public class TomcatInstanceViewModel {
 
 	}
 
-	public String getStateString() {
-		return stateString;
-	}
-
-	public void setStateString(String stateString) {
-		this.stateString = stateString;
-	}
-
 	public int getState() {
 		return state;
 	}
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	public String getStateNm() {
+		return stateNm;
+	}
+
+	public void setStateNm(String stateNm) {
+		this.stateNm = stateNm;
 	}
 }
