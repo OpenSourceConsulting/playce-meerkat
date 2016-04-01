@@ -180,4 +180,8 @@ public class DataSourceService {
 	public List<DataSource> listNotAssigned(int domainId) {
 		return datasourceRepo.listNotAssigned(domainId);
 	}
+	
+	public List<DataSource> listDomainLinked(int domainId) {
+		return datasourceRepo.listDomainLinked(domainId);
+	}
 }

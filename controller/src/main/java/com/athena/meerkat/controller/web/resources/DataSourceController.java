@@ -18,6 +18,7 @@ import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -102,6 +103,16 @@ public class DataSourceController {
 	@ResponseBody
 	public GridJsonResponse getAvailableDataSource(GridJsonResponse json) {
 		List<DataSource> datasources = service.getAll();
+		json.setList(datasources);
+		json.setTotal(datasources.size());
+
+		return json;
+	}
+	
+	@RequestMapping(value = "/domain/link/list", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getDatasourceList(GridJsonResponse json, @RequestParam(value="domainId") int domainId) {
+		List<DataSource> datasources = service.listDomainLinked(domainId);
 		json.setList(datasources);
 		json.setTotal(datasources.size());
 
