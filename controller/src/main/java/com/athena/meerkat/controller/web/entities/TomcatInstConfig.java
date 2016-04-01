@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Tran
  *
@@ -32,6 +34,7 @@ public class TomcatInstConfig {
 	private Date createdDate;
 
 	@ManyToOne
+	@JsonIgnore
 	private TomcatInstance tomcatInstance;
 
 	/**

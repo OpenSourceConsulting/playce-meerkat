@@ -101,7 +101,7 @@ public class TomcatInstance implements Serializable {
 	private List<TomcatApplication> tomcatApplications;
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "config-tomcat")
+	//@JsonManagedReference(value = "config-tomcat")
 	private List<TomcatInstConfig> tomcatConfigs;
 
 	public TomcatInstance() {
