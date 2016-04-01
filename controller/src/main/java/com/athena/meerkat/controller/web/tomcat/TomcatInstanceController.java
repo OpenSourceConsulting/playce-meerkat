@@ -55,7 +55,6 @@ import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
-import com.couchbase.client.vbucket.config.Config;
 
 /**
  * <pre>
@@ -174,6 +173,35 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
+			@PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+
+		if (tomcat != null) {
+			DomainTomcatConfiguration conf = domainService
+					.getTomcatConfig(tomcat.getDomainId());
+			// get configurations that are different to domain tomcat config
+			List<TomcatInstConfig> changedConfigs = service
+					.getTomcatInstConfigs(tomcat.getId());
+			if (changedConfigs != null) {
+				for (TomcatInstConfig c : changedConfigs) {
+					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
+						conf.setHttpPort(Integer.parseInt(c.getConfigValue()));
+					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
+						conf.setJavaHome(c.getConfigValue());
+					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
+						conf.setSessionTimeout(Integer.parseInt(c
+								.getConfigValue()));
+					}
+				}
+			}
+			json.setData(conf);
+		}
+		return json;
+	}
+
 	@RequestMapping("/instance/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(
 			SimpleJsonResponse json) {
@@ -197,19 +225,16 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/instance/datasource")
-	public @ResponseBody SimpleJsonResponse getDatasourceByTomcat(
-			SimpleJsonResponse json, int tomcatId) {
-		TomcatInstance tomcat = service.findOne(tomcatId);
-		if (tomcat == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat does not exist");
-		} else {
-			List<DataSource> datasources = service
-					.getDataSourceListByTomcat(tomcat);
-			json.setSuccess(true);
-			json.setData(datasources);
-		}
+	@RequestMapping(value = "/instance/{id}/ds", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getDatasourceByTomcat(
+			GridJsonResponse json, @PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+
+		List<DataSource> datasources = domainService
+				.getDatasourceByDomainId(tomcat.getDomainId());
+		json.setList(datasources);
+		json.setTotal(datasources.size());
+
 		return json;
 	}
 

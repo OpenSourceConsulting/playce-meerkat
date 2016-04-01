@@ -33,4 +33,7 @@ public interface DataSourceRepository extends
 	@Query("select a from DataSource a inner join a.tomcatDomains t where t.id = ?1")
 	List<DataSource> listDomainLinked(int domainId);
 
+	@Query("select a from DataSource a where a.id in (select t.datasourceId from TomcatDomainDatasource t where t.tomcatDomainId = ?1)")
+	List<DataSource> getDatasourcesByDomainId(int domainId);
+
 }

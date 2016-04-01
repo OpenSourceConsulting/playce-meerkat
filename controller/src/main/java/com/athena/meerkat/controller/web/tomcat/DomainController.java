@@ -140,8 +140,10 @@ public class DomainController {
 		json.setList(result);
 		json.setTotal(result.size());
 
+		json.setSuccess(true);
 		return json;
 	}
+
 
 	@RequestMapping(value = "/{domainId}/config", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getConfig(SimpleJsonResponse json,
