@@ -67,11 +67,7 @@ public class TomcatInstance implements Serializable {
 
 	@Column(name = "state")
 	private int state = 5; //default value.
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 	@Transient
 	private String stateNm;
 
