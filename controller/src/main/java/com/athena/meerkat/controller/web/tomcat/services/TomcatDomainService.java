@@ -17,11 +17,13 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
+import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
+import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
@@ -52,6 +54,8 @@ public class TomcatDomainService {
 	private ApplicationRepository appRepo;
 	@Autowired
 	private TomcatDomainDatasourceRepository tdDatasoureRepo;
+	@Autowired
+	private DataSourceRepository dsRepo;
 
 	@Autowired
 	private ClusteringConfigurationVersionRepository clusteringConfigVerRepo;
@@ -289,5 +293,9 @@ public class TomcatDomainService {
 	public TomcatConfigFile saveConfigFile(TomcatConfigFile conf) {
 		return tomcatConfigFileRepo.save(conf);
 
+	}
+
+	public List<DataSource> getDatasourceByDomainId(Integer domainId) {
+		return dsRepo.getDatasourcesByDomainId(domainId);
 	}
 }

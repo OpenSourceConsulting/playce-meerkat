@@ -145,16 +145,12 @@ public class DomainController {
 
 	@RequestMapping(value = "/{domainId}/ds/list", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getDatasourceList(
-			GridJsonResponse json, @PathVariable int domainId) {
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
-			List<DataSource> dss = (List<DataSource>) td.getDatasources();
-			json.setList(dss);
-			json.setTotal(dss.size());
-		}
+			GridJsonResponse json, @PathVariable Integer domainId) {
+
+		List<DataSource> dss = domainService.getDatasourceByDomainId(domainId);
+		json.setList(dss);
+		json.setTotal(dss.size());
+
 		return json;
 	}
 

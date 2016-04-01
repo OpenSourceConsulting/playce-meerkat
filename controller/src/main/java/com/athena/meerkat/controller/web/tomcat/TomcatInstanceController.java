@@ -55,7 +55,6 @@ import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
-import com.couchbase.client.vbucket.config.Config;
 
 /**
  * <pre>
@@ -226,19 +225,16 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/instance/datasource")
-	public @ResponseBody SimpleJsonResponse getDatasourceByTomcat(
-			SimpleJsonResponse json, int tomcatId) {
-		TomcatInstance tomcat = service.findOne(tomcatId);
-		if (tomcat == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat does not exist");
-		} else {
-			List<DataSource> datasources = service
-					.getDataSourceListByTomcat(tomcat);
-			json.setSuccess(true);
-			json.setData(datasources);
-		}
+	@RequestMapping(value = "/instance/{id}/ds", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getDatasourceByTomcat(
+			GridJsonResponse json, @PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+
+		List<DataSource> datasources = domainService
+				.getDatasourceByDomainId(tomcat.getDomainId());
+		json.setList(datasources);
+		json.setTotal(datasources.size());
+
 		return json;
 	}
 
