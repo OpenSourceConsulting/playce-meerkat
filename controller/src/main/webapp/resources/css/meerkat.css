@@ -32,6 +32,18 @@
 .add {
     background-image:url(../images/icons/fam/add.gif) !important;
 }
+.icon-list1 {
+    background-image:url(../images/icons/fam/application_view_list.png);
+}
+.icon-list2 {
+    background-image:url(../images/icons/fam/grid.png);
+}
+.icon-user {
+    background-image:url(../images/icons/fam/user.png);
+}
+.icon-delete {
+	background-image:url(../images/icons/fam/delete.gif);
+}
 
 /*
  * menu css
