@@ -342,14 +342,4 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "domain/{domainId}/search/{keyword}", method = RequestMethod.GET)
-	@ResponseBody
-	public GridJsonResponse search(GridJsonResponse json,
-			@PathVariable Integer domainId, @PathVariable String keyword) {
-		List<TomcatInstance> result = service.findByNameAndDomain(keyword,
-				domainId);
-		json.setList(result);
-		json.setTotal(result.size());
-		return json;
-	}
 }

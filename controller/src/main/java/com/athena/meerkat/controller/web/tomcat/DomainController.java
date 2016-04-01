@@ -34,6 +34,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -578,5 +579,16 @@ public class DomainController {
 			model.put("secondConfigVersion", secondConfig.getVersionAndTime());
 		}
 		return "configdiff";
+	}
+
+	@RequestMapping(value = "/{domainId}/tomcat/search/{keyword}", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse search(GridJsonResponse json,
+			@PathVariable Integer domainId, @PathVariable String keyword) {
+		List<TomcatInstance> result = tomcatService.findByNameAndDomain(
+				keyword, domainId);
+		json.setList(result);
+		json.setTotal(result.size());
+		return json;
 	}
 }
