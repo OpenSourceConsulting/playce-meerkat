@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
@@ -46,6 +49,9 @@ public class TomcatConfigFile implements Serializable {
 	private Date createdTime;
 	@Column(name = "create_user_id")
 	private int createUserId;
+
+	@Transient
+	private String content;
 
 	@ManyToOne
 	@JsonBackReference(value = "domain-configFile")
@@ -113,7 +119,12 @@ public class TomcatConfigFile implements Serializable {
 	}
 
 	public String getVersionAndTimeAndTomcat() {
-		String str = String.valueOf(version) + " - " + createdTime.toString();
+		String str = String.valueOf(version)
+				+ " - "
+				+ MeerkatUtils
+						.dateTimeToString(
+								this.createdTime,
+								MeerkatConstants.CONFIG_FILE_VERSION_DATE_TIME_FORMATTER);
 		if (tomcatInstance != null) {
 			str = str + "(" + tomcatInstance.getName() + ")";
 		}
@@ -127,6 +138,14 @@ public class TomcatConfigFile implements Serializable {
 
 	public void setId(int id) {
 		Id = id;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

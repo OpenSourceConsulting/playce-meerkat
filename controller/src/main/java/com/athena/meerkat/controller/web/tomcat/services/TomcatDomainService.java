@@ -279,7 +279,7 @@ public class TomcatDomainService {
 	}
 
 	public TomcatConfigFile getLatestConfVersion(int domainId, String type) {
-		List<TomcatConfigFile> list = tomcatConfigFileRepo.getLatestVersion(
+		List<TomcatConfigFile> list = tomcatConfigFileRepo.getConfiFileOrderByVersionDesc(
 				domainId, type);
 		if (list.size() > 0) {
 			return list.get(0);

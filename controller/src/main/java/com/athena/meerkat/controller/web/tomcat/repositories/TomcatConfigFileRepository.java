@@ -26,7 +26,12 @@ public interface TomcatConfigFileRepository extends
 	// @Param("type") String type);
 
 	@Query(value = "select cf from TomcatConfigFile cf, CommonCode cc where cc.id = cf.fileTypeCdId and cf.tomcatDomain.id =:domainId  and cc.codeNm = :type order by cf.version desc")
-	List<TomcatConfigFile> getLatestVersion(@Param("domainId") int domainId,
+	List<TomcatConfigFile> getConfiFileOrderByVersionDesc(
+			@Param("domainId") int domainId, @Param("type") String type);
+
+	@Query(value = "select cf from TomcatConfigFile cf, CommonCode cc where cc.id = cf.fileTypeCdId and (cf.tomcatDomain.id =:domainId or cf.tomcatInstance.id = :tomcatId) and cc.codeNm = :type order by cf.version desc")
+	List<TomcatConfigFile> getConfiFileOrderByVersionDesc(
+			@Param("domainId") int domainId, @Param("tomcatId") int tomcatId,
 			@Param("type") String type);
 
 	@Query(value = "select cf from TomcatConfigFile cf where cf.tomcatInstance.id =:tomcatId  and cf.fileTypeCdId = :typeId order by cf.version desc")

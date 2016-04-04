@@ -116,8 +116,11 @@ public abstract class MeerkatConstants {
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "configFileType";
+	public static final String CONFIG_FILE_TYPE_SERVER_XML = "server.xml";
+	public static final String CONFIG_FILE_TYPE_CONTEXT_XML = "context.xml";
 
 	public static final String DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm:ss";
+	public static final String CONFIG_FILE_VERSION_DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm";
 
 	/**
 	 * Configuration name

@@ -18,6 +18,8 @@ public class TomcatInstanceViewModel {
 	private String jvmVersion;
 	private String domainName;
 	private int domainId;
+	private int latestServerXmlConfigFileId = 0;
+	private int latestContextXmlConfigFileId = 0;
 
 	public int getDomainId() {
 		return domainId;
@@ -161,5 +163,21 @@ public class TomcatInstanceViewModel {
 
 	public void setStateNm(String stateNm) {
 		this.stateNm = stateNm;
+	}
+
+	public int getLatestServerXmlConfigFileId() {
+		return latestServerXmlConfigFileId;
+	}
+
+	public void setLatestServerXmlConfigFileId(int latestServerXmlConfigFileId) {
+		this.latestServerXmlConfigFileId = latestServerXmlConfigFileId;
+	}
+
+	public int getLatestContextXmlConfigFileId() {
+		return latestContextXmlConfigFileId;
+	}
+
+	public void setLatestContextXmlConfigFileId(int latestContextXmlConfigFileId) {
+		this.latestContextXmlConfigFileId = latestContextXmlConfigFileId;
 	}
 }

@@ -297,4 +297,19 @@ public class TomcatInstanceService {
 
 		return configs;
 	}
+
+	public TomcatConfigFile getLatestConfVersion(int tomcatInstanceId,
+			String type) {
+		TomcatInstance instance = repo.findOne(tomcatInstanceId);
+		if (instance != null) {
+			List<TomcatConfigFile> list = tomcatConfigFileRepo
+					.getConfiFileOrderByVersionDesc(instance.getDomainId(),
+							tomcatInstanceId, type);
+			if (list.size() > 0) {
+				return list.get(0);
+			}
+		}
+
+		return null;
+	}
 }

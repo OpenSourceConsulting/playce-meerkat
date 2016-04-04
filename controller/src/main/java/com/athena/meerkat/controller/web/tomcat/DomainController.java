@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
@@ -357,9 +358,11 @@ public class DomainController {
 		}
 
 		TomcatConfigFile latestServerXmlVersion = domainService
-				.getLatestConfVersion(id, "server.xml");
+				.getLatestConfVersion(id,
+						MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML);
 		TomcatConfigFile latestContextXmlVersion = domainService
-				.getLatestConfVersion(id, "context.xml");
+				.getLatestConfVersion(id,
+						MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML);
 		result.setLatestServerXmlVersion(latestServerXmlVersion == null ? 0
 				: latestServerXmlVersion.getId());
 		result.setLatestContextXmlVersion(latestContextXmlVersion == null ? 0

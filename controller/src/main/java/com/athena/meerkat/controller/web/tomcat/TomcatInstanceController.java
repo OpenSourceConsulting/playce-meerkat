@@ -169,6 +169,19 @@ public class TomcatInstanceController {
 					}
 				}
 			}
+			// set latest Config file id
+			TomcatConfigFile latestServerXml = service.getLatestConfVersion(
+					tomcat.getId(), "server.xml");
+			TomcatConfigFile latestContextXml = service.getLatestConfVersion(
+					tomcat.getId(), "context.xml");
+			if (latestServerXml != null) {
+				viewmodel.setLatestServerXmlConfigFileId(latestServerXml
+						.getId());
+			}
+			if (latestContextXml != null) {
+				viewmodel.setLatestContextXmlConfigFileId(latestContextXml
+						.getId());
+			}
 			json.setData(viewmodel);
 		}
 		return json;
@@ -363,6 +376,36 @@ public class TomcatInstanceController {
 
 		json.setList(confVersions);
 		json.setTotal(confVersions.size());
+		return json;
+	}
+
+	@RequestMapping(value = "/instance/{tomcatId}/configfile/{type}/latest", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getLatestVersionConfigFile(
+			SimpleJsonResponse json, @PathVariable Integer tomcatId,
+			@PathVariable String type) {
+		TomcatConfigFile conf = service.getLatestConfVersion(tomcatId, type);
+
+		if (conf != null) {
+			// TODO idkbj get content of config file by provisioning
+			String content = "This is example content for config ID:"
+					+ conf.getId();
+			conf.setContent(content);
+			json.setData(conf);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/instance/configfile/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getConfigFileContent(SimpleJsonResponse json,
+			@PathVariable Integer id) {
+		TomcatConfigFile file = domainService.getTomcatConfigFileById(id);
+		if (file != null) {
+			// TODO: idkbj load content by provisioning
+			String content = "loading ....." + id.toString();
+			json.setData(content);
+		}
 		return json;
 	}
 }
