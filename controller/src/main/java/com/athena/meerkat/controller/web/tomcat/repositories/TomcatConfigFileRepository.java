@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 
 @Repository
 public interface TomcatConfigFileRepository extends
 		JpaRepository<TomcatConfigFile, Integer> {
-	List<TomcatConfigFile> findByTomcatDomainAndFileTypeCdId(
-			TomcatDomain tomcatDomain, int fileTypeCdId);
+	List<TomcatConfigFile> findByTomcatDomain_IdAndFileTypeCdId(int domainId,
+			int fileTypeCdId);
 
 	TomcatConfigFile findByTomcatDomainAndFileTypeCdIdAndVersion(
 			TomcatDomain td, int id, int version);
@@ -27,5 +28,9 @@ public interface TomcatConfigFileRepository extends
 	@Query(value = "select cf from TomcatConfigFile cf, CommonCode cc where cc.id = cf.fileTypeCdId and cf.tomcatDomain.id =:domainId  and cc.codeNm = :type order by cf.version desc")
 	List<TomcatConfigFile> getLatestVersion(@Param("domainId") int domainId,
 			@Param("type") String type);
+
+	@Query(value = "select cf from TomcatConfigFile cf where cf.tomcatInstance.id =:tomcatId  and cf.fileTypeCdId = :typeId order by cf.version desc")
+	List<TomcatConfigFile> findByTomcatAndFileTypeCdId(
+			@Param("tomcatId") int tomcatId, @Param("typeId") int typeId);
 
 }
