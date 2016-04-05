@@ -42,9 +42,11 @@ import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
@@ -82,6 +84,9 @@ public class TomcatInstanceService {
 	private CommonCodeRepository commonRepo;
 	@Autowired
 	private TomcatConfigFileRepository tomcatConfigFileRepo;
+
+	@Autowired
+	private ApplicationRepository appRepo;
 
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
@@ -264,6 +269,10 @@ public class TomcatInstanceService {
 
 	public List<TomcatInstConfig> getTomcatInstConfigs(int tomcatId) {
 		return tomcatInstConfigRepo.findByTomcatInstance_Id(tomcatId);
+	}
+
+	public List<TomcatApplication> getApplicationByTomcat(int id) {
+		return appRepo.findByTomcatInstance_Id(id);
 	}
 
 }

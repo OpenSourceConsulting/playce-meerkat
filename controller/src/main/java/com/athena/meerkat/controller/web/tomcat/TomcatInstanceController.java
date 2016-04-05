@@ -47,6 +47,8 @@ import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.Session;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
@@ -252,6 +254,41 @@ public class TomcatInstanceController {
 		json.setList(datasources);
 		json.setTotal(datasources.size());
 
+		return json;
+	}
+
+	@RequestMapping(value = "/instance/{id}/apps", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getAppsByTomcat(
+			GridJsonResponse json, @PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+		if (tomcat != null) {
+			List<TomcatApplication> domainApps = domainService
+					.getApplicationListByDomain(tomcat.getDomainId());
+			List<TomcatApplication> tomcatApps = service
+					.getApplicationByTomcat(tomcat.getId());
+			tomcatApps.addAll(domainApps);
+			json.setList(tomcatApps);
+			json.setTotal(tomcatApps.size());
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/instance/{id}/sessions", method = RequestMethod.GET)
+	public @ResponseBody GridJsonResponse getSessionsByTomcat(
+			GridJsonResponse json, @PathVariable Integer id) {
+		TomcatInstance tomcat = service.findOne(id);
+		if (tomcat != null) {
+			List<Session> sessions = new ArrayList<Session>();
+			Session e = new Session();
+			e.setId(1);
+			e.setKey("Session 1");
+			e.setValue("Value session asdasdkjad kajdah dk");
+			e.setLocation("Server 1");
+			sessions.add(0, e);
+
+			json.setList(sessions);
+			json.setTotal(sessions.size());
+		}
 		return json;
 	}
 
