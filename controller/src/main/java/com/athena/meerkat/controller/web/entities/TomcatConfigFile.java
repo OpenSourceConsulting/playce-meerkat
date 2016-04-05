@@ -125,8 +125,8 @@ public class TomcatConfigFile implements Serializable {
 						.dateTimeToString(
 								this.createdTime,
 								MeerkatConstants.CONFIG_FILE_VERSION_DATE_TIME_FORMATTER);
-		if (tomcatInstance != null) {
-			str = str + "(" + tomcatInstance.getName() + ")";
+		if (getTomcatInstance() != null) {
+			str = str + "(" + getTomcatInstance().getName() + ")";
 		}
 		return str;
 
@@ -146,6 +146,14 @@ public class TomcatConfigFile implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public TomcatInstance getTomcatInstance() {
+		return tomcatInstance;
+	}
+
+	public void setTomcatInstance(TomcatInstance tomcatInstance) {
+		this.tomcatInstance = tomcatInstance;
 	}
 
 }

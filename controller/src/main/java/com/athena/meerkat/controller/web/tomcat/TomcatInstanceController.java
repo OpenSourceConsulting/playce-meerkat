@@ -53,6 +53,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
@@ -77,6 +78,8 @@ public class TomcatInstanceController {
 	private TomcatDomainService domainService;
 	@Autowired
 	private DataSourceService dsService;
+	@Autowired
+	private TomcatConfigFileService tomcatConfigFileService;
 	@Inject
 	@Named("provisioningHandler")
 	private ProvisioningHandler provisioningHandler;
@@ -170,10 +173,10 @@ public class TomcatInstanceController {
 				}
 			}
 			// set latest Config file id
-			TomcatConfigFile latestServerXml = service.getLatestConfVersion(
-					tomcat.getId(), "server.xml");
-			TomcatConfigFile latestContextXml = service.getLatestConfVersion(
-					tomcat.getId(), "context.xml");
+			TomcatConfigFile latestServerXml = tomcatConfigFileService
+					.getLatestConfVersion(null, tomcat, "server.xml");
+			TomcatConfigFile latestContextXml = tomcatConfigFileService
+					.getLatestConfVersion(null, tomcat, "context.xml");
 			if (latestServerXml != null) {
 				viewmodel.setLatestServerXmlConfigFileId(latestServerXml
 						.getId());
@@ -356,56 +359,4 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{tomcatId}/configfile/{type}/", method = RequestMethod.GET)
-	@ResponseBody
-	public GridJsonResponse getConfigFileVersions(GridJsonResponse json,
-			@PathVariable Integer tomcatId, @PathVariable String type) {
-		TomcatInstance tomcat = service.findOne(tomcatId);
-		List<TomcatConfigFile> confVersions = new ArrayList<TomcatConfigFile>();
-		if (tomcat != null) {
-			// list of config files modified in domain level
-			confVersions = domainService.getConfigFileVersions(
-					tomcat.getDomainId(), type);
-
-			List<TomcatConfigFile> modifiedConfigVersions = service
-					.getConfigFileVersions(tomcat, type);
-			if (modifiedConfigVersions != null) {
-				confVersions.addAll(modifiedConfigVersions);
-			}
-		}
-
-		json.setList(confVersions);
-		json.setTotal(confVersions.size());
-		return json;
-	}
-
-	@RequestMapping(value = "/instance/{tomcatId}/configfile/{type}/latest", method = RequestMethod.GET)
-	@ResponseBody
-	public SimpleJsonResponse getLatestVersionConfigFile(
-			SimpleJsonResponse json, @PathVariable Integer tomcatId,
-			@PathVariable String type) {
-		TomcatConfigFile conf = service.getLatestConfVersion(tomcatId, type);
-
-		if (conf != null) {
-			// TODO idkbj get content of config file by provisioning
-			String content = "This is example content for config ID:"
-					+ conf.getId();
-			conf.setContent(content);
-			json.setData(conf);
-		}
-		return json;
-	}
-
-	@RequestMapping(value = "/instance/configfile/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public SimpleJsonResponse getConfigFileContent(SimpleJsonResponse json,
-			@PathVariable Integer id) {
-		TomcatConfigFile file = domainService.getTomcatConfigFileById(id);
-		if (file != null) {
-			// TODO: idkbj load content by provisioning
-			String content = "loading ....." + id.toString();
-			json.setData(content);
-		}
-		return json;
-	}
 }

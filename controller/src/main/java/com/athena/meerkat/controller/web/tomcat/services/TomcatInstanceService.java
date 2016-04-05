@@ -36,19 +36,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
-import com.athena.meerkat.controller.ServiceResult;
-import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
-import com.athena.meerkat.controller.web.entities.CommonCode;
-import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
+import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
@@ -250,24 +245,6 @@ public class TomcatInstanceService {
 		return true;
 	}
 
-	public ServiceResult getAssociatedTomcatList(int dataSourceId) {
-		DataSource ds = datasourceRepo.findOne(dataSourceId);
-		if (ds != null) {
-			// return new ServiceResult(Status.DONE, "",
-			// ds.getTomcatInstances());
-		}
-		return new ServiceResult(Status.FAILED, "");
-	}
-
-	public ServiceResult editAssoicateTomcatList(int dataSourceId,
-			List<Integer> removedAssociatedTomcatId) {
-		DataSource ds = datasourceRepo.findOne(dataSourceId);
-		if (ds != null) {
-
-		}
-		return null;
-	}
-
 	public List<TomcatInstance> getAll() {
 		return repo.findAll();
 	}
@@ -289,27 +266,4 @@ public class TomcatInstanceService {
 		return tomcatInstConfigRepo.findByTomcatInstance_Id(tomcatId);
 	}
 
-	public List<TomcatConfigFile> getConfigFileVersions(TomcatInstance tomcat,
-			String type) {
-		CommonCode codeValue = commonRepo.findByCodeNm(type);
-		List<TomcatConfigFile> configs = tomcatConfigFileRepo
-				.findByTomcatAndFileTypeCdId(tomcat.getId(), codeValue.getId());
-
-		return configs;
-	}
-
-	public TomcatConfigFile getLatestConfVersion(int tomcatInstanceId,
-			String type) {
-		TomcatInstance instance = repo.findOne(tomcatInstanceId);
-		if (instance != null) {
-			List<TomcatConfigFile> list = tomcatConfigFileRepo
-					.getConfiFileOrderByVersionDesc(instance.getDomainId(),
-							tomcatInstanceId, type);
-			if (list.size() > 0) {
-				return list.get(0);
-			}
-		}
-
-		return null;
-	}
 }

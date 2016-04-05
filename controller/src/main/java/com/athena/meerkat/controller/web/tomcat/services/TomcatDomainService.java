@@ -1,7 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,16 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.athena.meerkat.controller.ServiceResult;
-import com.athena.meerkat.controller.ServiceResult.Status;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
-import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
-import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
@@ -29,7 +24,6 @@ import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigura
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
-import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatDomainDatasourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
@@ -44,8 +38,7 @@ public class TomcatDomainService {
 	private TomcatInstanceRepository tomcatRepo;
 	@Autowired
 	private CommonCodeRepository commonRepo;
-	@Autowired
-	private TomcatConfigFileRepository tomcatConfigFileRepo;
+
 	@Autowired
 	private DomainTomcatConfigurationRepository domainTomcatConfRepo;
 	@Autowired
@@ -80,16 +73,17 @@ public class TomcatDomainService {
 		tdDatasoureRepo.save(datasources);
 	}
 
-	public ServiceResult edit(int domainId, String name, boolean is_clustering) {
-		TomcatDomain domain = domainRepo.findOne(domainId);
-		if (domain == null) {
-			return new ServiceResult(Status.FAILED, "Domain does not exist");
-		}
-		domain.setName(name);
-		// domain.setIsClustering(is_clustering);
-		domainRepo.save(domain);
-		return new ServiceResult(Status.DONE, "Done", true);
-	}
+	// public ServiceResult edit(int domainId, String name, boolean
+	// is_clustering) {
+	// TomcatDomain domain = domainRepo.findOne(domainId);
+	// if (domain == null) {
+	// return new ServiceResult(Status.FAILED, "Domain does not exist");
+	// }
+	// domain.setName(name);
+	// // domain.setIsClustering(is_clustering);
+	// domainRepo.save(domain);
+	// return new ServiceResult(Status.DONE, "Done", true);
+	// }
 
 	public boolean delete(int domainId) {
 		TomcatDomain domain = domainRepo.findOne(domainId);
@@ -104,10 +98,6 @@ public class TomcatDomainService {
 		// }
 		domainRepo.delete(domain);
 		return true;
-	}
-
-	public ServiceResult configure(int domainId) {
-		return new ServiceResult(Status.DONE, "Not implemented yet");
 	}
 
 	public List<TomcatDomain> getAll() {
@@ -135,16 +125,6 @@ public class TomcatDomainService {
 		// revision);
 	}
 
-	public List<TomcatConfigFile> getConfigFileVersions(int domainId,
-			String type) {
-		CommonCode codeValue = commonRepo.findByCodeNm(type);
-		List<TomcatConfigFile> configs = tomcatConfigFileRepo
-				.findByTomcatDomain_IdAndFileTypeCdId(domainId,
-						codeValue.getId());
-
-		return configs;
-	}
-
 	public List<ClusteringConfiguration> getClusteringConfigurationByName(
 			String name) {
 		return clusteringConfRepo.findByName(name);
@@ -161,14 +141,6 @@ public class TomcatDomainService {
 	// public void deleteClusteringConfig(ClusteringConfiguration config) {
 	// clusteringConfigRepo.delete(config);
 	// }
-
-	public TomcatConfigFile getConfig(TomcatDomain td, String type, int version) {
-		CommonCode codeValue = commonRepo.findByCodeNm(type);
-		TomcatConfigFile conf = tomcatConfigFileRepo
-				.findByTomcatDomainAndFileTypeCdIdAndVersion(td,
-						codeValue.getId(), version);
-		return conf;
-	}
 
 	public DomainTomcatConfiguration getTomcatConfig(int domainId) {
 		return domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
@@ -276,24 +248,6 @@ public class TomcatDomainService {
 		return clusteringConfRepo
 				.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
 						domainId, versionId, keyword);
-	}
-
-	public TomcatConfigFile getLatestConfVersion(int domainId, String type) {
-		List<TomcatConfigFile> list = tomcatConfigFileRepo.getConfiFileOrderByVersionDesc(
-				domainId, type);
-		if (list.size() > 0) {
-			return list.get(0);
-		}
-		return null;
-	}
-
-	public TomcatConfigFile getTomcatConfigFileById(Integer id) {
-		return tomcatConfigFileRepo.findOne(id);
-	}
-
-	public TomcatConfigFile saveConfigFile(TomcatConfigFile conf) {
-		return tomcatConfigFileRepo.save(conf);
-
 	}
 
 	public List<DataSource> getDatasourceByDomainId(Integer domainId) {
