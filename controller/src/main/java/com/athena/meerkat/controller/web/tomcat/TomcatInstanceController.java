@@ -87,7 +87,6 @@ public class TomcatInstanceController {
 	private ProvisioningHandler provisioningHandler;
 
 	public TomcatInstanceController() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@RequestMapping(value = "/instance/start", method = RequestMethod.POST)
@@ -108,37 +107,32 @@ public class TomcatInstanceController {
 
 	private SimpleJsonResponse changeTomcatState(SimpleJsonResponse json,
 			TomcatInstance tomcat, int state) {
-		if (tomcat == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat does not exist.");
-		} else {
-			boolean success = false;
-			// provisioning
-			// ..
 
-			// update to db
-			if (state == State.TOMCAT_STATE_STARTED) {
-				if (tomcat.getState() == State.TOMCAT_STATE_STARTED) {
-					json.setSuccess(false);
-					json.setMsg("Tomcat is already started.");
-				} else {
-					success = service.start(tomcat); // provisioning &&
-														// service.start(tomcat);
-					json.setData(State.TOMCAT_STATE_STARTED);
-				}
-			} else if (state == State.TOMCAT_STATE_STOPPED) {
-				if (tomcat.getState() == State.TOMCAT_STATE_STOPPED) {
-					json.setSuccess(false);
-					json.setMsg("Tomcat is already stopped.");
-				} else {
-					success = service.stop(tomcat); // provisioning &&
-					// service.stop(tomcat);
-					json.setData(State.TOMCAT_STATE_STOPPED);
-				}
+		boolean success = false;
+		// TODO idkjwon provisioning
+		// ..
+
+		// update to db
+		if (state == State.TOMCAT_STATE_STARTED) {
+			if (tomcat.getState() == State.TOMCAT_STATE_STARTED) {
+				json.setSuccess(false);
+				json.setMsg("Tomcat is already started.");
+			} else {
+				success = service.start(tomcat); // provisioning &&
+													// service.start(tomcat);
+				json.setData(State.TOMCAT_STATE_STARTED);
 			}
-
-			json.setSuccess(success);
+		} else if (state == State.TOMCAT_STATE_STOPPED) {
+			if (tomcat.getState() == State.TOMCAT_STATE_STOPPED) {
+				json.setSuccess(false);
+				json.setMsg("Tomcat is already stopped.");
+			} else {
+				success = service.stop(tomcat); // provisioning &&
+				// service.stop(tomcat);
+				json.setData(State.TOMCAT_STATE_STOPPED);
+			}
 		}
+		json.setSuccess(success);
 		return json;
 	}
 
@@ -176,9 +170,11 @@ public class TomcatInstanceController {
 			}
 			// set latest Config file id
 			TomcatConfigFile latestServerXml = tomcatConfigFileService
-					.getLatestConfVersion(null, tomcat, "server.xml");
+					.getLatestConfVersion(null, tomcat,
+							MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML);
 			TomcatConfigFile latestContextXml = tomcatConfigFileService
-					.getLatestConfVersion(null, tomcat, "context.xml");
+					.getLatestConfVersion(null, tomcat,
+							MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML);
 			if (latestServerXml != null) {
 				viewmodel.setLatestServerXmlConfigFileId(latestServerXml
 						.getId());
@@ -226,7 +222,6 @@ public class TomcatInstanceController {
 			SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
-		json.setSuccess(true);
 		return json;
 	}
 
@@ -234,12 +229,8 @@ public class TomcatInstanceController {
 	public @ResponseBody SimpleJsonResponse getTomcatInstances(
 			SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
-		if (domain == null) {
-			json.setSuccess(false);
-			json.setMsg("Domain does not exist.");
-		} else {
+		if (domain != null) {
 			json.setData(service.getTomcatListByDomainId(domain.getId()));
-			json.setSuccess(true);
 		}
 		return json;
 	}
@@ -248,7 +239,6 @@ public class TomcatInstanceController {
 	public @ResponseBody GridJsonResponse getDatasourceByTomcat(
 			GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
-
 		List<DataSource> datasources = domainService
 				.getDatasourceByDomainId(tomcat.getDomainId());
 		json.setList(datasources);
@@ -262,6 +252,8 @@ public class TomcatInstanceController {
 			GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
+			/* example */
+			// TODO idkjwon loading
 			List<TomcatApplication> domainApps = domainService
 					.getApplicationListByDomain(tomcat.getDomainId());
 			List<TomcatApplication> tomcatApps = service
@@ -278,6 +270,7 @@ public class TomcatInstanceController {
 			GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
+			// TODO idkjwon get from clustering session server
 			List<Session> sessions = new ArrayList<Session>();
 			Session e = new Session();
 			e.setId(1);
@@ -289,85 +282,6 @@ public class TomcatInstanceController {
 			json.setList(sessions);
 			json.setTotal(sessions.size());
 		}
-		return json;
-	}
-
-	@RequestMapping("/save")
-	@ResponseBody
-	// add more param later
-	public SimpleJsonResponse save(SimpleJsonResponse json,
-			TomcatInstance tomcat, int machineId, int domainId, String dsIds,
-			boolean autoRestart) {
-		// check existing
-		// TomcatInstance existingTomcat = service.findByNameAndDomain(
-		// tomcat.getName(), domainId);
-		TomcatInstance existingTomcat = new TomcatInstance();
-		if (existingTomcat != null) {
-			if (existingTomcat.getId() != tomcat.getId()) {
-				json.setSuccess(false);
-				json.setMsg("Tomcat name is duplicated.");
-				return json;
-			}
-		}
-		Server machine = machineService.retrieve(machineId);
-		TomcatDomain domain = domainService.getDomain(domainId);
-		// if (machine != null) {
-		// tomcat.setMachine(machine);
-		// }
-		// if (domain != null) {
-		// tomcat.setDomain(domain);
-		// }
-
-		List<DataSource> datasources = new ArrayList<DataSource>();
-		String[] idStrings = dsIds.split("#", 0);
-		for (int i = 1; i < idStrings.length; i++) { // the first element is
-														// empty
-			DataSource ds = dsService.findOne(Integer.parseInt(idStrings[i]));
-			if (ds != null) {
-				datasources.add(ds);
-			}
-		}
-		// tomcat.associateDatasources(datasources);
-
-		boolean provisioning_result = true; // change to false when implement
-											// provisioning
-		// provisioning section
-		// ....
-		//
-		if (provisioning_result) {
-			TomcatInstance tc = service.save(tomcat);
-			if (tc != null) {
-				json.setData(tc);
-				json.setSuccess(true);
-
-			} else {
-				json.setSuccess(false);
-				json.setMsg("An error occurred while saving tomcat instance to database.");
-			}
-		} else {
-			json.setSuccess(false);
-			json.setMsg("An error occurred while provisioning to target server.");
-		}
-
-		// String repoAddr = DollyConstants.MEERKAT_REPO;
-		/* sample data */
-		// String user = "root";
-		// String version = "7.0.54";
-		// String java_home = "/usr/java/default";
-		// String server_home = "/root";
-		// String server_name = "rootServer21";
-		// String catalina_home = "/root/jboss-ews-2.1/tomcat7";
-		// String catalina_base = "/root/Servers/rootServer21222";
-		// String encoding = "UTF-8";
-		// int port_offset = 0;
-		// int heap_size = 1024;
-		// int permgen_size = 256;
-		// boolean is_enable_http = true;
-		// boolean is_high_availability = true;
-		// String bind_address = "192.168.0.88";
-		// String other_bind_address = "";
-		// boolean is_start_service = true;
-
 		return json;
 	}
 
@@ -395,5 +309,4 @@ public class TomcatInstanceController {
 
 		return json;
 	}
-
 }
