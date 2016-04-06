@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
-import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.resources.services.ServerService;
 
 @Controller
 @RequestMapping("/res/datagrid")
 public class DatagridServerGroupController {
 	@Autowired
 	private DataGridServerGroupService service;
+	@Autowired
+	private ServerService serverService;
 
 	@RequestMapping(value = "/group/list", method = RequestMethod.GET)
 	@ResponseBody
@@ -25,23 +28,18 @@ public class DatagridServerGroupController {
 		List<DatagridServerGroup> result = service.getAll();
 		json.setList(result);
 		json.setTotal(result.size());
-		json.setSuccess(true);
 		return json;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getByGroup(SimpleJsonResponse json, int groupId) {
-		// DatagridServerGroup group = service.getGroup(groupId);
-		// if (group == null) {
-		// json.setSuccess(false);
-		// json.setMsg("Group does not exist.");
-		// } else {
-		// json.setData(group.getDatagridServers());
-		// json.setSuccess(true);
-		// }
-
+	public GridJsonResponse getByGroup(GridJsonResponse json, Integer groupId) {
+		DatagridServerGroup group = service.getGroup(groupId);
+		if (group != null) {
+			List<Server> list = serverService.getListByGroupId(groupId);
+			json.setList(list);
+			json.setTotal(list.size());
+		}
 		return json;
 	}
-
 }

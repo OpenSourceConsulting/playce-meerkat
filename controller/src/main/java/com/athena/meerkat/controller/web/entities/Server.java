@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -73,11 +74,11 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
 	private NetworkInterface sshNi;
-	
+
 	@Column(name = "state")
 	private int state;
 
@@ -85,7 +86,7 @@ public class Server implements Serializable {
 	private List<NetworkInterface> networkInterfaces;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="inst-server")
+	@JsonManagedReference(value = "inst-server")
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
@@ -93,8 +94,19 @@ public class Server implements Serializable {
 	private Collection<SshAccount> sshAccounts;
 
 	@ManyToOne
-	@JsonBackReference(value="grid-server")
+	@JsonBackReference(value = "grid-server")
 	private DatagridServerGroup datagridServerGroup;
+
+	// number of session for datagrid server
+	@Transient
+	private int sessionNo;
+
+	public String getGroupName() {
+		if (datagridServerGroup != null) {
+			return datagridServerGroup.getName();
+		}
+		return "";
+	}
 
 	public String getName() {
 		return name;
@@ -232,6 +244,11 @@ public class Server implements Serializable {
 		this.state = state;
 	}
 
+	public String getStateNm() {
+		// wait for common handler
+		return "";
+	}
+
 	/**
 	 * Constructor with required information
 	 * 
@@ -294,8 +311,7 @@ public class Server implements Serializable {
 		return networkInterfaces;
 	}
 
-	public void setNetworkInterfaces(
-			List<NetworkInterface> networkInterfaces) {
+	public void setNetworkInterfaces(List<NetworkInterface> networkInterfaces) {
 		this.networkInterfaces = networkInterfaces;
 	}
 
@@ -340,6 +356,7 @@ public class Server implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public NetworkInterface getSshNi() {
 		return sshNi;
 	}
@@ -347,7 +364,7 @@ public class Server implements Serializable {
 	public void setSshNi(NetworkInterface sshNi) {
 		this.sshNi = sshNi;
 	}
-	
+
 	public void addNis(NetworkInterface ni) {
 		if (this.networkInterfaces == null) {
 			networkInterfaces = new ArrayList<NetworkInterface>();
@@ -356,7 +373,7 @@ public class Server implements Serializable {
 	}
 
 	public String getSshIPAddr() {
-		if (sshNi != null ) {
+		if (sshNi != null) {
 			return sshNi.getIpv4();
 		}
 		return "";
@@ -382,5 +399,13 @@ public class Server implements Serializable {
 
 	public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
 		this.datagridServerGroup = datagridServerGroup;
+	}
+
+	public int getSessionNo() {
+		return sessionNo;
+	}
+
+	public void setSessionNo(int sessionNo) {
+		this.sessionNo = sessionNo;
 	}
 }

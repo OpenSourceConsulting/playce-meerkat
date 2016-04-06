@@ -3,16 +3,13 @@ package com.athena.meerkat.controller.web.resources.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.ServiceResult.Status;
-import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
@@ -341,6 +338,10 @@ public class ServerService {
 	public void deleteSSHAccount(SshAccount ssh) {
 		sshRepo.delete(ssh);
 
+	}
+
+	public List<Server> getListByGroupId(Integer groupId) {
+		return serverRepo.findByDatagridServerGroup_Id(groupId);
 	}
 
 }

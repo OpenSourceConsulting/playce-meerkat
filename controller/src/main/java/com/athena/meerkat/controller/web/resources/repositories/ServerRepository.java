@@ -17,6 +17,8 @@ public interface ServerRepository extends JpaRepository<Server, Integer>,
 
 	Server findByName(String name);
 
+	List<Server> findByDatagridServerGroup_Id(Integer id);
+
 	// List<Server> findByMachineServerType(int type);
 	// List<Server> findByNameOrSshIPAddr(String name, String sshIPAddr);
 }

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -34,20 +35,22 @@ public class DatagridServerGroup implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
-	private int Id;
+	private int id;
 
 	@Column(name = "name")
 	private String name;
 
 	@Column(name = "type_cd_id")
 	private int typeCdId;
+	@Transient
+	private String typeNm;
 
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="grid-server")
+	@JsonManagedReference(value = "grid-server")
 	private List<Server> servers;
 	//
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference(value="grid-configs")
+	@JsonManagedReference(value = "grid-configs")
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	public String getName() {
@@ -59,11 +62,11 @@ public class DatagridServerGroup implements Serializable {
 	}
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public List<Server> getServers() {
@@ -98,4 +101,7 @@ public class DatagridServerGroup implements Serializable {
 		this.clusteringConfigurations = clusteringConfigurations;
 	}
 
+	public String getTypeNm() {
+		return typeNm;
+	}
 }
