@@ -43,7 +43,6 @@ import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -109,9 +108,10 @@ public class TomcatInstance implements Serializable {
 	//@JsonManagedReference(value = "config-tomcat")
 	private List<TomcatInstConfig> tomcatConfigs;
 	
-	@Autowired
+
 	@JsonIgnore
 	@Transient
+	@Autowired
 	private CommonCodeHandler codeHandler;
 
 	public TomcatInstance() {
@@ -262,6 +262,7 @@ public class TomcatInstance implements Serializable {
 	
 	@PostLoad
 	public void onPostLoad(){
-		setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, getState()));
+		// setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE,
+		// getState()));
 	}
 }
