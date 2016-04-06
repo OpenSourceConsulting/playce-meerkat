@@ -205,15 +205,11 @@ public class DomainController {
 	public @ResponseBody GridJsonResponse getClusteringVers(
 			GridJsonResponse json, @PathVariable Integer domainId) {
 		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
+		if (td != null) {
 			List<ClusteringConfigurationVersion> versions = domainService
 					.getClusteringConfVersions(td);
 			json.setList(versions);
 			json.setTotal(versions.size());
-			json.setSuccess(true);
 		}
 		return json;
 	}
@@ -223,16 +219,13 @@ public class DomainController {
 			GridJsonResponse json, @PathVariable Integer domainId,
 			@PathVariable Integer version) {
 		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
+		if (td != null) {
 			List<ClusteringConfiguration> confs = domainService
 					.getClusteringConf(td, version);
 			json.setList(confs);
 			json.setTotal(confs.size());
-			json.setSuccess(true);
 		}
+
 		return json;
 	}
 
