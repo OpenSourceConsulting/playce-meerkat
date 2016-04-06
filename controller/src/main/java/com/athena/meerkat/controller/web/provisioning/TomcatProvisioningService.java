@@ -41,6 +41,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -112,6 +113,8 @@ public class TomcatProvisioningService implements InitializingBean{
 		
 	}
 	
+	@Transactional
+	@Async
 	public void installTomcatInstance(int domainId) {
 		
 				
@@ -119,8 +122,18 @@ public class TomcatProvisioningService implements InitializingBean{
 		//List<Tomcat>   TomcatInstanceService
 		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
 		
-		for (TomcatInstance tomcatInstance : list) {
-			doInstallTomcatInstance(tomcatConfig, tomcatInstance.getServer());
+		if(tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+		
+		if(list != null && list.size() > 0){
+		
+			for (TomcatInstance tomcatInstance : list) {
+				doInstallTomcatInstance(tomcatConfig, tomcatInstance.getServer());
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
 		}
 		
 	}

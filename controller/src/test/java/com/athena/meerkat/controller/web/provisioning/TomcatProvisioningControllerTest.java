@@ -97,20 +97,21 @@ public class TomcatProvisioningControllerTest {
 	public void testInstall() {
 		
 		File workingDir = new File(commanderDir);
-		String serverIp = "52.23.242.79";//192.168.0.156
+		String serverIp = "192.168.0.156";
+		String userId = "centos";
 		
 		Properties prop = new Properties(); //build-ssh.properties
 		prop.setProperty("server.ip", 	serverIp);
 		prop.setProperty("server.port", "22");
-		prop.setProperty("user.id", 	"ec2-user");
-		prop.setProperty("user.passwd", "centos");
-		prop.setProperty("key.file", 	commanderDir + "/ssh/myaws.pem");
+		prop.setProperty("user.id", 	userId);
+		prop.setProperty("user.passwd", userId);
+		prop.setProperty("key.file", 	commanderDir + "/ssh/svn_key.pem");
 		
 		Properties targetProps = new Properties(); //build.properties
-		targetProps.setProperty("agent.deploy.dir", "/home/ec2-user/athena-meerkat-agent");
+		targetProps.setProperty("agent.deploy.dir", "/home/"+userId+"/athena-meerkat-agent");
 		targetProps.setProperty("agent.name", 		"athena-meerkat-agent-1.0.0-SNAPSHOT");
-		targetProps.setProperty("tomcat.unzip.pah", "/home/ec2-user/app");
-		targetProps.setProperty("catalina.base", 	"/home/ec2-user/app/instance1");
+		targetProps.setProperty("tomcat.unzip.pah", "/home/"+userId+"/app");
+		targetProps.setProperty("catalina.base", 	"/home/"+userId+"/app/instance1");
 		
 		
 		OutputStream output = null;
@@ -135,7 +136,7 @@ public class TomcatProvisioningControllerTest {
 			 * 2. generate agentenv.sh
 			 */
 			createAgentEnvSHFile(jobDir, targetProps.getProperty("agent.deploy.dir"), targetProps.getProperty("agent.name"));
-			generateTomcatEnvFile(jobDir,  createTomcatConfig());
+			generateTomcatEnvFile(jobDir,  createTomcatConfig(userId));
 			
 			
 			/*
@@ -188,11 +189,11 @@ public class TomcatProvisioningControllerTest {
 		}
 	}
 	
-	private DomainTomcatConfiguration createTomcatConfig() {
+	private DomainTomcatConfiguration createTomcatConfig(String userId) {
 		DomainTomcatConfiguration config = new DomainTomcatConfiguration();
 		config.setJavaHome("/usr/java/jdk1.7.0_80");
-		config.setCatalinaHome("/home/centos/tmp/apache-tomcat-7.0.68/apache-tomcat-7.0.68");
-		config.setCatalinaBase("/home/centos/tmp/instance1");
+		config.setCatalinaHome("/home/"+userId+"/tmp/apache-tomcat-7.0.68/apache-tomcat-7.0.68");
+		config.setCatalinaBase("/home/"+userId+"/tmp/instance1");
 		
 		return config;
 	}

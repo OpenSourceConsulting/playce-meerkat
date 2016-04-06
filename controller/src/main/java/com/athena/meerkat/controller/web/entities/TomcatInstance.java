@@ -37,11 +37,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -103,6 +108,11 @@ public class TomcatInstance implements Serializable {
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
 	//@JsonManagedReference(value = "config-tomcat")
 	private List<TomcatInstConfig> tomcatConfigs;
+	
+	@Autowired
+	@JsonIgnore
+	@Transient
+	private CommonCodeHandler codeHandler;
 
 	public TomcatInstance() {
 	}
@@ -248,5 +258,10 @@ public class TomcatInstance implements Serializable {
 
 	public void setTomcatConfigs(List<TomcatInstConfig> tomcatConfigs) {
 		this.tomcatConfigs = tomcatConfigs;
+	}
+	
+	@PostLoad
+	public void onPostLoad(){
+		setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, getState()));
 	}
 }
