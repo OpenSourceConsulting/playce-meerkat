@@ -17,6 +17,7 @@
 
 		<!--
 		<delete dir="${catalina.base}" />
+		http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip
 		-->
 		<mkdir dir="${catalina.base}" />
 
@@ -25,7 +26,7 @@
 
 		<cargo containerId="tomcat7x" action="configure">
 			<zipUrlInstaller 
-					installUrl="http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip" 
+					installUrl="http://192.168.0.87:8080/down/apache-tomcat-7.0.68.zip" 
 					downloadDir="${down.dir}" 
 					extractDir="${tomcat.unzip.pah}" />
 			

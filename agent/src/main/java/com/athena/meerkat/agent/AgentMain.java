@@ -1,11 +1,3 @@
-package com.athena.meerkat.agent;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-
 /* 
  * Copyright (C) 2012-2015 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
  *
@@ -28,6 +20,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * ---------------	----------------	------------
  * BongJin Kwon		2016. 3. 22.		First Draft.
  */
+package com.athena.meerkat.agent;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat.agent" })
