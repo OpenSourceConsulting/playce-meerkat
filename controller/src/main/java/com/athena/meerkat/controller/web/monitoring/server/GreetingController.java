@@ -13,7 +13,7 @@ public class GreetingController {
         //Thread.sleep(3000); // simulated delay
         
         
-        System.out.println("################# greeting. ############");
+        System.out.println("################# greeting. " + message.getName() + " ############");
         
         return new Greeting("Hello, " + message.getName() + "!");
     }

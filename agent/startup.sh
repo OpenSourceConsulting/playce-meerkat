@@ -22,6 +22,7 @@ fi
 export JAVA_OPTS="$JAVA_OPTS -Xms256m -Xmx512m"
 export JAVA_OPTS="$JAVA_OPTS -Dagent.name=$AGENT_PROCESS_NAME "
 export JAVA_OPTS="$JAVA_OPTS -Dspring.config.name=meerkat-agent"
+export JAVA_OPTS="$JAVA_OPTS -Djava.library.path=./sigar"
 
 nohup $EXE_JAVA -cp ./conf:lib/* $JAVA_OPTS $AGENT_CLASS > /dev/null 2>&1 &
 

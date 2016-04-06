@@ -64,6 +64,11 @@
             <fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
+			<directory>${project.basedir}/src/main/resources/sigar</directory>
+			<outputDirectory>sigar</outputDirectory>
+            <fileMode>0644</fileMode>
+		</fileSet>
+		<fileSet>
 			<directory>${project.basedir}/src/main/resources/scripts</directory>
 			<outputDirectory>scripts</outputDirectory>
 			<includes>

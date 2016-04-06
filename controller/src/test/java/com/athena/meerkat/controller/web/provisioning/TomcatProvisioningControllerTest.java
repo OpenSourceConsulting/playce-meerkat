@@ -22,17 +22,13 @@
  */
 package com.athena.meerkat.controller.web.provisioning;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -45,6 +41,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 
@@ -97,11 +94,12 @@ public class TomcatProvisioningControllerTest {
 	public void testInstall() {
 		
 		File workingDir = new File(commanderDir);
-		String serverIp = "192.168.0.156";
+		String serverIp = "192.168.0.156"; MDC.put("client", serverIp);
 		String userId = "centos";
 		
 		Properties prop = new Properties(); //build-ssh.properties
 		prop.setProperty("server.ip", 	serverIp);
+		prop.setProperty("server.id", 	"6");
 		prop.setProperty("server.port", "22");
 		prop.setProperty("user.id", 	userId);
 		prop.setProperty("user.passwd", userId);
@@ -171,6 +169,7 @@ public class TomcatProvisioningControllerTest {
 			//fail(e.toString());
 			e.printStackTrace();
 		} finally {
+			MDC.remove(serverIp);
 			IOUtils.closeQuietly(output);
 		}
 		

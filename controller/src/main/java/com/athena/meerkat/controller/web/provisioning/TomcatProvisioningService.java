@@ -154,6 +154,7 @@ public class TomcatProvisioningService implements InitializingBean{
 		
 		Properties prop = new Properties(); //build-ssh.properties
 		prop.setProperty("server.ip", 	serverIp);
+		prop.setProperty("server.id", 	String.valueOf(targetServer.getId()));
 		prop.setProperty("server.port", String.valueOf(targetServer.getSshPort()));
 		prop.setProperty("user.id", 	userId);
 		prop.setProperty("user.passwd", userPass);

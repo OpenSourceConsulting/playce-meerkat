@@ -34,6 +34,7 @@ public final class SigarUtil {
 	 */
 	static {
 		String sigarLibPath = SigarUtil.class.getResource("/sigar").getFile();
+		System.out.println(sigarLibPath + "--------------------------------------------------------");
 		String javaLibPath = System.getProperty("java.library.path");
 		
 		if (javaLibPath.indexOf(sigarLibPath) < 0) {
@@ -182,8 +183,12 @@ public final class SigarUtil {
 	
 	
 	public static void main(String[] args)throws Exception {
+		
+		System.out.println(System.getProperty("java.library.path"));
+		
 		System.out.println(SigarUtil.getCpuPerc());
-		System.out.println(SigarUtil.getNetInfo().getHostName());
+		//System.out.println(SigarUtil.getNetInfo().getHostName());
+		System.out.println(SigarUtil.getNetInfo());
 	}
 }
 //end of SigarUtil.java

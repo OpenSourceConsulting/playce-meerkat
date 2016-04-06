@@ -20,11 +20,13 @@
 
 		<property name="filename" value="${agent.name}-bin.tar.gz" />
 		
-		<property name="install.cmd1" value="cd ${agent.deploy.dir}" />
-		<property name="install.cmd2" value="tar xvfz ./${filename}" />
-		<property name="install.cmd3" value="rm -f ./${filename}" />
-		<property name="install.cmd4" value="mv ./agentenv.sh ./${agent.name}/bin/" />
-		<property name="install.cmd5" value="mv ./env.sh ./${agent.name}/scripts/" />
+		<property name="cmd1" value="cd ${agent.deploy.dir}" />
+		<property name="cmd2" value="tar xvfz ./${filename}" />
+		<property name="cmd3" value="rm -f ./${filename}" />
+		<property name="cmd4" value="mv ./agentenv.sh ./${agent.name}/bin/" />
+		<property name="cmd5" value="mv ./env.sh ./${agent.name}/scripts/" />
+		<property name="cmd6" value="echo meerkat.agent.server.id=${server.id} >> ./${agent.name}/conf/meerkat-agent.properties" />
+		<property name="cmd7" value="cd ./${agent.name}; ./startup.sh nolog" />
 
 		<echo>basedir : ${basedir}</echo>
 		<echo>create ${agent.deploy.dir}</echo>
@@ -43,9 +45,12 @@
 			</fileset>
 		</scp>
 		
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="${install.cmd1}; ${install.cmd2}; ${install.cmd3}; ${install.cmd4}; ${install.cmd5}" trust="true" failonerror="true" />
 
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="${cmd1}; ${cmd2}; ${cmd3}; ${cmd4}; ${cmd5}; ${cmd6}; ${cmd7}" trust="true" failonerror="true" />
+		
+		<echo>running agent.</echo>
+		
 	</target>
 	
 	<target name="send-cmd" description="send cmd build file to server and exec">
@@ -63,27 +68,6 @@
 
 	</target>
 	
-	<target name="test" description="test">
-		<property name="server.ip1" value="192.168.0.156" />
-		<property name="server.port1" value="22" />
-		<property name="user.id1" value="centos" />
-		<property name="user.passwd1" value="centos" />
-		<!--
-		<property name="key.file1" value="G:/svn_key.pem" />
-		-->
-		
-		<echo>test</echo>
-		<scp port="${server.port1}" todir="${user.id1}@${server.ip1}:" trust="true" 
-			keyfile="${key.file1}" password="${user.passwd1}">
-			<fileset dir="${basedir}" defaultexcludes="true">
-				<include name="cmd.xml"/>
-			</fileset>
-		</scp>
-		
-		<sshexec port="${server.port1}" host="${server.ip1}" username="${user.id1}" password="${user.passwd1}" keyfile="${key.file1}"
-			command="ls -al" trust="true" failonerror="false" />
-		
-	</target>
 
 
 </project>
