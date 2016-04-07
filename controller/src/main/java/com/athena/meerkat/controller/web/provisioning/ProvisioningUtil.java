@@ -29,6 +29,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import com.athena.meerkat.controller.web.provisioning.util.OSUtil;
+
 public class ProvisioningUtil {
 	
 	private static final String JOB_NUM_FILE_NAME = "job";
@@ -47,16 +49,30 @@ public class ProvisioningUtil {
 	}
 	
 	public static void deployAgent(File commanderDir, File jobDir) throws Exception {
+		
+		String scriptFile = "deployagent.sh";
+		
+		if(OSUtil.isWindows()) {
+			scriptFile = "deployAgent.bat";
+		}
+		
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + "deployAgent.bat");
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
 				
 		CommandUtil.execWithLog(commanderDir, cmds);
 	}
 	
 	public static void sendCommand(File commanderDir, File jobDir) throws Exception {
+		
+		String scriptFile = "sendcmd.sh";
+		
+		if(OSUtil.isWindows()) {
+			scriptFile = "sendCommand.bat";
+		}
+		
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + "sendCommand.bat");
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
 		
 		CommandUtil.execWithLog(commanderDir, cmds);
