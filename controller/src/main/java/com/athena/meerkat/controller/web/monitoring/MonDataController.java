@@ -108,8 +108,6 @@ public class MonDataController {
 		List<MonData> results = service.getMonDataList("cpu", serverId,
 				twoMinsAgo, now);
 		jsonRes.setList(results);
-		System.out.print("##########################"
-				+ results.get(results.size() - 1).getMonDtString());
 		jsonRes.setTotal(results.size());
 		return jsonRes;
 	}
