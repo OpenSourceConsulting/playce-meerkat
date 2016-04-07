@@ -31,11 +31,15 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.athena.meerkat.controller.common.MeerkatUtils;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -49,18 +53,20 @@ public class MonData implements Serializable {
 	@Id
 	@Column(name = "mon_factor_id")
 	private String monFactorId;//
-	
+
 	@Id
 	@Column(name = "server_id")
 	private int serverId;//
-	
+
 	@Id
 	@Column(name = "mon_dt")
 	private Date monDt;//
-	
-	
+
 	@Column(name = "mon_value")
 	private Double monValue;//
+
+	@Transient
+	private String monDtString;
 
 	/**
 	 * <pre>
@@ -79,7 +85,8 @@ public class MonData implements Serializable {
 	}
 
 	/**
-	 * @param monFactorId the monFactorId to set
+	 * @param monFactorId
+	 *            the monFactorId to set
 	 */
 	public void setMonFactorId(String monFactorId) {
 		this.monFactorId = monFactorId;
@@ -93,7 +100,8 @@ public class MonData implements Serializable {
 	}
 
 	/**
-	 * @param serverId the serverId to set
+	 * @param serverId
+	 *            the serverId to set
 	 */
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
@@ -107,7 +115,8 @@ public class MonData implements Serializable {
 	}
 
 	/**
-	 * @param monDt the monDt to set
+	 * @param monDt
+	 *            the monDt to set
 	 */
 	public void setMonDt(java.util.Date monDt) {
 		this.monDt = monDt;
@@ -121,16 +130,25 @@ public class MonData implements Serializable {
 	}
 
 	/**
-	 * @param monValue the monValue to set
+	 * @param monValue
+	 *            the monValue to set
 	 */
 	public void setMonValue(Double monValue) {
 		this.monValue = monValue;
 	}
-	
+
 	@PrePersist
-	public void onPrePersist(){
+	public void onPrePersist() {
 		this.monDt = new Date();
 	}
 
+	public String getMonDtString() {
+		return MeerkatUtils.dateTimeToString(this.monDt, "hh:mm:ss");
+	}
+
+	public void setMonDtString(String monDtString) {
+		this.monDtString = monDtString;
+	}
+
 }
-//end of MonData.java
+// end of MonData.java

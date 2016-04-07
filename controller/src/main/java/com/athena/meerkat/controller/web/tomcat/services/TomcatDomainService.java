@@ -185,7 +185,7 @@ public class TomcatDomainService {
 	public ClusteringConfigurationVersion getLatestClusteringConfVersion(
 			int domainId) {
 		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
-				.findFirstClusteringVersion(domainId);
+				.findFirstClusteringVersionByDomainId(domainId);
 		if (latestVersion.size() == 0) {
 			return null;
 		}

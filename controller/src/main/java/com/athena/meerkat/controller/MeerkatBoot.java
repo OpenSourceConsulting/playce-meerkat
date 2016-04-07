@@ -110,7 +110,6 @@ public class MeerkatBoot {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-
 			http.anonymous()
 					.disable()
 					.authorizeRequests()
@@ -120,9 +119,9 @@ public class MeerkatBoot {
 					.antMatchers("/auth/onAfterLogin")
 					.fullyAuthenticated()
 
-					.antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					//.antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
 					.antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
-					.antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
+					//.antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
 					.antMatchers(HttpMethod.GET, "/tomcat/**").access("hasRole('ROLE_TOMCAT_USER')")
 
 					// .antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")

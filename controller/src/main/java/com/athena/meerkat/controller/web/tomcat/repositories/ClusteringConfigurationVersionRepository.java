@@ -12,6 +12,11 @@ import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion
 public interface ClusteringConfigurationVersionRepository extends
 		JpaRepository<ClusteringConfigurationVersion, Integer> {
 	@Query(value = "select  v.* from clustering_configuration cc join clustering_conf_version v where cc.domain_id = ?1 and cc.clustering_conf_version_id = v.id order by v.version desc limit 1", nativeQuery = true)
-	List<ClusteringConfigurationVersion> findFirstClusteringVersion(int domainId);
+	List<ClusteringConfigurationVersion> findFirstClusteringVersionByDomainId(
+			int domainId);
+
+	@Query(value = "select  v.* from clustering_configuration cc join clustering_conf_version v where cc.datagrid_server_group_id = ?1 and cc.clustering_conf_version_id = v.id order by v.version desc limit 1", nativeQuery = true)
+	List<ClusteringConfigurationVersion> findFirstClusteringVersionByDatagridGroupId(
+			int groupId);
 
 }

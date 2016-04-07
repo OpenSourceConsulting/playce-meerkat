@@ -131,4 +131,6 @@ public abstract class MeerkatConstants {
 
 	public static final String CONFIG_FILE_OBJ_TYPE_DOMAIN = "domain_tomcat";
 	public static final String CONFIG_FILE_OBJ_TYPE_TOMCAT = "tomcat_inst";
+
+	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 }

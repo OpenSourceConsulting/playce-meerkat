@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
+import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
@@ -42,4 +45,23 @@ public class DatagridServerGroupController {
 		}
 		return json;
 	}
+
+	@RequestMapping(value = "/group/{groupId}/clustering/config/latest", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getClusteringLatestVersion(
+			SimpleJsonResponse json, @PathVariable Integer groupId) {
+		DatagridServerGroup group = service.getGroup(groupId);
+		if (group != null) {
+			ClusteringConfigurationVersion latestVersion = service
+					.getLatestClusteringConfVersion(groupId);
+			if (latestVersion != null) {
+				json.setData(latestVersion.getId());
+			} else {
+				json.setData(0);
+			}
+			return json;
+		}
+		return json;
+	}
+
 }

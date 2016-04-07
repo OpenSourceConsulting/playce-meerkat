@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.monitoring;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.athena.meerkat.controller.web.common.model.ExtjsGridParam;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bong-Jin Kwon
  * @version 1.0
  */
@@ -19,35 +21,37 @@ public class MonDataService {
 
 	@Autowired
 	private MonDataRepository repository;
-	
+
 	public MonDataService() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void insertMonData(MonData monData){
+
+	public void insertMonData(MonData monData) {
 		repository.save(monData);
 	}
+
 	/*
-	public List<MonData> getMonDataList(ExtjsGridParam gridParam){
-		return repository.getMonDataList(gridParam);
+	 * public List<MonData> getMonDataList(ExtjsGridParam gridParam){ return
+	 * repository.getMonDataList(gridParam); }
+	 * 
+	 * public int getMonDataListTotalCount(ExtjsGridParam gridParam){
+	 * 
+	 * return repository.getMonDataListTotalCount(gridParam); }
+	 * 
+	 * public MonData getMonData(MonData monData){ return
+	 * repository.getMonData(monData); }
+	 * 
+	 * public void updateMonData(MonData monData){
+	 * repository.updateMonData(monData); }
+	 * 
+	 * public void deleteMonData(MonData monData){
+	 * repository.deleteMonData(monData); }
+	 */
+
+	public List<MonData> getMonDataList(String type, Integer serverId,
+			Date tenMinsAgo, Date now) {
+		return repository.findByMonFactorIdAndServerIdInTenMins(type, serverId,
+				tenMinsAgo, now);
 	}
-	
-	public int getMonDataListTotalCount(ExtjsGridParam gridParam){
-		
-		return repository.getMonDataListTotalCount(gridParam);
-	}
-	
-	public MonData getMonData(MonData monData){
-		return repository.getMonData(monData);
-	}
-	
-	public void updateMonData(MonData monData){
-		repository.updateMonData(monData);
-	}
-	
-	public void deleteMonData(MonData monData){
-		repository.deleteMonData(monData);
-	}
-*/
 }
-//end of MonDataService.java
+// end of MonDataService.java
