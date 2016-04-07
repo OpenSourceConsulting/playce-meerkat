@@ -126,7 +126,7 @@ public class MonData implements Serializable {
 	 * @return the monValue
 	 */
 	public Double getMonValue() {
-		return monValue;
+		return monValue * 100;
 	}
 
 	/**

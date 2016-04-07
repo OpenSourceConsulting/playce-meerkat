@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 
 @Repository
@@ -26,4 +27,11 @@ public interface ClusteringConfigurationReposiroty extends
 
 	List<ClusteringConfiguration> findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
 			int domainId, int versionId, String keyword);
+
+	@Query(value = "select distinct ccv from DatagridServerGroup dsg inner join dsg.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where dsg.id = :groupId group by ccv.version")
+	List<ClusteringConfigurationVersion> getVersionsByServerGroup(
+			@Param("groupId") int groupId);
+
+	List<ClusteringConfiguration> findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
+			DatagridServerGroup group, Integer version);
 }
