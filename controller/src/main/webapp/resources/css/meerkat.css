@@ -45,6 +45,10 @@
 	background-image:url(../images/icons/fam/delete.gif);
 }
 
+.icon-preview {
+	background-image:url(../images/icons/fam/preview.png);
+}
+
 /*
  * menu css
  */
