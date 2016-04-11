@@ -88,6 +88,26 @@
 
 	</target>
 	
+	<target name="scp.agent.tar.gz" description="deploy only agent tar.gz file.">
+			
+		<property name="server.ip" value="192.168.0.87" />
+		<property name="server.port" value="22" />
+		<property name="user.id" value="meerkat" />
+		<property name="user.passwd" value="meerkat" />
+		<property name="deploy.dir" value="/home/meerkat/.aMeerkat" />
+		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
+
+		<echo>send agent tar.gz file.</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+			password="${user.passwd}">
+			<fileset dir="${basedir}/target" defaultexcludes="true">
+				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz"/>
+			</fileset>
+		</scp>
+		
+
+	</target>
+	
 
 
 </project>

@@ -48,6 +48,7 @@ public class ServerMonScheduledTask extends MonitoringTask{
     		String memUsedJson = createJsonString("mem.used", serverId, memUsed);
     		String netInJson = createJsonString("net.in", serverId, netIn);
     		String netOutJson = createJsonString("net.out", serverId, netOut);
+    		//TODO tran : verify data and add additional data(disk.used, disk.free)
     		
     		sendMonData(cpuUsedJson, memUsedJson, netInJson, netOutJson);
     		
