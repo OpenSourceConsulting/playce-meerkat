@@ -68,6 +68,26 @@
 
 	</target>
 	
+	<target name="scp.agent.jar" description="deploy only agent jar file.">
+		
+		<property name="server.ip" value="192.168.0.157" />
+		<property name="server.port" value="22" />
+		<property name="user.id" value="centos" />
+		<property name="user.passwd" value="centos" />
+		<property name="deploy.dir" value="/home/centos/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT/lib" />
+		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
+
+		<echo>send agent jar file.</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+			password="${user.passwd}">
+			<fileset dir="${basedir}/target/dependency" defaultexcludes="true">
+				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT.jar"/>
+			</fileset>
+		</scp>
+		
+
+	</target>
+	
 
 
 </project>

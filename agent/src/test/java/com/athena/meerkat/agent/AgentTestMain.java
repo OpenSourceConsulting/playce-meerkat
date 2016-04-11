@@ -31,11 +31,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat.agent" })
-@EnableScheduling
-public class AgentMain {
+//@EnableScheduling
+public class AgentTestMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AgentTestMain.class, args);
+		SpringApplication.run(AgentMain.class, args);
 	}
 
 }

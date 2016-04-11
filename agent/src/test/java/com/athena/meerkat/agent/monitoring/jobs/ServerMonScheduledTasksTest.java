@@ -18,13 +18,11 @@
  * Revision History
  * Author			Date				Description
  * ---------------	----------------	------------
- * BongJin Kwon		2016. 4. 6.		First Draft.
+ * BongJin Kwon		2016. 4. 11.		First Draft.
  */
-package com.athena.meerkat.agent.monitoring.websocket;
+package com.athena.meerkat.agent.monitoring.jobs;
 
 import static org.junit.Assert.*;
-
-import java.io.IOException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -32,19 +30,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.athena.meerkat.agent.AgentTestMain;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=AgentTestMain.class)
-public class StompWebSocketClientTest {
-	
-	@Autowired
-	private StompWebSocketClient client;
+public class ServerMonScheduledTasksTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -63,24 +56,15 @@ public class StompWebSocketClientTest {
 	}
 
 	@Test
-	public void testSendMessage() {
+	public void test() {
+		//fail("Not yet implemented");
 		
 		try{
-			Thread.sleep(2000);
+			Thread.sleep(3000);
+		} catch(Exception e){
 			
-			client.sendMessage("[{\"monFactorId\":\"test\",\"serverId\":\"0\",\"monValue\":\"123\"}]");
-		}catch(Exception e) {
-			fail(e.toString());
-		}finally {
-			
-			try{
-				Thread.sleep(1000);
-				client.disconnect();
-			}catch(Exception e) {
-				
-			}
 		}
 	}
 
 }
-//end of StompWebSocketClientTest.java
+//end of ServerMonScheduledTasksTest.java

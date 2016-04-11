@@ -7,6 +7,7 @@ import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.NetInfo;
+import org.hyperic.sigar.NetStat;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
@@ -34,7 +35,7 @@ public final class SigarUtil {
 	 */
 	static {
 		String sigarLibPath = SigarUtil.class.getResource("/sigar").getFile();
-		System.out.println(sigarLibPath + "--------------------------------------------------------");
+		//System.out.println(sigarLibPath + "--------------------------------------------------------");
 		String javaLibPath = System.getProperty("java.library.path");
 		
 		if (javaLibPath.indexOf(sigarLibPath) < 0) {
@@ -161,12 +162,23 @@ public final class SigarUtil {
 	
 	/**
 	 * <pre>
+	 * 
+	 * </pre>
+	 * @return
+	 * @throws SigarException
+	 */
+	public static NetStat getNetStat() throws SigarException {
+		return getInstance().getNetStat();
+	}
+	
+	/**
+	 * <pre>
 	 * FileSystem 정보를 조회한다.
 	 * </pre>
 	 * @return
 	 * @throws SigarException
 	 */
-	public static FileSystem[] getFileSystem() throws SigarException {
+	public static FileSystem[] getFileSystemList() throws SigarException {
 		return getInstance().getFileSystemList();
 	}//end of getFileSystem()
 	
@@ -186,9 +198,20 @@ public final class SigarUtil {
 		
 		System.out.println(System.getProperty("java.library.path"));
 		
-		System.out.println(SigarUtil.getCpuPerc());
+		System.out.println(SigarUtil.getCpuPerc().getCombined() + "::" + SigarUtil.getCpuPerc());
 		//System.out.println(SigarUtil.getNetInfo().getHostName());
 		System.out.println(SigarUtil.getNetInfo());
+		
+		long diskSize = 0L;
+		
+		FileSystem[] fileSysList = SigarUtil.getFileSystemList();
+		for (FileSystem fs : fileSysList) {
+			FileSystemUsage fsu = SigarUtil.getFileSystemUsage(fs.getDirName());
+			System.out.println("fs: " + fs.getDirName() + ", " + fsu.getTotal());
+			diskSize += fsu.getTotal();//
+		}
+		
+		System.out.println(diskSize);
 	}
 }
 //end of SigarUtil.java
