@@ -35,7 +35,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AgentMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AgentTestMain.class, args);
+		SpringApplication.run(AgentMain.class, args);
 	}
 
 }
