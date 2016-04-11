@@ -30,23 +30,9 @@ public class MonDataService {
 		repository.save(monData);
 	}
 
-	/*
-	 * public List<MonData> getMonDataList(ExtjsGridParam gridParam){ return
-	 * repository.getMonDataList(gridParam); }
-	 * 
-	 * public int getMonDataListTotalCount(ExtjsGridParam gridParam){
-	 * 
-	 * return repository.getMonDataListTotalCount(gridParam); }
-	 * 
-	 * public MonData getMonData(MonData monData){ return
-	 * repository.getMonData(monData); }
-	 * 
-	 * public void updateMonData(MonData monData){
-	 * repository.updateMonData(monData); }
-	 * 
-	 * public void deleteMonData(MonData monData){
-	 * repository.deleteMonData(monData); }
-	 */
+	public void insertMonDatas(List<MonData> monDatas) {
+		repository.save(monDatas);
+	}
 
 	public List<MonData> getMonDataList(String type, Integer serverId,
 			Date tenMinsAgo, Date now) {

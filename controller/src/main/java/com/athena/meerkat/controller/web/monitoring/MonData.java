@@ -74,7 +74,7 @@ public class MonData implements Serializable {
 	 * </pre>
 	 */
 	public MonData() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

@@ -61,7 +61,7 @@ public class AuthController {
 	 * </pre>
 	 */
 	public AuthController() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@RequestMapping("/onAfterLogout")
