@@ -157,7 +157,7 @@ public class CommonCodeHandler implements InitializingBean {
 					"prtoSeq"));
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			logger.error(e.toString(), e);
 		}
 

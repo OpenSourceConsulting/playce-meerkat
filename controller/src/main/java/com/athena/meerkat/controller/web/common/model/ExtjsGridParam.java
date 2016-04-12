@@ -49,7 +49,7 @@ public class ExtjsGridParam {
 	 * </pre>
 	 */
 	public ExtjsGridParam() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getPage() {

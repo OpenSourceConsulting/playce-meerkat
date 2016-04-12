@@ -481,10 +481,10 @@ public class CouchbaseClient extends MeerkatClient {
 			//System.err.println(client.deleteView("test", "test"));
 			//System.err.println(client.createView("test", "test"));
 		} catch (RestClientException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			client.shutdown();

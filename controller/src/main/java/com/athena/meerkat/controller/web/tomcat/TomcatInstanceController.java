@@ -27,9 +27,6 @@ package com.athena.meerkat.controller.web.tomcat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.State;
-import com.athena.meerkat.controller.common.provisioning.ProvisioningHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
@@ -82,9 +78,6 @@ public class TomcatInstanceController {
 	private DataSourceService dsService;
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
-	@Inject
-	@Named("provisioningHandler")
-	private ProvisioningHandler provisioningHandler;
 
 	public TomcatInstanceController() {
 	}

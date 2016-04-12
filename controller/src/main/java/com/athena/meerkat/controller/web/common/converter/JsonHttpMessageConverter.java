@@ -77,7 +77,6 @@ public class JsonHttpMessageConverter extends
 	 */
 	public JsonHttpMessageConverter(ObjectMapper objectMapper) {
 		super(objectMapper);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

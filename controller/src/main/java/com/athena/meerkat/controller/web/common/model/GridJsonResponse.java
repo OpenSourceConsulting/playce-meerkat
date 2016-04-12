@@ -55,7 +55,7 @@ public class GridJsonResponse implements MeerkatResponse {
 	 * </pre>
 	 */
 	public GridJsonResponse() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getTotal() {

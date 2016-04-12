@@ -24,7 +24,6 @@
  */
 package com.athena.meerkat.controller;
 
-import io.netty.channel.nio.NioEventLoopGroup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -97,10 +96,11 @@ public class MeerkatBoot {
 					"/", 
 					"/*.html", 
 					"/app.js",
+					"/app.json",
 					"/resources/**", 
 					"/monitor/**", 
 					"/provi/**",
-
+					
 					"/getServerList", 
 					"/auth/notLogin*", 
 					"/auth/loginFail*",
@@ -192,7 +192,7 @@ public class MeerkatBoot {
 
 		/*
 		 * for netty below
-		 */
+		 
 		@Bean(name = "bossGroup", destroyMethod = "shutdownGracefully")
 		public NioEventLoopGroup getBossGroup() {
 			NioEventLoopGroup group = new NioEventLoopGroup();
@@ -204,6 +204,7 @@ public class MeerkatBoot {
 			NioEventLoopGroup group = new NioEventLoopGroup();
 			return group;
 		}
+		*/
 	}
 	
 }

@@ -46,7 +46,7 @@ import com.athena.meerkat.controller.module.vo.MemoryVo;
  * @author Sang-cheon Park
  * @version 1.0
  */
-@Component
+//@Component
 public class ClientManager implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientManager.class);
