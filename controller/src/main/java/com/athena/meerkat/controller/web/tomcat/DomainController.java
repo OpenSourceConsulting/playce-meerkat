@@ -93,11 +93,12 @@ public class DomainController {
 			}
 
 			domain.setCreateUser(WebUtil.getLoginUserId());
-			domainService.save(domain);
+			domain = domainService.save(domain);
 		} catch (Exception ex) {
 			LOGGER.debug(ex.getMessage());
 		}
 		json.setSuccess(true);
+		json.setData(domain.getId());
 		return json;
 	}
 
