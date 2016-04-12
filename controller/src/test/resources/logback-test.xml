@@ -5,24 +5,15 @@
 			<pattern>%d [%thread] %-5level %-35logger{30} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>G:\project\AthenaMeerkat\meerkat.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>G:\project\AthenaMeerkat\meerkat.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>50MB</maxFileSize>
-			    <maxHistory>30</maxHistory>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-
-		<encoder>
-			<pattern>%d [%thread] %-5level %-35logger{30} - %msg%n</pattern>
+	<appender name="TAIL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[TAIL] - %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<logger name="com.athena" level="DEBUG"/>
-	<logger name="com.athena.meerkat.controller.web.provisioning" level="DEBUG">
-		<appender-ref ref="FILE" />
+	<logger name="com.athena.provisioning.log" level="DEBUG" additivity="false">
+		<appender-ref ref="TAIL_CONSOLE" />
 	</logger>
 
 	<logger name="org.springframework" level="ERROR"/>

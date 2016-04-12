@@ -72,6 +72,7 @@ public class TomcatProvisioningService implements InitializingBean{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningService.class);
 	private static final String JOBS_DIR_NM = "jobs";
+	public static final String LOG_END = "provisioning finished.";
 	
 	@Autowired
 	private TomcatDomainService domainService;
@@ -222,6 +223,7 @@ public class TomcatProvisioningService implements InitializingBean{
 			
 		} finally {
 			IOUtils.closeQuietly(output);
+			LOGGER.debug(LOG_END);
 		}
 	}
 	

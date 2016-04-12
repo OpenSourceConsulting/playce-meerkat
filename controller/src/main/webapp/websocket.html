@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Hello WebSocket</title>
+    <meta charset="UTF-8">
     <script src="resources/sockjs-0.3.4.js"></script>
     <script src="resources/stomp.js"></script>
     <script type="text/javascript">
@@ -48,6 +49,37 @@
             p.appendChild(document.createTextNode(message));
             response.appendChild(p);
         }
+        
+        /* ------------------------------------ */
+        var ws = null;
+	    var url = 'ws://localhost:8080/controller/provi/test';
+	  
+	    function wconnect() {
+	        <!-- 중요 포인트!! url을 이용해서 WebSocket을 생성하고 각각 이벤트에 대한 처리를 정의한다.-->
+	        ws = new WebSocket(url);
+	  
+	        ws.onopen = function() {
+	            console.log('websocket opened');
+	        };
+	        ws.onmessage = function(message) {
+	            console.log(message);
+	            console.log('receive message : ' + message.data);
+	        };
+	        ws.onclose = function(event) {
+	            console.log(event);
+	            console.log('websocket closed');
+	        };
+	    }
+	  
+	    function wdisconnect() {
+	        ws.close();
+	        ws = null;
+	    }
+	  
+	    function wsend() {
+	        // send 명령을 이용해서 전송을 한다.
+	        ws.send('aaaaa');
+	    }
     </script>
 </head>
 <body onload="disconnect()">
@@ -57,6 +89,9 @@
     <div>
         <button id="connect" onclick="connect();">Connect</button>
         <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+        <button onclick="wconnect();">WConnect</button>
+        <button onclick="wdisconnect();">WDisconnect</button>
+        <button onclick="wsend();">WSend</button>
     </div>
     <div id="conversationDiv">
         <label>What is your name?</label><input type="text" id="name" />

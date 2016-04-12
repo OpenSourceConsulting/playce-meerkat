@@ -1,41 +1,33 @@
 package com.athena.meerkat.controller;
 
-import java.util.List;
-
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.DefaultContentTypeResolver;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.converter.MessageConverter;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+import com.athena.meerkat.controller.web.provisioning.log.LogWebSocketHandler;
+import com.athena.meerkat.controller.web.provisioning.log.TestWebSocketHandler;
 
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
 
 	@Override
-	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic");
-		config.setApplicationDestinationPrefixes("/app");
-	}
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(websocketHandler(), "/provi/taillog");
+        registry.addHandler(testWebsocketHandler(), "/provi/test");
+    }
 
-	@Override
-	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/monitor/endpoint");
-		//registry.addEndpoint("/monitor/hello").withSockJS();
-	}
-	
-	@Override
-    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
-        DefaultContentTypeResolver resolver = new DefaultContentTypeResolver();
-        resolver.setDefaultMimeType(MimeTypeUtils.APPLICATION_JSON);
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setContentTypeResolver(resolver);
-        messageConverters.add(converter);
-        return false;
-    }   
+    @Bean
+    public WebSocketHandler testWebsocketHandler() {
+        return new TestWebSocketHandler();
+    }
+    
+    @Bean
+    public WebSocketHandler websocketHandler() {
+        return new LogWebSocketHandler();
+    }
 
 }
