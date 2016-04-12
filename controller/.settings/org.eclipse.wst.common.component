@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <dependent-module archiveName="athena-meerkat-common-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/athena-meerkat-common/athena-meerkat-common">
+        <dependent-module archiveName="athena-meerkat-common-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/MeerkatCommon/MeerkatCommon">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/MeerkatController/target/classes"/>

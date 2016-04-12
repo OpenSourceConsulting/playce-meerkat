@@ -61,9 +61,13 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.server.endpoint}")
 	private String endpoint;
 	
-	@Value("${meerkat.agent.server.app.dest:/app/monitor/hello}")
+	@Value("${meerkat.agent.server.app.init}")
+	private String appInitDestination;
+	
+	@Value("${meerkat.agent.server.app.dest}")
 	private String appDestination;
 	
+	private String initDestHeader;
 	private String destHeader;
 
 	private WebSocketSession session;
@@ -94,11 +98,20 @@ public class StompWebSocketClient implements InitializingBean{
 		
 		Assert.notNull(session);
 		Assert.isTrue(session.isOpen(), "server connection fail.");
+		Assert.notNull(appInitDestination);
 		Assert.notNull(appDestination);
 		
+		this.initDestHeader = "destination:" + appInitDestination;;
 		this.destHeader = "destination:" + appDestination;
 		
 		LOGGER.info("connected");
+	}
+	
+	public void sendInitMessage(String message) throws IOException {
+		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.initDestHeader).body(message).build();
+		session.sendMessage(txtMessage); 
+		
+		LOGGER.debug("send >> {}", message);
 	}
 	
 	public void sendMessage(String message) throws IOException {
