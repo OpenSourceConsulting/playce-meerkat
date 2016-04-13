@@ -94,7 +94,7 @@ public class TomcatProvisioningControllerTest {
 	public void testInstall() {
 		
 		File workingDir = new File(commanderDir);
-		String serverIp = "192.168.0.157"; MDC.put("client", serverIp);
+		String serverIp = "192.168.0.157"; MDC.put("serverIp", serverIp);
 		String userId = "centos";
 		
 		Properties prop = new Properties(); //build-ssh.properties
@@ -169,7 +169,7 @@ public class TomcatProvisioningControllerTest {
 			//fail(e.toString());
 			e.printStackTrace();
 		} finally {
-			MDC.remove(serverIp);
+			MDC.remove("serverIp");
 			IOUtils.closeQuietly(output);
 		}
 		

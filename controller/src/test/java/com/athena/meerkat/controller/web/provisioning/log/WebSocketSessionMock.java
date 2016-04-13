@@ -29,6 +29,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketExtension;
@@ -36,6 +38,8 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 public class WebSocketSessionMock implements WebSocketSession {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketSessionMock.class);
 
 	public WebSocketSessionMock() {
 		// TODO Auto-generated constructor stub
@@ -121,7 +125,7 @@ public class WebSocketSessionMock implements WebSocketSession {
 
 	@Override
 	public void sendMessage(WebSocketMessage<?> message) throws IOException {
-		// TODO Auto-generated method stub
+		LOGGER.debug(message.toString());
 
 	}
 
@@ -133,7 +137,7 @@ public class WebSocketSessionMock implements WebSocketSession {
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
+		LOGGER.debug("session was closed!!");
 
 	}
 

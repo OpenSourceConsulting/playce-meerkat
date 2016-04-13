@@ -58,6 +58,7 @@ public class LogTailerListenerTest {
 		Tailer tailer = new Tailer(file, listener, delay);
 
 	    // stupid executor impl. for demo purposes
+		
 	    Executor executor = new Executor() {
 	          public void execute(Runnable command) {
 	              command.run();
@@ -65,6 +66,16 @@ public class LogTailerListenerTest {
 	    };
 
 	    executor.execute(tailer);
+	    
+	    /*
+		Thread thread = new Thread(tailer);
+		thread.setDaemon(true);
+		thread.start();
+		
+		try{
+			Thread.sleep(10000);
+		}catch(Exception e){}
+		*/
 	}
 
 }

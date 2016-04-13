@@ -22,11 +22,6 @@
  */
 package com.athena.meerkat.controller.web.provisioning;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,27 +53,12 @@ public class TomcatProvisioningController {
 	@ResponseBody
 	public SimpleJsonResponse install(@PathVariable("domainId") int domainId) {
 		
-		proviService.installTomcatInstance(domainId);
+		proviService.installTomcatInstance(domainId, null);
 		//System.out.println("call install "+ domainId + "******************************");
 		
 		return new SimpleJsonResponse();
 	}
 	
-	/**
-	 * <pre>
-	 * for test.
-	 * </pre>
-	 * @param domainId
-	 * @return
-	 */
-	@RequestMapping(value = "/install2/{domainId}", method = RequestMethod.GET)
-	@ResponseBody
-	public SimpleJsonResponse install2(@PathVariable("domainId") int domainId) {
-		
-		proviService.installTomcatInstance(domainId);
-		
-		return new SimpleJsonResponse();
-	}
 
 }
 //end of ProvisioningController.java

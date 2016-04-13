@@ -27,10 +27,14 @@ import java.io.File;
 import org.apache.commons.io.input.Tailer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 
 /**
  * <pre>
@@ -39,10 +43,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  * @author Bongjin Kwon
  * @version 1.0
  */
+@Component
 public class LogWebSocketHandler extends TextWebSocketHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LogWebSocketHandler.class);
 
+	@Autowired
+	private TomcatProvisioningService service;
+	
 	/**
 	 * <pre>
 	 * 
@@ -57,13 +65,13 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		LOGGER.debug("connected!! id={}", session.getId());
-		
+		/*
 		LogTailerListener listener = new LogTailerListener(session);
 		long delay = 2000;
 		File file = new File("G:\\project\\AthenaMeerkat\\meerkat.log");
 		Tailer tailer = new Tailer(file, listener, delay);
 		new Thread(tailer).start();
-		
+		*/
 	}
 
 
@@ -79,6 +87,10 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		LOGGER.debug(message.toString());
 		
+		int domainId = Integer.parseInt(message.getPayload());
+		LOGGER.debug("domainId : {}", domainId);
+		
+		service.installTomcatInstance(domainId, session);
 		
 	}
 

@@ -16,13 +16,28 @@
 		</rollingPolicy>
 
 		<encoder>
-			<pattern>%d [%thread] %-5level %-35logger{30} - %msg%n</pattern>
+			<pattern>%d [%thread] %X{serverIp} # %msg%n</pattern>
 		</encoder>
 	</appender>
+	<appender name="PROVI_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+	    <discriminator>
+	      <key>jobPath</key>
+	      <defaultValue>unknown</defaultValue>
+	    </discriminator>
+	    <sift>
+	      <appender name="FILE-${jobPath}" class="ch.qos.logback.core.FileAppender">
+	        <file>${jobPath}/build.log</file>
+	        <append>false</append>
+	        <layout class="ch.qos.logback.classic.PatternLayout">
+	          <pattern>%d [%thread] %X{serverIp} # %msg%n</pattern>
+	        </layout>
+	      </appender>
+	    </sift>
+	  </appender>
 
 	<logger name="com.athena" level="DEBUG"/>
 	<logger name="com.athena.meerkat.controller.web.provisioning" level="DEBUG">
-		<appender-ref ref="FILE" />
+		<appender-ref ref="PROVI_LOG" />
 	</logger>
 
 	<logger name="org.springframework" level="ERROR"/>

@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;
@@ -13,10 +14,13 @@ import com.athena.meerkat.controller.web.provisioning.log.TestWebSocketHandler;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+	
+	@Autowired
+	private LogWebSocketHandler logWebSocketHandler;
 
 	@Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(websocketHandler(), "/provi/taillog");
+        registry.addHandler(logWebSocketHandler, "/provi/taillog");
         registry.addHandler(testWebsocketHandler(), "/provi/test");
     }
 
@@ -25,9 +29,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
         return new TestWebSocketHandler();
     }
     
-    @Bean
-    public WebSocketHandler websocketHandler() {
-        return new LogWebSocketHandler();
-    }
 
 }

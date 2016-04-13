@@ -42,7 +42,7 @@ import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
  */
 public class LogTailerListener extends TailerListenerAdapter {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(LogTailerListener.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger("com.athena.meerkat.LogTailerListener");
 
 	private Tailer tailer;
 	private WebSocketSession session;
@@ -96,11 +96,11 @@ public class LogTailerListener extends TailerListenerAdapter {
 	
 	protected void stop(){
 		this.tailer.stop();
-		try{
-			this.session.close();
-		}catch(IOException e){
-			LOGGER.error(e.toString(), e);
-		}
+//		try{
+//			this.session.close();
+//		}catch(IOException e){
+//			LOGGER.error(e.toString(), e);
+//		}
 		isStop = true;
 		LOGGER.debug("tailer stop!!");
 	}
