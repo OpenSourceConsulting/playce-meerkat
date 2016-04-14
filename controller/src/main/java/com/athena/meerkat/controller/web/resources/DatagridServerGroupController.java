@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
@@ -40,6 +41,16 @@ public class DatagridServerGroupController {
 			json.setList(list);
 			json.setTotal(list.size());
 		}
+		return json;
+	}
+
+	@RequestMapping(value = "/group/types", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getServerGroupTypes(GridJsonResponse json) {
+		List<CommonCode> list = service.getSessionServerGroupTypes();
+		json.setList(list);
+		json.setTotal(list.size());
+
 		return json;
 	}
 }

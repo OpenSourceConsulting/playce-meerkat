@@ -134,4 +134,6 @@ public abstract class MeerkatConstants {
 	public static final String OBJ_TYPE_TOMCAT = "tomcat_inst";
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
+
+	public static final String SESSION_SERVER_TYPE_GROUP_ID = "SESSION_GROUP_TYPE";
 }

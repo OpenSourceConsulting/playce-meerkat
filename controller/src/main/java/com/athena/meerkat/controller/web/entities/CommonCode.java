@@ -52,7 +52,7 @@ public class CommonCode {
 	private String codeNm;//코드명
 	
 	@Column(name = "prto_seq")
-	private short prtoSeq;//출력순서
+	private Short prtoSeq;//출력순서
 	
 	@Column(name = "cd_desc")
 	private String cdDesc;//코드설명
