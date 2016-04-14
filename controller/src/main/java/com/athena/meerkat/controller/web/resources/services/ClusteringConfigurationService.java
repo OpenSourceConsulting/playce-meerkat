@@ -121,7 +121,8 @@ public class ClusteringConfigurationService {
 						.findByTomcatDomainAndClusteringConfigurationVersion_Id(
 								td, secondVersion);
 			}
-		} else if (objectType.equals(MeerkatConstants.OBJ_TYPE_SESSION_SERVER_GROUP)) {
+		} else if (objectType
+				.equals(MeerkatConstants.OBJ_TYPE_SESSION_SERVER_GROUP)) {
 			DatagridServerGroup group = groupRepo.findOne(objectId);
 			if (group != null) {
 				firstList = clusteringConfigRepo
@@ -136,16 +137,20 @@ public class ClusteringConfigurationService {
 		firstList.addAll(secondList);
 		Collections.sort(firstList);
 
-		for (int i = 0; i < firstList.size() - 1;) {
+		for (int i = 0; i < firstList.size();) {
+
 			ClusteringConfiguration first = firstList.get(i);
-			ClusteringConfiguration second = firstList.get(i + 1);
-			if (first.getName().equals(second.getName())) {
+			ClusteringConfiguration second = null;
+
+			if (i + 1 < firstList.size()) {
+				second = firstList.get(i + 1);
+			}
+			if (second != null && first.getName().equals(second.getName())) {
 				list.add(new ClusteringConfComparisionViewModel(first.getId(),
 						first.getName(), first.getValue(), second.getId(),
 						second.getValue()));
 				i += 2;
 			} else {
-				i++;
 				if (first.getClusteringConfigurationVersion().getId() == firstVersion) {
 					list.add(new ClusteringConfComparisionViewModel(first
 							.getId(), first.getName(), first.getValue(), 0, ""));
@@ -153,7 +158,9 @@ public class ClusteringConfigurationService {
 					list.add(new ClusteringConfComparisionViewModel(0, first
 							.getName(), "", first.getId(), first.getValue()));
 				}
+				i++;
 			}
+
 		}
 
 		return list;

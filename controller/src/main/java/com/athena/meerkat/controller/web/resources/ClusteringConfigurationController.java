@@ -219,7 +219,7 @@ public class ClusteringConfigurationController {
 		return json;
 	}
 
-	@RequestMapping(value = "conf/{version}", method = RequestMethod.GET)
+	@RequestMapping(value = "config/{version}", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getClusteringConf(
 			GridJsonResponse json, Integer objectId, String objectType,
 			@PathVariable Integer version) {
