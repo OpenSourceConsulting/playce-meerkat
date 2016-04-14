@@ -47,10 +47,10 @@ public class TomcatConfigFileController {
 		TomcatDomain td = null;
 		TomcatInstance tcinst = null;
 		TomcatConfigFile conf = new TomcatConfigFile();
-		if (objType.equals(MeerkatConstants.CONFIG_FILE_OBJ_TYPE_DOMAIN)) {
+		if (objType.equals(MeerkatConstants.OBJ_TYPE_DOMAIN)) {
 			td = domainService.getDomain(objId);
 			conf.setTomcatDomain(td);
-		} else if (objType.equals(MeerkatConstants.CONFIG_FILE_OBJ_TYPE_TOMCAT)) {
+		} else if (objType.equals(MeerkatConstants.OBJ_TYPE_TOMCAT)) {
 			tcinst = tomcatService.findOne(objId);
 			conf.setTomcatInstance(tcinst);
 		}

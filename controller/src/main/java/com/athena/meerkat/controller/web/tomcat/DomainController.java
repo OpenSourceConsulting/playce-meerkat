@@ -20,8 +20,6 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
-import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Session;
@@ -33,7 +31,6 @@ import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupS
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
-import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
 
 @Controller
 @RequestMapping("/domain")
@@ -202,34 +199,6 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping(value = "/{domainId}/clusteringvers", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getClusteringVers(
-			GridJsonResponse json, @PathVariable Integer domainId) {
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td != null) {
-			List<ClusteringConfigurationVersion> versions = domainService
-					.getClusteringConfVersions(td);
-			json.setList(versions);
-			json.setTotal(versions.size());
-		}
-		return json;
-	}
-
-	@RequestMapping(value = "/{domainId}/clusteringconf/{version}", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getClusteringConf(
-			GridJsonResponse json, @PathVariable Integer domainId,
-			@PathVariable Integer version) {
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td != null) {
-			List<ClusteringConfiguration> confs = domainService
-					.getClusteringConf(td, version);
-			json.setList(confs);
-			json.setTotal(confs.size());
-		}
-
-		return json;
-	}
-
 	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(
 			SimpleJsonResponse json,
@@ -262,146 +231,6 @@ public class DomainController {
 			GridJsonResponse json, int domainId) {
 		json.setList(tomcatService.getTomcatListByDomainId(domainId));
 		json.setSuccess(true);
-		return json;
-	}
-
-	@RequestMapping(value = "/clustering/config/save", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse saveClusteringConfig(
-			SimpleJsonResponse json, ClusteringConfiguration config,
-			Integer tomcatDomainId) {
-		boolean isEdit = !(config.getId() == 0);
-
-		ClusteringConfiguration currentConfig = domainService
-				.getClusteringConfig(config.getId());
-		if (tomcatDomainId > 0) {
-			TomcatDomain domain = domainService.getDomain(tomcatDomainId);
-			config.setTomcatDomain(domain);
-			List<ClusteringConfiguration> confs = null;
-			ClusteringConfigurationVersion latestVersion = domainService
-					.getLatestClusteringConfVersion(domain.getId());
-			ClusteringConfigurationVersion versionObj = new ClusteringConfigurationVersion();
-			versionObj.setCreatedTime(new Date());
-			if (latestVersion == null) {
-				versionObj.setVersion(1);
-			} else {
-				confs = domainService.getClusteringConf(domain,
-						latestVersion.getId());
-				versionObj.setVersion(latestVersion.getVersion() + 1);
-			}
-			versionObj = domainService.saveCluteringConfVersion(versionObj);
-			List<ClusteringConfiguration> cloneConfs = new ArrayList<ClusteringConfiguration>();
-			if (confs != null) {
-				for (ClusteringConfiguration c : confs) {
-					if (c.getId() != config.getId()) { // dont clone the edited
-														// config
-						ClusteringConfiguration clone = (ClusteringConfiguration) c
-								.clone();
-						if (clone != null) {
-							clone.setClusteringConfigurationVersion(versionObj);
-							cloneConfs.add(clone);
-						}
-					}
-				}
-				// TODO idkbj apply to clustering server
-				domainService.saveClusteringConfigs(cloneConfs);
-			}
-			if (config.getId() != 0) {
-				// reset id for editing case
-				config.setId(0);
-			}
-			config.setClusteringConfigurationVersion(versionObj);
-			domainService.saveClusteringConfig(config);
-			json.setData(versionObj.getId());
-			json.setSuccess(true);
-		}
-
-		return json;
-	}
-
-	@RequestMapping(value = "/clustering/config/edit", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse editClusteringConfig(
-			SimpleJsonResponse json, int id) {
-		ClusteringConfiguration config = domainService.getClusteringConfig(id);
-		json.setData(config);
-		return json;
-	}
-
-	@RequestMapping(value = "/clustering/config/delete", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse deleteClusteringConfig(
-			SimpleJsonResponse json, int id) {
-		ClusteringConfiguration config = domainService.getClusteringConfig(id);
-		ClusteringConfigurationVersion latestVersion = domainService
-				.getLatestClusteringConfVersion(config.getTomcatDomainId());
-		// if this is not latest version, just delete
-		if (config.getClusteringConfigurationVersion().getId() != latestVersion
-				.getId()) {
-			domainService.deleteClusteringConfig(config);
-			json.setData(latestVersion.getId());
-		} else {
-			ClusteringConfigurationVersion versionObj = new ClusteringConfigurationVersion();
-			versionObj.setCreatedTime(new Date());
-			versionObj.setVersion(latestVersion.getVersion() + 1);
-			versionObj = domainService.saveCluteringConfVersion(versionObj);
-			List<ClusteringConfiguration> confs = domainService
-					.getClusteringConf(config.getTomcatDomain(),
-							latestVersion.getId());
-			List<ClusteringConfiguration> cloneConfs = new ArrayList<ClusteringConfiguration>();
-			if (confs != null) {
-				for (ClusteringConfiguration c : confs) {
-					if (c.getId() != config.getId()) {
-						ClusteringConfiguration clone = (ClusteringConfiguration) c
-								.clone();
-						if (clone != null) {
-							clone.setClusteringConfigurationVersion(versionObj);
-							cloneConfs.add(clone);
-						}
-					}
-				}
-				// TODO idkbj apply to clustering servers
-				domainService.saveClusteringConfigs(cloneConfs);
-			}
-			json.setData(versionObj.getId());
-		}
-
-		json.setSuccess(true);
-
-		return json;
-	}
-
-	@RequestMapping(value = "/{domainId}/clustering/config/compare/{firstVersion}/to/{secondVersion}", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse compareClusteringConfig(
-			GridJsonResponse json, @PathVariable Integer domainId,
-			@PathVariable Integer firstVersion,
-			@PathVariable Integer secondVersion) {
-		List<ClusteringConfComparisionViewModel> viewmodels = domainService
-				.getClusteringConfComparison(domainId, firstVersion,
-						secondVersion);
-		json.setList(viewmodels);
-		json.setTotal(viewmodels.size());
-		return json;
-	}
-
-	@RequestMapping(value = "/{domainId}/clustering/config/latest", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getLatestClusteringVersion(
-			SimpleJsonResponse json, @PathVariable Integer domainId) {
-
-		ClusteringConfigurationVersion latestVersion = domainService
-				.getLatestClusteringConfVersion(domainId);
-		if (latestVersion != null) {
-			json.setData(latestVersion.getId());
-		}
-		return json;
-	}
-
-	@RequestMapping(value = "/{domainId}/clustering/config/{versionId}/search/{keyword}", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse compareClusteringConfig(
-			GridJsonResponse json, @PathVariable int domainId,
-			@PathVariable int versionId, @PathVariable String keyword) {
-		List<ClusteringConfiguration> list = domainService
-				.searchClusteringConfByDomainAndVersionAndName(domainId,
-						versionId, keyword);
-		json.setList(list);
-		json.setTotal(list.size());
 		return json;
 	}
 

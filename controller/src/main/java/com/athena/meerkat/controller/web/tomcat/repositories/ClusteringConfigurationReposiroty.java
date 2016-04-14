@@ -17,7 +17,7 @@ public interface ClusteringConfigurationReposiroty extends
 		JpaRepository<ClusteringConfiguration, Integer> {
 
 	@Query(value = "select distinct ccv from TomcatDomain td inner join td.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where td.id = :domainId group by ccv.version")
-	List<ClusteringConfigurationVersion> getVersions(
+	List<ClusteringConfigurationVersion> getVersionsByDomain(
 			@Param("domainId") int domainId);
 
 	List<ClusteringConfiguration> findByTomcatDomainAndClusteringConfigurationVersion_Id(
@@ -34,4 +34,7 @@ public interface ClusteringConfigurationReposiroty extends
 
 	List<ClusteringConfiguration> findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
 			DatagridServerGroup group, Integer version);
+
+	List<ClusteringConfiguration> findByDatagridServerGroup_IdAndClusteringConfigurationVersion_IdAndNameContaining(
+			Integer groupId, int versionId, String keyword);
 }

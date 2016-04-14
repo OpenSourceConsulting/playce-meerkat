@@ -129,8 +129,9 @@ public abstract class MeerkatConstants {
 	public static final String TOMCAT_INST_CONFIG_HTTPPORT_NAME = "http_port";
 	public static final String TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME = "session_timeout";
 
-	public static final String CONFIG_FILE_OBJ_TYPE_DOMAIN = "tomcat_domain";
-	public static final String CONFIG_FILE_OBJ_TYPE_TOMCAT = "tomcat_inst";
+	public static final String OBJ_TYPE_DOMAIN = "tomcat_domain";
+	public static final String OBJ_TYPE_SESSION_SERVER_GROUP = "server_group";
+	public static final String OBJ_TYPE_TOMCAT = "tomcat_inst";
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 }

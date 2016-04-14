@@ -16,10 +16,6 @@ import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigura
 public class DataGridServerGroupService {
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
-	@Autowired
-	ClusteringConfigurationVersionRepository clusteringConfigVerRepo;
-	@Autowired
-	ClusteringConfigurationReposiroty clusteringConfigRepo;
 
 	public List<DatagridServerGroup> getAll() {
 		List<DatagridServerGroup> list = groupRepo.findAll();
@@ -30,28 +26,4 @@ public class DataGridServerGroupService {
 		return groupRepo.findOne(id);
 	}
 
-	public ClusteringConfigurationVersion getLatestClusteringConfVersion(
-			Integer groupId) {
-		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
-				.findFirstClusteringVersionByDatagridGroupId(groupId);
-		if (latestVersion.size() == 0) {
-			return null;
-		}
-		return latestVersion.get(0);
-
-	}
-
-	public List<ClusteringConfigurationVersion> getClusteringConfVersions(
-			DatagridServerGroup group) {
-		return clusteringConfigRepo.getVersionsByServerGroup(group.getId());
-
-	}
-
-	public List<ClusteringConfiguration> getClusteringConf(
-			DatagridServerGroup group, Integer version) {
-		List<ClusteringConfiguration> result = clusteringConfigRepo
-				.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
-						group, version);
-		return result;
-	}
 }
