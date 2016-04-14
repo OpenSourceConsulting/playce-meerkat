@@ -21,3 +21,7 @@ CREATE TABLE `mon_jmx_tbl` (
   `mon_value` double NOT NULL,
   PRIMARY KEY (`mon_factor_id`,`instance_id`,`mon_dt`)
 ) ENGINE=InnoDB;
+
+
+ALTER TABLE `athena_meerkat_local`.`common_code` 
+CHANGE COLUMN `cd_desc` `cd_desc` VARCHAR(100) NULL DEFAULT NULL COMMENT '코드설명' ;
