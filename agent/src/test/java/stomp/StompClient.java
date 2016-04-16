@@ -25,9 +25,16 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 //@Component
-public class WebSocketStompClient implements InitializingBean{
+/**
+ * <pre>
+ * Another Sample client.
+ * </pre>
+ * @author Bongjin Kwon
+ * @version 1.0
+ */
+public class StompClient implements InitializingBean{
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketStompClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StompClient.class);
 
 	//@Value("${meerkat.agent.server.topic}")
 	private String topic;
@@ -49,7 +56,7 @@ public class WebSocketStompClient implements InitializingBean{
 
 	private MessageConverter messageConverter;
 
-	public WebSocketStompClient(URI uri, WebSocketHttpHeaders headers) {
+	public StompClient(URI uri, WebSocketHttpHeaders headers) {
 		this.uri = uri;
 		this.headers = headers;
 	}

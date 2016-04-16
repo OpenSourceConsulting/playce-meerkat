@@ -137,7 +137,7 @@ public class TomcatProvisioningService implements InitializingBean{
 		if(list != null && list.size() > 0){
 		
 			for (TomcatInstance tomcatInstance : list) {
-				doInstallTomcatInstance(tomcatConfig, tomcatInstance.getServer(), session);
+				doInstallTomcatInstance(tomcatConfig, tomcatInstance, session);
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -145,8 +145,9 @@ public class TomcatProvisioningService implements InitializingBean{
 		
 	}
 	
-	private void doInstallTomcatInstance(DomainTomcatConfiguration tomcatConfig, Server targetServer, WebSocketSession session) {
+	private void doInstallTomcatInstance(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
 
+		Server targetServer = tomcatInstance.getServer();
 		String serverIp = targetServer.getSshIPAddr();
 		MDC.put("serverIp", serverIp);
 		
@@ -229,6 +230,9 @@ public class TomcatProvisioningService implements InitializingBean{
 			 * 5. send cmd.
 			 */
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			
+			
+			instanceService.start(tomcatInstance);
 			
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);

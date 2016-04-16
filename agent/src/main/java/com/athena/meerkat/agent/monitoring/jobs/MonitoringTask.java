@@ -23,6 +23,7 @@
 package com.athena.meerkat.agent.monitoring.jobs;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -56,14 +57,14 @@ public abstract class MonitoringTask {
 	 * @param jsons
 	 * @throws IOException
 	 */
-	protected void sendMonData(String... jsons) throws IOException {
+	protected void sendMonData(List<String> monDatas) throws IOException {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		
 		boolean more = false;
 		
-		for (String json : jsons) {
+		for (String json : monDatas) {
 			
 			if (more) {
 				sb.append(",");

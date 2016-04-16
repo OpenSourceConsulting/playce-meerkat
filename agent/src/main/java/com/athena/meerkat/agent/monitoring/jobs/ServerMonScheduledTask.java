@@ -1,5 +1,8 @@
 package com.athena.meerkat.agent.monitoring.jobs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.NetStat;
@@ -16,10 +19,11 @@ public class ServerMonScheduledTask extends MonitoringTask{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerMonScheduledTask.class);
 
-    //private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     
     @Value("${meerkat.agent.server.id:0}")
     private String serverId;
+    
+    private List<String> monDatas = new ArrayList<String>();
     
 		
 	public ServerMonScheduledTask() {
@@ -29,11 +33,11 @@ public class ServerMonScheduledTask extends MonitoringTask{
 		this.serverId = serverId;
 	}
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 10000)
 	@Override
     public void monitor() {
-    	//LOGGER.debug("The time is now " + dateFormat.format(new Date()));
     	
+		monDatas.clear();
     	try{
     		CpuPerc cpu = SigarUtil.getCpuPerc();
     		Mem mem = SigarUtil.getMem();
@@ -44,18 +48,31 @@ public class ServerMonScheduledTask extends MonitoringTask{
     		int netIn = netStat.getAllInboundTotal();
     		int netOut = netStat.getAllOutboundTotal();
     		
-    		String cpuUsedJson = createJsonString("cpu.used", serverId, cpuUsed);
-    		String memUsedJson = createJsonString("mem.used", serverId, memUsed);
-    		String netInJson = createJsonString("net.in", serverId, netIn);
-    		String netOutJson = createJsonString("net.out", serverId, netOut);
+    		
+    		monDatas.add(createJsonString("cpu.used", serverId, cpuUsed));
+    		monDatas.add(createJsonString("mem.used", serverId, memUsed));
+    		monDatas.add(createJsonString("net.in", serverId, netIn));
+    		monDatas.add(createJsonString("net.out", serverId, netOut));
+    		addTomcatInstanceMonitoring();
     		//TODO tran : verify data and add additional data(disk.used, disk.free)
     		
-    		sendMonData(cpuUsedJson, memUsedJson, netInJson, netOutJson);
+    		sendMonData(monDatas);
     		
-    	}catch (Exception e) {
+    	} catch (Exception e) {
     		LOGGER.error(e.toString(), e);
+    	} finally {
+    		monDatas.clear();
     	}
     }
+	
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 */
+	public void addTomcatInstanceMonitoring() {
+		
+	}
 
 	
 

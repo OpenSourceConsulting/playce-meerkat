@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.monitoring.server.HelloMessage;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**
  * <pre>
@@ -44,6 +46,9 @@ public class MonDataController {
 	
 	@Autowired
 	private ServerService svrService;
+	
+	@Autowired
+	private TomcatInstanceService tiService;
 
 	/**
 	 * <pre>
@@ -64,18 +69,20 @@ public class MonDataController {
 	 * @return
 	 */
 	@MessageMapping("/monitor/init")
-	@SendTo("/topic/agents")
+	@SendToUser("/queue/agents")
 	public SimpleJsonResponse init(SimpleJsonResponse jsonRes, Server machine) {
 		
 		//svrService.save(machine);//TODO tran test.
 
-		LOGGER.debug("init saved. ----------------");
+		LOGGER.debug("init saved. ---------------- {}", machine.getId());
+		
+		jsonRes.setData(tiService.findInstanceConfigs(machine.getId()));
 
 		return jsonRes;
 	}
 	
 	@MessageMapping("/monitor/create")
-	@SendTo("/topic/agents")
+	@SendToUser("/queue/agents")
 	public SimpleJsonResponse create(List<Map> datas) {
 		
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse();

@@ -10,7 +10,7 @@ public class State {
 	public static int APP_STATE_STARTED = 1;
 	public static int APP_STATE_STOPPED = 2;
 
-	/* State of application */
-	public static int TOMCAT_STATE_STARTED = 1;
-	public static int TOMCAT_STATE_STOPPED = 2;
+	/* State of tomcat instance */
+	public static int TOMCAT_STATE_STARTED = 4;
+	public static int TOMCAT_STATE_STOPPED = 3;
 }

@@ -95,6 +95,10 @@
 					<artifactId>ant-jsch</artifactId>
 					<groupId>org.apache.ant</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 

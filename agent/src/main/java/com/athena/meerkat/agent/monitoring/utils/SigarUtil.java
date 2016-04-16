@@ -6,10 +6,14 @@ import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.NetConnection;
+import org.hyperic.sigar.NetFlags;
 import org.hyperic.sigar.NetInfo;
 import org.hyperic.sigar.NetStat;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -20,6 +24,8 @@ import org.hyperic.sigar.SigarException;
  * @version 1.0
  */
 public final class SigarUtil {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(SigarUtil.class);
 	
 	private static Sigar sigar;
 	
@@ -193,6 +199,25 @@ public final class SigarUtil {
 		return getInstance().getFileSystemUsage(dirName);
 	}//end of getFileSystemUsage()
 	
+	public static boolean isListenPort(long port) {
+		Sigar sigar = SigarUtil.getInstance();
+		int flags = NetFlags.CONN_TCP | NetFlags.CONN_SERVER;// | NetFlags.CONN_CLIENT;
+		
+		try{
+			NetConnection[] netConnectionList = sigar.getNetConnectionList(flags);
+			for (NetConnection netConnection : netConnectionList) {
+			   if(netConnection.getLocalPort() == port) {
+				   return true;
+			   }
+			}
+			
+		}catch(SigarException e){
+			LOGGER.error(e.toString(), e);
+		}
+		
+		return false;
+	}
+	
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -202,6 +227,7 @@ public final class SigarUtil {
 		//System.out.println(SigarUtil.getNetInfo().getHostName());
 		System.out.println(SigarUtil.getNetInfo());
 		
+		//---------------- dis size -----------
 		long diskSize = 0L;
 		
 		FileSystem[] fileSysList = SigarUtil.getFileSystemList();
@@ -212,6 +238,15 @@ public final class SigarUtil {
 		}
 		
 		System.out.println(diskSize);
+		
+		System.out.println("------------------------- port check --------");
+		long port = 8080;
+		Sigar sigar = SigarUtil.getInstance();
+		int flags = NetFlags.CONN_TCP | NetFlags.CONN_SERVER;// | NetFlags.CONN_CLIENT;
+		NetConnection[] netConnectionList = sigar.getNetConnectionList(flags);
+		for (NetConnection netConnection : netConnectionList) {
+		   System.out.println(netConnection.getLocalPort());
+		}
 	}
 }
 //end of SigarUtil.java

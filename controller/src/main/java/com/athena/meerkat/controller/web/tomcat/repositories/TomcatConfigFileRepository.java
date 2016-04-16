@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -37,5 +38,6 @@ public interface TomcatConfigFileRepository extends
 	@Query(value = "select cf from TomcatConfigFile cf where cf.tomcatInstance.id =:tomcatId  and cf.fileTypeCdId = :typeId order by cf.version desc")
 	List<TomcatConfigFile> findByTomcatAndFileTypeCdId(
 			@Param("tomcatId") int tomcatId, @Param("typeId") int typeId);
+	
 
 }

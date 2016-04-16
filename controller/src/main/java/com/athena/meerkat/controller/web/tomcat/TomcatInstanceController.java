@@ -183,44 +183,35 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
-			@PathVariable Integer id) {
-		TomcatInstance tomcat = service.findOne(id);
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable Integer id) {
+		
+		DomainTomcatConfiguration conf = service.getTomcatConfig(id);
 
-		if (tomcat != null) {
-			DomainTomcatConfiguration conf = domainService
-					.getTomcatConfig(tomcat.getDomainId());
-			// get configurations that are different to domain tomcat config
-			List<TomcatInstConfig> changedConfigs = service
-					.getTomcatInstConfigs(tomcat.getId());
-			if (changedConfigs != null) {
-				for (TomcatInstConfig c : changedConfigs) {
-					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
-						conf.setHttpPort(Integer.parseInt(c.getConfigValue()));
-					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
-						conf.setJavaHome(c.getConfigValue());
-					} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
-						conf.setSessionTimeout(Integer.parseInt(c
-								.getConfigValue()));
-					}
-				}
-			}
-			json.setData(conf);
-		}
+		json.setData(conf);
+		
+		return json;
+	}
+	
+	@RequestMapping(value = "/instance/{serverId}/conf2", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
+		
+		List<DomainTomcatConfiguration> list = service.findInstanceConfigs(serverId);
+
+		json.setData(list);
+		
 		return json;
 	}
 
 	@RequestMapping("/instance/list")
-	public @ResponseBody SimpleJsonResponse getTomcatInstance(
-			SimpleJsonResponse json) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
 		return json;
 	}
 
 	@RequestMapping("/instance/listbydomain")
-	public @ResponseBody SimpleJsonResponse getTomcatInstances(
-			SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
 		if (domain != null) {
 			json.setData(service.getTomcatListByDomainId(domain.getId()));

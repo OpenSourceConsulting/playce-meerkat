@@ -33,11 +33,14 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompDecoder;
 import org.springframework.messaging.simp.stomp.StompEncoder;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
  * <pre>
@@ -55,6 +58,10 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	
 	private final StompEncoder encoder = new StompEncoder();
 	private final StompDecoder decoder = new StompDecoder();
+	
+	private ObjectMapper mapper = new ObjectMapper();
+	
+	private ArrayNode datas;
 	
 	private TextMessage subscribeMsg;
 
@@ -88,7 +95,14 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 		byte[] bytes = encoder.encode(MessageBuilder.withPayload(EMPTY_PAYLOAD).setHeaders(subheaders).build());
 		session.sendMessage(new TextMessage(new String(bytes, UTF_8)));
 		*/
-		LOGGER.debug(">>> SUBSCRIBE.");
+		LOGGER.debug(">>> SUBSCRIBE: {}", getHeader(subscribeMsg).getDestination());
+	}
+	
+	protected StompHeaderAccessor getHeader(TextMessage message) {
+		ByteBuffer payload = ByteBuffer.wrap(message.getPayload().getBytes(UTF_8));
+		List<Message<byte[]>> messages = this.decoder.decode(payload);
+		
+		return StompHeaderAccessor.wrap(messages.get(0));
 	}
 
 	@Override
@@ -111,7 +125,19 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 				//this.stompMessageHandler.afterConnected(session, headers);
 			} else if (StompCommand.MESSAGE.equals(headers.getCommand())) {
 				
-				LOGGER.debug("MESSAGE : {}", new String(msg.getPayload()));
+				String content = new String(msg.getPayload());
+				
+				JsonNode node = mapper.readTree(content);
+				JsonNode dataNode = node.get("data");
+				ArrayNode datas = null;
+				
+				LOGGER.debug("MESSAGE : {}", content);
+				
+				if (dataNode instanceof ArrayNode) {
+					datas = (ArrayNode)dataNode;
+					LOGGER.debug("MESSAGE datas.size(): {}", datas.size());
+				}
+				
 				
 				//this.stompMessageHandler.handleMessage(message);
 			} else if (StompCommand.RECEIPT.equals(headers.getCommand())) {
@@ -135,6 +161,8 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		LOGGER.debug("Connection closed!!");
 	}
+	
+	
 
 }
 //end of AgentWebSocketHandler.java

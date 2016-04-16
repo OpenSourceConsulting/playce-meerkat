@@ -27,6 +27,8 @@ package com.athena.meerkat.controller.web.tomcat.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 
@@ -39,12 +41,16 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
  * @author Tran Ho
  * @version 2.0
  */
-public interface TomcatInstanceRepository extends
-		JpaRepository<TomcatInstance, Integer> {
+public interface TomcatInstanceRepository extends JpaRepository<TomcatInstance, Integer> {
 
 	List<TomcatInstance> findByTomcatDomain_Id(int domainId);
 
-	List<TomcatInstance> findByNameContainingAndTomcatDomain_Id(String name,
-			int domainId);
+	List<TomcatInstance> findByNameContainingAndTomcatDomain_Id(String name, int domainId);
+	
+	List<TomcatInstance> findByServer_Id(int serverId);
+	
+	@Modifying
+	@Query("update TomcatInstance ti set ti.state = ?2 where ti.id = ?1")
+	int setState(int instanceId, int state);
 
 }

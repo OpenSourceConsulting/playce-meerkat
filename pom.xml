@@ -182,28 +182,12 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.0.29.Final</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.redhat.rhevm.api</groupId>
-			<artifactId>rhevm-api</artifactId>
-			<version>1.0-rc1.21</version>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
 
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.6</version>
 		</dependency>
-
-		<!-- for debugging -->
-		<!-- <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>tomcat-catalina</artifactId> 
-			<version>7.0.47</version> <scope>provided</scope> </dependency> -->
 	</dependencies>
 
 	<modules>

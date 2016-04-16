@@ -22,9 +22,11 @@
             stompClient.connect({}, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
+                //stompClient.subscribe('/user/queue/greetings', function(greeting){
+                	stompClient.subscribe('/user/queue/agents', function(greeting){
                 	//alert("response!!");
-                    showGreeting(JSON.parse(greeting.body).content);
+                    //showGreeting(JSON.parse(greeting.body).content);
+                	showGreeting(greeting.body);
                 });
             });
         }
@@ -39,7 +41,8 @@
 
         function sendName() {
             var name = document.getElementById('name').value;
-            stompClient.send("/app/monitor/hello", {}, JSON.stringify([{ 'name': name }]));
+            //stompClient.send("/app/monitor/hello", {}, JSON.stringify([{ 'name': name }]));
+            stompClient.send("/app/monitor/init", {}, JSON.stringify({ 'id': name }));
         }
 
         function showGreeting(message) {

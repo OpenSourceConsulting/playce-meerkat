@@ -29,14 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompCommand;
-import org.springframework.messaging.simp.stomp.StompEncoder;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
@@ -72,18 +69,21 @@ public class StompWebSocketClient implements InitializingBean{
 
 	private WebSocketSession session;
 	
+	private WebSocketHandler webSocketHandler;
+	
 	/**
 	 * <pre>
 	 * 
 	 * </pre>
 	 */
 	public StompWebSocketClient() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
+		webSocketHandler = new StompWebSocketHandler(topic);
 		connect();
 	}
 	
@@ -93,7 +93,7 @@ public class StompWebSocketClient implements InitializingBean{
 		
 		LOGGER.info("connecting to {}", endpoint);
 		
-		this.session = wsClient.doHandshake(new StompWebSocketHandler(topic), endpoint).get();
+		this.session = wsClient.doHandshake(webSocketHandler, endpoint).get();
 		
 		
 		Assert.notNull(session);

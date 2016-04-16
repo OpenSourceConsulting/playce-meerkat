@@ -25,6 +25,7 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -37,11 +38,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -63,8 +66,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 @Service
 public class TomcatInstanceService {
 
-	static final Logger logger = LoggerFactory
-			.getLogger(TomcatInstanceService.class);
+	static final Logger logger = LoggerFactory.getLogger(TomcatInstanceService.class);
 
 	@Autowired
 	private TomcatInstanceRepository repo;
@@ -80,13 +82,18 @@ public class TomcatInstanceService {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
+	
 	@Autowired
 	private CommonCodeRepository commonRepo;
+	
 	@Autowired
 	private TomcatConfigFileRepository tomcatConfigFileRepo;
 
 	@Autowired
 	private ApplicationRepository appRepo;
+	
+	@Autowired
+	private TomcatDomainService domainService;
 
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
@@ -115,6 +122,46 @@ public class TomcatInstanceService {
 
 	public TomcatInstance findOne(int id) {
 		return repo.findOne(id);
+	}
+	
+	public DomainTomcatConfiguration getTomcatConfig(int instanceId) {
+		
+		TomcatInstance tomcat = findOne(instanceId);
+
+		DomainTomcatConfiguration conf = domainService.getTomcatConfig(tomcat.getDomainId());
+		// get configurations that are different to domain tomcat config
+		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(tomcat.getId());
+		if (changedConfigs != null) {
+			for (TomcatInstConfig c : changedConfigs) {
+				if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
+					conf.setHttpPort(Integer.parseInt(c.getConfigValue()));
+				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
+					conf.setJavaHome(c.getConfigValue());
+				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
+					conf.setSessionTimeout(Integer.parseInt(c
+							.getConfigValue()));
+				}
+			}
+		}
+		
+		return conf;
+		
+	}
+	
+	public List<TomcatInstance> findInstances(int serverId) {
+		return repo.findByServer_Id(serverId);
+	}
+	
+	public List<DomainTomcatConfiguration> findInstanceConfigs(int serverId) {
+		
+		List<DomainTomcatConfiguration> configs = new ArrayList<DomainTomcatConfiguration>();
+		List<TomcatInstance> list = repo.findByServer_Id(serverId);
+		
+		for (TomcatInstance tomcatInstance : list) {
+			configs.add(getTomcatConfig(tomcatInstance.getId()));
+		}
+		
+		return configs;
 	}
 
 	public void delete(int id) {
@@ -211,19 +258,8 @@ public class TomcatInstanceService {
 		// saveState(inst, state);
 	}
 
-	public void loadServerXML(SSHManager sshMng, TomcatInstance inst, int state) {
-
-		saveState(inst, state);
-	}
-
-	public void loadContextXML(SSHManager sshMng, TomcatInstance inst, int state) {
-
-		saveState(inst, state);
-	}
-
-	private void saveState(TomcatInstance inst, int state) {
-		// inst.setState(state);
-		// repo.save(inst);
+	private void saveState(int instanceId, int state) {
+		repo.setState(instanceId, state);
 	}
 
 	/**
@@ -234,7 +270,7 @@ public class TomcatInstanceService {
 	 */
 	public boolean start(TomcatInstance tomcat) {
 		tomcat.setState(State.TOMCAT_STATE_STARTED);
-		repo.save(tomcat);
+		//repo.save(tomcat);
 		return true;
 	}
 
@@ -246,7 +282,7 @@ public class TomcatInstanceService {
 	 */
 	public boolean stop(TomcatInstance tomcat) {
 		tomcat.setState(State.TOMCAT_STATE_STOPPED);
-		repo.save(tomcat);
+		//repo.save(tomcat);
 		return true;
 	}
 

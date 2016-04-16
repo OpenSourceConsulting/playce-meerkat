@@ -81,6 +81,27 @@ public class StompWebSocketClientTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testSendInitMessage() {
+		
+		try{
+			Thread.sleep(2000);
+			
+			client.sendInitMessage("{\"id\": 6}");
+			
+		}catch(Exception e) {
+			fail(e.toString());
+		}finally {
+			
+			try{
+				Thread.sleep(1000);
+				client.disconnect();
+			}catch(Exception e) {
+				
+			}
+		}
+	}
 
 }
 //end of StompWebSocketClientTest.java
