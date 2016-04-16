@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -46,11 +47,11 @@ public class DatagridServerGroup implements Serializable {
 	private String typeNm;
 
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "grid-server")
+	@JsonIgnore
 	private List<Server> servers;
 	//
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "grid-configs")
+	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	public String getName() {

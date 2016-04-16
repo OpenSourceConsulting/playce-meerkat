@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
+import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.Server;
@@ -44,6 +45,33 @@ public class DatagridServerGroupController {
 		return json;
 	}
 
+	@RequestMapping(value = "/list/selected", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getSelectedServersByGroup(GridJsonResponse json,
+			Integer groupId) {
+		DatagridServerGroup group = service.getGroup(groupId);
+		if (group != null) {
+			List<Server> allServers = serverService.getList();
+			List<Server> list = serverService.getListByGroupId(groupId);
+			for (Server s : allServers) {
+				if (list.contains(s)) {
+					s.setSelected(true);
+				}
+			}
+			json.setList(allServers);
+			json.setTotal(allServers.size());
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/group/get", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getServerGroup(SimpleJsonResponse json, Integer id) {
+		DatagridServerGroup group = service.getGroup(id);
+		json.setData(group);
+		return json;
+	}
+
 	@RequestMapping(value = "/group/types", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getServerGroupTypes(GridJsonResponse json) {
@@ -51,6 +79,14 @@ public class DatagridServerGroupController {
 		json.setList(list);
 		json.setTotal(list.size());
 
+		return json;
+	}
+
+	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveGroup(SimpleJsonResponse json,
+			Object viewmodel) {
+		
 		return json;
 	}
 }

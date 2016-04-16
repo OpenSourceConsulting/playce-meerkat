@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -75,6 +76,9 @@ public class Server implements Serializable {
 	@Column(name = "ssh_port")
 	private int sshPort;
 
+	@Transient
+	private boolean selected; // use for checked grid on UI
+
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
 	private NetworkInterface sshNi;
@@ -83,14 +87,15 @@ public class Server implements Serializable {
 	private int state;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "server")
+	@JsonIgnore
 	private List<NetworkInterface> networkInterfaces;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "inst-server")
+	@JsonIgnore
 	private Collection<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private Collection<SshAccount> sshAccounts;
 
 	@ManyToOne
@@ -407,5 +412,15 @@ public class Server implements Serializable {
 
 	public void setSessionNo(int sessionNo) {
 		this.sessionNo = sessionNo;
+	}
+
+	// use for UI, select server on server group
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean b) {
+		selected = b;
+
 	}
 }
