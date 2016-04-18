@@ -140,7 +140,12 @@ public class CommonCodeHandler implements InitializingBean {
 		CommonCode codef = getCode(cd_grp, codeId);
 
 		if (codef == null) {
+			logger.debug("{}, {} is not found.", cd_grp, codeId);
 			return "";
+		}
+		
+		if (codef.getCodeNm() == null) {
+			logger.debug("{}, {} code name is not found.", cd_grp, codeId);
 		}
 
 		return codef.getCodeNm();

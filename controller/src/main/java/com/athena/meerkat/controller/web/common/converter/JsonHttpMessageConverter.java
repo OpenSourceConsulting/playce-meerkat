@@ -54,8 +54,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonHttpMessageConverter extends
 		MappingJackson2HttpMessageConverter {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JsonHttpMessageConverter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonHttpMessageConverter.class);
 
 	@Autowired
 	private CommonCodeHandler codeHandler;
@@ -119,8 +118,7 @@ public class JsonHttpMessageConverter extends
 			handleEntity((TomcatInstanceViewModel) object);
 
 		} else {
-			LOGGER.debug("Not found convert method for {}", object.getClass()
-					.getName());
+			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
 	}
 

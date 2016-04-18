@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -40,6 +41,7 @@ public class MonJmxService {
 		repository.save(monJmxs);
 	}
 	
+	@Transactional
 	public void saveInstanceState(List<MonJmx> monJmxs){
 		for (MonJmx monJmx : monJmxs) {
 			

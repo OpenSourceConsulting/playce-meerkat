@@ -86,9 +86,10 @@ public abstract class MeerkatConstants {
 
 	/**
 	 * Tomcat status
+	 * - 'TS_STATE' common code
 	 */
-	public static final int TOMCAT_STATUS_RUNNING = 1;
-	public static final int TOMCAT_STATUS_SHUTDOWN = 2;
+	public static final int TOMCAT_STATUS_RUNNING = 7;
+	public static final int TOMCAT_STATUS_SHUTDOWN = 8;
 
 	/**
 	 * meerkat repo address
@@ -141,5 +142,5 @@ public abstract class MeerkatConstants {
 	 * Monitoring Factor id
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
-	public static final String MON_FACTOR_TI_RUN = "ti.run";//tomcat instance running status.
+	public static final String MON_FACTOR_TI_RUN = "ti.run";	//tomcat instance running status.
 }
