@@ -22,10 +22,13 @@
  */
 package com.athena.meerkat.controller.web.monitoring.jmx;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 /**
@@ -121,5 +124,9 @@ public class MonJmx {
 		this.monValue = monValue;
 	}
 
+	@PrePersist
+	public void onPrePersist() {
+		this.monDt = new Date();
+	}
 }
 //end of MonJmx.java
