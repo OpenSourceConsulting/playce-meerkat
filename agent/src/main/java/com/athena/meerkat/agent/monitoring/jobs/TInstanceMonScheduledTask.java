@@ -68,7 +68,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
     				}
     			}
     			
-    			monDatas.add(createJsonString("ti.run", tomcatInstanceId, isRun));//tomcat instance running status.
+    			monDatas.add(createJmxJsonString("ti.run", tomcatInstanceId, isRun));//tomcat instance running status.
     		}
     		
     		//TODO add another jmx monitoring.
