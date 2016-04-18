@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -72,6 +73,18 @@ public class DomainTomcatConfiguration implements Serializable {
 	@JoinColumn(name = "domain_id")
 	@JsonBackReference(value="domain-config")
 	private TomcatDomain tomcatDomain;
+	
+	@Transient
+	private int tomcatInstanceId;
+
+	
+	public int getTomcatInstanceId() {
+		return tomcatInstanceId;
+	}
+
+	public void setTomcatInstanceId(int tomcatInstanceId) {
+		this.tomcatInstanceId = tomcatInstanceId;
+	}
 
 	public TomcatDomain getTomcatDomain() {
 		return tomcatDomain;

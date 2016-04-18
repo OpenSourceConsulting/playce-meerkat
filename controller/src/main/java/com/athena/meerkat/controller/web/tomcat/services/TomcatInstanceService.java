@@ -144,6 +144,8 @@ public class TomcatInstanceService {
 			}
 		}
 		
+		conf.setTomcatInstanceId(instanceId);
+		
 		return conf;
 		
 	}
