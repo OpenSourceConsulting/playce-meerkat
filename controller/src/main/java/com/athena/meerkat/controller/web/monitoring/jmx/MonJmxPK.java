@@ -18,15 +18,12 @@
  * Revision History
  * Author			Date				Description
  * ---------------	----------------	------------
- * BongJin Kwon		2016. 4. 18.		First Draft.
+ * BongJin Kwon		2016. 4. 6.		First Draft.
  */
 package com.athena.meerkat.controller.web.monitoring.jmx;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <pre>
@@ -35,91 +32,41 @@ import javax.persistence.Table;
  * @author Bongjin Kwon
  * @version 1.0
  */
-@Entity
-@Table(name = "mon_jmx_tbl")
-@IdClass(MonJmxPK.class)
-public class MonJmx {
+public class MonJmxPK implements Serializable {
 
-	@Id
-	@Column(name = "mon_factor_id")
+	private static final long serialVersionUID = 5808702600047332135L;
+	
 	private String monFactorId;//
-	
-	@Id
-	@Column(name = "instance_id")
 	private int instanceId;//
+	private Date monDt;//
 	
-	@Id
-	@Column(name = "mon_dt")
-	private java.util.Date monDt;//
-	
-	
-	@Column(name = "mon_value")
-	private Double monValue;//
-
-	/**
-	 * <pre>
-	 * 
-	 * </pre>
-	 */
-	public MonJmx() {
+	public MonJmxPK() {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @return the monFactorId
-	 */
 	public String getMonFactorId() {
 		return monFactorId;
 	}
 
-	/**
-	 * @param monFactorId the monFactorId to set
-	 */
 	public void setMonFactorId(String monFactorId) {
 		this.monFactorId = monFactorId;
 	}
 
-	/**
-	 * @return the instanceId
-	 */
 	public int getInstanceId() {
 		return instanceId;
 	}
 
-	/**
-	 * @param instanceId the instanceId to set
-	 */
 	public void setInstanceId(int instanceId) {
 		this.instanceId = instanceId;
 	}
 
-	/**
-	 * @return the monDt
-	 */
-	public java.util.Date getMonDt() {
+	public Date getMonDt() {
 		return monDt;
 	}
 
-	/**
-	 * @param monDt the monDt to set
-	 */
-	public void setMonDt(java.util.Date monDt) {
+	public void setMonDt(Date monDt) {
 		this.monDt = monDt;
 	}
 
-	/**
-	 * @return the monValue
-	 */
-	public Double getMonValue() {
-		return monValue;
-	}
-
-	/**
-	 * @param monValue the monValue to set
-	 */
-	public void setMonValue(Double monValue) {
-		this.monValue = monValue;
-	}
-
 }
-//end of MonJmx.java
+//end of MonDataPK.java
