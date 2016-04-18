@@ -1,7 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
-import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 
@@ -38,7 +35,7 @@ public class ApplicationController {
 		TomcatDomain domain = domainService.getDomain(domainIdHiddenField);
 		TomcatApplication app = new TomcatApplication(contextPathTextField,
 				installationRemotePathTextField, "");
-		app.setState(State.APP_STATE_STOPPED);
+		app.setState(MeerkatConstants.APP_STATE_STOPPED);
 		app.setLastModifiedTime(new Date());
 		app.setDeployedDate(new Date());
 		app.setTomcatDomain(domain);
@@ -76,7 +73,7 @@ public class ApplicationController {
 			return json;
 		}
 
-		if (app.getState() == State.APP_STATE_STARTED) {
+		if (app.getState() == MeerkatConstants.APP_STATE_STARTED) {
 			json.setSuccess(false);
 			json.setMsg("Application has been already started.");
 			return json;
@@ -84,7 +81,7 @@ public class ApplicationController {
 
 		if (appService.start(app)) {
 			json.setSuccess(true);
-			json.setData(State.APP_STATE_STARTED);
+			json.setData(MeerkatConstants.APP_STATE_STARTED);
 		}
 		return json;
 	}
@@ -98,7 +95,7 @@ public class ApplicationController {
 			return json;
 		}
 
-		if (app.getState() == State.APP_STATE_STOPPED) {
+		if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
 			json.setSuccess(false);
 			json.setMsg("Application has been already stopped.");
 			return json;
@@ -106,7 +103,7 @@ public class ApplicationController {
 
 		if (appService.stop(app)) {
 			json.setSuccess(true);
-			json.setData(State.APP_STATE_STOPPED);
+			json.setData(MeerkatConstants.APP_STATE_STOPPED);
 		}
 		return json;
 	}
@@ -121,7 +118,7 @@ public class ApplicationController {
 			return json;
 		}
 
-		if (app.getState() == State.APP_STATE_STOPPED) {
+		if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
 			json.setSuccess(false);
 			json.setMsg("Application has been already stopped.");
 			return json;
@@ -129,7 +126,7 @@ public class ApplicationController {
 			if (appService.stop(app)) {
 				if (appService.start(app)) {
 					json.setSuccess(true);
-					json.setData(State.APP_STATE_STARTED);
+					json.setData(MeerkatConstants.APP_STATE_STARTED);
 				}
 			}
 		}

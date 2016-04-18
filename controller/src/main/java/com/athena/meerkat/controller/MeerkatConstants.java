@@ -90,6 +90,11 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int TOMCAT_STATUS_RUNNING = 7;
 	public static final int TOMCAT_STATUS_SHUTDOWN = 8;
+	
+	/* State of application */
+	public static int APP_STATE_STARTED = 1;
+	public static int APP_STATE_STOPPED = 2;
+	
 
 	/**
 	 * meerkat repo address

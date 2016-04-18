@@ -51,12 +51,10 @@ public class DomainController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
-	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json,
-			TomcatDomain domain) {
+	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json, TomcatDomain domain) {
 		boolean isEdit = !(domain.getId() == 0);
 		try {
-			List<TomcatDomain> existingDomains = domainService
-					.getDomainByName(domain.getName());
+			List<TomcatDomain> existingDomains = domainService.getDomainByName(domain.getName());
 			if (existingDomains.size() > 0) {
 				if (!isEdit) { // add new domain
 					json.setSuccess(false);
@@ -200,16 +198,14 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse saveTomcatConfig(
-			SimpleJsonResponse json,
-			DomainTomcatConfiguration domainTomcatConfig) {
-		DomainTomcatConfiguration currentConf = domainService
-				.getTomcatConfig(domainTomcatConfig.getTomcatDomain().getId());
+	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig) {
+		
+		DomainTomcatConfiguration currentConf = domainService.getTomcatConfig(domainTomcatConfig.getTomcatDomain().getId());
+		
 		int id = currentConf.getId();
 		currentConf = domainTomcatConfig;
 		currentConf.setId(id);
-		currentConf.setModifiedDate(new Date());
-		currentConf.setModifiedUserId(WebUtil.getLoginUserId());
+		
 		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
 			json.setSuccess(false);
 			json.setMsg("Domain tomcat configuration is fail.");

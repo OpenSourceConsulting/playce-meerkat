@@ -40,7 +40,6 @@ import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.SSHManager;
-import com.athena.meerkat.controller.common.State;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.DataSource;
@@ -273,7 +272,7 @@ public class TomcatInstanceService {
 	 * @return status of process. True for success
 	 */
 	public boolean start(TomcatInstance tomcat) {
-		tomcat.setState(State.TOMCAT_STATE_STARTED);
+		tomcat.setState(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 		//repo.save(tomcat);
 		return true;
 	}
@@ -285,7 +284,7 @@ public class TomcatInstanceService {
 	 * @return
 	 */
 	public boolean stop(TomcatInstance tomcat) {
-		tomcat.setState(State.TOMCAT_STATE_STOPPED);
+		tomcat.setState(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
 		//repo.save(tomcat);
 		return true;
 	}

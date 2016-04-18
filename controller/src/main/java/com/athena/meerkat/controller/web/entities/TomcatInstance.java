@@ -38,12 +38,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
+import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -260,9 +262,10 @@ public class TomcatInstance implements Serializable {
 		this.tomcatConfigs = tomcatConfigs;
 	}
 	
-	@PostLoad
-	public void onPostLoad(){
-		// setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE,
-		// getState()));
+	@PrePersist
+	public void onPreSave(){
+		this.createdTime = new Date();
+		this.createUserId = WebUtil.getLoginUserId();
 	}
+
 }

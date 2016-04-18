@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -225,5 +226,6 @@ public class DomainTomcatConfiguration implements Serializable {
 	@PrePersist
 	public void onPreSave() {
 		this.modifiedDate = new Date();
+		this.modifiedUserId = WebUtil.getLoginUserId();
 	}
 }
