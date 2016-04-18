@@ -344,4 +344,9 @@ public class ServerService {
 		return serverRepo.findByDatagridServerGroup_Id(groupId);
 	}
 
+	public void saveList(List<Server> servers) {
+		serverRepo.save(servers);
+
+	}
+
 }

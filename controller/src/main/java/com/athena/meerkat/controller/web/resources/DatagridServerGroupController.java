@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,9 +85,45 @@ public class DatagridServerGroupController {
 
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveGroup(SimpleJsonResponse json,
-			Object viewmodel) {
-		
+	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, Integer id,
+			String name, Integer typeCdId, String serverIds) {
+		DatagridServerGroup group = new DatagridServerGroup();
+		if (id > 0) {
+			group = service.getGroup(id);
+		}
+		if (group != null) {
+			group.setName(name);
+			group.setTypeCdId(typeCdId);
+		}
+		List<Server> servers = new ArrayList<>();
+		String[] idStrings = serverIds.split("#", 0);
+		for (int i = 1; i < idStrings.length; i++) { // the first element is
+														// empty
+			Server s = serverService.retrieve(Integer.parseInt(idStrings[i]));
+			if (s != null) {
+				servers.add(s);
+			}
+		}
+		if (id > 0) { // edit case
+			List<Server> removedServers = new ArrayList<>();
+			List<Server> currentServers = group.getServers();
+			for (Server s : currentServers) {
+				if (!servers.contains(s)) {
+					s.setDatagridServerGroup(null);
+					removedServers.add(s);
+				}
+			}
+			serverService.saveList(removedServers);
+		}
+		// }
+		group.setServers(servers);
+		group = service.save(group);
+		json.setData(group.getId());
+		for (Server s : servers) {
+			s.setDatagridServerGroup(group);
+		}
+		serverService.saveList(servers);
+
 		return json;
 	}
 }

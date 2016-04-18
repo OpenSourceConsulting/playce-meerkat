@@ -7,13 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
-import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
-import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
-import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
 
 @Service
 public class DataGridServerGroupService {
@@ -34,5 +30,9 @@ public class DataGridServerGroupService {
 	public List<CommonCode> getSessionServerGroupTypes() {
 		return commonCodeRepo
 				.findByGropId(MeerkatConstants.SESSION_SERVER_TYPE_GROUP_ID);
+	}
+
+	public DatagridServerGroup save(DatagridServerGroup group) {
+		return groupRepo.save(group);
 	}
 }
