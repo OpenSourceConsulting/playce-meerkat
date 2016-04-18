@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -61,12 +62,16 @@ public class DomainTomcatConfiguration implements Serializable {
 	private int rmiServerPort;
 	@Column(name = "catalina_opts")
 	private String catalinaOpts;
+	
 	@Column(name = "modified_user_id")
 	private int modifiedUserId;
+	
 	@Column(name = "modified_date")
 	private Date modifiedDate;
+	
 	@Column(name = "tomcat_version")
 	private String tomcatVersion;
+	
 	@Column(name = "encoding")
 	private String encoding;
 
@@ -77,8 +82,20 @@ public class DomainTomcatConfiguration implements Serializable {
 	
 	@Transient
 	private int tomcatInstanceId;
+	
+	@Transient
+	private String tomcatVersionNm;
 
 	
+	
+	public String getTomcatVersionNm() {
+		return tomcatVersionNm;
+	}
+
+	public void setTomcatVersionNm(String tomcatVersionNm) {
+		this.tomcatVersionNm = tomcatVersionNm;
+	}
+
 	public int getTomcatInstanceId() {
 		return tomcatInstanceId;
 	}
@@ -224,6 +241,7 @@ public class DomainTomcatConfiguration implements Serializable {
 	}
 	
 	@PrePersist
+	@PreUpdate
 	public void onPreSave() {
 		this.modifiedDate = new Date();
 		this.modifiedUserId = WebUtil.getLoginUserId();

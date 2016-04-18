@@ -154,6 +154,118 @@ public class TomcatProvisioningService implements InitializingBean{
 	
 	private void doInstallTomcatInstance(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
 
+		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, session);
+		
+		try {
+			
+			/*
+			 * 1. make job dir & copy build.xml.
+			 */
+			FileUtils.copyFileToDirectory(new File(commanderDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
+			FileUtils.copyFile(new File(commanderDir.getAbsolutePath() + File.separator + "/cmds/install.xml"), 
+					new File(jobDir.getAbsolutePath() + File.separator + "cmd.xml"));
+			
+			
+			/*
+			 * 2. generate agentenv.sh
+			createAgentEnvSHFile(jobDir, agentDeployDir, agentName);
+			generateTomcatEnvFile(jobDir,  tomcatConfig);
+			*/
+			
+			/*
+			 * 4. deploy agent
+			 */
+			ProvisioningUtil.deployAgent(commanderDir, jobDir);
+			
+			
+			/*
+			 * 5. send cmd.
+			 */
+			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			
+			
+			//instanceService.start(tomcatInstance);
+			
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+			throw new RuntimeException(e);
+			
+		} finally {
+			LOGGER.debug(LOG_END);
+			MDC.remove("jobPath");
+			MDC.remove("serverIp");
+		}
+	}
+	
+	@Transactional
+	//@Async
+	public void updateTomcatInstanceConfig(int domainId, WebSocketSession session) {
+		
+				
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		//List<Tomcat>   TomcatInstanceService
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if(tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+		
+		if(list != null && list.size() > 0){
+		
+			for (TomcatInstance tomcatInstance : list) {
+				doUpdateTomcatInstanceConfig(tomcatConfig, tomcatInstance, session);
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+		
+	}
+	
+	private void doUpdateTomcatInstanceConfig(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
+
+		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, session);
+		
+		try {
+			
+			
+			/*
+			 * 1. make job dir & copy build.xml.
+			 */
+			FileUtils.copyFileToDirectory(new File(commanderDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
+			FileUtils.copyFile(new File(commanderDir.getAbsolutePath() + File.separator + "/cmds/updateInstanceConfig.xml"), 
+					new File(jobDir.getAbsolutePath() + File.separator + "cmd.xml"));
+			
+			
+			/*
+			 * 5. send cmd.
+			 */
+			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			
+			
+			//instanceService.start(tomcatInstance);
+			
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+			throw new RuntimeException(e);
+			
+		} finally {
+			LOGGER.debug(LOG_END);
+			MDC.remove("jobPath");
+			MDC.remove("serverIp");
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * generate build-ssh.properties & build.properties in job path.
+	 * </pre>
+	 * @param tomcatConfig
+	 * @param tomcatInstance
+	 * @param session
+	 * @return
+	 */
+	private File generateBuildProperties(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
 		Server targetServer = tomcatInstance.getServer();
 		String serverIp = targetServer.getSshIPAddr();
 		MDC.put("serverIp", serverIp);
@@ -187,13 +299,12 @@ public class TomcatProvisioningService implements InitializingBean{
 		targetProps.setProperty("ti.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
 		targetProps.setProperty("ti.http.encoding", tomcatConfig.getEncoding());
 		
-		
 		OutputStream output = null;
-		
+		File jobDir = null;
 		try {
 			int jobNum = getJobNumber(serverIp);
 			targetProps.setProperty("job.number", 	String.valueOf(jobNum));
-			File jobDir = makeJobDir(serverIp, jobNum);
+			jobDir = makeJobDir(serverIp, jobNum);
 			
 			MDC.put("jobPath", jobDir.getAbsolutePath());
 			
@@ -206,24 +317,14 @@ public class TomcatProvisioningService implements InitializingBean{
 			
 			LOGGER.debug("SERVER NAME : " + targetServer.getName());
 			
-			
 			/*
-			 * 1. make job dir & copy build.xml.
-			 */
-			FileUtils.copyFileToDirectory(new File(commanderDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
-			FileUtils.copyFile(new File(commanderDir.getAbsolutePath() + File.separator + "/cmds/install.xml"), 
-					new File(jobDir.getAbsolutePath() + File.separator + "cmd.xml"));
-			
-			
-			/*
-			 * 2. generate agentenv.sh
+			 * generate agentenv.sh
 			 */
 			createAgentEnvSHFile(jobDir, agentDeployDir, agentName);
 			generateTomcatEnvFile(jobDir,  tomcatConfig);
 			
-			
 			/*
-			 * 3. generate build properties
+			 * generate build properties
 			 */
 			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build-ssh.properties");
 			prop.store(output, PROPS_COMMENTS);
@@ -235,30 +336,15 @@ public class TomcatProvisioningService implements InitializingBean{
 			targetProps.store(output, PROPS_COMMENTS);
 			LOGGER.debug("generated build.properties");
 			
-			/*
-			 * 4. deploy agent
-			 */
-			ProvisioningUtil.deployAgent(commanderDir, jobDir);
-			
-			
-			/*
-			 * 5. send cmd.
-			 */
-			ProvisioningUtil.sendCommand(commanderDir, jobDir);
-			
-			
-			instanceService.start(tomcatInstance);
-			
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
 			throw new RuntimeException(e);
 			
 		} finally {
 			IOUtils.closeQuietly(output);
-			LOGGER.debug(LOG_END);
-			MDC.remove("jobPath");
-			MDC.remove("serverIp");
 		}
+		
+		return jobDir;
 	}
 	
 	/**

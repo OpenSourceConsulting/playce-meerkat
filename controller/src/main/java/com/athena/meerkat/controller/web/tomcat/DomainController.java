@@ -1,7 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,6 +26,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -48,6 +48,10 @@ public class DomainController {
 
 	@Autowired
 	private CommonCodeHandler commonHandler;
+	
+	@Autowired
+	private TomcatProvisioningService proviService;
+	
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -200,6 +204,9 @@ public class DomainController {
 	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig) {
 		
+		domainService.saveDomainTomcatConfig(domainTomcatConfig);
+		
+		/*
 		DomainTomcatConfiguration currentConf = domainService.getTomcatConfig(domainTomcatConfig.getTomcatDomain().getId());
 		
 		int id = currentConf.getId();
@@ -210,6 +217,10 @@ public class DomainController {
 			json.setSuccess(false);
 			json.setMsg("Domain tomcat configuration is fail.");
 		}
+		*/
+		
+		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), null);
+		
 		return json;
 	}
 
