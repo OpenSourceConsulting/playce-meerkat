@@ -29,6 +29,14 @@
             <fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
+			<directory>${project.basedir}/src/main/resources/cmds</directory>
+			<outputDirectory>/cmds</outputDirectory>
+			<includes>
+				<include>*</include>
+			</includes>
+            <fileMode>0644</fileMode>
+		</fileSet>
+		<fileSet>
 			<directory>${project.basedir}/apache-ant-1.9.6</directory>
 			<outputDirectory>apache-ant-1.9.6</outputDirectory>
             <fileMode>0755</fileMode>

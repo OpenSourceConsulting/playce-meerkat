@@ -115,10 +115,11 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int REVISION_CLUSTERING_CONFIG_TYPE = 1;
 	public static final int REVISION_ENV_CONFIG_TYPE = 2;
+	
 	/**
 	 * Common code
 	 */
-
+	public static final String CODE_GROP_TE_VERSION = "tever";//tomcat version (involve name)
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "configFileType";

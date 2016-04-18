@@ -1,5 +1,10 @@
-<project name="athena-meerkat cmd" basedir="." default="cmd">
-
+<project name="install tomcat cmd" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# Install Tomcat Engine & Tocmat Instance
+	#########################################
+	-->
 	
 	<property file="${basedir}/build.properties" />
 	
@@ -15,29 +20,30 @@
 
 	<target name="cmd">
 
-		<!--
-		<delete dir="${catalina.base}" />
-		http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.zip
-		-->
+		<echo message="making ${catalina.home}" />
+		<mkdir dir="${catalina.home}" />
+		
+		<echo message="making ${catalina.base}" />
 		<mkdir dir="${catalina.base}" />
 
 		<echo message="Installing Tomcat..." />
-		<echo message="Using tomcat.unzip.pah = ${tomcat.unzip.pah} " />
 
 		<cargo containerId="tomcat7x" action="configure">
 			<zipUrlInstaller 
 					installUrl="http://192.168.0.87:8080/down/apache-tomcat-7.0.68.zip" 
 					downloadDir="${down.dir}" 
-					extractDir="${tomcat.unzip.pah}" />
+					extractDir="${down.dir}" />
 			
 			<configuration home="${catalina.base}">
-				<property name="cargo.port.offset" value="1" />
-				<!--
-				  <property name="cargo.servlet.port" value="8086"/>
-				  <property name="cargo.tomcat.ajp.port" value="8209"/>
-				-->
+				<property name="cargo.servlet.port" 		value="${ti.http.port}"/>
+				<property name="cargo.tomcat.ajp.port" 		value="${ti.ajp.port}"/>
+				<property name="cargo.tomcat.uriencoding" 	value="${ti.http.encoding}"/>
 			</configuration>
 		</cargo>
+		
+		<copy todir="${catalina.home}" >
+			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
+		</copy>
 
 		<copy todir="${catalina.base}" verbose="true">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">
@@ -45,7 +51,7 @@
 		    </fileset>
 		</copy>
 
-		<chmod dir="${tomcat.unzip.pah}" perm="755" includes="**/*.sh"/>
+		<chmod dir="${catalina.home}" perm="755" includes="**/*.sh"/>
 		<chmod dir="${catalina.base}" perm="755" includes="**/*.sh"/>
 
 	</target>

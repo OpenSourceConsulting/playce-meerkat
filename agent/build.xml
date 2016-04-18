@@ -59,6 +59,7 @@
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
 			<fileset dir="${basedir}" defaultexcludes="true">
+				<include name="cmd.xml"/>
 				<include name="build.properties"/>
 			</fileset>
 		</scp>
@@ -105,6 +106,11 @@
 			</fileset>
 		</scp>
 		
+		<copy todir="G:\project\AthenaMeerkat\.aMeerkat" >
+			<fileset dir="${basedir}/target" defaultexcludes="true">
+				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz"/>
+			</fileset>
+		</copy>
 
 	</target>
 	

@@ -49,6 +49,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
@@ -75,6 +77,8 @@ import freemarker.template.TemplateExceptionHandler;
 public class TomcatProvisioningService implements InitializingBean{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningService.class);
+	
+	private static final String PROPS_COMMENTS = "Don't modify this file. This file is auto generated.";
 	private static final String JOBS_DIR_NM = "jobs";
 	public static final String LOG_END = "provisioning finished.";
 	
@@ -83,6 +87,9 @@ public class TomcatProvisioningService implements InitializingBean{
 	
 	@Autowired
 	private TomcatInstanceService instanceService;
+	
+	@Autowired
+	private CommonCodeHandler codeHandler;
 	
 	@Value("${meerkat.commander.home}")
 	private String commanderHome;// = "G:/project/AthenaMeerkat/.aMeerkat";
@@ -172,8 +179,14 @@ public class TomcatProvisioningService implements InitializingBean{
 		Properties targetProps = new Properties(); //build.properties
 		targetProps.setProperty("agent.deploy.dir", agentDeployDir);
 		targetProps.setProperty("agent.name", 		agentName);
-		targetProps.setProperty("tomcat.unzip.pah", "/home/"+ userId +"/tmp");
-		targetProps.setProperty("catalina.base", 	"/home/"+ userId +"/tmp/instance1");
+		//targetProps.setProperty("tomcat.unzip.pah", "/home/"+ userId +"/tmp");
+		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
+		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
+		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersion()) );
+		targetProps.setProperty("ti.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
+		targetProps.setProperty("ti.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
+		targetProps.setProperty("ti.http.encoding", tomcatConfig.getEncoding());
+		
 		
 		OutputStream output = null;
 		
@@ -198,6 +211,8 @@ public class TomcatProvisioningService implements InitializingBean{
 			 * 1. make job dir & copy build.xml.
 			 */
 			FileUtils.copyFileToDirectory(new File(commanderDir.getAbsolutePath() + File.separator + "build.xml"), jobDir);
+			FileUtils.copyFile(new File(commanderDir.getAbsolutePath() + File.separator + "/cmds/install.xml"), 
+					new File(jobDir.getAbsolutePath() + File.separator + "cmd.xml"));
 			
 			
 			/*
@@ -211,13 +226,13 @@ public class TomcatProvisioningService implements InitializingBean{
 			 * 3. generate build properties
 			 */
 			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build-ssh.properties");
-			prop.store(output, "desc");
+			prop.store(output, PROPS_COMMENTS);
 			LOGGER.debug("generated build-ssh.properties");
 			
 			IOUtils.closeQuietly(output);
 			
 			output = new FileOutputStream(jobDir.getAbsolutePath() + File.separator + "build.properties");
-			targetProps.store(output, "desc");
+			targetProps.store(output, PROPS_COMMENTS);
 			LOGGER.debug("generated build.properties");
 			
 			/*
@@ -342,7 +357,9 @@ public class TomcatProvisioningService implements InitializingBean{
         }
 	}
 	
-	
+	private String getTomcatName(String tomcatVersion) {
+		return codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, Integer.parseInt(tomcatVersion));
+	}
 	
 
 }

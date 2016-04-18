@@ -1,0 +1,36 @@
+<project name="modify tomcat config cmd" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# Modify Tocmat Instance Config
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+	<property name="meerkat.agent.home" value="${agent.deploy.dir}/${agent.name}" />
+	<property name="down.dir" value="${agent.deploy.dir}/${agent.name}/downloads" />
+
+	<taskdef resource="cargo.tasks">
+		<classpath>
+			<pathelement location="${meerkat.agent.home}/lib/cargo-core-uberjar-1.4.19.jar" />
+			<pathelement location="${meerkat.agent.home}/lib/cargo-ant-1.4.19.jar" />
+		</classpath>
+	</taskdef>
+
+	<target name="cmd">
+
+		<echo message="Modifing Tomcat Config..." />
+
+		<cargo containerId="tomcat7x" home="${catalina.home}"  action="configure">
+			
+			<configuration home="${catalina.base}">
+				<property name="cargo.servlet.port" 		value="${ti.http.port}"/>
+				<property name="cargo.tomcat.ajp.port" 		value="${ti.ajp.port}"/>
+				<property name="cargo.tomcat.uriencoding" 	value="${ti.http.encoding}"/>
+			</configuration>
+		</cargo>
+
+	</target>
+
+</project>
