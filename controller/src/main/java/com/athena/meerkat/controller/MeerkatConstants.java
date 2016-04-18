@@ -136,4 +136,10 @@ public abstract class MeerkatConstants {
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 
 	public static final String SESSION_SERVER_TYPE_GROUP_ID = "SESSION_GROUP_TYPE";
+	
+	/**
+	 * Monitoring Factor id
+	 */
+	public static final String MON_FACTOR_CPU_USED = "cpu.used";
+	public static final String MON_FACTOR_TI_RUN = "ti.run";//tomcat instance running status.
 }

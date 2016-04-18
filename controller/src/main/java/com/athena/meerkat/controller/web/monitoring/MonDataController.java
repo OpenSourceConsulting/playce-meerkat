@@ -35,7 +35,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/monitoring")
+@RequestMapping("/monitor/server")
 public class MonDataController {
 
 	private static final Logger LOGGER = LoggerFactory
@@ -97,20 +97,22 @@ public class MonDataController {
 	}
 
 
-	@RequestMapping(value = "/server/cpumon", method = RequestMethod.GET)
+	@RequestMapping(value = "/cpumon", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getMonData(GridJsonResponse jsonRes, Integer serverId) {
+		
 		Date now = new Date();
-		Date twoMinsAgo = new Date(now.getTime() - 2
-				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
-		List<MonData> results = service.getMonDataList("cpu", serverId,
-				twoMinsAgo, now);
+		Date twoMinsAgo = new Date(now.getTime() - 2 * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		
+		List<MonData> results = service.getMonDataList(MeerkatConstants.MON_FACTOR_CPU_USED, serverId, twoMinsAgo, now);
+		
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
 		return jsonRes;
 	}
 	
 	private List<MonData> copyProperties(List<Map> maps) {
+		
 		List<MonData> messages = new ArrayList<MonData>();
     	
 		try{

@@ -66,7 +66,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 @Service
 public class TomcatInstanceService {
 
-	static final Logger logger = LoggerFactory.getLogger(TomcatInstanceService.class);
+	static final Logger LOGGER = LoggerFactory.getLogger(TomcatInstanceService.class);
 
 	@Autowired
 	private TomcatInstanceRepository repo;
@@ -260,8 +260,10 @@ public class TomcatInstanceService {
 		// saveState(inst, state);
 	}
 
-	private void saveState(int instanceId, int state) {
+	public void saveState(int instanceId, int state) {
 		repo.setState(instanceId, state);
+		
+		LOGGER.debug("tomcat instance({}) state({}) saved.", instanceId, state);
 	}
 
 	/**

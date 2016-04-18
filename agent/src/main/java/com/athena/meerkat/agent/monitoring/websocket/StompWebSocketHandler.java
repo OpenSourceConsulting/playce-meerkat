@@ -61,7 +61,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	private ArrayNode datas;
+	private ArrayNode instanceConfigs;
 	
 	private TextMessage subscribeMsg;
 
@@ -129,13 +129,12 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 				
 				JsonNode node = mapper.readTree(content);
 				JsonNode dataNode = node.get("data");
-				ArrayNode datas = null;
 				
 				LOGGER.debug("MESSAGE : {}", content);
 				
 				if (dataNode instanceof ArrayNode) {
-					datas = (ArrayNode)dataNode;
-					LOGGER.debug("MESSAGE datas.size(): {}", datas.size());
+					instanceConfigs = (ArrayNode)dataNode;
+					LOGGER.debug("MESSAGE datas.size(): {}", instanceConfigs.size());
 				}
 				
 				
@@ -161,8 +160,10 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		LOGGER.debug("Connection closed!!");
 	}
-	
-	
 
+	public ArrayNode getInstanceConfigs() {
+		return instanceConfigs;
+	}
+	
 }
 //end of AgentWebSocketHandler.java

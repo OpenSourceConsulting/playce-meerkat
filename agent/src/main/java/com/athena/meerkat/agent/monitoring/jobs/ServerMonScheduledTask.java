@@ -5,14 +5,19 @@ import java.util.List;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.NetConnection;
 import org.hyperic.sigar.NetStat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.athena.meerkat.agent.monitoring.utils.SigarUtil;
+import com.athena.meerkat.agent.monitoring.websocket.StompWebSocketClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 @Component
 public class ServerMonScheduledTask extends MonitoringTask{
@@ -25,7 +30,7 @@ public class ServerMonScheduledTask extends MonitoringTask{
     
     private List<String> monDatas = new ArrayList<String>();
     
-		
+    
 	public ServerMonScheduledTask() {
 	}
 
@@ -53,7 +58,6 @@ public class ServerMonScheduledTask extends MonitoringTask{
     		monDatas.add(createJsonString("mem.used", serverId, memUsed));
     		monDatas.add(createJsonString("net.in", serverId, netIn));
     		monDatas.add(createJsonString("net.out", serverId, netOut));
-    		addTomcatInstanceMonitoring();
     		//TODO tran : verify data and add additional data(disk.used, disk.free)
     		
     		sendMonData(monDatas);
@@ -65,18 +69,4 @@ public class ServerMonScheduledTask extends MonitoringTask{
     	}
     }
 	
-	/**
-	 * <pre>
-	 * 
-	 * </pre>
-	 */
-	public void addTomcatInstanceMonitoring() {
-		
-	}
-
-	
-
-    
-    
-    
 }

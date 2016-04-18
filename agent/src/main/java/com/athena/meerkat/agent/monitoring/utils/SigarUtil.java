@@ -218,6 +218,19 @@ public final class SigarUtil {
 		return false;
 	}
 	
+	public static NetConnection[] getListenPorts() {
+		Sigar sigar = SigarUtil.getInstance();
+		int flags = NetFlags.CONN_TCP | NetFlags.CONN_SERVER;// | NetFlags.CONN_CLIENT;
+		
+		try{
+			return sigar.getNetConnectionList(flags);
+			
+		}catch(SigarException e){
+			LOGGER.error(e.toString(), e);
+		}
+		
+		return null;
+	}
 	
 	public static void main(String[] args)throws Exception {
 		

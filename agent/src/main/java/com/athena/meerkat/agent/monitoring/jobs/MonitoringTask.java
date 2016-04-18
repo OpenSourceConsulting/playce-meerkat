@@ -59,6 +59,29 @@ public abstract class MonitoringTask {
 	 */
 	protected void sendMonData(List<String> monDatas) throws IOException {
 		
+		String message = createJsonArrayString(monDatas);
+		
+		webSocketClient.sendMessage(message);
+	}
+	
+	protected void sendInstanceMonData(List<String> monDatas) throws IOException {
+		
+		String message = createJsonArrayString(monDatas);
+		
+		webSocketClient.sendJmxMessage(message);
+	}
+	
+	abstract public void monitor();
+	
+	protected String createJsonString(String monFactorId, String serverId, double value){
+		return "{\"monFactorId\":\""+ monFactorId +"\",\"serverId\": "+serverId+" ,\"monValue\": "+value+"}";
+	}
+	
+	protected String createJmxJsonString(String monFactorId, String instanceId, double value){
+		return "{\"monFactorId\":\""+ monFactorId +"\",\"instanceId\": "+instanceId+" ,\"monValue\": "+value+"}";
+	}
+	
+	protected String createJsonArrayString(List<String> monDatas) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		
@@ -76,13 +99,7 @@ public abstract class MonitoringTask {
 		
 		sb.append("]");
 		
-		webSocketClient.sendMessage(sb.toString());
-	}
-	
-	abstract public void monitor();
-	
-	protected String createJsonString(String monFactorId, String serverId, double value){
-		return "{\"monFactorId\":\""+ monFactorId +"\",\"serverId\": "+serverId+" ,\"monValue\": "+value+"}";
+		return sb.toString();
 	}
 	
 }

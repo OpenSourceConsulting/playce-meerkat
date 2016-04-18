@@ -37,6 +37,8 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
 /**
  * <pre>
  * 
@@ -64,12 +66,16 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.server.app.dest}")
 	private String appDestination;
 	
+	@Value("${meerkat.agent.jmx.app.dest}")
+	private String appJmxDestination;
+	
 	private String initDestHeader;
-	private String destHeader;
+	private String jmxDestHeader;
+	private String serverDestHeader;
 
 	private WebSocketSession session;
 	
-	private WebSocketHandler webSocketHandler;
+	private StompWebSocketHandler webSocketHandler;
 	
 	/**
 	 * <pre>
@@ -87,6 +93,10 @@ public class StompWebSocketClient implements InitializingBean{
 		connect();
 	}
 	
+	public ArrayNode getInstanceConfigs(){
+		return webSocketHandler.getInstanceConfigs();
+	}
+	
 	public void connect() throws Exception {
 		
 		StandardWebSocketClient wsClient = new StandardWebSocketClient();
@@ -102,23 +112,54 @@ public class StompWebSocketClient implements InitializingBean{
 		Assert.notNull(appDestination);
 		
 		this.initDestHeader = "destination:" + appInitDestination;;
-		this.destHeader = "destination:" + appDestination;
+		this.serverDestHeader = "destination:" + appDestination;
+		this.jmxDestHeader = "destination:" + appJmxDestination;
 		
 		LOGGER.info("connected");
 	}
 	
+	/**
+	 * <pre>
+	 * send server init data(message)
+	 * </pre>
+	 * @param message
+	 * @throws IOException
+	 */
 	public void sendInitMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.initDestHeader).body(message).build();
 		session.sendMessage(txtMessage); 
 		
-		LOGGER.debug("send >> {}", message);
+		LOGGER.debug("send init >> {}", message);
 	}
 	
+	/**
+	 * <pre>
+	 * send server monitoring data(message)
+	 * </pre>
+	 * @param message
+	 * @throws IOException
+	 */
 	public void sendMessage(String message) throws IOException {
-		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.destHeader).body(message).build();
+		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.serverDestHeader).body(message).build();
 		session.sendMessage(txtMessage); 
 		
-		LOGGER.debug("send >> {}", message);
+		LOGGER.debug("send server >> {}", message);
+	}
+	
+	/**
+	 * <pre>
+	 * send tomcat instance monitoring data(message)
+	 * - instance status
+	 * - jmx monitoring data
+	 * </pre>
+	 * @param message
+	 * @throws IOException
+	 */
+	public void sendJmxMessage(String message) throws IOException {
+		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.jmxDestHeader).body(message).build();
+		session.sendMessage(txtMessage); 
+		
+		LOGGER.debug("send jmx >> {}", message);
 	}
 	
 	public void disconnect() throws IOException {

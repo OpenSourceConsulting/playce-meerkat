@@ -1,4 +1,4 @@
-<project name="pilot fris build" basedir="." default="deploy-agent">
+<project name="MeerkatAgent build" basedir="." default="deploy-agent">
 
 	<property file="${basedir}/build.properties" />
 	
