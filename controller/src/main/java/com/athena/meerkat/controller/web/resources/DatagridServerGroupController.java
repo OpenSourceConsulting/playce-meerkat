@@ -83,6 +83,21 @@ public class DatagridServerGroupController {
 		return json;
 	}
 
+	@RequestMapping(value = "/group/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deleteGroup(SimpleJsonResponse json, Integer id) {
+		DatagridServerGroup group = service.getGroup(id);
+		if(group != null){
+			List<Server> servers = group.getServers();
+			for(Server s: servers){
+				s.setDatagridServerGroup(null);
+			}
+			serverService.saveList(servers);
+			service.delete(group);
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, Integer id,
