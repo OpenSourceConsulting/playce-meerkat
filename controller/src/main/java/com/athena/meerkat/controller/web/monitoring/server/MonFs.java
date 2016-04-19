@@ -27,11 +27,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -43,16 +45,15 @@ public class MonFs {
 	@Id
 	@Column(name = "server_id")
 	private int serverId;//
-	
+
 	@Id
 	@Column(name = "fs_name")
 	private String fsName;//
-	
+
 	@Id
 	@Column(name = "mon_dt")
 	private java.util.Date monDt;//
-	
-	
+
 	@Column(name = "total")
 	private int total;//
 	@Column(name = "used")
@@ -79,7 +80,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param serverId the serverId to set
+	 * @param serverId
+	 *            the serverId to set
 	 */
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
@@ -93,7 +95,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param fsName the fsName to set
+	 * @param fsName
+	 *            the fsName to set
 	 */
 	public void setFsName(String fsName) {
 		this.fsName = fsName;
@@ -107,7 +110,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param monDt the monDt to set
+	 * @param monDt
+	 *            the monDt to set
 	 */
 	public void setMonDt(java.util.Date monDt) {
 		this.monDt = monDt;
@@ -121,7 +125,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param total the total to set
+	 * @param total
+	 *            the total to set
 	 */
 	public void setTotal(int total) {
 		this.total = total;
@@ -135,7 +140,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param used the used to set
+	 * @param used
+	 *            the used to set
 	 */
 	public void setUsed(int used) {
 		this.used = used;
@@ -149,7 +155,8 @@ public class MonFs {
 	}
 
 	/**
-	 * @param usePer the usePer to set
+	 * @param usePer
+	 *            the usePer to set
 	 */
 	public void setUsePer(Double usePer) {
 		this.usePer = usePer;
@@ -163,11 +170,16 @@ public class MonFs {
 	}
 
 	/**
-	 * @param avail the avail to set
+	 * @param avail
+	 *            the avail to set
 	 */
 	public void setAvail(int avail) {
 		this.avail = avail;
 	}
 
+	public Double getAvailPer() {
+		return 100 - usePer;
+	}
+
 }
-//end of MonFs.java
+// end of MonFs.java
