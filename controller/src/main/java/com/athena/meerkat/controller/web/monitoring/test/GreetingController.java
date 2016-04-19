@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.monitoring.server;
+package com.athena.meerkat.controller.web.monitoring.test;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

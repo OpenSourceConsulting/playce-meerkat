@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.monitoring;
+package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +22,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.monitoring.server.HelloMessage;
+import com.athena.meerkat.controller.web.monitoring.test.HelloMessage;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -38,8 +38,10 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @RequestMapping("/monitor/server")
 public class MonDataController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(MonDataController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MonDataController.class);
+	
+	private static final String MSG_MON = "mon";
+	private static final String MSG_FS = "fs";
 
 	@Autowired
 	private MonDataService service;
@@ -83,15 +85,30 @@ public class MonDataController {
 	
 	@MessageMapping("/monitor/create")
 	@SendToUser("/queue/agents")
-	public SimpleJsonResponse create(List<Map> datas) {
+	public SimpleJsonResponse saveMon(List<Map> datas) {
 		
-		SimpleJsonResponse jsonRes = new SimpleJsonResponse();
+		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
 		
 		List<MonData> monDatas = copyProperties(datas);
 		
 		service.insertMonDatas(monDatas);
 
 		LOGGER.debug("saved. ----------------");
+
+		return jsonRes;
+	}
+	
+	@MessageMapping("/monitor/fs")
+	@SendToUser("/queue/agents")
+	public SimpleJsonResponse saveFs(List<Map> datas) {
+		
+		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_FS);
+		
+		List<MonFs> monFsList = copyFSProperties(datas);
+		
+		service.saveMonFsList(monFsList);
+
+		LOGGER.debug("saved fs. ----------------");
 
 		return jsonRes;
 	}
@@ -119,6 +136,26 @@ public class MonDataController {
 	    	for (Map map : maps) {
 	    		
 	    		MonData msg = new MonData();
+				
+	    		PropertyUtils.copyProperties(msg, map);
+	    		
+				messages.add(msg);
+			}
+		}catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+    	
+    	return messages;
+	}
+	
+	private List<MonFs> copyFSProperties(List<Map> maps) {
+		
+		List<MonFs> messages = new ArrayList<MonFs>();
+    	
+		try{
+	    	for (Map map : maps) {
+	    		
+	    		MonFs msg = new MonFs();
 				
 	    		PropertyUtils.copyProperties(msg, map);
 	    		

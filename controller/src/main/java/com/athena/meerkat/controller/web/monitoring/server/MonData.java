@@ -20,7 +20,7 @@
  * ---------------	----------------	------------
  * BongJin Kwon		2016. 4. 6.		First Draft.
  */
-package com.athena.meerkat.controller.web.monitoring;
+package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.io.Serializable;
 import java.util.Date;

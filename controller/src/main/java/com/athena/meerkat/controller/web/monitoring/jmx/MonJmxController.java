@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.athena.meerkat.common.constant.MeerkatConstant;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.monitoring.MonData;
+import com.athena.meerkat.controller.web.monitoring.server.MonData;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**

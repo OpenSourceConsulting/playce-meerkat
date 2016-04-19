@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.monitoring;
+package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +21,9 @@ public class MonDataService {
 
 	@Autowired
 	private MonDataRepository repository;
+	
+	@Autowired
+	private MonFsRepository fsRepo;
 
 	public MonDataService() {
 		// TODO Auto-generated constructor stub
@@ -38,6 +41,10 @@ public class MonDataService {
 			Date time, Date now) {
 		return repository.findByMonFactorIdAndServerId(type, serverId,
 				time, now);
+	}
+	
+	public void saveMonFsList(List<MonFs> monFsList) {
+		fsRepo.save(monFsList);
 	}
 }
 // end of MonDataService.java

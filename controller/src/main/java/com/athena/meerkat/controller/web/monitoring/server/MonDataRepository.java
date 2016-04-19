@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.monitoring;
+package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.util.Date;
 import java.util.List;

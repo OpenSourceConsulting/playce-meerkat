@@ -56,7 +56,11 @@ public class SimpleJsonResponse implements MeerkatResponse {
 	 * </pre>
 	 */
 	public SimpleJsonResponse() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public SimpleJsonResponse(String msg) {
+		this.msg = msg;
 	}
 
 	public boolean isSuccess() {

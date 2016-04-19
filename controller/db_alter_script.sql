@@ -12,7 +12,7 @@ CREATE TABLE `mon_data_tbl` (
   `mon_dt` datetime NOT NULL,
   `mon_value` double NOT NULL,
   PRIMARY KEY (`mon_factor_id`,`server_id`,`mon_dt`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `mon_jmx_tbl` (
   `mon_factor_id` varchar(10) NOT NULL,
@@ -20,7 +20,18 @@ CREATE TABLE `mon_jmx_tbl` (
   `mon_dt` datetime NOT NULL,
   `mon_value` double NOT NULL,
   PRIMARY KEY (`mon_factor_id`,`instance_id`,`mon_dt`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `mon_fs_tbl` (
+  `server_id` int(11) NOT NULL,
+  `fs_name` varchar(45) NOT NULL,
+  `mon_dt` datetime NOT NULL,
+  `total` int(11) NOT NULL,
+  `used` int(11) NOT NULL,
+  `use_per` double NULL,
+  `avail` int(11) NULL,
+  PRIMARY KEY (`server_id`,`fs_name`,`mon_dt`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `athena_meerkat_local`.`common_code` 

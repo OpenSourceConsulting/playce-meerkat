@@ -20,7 +20,7 @@
  * ---------------	----------------	------------
  * BongJin Kwon		2016. 4. 6.		First Draft.
  */
-package com.athena.meerkat.controller.web.monitoring;
+package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,24 +32,25 @@ import java.util.Date;
  * @author Bongjin Kwon
  * @version 1.0
  */
-public class MonDataPK implements Serializable {
+public class MonFsPK implements Serializable {
 
-	private static final long serialVersionUID = 5808702600047332135L;
 	
-	private String monFactorId;//
+	private static final long serialVersionUID = 1817087669442175476L;
+	
 	private int serverId;//
+	private String fsName;
 	private Date monDt;//
 	
-	public MonDataPK() {
-		// TODO Auto-generated constructor stub
+	public MonFsPK() {
+		
 	}
 
-	public String getMonFactorId() {
-		return monFactorId;
+	public String getFsName() {
+		return fsName;
 	}
 
-	public void setMonFactorId(String monFactorId) {
-		this.monFactorId = monFactorId;
+	public void setFsName(String fsName) {
+		this.fsName = fsName;
 	}
 
 	public int getServerId() {

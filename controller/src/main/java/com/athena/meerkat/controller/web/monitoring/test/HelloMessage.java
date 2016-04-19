@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.monitoring.server;
+package com.athena.meerkat.controller.web.monitoring.test;
 public class HelloMessage {
 
     private String name;
