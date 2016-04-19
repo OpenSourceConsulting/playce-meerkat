@@ -69,9 +69,13 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.jmx.app.dest}")
 	private String appJmxDestination;
 	
+	@Value("${meerkat.agent.server.app.fs}")
+	private String appFSDestination;
+	
 	private String initDestHeader;
 	private String jmxDestHeader;
 	private String serverDestHeader;
+	private String fsDestHeader;
 
 	private WebSocketSession session;
 	
@@ -114,6 +118,7 @@ public class StompWebSocketClient implements InitializingBean{
 		this.initDestHeader = "destination:" + appInitDestination;;
 		this.serverDestHeader = "destination:" + appDestination;
 		this.jmxDestHeader = "destination:" + appJmxDestination;
+		this.fsDestHeader = "destination:" + appFSDestination;
 		
 		LOGGER.info("connected");
 	}
@@ -160,6 +165,13 @@ public class StompWebSocketClient implements InitializingBean{
 		session.sendMessage(txtMessage); 
 		
 		LOGGER.debug("send jmx >> {}", message);
+	}
+	
+	public void sendFSMessage(String message) throws IOException {
+		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.fsDestHeader).body(message).build();
+		session.sendMessage(txtMessage); 
+		
+		LOGGER.debug("send fs >> {}", message);
 	}
 	
 	public void disconnect() throws IOException {

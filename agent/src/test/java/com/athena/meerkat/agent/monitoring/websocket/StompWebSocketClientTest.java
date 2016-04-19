@@ -22,9 +22,7 @@
  */
 package com.athena.meerkat.agent.monitoring.websocket;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.AfterClass;

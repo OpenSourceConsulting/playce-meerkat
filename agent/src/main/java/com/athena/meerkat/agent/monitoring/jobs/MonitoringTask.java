@@ -71,6 +71,13 @@ public abstract class MonitoringTask {
 		webSocketClient.sendJmxMessage(message);
 	}
 	
+	protected void sendFSMonData(List<String> monDatas) throws IOException {
+		
+		String message = createJsonArrayString(monDatas);
+		
+		webSocketClient.sendFSMessage(message);
+	}
+	
 	abstract public void monitor();
 	
 	protected String createJsonString(String monFactorId, String serverId, double value){
@@ -79,6 +86,10 @@ public abstract class MonitoringTask {
 	
 	protected String createJmxJsonString(String monFactorId, String instanceId, double value){
 		return "{\"monFactorId\":\""+ monFactorId +"\",\"instanceId\": "+instanceId+" ,\"monValue\": "+value+"}";
+	}
+	
+	protected String createFSJsonString(String serverId, String fsName, long total, long used, double usePer, long avail){
+		return "{\"serverId\":"+ serverId +",\"fsName\": \""+fsName+"\" ,\"total\": "+total+" ,\"used\": "+used+" ,\"usePer\": "+usePer+" ,\"avail\": "+avail+"}";
 	}
 	
 	protected String createJsonArrayString(List<String> monDatas) {

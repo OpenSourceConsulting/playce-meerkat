@@ -246,12 +246,12 @@ public final class SigarUtil {
 		FileSystem[] fileSysList = SigarUtil.getFileSystemList();
 		for (FileSystem fs : fileSysList) {
 			FileSystemUsage fsu = SigarUtil.getFileSystemUsage(fs.getDirName());
-			System.out.println("fs: " + fs.getDirName() + ", " + fsu.getTotal());
+			System.out.println("fs: " + fs.getDirName() + ", " + fsu.getTotal() + ", " + fsu.getUsed() + ", " + fsu.getUsePercent() + ", " + fsu.getAvail());
 			diskSize += fsu.getTotal();//
 		}
 		
 		System.out.println(diskSize);
-		
+		/*
 		System.out.println("------------------------- port check --------");
 		long port = 8080;
 		Sigar sigar = SigarUtil.getInstance();
@@ -260,6 +260,7 @@ public final class SigarUtil {
 		for (NetConnection netConnection : netConnectionList) {
 		   System.out.println(netConnection.getLocalPort());
 		}
+		*/
 	}
 }
 //end of SigarUtil.java
