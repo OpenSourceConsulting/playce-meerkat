@@ -78,6 +78,21 @@ public class ProvisioningUtil {
 		CommandUtil.execWithLog(commanderDir, cmds);
 	}
 	
+	public static void runCommand(File commanderDir, File jobDir) throws Exception {
+		
+		String scriptFile = "runcmd.sh";
+		
+		if(OSUtil.isWindows()) {
+			scriptFile = "runCommand.bat";
+		}
+		
+		List<String> cmds = new ArrayList<String>();
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
+		cmds.add(jobDir.getAbsolutePath() + File.separator + "cmd.xml");
+		
+		CommandUtil.execWithLog(commanderDir, cmds);
+	}
+	
 	
 }
 //end of ProvisioningUtil.java

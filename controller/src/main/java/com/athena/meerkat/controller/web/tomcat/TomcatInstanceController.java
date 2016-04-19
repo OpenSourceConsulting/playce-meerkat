@@ -47,6 +47,7 @@ import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
@@ -76,6 +77,9 @@ public class TomcatInstanceController {
 	private DataSourceService dsService;
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
+	
+	@Autowired
+	private TomcatProvisioningService proviService;
 
 	public TomcatInstanceController() {
 	}
@@ -84,54 +88,40 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		return changeTomcatState(json, tomcat, MeerkatConstants.TOMCAT_STATUS_RUNNING);
+		
+		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat is already started.");
+		} else {
+			proviService.startTomcatInstance(id, null);
+		}
+		
+		return json;
 	}
 
 	@RequestMapping(value = "/instance/restart", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
-		TomcatInstance tomcat = service.findOne(id);
-		json = changeTomcatState(json, tomcat, MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
-		json = changeTomcatState(json, tomcat, MeerkatConstants.TOMCAT_STATUS_RUNNING);
+		stopTomcat(json, id);
+		startTomcat(new SimpleJsonResponse(), id);
 		return json;
 	}
 
-	private SimpleJsonResponse changeTomcatState(SimpleJsonResponse json,
-			TomcatInstance tomcat, int state) {
-
-		boolean success = false;
-		// TODO idkjwon provisioning
-		// ..
-
-		// update to db
-		if (state == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
-			if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
-				json.setSuccess(false);
-				json.setMsg("Tomcat is already started.");
-			} else {
-				success = service.start(tomcat); // provisioning &&
-													// service.start(tomcat);
-				json.setData(MeerkatConstants.TOMCAT_STATUS_RUNNING);
-			}
-		} else if (state == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
-			if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
-				json.setSuccess(false);
-				json.setMsg("Tomcat is already stopped.");
-			} else {
-				success = service.stop(tomcat); // provisioning &&
-				// service.stop(tomcat);
-				json.setData(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
-			}
-		}
-		json.setSuccess(success);
-		return json;
-	}
 
 	@RequestMapping(value = "/instance/stop", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		return changeTomcatState(json, tomcat, MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
+		
+		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
+			json.setSuccess(false);
+			json.setMsg("Tomcat is already stopped.");
+		} else {
+			proviService.stopTomcatInstance(id, null);	
+			
+		}
+		
+		return json;
 	}
 
 	@RequestMapping(value = "/instance/get")

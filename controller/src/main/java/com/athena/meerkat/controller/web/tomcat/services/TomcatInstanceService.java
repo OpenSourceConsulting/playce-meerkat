@@ -47,6 +47,7 @@ import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
@@ -93,7 +94,7 @@ public class TomcatInstanceService {
 	
 	@Autowired
 	private TomcatDomainService domainService;
-
+	
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -124,12 +125,17 @@ public class TomcatInstanceService {
 	}
 	
 	public DomainTomcatConfiguration getTomcatConfig(int instanceId) {
-		
 		TomcatInstance tomcat = findOne(instanceId);
+		
+		return getTomcatConfig(tomcat.getDomainId(), instanceId);
+	}
+	
+	public DomainTomcatConfiguration getTomcatConfig(int domainId, int instanceId) {
+		
 
-		DomainTomcatConfiguration conf = domainService.getTomcatConfig(tomcat.getDomainId());
+		DomainTomcatConfiguration conf = domainService.getTomcatConfig(domainId);
 		// get configurations that are different to domain tomcat config
-		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(tomcat.getId());
+		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(instanceId);
 		if (changedConfigs != null) {
 			for (TomcatInstConfig c : changedConfigs) {
 				if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
@@ -159,7 +165,7 @@ public class TomcatInstanceService {
 		List<TomcatInstance> list = repo.findByServer_Id(serverId);
 		
 		for (TomcatInstance tomcatInstance : list) {
-			configs.add(getTomcatConfig(tomcatInstance.getId()));
+			configs.add(getTomcatConfig(tomcatInstance.getDomainId(), tomcatInstance.getId()));
 		}
 		
 		return configs;
@@ -263,30 +269,6 @@ public class TomcatInstanceService {
 		repo.setState(instanceId, state);
 		
 		LOGGER.debug("tomcat instance({}) state({}) saved.", instanceId, state);
-	}
-
-	/**
-	 * Start a tomcat instance
-	 * 
-	 * @param tomcat
-	 * @return status of process. True for success
-	 */
-	public boolean start(TomcatInstance tomcat) {
-		tomcat.setState(MeerkatConstants.TOMCAT_STATUS_RUNNING);
-		//repo.save(tomcat);
-		return true;
-	}
-
-	/**
-	 * Stop tomcat instance
-	 * 
-	 * @param tomcat
-	 * @return
-	 */
-	public boolean stop(TomcatInstance tomcat) {
-		tomcat.setState(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
-		//repo.save(tomcat);
-		return true;
 	}
 
 	public List<TomcatInstance> getAll() {
