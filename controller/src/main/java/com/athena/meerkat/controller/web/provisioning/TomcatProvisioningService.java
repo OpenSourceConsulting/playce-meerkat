@@ -184,7 +184,7 @@ public class TomcatProvisioningService implements InitializingBean{
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
 			
 			
-			//instanceService.start(tomcatInstance);
+			instanceService.saveState(tomcatInstance.getId(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 			
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
