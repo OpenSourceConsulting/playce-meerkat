@@ -46,5 +46,10 @@ public class MonDataService {
 	public void saveMonFsList(List<MonFs> monFsList) {
 		fsRepo.save(monFsList);
 	}
+
+	public List<MonFs> getDiskMonDataList(Integer serverId, Date tenMinsAgo,
+			Date now) {
+		return null;
+	}
 }
 // end of MonDataService.java
