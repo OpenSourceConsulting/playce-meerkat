@@ -1,0 +1,22 @@
+<project name="start tomcat cmd" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# start Tocmat Instance
+	#########################################
+	-->
+	
+	<property file="${basedir}/build-ssh.properties" />
+	<property file="${basedir}/build.properties" />
+	
+
+	<target name="cmd">
+
+		<echo message="starting Tomcat" />
+		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				 command="cd ${catalina.base}; ./startup.sh nolog;" trust="true" failonerror="true" />
+
+	</target>
+
+</project>

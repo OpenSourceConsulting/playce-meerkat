@@ -1,0 +1,21 @@
+<project name="stop tomcat cmd" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# stop Tocmat Instance
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+
+	<target name="cmd">
+
+		<echo message="stopping Tomcat" />
+
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				 command="cd ${catalina.base}; ./shutdown.sh" trust="true" failonerror="true" />
+
+	</target>
+
+</project>

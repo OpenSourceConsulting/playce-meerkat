@@ -28,6 +28,7 @@
 				<property name="cargo.servlet.port" 		value="${ti.http.port}"/>
 				<property name="cargo.tomcat.ajp.port" 		value="${ti.ajp.port}"/>
 				<property name="cargo.tomcat.uriencoding" 	value="${ti.http.encoding}"/>
+				<!-- <property name="cargo.rmi.port"				value="${ti.rmi.port}" /> -->
 			</configuration>
 		</cargo>
 
