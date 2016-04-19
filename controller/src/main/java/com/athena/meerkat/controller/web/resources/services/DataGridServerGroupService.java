@@ -35,4 +35,9 @@ public class DataGridServerGroupService {
 	public DatagridServerGroup save(DatagridServerGroup group) {
 		return groupRepo.save(group);
 	}
+
+	public void delete(DatagridServerGroup group) {
+		groupRepo.delete(group);
+
+	}
 }
