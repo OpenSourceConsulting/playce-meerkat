@@ -24,6 +24,10 @@ import com.athena.meerkat.agent.monitoring.utils.SigarUtil;
 public class ServerFSMonScheduledTask extends MonitoringTask{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerFSMonScheduledTask.class);
+	
+	private static final String[] IGNORE_DEVICES = { "none", "udev", "sysfs", "devpts", "binfmt_misc", "systemd", "gvfsd-fuse" }; 
+	 
+	private static final String[] IGNORE_SYSTYPES = { "proc"};
 
     
     @Value("${meerkat.agent.server.id:0}")
@@ -45,10 +49,31 @@ public class ServerFSMonScheduledTask extends MonitoringTask{
     	
 		monDatas.clear();
     	try{
+    		String root = null;
     		FileSystem[] fileSysList = SigarUtil.getFileSystemList();
     		for (FileSystem fs : fileSysList) {
+    			
+    			
+    			if (fs.getDevName() == null || equalsAny(fs.getDevName(), IGNORE_DEVICES)) { 
+    			      continue; 
+    			} 
+    			 
+    			if (fs.getSysTypeName() == null || equalsAny(fs.getSysTypeName(), IGNORE_SYSTYPES)) { 
+    			      continue; 
+    			}
+    			
     			FileSystemUsage fsu = SigarUtil.getFileSystemUsage(fs.getDirName());
-    			//System.out.println("fs: " + fs.getDirName() + ", " + fsu.getTotal() + ", " + fsu.getUsed() + ", " + fsu.getUsePercent() + ", " + fsu.getAvail());
+    			
+    			if(fsu.getTotal() == 0) {
+    				continue;
+    			}
+    			
+    			if(root != null && root.equals(fs.getDirName())){
+    				continue;
+    			} else if("/".equals(fs.getDirName())){
+    				root = fs.getDirName();
+    			}
+    			
     			monDatas.add(createFSJsonString(serverId, fs.getDirName(), fsu.getTotal(), fsu.getUsed(), fsu.getUsePercent()*100D, fsu.getAvail()));
     		}
 
@@ -60,5 +85,16 @@ public class ServerFSMonScheduledTask extends MonitoringTask{
     		monDatas.clear();
     	}
     }
+	
+	private static boolean equalsAny(String str, String[] strs) { 
+		   
+		for (String s : strs) { 
+		   if (s.equals(str)) { 
+			   return true; 
+		   } 
+		} 
+		 
+		return false; 
+	} 
 	
 }

@@ -58,7 +58,7 @@ public class ServerMonScheduledTask extends MonitoringTask{
     		monDatas.add(createJsonString("mem.used", serverId, memUsed));
     		monDatas.add(createJsonString("net.in", serverId, netIn));
     		monDatas.add(createJsonString("net.out", serverId, netOut));
-    		//TODO tran : verify data and add additional data(disk.used, disk.free)
+    		//TODO tran : verify data and add additional data
     		
     		sendMonData(monDatas);
     		

@@ -189,9 +189,5 @@ public class MonFs {
 		return 100 - usePer;
 	}
 
-	public Double getAvailPer() {
-		return 100 - usePer;
-	}
-
 }
 // end of MonFs.java
