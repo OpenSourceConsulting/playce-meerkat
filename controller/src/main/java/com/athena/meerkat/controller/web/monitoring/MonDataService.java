@@ -35,9 +35,9 @@ public class MonDataService {
 	}
 
 	public List<MonData> getMonDataList(String type, Integer serverId,
-			Date tenMinsAgo, Date now) {
-		return repository.findByMonFactorIdAndServerIdInTenMins(type, serverId,
-				tenMinsAgo, now);
+			Date time, Date now) {
+		return repository.findByMonFactorIdAndServerId(type, serverId,
+				time, now);
 	}
 }
 // end of MonDataService.java

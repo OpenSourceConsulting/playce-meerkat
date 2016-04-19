@@ -17,9 +17,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MonDataRepository extends JpaRepository<MonData, MonDataPK> {
 
-	@Query("select md from MonData md where md.monFactorId = :type and md.serverId = :serverId and md.monDt BETWEEN :tenMinsAgo AND :now")
-	List<MonData> findByMonFactorIdAndServerIdInTenMins(
+	@Query("select md from MonData md where md.monFactorId = :type and md.serverId = :serverId and md.monDt BETWEEN :time AND :now")
+	List<MonData> findByMonFactorIdAndServerId(
 			@Param("type") String type, @Param("serverId") Integer serverId,
-			@Param("tenMinsAgo") Date tenMinsAgo, @Param("now") Date now);
+			@Param("time") Date time, @Param("now") Date now);
 
 }
