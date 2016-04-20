@@ -65,6 +65,16 @@ public class ServerController {
 		return json;
 	}
 
+	@RequestMapping(value = "/get/totalmemsize", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getTotalMemSize(SimpleJsonResponse json, int id) {
+		Server m = service.retrieve(id);
+		if (m != null) {
+			json.setData(m.getMemorySize());
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/{serverId}/nis", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getNIs(GridJsonResponse json,
@@ -147,7 +157,7 @@ public class ServerController {
 			currentServer = service.save(currentServer);
 
 			NetworkInterface ni = new NetworkInterface();
-			if(!MeerkatUtils.validateIPAddress(sshIPAddr)){
+			if (!MeerkatUtils.validateIPAddress(sshIPAddr)) {
 				json.setMsg("SSH IP Address is invalid.");
 				json.setSuccess(false);
 				return json;

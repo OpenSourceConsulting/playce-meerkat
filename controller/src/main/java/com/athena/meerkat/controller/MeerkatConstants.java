@@ -149,6 +149,8 @@ public abstract class MeerkatConstants {
 	 * Monitoring Factor id
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
+	public static final String MON_FACTOR_MEM_USED = "mem.used";
+	public static final String MON_FACTOR_MEM_USED_PER = "mem.used_per";
 	public static final String MON_FACTOR_TI_RUN = "ti.run";	//tomcat instance running status.
 
 	public static final int DISK_MON_PERIOD_MINUTE = 10;
