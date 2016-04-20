@@ -11,5 +11,5 @@ fi
 echo ANT_HOME: $ANT_HOME
 
 
-$ANT_HOME/bin/ant -buildfile $1 deploy-agent
+$ANT_HOME/bin/ant -buildfile $1 $2
 

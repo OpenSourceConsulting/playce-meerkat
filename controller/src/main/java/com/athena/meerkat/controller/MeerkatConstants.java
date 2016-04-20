@@ -33,6 +33,8 @@ package com.athena.meerkat.controller;
  * @version 2.0
  */
 public abstract class MeerkatConstants {
+	
+	public static final String UTF8 = "UTF-8";
 
 	/**
 	 * env.sh 로딩완료 - 11 은 에러발생
@@ -123,9 +125,11 @@ public abstract class MeerkatConstants {
 	public static final String CODE_GROP_TE_VERSION = "tever";//tomcat version (involve name)
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
-	public static final String CONFIG_FILE_TYPE_PARENT_CODE_VALUE = "configFileType";
+	public static final String CODE_GROP_CONFIG_FILE_TYPE = "configFileType";
 	public static final String CONFIG_FILE_TYPE_SERVER_XML = "server.xml";
+	public static final int CONFIG_FILE_TYPE_SERVER_XML_CD = 3;
 	public static final String CONFIG_FILE_TYPE_CONTEXT_XML = "context.xml";
+	public static final int CONFIG_FILE_TYPE_CONTEXT_XML_CD = 4;
 
 	public static final String DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm:ss";
 	public static final String CONFIG_FILE_VERSION_DATE_TIME_FORMATTER = "MM/dd/yyyy HH:mm";
@@ -149,5 +153,9 @@ public abstract class MeerkatConstants {
 	 * Monitoring Factor id
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
+	public static final String MON_FACTOR_MEM_USED = "mem.used";
+	public static final String MON_FACTOR_MEM_USED_PER = "mem.used_per";
 	public static final String MON_FACTOR_TI_RUN = "ti.run";	//tomcat instance running status.
+
+	public static final int DISK_MON_PERIOD_MINUTE = 10;
 }

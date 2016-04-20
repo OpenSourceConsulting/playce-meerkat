@@ -152,10 +152,10 @@ public class TomcatInstanceController {
 			// set latest Config file id
 			TomcatConfigFile latestServerXml = tomcatConfigFileService
 					.getLatestConfVersion(null, tomcat,
-							MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML);
+							MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
 			TomcatConfigFile latestContextXml = tomcatConfigFileService
 					.getLatestConfVersion(null, tomcat,
-							MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML);
+							MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
 			if (latestServerXml != null) {
 				viewmodel.setLatestServerXmlConfigFileId(latestServerXml
 						.getId());

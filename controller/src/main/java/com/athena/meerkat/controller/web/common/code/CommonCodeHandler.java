@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 
 /**
@@ -149,6 +150,10 @@ public class CommonCodeHandler implements InitializingBean {
 		}
 
 		return codef.getCodeNm();
+	}
+	
+	public String getFileTypeName(int fileTypeCdId){
+		return getCodeNm(MeerkatConstants.CODE_GROP_CONFIG_FILE_TYPE, fileTypeCdId);
 	}
 
 	@SuppressWarnings("unchecked")

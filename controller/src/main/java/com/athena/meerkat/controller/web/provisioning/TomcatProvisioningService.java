@@ -28,6 +28,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +55,10 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -89,10 +92,14 @@ public class TomcatProvisioningService implements InitializingBean{
 	private TomcatInstanceService instanceService;
 	
 	@Autowired
+	private TomcatConfigFileService configFileService;
+	
+	@Autowired
 	private CommonCodeHandler codeHandler;
 	
 	@Value("${meerkat.commander.home}")
 	private String commanderHome;// = "G:/project/AthenaMeerkat/.aMeerkat";
+	
 	private File commanderDir;
 	
 	private Configuration cfg;
@@ -133,18 +140,23 @@ public class TomcatProvisioningService implements InitializingBean{
 		
 				
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
-		//List<Tomcat>   TomcatInstanceService
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
 		
 		if(tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
 		
+		List<TomcatConfigFile> confFiles = new ArrayList<TomcatConfigFile>();
+		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD));
+		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD));
+		
+		
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
 		if(list != null && list.size() > 0){
 		
 			for (TomcatInstance tomcatInstance : list) {
-				doInstallTomcatInstance(tomcatConfig, tomcatInstance, session);
+				doInstallTomcatInstance(tomcatConfig, tomcatInstance, confFiles, session);
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -152,9 +164,9 @@ public class TomcatProvisioningService implements InitializingBean{
 		
 	}
 	
-	private void doInstallTomcatInstance(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
+	private void doInstallTomcatInstance(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<TomcatConfigFile> confFiles, WebSocketSession session) {
 
-		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, session);
+		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, confFiles, session);
 		
 		try {
 			
@@ -175,13 +187,19 @@ public class TomcatProvisioningService implements InitializingBean{
 			/*
 			 * 4. deploy agent
 			 */
-			ProvisioningUtil.deployAgent(commanderDir, jobDir);
+			ProvisioningUtil.runTarget(commanderDir, jobDir, "deploy-agent");
 			
 			
 			/*
-			 * 5. send cmd.
+			 * 5. send install cmd.
 			 */
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			
+			
+			/*
+			 * 6. update server.xml & context.xml
+			 */
+			ProvisioningUtil.runTarget(commanderDir, jobDir, "update-config");
 			
 			
 			instanceService.saveState(tomcatInstance.getId(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
@@ -242,7 +260,7 @@ public class TomcatProvisioningService implements InitializingBean{
 	private void sendCommand(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, String cmdFileName, WebSocketSession session) {
 
 		
-		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, session);
+		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, null, session);
 		
 		
 		try {
@@ -276,7 +294,7 @@ public class TomcatProvisioningService implements InitializingBean{
 	private void runCommand(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, String cmdFileName, WebSocketSession session) {
 
 		
-		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, session);
+		File jobDir = generateBuildProperties(tomcatConfig, tomcatInstance, null, session);
 		
 		
 		try {
@@ -316,7 +334,7 @@ public class TomcatProvisioningService implements InitializingBean{
 	 * @param session
 	 * @return
 	 */
-	private File generateBuildProperties(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, WebSocketSession session) {
+	private File generateBuildProperties(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<TomcatConfigFile> confFiles, WebSocketSession session) {
 		Server targetServer = tomcatInstance.getServer();
 		String serverIp = targetServer.getSshIPAddr();
 		MDC.put("serverIp", serverIp);
@@ -346,11 +364,18 @@ public class TomcatProvisioningService implements InitializingBean{
 		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
 		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
 		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersion()) );
-		targetProps.setProperty("ti.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
-		targetProps.setProperty("ti.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
-		targetProps.setProperty("ti.http.encoding", tomcatConfig.getEncoding());
-		targetProps.setProperty("ti.rmi.registry.port",		String.valueOf(tomcatConfig.getRmiRegistryPort()));
-		targetProps.setProperty("ti.rmi.server.port",		String.valueOf(tomcatConfig.getRmiServerPort()));
+		targetProps.setProperty("am.server.port",	"8005");
+		targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
+		targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
+		targetProps.setProperty("am.uri.encoding",  tomcatConfig.getEncoding());
+		targetProps.setProperty("am.rmi.registry.port",		String.valueOf(tomcatConfig.getRmiRegistryPort()));
+		targetProps.setProperty("am.rmi.server.port",		String.valueOf(tomcatConfig.getRmiServerPort()));
+		
+		if (confFiles != null) {
+			for (TomcatConfigFile confFile : confFiles) {
+				targetProps.setProperty(codeHandler.getFileTypeName(confFile.getFileTypeCdId()) + ".file", configFileService.getFileFullPath(confFile));
+			}
+		}
 		
 		OutputStream output = null;
 		File jobDir = null;

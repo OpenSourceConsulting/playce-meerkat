@@ -117,8 +117,7 @@ public class DomainController {
 
 	@RequestMapping(value = "/saveWithConfig", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveWithConfig(SimpleJsonResponse json,
-			TomcatDomain domain, DomainTomcatConfiguration config) {
+	public SimpleJsonResponse saveWithConfig(SimpleJsonResponse json, TomcatDomain domain, DomainTomcatConfiguration config) {
 
 		int loginUserId = WebUtil.getLoginUserId();
 
