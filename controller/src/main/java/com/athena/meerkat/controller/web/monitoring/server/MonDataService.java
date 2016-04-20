@@ -21,7 +21,7 @@ public class MonDataService {
 
 	@Autowired
 	private MonDataRepository repository;
-	
+
 	@Autowired
 	private MonFsRepository fsRepo;
 
@@ -39,17 +39,16 @@ public class MonDataService {
 
 	public List<MonData> getMonDataList(String type, Integer serverId,
 			Date time, Date now) {
-		return repository.findByMonFactorIdAndServerId(type, serverId,
-				time, now);
+		return repository.findByMonFactorIdAndServerId(type, serverId, time,
+				now);
 	}
-	
+
 	public void saveMonFsList(List<MonFs> monFsList) {
 		fsRepo.save(monFsList);
 	}
 
-	public List<MonFs> getDiskMonDataList(Integer serverId, Date tenMinsAgo,
-			Date now) {
-		return null;
+	public List<MonFs> getDiskMonDataList(Integer serverId) {
+		return fsRepo.getFsMonData(serverId);
 	}
 }
 // end of MonDataService.java

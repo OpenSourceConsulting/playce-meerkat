@@ -138,11 +138,11 @@ public class MonDataController {
 			Integer serverId) {
 
 		Date now = new Date();
-		Date tenMinsAgo = new Date(now.getTime() - 2
+		Date tenMinsAgo = new Date(now.getTime()
+				- MeerkatConstants.DISK_MON_PERIOD_MINUTE
 				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 
-		List<MonFs> results = service.getDiskMonDataList(serverId, tenMinsAgo,
-				now);
+		List<MonFs> results = service.getDiskMonDataList(serverId);
 
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());

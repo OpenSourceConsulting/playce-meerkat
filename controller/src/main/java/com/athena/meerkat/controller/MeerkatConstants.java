@@ -150,4 +150,6 @@ public abstract class MeerkatConstants {
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
 	public static final String MON_FACTOR_TI_RUN = "ti.run";	//tomcat instance running status.
+
+	public static final int DISK_MON_PERIOD_MINUTE = 10;
 }

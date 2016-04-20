@@ -16,9 +16,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MonFsRepository extends JpaRepository<MonFs, MonFsPK> {
-	/*
-	@Query("select md from MonFs fs where fs.serverId = :serverId and fs.monDt BETWEEN :time AND :now")
-	List<MonFs> getFsMonData(@Param("serverId") Integer serverId,
-			@Param("time") Date time, @Param("now") Date now);
-			*/
+	//@Query(value = "SELECT server_id, fs_name, max(mon_dt) as mon_dt, total, used, use_per, avail from mon_fs_tbl where server_id= :serverId group by server_id, fs_name", nativeQuery = true)
+	@Query("SELECT new MonFs(fs.serverId, fs.fsName, max(fs.monDt), fs.total, fs.used,  fs.usePer, fs.avail) from MonFs fs where fs.serverId= :serverId group by fs.serverId, fs.fsName")
+	List<MonFs> getFsMonData(@Param("serverId") Integer serverId);
+			
 }
