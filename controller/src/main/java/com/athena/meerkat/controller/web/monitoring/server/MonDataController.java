@@ -116,16 +116,35 @@ public class MonDataController {
 
 	@RequestMapping(value = "/cpumon", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getMonData(GridJsonResponse jsonRes,
+	public GridJsonResponse getCPUMonData(GridJsonResponse jsonRes,
 			Integer serverId) {
 
 		Date now = new Date();
 		Date twoMinsAgo = new Date(now.getTime() - 2
 				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 
-		List<MonData> results = service
-				.getMonDataList(MeerkatConstants.MON_FACTOR_CPU_USED, serverId,
-						twoMinsAgo, now);
+		// List<MonData> results = service
+		// .getMonDataList(MeerkatConstants.MON_FACTOR_CPU_USED, serverId,
+		// twoMinsAgo, now);
+		//
+		// jsonRes.setList(results);
+		// jsonRes.setTotal(results.size());
+		return jsonRes;
+	}
+
+	@RequestMapping(value = "/memorymon", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getMemoryMonData(GridJsonResponse jsonRes,
+			Integer serverId) {
+
+		Date now = new Date();
+		Date twoMinsAgo = new Date(now.getTime() - 2
+				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[2];
+		types[0] = MeerkatConstants.MON_FACTOR_MEM_USED;
+		types[1] = MeerkatConstants.MON_FACTOR_MEM_USED_PER;
+		List<MonDataViewModel> results = service.getMonDataList(types,
+				serverId, twoMinsAgo, now);
 
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
@@ -138,11 +157,11 @@ public class MonDataController {
 			Integer serverId) {
 
 		Date now = new Date();
-		Date tenMinsAgo = new Date(now.getTime() - 2
+		Date tenMinsAgo = new Date(now.getTime()
+				- MeerkatConstants.DISK_MON_PERIOD_MINUTE
 				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 
-		List<MonFs> results = service.getDiskMonDataList(serverId, tenMinsAgo,
-				now);
+		List<MonFs> results = service.getDiskMonDataList(serverId);
 
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());

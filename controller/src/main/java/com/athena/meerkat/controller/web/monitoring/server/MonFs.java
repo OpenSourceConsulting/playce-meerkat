@@ -75,6 +75,17 @@ public class MonFs {
 		// TODO Auto-generated constructor stub
 	}
 
+	public MonFs(int _serverId, String _fsName, Date _monDt, int _total,
+			int _used, Double _usePer, int _avail) {
+		serverId = _serverId;
+		fsName = _fsName;
+		monDt = _monDt;
+		total = _total;
+		used = _used;
+		usePer = _usePer;
+		avail = _avail;
+	}
+
 	/**
 	 * @return the serverId
 	 */
@@ -179,7 +190,7 @@ public class MonFs {
 	public void setAvail(int avail) {
 		this.avail = avail;
 	}
-	
+
 	@PrePersist
 	public void onPrePersist() {
 		this.monDt = new Date();
