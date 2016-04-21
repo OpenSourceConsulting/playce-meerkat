@@ -47,33 +47,31 @@ public class TomcatConfigFileController {
 		TomcatDomain td = null;
 		TomcatInstance tcinst = null;
 		TomcatConfigFile conf = new TomcatConfigFile();
+		
 		if (objType.equals(MeerkatConstants.OBJ_TYPE_DOMAIN)) {
 			td = domainService.getDomain(objId);
 			conf.setTomcatDomain(td);
+			
 		} else if (objType.equals(MeerkatConstants.OBJ_TYPE_TOMCAT)) {
 			tcinst = tomcatService.findOne(objId);
 			conf.setTomcatInstance(tcinst);
+			conf.setTomcatDomain(tcinst.getTomcatDomain());//don't delete.
 		}
-		// TomcatConfigFile dbConf =
-		// TomcatConfigFile.getTomcatConfigFileById(id);
 
-		conf.setCreatedTime(new Date());
-		conf.setCreateUserId(WebUtil.getLoginUserId());
 		CommonCode code = commonHandler.getCode(confType);
 		if (code != null) {
 			conf.setFileTypeCdId(code.getId());
 		}
 
-		TomcatConfigFile latestVersion = tomcatConfigFileService
-				.getLatestConfVersion(td, tcinst, confType);
+		TomcatConfigFile latestVersion = tomcatConfigFileService.getLatestConfVersion(td, tcinst, conf.getFileTypeCdId());
+		
 		if (latestVersion != null) {
 			conf.setVersion(latestVersion.getVersion() + 1);
 		} else {
 			conf.setVersion(1);
 		}
-		// TODO idkbj: save by provisioning .... and get path
-		String path = conf.getVersion() + "/" + confType;
-		conf.setFilePath(path);
+		
+		conf.setContent(content);
 		conf = tomcatConfigFileService.saveConfigFile(conf);
 		json.setData(conf.getId());
 		return json;
@@ -94,39 +92,30 @@ public class TomcatConfigFileController {
 	}
 
 	@RequestMapping(value = "/{configFileId}", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getConfigVersionList(
-			SimpleJsonResponse json, @PathVariable Integer configFileId) {
-		TomcatConfigFile file = tomcatConfigFileService
-				.getTomcatConfigFileById(configFileId);
-		if (file != null) {
-			// TODO: idkbj load content by provisioning
-			String content = "loading ....." + configFileId.toString();
-			json.setData(content);
-		}
+	public @ResponseBody SimpleJsonResponse getConfigFileContents(SimpleJsonResponse json, @PathVariable Integer configFileId) {
+
+		json.setData(tomcatConfigFileService.getConfigFileContents(configFileId));
+		
 		return json;
 	}
 
 	@RequestMapping("/diff/{firstId}/{secondId}")
-	public String diff(Map<String, String> model,
-			@PathVariable Integer firstId, @PathVariable Integer secondId) {
-		TomcatConfigFile firstConfig = tomcatConfigFileService
-				.getTomcatConfigFileById(firstId);
-		TomcatConfigFile secondConfig = tomcatConfigFileService
-				.getTomcatConfigFileById(secondId);
+	public String diff(Map<String, String> model, @PathVariable Integer firstId, @PathVariable Integer secondId) {
+		
+		TomcatConfigFile firstConfig = tomcatConfigFileService.getTomcatConfigFileById(firstId);
+		TomcatConfigFile secondConfig = tomcatConfigFileService.getTomcatConfigFileById(secondId);
+		
 		String content = "";
 		if (firstConfig != null) {
-			// TODO idkbj get content of config file and put to model
-			content = "18:55:51.351 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityContextPersistenceFilter - SecurityContextHolder now cleared, as request processing completed";
+			
+			content = tomcatConfigFileService.getConfigFileContents(firstConfig.getFilePath());
 			model.put("firstConfig", content);
-			model.put("firstConfigVersion",
-					firstConfig.getVersionAndTimeAndTomcat());
+			model.put("firstConfigVersion",	firstConfig.getVersionAndTimeAndTomcat());
 		}
 		if (secondConfig != null) {
-			// TODO idkbj get content of config file and put to model
-			content = "18:55:51.351 [http-nio-8080-exec-7] DEBUG o.s.s.w.c.SecurityC3213123ntextPersistenceFilter - SecurityContextHolder now cleared, as request processing completed";
+			content = tomcatConfigFileService.getConfigFileContents(secondConfig.getFilePath());
 			model.put("secondConfig", content);
-			model.put("secondConfigVersion",
-					secondConfig.getVersionAndTimeAndTomcat());
+			model.put("secondConfigVersion", secondConfig.getVersionAndTimeAndTomcat());
 		}
 		return "configdiff";
 	}
@@ -149,14 +138,12 @@ public class TomcatConfigFileController {
 			// list of config files modified in domain level
 			confVersions = tomcatConfigFileService.getConfigFileVersions(
 					tomcat.getDomainId(), type);
-			List<TomcatConfigFile> modifiedConfigVersions = tomcatConfigFileService
-					.getConfigFileVersions(tomcat, type);
+			List<TomcatConfigFile> modifiedConfigVersions = tomcatConfigFileService.getConfigFileVersions(tomcat, commonHandler.getCode(type).getId());
 			if (modifiedConfigVersions != null) {
 				confVersions.addAll(modifiedConfigVersions);
 			}
 		} else if (td != null) {
-			confVersions = tomcatConfigFileService.getConfigFileVersions(
-					domainId, type);
+			confVersions = tomcatConfigFileService.getConfigFileVersions(domainId, type);
 		}
 		json.setList(confVersions);
 		json.setTotal(confVersions.size());
@@ -169,44 +156,24 @@ public class TomcatConfigFileController {
 			SimpleJsonResponse json, @PathVariable Integer domainId,
 			@PathVariable Integer tomcatId, @PathVariable String type) {
 		TomcatConfigFile conf = null;
+		
+		int fileTypeCdId = commonHandler.getCode(type).getId();//TODO tran : temporary code. don't do this.
+		
 		if (tomcatId > 0) {
 			TomcatInstance tc = tomcatService.findOne(tomcatId);
-			conf = tomcatConfigFileService.getLatestConfVersion(null, tc, type);
+			conf = tomcatConfigFileService.getLatestConfVersion(null, tc, fileTypeCdId);
 		} else if (domainId > 0) {
 			TomcatDomain td = domainService.getDomain(domainId);
-			conf = tomcatConfigFileService.getLatestConfVersion(td, null, type);
+			conf = tomcatConfigFileService.getLatestConfVersion(td, null, fileTypeCdId);
 		}
 
 		if (conf != null) {
 			// TODO idkbj get content of config file by provisioning
-			String content = "This is example content for config ID:"
-					+ conf.getId();
+			String content = "This is example content for config ID:" + conf.getId();
 			conf.setContent(content);
 			json.setData(conf);
 		}
 		return json;
 	}
-	// @RequestMapping(value = "{type}/{version}/domain/{domainId}", method =
-	// RequestMethod.GET)
-	// public @ResponseBody SimpleJsonResponse getConfigVersionList(
-	// SimpleJsonResponse json, @PathVariable Integer domainId,
-	// @PathVariable String type, @PathVariable Integer version) {
-	// TomcatDomain td = domainService.getDomain(domainId);
-	// String content = "";
-	// if (td == null) {
-	// json.setSuccess(false);
-	// json.setMsg("Tomcat domain does not exist.");
-	// } else {
-	// TomcatConfigFile confFile = tomcatConfigFileService.getConfig(td,
-	// type, version);
-	// if (confFile != null) {
-	// // TODO idkbj: load by ssh ....
-	// content = "load by ssh ...." + version;
-	// }
-	// json.setData(content);
-	// json.setSuccess(true);
-	// }
-	// return json;
-	// }
 
 }

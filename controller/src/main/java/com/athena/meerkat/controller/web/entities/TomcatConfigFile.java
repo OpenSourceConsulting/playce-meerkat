@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.MeerkatUtils;
+import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
@@ -154,6 +156,18 @@ public class TomcatConfigFile implements Serializable {
 
 	public void setTomcatInstance(TomcatInstance tomcatInstance) {
 		this.tomcatInstance = tomcatInstance;
+	}
+	
+	public void setDominaId(int domainId) {
+		TomcatDomain domain = new TomcatDomain();
+		domain.setId(domainId);
+		this.tomcatDomain = domain;
+	}
+	
+	@PrePersist
+	public void onPreSave(){
+		this.createUserId = WebUtil.getLoginUserId();
+		this.createdTime = new Date();
 	}
 
 }

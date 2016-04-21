@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
@@ -30,22 +32,35 @@ import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfCompari
 
 @Service
 public class TomcatDomainService {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TomcatDomainService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatDomainService.class);
+	
+	
 	@Autowired
 	private DomainRepository domainRepo;
+	
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
+	
 	@Autowired
 	private CommonCodeRepository commonRepo;
+	
 	@Autowired
 	private DomainTomcatConfigurationRepository domainTomcatConfRepo;
+	
 	@Autowired
 	private ApplicationRepository appRepo;
+	
 	@Autowired
 	private TomcatDomainDatasourceRepository tdDatasoureRepo;
+	
 	@Autowired
 	private DataSourceRepository dsRepo;
+	
+	@Autowired
+	private TomcatConfigFileService confFileService;
+	
+	@Autowired
+	private CommonCodeHandler codeService;
 
 	@Transactional
 	public TomcatDomain save(TomcatDomain domain) {
@@ -53,13 +68,12 @@ public class TomcatDomainService {
 	}
 
 	@Transactional
-	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain,
-			DomainTomcatConfiguration config) {
+	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain, DomainTomcatConfiguration config) {
 		domainRepo.save(domain);
 
 		config.setTomcatDomain(domain);
 
-		return saveDomainTomcatConfig(config);
+		return saveDomainTomcatConfigs(domain.getId(), config);
 	}
 
 	@Transactional
@@ -104,10 +118,24 @@ public class TomcatDomainService {
 		return domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
 	}
 
-	public DomainTomcatConfiguration saveDomainTomcatConfig(
-			DomainTomcatConfiguration conf) {
+	public DomainTomcatConfiguration saveDomainTomcatConfigs(int domainId, DomainTomcatConfiguration conf) {
+		
+		/*
+		 * save server.xml & context.xml
+		 */
+		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, Integer.parseInt(conf.getTomcatVersion()));
+		confFileService.saveNewTomcatConfigFiles(domainId, tomcatVersion);
+		
+		/*
+		 * save tomcat config
+		 */
 		return domainTomcatConfRepo.save(conf);
 
+	}
+	
+	public DomainTomcatConfiguration saveDomainTomcatConfig(DomainTomcatConfiguration conf) {
+		
+		return domainTomcatConfRepo.save(conf);
 	}
 
 	public List<DataSource> getDatasourceByDomainId(Integer domainId) {

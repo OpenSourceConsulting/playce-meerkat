@@ -48,31 +48,32 @@ public class ProvisioningUtil {
 		return jobNum;
 	}
 	
-	public static void deployAgent(File commanderDir, File jobDir) throws Exception {
+	public static void runTarget(File commanderDir, File jobDir, String targetName) throws Exception {
 		
-		String scriptFile = "deployagent.sh";
+		String execFile = "runtarget.sh";
 		
 		if(OSUtil.isWindows()) {
-			scriptFile = "deployAgent.bat";
+			execFile = "runTarget.bat";
 		}
 		
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
+		cmds.add(targetName);
 				
 		CommandUtil.execWithLog(commanderDir, cmds);
 	}
 	
 	public static void sendCommand(File commanderDir, File jobDir) throws Exception {
 		
-		String scriptFile = "sendcmd.sh";
+		String execFile = "sendcmd.sh";
 		
 		if(OSUtil.isWindows()) {
-			scriptFile = "sendCommand.bat";
+			execFile = "sendCommand.bat";
 		}
 		
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
 		
 		CommandUtil.execWithLog(commanderDir, cmds);
@@ -80,14 +81,14 @@ public class ProvisioningUtil {
 	
 	public static void runCommand(File commanderDir, File jobDir) throws Exception {
 		
-		String scriptFile = "runcmd.sh";
+		String execFile = "runcmd.sh";
 		
 		if(OSUtil.isWindows()) {
-			scriptFile = "runCommand.bat";
+			execFile = "runCommand.bat";
 		}
 		
 		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + scriptFile);
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "cmd.xml");
 		
 		CommandUtil.execWithLog(commanderDir, cmds);

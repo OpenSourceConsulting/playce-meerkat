@@ -118,17 +118,16 @@ public class MonDataController {
 	@ResponseBody
 	public GridJsonResponse getCPUMonData(GridJsonResponse jsonRes,
 			Integer serverId) {
-
 		Date now = new Date();
 		Date twoMinsAgo = new Date(now.getTime() - 2
 				* MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		types[0] = MeerkatConstants.MON_FACTOR_CPU_USED;
+		List<MonDataViewModel> results = service.getMonDataList(types,
+				serverId, twoMinsAgo, now);
 
-		// List<MonData> results = service
-		// .getMonDataList(MeerkatConstants.MON_FACTOR_CPU_USED, serverId,
-		// twoMinsAgo, now);
-		//
-		// jsonRes.setList(results);
-		// jsonRes.setTotal(results.size());
+		jsonRes.setList(results);
+		jsonRes.setTotal(results.size());
 		return jsonRes;
 	}
 
