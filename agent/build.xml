@@ -69,6 +69,20 @@
 
 	</target>
 	
+	<target name="update-config" description="">
+
+		<echo>update ${server.xml.file}</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/conf" trust="true" keyfile="${key.file}"
+			password="${user.passwd}" file="${server.xml.file}">
+		</scp>
+
+		<echo>update ${context.xml.file}</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/conf" trust="true" keyfile="${key.file}"
+			password="${user.passwd}" file="${context.xml.file}">
+		</scp>
+
+	</target>
+	
 	<target name="scp.agent.jar" description="deploy only agent jar file.">
 		
 		<property name="server.ip" value="192.168.0.157" />
