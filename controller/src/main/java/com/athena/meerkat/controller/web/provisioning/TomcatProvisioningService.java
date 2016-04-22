@@ -230,14 +230,16 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 	@Transactional
-	public void updateTomcatInstanceConfig(int domainId, WebSocketSession session) {
-		
-				
-		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
-		//List<Tomcat>   TomcatInstanceService
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
-		
-		if(tomcatConfig == null) {
+	public void updateTomcatInstanceConfig(int domainId,
+			WebSocketSession session) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService
+				.getTomcatConfig(domainId);
+		// List<Tomcat> TomcatInstanceService
+		List<TomcatInstance> list = instanceService
+				.getTomcatListByDomainId(domainId);
+
+		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
@@ -253,17 +255,20 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 
 	}
-	
+
 	@Transactional
-    public void updateTomcatInstanceConfig(TomcatInstance tomcat, WebSocketSession session) {
-		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcat.getId());
+	public void updateTomcatInstanceConfig(TomcatInstance tomcat,
+			WebSocketSession session) {
+		DomainTomcatConfiguration tomcatConfig = instanceService
+				.getTomcatConfig(tomcat.getId());
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
-		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null), "updateTomcatConfig.xml", session);
-    }
-	
+		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null),
+				"updateTomcatConfig.xml", session);
+	}
+
 	public void startTomcatInstance(int instanceId, WebSocketSession session) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
