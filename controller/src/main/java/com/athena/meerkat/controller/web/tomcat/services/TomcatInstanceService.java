@@ -148,6 +148,8 @@ public class TomcatInstanceService {
 				Method[] methods = DomainTomcatConfiguration.class.getMethods();
 				for (Method m : methods) {
 					// check the setter method
+					// Get the param type
+					Class<?>[] types = m.getParameterTypes();
 					if (m.getName()
 							.toLowerCase()
 							.contains(
@@ -156,7 +158,22 @@ public class TomcatInstanceService {
 													.toLowerCase())) {
 						try {
 							// run setter method to update value
-							m.invoke(conf, changedConf.getConfigValue());
+							// because the setter has only one param, just get
+							// the 1st param
+							if (types[0].toString().toLowerCase()
+									.contains("string")) {
+								m.invoke(conf,
+										(String) changedConf.getConfigValue());
+							} else if (types[0].toString().toLowerCase()
+									.contains("int")) {
+								m.invoke(conf, Integer.parseInt(changedConf
+										.getConfigValue()));
+							} else if (types[0].toString().toLowerCase()
+									.contains("boolean")) {
+								m.invoke(conf, Boolean.parseBoolean(changedConf
+										.getConfigValue()));
+							}
+
 						} catch (IllegalAccessException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
