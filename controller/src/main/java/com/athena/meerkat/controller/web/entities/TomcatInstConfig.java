@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -30,8 +32,10 @@ public class TomcatInstConfig {
 	private String configName;
 	@Column(name = "config_value")
 	private String configValue;
+
 	@Column(name = "created_date")
-	private Date createdDate;
+	@CreatedDate
+	private Date createdDate = new Date();
 
 	@ManyToOne
 	@JsonIgnore
@@ -42,6 +46,12 @@ public class TomcatInstConfig {
 	 */
 	public TomcatInstConfig() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public TomcatInstConfig(TomcatInstance tomcat, String name, String value) {
+		tomcatInstance = tomcat;
+		configName = name;
+		configValue = value;
 	}
 
 	/**

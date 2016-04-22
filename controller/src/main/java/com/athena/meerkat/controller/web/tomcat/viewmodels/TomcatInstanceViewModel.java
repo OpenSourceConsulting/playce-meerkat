@@ -17,6 +17,7 @@ public class TomcatInstanceViewModel {
 	private int redirectPort;
 	private String jvmVersion;
 	private String domainName;
+	private String domainType;
 	private int domainId;
 	private int latestServerXmlConfigFileId = 0;
 	private int latestContextXmlConfigFileId = 0;
@@ -131,7 +132,6 @@ public class TomcatInstanceViewModel {
 		if (tc.getTomcatDomain() != null) {
 			domainName = tc.getTomcatDomain().getName();
 			domainId = tc.getTomcatDomain().getId();
-
 			DomainTomcatConfiguration conf = tc.getTomcatDomain()
 					.getDomainTomcatConfig();
 			if (conf != null) {
@@ -179,5 +179,18 @@ public class TomcatInstanceViewModel {
 
 	public void setLatestContextXmlConfigFileId(int latestContextXmlConfigFileId) {
 		this.latestContextXmlConfigFileId = latestContextXmlConfigFileId;
+	}
+
+	public String getTomcatPorts() {
+		return "{HTTP:" + httpPort + ", AJP:" + ajpPort + ", redirect:"
+				+ redirectPort + "}";
+	}
+
+	public String getDomainType() {
+		return domainType;
+	}
+
+	public void setDomainType(String domainType) {
+		this.domainType = domainType;
 	}
 }

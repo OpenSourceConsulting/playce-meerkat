@@ -77,7 +77,7 @@ public class TomcatInstanceController {
 	private DataSourceService dsService;
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
-	
+
 	@Autowired
 	private TomcatProvisioningService proviService;
 
@@ -88,14 +88,15 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		
+
 		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already started.");
 		} else {
 			proviService.startTomcatInstance(id, null);
+			json.setMsg("Tomcat is started.");
 		}
-		
+
 		return json;
 	}
 
@@ -103,24 +104,26 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
 		stopTomcat(json, id);
-		startTomcat(new SimpleJsonResponse(), id);
+		
+		json = new SimpleJsonResponse();
+		
+		startTomcat(json, id);
 		return json;
 	}
-
 
 	@RequestMapping(value = "/instance/stop", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		
+
 		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already stopped.");
 		} else {
 			proviService.stopTomcatInstance(id, null);	
-			
+			json.setMsg("Tomcat is stopped.");
 		}
-		
+
 		return json;
 	}
 
@@ -171,35 +174,56 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable Integer id) {
-		
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
+			@PathVariable Integer id) {
+
 		DomainTomcatConfiguration conf = service.getTomcatConfig(id);
 
 		json.setData(conf);
-		
+
 		return json;
 	}
-	
+
+	@RequestMapping(value = "/instance/conf/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveTomcatConf(SimpleJsonResponse json,
+			DomainTomcatConfiguration conf) {
+		TomcatInstance tomcat = service.findOne(conf.getTomcatInstanceId());
+		if (tomcat != null) {
+			service.saveTomcatConfig(tomcat, conf);
+		}
+
+		// domainService.saveDomainTomcatConfig(domainTomcatConfig);
+
+		// proviService.updateTomcatInstanceConfig(domainTomcatConfig
+		// .getTomcatDomain().getId(), null);
+		return json;
+	}
+
 	@RequestMapping(value = "/instance/{serverId}/conf2", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
-		
-		List<DomainTomcatConfiguration> list = service.findInstanceConfigs(serverId);
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
+			@PathVariable int serverId) {
+
+		List<DomainTomcatConfiguration> list = service
+				.findInstanceConfigs(serverId);
 
 		json.setData(list);
-		
+
 		return json;
 	}
 
 	@RequestMapping("/instance/list")
-	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstance(
+			SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
 		return json;
 	}
 
 	@RequestMapping("/instance/listbydomain")
-	public @ResponseBody SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstances(
+			SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
 		if (domain != null) {
 			json.setData(service.getTomcatListByDomainId(domain.getId()));
@@ -261,7 +285,6 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json,
 			@RequestBody List<TomcatInstance> tomcats) {
-
 
 		for (TomcatInstance tomcatInstance : tomcats) {
 

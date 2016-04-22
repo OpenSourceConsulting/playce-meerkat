@@ -48,7 +48,16 @@ public class ProvisioningUtil {
 		return jobNum;
 	}
 	
-	public static void runTarget(File commanderDir, File jobDir, String targetName) throws Exception {
+	/**
+	 * <pre>
+	 * run default.xml target.
+	 * </pre>
+	 * @param commanderDir
+	 * @param jobDir
+	 * @param targetName
+	 * @throws Exception
+	 */
+	public static void runDefaultTarget(File commanderDir, File jobDir, String targetName) throws Exception {
 		
 		String execFile = "runtarget.sh";
 		
@@ -58,7 +67,7 @@ public class ProvisioningUtil {
 		
 		List<String> cmds = new ArrayList<String>();
 		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
-		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
+		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
 		cmds.add(targetName);
 				
 		CommandUtil.execWithLog(commanderDir, cmds);
@@ -74,7 +83,7 @@ public class ProvisioningUtil {
 		
 		List<String> cmds = new ArrayList<String>();
 		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
-		cmds.add(jobDir.getAbsolutePath() + File.separator + "build.xml");
+		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
 		
 		CommandUtil.execWithLog(commanderDir, cmds);
 	}

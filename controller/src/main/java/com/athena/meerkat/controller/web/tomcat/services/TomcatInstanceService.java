@@ -25,11 +25,14 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.catalina.startup.Tomcat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.server.standard.TomcatRequestUpgradeStrategy;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.SSHManager;
@@ -66,7 +70,8 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 @Service
 public class TomcatInstanceService {
 
-	static final Logger LOGGER = LoggerFactory.getLogger(TomcatInstanceService.class);
+	static final Logger LOGGER = LoggerFactory
+			.getLogger(TomcatInstanceService.class);
 
 	@Autowired
 	private TomcatInstanceRepository repo;
@@ -82,19 +87,19 @@ public class TomcatInstanceService {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	@Autowired
 	private CommonCodeRepository commonRepo;
-	
+
 	@Autowired
 	private TomcatConfigFileRepository tomcatConfigFileRepo;
 
 	@Autowired
 	private ApplicationRepository appRepo;
-	
+
 	@Autowired
 	private TomcatDomainService domainService;
-	
+
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -123,17 +128,17 @@ public class TomcatInstanceService {
 	public TomcatInstance findOne(int id) {
 		return repo.findOne(id);
 	}
-	
+
 	public DomainTomcatConfiguration getTomcatConfig(int instanceId) {
 		TomcatInstance tomcat = findOne(instanceId);
-		
 		return getTomcatConfig(tomcat.getDomainId(), instanceId);
 	}
-	
-	public DomainTomcatConfiguration getTomcatConfig(int domainId, int instanceId) {
-		
 
-		DomainTomcatConfiguration conf = domainService.getTomcatConfig(domainId);
+	public DomainTomcatConfiguration getTomcatConfig(int domainId,
+			int instanceId) {
+
+		DomainTomcatConfiguration conf = domainService
+				.getTomcatConfig(domainId);
 		// get configurations that are different to domain tomcat config
 		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(instanceId);
 		if (changedConfigs != null) {
@@ -143,31 +148,31 @@ public class TomcatInstanceService {
 				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
 					conf.setJavaHome(c.getConfigValue());
 				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
-					conf.setSessionTimeout(Integer.parseInt(c
-							.getConfigValue()));
+					conf.setSessionTimeout(Integer.parseInt(c.getConfigValue()));
 				}
 			}
 		}
-		
+
 		conf.setTomcatInstanceId(instanceId);
-		
+
 		return conf;
-		
+
 	}
-	
+
 	public List<TomcatInstance> findInstances(int serverId) {
 		return repo.findByServer_Id(serverId);
 	}
-	
+
 	public List<DomainTomcatConfiguration> findInstanceConfigs(int serverId) {
-		
+
 		List<DomainTomcatConfiguration> configs = new ArrayList<DomainTomcatConfiguration>();
 		List<TomcatInstance> list = repo.findByServer_Id(serverId);
-		
+
 		for (TomcatInstance tomcatInstance : list) {
-			configs.add(getTomcatConfig(tomcatInstance.getDomainId(), tomcatInstance.getId()));
+			configs.add(getTomcatConfig(tomcatInstance.getDomainId(),
+					tomcatInstance.getId()));
 		}
-		
+
 		return configs;
 	}
 
@@ -267,7 +272,7 @@ public class TomcatInstanceService {
 
 	public void saveState(int instanceId, int state) {
 		repo.setState(instanceId, state);
-		
+
 		LOGGER.debug("tomcat instance({}) state({}) saved.", instanceId, state);
 	}
 
@@ -296,4 +301,44 @@ public class TomcatInstanceService {
 		return appRepo.findByTomcatInstance_Id(id);
 	}
 
+	public void saveTomcatConfig(TomcatInstance tomcat,
+			DomainTomcatConfiguration conf) {
+		List<TomcatInstConfig> tomcatConfs = new ArrayList<>();
+		if (conf != null) {
+			// get all fields in domain tomcat config
+			Field[] fields = DomainTomcatConfiguration.class
+					.getDeclaredFields();
+
+			for (Field field : fields) {
+				// check whether the config property is exist in read-only
+				// conf
+				// list
+				String name = field.getName();
+				if (Arrays.asList(
+						MeerkatConstants.TOMCAT_INSTANCE_CONFIGS_CUSTOM)
+						.contains(name)) {
+					String value = "";
+					try {
+						field.setAccessible(true);
+						value = field.get(conf).toString();
+						field.setAccessible(false);
+					} catch (IllegalArgumentException | IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					TomcatInstConfig tomcatConf = tomcatInstConfigRepo
+							.findByConfigNameAndTomcatInstance(name, tomcat);
+					if (tomcatConf != null) {
+						tomcatConf.setConfigValue(value);
+					} else {
+						tomcatConf = new TomcatInstConfig(tomcat, name, value);
+					}
+					tomcatConfs.add(tomcatConf);
+				}
+			}
+			tomcatInstConfigRepo.save(tomcatConfs);
+		}
+
+	}
 }
