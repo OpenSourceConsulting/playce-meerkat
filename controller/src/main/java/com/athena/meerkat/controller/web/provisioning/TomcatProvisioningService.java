@@ -59,6 +59,7 @@ import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -207,7 +208,13 @@ public class TomcatProvisioningService implements InitializingBean {
 			 * 5. send install .
 			 */
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+<<<<<<< HEAD
+			
+			
+		
+=======
 
+>>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 			/*
 			 * 6. update server.xml & context.xml
 			 */
@@ -229,17 +236,14 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 	@Transactional
-	// @Async
-	public void updateTomcatInstanceConfig(int domainId,
-			WebSocketSession session) {
-
-		DomainTomcatConfiguration tomcatConfig = domainService
-				.getTomcatConfig(domainId);
-		// List<Tomcat> TomcatInstanceService
-		List<TomcatInstance> list = instanceService
-				.getTomcatListByDomainId(domainId);
-
-		if (tomcatConfig == null) {
+	public void updateTomcatInstanceConfig(int domainId, WebSocketSession session) {
+		
+				
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		//List<Tomcat>   TomcatInstanceService
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if(tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
@@ -255,21 +259,17 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 
 	}
-
+	
 	@Transactional
-	// @Async
-	public void updateTomcatInstanceConfig(TomcatInstance tomcat,
-			WebSocketSession session) {
-		DomainTomcatConfiguration tomcatConfig = instanceService
-				.getTomcatConfig(tomcat.getId());
+    public void updateTomcatInstanceConfig(TomcatInstance tomcat, WebSocketSession session) {
+		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcat.getId());
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
-		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null),
-				"updateTomcatConfig.xml", session);
-	}
-
+		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null), "updateTomcatConfig.xml", session);
+    }
+	
 	public void startTomcatInstance(int instanceId, WebSocketSession session) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);

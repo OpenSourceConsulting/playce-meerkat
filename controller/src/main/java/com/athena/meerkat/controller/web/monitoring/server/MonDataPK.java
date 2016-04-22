@@ -41,7 +41,6 @@ public class MonDataPK implements Serializable {
 	private Date monDt;//
 	
 	public MonDataPK() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getMonFactorId() {

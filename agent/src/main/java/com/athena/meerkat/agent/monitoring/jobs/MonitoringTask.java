@@ -47,7 +47,6 @@ public abstract class MonitoringTask {
 	 * </pre>
 	 */
 	public MonitoringTask() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

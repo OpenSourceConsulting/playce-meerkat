@@ -30,7 +30,6 @@ public class MonJmxService {
 	private TomcatInstanceService tiService;
 	
 	public MonJmxService() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void insertMonJmx(MonJmx monJmx){

@@ -27,7 +27,6 @@ public class MonDataService {
 	private MonFsRepository fsRepo;
 
 	public MonDataService() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void insertMonData(MonData monData) {

@@ -41,7 +41,6 @@ public class MonJmxPK implements Serializable {
 	private Date monDt;//
 	
 	public MonJmxPK() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getMonFactorId() {

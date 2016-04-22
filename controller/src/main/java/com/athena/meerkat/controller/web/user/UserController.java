@@ -67,7 +67,6 @@ public class UserController {
 	 * </pre>
 	 */
 	public UserController() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

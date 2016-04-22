@@ -39,5 +39,9 @@ public interface TomcatConfigFileRepository extends
 	List<TomcatConfigFile> findByTomcatAndFileTypeCdId(
 			@Param("tomcatId") int tomcatId, @Param("typeId") int typeId);
 	
+	@Query(value = "select id, domain_id, file_type_cd_id, max(version) version, file_path, tomcat_instance_id, comment, created_time, create_user_id "
+				  +"from tomcat_config_file where domain_id = :domainId and file_type_cd_id = :fileTypeCdId", nativeQuery = true)
+	TomcatConfigFile getLatestConfigFile(@Param("domainId") int domainId, @Param("fileTypeCdId") int fileTypeCdId);
+	
 
 }

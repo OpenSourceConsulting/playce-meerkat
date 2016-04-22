@@ -65,7 +65,6 @@ public class MonJmx {
 	 * </pre>
 	 */
 	public MonJmx() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
