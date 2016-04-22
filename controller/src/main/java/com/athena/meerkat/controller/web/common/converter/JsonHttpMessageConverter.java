@@ -149,9 +149,8 @@ public class JsonHttpMessageConverter extends
 	}
 
 	protected void handleEntity(DomainTomcatConfiguration entity) {
-		entity.setTomcatVersionNm((codeHandler.getCodeNm(
-				MeerkatConstants.CODE_GROP_TE_VERSION,
-				entity.getTomcatVersionCommonCodeId())));
+		
+		entity.setTomcatVersionNm((codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION,	entity.getTomcatVersionCd())));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
