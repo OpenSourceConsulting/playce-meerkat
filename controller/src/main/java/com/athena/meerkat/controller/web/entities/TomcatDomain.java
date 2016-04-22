@@ -26,11 +26,11 @@ import org.hibernate.annotations.LazyToOneOption;
 import org.springframework.context.annotation.Lazy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * A domain is used for grouping one or more tomcat instance. It is associated
- * to domain table in database
+ * A domain is used for grouping one or more tomcat instance. It is associated to domain table in database
  * 
  * @author Tran Ho
  * 
@@ -60,11 +60,11 @@ public class TomcatDomain {
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "domain-inst")
+	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
 	@OneToOne
@@ -73,14 +73,15 @@ public class TomcatDomain {
 	private DomainTomcatConfiguration domainTomcatConfig;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "domain-configFile")
+	@JsonIgnore
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "domain-app")
+	@JsonIgnore
 	private List<TomcatApplication> tomcatApplication;
 
 	@ManyToMany(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
 	private List<DataSource> datasources;
 
@@ -171,8 +172,7 @@ public class TomcatDomain {
 		return clusteringConfigurations;
 	}
 
-	public void setClusteringConfigurations(
-			List<ClusteringConfiguration> clusteringConfigurations) {
+	public void setClusteringConfigurations(List<ClusteringConfiguration> clusteringConfigurations) {
 		this.clusteringConfigurations = clusteringConfigurations;
 	}
 
@@ -187,8 +187,7 @@ public class TomcatDomain {
 		return domainTomcatConfig;
 	}
 
-	public void setDomainTomcatConfig(
-			DomainTomcatConfiguration domainTomcatConfig) {
+	public void setDomainTomcatConfig(DomainTomcatConfiguration domainTomcatConfig) {
 		this.domainTomcatConfig = domainTomcatConfig;
 	}
 
