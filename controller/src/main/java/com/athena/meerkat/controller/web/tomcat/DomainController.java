@@ -204,20 +204,6 @@ public class DomainController {
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig) {
 		
 		domainService.saveDomainTomcatConfig(domainTomcatConfig);
-		
-		/*
-		DomainTomcatConfiguration currentConf = domainService.getTomcatConfig(domainTomcatConfig.getTomcatDomain().getId());
-		
-		int id = currentConf.getId();
-		currentConf = domainTomcatConfig;
-		currentConf.setId(id);
-		
-		if (domainService.saveDomainTomcatConfig(currentConf) == null) {
-			json.setSuccess(false);
-			json.setMsg("Domain tomcat configuration is fail.");
-		}
-		*/
-		
 		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), null);
 		
 		return json;

@@ -33,7 +33,7 @@ package com.athena.meerkat.controller;
  * @version 2.0
  */
 public abstract class MeerkatConstants {
-	
+
 	public static final String UTF8 = "UTF-8";
 
 	/**
@@ -87,17 +87,15 @@ public abstract class MeerkatConstants {
 	public static String ORACLE_DRIVER = "oracle.jdbc.driver.OracleDriver";
 
 	/**
-	 * Tomcat status
-	 * - 'TS_STATE' common code
+	 * Tomcat status - 'TS_STATE' common code
 	 */
 	public static final int TOMCAT_STATUS_INSTALLED = 6;
 	public static final int TOMCAT_STATUS_RUNNING = 8;
 	public static final int TOMCAT_STATUS_SHUTDOWN = 7;
-	
+
 	/* State of application */
 	public static int APP_STATE_STARTED = 1;
 	public static int APP_STATE_STOPPED = 2;
-	
 
 	/**
 	 * meerkat repo address
@@ -118,11 +116,13 @@ public abstract class MeerkatConstants {
 	 */
 	public static final int REVISION_CLUSTERING_CONFIG_TYPE = 1;
 	public static final int REVISION_ENV_CONFIG_TYPE = 2;
-	
+
 	/**
 	 * Common code
 	 */
-	public static final String CODE_GROP_TE_VERSION = "tever";//tomcat version (involve name)
+	public static final String CODE_GROP_TE_VERSION = "tever";// tomcat version
+																// (involve
+																// name)
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CODE_GROP_CONFIG_FILE_TYPE = "configFileType";
@@ -148,14 +148,25 @@ public abstract class MeerkatConstants {
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 
 	public static final String SESSION_SERVER_TYPE_GROUP_ID = "SESSION_GROUP_TYPE";
-	
+
 	/**
 	 * Monitoring Factor id
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
 	public static final String MON_FACTOR_MEM_USED = "mem.used";
 	public static final String MON_FACTOR_MEM_USED_PER = "mem.used_per";
-	public static final String MON_FACTOR_TI_RUN = "ti.run";	//tomcat instance running status.
+	public static final String MON_FACTOR_TI_RUN = "ti.run"; // tomcat instance
+																// running
+																// status.
 
 	public static final int DISK_MON_PERIOD_MINUTE = 10;
+
+	/**
+	 * Define configuration fields that can be edited in domain level and in
+	 * tomcat instance as well
+	 */
+	public static final String[] TOMCAT_INSTANCE_CONFIGS_CUSTOM = { "javaHome",
+			"httpPort", "ajpPort", "sessionTimeout", "redirectPort",
+			"jmxEnable", "rmiRegistryPort", "rmiServerPort", "catalinaOpts",
+			"tomcatVersion", "encoding" };
 }
