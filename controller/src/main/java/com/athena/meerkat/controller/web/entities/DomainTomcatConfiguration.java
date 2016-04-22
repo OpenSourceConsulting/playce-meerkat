@@ -69,8 +69,8 @@ public class DomainTomcatConfiguration implements Serializable {
 	@Column(name = "modified_date")
 	private Date modifiedDate;
 
-	@Column(name = "tomcat_version_common_code_id")
-	private int tomcatVersionCommonCodeId;
+	@Column(name = "tomcat_version_cd")
+	private int tomcatVersionCd;
 
 	@Column(name = "encoding")
 	private String encoding;
@@ -230,12 +230,12 @@ public class DomainTomcatConfiguration implements Serializable {
 		this.encoding = encoding;
 	}
 
-	public int getTomcatVersionCommonCodeId() {
-		return tomcatVersionCommonCodeId;
+	public int getTomcatVersionCd() {
+		return tomcatVersionCd;
 	}
 
-	public void setTomcatVersionCommonCodeId(int tomcatVersion) {
-		this.tomcatVersionCommonCodeId = tomcatVersion;
+	public void setTomcatVersionCd(int tomcatVersionCd) {
+		this.tomcatVersionCd = tomcatVersionCd;
 	}
 
 	@PrePersist
