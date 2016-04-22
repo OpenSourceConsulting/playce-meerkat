@@ -296,12 +296,10 @@ public class ServerService {
 	 * @param machine
 	 */
 	public Server save(Server machine) {
-		// TODO Auto-generated method stub
 		return serverRepo.save(machine);
 	}
 
 	public Server getServerByName(String name) {
-		// TODO Auto-generated method stub
 		return serverRepo.findByName(name);
 	}
 
@@ -322,7 +320,6 @@ public class ServerService {
 	}
 
 	public NetworkInterface getNiByIp4(String sshIPAddr) {
-		// TODO Auto-generated method stub
 		return niRepo.findByIpv4(sshIPAddr);
 	}
 

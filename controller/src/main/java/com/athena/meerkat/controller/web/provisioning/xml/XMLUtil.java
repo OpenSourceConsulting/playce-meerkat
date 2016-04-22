@@ -17,12 +17,19 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
+
+import com.athena.meerkat.controller.MeerkatConstants;
 
 /**
  * xml utils
@@ -191,14 +198,26 @@ public abstract class XMLUtil {
 	
 	public static void writeToFile(Document doc, File file) {
 		try {
+			
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
-		} catch (TransformerException e) {
+			
+			/*
+			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+            DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
+            LSSerializer writer = impl.createLSSerializer();
+            
+            writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); // Set this to true if the output needs to be beautified.
+            writer.getDomConfig().setParameter("xml-declaration", Boolean.TRUE); // Set this to true if the declaration is needed to be outputted.
+
+            FileUtils.writeStringToFile(file, writer.writeToString(doc), MeerkatConstants.UTF8);
+            */
+		} catch (Exception e) {
 			throw new XMLUtilException(e);
 		}
 	}

@@ -59,6 +59,7 @@ import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -198,8 +199,7 @@ public class TomcatProvisioningService implements InitializingBean{
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
 			
 			
-			
-			
+		
 			/*
 			 * 6. update server.xml & context.xml
 			 */
@@ -220,7 +220,6 @@ public class TomcatProvisioningService implements InitializingBean{
 	}
 	
 	@Transactional
-	//@Async
 	public void updateTomcatInstanceConfig(int domainId, WebSocketSession session) {
 		
 				
@@ -243,6 +242,16 @@ public class TomcatProvisioningService implements InitializingBean{
 		}
 		
 	}
+	
+	@Transactional
+    public void updateTomcatInstanceConfig(TomcatInstance tomcat, WebSocketSession session) {
+		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcat.getId());
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null), "updateTomcatConfig.xml", session);
+    }
 	
 	
 	public void startTomcatInstance(int instanceId, WebSocketSession session) {

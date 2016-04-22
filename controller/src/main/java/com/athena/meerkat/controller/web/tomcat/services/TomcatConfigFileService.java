@@ -116,6 +116,11 @@ public class TomcatConfigFileService {
 		return null;
 	}
 	
+	public TomcatConfigFile getLatestContextConfigFile(int domainId) {
+		
+		return tomcatConfigFileRepo.getLatestConfigFile(domainId, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
+	}
+	
 	/**
 	 * <pre>
 	 * 

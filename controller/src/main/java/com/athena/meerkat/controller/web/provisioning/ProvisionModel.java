@@ -25,6 +25,7 @@ package com.athena.meerkat.controller.web.provisioning;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
@@ -111,6 +112,23 @@ public class ProvisionModel {
 		}else {
 			return CONFIG_OP_SET;
 		}
+	}
+	
+	public TomcatConfigFile getContextXmlConfig() {
+		
+		if (confFiles == null) {
+			return null;
+		}
+		
+		TomcatConfigFile tcFile = null;
+		for (TomcatConfigFile tomcatConfigFile : confFiles) {
+			if (MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == tomcatConfigFile.getFileTypeCdId()) {
+				tcFile = tomcatConfigFile;
+				break;
+			}
+		}
+		
+		return tcFile;
 	}
 
 }

@@ -42,66 +42,55 @@ public class WebSocketSessionMock implements WebSocketSession {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketSessionMock.class);
 
 	public WebSocketSessionMock() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public URI getUri() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public HttpHeaders getHandshakeHeaders() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Principal getPrincipal() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public InetSocketAddress getLocalAddress() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public InetSocketAddress getRemoteAddress() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getAcceptedProtocol() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setTextMessageSizeLimit(int messageSizeLimit) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public int getTextMessageSizeLimit() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -113,13 +102,11 @@ public class WebSocketSessionMock implements WebSocketSession {
 
 	@Override
 	public int getBinaryMessageSizeLimit() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<WebSocketExtension> getExtensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -131,7 +118,6 @@ public class WebSocketSessionMock implements WebSocketSession {
 
 	@Override
 	public boolean isOpen() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -143,7 +129,6 @@ public class WebSocketSessionMock implements WebSocketSession {
 
 	@Override
 	public void close(CloseStatus status) throws IOException {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -1,7 +1,5 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,22 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
-import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
-import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
+import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
-import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
-import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatDomainDatasourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
-import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
 
 @Service
 public class TomcatDomainService {
@@ -78,7 +73,22 @@ public class TomcatDomainService {
 
 	@Transactional
 	public void saveDatasources(List<TomcatDomainDatasource> datasources) {
+		
 		tdDatasoureRepo.save(datasources);
+		
+		
+		/*
+		 * modify context.xml
+		 * TODO 최초 설정시는 기존 version 을 modify & 이후는 version 증가하도록 수정.
+		 */
+		int domainId = datasources.get(0).getTomcatDomainId();
+		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
+		List<DataSource> dsList = dsRepo.getDatasourcesByDomainId(domainId);
+		
+		String contextFilePath = confFileService.getFileFullPath(contextFile);
+		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
+		
+		contextXml.updateDatasource(dsList);
 	}
 
 	public boolean delete(int domainId) {

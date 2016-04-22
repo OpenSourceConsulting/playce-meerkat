@@ -28,10 +28,13 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import com.athena.meerkat.controller.web.entities.DataSource;
 
@@ -44,6 +47,9 @@ import com.athena.meerkat.controller.web.entities.DataSource;
  */
 public class ContextXmlHandler {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContextXmlHandler.class);
+	
+	private static final String TAG_NAME_CONTEXT = "Context";
 	private static final String TAG_NAME_RES = "Resource";
 	private static final String DS_TYPE = "javax.sql.DataSource";
 
@@ -53,14 +59,21 @@ public class ContextXmlHandler {
 		this.filepath = filepath;
 	}
 	
-	public void updateDatasource(List<DataSource> dsList, File jobDir) {
+	public void updateDatasource(List<DataSource> dsList) {
+		
+		if (dsList == null || dsList.size() == 0) {
+			
+			LOGGER.debug("DataSource config is empty. skip update datasource.");
+			return;
+		}
+		
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(filepath);
 	
 			// Get the root element
-			Node context = doc.getFirstChild();
+			Node context = doc.getElementsByTagName(TAG_NAME_CONTEXT).item(0);
 			
 			NodeList list = doc.getElementsByTagName(TAG_NAME_RES);
 			for (int i = 0; i < list.getLength(); i++) {
@@ -91,7 +104,9 @@ public class ContextXmlHandler {
 				context.appendChild(res);
 			}
 			
-			XMLUtil.writeToFile(doc, new File(jobDir.getAbsoluteFile() + File.separator + "context.xml"));
+			context.appendChild(doc.createTextNode("\n"));
+			
+			XMLUtil.writeToFile(doc, new File(this.filepath));
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);

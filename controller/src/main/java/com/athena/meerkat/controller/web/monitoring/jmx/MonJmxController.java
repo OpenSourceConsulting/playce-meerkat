@@ -42,7 +42,6 @@ public class MonJmxController {
 	 * </pre>
 	 */
 	public MonJmxController() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@MessageMapping("/monitor/jmx/create")
