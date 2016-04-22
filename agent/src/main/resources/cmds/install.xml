@@ -35,18 +35,14 @@
 					extractDir="${down.dir}" />
 			
 			<configuration home="${catalina.base}">
-				<property name="cargo.servlet.port" 		value="${ti.http.port}"/>
-				<property name="cargo.tomcat.ajp.port" 		value="${ti.ajp.port}"/>
-				<property name="cargo.tomcat.uriencoding" 	value="${ti.http.encoding}"/>
-				<!-- <property name="cargo.rmi.port"				value="${ti.rmi.port}" /> -->
 			</configuration>
 		</cargo>
 		
-		<copy todir="${catalina.home}" >
+		<copy todir="${catalina.home}" description="copy catalina.home">
 			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
 		</copy>
 
-		<copy todir="${catalina.base}" verbose="true">
+		<copy todir="${catalina.base}" verbose="true" description="copy env/start/stop script.">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">
 		      <include name="*"/>
 		    </fileset>
