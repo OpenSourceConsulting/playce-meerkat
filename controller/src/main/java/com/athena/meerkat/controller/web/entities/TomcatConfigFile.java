@@ -164,6 +164,10 @@ public class TomcatConfigFile implements Serializable {
 		this.tomcatDomain = domain;
 	}
 	
+	public void increaseVersion() {
+		this.version++;
+	}
+	
 	@PrePersist
 	public void onPreSave(){
 		this.createUserId = WebUtil.getLoginUserId();

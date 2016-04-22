@@ -59,6 +59,12 @@ public class ContextXmlHandler {
 		this.filepath = filepath;
 	}
 	
+	/**
+	 * <pre>
+	 * 생성자로 전달된 filepath 의 context.xml 파일을 수정한다.
+	 * </pre>
+	 * @param dsList
+	 */
 	public void updateDatasource(List<DataSource> dsList) {
 		
 		if (dsList == null || dsList.size() == 0) {
@@ -68,45 +74,70 @@ public class ContextXmlHandler {
 		}
 		
 		try {
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse(filepath);
+			Document doc = changeXML(dsList);
 	
-			// Get the root element
-			Node context = doc.getElementsByTagName(TAG_NAME_CONTEXT).item(0);
-			
-			NodeList list = doc.getElementsByTagName(TAG_NAME_RES);
-			for (int i = 0; i < list.getLength(); i++) {
-				
-                Node node = list.item(i);
-                
-                if (DS_TYPE.equals(XMLUtil.getAttribute(node, "type"))) {
-                	context.removeChild(node);
-				}
-			}
-			
-			for (DataSource ds : dsList) {
-				Element res = doc.createElement(TAG_NAME_RES);
-				res.setAttribute("name", 			ds.getName());
-				res.setAttribute("auth", 			"Container");
-				res.setAttribute("type", 			DS_TYPE);
-				res.setAttribute("maxActive", 		String.valueOf(ds.getMaxConnection()));
-				res.setAttribute("maxIdle", 		String.valueOf(ds.getMaxConnectionPool()));
-				res.setAttribute("minIdle", 		String.valueOf(ds.getMinConnectionPool()));
-				res.setAttribute("maxWait", 		String.valueOf(ds.getTimeout()));
-				res.setAttribute("username", 		ds.getUserName());
-				res.setAttribute("password", 		ds.getPassword());
-				res.setAttribute("driverClassName", "com.mysql.jdbc.Driver");
-				res.setAttribute("url", 			ds.getJdbcUrl());
-				res.setAttribute("testOnBorrow", 	"true");
-				res.setAttribute("validationQuery", "SELECT 1");
-				
-				context.appendChild(res);
-			}
-			
-			context.appendChild(doc.createTextNode("\n"));
-			
 			XMLUtil.writeToFile(doc, new File(this.filepath));
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	protected Document changeXML(List<DataSource> dsList) throws Exception {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		Document doc = docBuilder.parse(filepath);
+
+		// Get the root element
+		Node context = doc.getElementsByTagName(TAG_NAME_CONTEXT).item(0);
+		
+		NodeList list = doc.getElementsByTagName(TAG_NAME_RES);
+		int len = list.getLength();
+		
+		for (int i = 0; i < len; i++) {
+			
+            Node node = list.item(0);
+            
+            if (DS_TYPE.equals(XMLUtil.getAttribute(node, "type"))) {
+            	context.removeChild(node);
+			}
+		}
+		
+		for (DataSource ds : dsList) {
+			Element res = doc.createElement(TAG_NAME_RES);
+			res.setAttribute("name", 			ds.getName());
+			res.setAttribute("auth", 			"Container");
+			res.setAttribute("type", 			DS_TYPE);
+			res.setAttribute("maxActive", 		String.valueOf(ds.getMaxConnection()));
+			res.setAttribute("maxIdle", 		String.valueOf(ds.getMaxConnectionPool()));
+			res.setAttribute("minIdle", 		String.valueOf(ds.getMinConnectionPool()));
+			res.setAttribute("maxWait", 		String.valueOf(ds.getTimeout()));
+			res.setAttribute("username", 		ds.getUserName());
+			res.setAttribute("password", 		ds.getPassword());
+			res.setAttribute("driverClassName", "com.mysql.jdbc.Driver");
+			res.setAttribute("url", 			ds.getJdbcUrl());
+			res.setAttribute("testOnBorrow", 	"true");
+			res.setAttribute("validationQuery", "SELECT 1");
+			
+			context.appendChild(res);
+		}
+		
+		context.appendChild(doc.createTextNode("\n"));
+		
+		return doc;
+	}
+	
+	public String updateDatasourceContents(List<DataSource> dsList) {
+		
+		if (dsList == null || dsList.size() == 0) {
+			
+			throw new IllegalArgumentException("DataSource list is empty.");
+		}
+		
+		try {
+			Document doc = changeXML(dsList);
+			
+			return XMLUtil.nodeToString(doc);
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -60,7 +60,8 @@ public class ContextXmlHandlerTest {
 		DefaultResourceLoader resLoader = new DefaultResourceLoader();
 		
 		try{
-			String file = ContextXmlHandlerTest.class.getResource("context.xml").getFile();
+			//String file = ContextXmlHandlerTest.class.getResource("context_3.xml").getFile();
+			String file = resLoader.getResource("file:src/test/resources/context_3.xml").getFile().getAbsolutePath();
 			System.out.println(file);
 			ContextXmlHandler xmlHandler = new ContextXmlHandler(file);
 			

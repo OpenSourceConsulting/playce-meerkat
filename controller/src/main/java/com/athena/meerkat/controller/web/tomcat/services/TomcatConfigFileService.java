@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FileUtils;
@@ -54,7 +56,7 @@ public class TomcatConfigFileService {
 	
 	@Value("${meerkat.config.dir:conffiles}")
 	private String configFileDir;
-
+	
 	public List<TomcatConfigFile> getConfigFileVersions(int domainId, String type) {
 		CommonCode codeValue = commonRepo.findByCodeNm(type);
 		List<TomcatConfigFile> configs = tomcatConfigFileRepo.findByTomcatDomain_IdAndFileTypeCdId(domainId, codeValue.getId());
@@ -72,6 +74,14 @@ public class TomcatConfigFileService {
 		return tomcatConfigFileRepo.findOne(id);
 	}
 
+	/**
+	 * <pre>
+	 * server.xml or context.xml 파일을 db & filesystem 같이 저장한다.
+	 * version 을 증가시키지는 않는다.
+	 * </pre>
+	 * @param conf
+	 * @return
+	 */
 	@Transactional
 	public TomcatConfigFile saveConfigFile(TomcatConfigFile conf) {
 		
@@ -81,10 +91,10 @@ public class TomcatConfigFileService {
 		String filePath = configFileDir + File.separator + conf.getTomcatDomain().getId() + "_" + getIdPath(conf.getTomcatInstance());
 		filePath = filePath + File.separator + getFileTypeName(conf.getFileTypeCdId(), conf.getVersion());
 		
-		File file = new File(cmdHome + File.separator + filePath);
+		File newFile = new File(getFileFullPath(filePath));
 		
 		try{
-			FileUtils.writeStringToFile(file, conf.getContent(), MeerkatConstants.UTF8);
+			FileUtils.writeStringToFile(newFile, conf.getContent(), MeerkatConstants.UTF8);
 		}catch(IOException e){
 			throw new RuntimeException(e);
 		}

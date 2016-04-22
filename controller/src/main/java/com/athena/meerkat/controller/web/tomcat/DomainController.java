@@ -239,12 +239,22 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping(value = "/saveDatasources", method = RequestMethod.POST)
+	@RequestMapping(value = "/addDatasources", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json,
 			@RequestBody List<TomcatDomainDatasource> datasources) {
 
-		domainService.saveDatasources(datasources);
+		domainService.addDatasources(datasources);
+
+		return json;
+	}
+	
+	@RequestMapping(value = "/saveFirstDatasources", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveFirstDatasources(SimpleJsonResponse json,
+			@RequestBody List<TomcatDomainDatasource> datasources) {
+
+		domainService.saveFirstDatasources(datasources);
 
 		return json;
 	}

@@ -2,6 +2,9 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +59,9 @@ public class TomcatDomainService {
 
 	@Autowired
 	private CommonCodeHandler codeService;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 
 	@Transactional
 	public TomcatDomain save(TomcatDomain domain) {
@@ -72,16 +78,51 @@ public class TomcatDomainService {
 		return saveDomainTomcatConfigs(domain.getId(), config);
 	}
 
+	/**
+	 * <pre>
+	 * 추가 저장시에는 context.xml 파일 버전도 증가시킨다.
+	 * </pre>
+	 * @param datasources
+	 */
 	@Transactional
-	public void saveDatasources(List<TomcatDomainDatasource> datasources) {
+	public void addDatasources(List<TomcatDomainDatasource> datasources) {
+		
+		tdDatasoureRepo.save(datasources);
+		
+		/*
+		 * make updated context.xml contents.
+		 */
+		int domainId = datasources.get(0).getTomcatDomainId();
+		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
+		List<DataSource> dsList = dsRepo.getDatasourcesByDomainId(domainId);
+		
+		String contextFilePath = confFileService.getFileFullPath(contextFile);
+		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
+		
+		contextFile.setContent(contextXml.updateDatasourceContents(dsList));
+		
+		/*
+		 * save new version TomcatConfigFile.
+		 */
+		entityManager.detach(contextFile);
+		contextFile.setId(0);//for insert.
+		contextFile.increaseVersion();
+		
+		confFileService.saveConfigFile(contextFile);
+	}
+	
+	/**
+	 * <pre>
+	 * 최초 저장시에는 기존 버전의 context.xml 파일을 수정한다.
+	 * </pre>
+	 * @param datasources
+	 */
+	@Transactional
+	public void saveFirstDatasources(List<TomcatDomainDatasource> datasources) {
 		
 		tdDatasoureRepo.save(datasources);
 		
 		
-		/*
-		 * modify context.xml
-		 * TODO 최초 설정시는 기존 version 을 modify & 이후는 version 증가하도록 수정.
-		 */
 		int domainId = datasources.get(0).getTomcatDomainId();
 		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
 		List<DataSource> dsList = dsRepo.getDatasourcesByDomainId(domainId);
