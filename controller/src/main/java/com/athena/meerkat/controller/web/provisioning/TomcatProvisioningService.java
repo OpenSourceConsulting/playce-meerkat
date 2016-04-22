@@ -414,7 +414,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		targetProps
 				.setProperty("catalina.base", tomcatConfig.getCatalinaBase());
 		targetProps.setProperty("tomcat.name",
-				getTomcatName(tomcatConfig.getTomcatVersion()));
+				getTomcatName(tomcatConfig.getTomcatVersionNm()));
 		targetProps.setProperty("am.server.port", "8005");
 		targetProps.setProperty("am.http.port",
 				String.valueOf(tomcatConfig.getHttpPort()));

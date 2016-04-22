@@ -139,7 +139,7 @@ public class TomcatInstanceViewModel {
 				ajpPort = conf.getAjpPort();
 				redirectPort = conf.getRedirectPort();
 				jvmVersion = "";
-				tomcatVersion = conf.getTomcatVersion();
+				tomcatVersion = conf.getTomcatVersionNm();
 			}
 		}
 

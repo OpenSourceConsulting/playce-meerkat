@@ -143,7 +143,7 @@ public class TomcatInstanceController {
 				viewmodel.setHttpPort(domainConf.getHttpPort());
 				viewmodel.setAjpPort(domainConf.getAjpPort());
 				viewmodel.setRedirectPort(domainConf.getRedirectPort());
-				viewmodel.setTomcatVersion(domainConf.getTomcatVersion());
+				viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
 			} else {
 				for (TomcatInstConfig c : changedConfigs) {
 					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {

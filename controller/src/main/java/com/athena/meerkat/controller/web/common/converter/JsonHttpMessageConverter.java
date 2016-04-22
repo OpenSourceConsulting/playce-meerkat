@@ -38,6 +38,7 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,7 +55,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonHttpMessageConverter extends
 		MappingJackson2HttpMessageConverter {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonHttpMessageConverter.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JsonHttpMessageConverter.class);
 
 	@Autowired
 	private CommonCodeHandler codeHandler;
@@ -117,8 +119,11 @@ public class JsonHttpMessageConverter extends
 		} else if (object instanceof TomcatInstanceViewModel) {
 			handleEntity((TomcatInstanceViewModel) object);
 
+		} else if (object instanceof DomainTomcatConfiguration) {
+			handleEntity((DomainTomcatConfiguration) object);
 		} else {
-			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
+			LOGGER.debug("Not found convert method for {}", object.getClass()
+					.getName());
 		}
 	}
 
@@ -139,6 +144,14 @@ public class JsonHttpMessageConverter extends
 	protected void handleEntity(TomcatInstanceViewModel entity) {
 		entity.setStateNm(codeHandler.getCodeNm(
 				MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
+
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+
+	protected void handleEntity(DomainTomcatConfiguration entity) {
+		entity.setTomcatVersionNm((codeHandler.getCodeNm(
+				MeerkatConstants.CODE_GROP_TE_VERSION,
+				entity.getTomcatVersionCommonCodeId())));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}

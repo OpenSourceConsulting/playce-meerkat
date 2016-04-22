@@ -62,32 +62,30 @@ public class DomainTomcatConfiguration implements Serializable {
 	private int rmiServerPort;
 	@Column(name = "catalina_opts")
 	private String catalinaOpts;
-	
+
 	@Column(name = "modified_user_id")
 	private int modifiedUserId;
-	
+
 	@Column(name = "modified_date")
 	private Date modifiedDate;
-	
-	@Column(name = "tomcat_version")
-	private String tomcatVersion;
-	
+
+	@Column(name = "tomcat_version_common_code_id")
+	private int tomcatVersionCommonCodeId;
+
 	@Column(name = "encoding")
 	private String encoding;
 
 	@OneToOne
 	@JoinColumn(name = "domain_id")
-	@JsonBackReference(value="domain-config")
+	@JsonBackReference(value = "domain-config")
 	private TomcatDomain tomcatDomain;
-	
+
 	@Transient
 	private int tomcatInstanceId;
-	
+
 	@Transient
 	private String tomcatVersionNm;
 
-	
-	
 	public String getTomcatVersionNm() {
 		return tomcatVersionNm;
 	}
@@ -232,14 +230,14 @@ public class DomainTomcatConfiguration implements Serializable {
 		this.encoding = encoding;
 	}
 
-	public String getTomcatVersion() {
-		return tomcatVersion;
+	public int getTomcatVersionCommonCodeId() {
+		return tomcatVersionCommonCodeId;
 	}
 
-	public void setTomcatVersion(String tomcatVersion) {
-		this.tomcatVersion = tomcatVersion;
+	public void setTomcatVersionCommonCodeId(int tomcatVersion) {
+		this.tomcatVersionCommonCodeId = tomcatVersion;
 	}
-	
+
 	@PrePersist
 	@PreUpdate
 	public void onPreSave() {
