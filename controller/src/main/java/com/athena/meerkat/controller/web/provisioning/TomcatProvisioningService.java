@@ -208,13 +208,7 @@ public class TomcatProvisioningService implements InitializingBean {
 			 * 5. send install .
 			 */
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
-<<<<<<< HEAD
-			
-			
-		
-=======
 
->>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 			/*
 			 * 6. update server.xml & context.xml
 			 */
@@ -607,4 +601,8 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 }
+<<<<<<< HEAD
 // end of TomcatProvisioningService.java
+=======
+// end of TomcatProvisioningService.java
+>>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
