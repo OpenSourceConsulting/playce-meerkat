@@ -1,73 +1,5 @@
-<project name="MeerkatAgent build" basedir="." default="deploy-agent">
+<project name="MeerkatAgent build" basedir="." default="deploy.commander">
 
-	<property file="${basedir}/build.properties" />
-	
-	<!--<property name="job.dir" value="${basedir}/jobs/${server.ip}/${job.number}" /> -->
-	<property file="${basedir}/build-ssh.properties" />
-	
-
-	<target name="deploy-agent" description="deploy to server">
-		
-		<!--
-		<setproxy socksproxyhost="localhost" socksproxyport="20024"/>
-		<property name="server.ip" value="192.168.0.87" />
-		<property name="server.port" value="22" />
-		<property name="user.id" value="meerkat" />
-		<property name="user.passwd" value="meerkat" />
-		<property name="agent.deploy.dir" value="/home/meerkat/athena-meerkat-agent" />
-		<property name="agent.name" value="athena-meerkat-agent-1.0.0-SNAPSHOT" />
-		 -->
-
-		<property name="filename" value="${agent.name}-bin.tar.gz" />
-		
-		<property name="cmd1" value="cd ${agent.deploy.dir}" />
-		<property name="cmd2" value="tar xvfz ./${filename}" />
-		<property name="cmd3" value="rm -f ./${filename}" />
-		<property name="cmd4" value="mv ./agentenv.sh ./${agent.name}/bin/" />
-		<property name="cmd5" value="mv ./env.sh ./${agent.name}/scripts/" />
-		<property name="cmd6" value="echo meerkat.agent.server.id=${server.id} >> ./${agent.name}/conf/meerkat-agent.properties" />
-		<property name="cmd7" value="cd ./${agent.name}; ./startup.sh nolog" />
-
-		<echo>basedir : ${basedir}</echo>
-		<echo>create ${agent.deploy.dir}</echo>
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-					command="mkdir ${agent.deploy.dir}" trust="true" failonerror="false"/>
-		
-		<echo>send ${filename}</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}" trust="true" keyfile="${key.file}"
-			password="${user.passwd}" failonerror="true">
-			<fileset dir="${basedir}/../../.." defaultexcludes="true">
-				<include name="${filename}"/>
-			</fileset>
-			<fileset dir="${basedir}" defaultexcludes="true">
-				<include name="agentenv.sh"/>
-				<include name="env.sh"/>
-			</fileset>
-		</scp>
-		
-
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="${cmd1}; ${cmd2}; ${cmd3}; ${cmd4}; ${cmd5}; ${cmd6}; ${cmd7}" trust="true" failonerror="true" />
-		
-		<echo>running agent.</echo>
-		
-	</target>
-	
-	<target name="send-cmd" description="send cmd build file to server and exec">
-
-		<echo>send build.properties</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
-			password="${user.passwd}">
-			<fileset dir="${basedir}" defaultexcludes="true">
-				<include name="cmd.xml"/>
-				<include name="build.properties"/>
-			</fileset>
-		</scp>
-		
-		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="cd ${agent.deploy.dir}/${agent.name}/bin; ./runCmd.sh" trust="true" failonerror="false" />
-
-	</target>
 	
 	<target name="scp.agent.jar" description="deploy only agent jar file.">
 		
@@ -89,31 +21,45 @@
 
 	</target>
 	
-	<target name="scp.agent.tar.gz" description="deploy only agent tar.gz file.">
+	<target name="deploy.commander" description="deploy only agent tar.gz file.">
 			
 		<property name="server.ip" value="192.168.0.87" />
 		<property name="server.port" value="22" />
 		<property name="user.id" value="meerkat" />
 		<property name="user.passwd" value="meerkat" />
 		<property name="deploy.dir" value="/home/meerkat/.aMeerkat" />
+		<property name="file.name" value="athena-meerkat-commander-1.0.0-SNAPSHOT" />
 		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
 
-		<echo>send agent tar.gz file.</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${deploy.dir}" trust="true" keyfile="${key.file}"
+		<echo>upload ${file.name}-bin.tar.gz</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:/home/meerkat" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
 			<fileset dir="${basedir}/target" defaultexcludes="true">
-				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz"/>
+				<include name="${file.name}-bin.tar.gz"/>
 			</fileset>
 		</scp>
 		
-		<copy todir="G:\project\AthenaMeerkat\.aMeerkat" >
-			<fileset dir="${basedir}/target" defaultexcludes="true">
-				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT-bin.tar.gz"/>
-			</fileset>
-		</copy>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="tar xvfz /home/meerkat/${file.name}-bin.tar.gz; cp -r /home/meerkat/${file.name}/* ${deploy.dir};rm -rf /home/meerkat/${file.name}*;" 
+			trust="true" failonerror="true" />
 
 	</target>
 	
-
+	<target name="deploy.commander.local">
+		<property name="gunzip.dest" value="G:\project\AthenaMeerkat" />
+		<property name="file.name" value="athena-meerkat-commander-1.0.0-SNAPSHOT" />
+		
+		<gunzip src="${basedir}/target/${file.name}-bin.tar.gz" dest="${gunzip.dest}"/>
+		<untar src="${gunzip.dest}/${file.name}-bin.tar" dest="${gunzip.dest}"/>
+		
+		<copy todir="${gunzip.dest}/.aMeerkat" verbose="true">
+		    <fileset dir="${gunzip.dest}/${file.name}" >
+		      <include name="**"/>
+		    </fileset>
+		</copy>
+		
+		<delete file="${gunzip.dest}/${file.name}-bin.tar"/>
+		<delete dir="${gunzip.dest}/${file.name}"/>
+	</target>
 
 </project>

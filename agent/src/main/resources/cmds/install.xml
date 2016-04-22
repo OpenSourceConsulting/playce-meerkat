@@ -35,18 +35,14 @@
 					extractDir="${down.dir}" />
 			
 			<configuration home="${catalina.base}">
-				<property name="cargo.servlet.port" 		value="${ti.http.port}"/>
-				<property name="cargo.tomcat.ajp.port" 		value="${ti.ajp.port}"/>
-				<property name="cargo.tomcat.uriencoding" 	value="${ti.http.encoding}"/>
-				<!-- <property name="cargo.rmi.port"				value="${ti.rmi.port}" /> -->
 			</configuration>
 		</cargo>
 		
-		<copy todir="${catalina.home}" >
+		<copy todir="${catalina.home}" description="copy catalina.home">
 			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
 		</copy>
 
-		<copy todir="${catalina.base}" verbose="true">
+		<copy todir="${catalina.base}" verbose="true" description="copy env/start/stop script.">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">
 		      <include name="*"/>
 		    </fileset>
@@ -54,6 +50,17 @@
 
 		<chmod dir="${catalina.home}" perm="755" includes="**/*.sh"/>
 		<chmod dir="${catalina.base}" perm="755" includes="**/*.sh"/>
+		
+		<echo message="updating ${catalina.base}/conf/catalina.properties" />
+
+		<propertyfile file="${catalina.base}/conf/catalina.properties" comment="##Generated file - do not modify!">
+		     <entry key="am.server.port" 	value="${am.server.port}" 	operation="${am.conf.op}" />
+		     <entry key="am.http.port"   	value="${am.http.port}" 	operation="${am.conf.op}" />
+		     <entry key="am.uri.encoding"   value="${am.uri.encoding}" 	operation="${am.conf.op}" />
+		     <entry key="am.ajp.port"    	value="${am.ajp.port}" 		operation="${am.conf.op}" />
+			 <entry key="am.rmi.registry.port"  value="${am.rmi.registry.port}" operation="${am.conf.op}" />
+			 <entry key="am.rmi.server.port" 	value="${am.rmi.server.port}" 	operation="${am.conf.op}" />
+		</propertyfile>
 
 	</target>
 
