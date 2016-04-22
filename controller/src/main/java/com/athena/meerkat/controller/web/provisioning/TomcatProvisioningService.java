@@ -182,9 +182,9 @@ public class TomcatProvisioningService implements InitializingBean {
 			copyCmds("install.xml", jobDir);
 
 			/*
-			 * 2. generate agentenv.sh createAgentEnvSHFile(jobDir,
-			 * agentDeployDir, agentName); generateTomcatEnvFile(jobDir,
-			 * tomcatConfig);
+			 * 2. generate agentenv.sh 
+			 *    createAgentEnvSHFile(jobDir, agentDeployDir, agentName); 
+			 *    generateTomcatEnvFile(jobDir, tomcatConfig);
 			 */
 
 			/*
@@ -371,17 +371,16 @@ public class TomcatProvisioningService implements InitializingBean {
 		Properties targetProps = new Properties(); // build.properties
 		targetProps.setProperty("agent.deploy.dir", agentDeployDir);
 		targetProps.setProperty("agent.name", agentName);
-		// targetProps.setProperty("tomcat.unzip.pah", "/home/"+ userId
-		// +"/tmp");
-		targetProps.setProperty("catalina.home", tomcatConfig.getCatalinaHome());
-		targetProps.setProperty("catalina.base", tomcatConfig.getCatalinaBase());
-		targetProps.setProperty("tomcat.name", getTomcatName(tomcatConfig.getTomcatVersionNm()));
-		targetProps.setProperty("am.server.port", "8005");
-		targetProps.setProperty("am.http.port", String.valueOf(tomcatConfig.getHttpPort()));
-		targetProps.setProperty("am.ajp.port", String.valueOf(tomcatConfig.getAjpPort()));
-		targetProps.setProperty("am.uri.encoding", tomcatConfig.getEncoding());
+		// targetProps.setProperty("tomcat.unzip.pah", "/home/"+ userId +"/tmp");
+		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
+		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
+		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));
+		targetProps.setProperty("am.server.port", 	"8005");
+		targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
+		targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
+		targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
 		targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
-		targetProps.setProperty("am.rmi.server.port", String.valueOf(tomcatConfig.getRmiServerPort()));
+		targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
 
 		targetProps.setProperty("am.conf.op", pModel.getConfigOP());
 
@@ -542,7 +541,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 	}
 
-	private String getTomcatName(String tomcatVersion) {
-		return codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, Integer.parseInt(tomcatVersion));
+	private String getTomcatName(int tomcatVersionCd) {
+		return codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, tomcatVersionCd);
 	}
 }

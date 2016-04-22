@@ -137,7 +137,7 @@ public class TomcatDomainService {
 		 */
 		String tomcatVersion = codeService.getCodeNm(
 				MeerkatConstants.CODE_GROP_TE_VERSION,
-				conf.getTomcatVersionCommonCodeId());
+				conf.getTomcatVersionCd());
 		confFileService.saveNewTomcatConfigFiles(domainId, tomcatVersion);
 
 		/*
