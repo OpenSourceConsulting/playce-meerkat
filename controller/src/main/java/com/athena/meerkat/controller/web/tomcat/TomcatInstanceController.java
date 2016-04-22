@@ -94,6 +94,7 @@ public class TomcatInstanceController {
 			json.setMsg("Tomcat is already started.");
 		} else {
 			proviService.startTomcatInstance(id, null);
+			json.setMsg("Tomcat is started.");
 		}
 		
 		return json;
@@ -103,7 +104,10 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
 		stopTomcat(json, id);
-		startTomcat(new SimpleJsonResponse(), id);
+		
+		json = new SimpleJsonResponse();
+		
+		startTomcat(json, id);
 		return json;
 	}
 
@@ -118,7 +122,7 @@ public class TomcatInstanceController {
 			json.setMsg("Tomcat is already stopped.");
 		} else {
 			proviService.stopTomcatInstance(id, null);	
-			
+			json.setMsg("Tomcat is stopped.");
 		}
 		
 		return json;

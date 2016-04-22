@@ -154,7 +154,7 @@ public class TomcatProvisioningControllerTest {
 			/*
 			 * 4. deploy agent
 			 */
-			ProvisioningUtil.runTarget(workingDir, jobDir, "deploy-agent");
+			ProvisioningUtil.runDefaultTarget(workingDir, jobDir, "deploy-agent");
 			
 			
 			/*

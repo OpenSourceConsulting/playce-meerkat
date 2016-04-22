@@ -90,7 +90,11 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		int domainId = Integer.parseInt(message.getPayload());
 		LOGGER.debug("domainId : {}", domainId);
 		
-		service.installTomcatInstance(domainId, session);
+		try{
+			service.installTomcatInstance(domainId, session);
+		}catch(Exception e) {
+			LOGGER.error(e.toString(), e);
+		}
 		
 	}
 
