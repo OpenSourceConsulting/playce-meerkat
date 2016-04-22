@@ -104,9 +104,9 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
 		stopTomcat(json, id);
-		
+
 		json = new SimpleJsonResponse();
-		
+
 		startTomcat(json, id);
 		return json;
 	}
@@ -120,7 +120,7 @@ public class TomcatInstanceController {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already stopped.");
 		} else {
-			proviService.stopTomcatInstance(id, null);	
+			proviService.stopTomcatInstance(id, null);
 			json.setMsg("Tomcat is stopped.");
 		}
 
@@ -193,10 +193,7 @@ public class TomcatInstanceController {
 			service.saveTomcatConfig(tomcat, conf);
 		}
 
-		// domainService.saveDomainTomcatConfig(domainTomcatConfig);
-
-		// proviService.updateTomcatInstanceConfig(domainTomcatConfig
-		// .getTomcatDomain().getId(), null);
+		proviService.updateTomcatInstanceConfig(tomcat, null);
 		return json;
 	}
 
