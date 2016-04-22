@@ -41,17 +41,15 @@ public class TomcatConfigFileController {
 	private TomcatConfigFileService tomcatConfigFileService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse saveConfigFile(
-			SimpleJsonResponse json, String content, String confType,
-			String objType, int id, int objId) {
+	public @ResponseBody SimpleJsonResponse saveConfigFile(SimpleJsonResponse json, String content, String confType, String objType, int id, int objId) {
 		TomcatDomain td = null;
 		TomcatInstance tcinst = null;
 		TomcatConfigFile conf = new TomcatConfigFile();
-		
+
 		if (objType.equals(MeerkatConstants.OBJ_TYPE_DOMAIN)) {
 			td = domainService.getDomain(objId);
 			conf.setTomcatDomain(td);
-			
+
 		} else if (objType.equals(MeerkatConstants.OBJ_TYPE_TOMCAT)) {
 			tcinst = tomcatService.findOne(objId);
 			conf.setTomcatInstance(tcinst);
@@ -64,13 +62,13 @@ public class TomcatConfigFileController {
 		}
 
 		TomcatConfigFile latestVersion = tomcatConfigFileService.getLatestConfVersion(td, tcinst, conf.getFileTypeCdId());
-		
+
 		if (latestVersion != null) {
 			conf.setVersion(latestVersion.getVersion() + 1);
 		} else {
 			conf.setVersion(1);
 		}
-		
+
 		conf.setContent(content);
 		conf = tomcatConfigFileService.saveConfigFile(conf);
 		json.setData(conf.getId());
@@ -78,13 +76,10 @@ public class TomcatConfigFileController {
 	}
 
 	@RequestMapping(value = "{type}/domain/{domainId}", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getConfigVersionList(
-			GridJsonResponse json, @PathVariable int domainId,
-			@PathVariable String type) {
+	public @ResponseBody GridJsonResponse getConfigVersionList(GridJsonResponse json, @PathVariable int domainId, @PathVariable String type) {
 		TomcatDomain td = domainService.getDomain(domainId);
 
-		List<TomcatConfigFile> confVersions = tomcatConfigFileService
-				.getConfigFileVersions(td.getId(), type);
+		List<TomcatConfigFile> confVersions = tomcatConfigFileService.getConfigFileVersions(td.getId(), type);
 		json.setList(confVersions);
 		json.setTotal(confVersions.size());
 		json.setSuccess(true);
@@ -95,22 +90,22 @@ public class TomcatConfigFileController {
 	public @ResponseBody SimpleJsonResponse getConfigFileContents(SimpleJsonResponse json, @PathVariable Integer configFileId) {
 
 		json.setData(tomcatConfigFileService.getConfigFileContents(configFileId));
-		
+
 		return json;
 	}
 
 	@RequestMapping("/diff/{firstId}/{secondId}")
 	public String diff(Map<String, String> model, @PathVariable Integer firstId, @PathVariable Integer secondId) {
-		
+
 		TomcatConfigFile firstConfig = tomcatConfigFileService.getTomcatConfigFileById(firstId);
 		TomcatConfigFile secondConfig = tomcatConfigFileService.getTomcatConfigFileById(secondId);
-		
+
 		String content = "";
 		if (firstConfig != null) {
-			
+
 			content = tomcatConfigFileService.getConfigFileContents(firstConfig.getFilePath());
 			model.put("firstConfig", content);
-			model.put("firstConfigVersion",	firstConfig.getVersionAndTimeAndTomcat());
+			model.put("firstConfigVersion", firstConfig.getVersionAndTimeAndTomcat());
 		}
 		if (secondConfig != null) {
 			content = tomcatConfigFileService.getConfigFileContents(secondConfig.getFilePath());
@@ -122,8 +117,7 @@ public class TomcatConfigFileController {
 
 	@RequestMapping(value = "/{type}/domain/{domainId}/tomcat/{tomcatId}", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getConfigFileVersions(GridJsonResponse json,
-			@PathVariable Integer domainId, @PathVariable Integer tomcatId,
+	public GridJsonResponse getConfigFileVersions(GridJsonResponse json, @PathVariable Integer domainId, @PathVariable Integer tomcatId,
 			@PathVariable String type) {
 		List<TomcatConfigFile> confVersions = new ArrayList<TomcatConfigFile>();
 		TomcatInstance tomcat = null;
@@ -136,8 +130,7 @@ public class TomcatConfigFileController {
 		}
 		if (tomcat != null) {
 			// list of config files modified in domain level
-			confVersions = tomcatConfigFileService.getConfigFileVersions(
-					tomcat.getDomainId(), type);
+			confVersions = tomcatConfigFileService.getConfigFileVersions(tomcat.getDomainId(), type);
 			List<TomcatConfigFile> modifiedConfigVersions = tomcatConfigFileService.getConfigFileVersions(tomcat, commonHandler.getCode(type).getId());
 			if (modifiedConfigVersions != null) {
 				confVersions.addAll(modifiedConfigVersions);
@@ -152,13 +145,12 @@ public class TomcatConfigFileController {
 
 	@RequestMapping(value = "/{type}/latest/domain/{domainId}/tomcat/{tomcatId}", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getLatestVersionConfigFile(
-			SimpleJsonResponse json, @PathVariable Integer domainId,
-			@PathVariable Integer tomcatId, @PathVariable String type) {
+	public SimpleJsonResponse getLatestVersionConfigFile(SimpleJsonResponse json, @PathVariable Integer domainId, @PathVariable Integer tomcatId,
+			@PathVariable String type) {
 		TomcatConfigFile conf = null;
-		
+
 		int fileTypeCdId = commonHandler.getCode(type).getId();//TODO tran : temporary code. don't do this.
-		
+
 		if (tomcatId > 0) {
 			TomcatInstance tc = tomcatService.findOne(tomcatId);
 			conf = tomcatConfigFileService.getLatestConfVersion(null, tc, fileTypeCdId);
@@ -168,8 +160,7 @@ public class TomcatConfigFileController {
 		}
 
 		if (conf != null) {
-			// TODO idkbj get content of config file by provisioning
-			String content = "This is example content for config ID:" + conf.getId();
+			String content = tomcatConfigFileService.getConfigFileContents(conf.getId());
 			conf.setContent(content);
 			json.setData(conf);
 		}
