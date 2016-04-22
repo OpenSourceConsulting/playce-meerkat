@@ -26,6 +26,8 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -142,17 +144,33 @@ public class TomcatInstanceService {
 		// get configurations that are different to domain tomcat config
 		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(instanceId);
 		if (changedConfigs != null) {
-			for (TomcatInstConfig c : changedConfigs) {
-				if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
-					conf.setHttpPort(Integer.parseInt(c.getConfigValue()));
-				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_JAVAHOME_NAME) {
-					conf.setJavaHome(c.getConfigValue());
-				} else if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME) {
-					conf.setSessionTimeout(Integer.parseInt(c.getConfigValue()));
+			for (TomcatInstConfig changedConf : changedConfigs) {
+				Method[] methods = DomainTomcatConfiguration.class.getMethods();
+				for (Method m : methods) {
+					// check the setter method
+					if (m.getName()
+							.toLowerCase()
+							.contains(
+									"set"
+											+ changedConf.getConfigName()
+													.toLowerCase())) {
+						try {
+							// run setter method to update value
+							m.invoke(conf, changedConf.getConfigValue());
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}
-
 		conf.setTomcatInstanceId(instanceId);
 
 		return conf;
