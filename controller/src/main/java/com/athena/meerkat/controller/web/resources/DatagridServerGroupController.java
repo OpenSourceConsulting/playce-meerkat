@@ -114,7 +114,7 @@ public class DatagridServerGroupController {
 		String[] idStrings = serverIds.split("#", 0);
 		for (int i = 1; i < idStrings.length; i++) { // the first element is
 														// empty
-			Server s = serverService.retrieve(Integer.parseInt(idStrings[i]));
+			Server s = serverService.getServer(Integer.parseInt(idStrings[i]));
 			if (s != null) {
 				servers.add(s);
 			}
