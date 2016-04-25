@@ -61,7 +61,7 @@ public class ServerInitialMonTask extends MonitoringTask implements Initializing
 
 	
 	protected String createJsonString(String serverId, String hostName, String osName, String osVersion
-			,String osArch, int cpuClockSpeed, float memorySize, int cpuCore, float diskSize){
+			,String osArch, int cpuClockSpeed, long memorySize, int cpuCore, long diskSize){
 		
 		return "{\"id\": "+serverId+" ,\"hostName\": \""+hostName+"\" ,\"osName\": \""+osName+"\" ,\"osName\": \""+osName+"\""
 				+" ,\"osArch\": \""+osArch+"\" ,\"cpuClockSpeed\": "+cpuClockSpeed+" ,\"memorySize\": "+memorySize+" ,\"cpuCore\": "+cpuCore+""

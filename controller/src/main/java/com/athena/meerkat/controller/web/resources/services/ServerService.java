@@ -88,7 +88,7 @@ public class ServerService {
 	// public ServiceResult retrieve(int id) {
 	// return new ServiceResult(Status.DONE, "", machineRepo.findOne(id));
 	// }
-	public Server retrieve(int id) {
+	public Server getServer(int id) {
 		return serverRepo.findOne(id);
 	}
 

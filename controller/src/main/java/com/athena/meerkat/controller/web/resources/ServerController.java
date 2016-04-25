@@ -54,7 +54,7 @@ public class ServerController {
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse get(SimpleJsonResponse json, int id) {
-		Server m = service.retrieve(id);
+		Server m = service.getServer(id);
 		if (m != null) {
 			json.setData(m);
 			json.setSuccess(true);
@@ -68,7 +68,7 @@ public class ServerController {
 	@RequestMapping(value = "/get/totalmemsize", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getTotalMemSize(SimpleJsonResponse json, int id) {
-		Server m = service.retrieve(id);
+		Server m = service.getServer(id);
 		if (m != null) {
 			json.setData(m.getMemorySize());
 		}
@@ -79,7 +79,7 @@ public class ServerController {
 	@ResponseBody
 	public GridJsonResponse getNIs(GridJsonResponse json,
 			@PathVariable Integer serverId) {
-		Server m = service.retrieve(serverId);
+		Server m = service.getServer(serverId);
 		if (m != null) {
 			json.setList((List<?>) m.getNetworkInterfaces());
 			json.setTotal(m.getNetworkInterfaces().size());
@@ -95,7 +95,7 @@ public class ServerController {
 	@ResponseBody
 	public GridJsonResponse getSSHAccounts(GridJsonResponse json,
 			@PathVariable Integer serverId) {
-		Server m = service.retrieve(serverId);
+		Server m = service.getServer(serverId);
 		if (m != null) {
 			json.setList((List<?>) m.getSshAccounts());
 			json.setTotal(m.getSshAccounts().size());
@@ -190,7 +190,7 @@ public class ServerController {
 				json.setSuccess(false);
 				return json;
 			}
-			currentServer = service.retrieve(server.getId());
+			currentServer = service.getServer(server.getId());
 			if (currentServer == null) {
 				json.setMsg("Server does not exist.");
 				json.setSuccess(false);
@@ -241,7 +241,7 @@ public class ServerController {
 				json.setSuccess(false);
 			}
 		}
-		Server server = service.retrieve(account.getServerId());
+		Server server = service.getServer(account.getServerId());
 		account.setServer(server);
 
 		if (service.saveSSHAccount(account) != null) {

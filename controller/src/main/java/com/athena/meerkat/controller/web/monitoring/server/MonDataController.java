@@ -73,13 +73,18 @@ public class MonDataController {
 	 */
 	@MessageMapping("/monitor/init")
 	@SendToUser("/queue/agents")
-	public SimpleJsonResponse init(SimpleJsonResponse jsonRes, Server machine) {
+	public SimpleJsonResponse init(SimpleJsonResponse jsonRes, Map<String, Object> initMon) throws Exception {
 
-		// svrService.save(machine);//TODO tran test.
+		int serverId = Integer.valueOf(initMon.get("id").toString());
+		Server dbServer = svrService.getServer(serverId);
+		
+		PropertyUtils.copyProperties(dbServer, initMon);
+		
+		svrService.save(dbServer);
 
-		LOGGER.debug("init saved. ---------------- {}", machine.getId());
+		LOGGER.debug("init saved. ---------------- {}", serverId);
 
-		jsonRes.setData(tiService.findInstanceConfigs(machine.getId()));
+		jsonRes.setData(tiService.findInstanceConfigs(serverId));
 
 		return jsonRes;
 	}

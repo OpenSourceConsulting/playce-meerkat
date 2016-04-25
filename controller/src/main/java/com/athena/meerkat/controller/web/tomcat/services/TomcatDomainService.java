@@ -62,6 +62,9 @@ public class TomcatDomainService {
 	
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	private CommonCodeHandler codeHandler;
 
 	@Transactional
 	public TomcatDomain save(TomcatDomain domain) {
@@ -69,11 +72,12 @@ public class TomcatDomainService {
 	}
 
 	@Transactional
-	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain,
-			DomainTomcatConfiguration config) {
+	public DomainTomcatConfiguration saveWithConfig(TomcatDomain domain, DomainTomcatConfiguration config) {
 		domainRepo.save(domain);
 
 		config.setTomcatDomain(domain);
+		
+		config.setCatalinaHome(config.getCatalinaHome() + "/" + codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, config.getTomcatVersionCd()));
 
 		return saveDomainTomcatConfigs(domain.getId(), config);
 	}
