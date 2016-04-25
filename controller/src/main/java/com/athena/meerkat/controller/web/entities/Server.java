@@ -52,7 +52,7 @@ public class Server implements Serializable {
 	@Column(name = "cpu_clock_unit", nullable = false)
 	private String cpuClockUnit;
 	@Column(name = "memory_size", nullable = false)
-	private float memorySize;
+	private long memorySize;
 	@Column(name = "memory_size_unit", nullable = false)
 	private String memorySizeUnit;
 	@Column(name = "cpu_core", nullable = false)
@@ -66,7 +66,7 @@ public class Server implements Serializable {
 	@Column(name = "description")
 	private String description;
 	@Column(name = "disk_size")
-	private float diskSize;
+	private long diskSize;
 	@Column(name = "disk_size_unit")
 	private String diskSizeUnit;
 	@Column(name = "is_vm")
@@ -161,11 +161,11 @@ public class Server implements Serializable {
 		this.cpuClockUnit = cpu_clock_unit;
 	}
 
-	public float getMemorySize() {
+	public long getMemorySize() {
 		return memorySize;
 	}
 
-	public void setMemorySize(float memory_size) {
+	public void setMemorySize(long memory_size) {
 		this.memorySize = memory_size;
 	}
 
@@ -217,11 +217,11 @@ public class Server implements Serializable {
 		this.description = description;
 	}
 
-	public float getDiskSize() {
+	public long getDiskSize() {
 		return diskSize;
 	}
 
-	public void setDiskSize(float disk_size) {
+	public void setDiskSize(long disk_size) {
 		this.diskSize = disk_size;
 	}
 

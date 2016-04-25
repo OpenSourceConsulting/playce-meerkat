@@ -48,7 +48,7 @@ public class ServerMonScheduledTask extends MonitoringTask {
 			NetStat netStat = SigarUtil.getNetStat();
 
 			double cpuUsed = (cpu.getCombined()) * 100.0d;
-			double memUsed = mem.getActualUsed() / (1024L*1024L);
+			double memUsed = mem.getActualUsed() / (1024L*1024L);//mb
 			double memUsedPer = mem.getUsedPercent();
 			int netIn = netStat.getAllInboundTotal();
 			int netOut = netStat.getAllOutboundTotal();

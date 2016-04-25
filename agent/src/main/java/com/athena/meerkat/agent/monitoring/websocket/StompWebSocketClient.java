@@ -72,6 +72,9 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.server.app.fs}")
 	private String appFSDestination;
 	
+	@Value("${meerkat.agent.reconnect.interval:10000}")
+	private long reconnectInterval;
+	
 	private String initDestHeader;
 	private String jmxDestHeader;
 	private String serverDestHeader;
@@ -93,7 +96,7 @@ public class StompWebSocketClient implements InitializingBean{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
-		webSocketHandler = new StompWebSocketHandler(topic);
+		webSocketHandler = new StompWebSocketHandler(this, topic);
 		connect();
 	}
 	
@@ -107,8 +110,7 @@ public class StompWebSocketClient implements InitializingBean{
 		
 		LOGGER.info("connecting to {}", endpoint);
 		
-		this.session = wsClient.doHandshake(webSocketHandler, endpoint).get();
-		
+		doConnect(wsClient);
 		
 		Assert.notNull(session);
 		Assert.isTrue(session.isOpen(), "server connection fail.");
@@ -121,6 +123,21 @@ public class StompWebSocketClient implements InitializingBean{
 		this.fsDestHeader = "destination:" + appFSDestination;
 		
 		LOGGER.info("connected");
+	}
+	
+	protected void doConnect(StandardWebSocketClient wsClient) {
+		
+		try{
+			this.session = wsClient.doHandshake(webSocketHandler, endpoint).get();
+		}catch(Exception e) {
+			LOGGER.error(e.toString());
+			try{
+				Thread.sleep(reconnectInterval);
+			}catch(InterruptedException ex){
+				//ignore.
+			}
+			doConnect(wsClient);
+		}
 	}
 	
 	/**

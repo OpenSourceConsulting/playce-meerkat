@@ -34,5 +34,10 @@ CREATE TABLE `mon_fs_tbl` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-ALTER TABLE `athena_meerkat_local`.`common_code` 
+ALTER TABLE `common_code` 
 CHANGE COLUMN `cd_desc` `cd_desc` VARCHAR(100) NULL DEFAULT NULL COMMENT '코드설명' ;
+
+
+ALTER TABLE `server` 
+CHANGE COLUMN `disk_size` `disk_size` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `memory_size` `memory_size` INT(11) NULL DEFAULT NULL ;

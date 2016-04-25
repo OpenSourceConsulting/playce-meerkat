@@ -64,14 +64,17 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	private ArrayNode instanceConfigs;
 	
 	private TextMessage subscribeMsg;
+	
+	private StompWebSocketClient webSocketClient;
 
 	/**
 	 * <pre>
 	 * 
 	 * </pre>
 	 */
-	public StompWebSocketHandler(String topic) {
+	public StompWebSocketHandler(StompWebSocketClient webSocketClient, String topic) {
 		subscribeMsg = StompTextMessageBuilder.create(StompCommand.SUBSCRIBE).headers("id:subs1", "destination:"+topic).build();
+		this.webSocketClient = webSocketClient;
 	}
 
 	@Override
@@ -159,6 +162,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		LOGGER.debug("Connection closed!!");
+		this.webSocketClient.connect();
 	}
 
 	public ArrayNode getInstanceConfigs() {
