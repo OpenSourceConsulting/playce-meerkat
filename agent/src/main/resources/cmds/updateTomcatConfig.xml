@@ -1,4 +1,4 @@
-<project name="update tomcat config" basedir="." default="updateTomcatConfig">
+<project name="update tomcat config" basedir="." default="cmd">
 	
 	<!-- 
 	#########################################
@@ -9,7 +9,7 @@
 	<property file="${basedir}/build.properties" />
 	
 
-	<target name="updateTomcatConfig">
+	<target name="cmd">
 
 		<echo message="updating ${catalina.base}/conf/catalina.properties" />
 
