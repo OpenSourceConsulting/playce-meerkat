@@ -35,6 +35,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 
 import org.apache.catalina.startup.Tomcat;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,15 +137,31 @@ public class TomcatInstanceService {
 		return getTomcatConfig(tomcat.getDomainId(), instanceId);
 	}
 
-	public DomainTomcatConfiguration getTomcatConfig(int domainId,
-			int instanceId) {
+	public DomainTomcatConfiguration getTomcatConfig(int domainId, int instanceId) {
 
-		DomainTomcatConfiguration conf = domainService
-				.getTomcatConfig(domainId);
+		LOGGER.debug("domainId : {}, instanceId: {}", domainId, instanceId);
+		
+		DomainTomcatConfiguration conf = domainService.getTomcatConfig(domainId);
+		
+		if (conf == null) {
+			LOGGER.debug("DomainTomcatConfiguration is null of domainId({})", domainId);
+			return null;
+		} 
+		
 		// get configurations that are different to domain tomcat config
 		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(instanceId);
 		if (changedConfigs != null) {
 			for (TomcatInstConfig changedConf : changedConfigs) {
+				
+				try{
+					//TODO tran : test this code.
+					PropertyUtils.setProperty(conf, changedConf.getConfigName(), changedConf.getConfigValue());
+				}catch(Exception e){
+					LOGGER.error(e.toString(), e);
+					throw new RuntimeException(e);
+				}
+				
+				/*
 				Method[] methods = DomainTomcatConfiguration.class.getMethods();
 				for (Method m : methods) {
 					// check the setter method
@@ -175,19 +192,18 @@ public class TomcatInstanceService {
 							}
 
 						} catch (IllegalAccessException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IllegalArgumentException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (InvocationTargetException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				}
+				*/
 			}
 		}
+		
 		conf.setTomcatInstanceId(instanceId);
 
 		return conf;
@@ -204,8 +220,13 @@ public class TomcatInstanceService {
 		List<TomcatInstance> list = repo.findByServer_Id(serverId);
 
 		for (TomcatInstance tomcatInstance : list) {
-			configs.add(getTomcatConfig(tomcatInstance.getDomainId(),
-					tomcatInstance.getId()));
+			
+			DomainTomcatConfiguration conf = getTomcatConfig(tomcatInstance.getDomainId(), tomcatInstance.getId());
+			
+			if (conf != null) {
+				configs.add(conf);
+			}
+			
 		}
 
 		return configs;
