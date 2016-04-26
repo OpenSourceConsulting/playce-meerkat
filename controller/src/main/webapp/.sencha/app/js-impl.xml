@@ -1,29 +1,21 @@
 <project name="x-js-impl">
-    <!--
-    this target extracts split mode information from the compiler's app
-    processor to determine various pieces of information
-    -->
-    <target name="-detect-app-build-properties" 
-            depends="-init-app-js-files">
-        <x-load-app-builder-properties
-            refid="${compiler.ref.id}"
-            splitModePropName="enable.split.mode"
-            pageModePropName="app.page.mode"
-            hasJsSdkPropName="app.has.js.sdk"
-            hasCssSdkPropName="app.has.css.sdk"/>
-    </target>
+	<!-- this target extracts split mode information from the compiler's app 
+		processor to determine various pieces of information -->
+	<target name="-detect-app-build-properties" depends="-init-app-js-files">
+		<x-load-app-builder-properties refid="${compiler.ref.id}"
+			splitModePropName="enable.split.mode" pageModePropName="app.page.mode"
+			hasJsSdkPropName="app.has.js.sdk" hasCssSdkPropName="app.has.css.sdk" />
+	</target>
 
-    <!--    
-    this is the standard js compile target that builds the output js file(s)
-    -->
-    <target name="-compile-js" depends="-detect-app-build-properties">
-        <if>
-            <x-is-true value="${enable.split.mode}"/>
-            <then>
-                <property name="app.output.framework.include"
-                          value="package-sencha-core,framework,toolkit,package-core"/>
+	<!-- this is the standard js compile target that builds the output js file(s) -->
+	<target name="-compile-js" depends="-detect-app-build-properties">
+		<if>
+			<x-is-true value="${enable.split.mode}" />
+			<then>
+				<property name="app.output.framework.include"
+					value="package-sencha-core,framework,toolkit,package-core" />
 
-                <x-compile refid="${compiler.ref.id}">
+				<x-compile refid="${compiler.ref.id}">
                     <![CDATA[
                         # build a separate sdk-only js file
                         restore
@@ -77,10 +69,10 @@
                             -out=${build.classes.file}
                             ${build.concat.options}
                     ]]>
-                </x-compile>
-            </then>
-            <else>
-                <x-compile refid="${compiler.ref.id}">
+				</x-compile>
+			</then>
+			<else>
+				<x-compile refid="${compiler.ref.id}">
                     <![CDATA[
                         # build an all-classes.js file that contains
                         # all code needed by the app
@@ -97,15 +89,13 @@
                             -out=${build.classes.file}
                             ${build.concat.options}
                     ]]>
-                </x-compile>
-            </else>
-        </if>
-    </target>
-    
-    <!--    
-    Build javascript
-    -->
-    <target name="-before-js"/>
-    <target name="-js" depends="-compile-js"/>
-    <target name="-after-js"/>
+				</x-compile>
+			</else>
+		</if>
+	</target>
+
+	<!-- Build javascript -->
+	<target name="-before-js" />
+	<target name="-js" depends="-compile-js" />
+	<target name="-after-js" />
 </project>

@@ -262,7 +262,6 @@ public class DomainController {
 			mappedDatasources.remove(ds);
 			domain.setDatasources(mappedDatasources);
 			domainService.save(domain);
-			
 			//TODO: kwonbj implement next for provisioning
 		}
 		return json;
