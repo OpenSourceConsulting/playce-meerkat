@@ -12,11 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.MeerkatUtils;
+import com.athena.meerkat.controller.web.common.converter.JsonDateSerializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 //
 @Entity
@@ -32,16 +39,23 @@ public class TomcatApplication implements Serializable, Cloneable {
 	@Column(name = "Id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
+	
 	@Column(name = "context_path")
 	private String contextPath;
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	@Column(name = "deployed_time")
 	private Date deployedTime;
+	
 	@Column(name = "version")
 	private String version;
+	
 	@Column(name = "war_path")
 	private String warPath;
+	
 	@Column(name = "last_modified_time")
 	private Date lastModifiedTime;
+	
 	private int state;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -55,10 +69,23 @@ public class TomcatApplication implements Serializable, Cloneable {
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
-	//
-	// @OneToMany(mappedBy = "application")
-	// @JsonManagedReference
-	// private Collection<Session> sessions;
+	@JsonIgnore
+	@Transient
+	private MultipartFile warFile;
+
+	/**
+	 * Constructor
+	 */
+	public TomcatApplication() {
+	}
+	
+	public MultipartFile getWarFile() {
+		return warFile;
+	}
+
+	public void setWarFile(MultipartFile warFile) {
+		this.warFile = warFile;
+	}
 
 	public String getContextPath() {
 		return contextPath;
@@ -77,15 +104,6 @@ public class TomcatApplication implements Serializable, Cloneable {
 
 	public Date getDeployedTime() {
 		return deployedTime;
-	}
-
-	public String getDeployedTimeString() {
-		return MeerkatUtils.dateTimeToString(deployedTime,
-				MeerkatConstants.DATE_TIME_FORMATTER);
-	}
-
-	public void setDeployedDate(Date deployedTime) {
-		this.setDeployedTime(deployedTime);
 	}
 
 	public String getVersion() {
@@ -108,11 +126,6 @@ public class TomcatApplication implements Serializable, Cloneable {
 		return lastModifiedTime;
 	}
 
-	public String getLastModifiedTimeString() {
-		return MeerkatUtils.dateTimeToString(lastModifiedTime,
-				MeerkatConstants.DATE_TIME_FORMATTER);
-	}
-
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
 	}
@@ -131,27 +144,6 @@ public class TomcatApplication implements Serializable, Cloneable {
 
 	public void setTomcatInstance(TomcatInstance tomcat) {
 		this.tomcatInstance = tomcat;
-	}
-
-	// public Collection<Session> getSessions() {
-	// return sessions;
-	// }
-	//
-	// public void setSessions(Collection<Session> sessions) {
-	// this.sessions = sessions;
-	// }
-
-	/**
-	 * Constructor
-	 */
-	public TomcatApplication() {
-	}
-
-	public TomcatApplication(String context_path, String war_path,
-			String version) {
-		contextPath = context_path;
-		warPath = war_path;
-		this.version = version;
 	}
 
 	public int getId() {
@@ -180,5 +172,11 @@ public class TomcatApplication implements Serializable, Cloneable {
 
 	public void setDeployedTime(Date deployedTime) {
 		this.deployedTime = deployedTime;
+	}
+	
+	@PrePersist
+	public void onPreSave(){
+		this.lastModifiedTime = new Date();
+		this.deployedTime = new Date();
 	}
 }

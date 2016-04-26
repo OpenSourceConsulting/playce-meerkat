@@ -27,20 +27,7 @@ public class ApplicationController {
 	private TomcatDomainService domainService;
 
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse deploy(SimpleJsonResponse json,
-			@RequestParam String contextPathTextField,
-			@RequestParam String installationRemotePathTextField,
-			@RequestParam Integer domainIdHiddenField,
-			@RequestParam MultipartFile warLocalPathFileField) {
-		TomcatDomain domain = domainService.getDomain(domainIdHiddenField);
-		TomcatApplication app = new TomcatApplication(contextPathTextField,
-				installationRemotePathTextField, "");
-		app.setState(MeerkatConstants.APP_STATE_STOPPED);
-		app.setLastModifiedTime(new Date());
-		app.setDeployedDate(new Date());
-		app.setTomcatDomain(domain);
-		// TODO: idkjwon provisioning deploy application
-		app.setVersion("1.233"); // get by war fileF
+	public @ResponseBody SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
 
 		// provisioning before save
 		appService.save(app);
@@ -48,8 +35,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("/undeploy")
-	public @ResponseBody SimpleJsonResponse undeploy(SimpleJsonResponse json,
-			int Id) {
+	public @ResponseBody SimpleJsonResponse undeploy(SimpleJsonResponse json, int Id) {
 		TomcatApplication app = appService.getApplication(Id);
 
 		if (app == null) {
