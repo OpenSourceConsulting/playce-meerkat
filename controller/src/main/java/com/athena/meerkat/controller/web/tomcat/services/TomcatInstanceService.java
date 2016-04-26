@@ -26,16 +26,13 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.apache.catalina.startup.Tomcat;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +40,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.server.standard.TomcatRequestUpgradeStrategy;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.SSHManager;
@@ -54,7 +50,6 @@ import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
@@ -73,8 +68,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 @Service
 public class TomcatInstanceService {
 
-	static final Logger LOGGER = LoggerFactory
-			.getLogger(TomcatInstanceService.class);
+	static final Logger LOGGER = LoggerFactory.getLogger(TomcatInstanceService.class);
 
 	@Autowired
 	private TomcatInstanceRepository repo;
@@ -140,27 +134,25 @@ public class TomcatInstanceService {
 	public DomainTomcatConfiguration getTomcatConfig(int domainId, int instanceId) {
 
 		LOGGER.debug("domainId : {}, instanceId: {}", domainId, instanceId);
-		
+
 		DomainTomcatConfiguration conf = domainService.getTomcatConfig(domainId);
-		
+
 		if (conf == null) {
 			LOGGER.debug("DomainTomcatConfiguration is null of domainId({})", domainId);
 			return null;
-		} 
-		
+		}
+
 		// get configurations that are different to domain tomcat config
 		List<TomcatInstConfig> changedConfigs = getTomcatInstConfigs(instanceId);
 		if (changedConfigs != null) {
 			for (TomcatInstConfig changedConf : changedConfigs) {
-				
-				try{
-					//TODO tran : test this code.
-					PropertyUtils.setProperty(conf, changedConf.getConfigName(), changedConf.getConfigValue());
-				}catch(Exception e){
+				try {
+					BeanUtils.setProperty(conf, changedConf.getConfigName(), changedConf.getConfigValue());
+				} catch (Exception e) {
 					LOGGER.error(e.toString(), e);
 					throw new RuntimeException(e);
 				}
-				
+
 				/*
 				Method[] methods = DomainTomcatConfiguration.class.getMethods();
 				for (Method m : methods) {
@@ -203,7 +195,7 @@ public class TomcatInstanceService {
 				*/
 			}
 		}
-		
+
 		conf.setTomcatInstanceId(instanceId);
 
 		return conf;
@@ -220,13 +212,13 @@ public class TomcatInstanceService {
 		List<TomcatInstance> list = repo.findByServer_Id(serverId);
 
 		for (TomcatInstance tomcatInstance : list) {
-			
+
 			DomainTomcatConfiguration conf = getTomcatConfig(tomcatInstance.getDomainId(), tomcatInstance.getId());
-			
+
 			if (conf != null) {
 				configs.add(conf);
 			}
-			
+
 		}
 
 		return configs;
@@ -289,8 +281,7 @@ public class TomcatInstanceService {
 	 * 
 	 * @param inst
 	 */
-	public void loadEnvSH(SSHManager sshMng, TomcatInstance inst, int state)
-			throws UnsupportedEncodingException {
+	public void loadEnvSH(SSHManager sshMng, TomcatInstance inst, int state) throws UnsupportedEncodingException {
 
 		// String remoteFile = inst.getCatalinaBase()
 		// + inst.getEnvScriptFile().replaceFirst("$CATALINA_BASE", "");
@@ -357,22 +348,17 @@ public class TomcatInstanceService {
 		return appRepo.findByTomcatInstance_Id(id);
 	}
 
-	public void saveTomcatConfig(TomcatInstance tomcat,
-			DomainTomcatConfiguration conf) {
+	public void saveTomcatConfig(TomcatInstance tomcat, DomainTomcatConfiguration conf) {
 		List<TomcatInstConfig> tomcatConfs = new ArrayList<>();
 		if (conf != null) {
 			// get all fields in domain tomcat config
-			Field[] fields = DomainTomcatConfiguration.class
-					.getDeclaredFields();
-
+			Field[] fields = DomainTomcatConfiguration.class.getDeclaredFields();
 			for (Field field : fields) {
 				// check whether the config property is exist in read-only
 				// conf
 				// list
 				String name = field.getName();
-				if (Arrays.asList(
-						MeerkatConstants.TOMCAT_INSTANCE_CONFIGS_CUSTOM)
-						.contains(name)) {
+				if (Arrays.asList(MeerkatConstants.TOMCAT_INSTANCE_CONFIGS_CUSTOM).contains(name)) {
 					String value = "";
 					try {
 						field.setAccessible(true);
@@ -383,8 +369,7 @@ public class TomcatInstanceService {
 						e1.printStackTrace();
 					}
 
-					TomcatInstConfig tomcatConf = tomcatInstConfigRepo
-							.findByConfigNameAndTomcatInstance(name, tomcat);
+					TomcatInstConfig tomcatConf = tomcatInstConfigRepo.findByConfigNameAndTomcatInstance(name, tomcat);
 					if (tomcatConf != null) {
 						tomcatConf.setConfigValue(value);
 					} else {
