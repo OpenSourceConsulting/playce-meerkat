@@ -93,18 +93,26 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		
 		String jsonMsg = message.getPayload();
 		
-		JsonNode json = JSONUtil.readTree(jsonMsg);
-		
-		String event = json.get("event").asText();
-		JsonNode data = json.get("data");
 		try{
+			
+			JsonNode json = JSONUtil.readTree(jsonMsg);
+			
+			String event = json.get("event").asText();
+			JsonNode data = json.get("data");
+			int domainId = data.get("domainId").asInt();
+			
+			LOGGER.debug("event: {}, domainId : {}", event, domainId);
 		
 			if (MeerkatConstants.WEBSOCKET_EVENT_INSTALL.equals(event)) {
-				int domainId = data.get("domainId").asInt();
 				
-				LOGGER.debug("domainId : {}", domainId);
-			
 				service.installTomcatInstance(domainId, session);
+				
+			} else if (MeerkatConstants.WEBSOCKET_EVENT_DEPLOY.equals(event)) {
+				
+				String contextPath = data.get("contextPath").asText();
+				String warFilePath = data.get("warFilePath").asText();
+				
+				service.deployWar(domainId, warFilePath, session);
 			}
 		
 		}catch(Exception e) {

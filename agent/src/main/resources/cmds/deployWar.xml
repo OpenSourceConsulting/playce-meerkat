@@ -1,0 +1,26 @@
+<project name="deploy war" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# deploy war file.
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	<property file="${basedir}/build-ssh.properties" />
+	
+
+	<target name="cmd">
+
+		<echo>deploy ${filename}</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/temp" trust="true" keyfile="${key.file}"
+			password="${user.passwd}" failonerror="true" file="${warFilePath}">
+		</scp>
+		
+
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="${cmd1}; ${cmd2}; ${cmd3}; ${cmd4}; ${cmd5}; ${cmd6}; ${cmd7}" trust="true" failonerror="true" />
+
+	</target>
+
+</project>

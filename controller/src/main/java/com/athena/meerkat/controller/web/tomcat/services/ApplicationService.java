@@ -55,8 +55,9 @@ public class ApplicationService {
 	 * save to filesystem and db
 	 * </pre>
 	 * @param app
+	 * @return saved war file path.
 	 */
-	public void save(TomcatApplication app) {
+	public TomcatApplication save(TomcatApplication app) {
 		
 		MultipartFile warFile = app.getWarFile();
 		String filePath = tcfService.getDomainFilePath(app.getTomcatDomain().getId(), null) + File.separator + warFile.getOriginalFilename();
@@ -80,6 +81,8 @@ public class ApplicationService {
 		 */
 		app.setWarPath(filePath);
 		appRepo.save(app);
+		
+		return app;
 	}
 
 	public boolean delete(TomcatApplication app) {

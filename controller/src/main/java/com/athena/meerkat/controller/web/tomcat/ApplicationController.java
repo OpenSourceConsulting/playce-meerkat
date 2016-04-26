@@ -24,17 +24,20 @@ public class ApplicationController {
 	private TomcatDomainService domainService;
 
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
-
+	@ResponseBody
+	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
 		
 		
-		// provisioning before save
-		appService.save(app);
+		TomcatApplication tApp = appService.save(app);
+		json.setData(tApp);
+		
+		
 		return json;
 	}
 
 	@RequestMapping("/undeploy")
-	public @ResponseBody SimpleJsonResponse undeploy(SimpleJsonResponse json, int Id) {
+	@ResponseBody
+	public SimpleJsonResponse undeploy(SimpleJsonResponse json, int Id) {
 		TomcatApplication app = appService.getApplication(Id);
 
 		if (app == null) {

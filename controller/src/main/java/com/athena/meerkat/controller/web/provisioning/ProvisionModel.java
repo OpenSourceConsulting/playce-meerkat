@@ -23,7 +23,9 @@
 package com.athena.meerkat.controller.web.provisioning;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.DataSource;
@@ -49,6 +51,8 @@ public class ProvisionModel {
 	private List<DataSource> dsList = new ArrayList<DataSource>();
 	
 	private boolean isFirstInstall;
+	
+	private Map<String, String> propsMap;
 
 	
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
@@ -72,6 +76,22 @@ public class ProvisionModel {
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
 		this(tomcatConfig, tomcatInstance, dsList);
 		this.isFirstInstall = isFirstInstall;
+	}
+
+	public Map<String, String> getPropsMap() {
+		return propsMap;
+	}
+
+	public void setPropsMap(Map<String, String> propsMap) {
+		this.propsMap = propsMap;
+	}
+	
+	public void addProps(String key, String value) {
+		if (this.propsMap == null) {
+			this.propsMap = new HashMap<String, String>();
+		}
+		
+		this.propsMap.put(key, value);
 	}
 
 	public DomainTomcatConfiguration getTomcatConfig() {

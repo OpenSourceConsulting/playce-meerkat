@@ -263,6 +263,32 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "stopTomcat.xml", session);
 	}
+	
+	@Transactional
+	public void deployWar(int domainId, String warFilePath, WebSocketSession session) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		// List<Tomcat> TomcatInstanceService
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+
+		if (list != null && list.size() > 0) {
+
+			for (TomcatInstance tomcatInstance : list) {
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				pModel.addProps("warFilePath", warFilePath);
+				
+				runCommand(pModel, "deployWar.xml", session);
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+
+	}
 
 	private void sendCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
 
@@ -303,7 +329,7 @@ public class TomcatProvisioningService implements InitializingBean {
 			copyCmds(cmdFileName, jobDir);
 
 			/*
-			 * 2. send cmd.
+			 * 2. run cmd.
 			 */
 			ProvisioningUtil.runCommand(commanderDir, jobDir);
 
@@ -383,6 +409,10 @@ public class TomcatProvisioningService implements InitializingBean {
 		targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
 
 		targetProps.setProperty("am.conf.op", pModel.getConfigOP());
+		
+		if (pModel.getPropsMap() != null) {
+			targetProps.putAll(pModel.getPropsMap());
+		}
 
 		if (confFiles != null) {
 			for (TomcatConfigFile confFile : confFiles) {
