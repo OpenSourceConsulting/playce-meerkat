@@ -94,6 +94,7 @@ public class TomcatInstanceController {
 			json.setMsg("Tomcat is already started.");
 		} else {
 			proviService.startTomcatInstance(id, null);
+			json.setData(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 			json.setMsg("Tomcat is started.");
 		}
 
@@ -121,6 +122,8 @@ public class TomcatInstanceController {
 			json.setMsg("Tomcat is already stopped.");
 		} else {
 			proviService.stopTomcatInstance(id, null);
+			json.setData(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
+			
 			json.setMsg("Tomcat is stopped.");
 		}
 

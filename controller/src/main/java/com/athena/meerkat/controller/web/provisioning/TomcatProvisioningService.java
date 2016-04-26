@@ -128,7 +128,7 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 	@Async
-	public void installTomcatInstance2(int domainId) {
+	public void installTomcatInstance2(int domainId, WebSocketSession session) {
 
 		try {
 			Thread.sleep(10000);

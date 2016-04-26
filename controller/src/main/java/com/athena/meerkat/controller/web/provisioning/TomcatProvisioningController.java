@@ -53,7 +53,7 @@ public class TomcatProvisioningController {
 	@ResponseBody
 	public SimpleJsonResponse install(@PathVariable("domainId") int domainId) {
 		
-		proviService.installTomcatInstance(domainId, null);
+		proviService.installTomcatInstance2(domainId, null);
 		//System.out.println("call install "+ domainId + "******************************");
 		
 		return new SimpleJsonResponse();
