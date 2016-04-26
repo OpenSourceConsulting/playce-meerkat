@@ -79,7 +79,7 @@ public class TomcatDomainService {
 		
 		config.setCatalinaHome(config.getCatalinaHome() + "/" + codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, config.getTomcatVersionCd()));
 
-		return saveDomainTomcatConfigs(domain.getId(), config);
+		return saveNewDomainTomcatConfig(config);
 	}
 
 	/**
@@ -174,27 +174,23 @@ public class TomcatDomainService {
 		return domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
 	}
 
-	public DomainTomcatConfiguration saveDomainTomcatConfigs(int domainId,
-			DomainTomcatConfiguration conf) {
+	public DomainTomcatConfiguration saveNewDomainTomcatConfig(DomainTomcatConfiguration conf) {
 
 		/*
 		 * save server.xml & context.xml
 		 */
-		String tomcatVersion = codeService.getCodeNm(
-				MeerkatConstants.CODE_GROP_TE_VERSION,
-				conf.getTomcatVersionCd());
-		confFileService.saveNewTomcatConfigFiles(domainId, tomcatVersion);
+		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION,	conf.getTomcatVersionCd());
+		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion);
 
 		/*
 		 * save tomcat config
 		 */
-		return domainTomcatConfRepo.save(conf);
+		return saveDomainTomcatConfig(conf);
 
 	}
 
-	public DomainTomcatConfiguration saveDomainTomcatConfig(
-			DomainTomcatConfiguration conf) {
-
+	public DomainTomcatConfiguration saveDomainTomcatConfig(DomainTomcatConfiguration conf) {
+		
 		return domainTomcatConfRepo.save(conf);
 	}
 

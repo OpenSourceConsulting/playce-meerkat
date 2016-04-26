@@ -169,4 +169,8 @@ public abstract class MeerkatConstants {
 			"httpPort", "ajpPort", "sessionTimeout", "redirectPort",
 			"jmxEnable", "rmiRegistryPort", "rmiServerPort", "catalinaOpts",
 			"tomcatVersion", "encoding" };
+	
+	
+	public static final String WEBSOCKET_EVENT_INSTALL = "install";
+	public static final String WEBSOCKET_EVENT_DEPLOY = "deploy";
 }

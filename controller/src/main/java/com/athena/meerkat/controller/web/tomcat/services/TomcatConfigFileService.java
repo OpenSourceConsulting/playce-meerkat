@@ -88,7 +88,7 @@ public class TomcatConfigFileService {
 		/*
 		 * save to filesystem.
 		 */
-		String filePath = configFileDir + File.separator + conf.getTomcatDomain().getId() + "_" + getIdPath(conf.getTomcatInstance());
+		String filePath = getDomainFilePath(conf.getTomcatDomain().getId(), conf.getTomcatInstance());
 		filePath = filePath + File.separator + getFileTypeName(conf.getFileTypeCdId(), conf.getVersion());
 		
 		File newFile = new File(getFileFullPath(filePath));
@@ -216,7 +216,13 @@ public class TomcatConfigFileService {
 		return fileName + "_" + version;
 	}
 	
-	private String getIdPath(TomcatInstance ti) {
+	public String getDomainFilePath(int domainId, TomcatInstance ti){
+		String filePath = configFileDir + File.separator + domainId + "_" + getTiPath(ti);
+		
+		return filePath;
+	}
+	
+	private String getTiPath(TomcatInstance ti) {
 		return ti == null? null: String.valueOf(ti.getId());
 	}
 	

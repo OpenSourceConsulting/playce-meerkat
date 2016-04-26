@@ -34,7 +34,11 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * <pre>
@@ -47,7 +51,7 @@ import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 public class LogWebSocketHandler extends TextWebSocketHandler {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LogWebSocketHandler.class);
-
+	
 	@Autowired
 	private TomcatProvisioningService service;
 	
@@ -87,11 +91,22 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		LOGGER.debug(message.toString());
 		
-		int domainId = Integer.parseInt(message.getPayload());
-		LOGGER.debug("domainId : {}", domainId);
+		String jsonMsg = message.getPayload();
 		
+		JsonNode json = JSONUtil.readTree(jsonMsg);
+		
+		String event = json.get("event").asText();
+		JsonNode data = json.get("data");
 		try{
-			service.installTomcatInstance(domainId, session);
+		
+			if (MeerkatConstants.WEBSOCKET_EVENT_INSTALL.equals(event)) {
+				int domainId = data.get("domainId").asInt();
+				
+				LOGGER.debug("domainId : {}", domainId);
+			
+				service.installTomcatInstance(domainId, session);
+			}
+		
 		}catch(Exception e) {
 			LOGGER.error(e.toString(), e);
 		}
