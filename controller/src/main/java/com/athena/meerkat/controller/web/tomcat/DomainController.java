@@ -205,7 +205,7 @@ public class DomainController {
 		} else {
 			domainService.saveDomainTomcatConfig(domainTomcatConfig);
 		}
-		
+
 		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), null);
 
 		return json;
