@@ -121,14 +121,10 @@ public class TomcatConfigFile implements Serializable {
 	}
 
 	public String getVersionAndTimeAndTomcat() {
-		String str = String.valueOf(version)
-				+ " - "
-				+ MeerkatUtils
-						.dateTimeToString(
-								this.createdTime,
-								MeerkatConstants.CONFIG_FILE_VERSION_DATE_TIME_FORMATTER);
+		String str = String.valueOf(version) + " - "
+				+ MeerkatUtils.dateTimeToString(this.createdTime, MeerkatConstants.CONFIG_FILE_VERSION_DATE_TIME_FORMATTER);
 		if (getTomcatInstance() != null) {
-			str = str + "(" + getTomcatInstance().getName() + ")";
+			str = str + " - " + getTomcatInstance().getName();
 		}
 		return str;
 
@@ -157,19 +153,19 @@ public class TomcatConfigFile implements Serializable {
 	public void setTomcatInstance(TomcatInstance tomcatInstance) {
 		this.tomcatInstance = tomcatInstance;
 	}
-	
+
 	public void setDominaId(int domainId) {
 		TomcatDomain domain = new TomcatDomain();
 		domain.setId(domainId);
 		this.tomcatDomain = domain;
 	}
-	
+
 	public void increaseVersion() {
 		this.version++;
 	}
-	
+
 	@PrePersist
-	public void onPreSave(){
+	public void onPreSave() {
 		this.createUserId = WebUtil.getLoginUserId();
 		this.createdTime = new Date();
 	}
