@@ -1,39 +1,40 @@
 <project name="x-refresh-impl">
-    <import file="bootstrap-impl.xml"/>
+	<import file="bootstrap-impl.xml" />
 
-    <target name="-init-refresh" depends="-detect-app-build-properties">
-        <property name="app.bootstrap.base.path"
-                  value="${build.bootstrap.metadata.dir}"/>
-    </target>
+	<target name="-init-refresh" depends="-detect-app-build-properties">
+		<property name="app.bootstrap.base.path" value="${build.bootstrap.metadata.dir}" />
+	</target>
 
-    <target name="-refresh-app-manifest" if="build.enable.appmanifest" depends="-init-refresh">
+	<target name="-refresh-app-manifest" if="build.enable.appmanifest"
+		depends="-init-refresh">
 
-        <local name="manifest.root.excludes"/>
-        <condition property="manifest.root.excludes" value="${app.bootstrap.manifest.exclude}">
-            <isset property="app.bootstrap.manifest.exclude"/>
-        </condition>
+		<local name="manifest.root.excludes" />
+		<condition property="manifest.root.excludes" value="${app.bootstrap.manifest.exclude}">
+			<isset property="app.bootstrap.manifest.exclude" />
+		</condition>
 
-        <condition property="manifest.root.excludes" value="loadOrder">
-            <and>
-                <x-is-true value="${app.has.js.sdk}"/>
-                <not>
-                    <isset property="app.watch.enabled"/>
-                </not>
-            </and>
-        </condition>
-        <property name="manifest.root.excludes" value=""/>
+		<condition property="manifest.root.excludes" value="loadOrder">
+			<and>
+				<x-is-true value="${app.has.js.sdk}" />
+				<not>
+					<isset property="app.watch.enabled" />
+				</not>
+			</and>
+		</condition>
+		<property name="manifest.root.excludes" value="" />
 
-        <property name="metadata.bootstrap.base.path" value="${build.bootstrap.metadata.dir}"/>
+		<property name="metadata.bootstrap.base.path" value="${build.bootstrap.metadata.dir}" />
 
-        <condition property="refresh.file.filter" value="framework,package-core,package-${toolkit.name}">
-            <x-is-true value="${framework.isV6}"/>
-        </condition>
-        <property name="refresh.file.filter" value="framework,package-sencha-core"/>
+		<condition property="refresh.file.filter"
+			value="framework,package-core,package-${toolkit.name}">
+			<x-is-true value="${framework.isV6}" />
+		</condition>
+		<property name="refresh.file.filter" value="framework,package-sencha-core" />
 
-        <if>
-            <x-is-true value="${app.has.js.sdk}"/>
-            <then>
-                <x-compile refid="${compiler.ref.id}">
+		<if>
+			<x-is-true value="${app.has.js.sdk}" />
+			<then>
+				<x-compile refid="${compiler.ref.id}">
                     <![CDATA[
                         include
                             -all
@@ -44,10 +45,10 @@
                         save
                             bootstrap
                     ]]>
-                </x-compile>
-            </then>
-            <else>
-                <x-compile refid="${compiler.ref.id}">
+				</x-compile>
+			</then>
+			<else>
+				<x-compile refid="${compiler.ref.id}">
                     <![CDATA[
                         include
                             -all
@@ -55,19 +56,18 @@
                         save
                             bootstrap
                     ]]>
-                </x-compile>
-            </else>
-        </if>
+				</x-compile>
+			</else>
+		</if>
 
-        <x-get-relative-path from="${build.bootstrap.page.dir}"
-                             to="${build.json.bootstrap.path}"
-                             property="build.json.bootstrap.rel.path"/>
+		<x-get-relative-path from="${build.bootstrap.page.dir}"
+			to="${build.json.bootstrap.path}" property="build.json.bootstrap.rel.path" />
 
-<echo file="${app.bootstrap.js}">var Ext = Ext || {};
-Ext.manifest = Ext.manifest || "${build.json.bootstrap.rel.path}";
-</echo>
+		<echo file="${app.bootstrap.js}">var Ext = Ext || {};
+			Ext.manifest = Ext.manifest || "${build.json.bootstrap.rel.path}";
+		</echo>
 
-        <x-compile refid="${compiler.ref.id}">
+		<x-compile refid="${compiler.ref.id}">
             <![CDATA[
                 microload
                     -operation=microloader
@@ -86,32 +86,30 @@ Ext.manifest = Ext.manifest || "${build.json.bootstrap.rel.path}";
                     -basePath=${metadata.bootstrap.base.path}
                     -out=${build.json.bootstrap.path}
             ]]>
-        </x-compile>
-    </target>
-    
-    <target name="-refresh-app-bootstrap" unless="build.enable.appmanifest" depends="-init-refresh">
+		</x-compile>
+	</target>
 
-        <!--regenerate class system metadata-->
-        <x-bootstrap file="${app.bootstrap.js}"
-                     basedir="${app.bootstrap.base.path}"
-                     overrideTpl="${bootstrap.override.tpl}"
-                     overrideTplType="${bootstrap.override.tpltype}"
-                     includeOverrides="${bootstrap.include.overrides}"
-                     includeBoot="${bootstrap.include.boot}"/>
+	<target name="-refresh-app-bootstrap" unless="build.enable.appmanifest"
+		depends="-init-refresh">
 
-        <!--
-        create / overwrite bootstrap.json, which will be used
-        by the default development.js microloader
-        -->
+		<!--regenerate class system metadata -->
+		<x-bootstrap file="${app.bootstrap.js}" basedir="${app.bootstrap.base.path}"
+			overrideTpl="${bootstrap.override.tpl}" overrideTplType="${bootstrap.override.tpltype}"
+			includeOverrides="${bootstrap.include.overrides}" includeBoot="${bootstrap.include.boot}" />
 
-<echo file="${build.json.bootstrap.path}">
-/**
- * This file is generated by Sencha Cmd and should NOT be edited. It is a
- * combination of content from app.json, and all required package's package.json
- * files.  Customizations should be placed in app.json.
- */
-</echo>
-        <x-compile refid="${compiler.ref.id}">
+		<!-- create / overwrite bootstrap.json, which will be used by the default 
+			development.js microloader -->
+
+		<echo file="${build.json.bootstrap.path}">
+			/**
+			* This file is generated by Sencha Cmd and should NOT be edited. It is
+			a
+			* combination of content from app.json, and all required package's
+			package.json
+			* files. Customizations should be placed in app.json.
+			*/
+		</echo>
+		<x-compile refid="${compiler.ref.id}">
             <![CDATA[
             microload
                 -operation=json
@@ -121,22 +119,18 @@ Ext.manifest = Ext.manifest || "${build.json.bootstrap.rel.path}";
                 -basePath=${app.bootstrap.base.path}
                 -out=${build.json.bootstrap.path}
             ]]>
-        </x-compile>
-    </target>
-    
-    <!--
-    Refreshes the application's bootstrap javascript and microloader manifest
-    '-detect-app-build-properties' is defined in js-impl.xml
-    -->
-    <target name="-refresh-app" 
-            depends="-detect-app-build-properties,
+		</x-compile>
+	</target>
+
+	<!-- Refreshes the application's bootstrap javascript and microloader manifest 
+		'-detect-app-build-properties' is defined in js-impl.xml -->
+	<target name="-refresh-app"
+		depends="-detect-app-build-properties,
                      -refresh-app-manifest,
-                     -refresh-app-bootstrap"/>
-    
-    <!--
-    Refresh app
-    -->
-    <target name="-before-refresh"/>
-    <target name="-refresh" depends="-refresh-app"/>
-    <target name="-after-refresh"/>
+                     -refresh-app-bootstrap" />
+
+	<!-- Refresh app -->
+	<target name="-before-refresh" />
+	<target name="-refresh" depends="-refresh-app" />
+	<target name="-after-refresh" />
 </project>
