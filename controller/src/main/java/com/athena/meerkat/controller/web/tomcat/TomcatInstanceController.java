@@ -135,40 +135,32 @@ public class TomcatInstanceController {
 	public SimpleJsonResponse getTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
-			TomcatInstanceViewModel viewmodel = new TomcatInstanceViewModel(
-					tomcat);
+			TomcatInstanceViewModel viewmodel = new TomcatInstanceViewModel(tomcat);
 			// get configurations that are different to domain tomcat config
-			List<TomcatInstConfig> changedConfigs = service
-					.getTomcatInstConfigs(tomcat.getId());
+			List<TomcatInstConfig> changedConfigs = service.getTomcatInstConfigs(tomcat.getId());
 			if (changedConfigs == null || changedConfigs.size() <= 0) {
-				DomainTomcatConfiguration domainConf = domainService
-						.getTomcatConfig(tomcat.getDomainId());
-				viewmodel.setHttpPort(domainConf.getHttpPort());
-				viewmodel.setAjpPort(domainConf.getAjpPort());
-				viewmodel.setRedirectPort(domainConf.getRedirectPort());
-				viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
+				DomainTomcatConfiguration domainConf = domainService.getTomcatConfig(tomcat.getDomainId());
+				if (domainConf != null) {
+					viewmodel.setHttpPort(domainConf.getHttpPort());
+					viewmodel.setAjpPort(domainConf.getAjpPort());
+					viewmodel.setRedirectPort(domainConf.getRedirectPort());
+					viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
+				}
 			} else {
 				for (TomcatInstConfig c : changedConfigs) {
 					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
-						viewmodel.setHttpPort(Integer.parseInt(c
-								.getConfigValue()));
+						viewmodel.setHttpPort(Integer.parseInt(c.getConfigValue()));
 					}
 				}
 			}
 			// set latest Config file id
-			TomcatConfigFile latestServerXml = tomcatConfigFileService
-					.getLatestConfVersion(null, tomcat,
-							MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
-			TomcatConfigFile latestContextXml = tomcatConfigFileService
-					.getLatestConfVersion(null, tomcat,
-							MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
+			TomcatConfigFile latestServerXml = tomcatConfigFileService.getLatestConfVersion(null, tomcat, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
+			TomcatConfigFile latestContextXml = tomcatConfigFileService.getLatestConfVersion(null, tomcat, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
 			if (latestServerXml != null) {
-				viewmodel.setLatestServerXmlConfigFileId(latestServerXml
-						.getId());
+				viewmodel.setLatestServerXmlConfigFileId(latestServerXml.getId());
 			}
 			if (latestContextXml != null) {
-				viewmodel.setLatestContextXmlConfigFileId(latestContextXml
-						.getId());
+				viewmodel.setLatestContextXmlConfigFileId(latestContextXml.getId());
 			}
 			json.setData(viewmodel);
 		}
@@ -177,8 +169,7 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
-			@PathVariable Integer id) {
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable Integer id) {
 
 		DomainTomcatConfiguration conf = service.getTomcatConfig(id);
 
@@ -189,10 +180,12 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/conf/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveTomcatConf(SimpleJsonResponse json,
-			DomainTomcatConfiguration conf) {
+	public SimpleJsonResponse saveTomcatConf(SimpleJsonResponse json, DomainTomcatConfiguration conf) {
 		TomcatInstance tomcat = service.findOne(conf.getTomcatInstanceId());
 		if (tomcat != null) {
+			//update catalina home
+			String cataHome = conf.getCatalinaHome();
+			conf.setCatalinaHome(cataHome + conf.getTomcatVersionNm());
 			service.saveTomcatConfig(tomcat, conf);
 		}
 
@@ -202,11 +195,9 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/instance/{serverId}/conf2", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json,
-			@PathVariable int serverId) {
+	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
 
-		List<DomainTomcatConfiguration> list = service
-				.findInstanceConfigs(serverId);
+		List<DomainTomcatConfiguration> list = service.findInstanceConfigs(serverId);
 
 		json.setData(list);
 
@@ -214,16 +205,14 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping("/instance/list")
-	public @ResponseBody SimpleJsonResponse getTomcatInstance(
-			SimpleJsonResponse json) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
 		return json;
 	}
 
 	@RequestMapping("/instance/listbydomain")
-	public @ResponseBody SimpleJsonResponse getTomcatInstances(
-			SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
 		if (domain != null) {
 			json.setData(service.getTomcatListByDomainId(domain.getId()));
@@ -232,11 +221,9 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping(value = "/instance/{id}/ds", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getDatasourceByTomcat(
-			GridJsonResponse json, @PathVariable Integer id) {
+	public @ResponseBody GridJsonResponse getDatasourceByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
-		List<DataSource> datasources = domainService
-				.getDatasourceByDomainId(tomcat.getDomainId());
+		List<DataSource> datasources = domainService.getDatasourceByDomainId(tomcat.getDomainId());
 		json.setList(datasources);
 		json.setTotal(datasources.size());
 
@@ -244,16 +231,13 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping(value = "/instance/{id}/apps", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getAppsByTomcat(
-			GridJsonResponse json, @PathVariable Integer id) {
+	public @ResponseBody GridJsonResponse getAppsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
 			/* example */
 			// TODO idkjwon loading
-			List<TomcatApplication> domainApps = domainService
-					.getApplicationListByDomain(tomcat.getDomainId());
-			List<TomcatApplication> tomcatApps = service
-					.getApplicationByTomcat(tomcat.getId());
+			List<TomcatApplication> domainApps = domainService.getApplicationListByDomain(tomcat.getDomainId());
+			List<TomcatApplication> tomcatApps = service.getApplicationByTomcat(tomcat.getId());
 			tomcatApps.addAll(domainApps);
 			json.setList(tomcatApps);
 			json.setTotal(tomcatApps.size());
@@ -262,8 +246,7 @@ public class TomcatInstanceController {
 	}
 
 	@RequestMapping(value = "/instance/{id}/sessions", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getSessionsByTomcat(
-			GridJsonResponse json, @PathVariable Integer id) {
+	public @ResponseBody GridJsonResponse getSessionsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
 			// TODO idkjwon get from clustering session server
@@ -283,8 +266,7 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/saveList", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveList(SimpleJsonResponse json,
-			@RequestBody List<TomcatInstance> tomcats) {
+	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
 
 		for (TomcatInstance tomcatInstance : tomcats) {
 
