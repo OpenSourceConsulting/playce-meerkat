@@ -19,6 +19,7 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
+import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Session;
@@ -28,6 +29,7 @@ import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -35,10 +37,11 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @Controller
 @RequestMapping("/domain")
 public class DomainController {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(DomainController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DomainController.class);
 	@Autowired
 	private TomcatDomainService domainService;
+	@Autowired
+	private DataSourceService dsService;
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
 	@Autowired
@@ -48,10 +51,9 @@ public class DomainController {
 
 	@Autowired
 	private CommonCodeHandler commonHandler;
-	
+
 	@Autowired
 	private TomcatProvisioningService proviService;
-	
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -81,8 +83,7 @@ public class DomainController {
 				}
 			}
 			if (domain.getServerGroup() != null) {
-				DatagridServerGroup group = datagridGroupService
-						.getGroup(domain.getServerGroup().getId());
+				DatagridServerGroup group = datagridGroupService.getGroup(domain.getServerGroup().getId());
 				if (group == null) {
 					json.setSuccess(false);
 					json.setMsg("Datagrid server group does not exist.");
@@ -102,8 +103,7 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/{domainId}/config", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getConfig(SimpleJsonResponse json,
-			@PathVariable int domainId) {
+	public @ResponseBody SimpleJsonResponse getConfig(SimpleJsonResponse json, @PathVariable int domainId) {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td == null) {
 			json.setSuccess(false);
@@ -154,8 +154,7 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/{domainId}/apps", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getApplications(
-			GridJsonResponse json, @PathVariable Integer domainId) {
+	public @ResponseBody GridJsonResponse getApplications(GridJsonResponse json, @PathVariable Integer domainId) {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td != null) {
 			List<TomcatApplication> apps = td.getTomcatApplication();
@@ -167,16 +166,14 @@ public class DomainController {
 
 	@RequestMapping(value = "/{domainId}/tomcatconfig", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getTomcatConfig(SimpleJsonResponse json,
-			@PathVariable Integer domainId) {
+	public SimpleJsonResponse getTomcatConfig(SimpleJsonResponse json, @PathVariable Integer domainId) {
 
 		json.setData(domainService.getTomcatConfig(domainId));
 		return json;
 	}
 
 	@RequestMapping(value = "/{domainId}/sessions", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getSessions(GridJsonResponse json,
-			@PathVariable Integer domainId) {
+	public @ResponseBody GridJsonResponse getSessions(GridJsonResponse json, @PathVariable Integer domainId) {
 
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td == null) {
@@ -202,16 +199,20 @@ public class DomainController {
 
 	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig) {
+
+		if(domainTomcatConfig.getId() == 0) {
+			domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
+		} else {
+			domainService.saveDomainTomcatConfig(domainTomcatConfig);
+		}
 		
-		domainService.saveDomainTomcatConfig(domainTomcatConfig);
 		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), null);
-		
+
 		return json;
 	}
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json,
-			int id) {
+	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json, int id) {
 		TomcatDomain result = domainService.getDomain(id);
 		json.setData(result);
 
@@ -219,16 +220,14 @@ public class DomainController {
 	}
 
 	@RequestMapping(value = "/tomcatlist", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getTomcatInstanceByDomain(
-			GridJsonResponse json, int domainId) {
+	public @ResponseBody GridJsonResponse getTomcatInstanceByDomain(GridJsonResponse json, int domainId) {
 		json.setList(tomcatService.getTomcatListByDomainId(domainId));
 		json.setSuccess(true);
 		return json;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse delete(SimpleJsonResponse json,
-			int domainId) {
+	public @ResponseBody SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {
 		if (domainService.delete(domainId)) {
 			json.setMsg("Domain is deleted successfully.");
 			json.setSuccess(true);
@@ -241,30 +240,42 @@ public class DomainController {
 
 	@RequestMapping(value = "/addDatasources", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json,
-			@RequestBody List<TomcatDomainDatasource> datasources) {
+	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
 
 		domainService.addDatasources(datasources);
 
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/saveFirstDatasources", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveFirstDatasources(SimpleJsonResponse json,
-			@RequestBody List<TomcatDomainDatasource> datasources) {
+	public SimpleJsonResponse saveFirstDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
 
 		domainService.saveFirstDatasources(datasources);
 
 		return json;
 	}
 
+	@RequestMapping(value = "/datasource/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deleteDatasourceMapping(SimpleJsonResponse json, int domainId, int dsId) {
+
+		TomcatDomain domain = domainService.getDomain(domainId);
+		if (domain != null) {
+			List<DataSource> mappedDatasources = domainService.getDatasourceByDomainId(domainId);
+			DataSource ds = dsService.findOne(dsId);
+			mappedDatasources.remove(ds);
+			domain.setDatasources(mappedDatasources);
+			domainService.save(domain);
+			//TODO: kwonbj implement next for provisioning
+		}
+		return json;
+	}
+
 	@RequestMapping(value = "/{domainId}/tomcat/search/{keyword}", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse search(GridJsonResponse json,
-			@PathVariable Integer domainId, @PathVariable String keyword) {
-		List<TomcatInstance> result = tomcatService.findByNameAndDomain(
-				keyword, domainId);
+	public GridJsonResponse search(GridJsonResponse json, @PathVariable Integer domainId, @PathVariable String keyword) {
+		List<TomcatInstance> result = tomcatService.findByNameAndDomain(keyword, domainId);
 		json.setList(result);
 		json.setTotal(result.size());
 		return json;
