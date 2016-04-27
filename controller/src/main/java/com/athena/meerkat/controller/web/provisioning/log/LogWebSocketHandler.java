@@ -92,6 +92,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		LOGGER.debug(message.toString());
 		
 		String jsonMsg = message.getPayload();
+
 		LOGGER.debug("playload : {}", jsonMsg);
 		
 		try{
