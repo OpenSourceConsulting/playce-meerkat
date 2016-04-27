@@ -92,6 +92,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		LOGGER.debug(message.toString());
 		
 		String jsonMsg = message.getPayload();
+		LOGGER.debug("playload : {}", jsonMsg);
 		
 		try{
 			
@@ -112,7 +113,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 				String contextPath = data.get("contextPath").asText();
 				String warFilePath = data.get("warFilePath").asText();
 				
-				service.deployWar(domainId, warFilePath, session);
+				service.deployWar(domainId, warFilePath, contextPath, session);
 			}
 		
 		}catch(Exception e) {

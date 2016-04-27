@@ -52,6 +52,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
+import com.athena.meerkat.controller.web.common.util.FileUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
@@ -265,7 +266,7 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 	
 	@Transactional
-	public void deployWar(int domainId, String warFilePath, WebSocketSession session) {
+	public void deployWar(int domainId, String warFilePath, String contextPath, WebSocketSession session) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
@@ -279,8 +280,11 @@ public class TomcatProvisioningService implements InitializingBean {
 		if (list != null && list.size() > 0) {
 
 			for (TomcatInstance tomcatInstance : list) {
+				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
-				pModel.addProps("warFilePath", warFilePath);
+				pModel.addProps("warFilePath", configFileService.getFileFullPath(warFilePath));
+				pModel.addProps("warFileName", FileUtil.getFileName(warFilePath));
+				pModel.addProps("contextPath", contextPath);
 				
 				runCommand(pModel, "deployWar.xml", session);
 			}
