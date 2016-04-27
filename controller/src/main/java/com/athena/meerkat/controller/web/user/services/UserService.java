@@ -22,15 +22,13 @@ import com.athena.meerkat.controller.web.user.repositories.UserRoleRepository;
 @Service
 public class UserService implements InitializingBean, UserDetailsService {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(UserService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private UserRepository repo;
 
 	@Autowired
 	private UserRoleRepository roleRepo;
-
 
 	public List<User> getList() {
 		return repo.findAll();
@@ -46,6 +44,10 @@ public class UserService implements InitializingBean, UserDetailsService {
 
 	public List<UserRole> getRoleList() {
 		return roleRepo.findAll();
+	}
+
+	public List<UserRole> getRoleList(List<Integer> ids) {
+		return roleRepo.findAll(ids);
 	}
 
 	public UserRole getUserRole(String name) {
@@ -74,8 +76,7 @@ public class UserService implements InitializingBean, UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		return repo.findByUsername(username);
 	}

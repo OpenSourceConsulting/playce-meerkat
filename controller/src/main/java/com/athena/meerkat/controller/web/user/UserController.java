@@ -22,6 +22,7 @@
  */
 package com.athena.meerkat.controller.web.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.user.entities.User;
 import com.athena.meerkat.controller.web.user.entities.UserRole;
 import com.athena.meerkat.controller.web.user.services.UserService;
@@ -50,8 +52,7 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(UserController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	public static final String SESSION_USER_KEY = "loginUser";
 
@@ -84,36 +85,56 @@ public class UserController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveUser(User user) {
+	public SimpleJsonResponse saveUser(SimpleJsonResponse json, User user, String retypePassword, String userRoleStrIds) {
 
 		if (user.getId() == 0) {
 			User existingUser = service.getUser(user.getUsername());
 			if (existingUser != null) {
-				return false;
+				json.setMsg("Username is duplicated.");
+				json.setSuccess(false);
+				return json;
 			}
-
 			user.setCreatedDate(new Date());
 		}
 
-		List<UserRole> role = null;//service.getUserRole(user.getUserRolesId());
+		if (!user.getPassword().equals(retypePassword)) {
+			json.setMsg("Retype password does not match.");
+			json.setSuccess(false);
+			return json;
+		}
+		String[] userRolesStrArray = userRoleStrIds.split("#");
+		List<Integer> userRoleIds = new ArrayList<>();
+		for (String str : userRolesStrArray) {
+			if (!str.equals("")) {
+				userRoleIds.add(Integer.parseInt(str));
+			}
+		}
+		List<UserRole> roles = service.getRoleList(userRoleIds);
 
 		LOGGER.debug("user fullname is {}", user.getFullName());
-		LOGGER.debug("passEncoder is {}", passEncoder.getClass()
-				.getCanonicalName());
+		LOGGER.debug("passEncoder is {}", passEncoder.getClass().getCanonicalName());
 
 		user.setPassword(passEncoder.encode(user.getPassword()));
-	//	user.setUserRole(role);
+		user.setUserRoles(roles);
 
-		if (service.saveUser(user) != null) {
-			return true;
-		}
-		return false;
+		service.saveUser(user);
+		return json;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public User editUser(int id) {
-		return service.findUser(id);
+	public SimpleJsonResponse editUser(SimpleJsonResponse json, int id) {
+		User user = service.findUser(id);
+		List<UserRole> roles = user.getUserRoles();
+		List<UserRole> dbRoles = service.getRoleList();
+		for (UserRole role : dbRoles) {
+			if (roles.contains(role)) {
+				role.setSelected(true);
+			}
+		}
+		user.setUserRoles(dbRoles);
+		json.setData(user);
+		return json;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)

@@ -84,7 +84,7 @@ public class User implements UserDetails {
 	@Transient
 	private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<UserRole> userRoles;
 
@@ -203,7 +203,15 @@ public class User implements UserDetails {
 	}
 
 	public String getUserRolesString() {
-		return StringUtils.join(userRoles.toArray(), ",");
+		String userRolesStr = "";
+		for (UserRole role : this.userRoles) {
+			userRolesStr += role.getName() + ",";
+		}
+		int length = userRolesStr.length();
+		if (length > 0) {
+			userRolesStr = userRolesStr.substring(0, length - 1);
+		}
+		return userRolesStr;
 	}
 
 	public List<Integer> getUserRoleIds() {

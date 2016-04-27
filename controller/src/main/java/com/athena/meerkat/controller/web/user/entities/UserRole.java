@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +39,8 @@ public class UserRole implements Serializable {
 	@JsonBackReference
 	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private List<User> users;
+	@Transient
+	private boolean selected;
 
 	public int getId() {
 		return Id;
@@ -68,6 +71,14 @@ public class UserRole implements Serializable {
 			return this.users.size();
 		}
 		return 0;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 
 }
