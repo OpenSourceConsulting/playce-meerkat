@@ -95,14 +95,14 @@ public class UserController {
 			user.setCreatedDate(new Date());
 		}
 
-		UserRole role = service.getUserRole(user.getUserRoleId());
+		List<UserRole> role = null;//service.getUserRole(user.getUserRolesId());
 
 		LOGGER.debug("user fullname is {}", user.getFullName());
 		LOGGER.debug("passEncoder is {}", passEncoder.getClass()
 				.getCanonicalName());
 
 		user.setPassword(passEncoder.encode(user.getPassword()));
-		user.setUserRole(role);
+	//	user.setUserRole(role);
 
 		if (service.saveUser(user) != null) {
 			return true;

@@ -24,28 +24,31 @@
  */
 package com.athena.meerkat.controller.web.user.entities;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.MeerkatUtils;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * <pre>
@@ -81,9 +84,9 @@ public class User implements UserDetails {
 	@Transient
 	private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
-	@ManyToOne
-	@JsonBackReference
-	private UserRole userRole;
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<UserRole> userRoles;
 
 	public User(String usrName, String pwd) {
 		setUsername(usrName);
@@ -92,9 +95,12 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		if (userRole != null && authorities.size() == 0) {
-			addAuthority(new SimpleGrantedAuthority(userRole.getName()));
+		if (userRoles != null) {
+			for (UserRole userRole : userRoles) {
+				if (userRole != null && authorities.size() == 0) {
+					addAuthority(new SimpleGrantedAuthority(userRole.getName()));
+				}
+			}
 		}
 
 		return this.authorities;
@@ -139,14 +145,6 @@ public class User implements UserDetails {
 	// public void addAuthority(SimpleGrantedAuthority authority) {
 	// this.authorities.add(authority);
 	// }
-
-	public UserRole getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
-	}
 
 	public int getId() {
 		return Id;
@@ -197,30 +195,31 @@ public class User implements UserDetails {
 	}
 
 	public String getLastLoginDateString() {
-		return MeerkatUtils.dateTimeToString(lastLoginDate,
-				MeerkatConstants.DATE_TIME_FORMATTER);
+		return MeerkatUtils.dateTimeToString(lastLoginDate, MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
 	public String getCreatedDateString() {
-		return MeerkatUtils.dateTimeToString(createdDate,
-				MeerkatConstants.DATE_TIME_FORMATTER);
+		return MeerkatUtils.dateTimeToString(createdDate, MeerkatConstants.DATE_TIME_FORMATTER);
 	}
 
-	public String getUserRoleString() {
-		return userRole.getName();
+	public String getUserRolesString() {
+		return StringUtils.join(userRoles.toArray(), ",");
 	}
 
-	public int getUserRoleId() {
-		return userRole.getId();
+	public List<Integer> getUserRoleIds() {
+		List<Integer> userIds = new ArrayList<>();
+		for (UserRole role : userRoles) {
+			userIds.add(role.getId());
+		}
+		return userIds;
 	}
 
-	public User(String _userID, String _fullName, String _password,
-			String _email, UserRole _userRole) {
+	public User(String _userID, String _fullName, String _password, String _email, List<UserRole> _userRoles) {
 		username = _userID;
 		fullName = _fullName;
 		password = _password;
 		email = _email;
-		userRole = _userRole;
+		userRoles = _userRoles;
 		createdDate = new Date();
 	}
 
@@ -230,6 +229,14 @@ public class User implements UserDetails {
 
 	public void addAuthority(SimpleGrantedAuthority authority) {
 		this.authorities.add(authority);
+	}
+
+	public List<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 }
