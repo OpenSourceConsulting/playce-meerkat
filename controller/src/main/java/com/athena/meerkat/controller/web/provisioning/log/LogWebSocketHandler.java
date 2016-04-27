@@ -92,7 +92,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		LOGGER.debug(message.toString());
 		
 		String jsonMsg = message.getPayload();
-		
+		/*
 		try{
 			
 			JsonNode json = JSONUtil.readTree(jsonMsg);
@@ -117,7 +117,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		
 		}catch(Exception e) {
 			LOGGER.error(e.toString(), e);
-		}
+		}*/
 		
 	}
 

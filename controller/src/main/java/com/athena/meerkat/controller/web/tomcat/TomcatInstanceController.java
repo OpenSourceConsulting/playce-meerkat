@@ -80,6 +80,8 @@ public class TomcatInstanceController {
 
 	@Autowired
 	private TomcatProvisioningService proviService;
+	@Autowired
+	private ServerService serverService;
 
 	public TomcatInstanceController() {
 	}
@@ -123,7 +125,7 @@ public class TomcatInstanceController {
 		} else {
 			proviService.stopTomcatInstance(id, null);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
-			
+
 			json.setMsg("Tomcat is stopped.");
 		}
 
@@ -267,21 +269,56 @@ public class TomcatInstanceController {
 	@RequestMapping(value = "/saveList", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
-
+		boolean isUniqueCataBase = false;
 		for (TomcatInstance tomcatInstance : tomcats) {
 
+			//checkUnique tomcat name within domain
+			if (!checkUniqueTomcatName(tomcatInstance.getName(), tomcatInstance.getDomainId())) {
+				json.setSuccess(false);
+				json.setMsg(String.format("Tomcat instance (%s) name is duplicated.", tomcatInstance.getName()));
+				return json;
+			}
 			TomcatDomain domain = new TomcatDomain();
 			domain.setId(tomcatInstance.getDomainId());
 
-			Server server = new Server();
-			server.setId(tomcatInstance.getServerId());
-
-			tomcatInstance.setTomcatDomain(domain);
-			tomcatInstance.setServer(server);
+			Server server = serverService.getServer(tomcatInstance.getServerId());
+			if (server == null) {
+				break;
+			}
+			List<DomainTomcatConfiguration> configs = service.findInstanceConfigs(server.getId());
+			isUniqueCataBase = checkUniqueCatalinaBase(configs);
+			if (isUniqueCataBase) {
+				tomcatInstance.setTomcatDomain(domain);
+				tomcatInstance.setServer(server);
+			} else {
+				json.setSuccess(false);
+				json.setMsg(String.format("Catalina base is duplicated in server (%s).", server.getName()));
+				return json;
+			}
+		}
+		if (isUniqueCataBase) {
+			service.saveList(tomcats);
 		}
 
-		service.saveList(tomcats);
-
 		return json;
+	}
+
+	private boolean checkUniqueCatalinaBase(List<DomainTomcatConfiguration> configs) {
+		for (int i = 0; i < configs.size() - 1; i++) {
+			for (int j = i; j < configs.size(); j++) {
+				if (!configs.get(i).getCatalinaBase().equals(configs.get(j).getCatalinaBase())) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private boolean checkUniqueTomcatName(String tomcatName, int domainId) {
+		List<TomcatInstance> tomcats = service.findByNameAndDomain(tomcatName, domainId);
+		if (tomcats == null || tomcats.size() <= 0) {
+			return true;
+		}
+		return false;
 	}
 }
