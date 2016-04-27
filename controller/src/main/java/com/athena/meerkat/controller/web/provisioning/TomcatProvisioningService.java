@@ -293,6 +293,38 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 
 	}
+	
+	@Transactional
+	public void updateXml(int domainId, int configFileId, WebSocketSession session) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		// List<Tomcat> TomcatInstanceService
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		TomcatConfigFile confFile = configFileService.getTomcatConfigFileById(configFileId);
+		
+		String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
+		
+
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+
+		if (list != null && list.size() > 0) {
+
+			for (TomcatInstance tomcatInstance : list) {
+				
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				pModel.addConfFile(confFile);
+				
+				runDefaultTarget(pModel, targetName, session);
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+
+	}
 
 	private void sendCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
 
@@ -301,7 +333,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		try {
 
 			/*
-			 * 1. make job dir & copy build.xml.
+			 * 1. copy cmd.xml & default.xml.
 			 */
 			copyCmds(cmdFileName, jobDir);
 
@@ -328,7 +360,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		try {
 
 			/*
-			 * 1. make job dir & copy build.xml.
+			 * 1. copy cmd.xml & default.xml.
 			 */
 			copyCmds(cmdFileName, jobDir);
 
@@ -347,10 +379,37 @@ public class TomcatProvisioningService implements InitializingBean {
 			MDC.remove("serverIp");
 		}
 	}
+	
+	private void runDefaultTarget(ProvisionModel pModel, String targetName, WebSocketSession session) {
+
+		File jobDir = generateBuildProperties(pModel, session);
+
+		try {
+
+			/*
+			 * 1. copy default.xml.
+			 */
+			copyDefault(jobDir);
+
+			/*
+			 * 2. run cmd.
+			 */
+			ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+			throw new RuntimeException(e);
+
+		} finally {
+			LOGGER.debug(LOG_END);
+			MDC.remove("jobPath");
+			MDC.remove("serverIp");
+		}
+	}
 
 	/**
 	 * <pre>
-	 * 실행할 ant commands file 을 jobDir 에 copy 한다.
+	 * 실행할 ant commands file (cmd.xml & default.xml) 을 jobDir 에 copy 한다.
 	 * </pre>
 	 * 
 	 * @param cmdFileName
@@ -361,6 +420,11 @@ public class TomcatProvisioningService implements InitializingBean {
 		String cmdsPath = commanderDir.getAbsolutePath() + File.separator + "cmds" + File.separator;
 		FileUtils.copyFileToDirectory(new File(cmdsPath + "default.xml"), jobDir);
 		FileUtils.copyFile(new File(cmdsPath + cmdFileName), new File(jobDir.getAbsolutePath() + File.separator + "cmd.xml"));
+	}
+	
+	private void copyDefault(File jobDir) throws IOException {
+		String cmdsPath = commanderDir.getAbsolutePath() + File.separator + "cmds" + File.separator;
+		FileUtils.copyFileToDirectory(new File(cmdsPath + "default.xml"), jobDir);
 	}
 
 	/**
@@ -401,7 +465,8 @@ public class TomcatProvisioningService implements InitializingBean {
 		Properties targetProps = new Properties(); // build.properties
 		targetProps.setProperty("agent.deploy.dir", agentDeployDir);
 		targetProps.setProperty("agent.name", agentName);
-		// targetProps.setProperty("tomcat.unzip.pah", "/home/"+ userId +"/tmp");
+		targetProps.setProperty("server.ant.home", agentDeployDir + "/" + agentName + "/apache-ant-1.9.6");
+		
 		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
 		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
 		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));

@@ -67,17 +67,28 @@
 
 	</target>
 	
-	<target name="update-config" description="">
+	<target name="update-server.xml" description="">
 
 		<echo>update ${server.xml.file}</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/conf/server.xml" trust="true" keyfile="${key.file}"
 			password="${user.passwd}" file="${server.xml.file}">
 		</scp>
 
+	</target>
+	
+	<target name="update-context.xml" description="">
+
 		<echo>update ${context.xml.file}</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/conf/context.xml" trust="true" keyfile="${key.file}"
 			password="${user.passwd}" file="${context.xml.file}">
 		</scp>
+
+	</target>
+	
+	<target name="update-config" description="">
+
+		<antcall target="update-server.xml"></antcall>
+		<antcall target="update-context.xml"></antcall>
 
 	</target>
 

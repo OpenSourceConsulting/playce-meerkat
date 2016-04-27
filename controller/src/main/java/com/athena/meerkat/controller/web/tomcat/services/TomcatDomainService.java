@@ -89,7 +89,7 @@ public class TomcatDomainService {
 	 * @param datasources
 	 */
 	@Transactional
-	public void addDatasources(List<TomcatDomainDatasource> datasources) {
+	public TomcatConfigFile addDatasources(List<TomcatDomainDatasource> datasources) {
 		
 		tdDatasoureRepo.save(datasources);
 		
@@ -112,7 +112,7 @@ public class TomcatDomainService {
 		contextFile.setId(0);//for insert.
 		contextFile.increaseVersion();
 		
-		confFileService.saveConfigFile(contextFile);
+		return confFileService.saveConfigFile(contextFile);
 	}
 	
 	/**

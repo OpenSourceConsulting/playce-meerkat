@@ -72,7 +72,14 @@ public class ProvisioningUtil {
 				
 		CommandUtil.execWithLog(commanderDir, cmds);
 	}
-	
+	/**
+	 * <pre>
+	 * send cmd.xml & run sshexec runCmd.sh
+	 * </pre>
+	 * @param commanderDir
+	 * @param jobDir
+	 * @throws Exception
+	 */
 	public static void sendCommand(File commanderDir, File jobDir) throws Exception {
 		
 		String execFile = "sendcmd.sh";

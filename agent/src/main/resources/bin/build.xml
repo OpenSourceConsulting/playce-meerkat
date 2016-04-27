@@ -1,0 +1,20 @@
+<project name="agent ant targets" basedir="." default="unzip">
+	
+	<!-- 
+	#########################################
+	# agent ant targets
+	#########################################
+	-->
+	
+	<property file="${basedir}/build-ssh.properties" />
+	<property file="${basedir}/build.properties" />
+	
+
+	<target name="unzip">
+
+		<echo message="unzip ${src}" />
+		<unzip src="${src}" dest="${dest}"/>
+
+	</target>
+
+</project>

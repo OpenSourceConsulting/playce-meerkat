@@ -173,4 +173,5 @@ public abstract class MeerkatConstants {
 	
 	public static final String WEBSOCKET_EVENT_INSTALL = "install";
 	public static final String WEBSOCKET_EVENT_DEPLOY = "deploy";
+	public static final String WEBSOCKET_EVENT_UXMLFILE = "updateXmlFile";
 }
