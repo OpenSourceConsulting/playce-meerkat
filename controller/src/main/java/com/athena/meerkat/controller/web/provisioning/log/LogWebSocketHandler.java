@@ -115,6 +115,12 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 				String warFilePath = data.get("warFilePath").asText();
 				
 				service.deployWar(domainId, warFilePath, contextPath, session);
+				
+			} else if (MeerkatConstants.WEBSOCKET_EVENT_UXMLFILE.equals(event)) {
+				
+				int configFileId = data.get("configFileId").asInt();
+				
+				service.updateXml(domainId, configFileId, session);
 			}
 		
 		}catch(Exception e) {

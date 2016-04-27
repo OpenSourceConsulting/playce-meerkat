@@ -24,6 +24,7 @@ import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -242,8 +243,10 @@ public class DomainController {
 	@ResponseBody
 	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
 
-		domainService.addDatasources(datasources);
+		TomcatConfigFile confFile = domainService.addDatasources(datasources);
 
+		json.setData(confFile);
+		
 		return json;
 	}
 

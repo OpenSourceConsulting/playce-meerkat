@@ -118,6 +118,14 @@ public class ProvisionModel {
 		this.confFiles = confFiles;
 	}
 	
+	public void addConfFile(TomcatConfigFile confFile) {
+		
+		if (confFiles == null) {
+			confFiles = new ArrayList<TomcatConfigFile>();
+		}
+		confFiles.add(confFile);
+	}
+	
 	public List<DataSource> getDsList() {
 		return dsList;
 	}
@@ -125,7 +133,7 @@ public class ProvisionModel {
 	public void setDsList(List<DataSource> dsList) {
 		this.dsList = dsList;
 	}
-
+	
 	public String getConfigOP() {
 		if (isFirstInstall) {
 			return CONFIG_OP_ADD;
