@@ -11,15 +11,34 @@
 	
 
 	<target name="cmd">
+		
+		<property name="upload.path" value="${catalina.base}/temp" />
+		<property name="webapp.path" value="${catalina.base}/webapps/${contextPath}" />
+		
+		<property name="cmd1" value="rm -rf ${webapp.path}*" />
+		<property name="cmd2" value="mkdir ${webapp.path}" />
+		<property name="cmd3" value="unzip -o ${upload.path}/${warFileName} -d ${webapp.path}" />
 
-		<echo>deploy ${filename}</echo>
-		<scp port="${server.port}" todir="${user.id}@${server.ip}:${catalina.base}/temp" trust="true" keyfile="${key.file}"
+		<echo>upload ${filename}</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${upload.path}" trust="true" keyfile="${key.file}"
 			password="${user.passwd}" failonerror="true" file="${warFilePath}">
 		</scp>
 		
-
+		<!-- stop -->
+		<echo>stopping ${catalina.base}</echo>
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="${cmd1}; ${cmd2}; ${cmd3}; ${cmd4}; ${cmd5}; ${cmd6}; ${cmd7}" trust="true" failonerror="true" />
+			command="cd ${catalina.base}; ./shutdown.sh" trust="true" failonerror="true" />
+		
+
+		<echo>replace ${webapp.path}</echo>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="${cmd1}; ${cmd2}; ${cmd3}" trust="true" failonerror="true" />
+		
+		
+		<!-- start -->
+		<echo>starting ${catalina.base}</echo>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="cd ${catalina.base}; ./startup.sh nolog;" trust="true" failonerror="true" />
 
 	</target>
 
