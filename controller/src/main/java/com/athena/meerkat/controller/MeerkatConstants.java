@@ -158,20 +158,23 @@ public abstract class MeerkatConstants {
 	public static final String MON_FACTOR_TI_RUN = "ti.run"; // tomcat instance
 																// running
 																// status.
+	public static final String MON_FACTOR_NI_OUT = "net.out";
+	public static final String MON_FACTOR_NI_IN = "net.in";
 
 	public static final int DISK_MON_PERIOD_MINUTE = 10;
 
 	/**
-	 * Define configuration fields that can be edited in domain level and in
-	 * tomcat instance as well
+	 * Define configuration fields that can be edited in domain level and in tomcat instance as well
 	 */
-	public static final String[] TOMCAT_INSTANCE_CONFIGS_CUSTOM = { "javaHome",
-			"httpPort", "ajpPort", "sessionTimeout", "redirectPort",
-			"jmxEnable", "rmiRegistryPort", "rmiServerPort", "catalinaOpts",
-			"tomcatVersion", "encoding" };
-	
-	
+	public static final String[] TOMCAT_INSTANCE_CONFIGS_CUSTOM = { "javaHome", "httpPort", "ajpPort", "sessionTimeout", "redirectPort", "jmxEnable",
+			"rmiRegistryPort", "rmiServerPort", "catalinaOpts", "tomcatVersion", "encoding" };
+
 	public static final String WEBSOCKET_EVENT_INSTALL = "install";
 	public static final String WEBSOCKET_EVENT_DEPLOY = "deploy";
 	public static final String WEBSOCKET_EVENT_UXMLFILE = "updateXmlFile";
+
+	public static final long MONITORING_MINUTE_INTERVAL = 2;
+
+	public static final String MON_NI_TYPE_IN = "traffic_in";
+	public static final String MON_NI_TYPE_OUT = "traffic_out";
 }
