@@ -20,6 +20,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
@@ -30,8 +31,8 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 
 @Service
 public class TomcatDomainService {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TomcatDomainService.class);
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatDomainService.class);
 
 	@Autowired
 	private DomainRepository domainRepo;
@@ -49,7 +50,7 @@ public class TomcatDomainService {
 	private ApplicationRepository appRepo;
 
 	@Autowired
-	private TomcatDomainDatasourceRepository tdDatasoureRepo;
+	private TomcatDomainDatasourceRepository domainDatasoureRepo;
 
 	@Autowired
 	private DataSourceRepository dsRepo;
@@ -65,6 +66,18 @@ public class TomcatDomainService {
 	
 	@Autowired
 	private CommonCodeHandler codeHandler;
+	
+
+	private TomcatProvisioningService provService;
+
+	
+	public TomcatProvisioningService getProvService() {
+		return provService;
+	}
+
+	public void setProvService(TomcatProvisioningService provService) {
+		this.provService = provService;
+	}
 
 	@Transactional
 	public TomcatDomain save(TomcatDomain domain) {
@@ -91,14 +104,28 @@ public class TomcatDomainService {
 	@Transactional
 	public TomcatConfigFile addDatasources(List<TomcatDomainDatasource> datasources) {
 		
-		tdDatasoureRepo.save(datasources);
+		domainDatasoureRepo.save(datasources);
+
+		int domainId = datasources.get(0).getTomcatDomainId();
+		
+		return updateContextXml(domainId);
+	}
+	
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * @param domainId
+	 * @return
+	 */
+	@Transactional
+	public TomcatConfigFile updateContextXml(int domainId) {
 		
 		/*
 		 * make updated context.xml contents.
 		 */
-		int domainId = datasources.get(0).getTomcatDomainId();
 		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
-		List<DataSource> dsList = dsRepo.getDatasourcesByDomainId(domainId);
+		List<DataSource> dsList = getDatasources(domainId);
 		
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
 		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
@@ -117,19 +144,19 @@ public class TomcatDomainService {
 	
 	/**
 	 * <pre>
-	 * 최초 저장시에는 기존 버전의 context.xml 파일을 수정한다.
+	 * wizard ui를 통한 추가: 기존 버전의 context.xml 파일만 수정한다. (버전 증가 없음)
 	 * </pre>
 	 * @param datasources
 	 */
 	@Transactional
 	public void saveFirstDatasources(List<TomcatDomainDatasource> datasources) {
 		
-		tdDatasoureRepo.save(datasources);
+		domainDatasoureRepo.save(datasources);
 		
 		
 		int domainId = datasources.get(0).getTomcatDomainId();
 		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
-		List<DataSource> dsList = dsRepo.getDatasourcesByDomainId(domainId);
+		List<DataSource> dsList = getDatasources(domainId);
 		
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
 		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
@@ -194,7 +221,39 @@ public class TomcatDomainService {
 		return domainTomcatConfRepo.save(conf);
 	}
 
-	public List<DataSource> getDatasourceByDomainId(Integer domainId) {
-		return dsRepo.getDatasourcesByDomainId(domainId);
+	public List<DataSource> getDatasources(Integer domainId) {
+		
+		TomcatDomain domain = getDomain(domainId);
+		
+		return domain.getDatasources();
+	}
+	
+	@Transactional
+	public void deleteDomainDatasource(int domainId, int dsId) {
+		
+		domainDatasoureRepo.deleteByTomcatDomainIdAndDatasourceId(domainId, dsId);
+		
+		/*
+		 * don't delete below.
+		 * 
+		TomcatDomain domain = getDomain(domainId);
+		List<DataSource> mappedDatasources = domain.getDatasources();
+		
+		for (Iterator<DataSource> iterator = mappedDatasources.iterator(); iterator.hasNext();) {
+			DataSource dataSource = iterator.next();
+			
+			if(dsId == dataSource.getId()) {
+				iterator.remove();
+				break;
+			}
+		}
+		
+		save(domain);//real delete db;
+		*/
+		
+		TomcatConfigFile configFile = updateContextXml(domainId);
+		
+		getProvService().updateXml(domainId, configFile.getId(), null);
+		
 	}
 }

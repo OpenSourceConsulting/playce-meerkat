@@ -145,7 +145,7 @@ public class TomcatProvisioningService implements InitializingBean {
 	public void installTomcatInstance(int domainId, WebSocketSession session) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
-		List<DataSource> dsList = domainService.getDatasourceByDomainId(domainId);
+		List<DataSource> dsList = domainService.getDatasources(domainId);
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
@@ -294,6 +294,14 @@ public class TomcatProvisioningService implements InitializingBean {
 
 	}
 	
+	/**
+	 * <pre>
+	 * server.xml or context.xml 파일을 tomcat instance 에 적용한다.
+	 * </pre>
+	 * @param domainId
+	 * @param configFileId 적용할 TomcatConfigFile id
+	 * @param session
+	 */
 	@Transactional
 	public void updateXml(int domainId, int configFileId, WebSocketSession session) {
 
@@ -582,6 +590,8 @@ public class TomcatProvisioningService implements InitializingBean {
 		Assert.notNull(commanderHome);
 
 		commanderDir = new File(commanderHome);
+		
+		domainService.setProvService(this);
 
 	}
 

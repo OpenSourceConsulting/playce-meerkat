@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
@@ -238,7 +239,25 @@ public class DomainController {
 		}
 		return json;
 	}
+	
+	@RequestMapping(value = "/datasource/list", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getDatasourceList(GridJsonResponse json, @RequestParam(value="domainId") int domainId) {
+		List<DataSource> datasources = domainService.getDatasources(domainId);
+		json.setList(datasources);
+		json.setTotal(datasources.size());
 
+		return json;
+	}
+
+	/**
+	 * <pre>
+	 * Domain 관리화면에서의 추가.
+	 * </pre>
+	 * @param json
+	 * @param datasources
+	 * @return
+	 */
 	@RequestMapping(value = "/addDatasources", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
@@ -250,6 +269,14 @@ public class DomainController {
 		return json;
 	}
 
+	/**
+	 * <pre>
+	 * wizard ui를 통한 추가
+	 * </pre>
+	 * @param json
+	 * @param datasources
+	 * @return
+	 */
 	@RequestMapping(value = "/saveFirstDatasources", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveFirstDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
@@ -263,15 +290,8 @@ public class DomainController {
 	@ResponseBody
 	public SimpleJsonResponse deleteDatasourceMapping(SimpleJsonResponse json, int domainId, int dsId) {
 
-		TomcatDomain domain = domainService.getDomain(domainId);
-		if (domain != null) {
-			List<DataSource> mappedDatasources = domainService.getDatasourceByDomainId(domainId);
-			DataSource ds = dsService.findOne(dsId);
-			mappedDatasources.remove(ds);
-			domain.setDatasources(mappedDatasources);
-			domainService.save(domain);
-			//TODO: kwonbj implement next for provisioning
-		}
+		domainService.deleteDomainDatasource(domainId, dsId);
+		
 		return json;
 	}
 

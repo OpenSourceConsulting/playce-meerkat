@@ -222,5 +222,5 @@ public class TomcatDomain {
 	public void setLatestContextXmlVersion(int latestContextXmlVersion) {
 		this.latestContextXmlVersion = latestContextXmlVersion;
 	}
-
+	
 }

@@ -181,7 +181,4 @@ public class DataSourceService {
 		return datasourceRepo.listNotAssigned(domainId);
 	}
 	
-	public List<DataSource> listDomainLinked(int domainId) {
-		return datasourceRepo.listDomainLinked(domainId);
-	}
 }

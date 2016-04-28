@@ -6,6 +6,7 @@
 	#########################################
 	-->
 	
+	<property file="${basedir}/build-ssh.properties" />
 	<property file="${basedir}/build.properties" />
 	
 
