@@ -77,8 +77,7 @@ public class ServerController {
 
 	@RequestMapping(value = "/{serverId}/nis", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getNIs(GridJsonResponse json,
-			@PathVariable Integer serverId) {
+	public GridJsonResponse getNIs(GridJsonResponse json, @PathVariable Integer serverId) {
 		Server m = service.getServer(serverId);
 		if (m != null) {
 			json.setList((List<?>) m.getNetworkInterfaces());
@@ -93,8 +92,7 @@ public class ServerController {
 
 	@RequestMapping(value = "/{serverId}/sshAccounts", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getSSHAccounts(GridJsonResponse json,
-			@PathVariable Integer serverId) {
+	public GridJsonResponse getSSHAccounts(GridJsonResponse json, @PathVariable Integer serverId) {
 		Server m = service.getServer(serverId);
 		if (m != null) {
 			json.setList((List<?>) m.getSshAccounts());
@@ -142,14 +140,18 @@ public class ServerController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveSeverInfo(SimpleJsonResponse json,
-			Server server, String sshIPAddr, String sshUserName,
-			String sshPassword) {
+	public SimpleJsonResponse saveSeverInfo(SimpleJsonResponse json, Server server, String sshIPAddr, String sshUserName, String sshPassword) {
 		Server currentServer;
 		if (server.getId() == 0) {
 			Server existingServer = service.getServerByName(server.getName());
 			if (existingServer != null) {
 				json.setMsg("Server name is duplicated.");
+				json.setSuccess(false);
+				return json;
+			}
+			Server existingIPAddrServer = service.getServerBySSHIPAddress(sshIPAddr);
+			if (existingIPAddrServer != null) {
+				json.setMsg("Server SSH IPAddress is duplicated.");
 				json.setSuccess(false);
 				return json;
 			}
@@ -168,8 +170,7 @@ public class ServerController {
 
 			currentServer.setSshNi(ni);
 			currentServer.addNetworkInterface(ni);
-			SshAccount sshAccount = service.getSSHAccountByUserNameAndServerId(
-					sshUserName, server.getId());
+			SshAccount sshAccount = service.getSSHAccountByUserNameAndServerId(sshUserName, server.getId());
 			if (sshAccount == null) {
 				sshAccount = new SshAccount();
 				sshAccount.setUsername(sshUserName);
@@ -184,8 +185,7 @@ public class ServerController {
 			service.save(currentServer);
 
 		} else { // edit case
-			if (server.getName().trim() == "" || server.getSshPort() < 0
-					|| server.getHostName() == "" || server.getSshNiId() <= 0) {
+			if (server.getName().trim() == "" || server.getSshPort() < 0 || server.getHostName() == "" || server.getSshNiId() <= 0) {
 				json.setMsg("The input data is invalid.");
 				json.setSuccess(false);
 				return json;
@@ -210,10 +210,8 @@ public class ServerController {
 
 	@RequestMapping(value = "/testssh", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse testSSHConnection(SimpleJsonResponse json,
-			String userID, String password, String ipAddr, int port) {
-		SSHManager sshMng = new SSHManager(userID, password, ipAddr, "", port,
-				1000);
+	public SimpleJsonResponse testSSHConnection(SimpleJsonResponse json, String userID, String password, String ipAddr, int port) {
+		SSHManager sshMng = new SSHManager(userID, password, ipAddr, "", port, 1000);
 		String errorMsg = sshMng.connect();
 		if (errorMsg == null || errorMsg == "") {
 			sshMng.close();
@@ -230,12 +228,9 @@ public class ServerController {
 
 	@RequestMapping(value = "/updatessh", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse updateSSH(SimpleJsonResponse json,
-			SshAccount account) {
+	public SimpleJsonResponse updateSSH(SimpleJsonResponse json, SshAccount account) {
 		if (account.getId() == 0) {
-			SshAccount existingAccount = service
-					.getSSHAccountByUserNameAndServerId(account.getUsername(),
-							account.getServerId());
+			SshAccount existingAccount = service.getSSHAccountByUserNameAndServerId(account.getUsername(), account.getServerId());
 			if (existingAccount != null) {
 				json.setMsg("User ID is duplicated.");
 				json.setSuccess(false);
@@ -272,8 +267,7 @@ public class ServerController {
 
 	@RequestMapping(value = "/envrevisions", method = RequestMethod.GET)
 	@ResponseBody
-	public SimpleJsonResponse getEVRevisions(SimpleJsonResponse json,
-			int machineId) {
+	public SimpleJsonResponse getEVRevisions(SimpleJsonResponse json, int machineId) {
 
 		// Machine machine = service.retrieve(machineId);
 		//

@@ -38,14 +38,12 @@ public class ServerService {
 	}
 
 	/**
-	 * Add new machine. Based on the provided SSH information, machine info will
-	 * be collected.
+	 * Add new machine. Based on the provided SSH information, machine info will be collected.
 	 * 
 	 * @param m
 	 * @return
 	 */
-	public ServiceResult add(String name, String description, String sshAddr,
-			int sshPort, String sshUserName, String sshPassword) {
+	public ServiceResult add(String name, String description, String sshAddr, int sshPort, String sshUserName, String sshPassword) {
 		// check existing
 		// List<Server> existingMachines =
 		// machineRepo.findByNameOrSshIPAddr(name,
@@ -183,8 +181,7 @@ public class ServerService {
 	}
 
 	/**
-	 * Edit machine information. Update name, description and using SSH account
-	 * to re-collect machine info.
+	 * Edit machine information. Update name, description and using SSH account to re-collect machine info.
 	 * 
 	 * @param machineId
 	 *            Machine Id need to be edited
@@ -204,8 +201,7 @@ public class ServerService {
 	 *            SSH password
 	 * @return
 	 */
-	public ServiceResult edit(int machineId, String name, String description,
-			String sshAddr, int sshPort, String sshUserName, String sshPassword) {
+	public ServiceResult edit(int machineId, String name, String description, String sshAddr, int sshPort, String sshUserName, String sshPassword) {
 		// boolean isChanged = false;
 		// Server m = machineRepo.getOne(machineId);
 		// if (m == null) {
@@ -303,6 +299,10 @@ public class ServerService {
 		return serverRepo.findByName(name);
 	}
 
+	public Server getServerBySSHIPAddress(String sshIPAddr) {
+		return serverRepo.findBySshNi_ipv4(sshIPAddr);
+	}
+
 	public NetworkInterface getNiById(int sshNiId) {
 		return niRepo.findOne(sshNiId);
 	}
@@ -327,8 +327,7 @@ public class ServerService {
 		return niRepo.save(ni);
 	}
 
-	public SshAccount getSSHAccountByUserNameAndServerId(String sshUserName,
-			int serverId) {
+	public SshAccount getSSHAccountByUserNameAndServerId(String sshUserName, int serverId) {
 		return sshRepo.findByUsernameAndServer_Id(sshUserName, serverId);
 	}
 
@@ -345,5 +344,4 @@ public class ServerService {
 		serverRepo.save(servers);
 
 	}
-
 }
