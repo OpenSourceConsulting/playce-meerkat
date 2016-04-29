@@ -64,7 +64,7 @@ import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewMod
  * @version 2.0
  */
 @RestController
-@RequestMapping("/tomcat")
+@RequestMapping("/tomcat/instance")
 public class TomcatInstanceController {
 
 	@Autowired
@@ -86,7 +86,7 @@ public class TomcatInstanceController {
 	public TomcatInstanceController() {
 	}
 
-	@RequestMapping(value = "/instance/start", method = RequestMethod.POST)
+	@RequestMapping(value = "/start", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
@@ -103,7 +103,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/restart", method = RequestMethod.POST)
+	@RequestMapping(value = "/restart", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
 		stopTomcat(json, id);
@@ -114,7 +114,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/stop", method = RequestMethod.POST)
+	@RequestMapping(value = "/stop", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
@@ -132,7 +132,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/get")
+	@RequestMapping(value = "/get")
 	@ResponseBody
 	public SimpleJsonResponse getTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
@@ -169,7 +169,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{id}/conf", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/conf", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable Integer id) {
 
@@ -180,7 +180,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/conf/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveTomcatConf(SimpleJsonResponse json, DomainTomcatConfiguration conf) {
 		TomcatInstance tomcat = service.findOne(conf.getTomcatInstanceId());
@@ -195,7 +195,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{serverId}/conf2", method = RequestMethod.GET)
+	@RequestMapping(value = "/{serverId}/conf2", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
 
@@ -206,14 +206,14 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping("/instance/list")
+	@RequestMapping("/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
 		json.setData(tomcats);
 		return json;
 	}
 
-	@RequestMapping("/instance/listbydomain")
+	@RequestMapping("/listbydomain")
 	public @ResponseBody SimpleJsonResponse getTomcatInstances(SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
 		if (domain != null) {
@@ -222,17 +222,17 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{id}/ds", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/ds", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getDatasourceByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
-		List<DataSource> datasources = domainService.getDatasourceByDomainId(tomcat.getDomainId());
+		List<DataSource> datasources = domainService.getDatasources(tomcat.getDomainId());
 		json.setList(datasources);
 		json.setTotal(datasources.size());
 
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{id}/apps", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/apps", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getAppsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {
@@ -247,7 +247,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/instance/{id}/sessions", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/sessions", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getSessionsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
 		TomcatInstance tomcat = service.findOne(id);
 		if (tomcat != null) {

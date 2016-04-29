@@ -35,8 +35,8 @@ import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
  * @version 1.0
  */
 @Repository
-public interface TomcatDomainDatasourceRepository extends
-		JpaRepository<TomcatDomainDatasource, Integer> {
+public interface TomcatDomainDatasourceRepository extends JpaRepository<TomcatDomainDatasource, Integer> {
 
+	Long deleteByTomcatDomainIdAndDatasourceId(int tomcatDomainId, int datasourceId);
 }
 //end of TomcatDomainDatasourceRepository.java

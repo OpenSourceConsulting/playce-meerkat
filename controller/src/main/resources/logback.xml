@@ -5,20 +5,6 @@
 			<pattern>%d [%thread] %-5level %-35logger{30} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>G:\project\AthenaMeerkat\meerkat.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>G:\project\AthenaMeerkat\meerkat.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>50MB</maxFileSize>
-			    <maxHistory>30</maxHistory>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-
-		<encoder>
-			<pattern>%d [%thread] %X{serverIp} # %msg%n</pattern>
-		</encoder>
-	</appender>
 	<appender name="PROVI_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
 	    <discriminator>
 	      <key>jobPath</key>
@@ -49,9 +35,10 @@
 
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.hibernate.SQL" level="DEBUG" /> <!-- sql log -->
-	<logger name="org.hibernate.type" level="WARN" /> <!-- parameters & result -->
-    <logger name="org.hibernate.type.CollectionType" level="TRACE" /> <!-- parameters & result -->
-    <logger name="org.hibernate.type.BasicTypeRegistry" level="WARN" />
+	<logger name="org.hibernate.type" level="TRACE" /> <!-- on off sql parameters & result -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" /> <!-- sql result (TRACE) -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" /> <!-- sql parameter (TRACE) -->
+    <logger name="org.hibernate.type.BasicTypeRegistry" level="DEBUG" />
 	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
 	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />
 	

@@ -109,15 +109,6 @@ public class DataSourceController {
 		return json;
 	}
 	
-	@RequestMapping(value = "/domain/link/list", method = RequestMethod.GET)
-	@ResponseBody
-	public GridJsonResponse getDatasourceList(GridJsonResponse json, @RequestParam(value="domainId") int domainId) {
-		List<DataSource> datasources = service.listDomainLinked(domainId);
-		json.setList(datasources);
-		json.setTotal(datasources.size());
-
-		return json;
-	}
 	
 	@RequestMapping("/listna")
 	@ResponseBody
