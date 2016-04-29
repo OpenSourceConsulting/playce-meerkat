@@ -5,19 +5,15 @@ import java.util.List;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
-import org.hyperic.sigar.NetConnection;
 import org.hyperic.sigar.NetStat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.athena.meerkat.agent.monitoring.NetworkData;
 import com.athena.meerkat.agent.monitoring.utils.SigarUtil;
-import com.athena.meerkat.agent.monitoring.websocket.StompWebSocketClient;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 @Component
 public class ServerMonScheduledTask extends MonitoringTask {
@@ -29,6 +25,8 @@ public class ServerMonScheduledTask extends MonitoringTask {
 	private String serverId;
 
 	private List<String> monDatas = new ArrayList<String>();
+	
+	private NetworkData netData;
 
 	public ServerMonScheduledTask() {
 	}
@@ -45,20 +43,22 @@ public class ServerMonScheduledTask extends MonitoringTask {
 		try {
 			CpuPerc cpu = SigarUtil.getCpuPerc();
 			Mem mem = SigarUtil.getMem();
-			NetStat netStat = SigarUtil.getNetStat();
+			//NetStat netStat = SigarUtil.getNetStat();
+			
+			if(netData == null) {
+				netData = new NetworkData(SigarUtil.getInstance());
+			}
 
 			double cpuUsed = (cpu.getCombined()) * 100.0d;
 			double memUsed = mem.getActualUsed() / (1024L*1024L);//mb
 			double memUsedPer = mem.getUsedPercent();
-			int netIn = netStat.getAllInboundTotal();
-			int netOut = netStat.getAllOutboundTotal();
+			Long[] netDatas = netData.getMetric();
 
 			monDatas.add(createJsonString("cpu.used", serverId, cpuUsed));
 			monDatas.add(createJsonString("mem.used", serverId, memUsed));
 			monDatas.add(createJsonString("mem.used_per", serverId, memUsedPer));
-			monDatas.add(createJsonString("net.in", serverId, netIn));
-			monDatas.add(createJsonString("net.out", serverId, netOut));
-			// TODO tran : verify data and add additional data
+			monDatas.add(createJsonString("net.in", serverId, netDatas[0]));
+			monDatas.add(createJsonString("net.out", serverId, netDatas[1]));
 
 			sendMonData(monDatas);
 
