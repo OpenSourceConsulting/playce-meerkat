@@ -173,7 +173,7 @@ public abstract class MeerkatConstants {
 	public static final String WEBSOCKET_EVENT_DEPLOY = "deploy";
 	public static final String WEBSOCKET_EVENT_UXMLFILE = "updateXmlFile";
 
-	public static final long MONITORING_MINUTE_INTERVAL = 2;
+	public static final long MONITORING_MINUTE_INTERVAL = 5;
 
 	public static final String MON_NI_TYPE_IN = "traffic_in";
 	public static final String MON_NI_TYPE_OUT = "traffic_out";
