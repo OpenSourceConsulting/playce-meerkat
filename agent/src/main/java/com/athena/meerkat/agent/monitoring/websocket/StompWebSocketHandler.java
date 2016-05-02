@@ -137,7 +137,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 				
 				if (dataNode instanceof ArrayNode) {
 					instanceConfigs = (ArrayNode)dataNode;
-					LOGGER.debug("MESSAGE datas.size(): {}", instanceConfigs.size());
+					LOGGER.debug("MESSAGE instance size : {}", instanceConfigs.size());
 				}
 				
 				
