@@ -32,10 +32,10 @@
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
-<!--am.rmi
+<!--am.rmi.disable.start
   <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener"
        rmiRegistryPortPlatform="${am.rmi.registry.port}" rmiServerPortPlatform="${am.rmi.server.port}"/>
-am.rmi-->
+am.rmi.disable.end-->
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html
   -->

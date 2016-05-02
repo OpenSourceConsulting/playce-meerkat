@@ -34,6 +34,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.Tailer;
@@ -100,9 +103,15 @@ public class TomcatProvisioningService implements InitializingBean {
 
 	@Autowired
 	private CommonCodeHandler codeHandler;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 
 	@Value("${meerkat.commander.home}")
 	private String commanderHome;// = "G:/project/AthenaMeerkat/.aMeerkat";
+	
+	@Value("${meerkat.tomcat.down.url}")
+	private String tomcatDownUrl;
 
 	private File commanderDir;
 
@@ -217,26 +226,70 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 	@Transactional
-	public void updateTomcatInstanceConfig(int domainId, WebSocketSession session) {
+	public void updateTomcatInstanceConfig(int domainId, boolean changeRMI, WebSocketSession session) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
 		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		TomcatConfigFile confFile = configFileService.getLatestServerXmlFile(domainId);
+		
+		final String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
+		
+		AdditionalTask addTask = null;
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
+		
+		if (changeRMI) {
+			updateRMIConfig(domainId, tomcatConfig);
+			
+			addTask = new AdditionalTask(){
+
+				@Override
+				public void runTask(File jobDir) throws Exception {
+					ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+				}
+				
+			};
+		}
+		
 
 		if (list != null && list.size() > 0) {
 
 			for (TomcatInstance tomcatInstance : list) {
-				sendCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "updateTomcatConfig.xml", session);
+				
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				pModel.addConfFile(confFile);
+				
+				sendCommand(pModel, "updateTomcatConfig.xml", session, addTask);
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
 		}
 
+	}
+	
+	/**
+	 * <pre>
+	 * server.xml 의 rmi 설정을 update 한다.
+	 * </pre>
+	 * @param domainId
+	 * @param tomcatConfig
+	 */
+	private void updateRMIConfig(int domainId, DomainTomcatConfiguration tomcatConfig) {
+		
+		TomcatConfigFile serverXmlFile = configFileService.getLatestServerXmlFile(domainId);
+		String serverXml = configFileService.getConfigFileContents(serverXmlFile.getFilePath());
+		serverXmlFile.setContent(serverXml);
+		
+		entityManager.detach(serverXmlFile);
+		serverXmlFile.setId(0);//for insert.
+		serverXmlFile.increaseVersion();
+		
+		configFileService.saveConfigFile(serverXmlFile, tomcatConfig);
 	}
 
 	@Transactional
@@ -335,6 +388,9 @@ public class TomcatProvisioningService implements InitializingBean {
 	}
 
 	private void sendCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
+		sendCommand(pModel, cmdFileName, session, null);
+	}
+	private void sendCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session, AdditionalTask task) {
 
 		File jobDir = generateBuildProperties(pModel, session);
 
@@ -349,6 +405,10 @@ public class TomcatProvisioningService implements InitializingBean {
 			 * 2. send cmd.
 			 */
 			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			
+			if(task != null) {
+				task.runTask(jobDir);
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
@@ -472,8 +532,9 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		Properties targetProps = new Properties(); // build.properties
 		targetProps.setProperty("agent.deploy.dir", agentDeployDir);
-		targetProps.setProperty("agent.name", agentName);
-		targetProps.setProperty("server.ant.home", agentDeployDir + "/" + agentName + "/apache-ant-1.9.6");
+		targetProps.setProperty("agent.name", 		agentName);
+		targetProps.setProperty("server.ant.home", 	agentDeployDir + "/" + agentName + "/apache-ant-1.9.6");
+		targetProps.setProperty("tomcat.down.url", 	tomcatDownUrl);
 		
 		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
 		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());

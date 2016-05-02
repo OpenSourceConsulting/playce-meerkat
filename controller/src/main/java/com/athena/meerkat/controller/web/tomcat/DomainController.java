@@ -199,8 +199,8 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping(value = "/savetomcatconfig", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig) {
+	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
+	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
 
 		if(domainTomcatConfig.getId() == 0) {
 			domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
@@ -208,7 +208,7 @@ public class DomainController {
 			domainService.saveDomainTomcatConfig(domainTomcatConfig);
 		}
 
-		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), null);
+		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), changeRMI, null);
 
 		return json;
 	}

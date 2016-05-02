@@ -124,7 +124,7 @@ public class TomcatDomainService {
 		/*
 		 * make updated context.xml contents.
 		 */
-		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
+		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
 		List<DataSource> dsList = getDatasources(domainId);
 		
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
@@ -139,7 +139,7 @@ public class TomcatDomainService {
 		contextFile.setId(0);//for insert.
 		contextFile.increaseVersion();
 		
-		return confFileService.saveConfigFile(contextFile);
+		return confFileService.saveConfigFile(contextFile, getTomcatConfig(domainId));
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class TomcatDomainService {
 		
 		
 		int domainId = datasources.get(0).getTomcatDomainId();
-		TomcatConfigFile contextFile = confFileService.getLatestContextConfigFile(domainId);
+		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
 		List<DataSource> dsList = getDatasources(domainId);
 		
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
@@ -207,7 +207,7 @@ public class TomcatDomainService {
 		 * save server.xml & context.xml
 		 */
 		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION,	conf.getTomcatVersionCd());
-		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion);
+		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion, conf);
 
 		/*
 		 * save tomcat config
