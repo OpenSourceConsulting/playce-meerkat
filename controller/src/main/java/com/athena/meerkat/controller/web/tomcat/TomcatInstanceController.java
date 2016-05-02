@@ -296,6 +296,11 @@ public class TomcatInstanceController {
 			if (server == null) {
 				break;
 			}
+			if (isExistingServerOnDomain(server, tomcatInstance.getDomainId())) {
+				json.setSuccess(false);
+				json.setMsg(String.format("Server of tomcat instance \"%s\" has been used in this domain", tomcatInstance.getName()));
+				return json;
+			}
 			List<DomainTomcatConfiguration> configs = service.findInstanceConfigs(server.getId());
 			isUniqueCataBase = checkUniqueCatalinaBase(configs);
 			if (isUniqueCataBase) {
@@ -329,6 +334,16 @@ public class TomcatInstanceController {
 		List<TomcatInstance> tomcats = service.findByNameAndDomain(tomcatName, domainId);
 		if (tomcats == null || tomcats.size() <= 0) {
 			return true;
+		}
+		return false;
+	}
+
+	private boolean isExistingServerOnDomain(Server s, int domainId) {
+		List<TomcatInstance> tomcats = service.findByDomain(domainId);
+		for (TomcatInstance tc : tomcats) {
+			if (s.getId() == tc.getServerId()) {
+				return true;
+			}
 		}
 		return false;
 	}
