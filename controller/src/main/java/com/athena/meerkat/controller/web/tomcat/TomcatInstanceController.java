@@ -132,7 +132,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/get")
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
@@ -165,6 +165,17 @@ public class TomcatInstanceController {
 				viewmodel.setLatestContextXmlConfigFileId(latestContextXml.getId());
 			}
 			json.setData(viewmodel);
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deleteTomcat(SimpleJsonResponse json, int id) {
+		TomcatInstance tomcat = service.findOne(id);
+		if (tomcat != null) {
+			service.delete(tomcat);
+			//TODO kwonbj delete provisoning
 		}
 		return json;
 	}

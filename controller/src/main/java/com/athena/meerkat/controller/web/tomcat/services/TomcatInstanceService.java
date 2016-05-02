@@ -224,8 +224,8 @@ public class TomcatInstanceService {
 		return configs;
 	}
 
-	public void delete(int id) {
-		repo.delete(id);
+	public void delete(TomcatInstance tomcat) {
+		repo.delete(tomcat);
 	}
 
 	public List<DataSource> getDataSourceListByTomcat(TomcatInstance tomcat) {
