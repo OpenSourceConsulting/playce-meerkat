@@ -2,15 +2,15 @@ package com.athena.meerkat.agent.monitoring.jobs;
 
 import java.io.IOException;
 import java.lang.management.MemoryUsage;
-import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.management.MBeanServerConnection;
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.remote.JMXConnector;
@@ -47,6 +47,9 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 	
 	private static final String MON_FACTOR_ID_THREADS = "jmx.tomcatThreads";
 	
+	private static final String JMX_ATTR_PROC_CPU = "ProcessCpuLoad";
+	private static final String JMX_ATTR_SYS_CPU = "SystemCpuLoad";
+	
 	private static final String JMX_ATTR_HEAPMEM = "HeapMemoryUsage";
 	private static final String JMX_ATTR_THREAD_POOL = "Catalina:type=ThreadPool,name=\"http-bio-";
 	private static final String JMX_ATTR_THREAD_USED = "currentThreadsBusy";
@@ -60,6 +63,8 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
     private Map<String, JMXConnector> jmxConnMap = new HashMap<String, JMXConnector>();
     
     private ObjectName memoryObj;
+    private ObjectName cpuObj;
+    private Map<String, ObjectName> dsObjects;
     
     
     @Autowired
@@ -137,9 +142,10 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 			
 			MBeanServerConnection mbeanServerConn = jmxc.getMBeanServerConnection();
 
-			
+			monitorTomcatCpu(mbeanServerConn, tomcatInstanceId);
 			monitorTomcatHeapMemory(mbeanServerConn, tomcatInstanceId);
 			monitorTomcatThreads(mbeanServerConn, tomcatInstanceId, httpPort);
+			monitorJDBC(mbeanServerConn, tomcatInstanceId);
 			
 		}catch(ConnectException e){
 			try{
@@ -149,6 +155,11 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 			}
 			jmxConnMap.remove(tomcatInstanceId);
 			
+			if (dsObjects != null) {
+				dsObjects.clear();
+				dsObjects = null;
+			}
+			
 		}catch(Exception e){
 			//if (LOGGER.isDebugEnabled()) {
 			//	LOGGER.error(e.toString(), e);
@@ -157,6 +168,18 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 			//}
 		}
 		
+	}
+	
+	private void monitorTomcatCpu(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
+		
+		
+		Object used = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_PROC_CPU);
+		Object sysCpuUsed = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_SYS_CPU);
+		
+		double usedVal = parseDouble(used) * 100d;
+		double sysVal = parseDouble(sysCpuUsed) * 100d;
+		
+		monDatas.add(createJmxJsonString("jmx." + JMX_ATTR_PROC_CPU, tomcatInstanceId, usedVal, sysVal));
 	}
 	
 	private void monitorTomcatHeapMemory(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
@@ -178,12 +201,87 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 		monDatas.add(createJmxJsonString(MON_FACTOR_ID_THREADS, tomcatInstanceId, parseDouble(used), parseDouble(max)));
 	}
 	
+	private void monitorJDBC(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
+		
+		if (dsObjects == null) {
+			initDSObjects(mbeanServerConn, tomcatInstanceId);
+		}
+		
+		if (dsObjects != null && dsObjects.size() > 0) {
+			for (Entry<String, ObjectName> entry : dsObjects.entrySet()) {
+				Object active = mbeanServerConn.getAttribute(entry.getValue(), "numActive");
+				Object idle = mbeanServerConn.getAttribute(entry.getValue(), "numIdle");
+				Object max = mbeanServerConn.getAttribute(entry.getValue(), "maxActive");
+				
+				double connVal = parseDouble(active) + parseDouble(idle);
+				double maxConnVal = parseDouble(max);
+				
+				monDatas.add(createJmxJsonString("jmx." + entry.getKey(), tomcatInstanceId, connVal, maxConnVal));
+			}
+		} else {
+			LOGGER.debug("DataSource is empty.");
+			dsObjects = null;
+		}
+		
+	}
+	
 	private void initJmx() throws Exception {
 		
 		if (memoryObj == null) {
 			memoryObj = new ObjectName("java.lang:type=Memory");
 		}
 		
+		if (cpuObj == null) {
+			cpuObj    = new ObjectName("java.lang:type=OperatingSystem");
+		}
+		
+	}
+	
+	private void initDSObjects(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) {
+		try {
+			
+			String objectName = "Catalina:type=DataSource,*";
+			Set<ObjectName> contexts = mbeanServerConn.queryNames(new ObjectName(objectName), null);
+			
+			String contextName = null;
+			for (ObjectName context : contexts) {
+				contextName = context.getKeyProperty("context");
+				break;
+			}
+			
+			objectName = "Catalina:type=DataSource,context=" + contextName + ",*";
+			Set<ObjectName> hosts = mbeanServerConn.queryNames(new ObjectName(objectName), null);
+			
+			String hostName = null;
+			for (ObjectName host : hosts) {
+				hostName = host.getKeyProperty("host");
+				break;
+			}
+			
+			objectName = "Catalina:type=DataSource,context=" + contextName + ",host="+ hostName + ",class=javax.sql.DataSource,*";
+			Set<ObjectName> dsNames = mbeanServerConn.queryNames(new ObjectName(objectName), null);
+			
+			LOGGER.debug("dsNames.size : {}, {}", dsNames.size(), objectName);
+			
+			
+			dsObjects = new HashMap<String, ObjectName>();
+			String jndiName = null;
+			for (ObjectName dsName : dsNames) {
+				jndiName = dsName.getKeyProperty("name");
+				
+				objectName = "Catalina:type=DataSource,context=" + contextName + ",host="+ hostName + ",class=javax.sql.DataSource,name="+ jndiName +"";
+				LOGGER.debug("JNDI NAME : {}", objectName);
+				
+				dsObjects.put(jndiName.replaceAll("\"", ""), new ObjectName(objectName));
+			}
+			
+		} catch (Exception e) {
+			//if (LOGGER.isDebugEnabled()) {
+			//	LOGGER.error(e.toString(), e);
+			//}else {
+				LOGGER.error("instanceId:{} - {}", tomcatInstanceId, e.toString());
+			//}
+		}
 	}
 	
 	private double parseDouble(Object obj) {

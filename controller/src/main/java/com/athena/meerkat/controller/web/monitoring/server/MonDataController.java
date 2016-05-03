@@ -159,6 +159,11 @@ public class MonDataController {
 			types[0] = MeerkatConstants.MON_FACTOR_NI_OUT;
 		}
 		List<MonDataViewModel> results = service.getMonDataList(types, serverId, time, now);
+		for (MonDataViewModel vm : results) {
+			Map<String, Double> value = vm.getValue();
+			value.put(types[0], value.get(types[0]) / 1000); //bytes to Kbytes
+			vm.setValue(value);
+		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
 		return jsonRes;
