@@ -225,6 +225,15 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * update ${catalina.base}/conf/catalina.properties
+	 * - with updating rmi config in server.xml 
+	 * </pre>
+	 * @param domainId
+	 * @param changeRMI
+	 * @param session
+	 */
 	@Transactional
 	public void updateTomcatInstanceConfig(int domainId, boolean changeRMI, WebSocketSession session) {
 
@@ -380,6 +389,41 @@ public class TomcatProvisioningService implements InitializingBean {
 				pModel.addConfFile(confFile);
 				
 				runDefaultTarget(pModel, targetName, session);
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+
+	}
+	
+	/**
+	 * <pre>
+	 * install jar libs in catalina.base/lib
+	 * </pre>
+	 * @param domainId
+	 * @param session
+	 */
+	@Transactional
+	public void installJar(int domainId, String installJarName, WebSocketSession session) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+		
+
+		if (list != null && list.size() > 0) {
+
+			for (TomcatInstance tomcatInstance : list) {
+				
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				pModel.addProps("install.jar.name", installJarName);
+				
+				sendCommand(pModel, "installLibs.xml", session);
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -549,10 +593,13 @@ public class TomcatProvisioningService implements InitializingBean {
 		targetProps.setProperty("am.conf.op", pModel.getConfigOP());
 		
 		if (pModel.getPropsMap() != null) {
-			targetProps.putAll(pModel.getPropsMap());
+			targetProps.putAll(pModel.getPropsMap());// additional properties.
 		}
 
 		if (confFiles != null) {
+			/*
+			 * used in default.xml (update-config target)
+			 */
 			for (TomcatConfigFile confFile : confFiles) {
 				targetProps.setProperty(codeHandler.getFileTypeName(confFile.getFileTypeCdId()) + ".file", configFileService.getFileFullPath(confFile));
 			}

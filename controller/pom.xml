@@ -113,6 +113,7 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
@@ -124,11 +125,19 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>3.6.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.picketbox</groupId>
 			<artifactId>picketbox</artifactId>
 			<version>4.0.20.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.9.6</version>
+		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jsp-api</artifactId>
@@ -144,12 +153,6 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-
-		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.9.6</version>
-		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -186,29 +189,7 @@
 					<layout>ZIP</layout>
 				</configuration>
 			</plugin>
-			<!-- -->
-			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>apt-maven-plugin</artifactId>
-				<version>1.1.3</version>
-				<!-- Eclipse error 로 인해 주석처리함. 아래와 같이 사용해야 한다고 함. http://stackoverflow.com/questions/24482259/eclipse-issue-with-maven-build-and-jdk-when-generating-qclasses-in-querydsl 
-					<executions> <execution> <goals> <goal>process</goal> </goals> <configuration> 
-					<outputDirectory>target/generated-sources/java</outputDirectory> <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor> 
-					</configuration> </execution> </executions> -->
-				<dependencies>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-apt</artifactId>
-						<version>3.6.0</version>
-					</dependency>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-jpa</artifactId>
-						<classifier>apt</classifier>
-						<version>3.6.0</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			
 		</plugins>
 	</build>
 </project>

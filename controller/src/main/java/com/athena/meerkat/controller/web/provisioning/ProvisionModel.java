@@ -52,8 +52,8 @@ public class ProvisionModel {
 	
 	private boolean isFirstInstall;
 	
-	private Map<String, String> propsMap;
-
+	private Map<String, String> propsMap;// additional properties.
+	
 	
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
 		this.tomcatConfig = tomcatConfig;

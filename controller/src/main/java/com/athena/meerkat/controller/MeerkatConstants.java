@@ -175,7 +175,7 @@ public abstract class MeerkatConstants {
 	public static final String WS_EVENT_INSTALL = "install";
 	public static final String WS_EVENT_DEPLOY = "deploy";
 	public static final String WS_EVENT_UXMLFILE = "updateXmlFile";
-	public static final String WS_EVENT_INSTALL_LIBS = "installLibs";
+	public static final String WS_EVENT_INSTALL_MYSQL_DRIVER = "installMySQLDriver";
 
 	public static final long MONITORING_MINUTE_INTERVAL = 5;
 
