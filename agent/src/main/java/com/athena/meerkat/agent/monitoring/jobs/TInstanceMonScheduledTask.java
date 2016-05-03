@@ -1,6 +1,7 @@
 package com.athena.meerkat.agent.monitoring.jobs;
 
 import java.io.IOException;
+import java.lang.management.MemoryUsage;
 import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.util.ArrayList;
@@ -8,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.openmbean.CompositeData;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
@@ -40,11 +44,22 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 public class TInstanceMonScheduledTask extends MonitoringTask{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TInstanceMonScheduledTask.class);
+	
+	private static final String MON_FACTOR_ID_THREADS = "jmx.tomcatThreads";
+	
+	private static final String JMX_ATTR_HEAPMEM = "HeapMemoryUsage";
+	private static final String JMX_ATTR_THREAD_POOL = "Catalina:type=ThreadPool,name=\"http-bio-";
+	private static final String JMX_ATTR_THREAD_USED = "currentThreadsBusy";
+	private static final String JMX_ATTR_THREAD_MAX = "maxThreads";
+	
+	private static final double asMB = 1024.d * 1024.d;
 
     
     private List<String> monDatas = new ArrayList<String>();
     
     private Map<String, JMXConnector> jmxConnMap = new HashMap<String, JMXConnector>();
+    
+    private ObjectName memoryObj;
     
     
     @Autowired
@@ -81,7 +96,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
     				}
     			}
     			
-    			monDatas.add(createJmxJsonString("ti.run", tomcatInstanceId, isRun));//tomcat instance running status.
+    			monDatas.add(createJmxJsonString("ti.run", tomcatInstanceId, isRun, 0));//tomcat instance running status.
     			monitorJMX(monDatas, tomcatInstanceId, tomcatConfig);
     		}
     		
@@ -116,12 +131,15 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 				LOGGER.debug("JMX connected!!");
 				
 				jmxConnMap.put(tomcatInstanceId, jmxc);
+				
+				initJmx();
 			}
 			
-			ObjectName name = new ObjectName("Catalina:type=ThreadPool,name=\"http-bio-"+ httpPort +"\"");
-			Object o = jmxc.getMBeanServerConnection().getAttribute(name, "currentThreadsBusy");// currentThreadCount or currentThreadsBusy
+			MBeanServerConnection mbeanServerConn = jmxc.getMBeanServerConnection();
+
 			
-			monDatas.add(createJmxJsonString("jmx.currentThreadsBusy", tomcatInstanceId, Double.parseDouble(o.toString())));
+			monitorTomcatHeapMemory(mbeanServerConn, tomcatInstanceId);
+			monitorTomcatThreads(mbeanServerConn, tomcatInstanceId, httpPort);
 			
 		}catch(ConnectException e){
 			try{
@@ -139,6 +157,37 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 			//}
 		}
 		
+	}
+	
+	private void monitorTomcatHeapMemory(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
+		
+		MemoryUsage memUsage = MemoryUsage.from( (CompositeData) mbeanServerConn.getAttribute(memoryObj, JMX_ATTR_HEAPMEM));
+		
+		double used = memUsage.getUsed()/asMB;//mbytes
+		double max = memUsage.getMax()/asMB;//mbytes
+		
+		monDatas.add(createJmxJsonString("jmx." + JMX_ATTR_HEAPMEM, tomcatInstanceId, used, max));
+	}
+	
+	private void monitorTomcatThreads(MBeanServerConnection mbeanServerConn, String tomcatInstanceId, String httpPort) throws Exception {
+		
+		ObjectName name = new ObjectName(JMX_ATTR_THREAD_POOL + httpPort +"\"");
+		Object used = mbeanServerConn.getAttribute(name, JMX_ATTR_THREAD_USED);// currentThreadsBusy
+		Object max = mbeanServerConn.getAttribute(name, JMX_ATTR_THREAD_MAX);// maxThreads
+		
+		monDatas.add(createJmxJsonString(MON_FACTOR_ID_THREADS, tomcatInstanceId, parseDouble(used), parseDouble(max)));
+	}
+	
+	private void initJmx() throws Exception {
+		
+		if (memoryObj == null) {
+			memoryObj = new ObjectName("java.lang:type=Memory");
+		}
+		
+	}
+	
+	private double parseDouble(Object obj) {
+		return Double.parseDouble(obj.toString());
 	}
     
     

@@ -42,5 +42,5 @@ ALTER TABLE `server`
 CHANGE COLUMN `disk_size` `disk_size` INT(11) NULL DEFAULT NULL ,
 CHANGE COLUMN `memory_size` `memory_size` INT(11) NULL DEFAULT NULL ;
 
-ALTER TABLE `mon_jmx_tbl` 
-CHANGE COLUMN `mon_factor_id` `mon_factor_id` VARCHAR(40) NOT NULL ;
+ALTER TABLE `mon_jmx_tbl` CHANGE COLUMN `mon_factor_id` `mon_factor_id` VARCHAR(40) NOT NULL ;
+ALTER TABLE `mon_jmx_tbl` ADD COLUMN `mon_value2` DOUBLE NULL AFTER `mon_value`;

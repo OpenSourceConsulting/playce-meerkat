@@ -11,7 +11,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Djava.security.egd=file:/dev/./urandom"
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote"
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
-#export CATALINA_OPTS="$CATALINA_OPTS -Djava.rmi.server.hostname=${rmiHostname}"
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.rmi.server.hostname=${rmiHostname}"
 
 
 
