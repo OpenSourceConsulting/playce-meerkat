@@ -206,6 +206,7 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	/*
 	@RequestMapping(value = "/{serverId}/conf2", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
@@ -216,6 +217,7 @@ public class TomcatInstanceController {
 
 		return json;
 	}
+	*/
 
 	@RequestMapping("/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
