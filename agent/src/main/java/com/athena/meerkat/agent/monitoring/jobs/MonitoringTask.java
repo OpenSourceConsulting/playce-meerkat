@@ -83,8 +83,8 @@ public abstract class MonitoringTask {
 		return "{\"monFactorId\":\""+ monFactorId +"\",\"serverId\": "+serverId+" ,\"monValue\": "+value+"}";
 	}
 	
-	protected String createJmxJsonString(String monFactorId, String instanceId, double value){
-		return "{\"monFactorId\":\""+ monFactorId +"\",\"instanceId\": "+instanceId+" ,\"monValue\": "+value+"}";
+	protected String createJmxJsonString(String monFactorId, String instanceId, double value, double value2){
+		return "{\"monFactorId\":\""+ monFactorId +"\",\"instanceId\": "+instanceId+" ,\"monValue\": "+value+" ,\"monValue2\": "+value2+"}";
 	}
 	
 	protected String createFSJsonString(String serverId, String fsName, long total, long used, double usePer, long avail){

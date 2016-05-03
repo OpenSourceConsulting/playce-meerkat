@@ -58,6 +58,9 @@ public class MonJmx {
 	
 	@Column(name = "mon_value")
 	private Double monValue;//
+	
+	@Column(name = "mon_value2")
+	private Double monValue2;//
 
 	/**
 	 * <pre>
@@ -121,6 +124,14 @@ public class MonJmx {
 	 */
 	public void setMonValue(Double monValue) {
 		this.monValue = monValue;
+	}
+
+	public Double getMonValue2() {
+		return monValue2;
+	}
+
+	public void setMonValue2(Double monValue2) {
+		this.monValue2 = monValue2;
 	}
 
 	@PrePersist
