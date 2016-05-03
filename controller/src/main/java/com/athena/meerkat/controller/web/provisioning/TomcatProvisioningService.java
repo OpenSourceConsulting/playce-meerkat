@@ -386,6 +386,41 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 
 	}
+	
+	/**
+	 * <pre>
+	 * install jar libs in catalina.base/lib
+	 * </pre>
+	 * @param domainId
+	 * @param session
+	 */
+	@Transactional
+	public void installJar(int domainId, String installJarName, WebSocketSession session) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+		
+
+		if (list != null && list.size() > 0) {
+
+			for (TomcatInstance tomcatInstance : list) {
+				
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				pModel.addProps("install.jar.name", installJarName);
+				
+				sendCommand(pModel, "installLibs.xml", session);
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+
+	}
 
 	private void sendCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
 		sendCommand(pModel, cmdFileName, session, null);
@@ -549,10 +584,13 @@ public class TomcatProvisioningService implements InitializingBean {
 		targetProps.setProperty("am.conf.op", pModel.getConfigOP());
 		
 		if (pModel.getPropsMap() != null) {
-			targetProps.putAll(pModel.getPropsMap());
+			targetProps.putAll(pModel.getPropsMap());// additional properties.
 		}
 
 		if (confFiles != null) {
+			/*
+			 * used in default.xml (update-config target)
+			 */
 			for (TomcatConfigFile confFile : confFiles) {
 				targetProps.setProperty(codeHandler.getFileTypeName(confFile.getFileTypeCdId()) + ".file", configFileService.getFileFullPath(confFile));
 			}

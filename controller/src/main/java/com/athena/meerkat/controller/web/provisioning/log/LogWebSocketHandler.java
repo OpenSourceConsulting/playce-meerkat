@@ -121,10 +121,10 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 				int configFileId = data.get("configFileId").asInt();
 				
 				service.updateXml(domainId, configFileId, session);
-			} else if (MeerkatConstants.WS_EVENT_INSTALL_LIBS.equals(event)) {
+			} else if (MeerkatConstants.WS_EVENT_INSTALL_JDBC.equals(event)) {
 				
 				
-				//service.updateXml(domainId, configFileId, session);
+				service.installJar(domainId, "mysql-connector-java-5.1.38.jar", session);
 			}
 		
 		}catch(Exception e) {
