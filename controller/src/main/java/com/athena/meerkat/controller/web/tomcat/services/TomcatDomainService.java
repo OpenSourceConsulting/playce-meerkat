@@ -142,7 +142,6 @@ public class TomcatDomainService {
 		entityManager.detach(contextFile);
 		contextFile.setId(0);//for insert.
 		contextFile.increaseVersion();
-
 		return confFileService.saveConfigFile(contextFile, getTomcatConfig(domainId));
 	}
 
