@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,9 @@ public interface ServerRepository extends JpaRepository<Server, Integer>, Paging
 	List<Server> findByDatagridServerGroup_Id(Integer id);
 
 	Server findBySshNi_ipv4(String sshIPAddr);
+
+	@Query("select s from Server s where s.id not in (select tc.serverId from TomcatDomain td join td.tomcatInstances tc where td.id= ?1)")
+	List<Server> getAvailableServersByDomain(int domainId);
 
 	// List<Server> findByMachineServerType(int type);
 	// List<Server> findByNameOrSshIPAddr(String name, String sshIPAddr);

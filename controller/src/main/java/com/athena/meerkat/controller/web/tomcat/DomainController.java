@@ -23,6 +23,7 @@ import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
@@ -202,7 +203,7 @@ public class DomainController {
 	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
 
-		if(domainTomcatConfig.getId() == 0) {
+		if (domainTomcatConfig.getId() == 0) {
 			domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
 		} else {
 			domainService.saveDomainTomcatConfig(domainTomcatConfig);
@@ -239,13 +240,23 @@ public class DomainController {
 		}
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/datasource/list", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getDatasourceList(GridJsonResponse json, @RequestParam(value="domainId") int domainId) {
+	public GridJsonResponse getDatasourceList(GridJsonResponse json, @RequestParam(value = "domainId") int domainId) {
 		List<DataSource> datasources = domainService.getDatasources(domainId);
 		json.setList(datasources);
 		json.setTotal(datasources.size());
+
+		return json;
+	}
+
+	@RequestMapping(value = "/server/availist", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getAvaiableServers(GridJsonResponse json, @RequestParam(value = "domainId") int domainId) {
+		List<Server> servers = domainService.getAvailableServers(domainId);
+		json.setList(servers);
+		json.setTotal(servers.size());
 
 		return json;
 	}
@@ -254,6 +265,7 @@ public class DomainController {
 	 * <pre>
 	 * Domain 관리화면에서의 추가.
 	 * </pre>
+	 * 
 	 * @param json
 	 * @param datasources
 	 * @return
@@ -265,7 +277,7 @@ public class DomainController {
 		TomcatConfigFile confFile = domainService.addDatasources(datasources);
 
 		json.setData(confFile);
-		
+
 		return json;
 	}
 
@@ -273,6 +285,7 @@ public class DomainController {
 	 * <pre>
 	 * wizard ui를 통한 추가
 	 * </pre>
+	 * 
 	 * @param json
 	 * @param datasources
 	 * @return
