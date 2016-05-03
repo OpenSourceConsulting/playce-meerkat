@@ -21,6 +21,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.CommonCode;
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -32,6 +33,11 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepos
 public class TomcatConfigFileService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatDomainService.class);
+	
+	private static final String RMI_DIS_START = "<!--am.rmi.disable.start";
+	private static final String RMI_DIS_END = "am.rmi.disable.end-->";
+	private static final String RMI_EN_START = "<!--am.rmi.enable.start-->";
+	private static final String RMI_EN_END = "<!--am.rmi.enable.end-->";
 	
 	@Autowired
 	private DomainRepository domainRepo;
@@ -77,33 +83,60 @@ public class TomcatConfigFileService {
 	/**
 	 * <pre>
 	 * server.xml or context.xml 파일을 db & filesystem 같이 저장한다.
-	 * version 을 증가시키지는 않는다.
+	 * - version 을 증가시키지는 않는다.
+	 * - xmlConfig 의 content field 가 not null 이어야 함.
 	 * </pre>
-	 * @param conf
+	 * @param xmlConfig
 	 * @return
 	 */
 	@Transactional
-	public TomcatConfigFile saveConfigFile(TomcatConfigFile conf) {
+	public TomcatConfigFile saveConfigFile(TomcatConfigFile xmlConfig, DomainTomcatConfiguration tomcatConf) {
 		
 		/*
 		 * save to filesystem.
 		 */
-		String filePath = getDomainFilePath(conf.getTomcatDomain().getId(), conf.getTomcatInstance());
-		filePath = filePath + File.separator + getFileTypeName(conf.getFileTypeCdId(), conf.getVersion());
+		String filePath = getDomainFilePath(xmlConfig.getTomcatDomain().getId(), xmlConfig.getTomcatInstance());
+		filePath = filePath + File.separator + getFileTypeName(xmlConfig.getFileTypeCdId(), xmlConfig.getVersion());
 		
 		File newFile = new File(getFileFullPath(filePath));
 		
+		updateRMIConfig(tomcatConf, xmlConfig, xmlConfig.getContent());
+		
 		try{
-			FileUtils.writeStringToFile(newFile, conf.getContent(), MeerkatConstants.UTF8);
+			FileUtils.writeStringToFile(newFile, xmlConfig.getContent(), MeerkatConstants.UTF8);
 		}catch(IOException e){
 			throw new RuntimeException(e);
 		}
-		conf.setFilePath(filePath);
+		xmlConfig.setFilePath(filePath);
 		
 		/*
 		 * save to db
 		 */
-		return tomcatConfigFileRepo.save(conf);
+		return tomcatConfigFileRepo.save(xmlConfig);
+	}
+	
+	/**
+	 * <pre>
+	 * server.xml 의 rmi 설정 주석 update.
+	 * </pre>
+	 * @param conf
+	 * @param confContents
+	 */
+	private void updateRMIConfig(DomainTomcatConfiguration tomcatConfig, TomcatConfigFile xmlConfig, String confContents) {
+		
+		if(MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD != xmlConfig.getFileTypeCdId()) {
+			return;
+		}
+		
+		String updatedContents = null;
+		if (tomcatConfig.isJmxEnable()) {
+			updatedContents = confContents.replace(RMI_DIS_START, RMI_EN_START)
+										  .replace(RMI_DIS_END, RMI_EN_END);
+		} else {
+			updatedContents = confContents.replace(RMI_EN_START, RMI_DIS_START)
+										  .replace(RMI_EN_END, RMI_DIS_END);
+		}
+		xmlConfig.setContent(updatedContents);
 	}
 
 	public List<TomcatConfigFile> getConfigFileVersions(TomcatInstance tomcat, int fileTypeCdId) {
@@ -126,9 +159,14 @@ public class TomcatConfigFileService {
 		return null;
 	}
 	
-	public TomcatConfigFile getLatestContextConfigFile(int domainId) {
+	public TomcatConfigFile getLatestContextXmlFile(int domainId) {
 		
 		return tomcatConfigFileRepo.getLatestConfigFile(domainId, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
+	}
+	
+	public TomcatConfigFile getLatestServerXmlFile(int domainId) {
+		
+		return tomcatConfigFileRepo.getLatestConfigFile(domainId, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
 	}
 	
 	/**
@@ -163,15 +201,15 @@ public class TomcatConfigFileService {
 	 * @param domainId
 	 * @param tomcatVersion
 	 */
-	public void saveNewTomcatConfigFiles(int domainId, String tomcatVersion) {
+	public void saveNewTomcatConfigFiles(int domainId, String tomcatVersion, DomainTomcatConfiguration conf) {
 		TomcatConfigFile serverXml = createNewTomcatConfigFile(tomcatVersion, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
 		serverXml.setDominaId(domainId);
 		
 		TomcatConfigFile contextXml = createNewTomcatConfigFile(tomcatVersion, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
 		contextXml.setDominaId(domainId);
 		
-		saveConfigFile(serverXml);
-		saveConfigFile(contextXml);
+		saveConfigFile(serverXml, conf);
+		saveConfigFile(contextXml, conf);
 	}
 	
 	private TomcatConfigFile createNewTomcatConfigFile(String tomcatVersion, int fileTypeCdId) {
@@ -200,6 +238,14 @@ public class TomcatConfigFileService {
 		return FileUtils.readFileToString(file.getFile(), MeerkatConstants.UTF8);
 	}
 	
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * @param fileTypeCdId
+	 * @param version
+	 * @return
+	 */
 	public String getFileTypeName(int fileTypeCdId, int version) {
 		String fileName = codeHandler.getFileTypeName(fileTypeCdId);
 		

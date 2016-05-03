@@ -169,9 +169,13 @@ public abstract class MeerkatConstants {
 	public static final String[] TOMCAT_INSTANCE_CONFIGS_CUSTOM = { "javaHome", "httpPort", "ajpPort", "sessionTimeout", "redirectPort", "jmxEnable",
 			"rmiRegistryPort", "rmiServerPort", "catalinaOpts", "tomcatVersion", "encoding" };
 
-	public static final String WEBSOCKET_EVENT_INSTALL = "install";
-	public static final String WEBSOCKET_EVENT_DEPLOY = "deploy";
-	public static final String WEBSOCKET_EVENT_UXMLFILE = "updateXmlFile";
+	/**
+	 * websocket events.
+	 */
+	public static final String WS_EVENT_INSTALL = "install";
+	public static final String WS_EVENT_DEPLOY = "deploy";
+	public static final String WS_EVENT_UXMLFILE = "updateXmlFile";
+	public static final String WS_EVENT_INSTALL_LIBS = "installLibs";
 
 	public static final long MONITORING_MINUTE_INTERVAL = 5;
 

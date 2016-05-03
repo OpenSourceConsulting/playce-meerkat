@@ -1,0 +1,19 @@
+<project name="install libraries" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# Install 3rd party libraries
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+
+	<target name="cmd">
+		
+		<echo message="downloading mysql-connector-java-5.1.38.jar" />
+		<get src="${tomcat.down.url}/mysql-connector-java-5.1.38.jar" dest="${catalina.home}/lib"/>
+
+	</target>
+
+</project>

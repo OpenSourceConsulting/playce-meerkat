@@ -105,22 +105,26 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 			
 			LOGGER.debug("event: {}, domainId : {}", event, domainId);
 		
-			if (MeerkatConstants.WEBSOCKET_EVENT_INSTALL.equals(event)) {
+			if (MeerkatConstants.WS_EVENT_INSTALL.equals(event)) {
 				
 				service.installTomcatInstance(domainId, session);
 				
-			} else if (MeerkatConstants.WEBSOCKET_EVENT_DEPLOY.equals(event)) {
+			} else if (MeerkatConstants.WS_EVENT_DEPLOY.equals(event)) {
 				
 				String contextPath = data.get("contextPath").asText();
 				String warFilePath = data.get("warFilePath").asText();
 				
 				service.deployWar(domainId, warFilePath, contextPath, session);
 				
-			} else if (MeerkatConstants.WEBSOCKET_EVENT_UXMLFILE.equals(event)) {
+			} else if (MeerkatConstants.WS_EVENT_UXMLFILE.equals(event)) {
 				
 				int configFileId = data.get("configFileId").asInt();
 				
 				service.updateXml(domainId, configFileId, session);
+			} else if (MeerkatConstants.WS_EVENT_INSTALL_LIBS.equals(event)) {
+				
+				
+				//service.updateXml(domainId, configFileId, session);
 			}
 		
 		}catch(Exception e) {

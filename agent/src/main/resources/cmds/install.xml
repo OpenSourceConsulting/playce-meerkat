@@ -30,7 +30,7 @@
 
 		<cargo containerId="tomcat7x" action="configure">
 			<zipUrlInstaller 
-					installUrl="http://192.168.0.87:8080/down/apache-tomcat-7.0.68.zip" 
+					installUrl="${tomcat.down.url}/${tomcat.name}.zip" 
 					downloadDir="${down.dir}" 
 					extractDir="${down.dir}" />
 			
@@ -38,9 +38,12 @@
 			</configuration>
 		</cargo>
 		
-		<copy todir="${catalina.home}" description="copy catalina.home">
+		<copy todir="${catalina.home}" description="copy to catalina.home">
 			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
 		</copy>
+		
+		<echo message="downloading catalina-jmx-remote-7.0.68.jar" />
+		<get src="${tomcat.down.url}/catalina-jmx-remote-7.0.68.jar" dest="${catalina.home}/lib"/>
 
 		<copy todir="${catalina.base}" verbose="true" description="copy env/start/stop script.">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">

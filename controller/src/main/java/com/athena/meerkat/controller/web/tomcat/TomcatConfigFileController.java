@@ -70,7 +70,7 @@ public class TomcatConfigFileController {
 		}
 
 		conf.setContent(content);
-		conf = tomcatConfigFileService.saveConfigFile(conf);
+		conf = tomcatConfigFileService.saveConfigFile(conf, td.getDomainTomcatConfig());
 		json.setData(conf);
 		
 		return json;
