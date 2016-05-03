@@ -284,7 +284,7 @@ public class TomcatInstanceController {
 		for (TomcatInstance tomcatInstance : tomcats) {
 
 			//checkUnique tomcat name within domain
-			if (!checkUniqueTomcatName(tomcatInstance.getName(), tomcatInstance.getDomainId())) {
+			if (!checkUniqueTomcatName(tomcatInstance, tomcatInstance.getDomainId())) {
 				json.setSuccess(false);
 				json.setMsg(String.format("Tomcat instance (%s) name is duplicated.", tomcatInstance.getName()));
 				return json;
@@ -319,6 +319,22 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	@RequestMapping(value = "/saveEdit", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveEditTomcat(SimpleJsonResponse json, TomcatInstance tomcat) {
+		TomcatInstance dbTomcat = service.findOne(tomcat.getId());
+		if (dbTomcat != null) {
+			if (checkUniqueTomcatName(tomcat, dbTomcat.getDomainId())) {
+				dbTomcat.setName(tomcat.getName());
+				service.save(dbTomcat);
+			} else {
+				json.setSuccess(false);
+				json.setMsg(String.format("Tomcat instance (%s) name is duplicated.", tomcat.getName()));
+			}
+		}
+		return json;
+	}
+
 	private boolean checkUniqueCatalinaBase(List<DomainTomcatConfiguration> configs) {
 		for (int i = 0; i < configs.size() - 1; i++) {
 			for (int j = i; j < configs.size(); j++) {
@@ -330,9 +346,12 @@ public class TomcatInstanceController {
 		return true;
 	}
 
-	private boolean checkUniqueTomcatName(String tomcatName, int domainId) {
-		List<TomcatInstance> tomcats = service.findByNameAndDomain(tomcatName, domainId);
+	private boolean checkUniqueTomcatName(TomcatInstance tomcat, int domainId) {
+		List<TomcatInstance> tomcats = service.findByNameAndDomain(tomcat.getName(), domainId);
 		if (tomcats == null || tomcats.size() <= 0) {
+			return true;
+		}
+		if (tomcats.size() == 1 && tomcats.get(0).getId() == tomcat.getId()) {
 			return true;
 		}
 		return false;
