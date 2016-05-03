@@ -93,7 +93,10 @@ public class MonDataController {
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
 
 		List<MonData> monDatas = copyProperties(datas);
+		//recalculate  
+		for (MonData data : monDatas) {
 
+		}
 		service.insertMonDatas(monDatas);
 
 		LOGGER.debug("saved. ----------------");
