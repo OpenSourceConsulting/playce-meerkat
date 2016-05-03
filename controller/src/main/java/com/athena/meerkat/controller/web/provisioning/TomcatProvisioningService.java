@@ -225,6 +225,15 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * update ${catalina.base}/conf/catalina.properties
+	 * - with updating rmi config in server.xml 
+	 * </pre>
+	 * @param domainId
+	 * @param changeRMI
+	 * @param session
+	 */
 	@Transactional
 	public void updateTomcatInstanceConfig(int domainId, boolean changeRMI, WebSocketSession session) {
 

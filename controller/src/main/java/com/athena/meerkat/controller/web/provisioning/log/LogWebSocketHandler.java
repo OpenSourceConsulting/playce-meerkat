@@ -121,7 +121,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 				int configFileId = data.get("configFileId").asInt();
 				
 				service.updateXml(domainId, configFileId, session);
-			} else if (MeerkatConstants.WS_EVENT_INSTALL_JDBC.equals(event)) {
+			} else if (MeerkatConstants.WS_EVENT_INSTALL_MYSQL_DRIVER.equals(event)) {
 				
 				
 				service.installJar(domainId, "mysql-connector-java-5.1.38.jar", session);
