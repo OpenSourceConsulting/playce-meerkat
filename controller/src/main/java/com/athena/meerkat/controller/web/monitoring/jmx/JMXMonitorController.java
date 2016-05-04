@@ -23,6 +23,7 @@
 package com.athena.meerkat.controller.web.monitoring.jmx;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,35 +33,43 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.hibernate.jmx.spi.JmxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
 @Controller
 @RequestMapping("/monitor/jmx")
 public class JMXMonitorController {
-	
+
+	@Autowired
+	private MonJmxService jmxService;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(JMXMonitorController.class);
-	
+
 	private Map<String, List> chartDataMap = new HashMap<String, List>();
-	
+
 	private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss");//yyyyMMddHHmmss
 	private JMXConnector jmxc = null;
 
 	public JMXMonitorController() {
-		
+
 	}
 
 	@RequestMapping("/{tinstId}/threadpool/{attr}")
@@ -68,49 +77,62 @@ public class JMXMonitorController {
 	public SimpleJsonResponse threadpool(SimpleJsonResponse jsonRes, @PathVariable String tinstId, @PathVariable String attr) throws Exception {
 
 		List<Map<String, Object>> chartDatas = chartDataMap.get(tinstId);
-		
+
 		if (chartDatas == null) {
 			chartDatas = new ArrayList<Map<String, Object>>();
 			chartDataMap.put(tinstId, chartDatas);
 		}
-		
+
 		if (chartDatas.size() > 30) {
 			chartDatas.remove(0);
 		}
-		
+
 		if (jmxc == null) {
 			JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://192.168.0.87:8225/jmxrmi");
 			jmxc = JMXConnectorFactory.connect(url);
 			LOGGER.debug("JMX connected!!");
 		}
-		
+
 		ObjectName name = new ObjectName("Catalina:type=ThreadPool,name=\"http-bio-8083\"");
 		Object o = jmxc.getMBeanServerConnection().getAttribute(name, "currentThreadsBusy");// currentThreadCount or currentThreadsBusy
 		//System.out.println(o.toString());
-		
+
 		LOGGER.debug("currentThreadsBusy is " + o.toString());
-		
+
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("time",  sdf.format(new java.util.Date()));
+		dataMap.put("time", sdf.format(new java.util.Date()));
 		dataMap.put("value", o);
-		
+
 		chartDatas.add(dataMap);
-		
+
 		jsonRes.setData(chartDatas);
 
 		return jsonRes;
 	}
-	
+
+	@RequestMapping("/{tinstId}/memory")
+	@ResponseBody
+	public GridJsonResponse getTomcatHeapMemory(GridJsonResponse json, @PathVariable Integer tinstId) throws Exception {
+		Date now = new Date();
+		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
+		List<MonJmx> list = jmxService.getJmxMonDataList(types, tinstId, time, now);
+		json.setList(list);
+
+		return json;
+	}
+
 	@RequestMapping("/{tinstId}/clear")
 	public void clear(@PathVariable String tinstId) throws Exception {
 		List<Map<String, Object>> chartDatas = chartDataMap.get(tinstId);
-		
+
 		if (chartDatas != null) {
 			chartDatas.clear();
 		}
-		
+
 		LOGGER.debug("chartDatas cleared!!");
 	}
-	
+
 }
 //end of JMXMonitorController.java

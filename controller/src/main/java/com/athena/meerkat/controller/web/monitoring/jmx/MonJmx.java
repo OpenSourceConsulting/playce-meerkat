@@ -30,11 +30,15 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.athena.meerkat.controller.common.MeerkatUtils;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -46,19 +50,18 @@ public class MonJmx {
 	@Id
 	@Column(name = "mon_factor_id")
 	private String monFactorId;//
-	
+
 	@Id
 	@Column(name = "instance_id")
 	private int instanceId;//
-	
+
 	@Id
 	@Column(name = "mon_dt")
 	private java.util.Date monDt;//
-	
-	
+
 	@Column(name = "mon_value")
 	private Double monValue;//
-	
+
 	@Column(name = "mon_value2")
 	private Double monValue2;//
 
@@ -78,7 +81,8 @@ public class MonJmx {
 	}
 
 	/**
-	 * @param monFactorId the monFactorId to set
+	 * @param monFactorId
+	 *            the monFactorId to set
 	 */
 	public void setMonFactorId(String monFactorId) {
 		this.monFactorId = monFactorId;
@@ -92,7 +96,8 @@ public class MonJmx {
 	}
 
 	/**
-	 * @param instanceId the instanceId to set
+	 * @param instanceId
+	 *            the instanceId to set
 	 */
 	public void setInstanceId(int instanceId) {
 		this.instanceId = instanceId;
@@ -106,7 +111,8 @@ public class MonJmx {
 	}
 
 	/**
-	 * @param monDt the monDt to set
+	 * @param monDt
+	 *            the monDt to set
 	 */
 	public void setMonDt(java.util.Date monDt) {
 		this.monDt = monDt;
@@ -120,7 +126,8 @@ public class MonJmx {
 	}
 
 	/**
-	 * @param monValue the monValue to set
+	 * @param monValue
+	 *            the monValue to set
 	 */
 	public void setMonValue(Double monValue) {
 		this.monValue = monValue;
@@ -132,6 +139,10 @@ public class MonJmx {
 
 	public void setMonValue2(Double monValue2) {
 		this.monValue2 = monValue2;
+	}
+
+	public String getMonDtString() {
+		return MeerkatUtils.dateTimeToString(this.monDt, "hh:mm:ss");
 	}
 
 	@PrePersist
