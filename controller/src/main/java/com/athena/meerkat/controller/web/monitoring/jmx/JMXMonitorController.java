@@ -110,13 +110,21 @@ public class JMXMonitorController {
 		return jsonRes;
 	}
 
-	@RequestMapping("/{tinstId}/memory")
+	@RequestMapping("/tomcat/{tinstId}/{type}")
 	@ResponseBody
-	public GridJsonResponse getTomcatHeapMemory(GridJsonResponse json, @PathVariable Integer tinstId) throws Exception {
+	public GridJsonResponse getTomcatHeapMemory(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type) throws Exception {
 		Date now = new Date();
 		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
-		types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
+		if (type.contains("memory")) {
+			types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
+		} else if (type.contains("cpu")) {
+			types[0] = MeerkatConstants.MON_JMX_FACTOR_CPU_USAGE;
+		} else if (type.contains("threads")) {
+			types[0] = MeerkatConstants.MON_JMX_FACTOR_ACTIVE_THREADS;
+		} else if (type.contains("jdbc")) {
+			types[0] = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS;
+		}
 		List<MonJmx> list = jmxService.getJmxMonDataList(types, tinstId, time, now);
 		json.setList(list);
 

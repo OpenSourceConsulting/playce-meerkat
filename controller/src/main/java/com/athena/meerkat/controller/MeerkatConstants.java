@@ -161,6 +161,9 @@ public abstract class MeerkatConstants {
 	public static final String MON_FACTOR_NI_OUT = "net.out";
 	public static final String MON_FACTOR_NI_IN = "net.in";
 	public static final String MON_JMX_FACTOR_HEAP_MEMORY = "jmx.HeapMemoryUsage";
+	public static final String MON_JMX_FACTOR_CPU_USAGE = "jmx.ProcessCpuLoad";
+	public static final String MON_JMX_FACTOR_ACTIVE_THREADS = "jmx.tomcatThreads";
+	public static final String MON_JMX_FACTOR_JDBC_CONNECTIONS = "jmx.jdbc/TestDB";
 
 	public static final int DISK_MON_PERIOD_MINUTE = 10;
 
