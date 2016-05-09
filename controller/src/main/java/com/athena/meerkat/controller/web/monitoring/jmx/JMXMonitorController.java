@@ -110,11 +110,15 @@ public class JMXMonitorController {
 		return jsonRes;
 	}
 
-	@RequestMapping("/tomcat/{tinstId}/{type}")
+	@RequestMapping("/tomcat/{tinstId}/{type}/{minutesAgo}")
 	@ResponseBody
-	public GridJsonResponse getTomcatHeapMemory(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type) throws Exception {
+	public GridJsonResponse getTomcatJMXData(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type, @PathVariable Integer minutesAgo)
+			throws Exception {
 		Date now = new Date();
-		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		if (minutesAgo <= 0) {
+			minutesAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minutesAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		if (type.contains("memory")) {
 			types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
