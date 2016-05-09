@@ -44,3 +44,8 @@ CHANGE COLUMN `memory_size` `memory_size` INT(11) NULL DEFAULT NULL ;
 
 ALTER TABLE `mon_jmx_tbl` CHANGE COLUMN `mon_factor_id` `mon_factor_id` VARCHAR(40) NOT NULL ;
 ALTER TABLE `mon_jmx_tbl` ADD COLUMN `mon_value2` DOUBLE NULL AFTER `mon_value`;
+
+
+ALTER TABLE `domain_tomcat_configuration` 
+ADD COLUMN `server_port` MEDIUMINT NULL AFTER `encoding` DEFAULT 8005 ;
+UPDATE domain_tomcat_configuration SET server_port=8005;

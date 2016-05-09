@@ -32,34 +32,43 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer" })
 public class DomainTomcatConfiguration implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5567525824190633125L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int Id;
+	
 	@Column(name = "java_home")
 	private String javaHome;
+	
 	@Column(name = "catalina_home")
 	private String catalinaHome;
+	
 	@Column(name = "catalina_base")
 	private String catalinaBase;
+	
 	@Column(name = "http_port")
 	private int httpPort;
+	
 	@Column(name = "ajp_port")
 	private int ajpPort;
+	
 	@Column(name = "session_timeout")
 	private int sessionTimeout;
+	
 	@Column(name = "redirect_port")
 	private int redirectPort;
+	
 	@Column(name = "jmx_enable")
 	private boolean jmxEnable;
+	
 	@Column(name = "rmi_registry_port")
 	private int rmiRegistryPort;
+	
 	@Column(name = "rmi_server_port")
 	private int rmiServerPort;
+	
 	@Column(name = "catalina_opts")
 	private String catalinaOpts;
 
@@ -74,6 +83,9 @@ public class DomainTomcatConfiguration implements Serializable {
 
 	@Column(name = "encoding")
 	private String encoding;
+	
+	@Column(name = "server_port")
+	private int serverPort;
 
 	@OneToOne
 	@JoinColumn(name = "domain_id")
@@ -85,6 +97,17 @@ public class DomainTomcatConfiguration implements Serializable {
 
 	@Transient
 	private String tomcatVersionNm;
+
+	
+	
+	
+	public int getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
+	}
 
 	public String getTomcatVersionNm() {
 		return tomcatVersionNm;

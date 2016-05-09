@@ -583,7 +583,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
 		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
 		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));
-		targetProps.setProperty("am.server.port", 	"8005");
+		targetProps.setProperty("am.server.port", 	String.valueOf(tomcatConfig.getServerPort()));
 		targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
 		targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
 		targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
@@ -709,6 +709,7 @@ public class TomcatProvisioningService implements InitializingBean {
 		model.put("javaHome", tomcatConfig.getJavaHome());
 		model.put("catalinaHome", tomcatConfig.getCatalinaHome());
 		model.put("catalinaBase", tomcatConfig.getCatalinaBase());
+		model.put("catalinaOpts", tomcatConfig.getCatalinaOpts());
 		model.put("rmiHostname", rmiHostname);
 
 		Writer output = null;

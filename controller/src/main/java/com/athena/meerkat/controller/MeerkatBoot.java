@@ -54,8 +54,7 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 /**
  * Main class with Spring Boot
  * 
- * - required java option : -Dspring.config.name=dolly
- * -Dspring.profiles.active=[local|dev|prd]
+ * - required java option : -Dspring.config.name=dolly -Dspring.profiles.active=[local|dev|prd]
  * 
  * @author BongJin Kwon
  * 
