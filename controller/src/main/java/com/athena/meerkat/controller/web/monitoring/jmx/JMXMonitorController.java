@@ -40,11 +40,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 
 /**
  * <pre>
@@ -60,6 +63,8 @@ public class JMXMonitorController {
 
 	@Autowired
 	private MonJmxService jmxService;
+	@Autowired
+	private DataSourceService dsService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JMXMonitorController.class);
 
@@ -112,14 +117,15 @@ public class JMXMonitorController {
 
 	@RequestMapping("/tomcat/{tinstId}/{type}/{minutesAgo}")
 	@ResponseBody
-	public GridJsonResponse getTomcatJMXData(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type, @PathVariable Integer minutesAgo)
-			throws Exception {
+	public GridJsonResponse getTomcatJMXData(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type, @PathVariable Integer minutesAgo,
+			@RequestParam(required = false) Integer dsId) throws Exception {
 		Date now = new Date();
 		if (minutesAgo <= 0) {
 			minutesAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
 		}
 		Date time = new Date(now.getTime() - minutesAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
+		List<MonJmx> list = new ArrayList<>();
 		if (type.contains("memory")) {
 			types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
 		} else if (type.contains("cpu")) {
@@ -127,9 +133,18 @@ public class JMXMonitorController {
 		} else if (type.contains("threads")) {
 			types[0] = MeerkatConstants.MON_JMX_FACTOR_ACTIVE_THREADS;
 		} else if (type.contains("jdbc")) {
-			types[0] = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS;
+			DataSource ds = dsService.findOne(dsId);
+			if (ds != null) {
+				types[0] = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS + "." + ds.getName();
+			} else {
+				json.setMsg("Datasource does not exist");
+				json.setSuccess(false);
+				return json;
+			}
+
 		}
-		List<MonJmx> list = jmxService.getJmxMonDataList(types, tinstId, time, now);
+		list = jmxService.getJmxMonDataList(types, tinstId, time, now);
+
 		json.setList(list);
 
 		return json;

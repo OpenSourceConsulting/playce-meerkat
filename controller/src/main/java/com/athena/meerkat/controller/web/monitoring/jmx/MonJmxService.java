@@ -56,6 +56,7 @@ public class MonJmxService {
 	public List<MonJmx> getJmxMonDataList(String[] types, int instanceId, Date time, Date now) {
 		return repository.findByInstanceIdAndMonFactorIds(types, instanceId, time, now);
 	}
+
 	/*
 	public List<MonJmx> getMonJmxList(ExtjsGridParam gridParam){
 		return repository.getMonJmxList(gridParam);
