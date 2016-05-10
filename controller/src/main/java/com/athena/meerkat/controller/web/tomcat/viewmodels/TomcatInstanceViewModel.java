@@ -18,6 +18,7 @@ public class TomcatInstanceViewModel {
 	private String jvmVersion;
 	private String domainName;
 	private String domainType;
+	private boolean jmxEnable;
 	private int domainId;
 	private int latestServerXmlConfigFileId = 0;
 	private int latestContextXmlConfigFileId = 0;
@@ -192,5 +193,13 @@ public class TomcatInstanceViewModel {
 
 	public void setDomainType(String domainType) {
 		this.domainType = domainType;
+	}
+
+	public boolean isJmxEnable() {
+		return jmxEnable;
+	}
+
+	public void setJmxEnable(boolean jmxEnable) {
+		this.jmxEnable = jmxEnable;
 	}
 }
