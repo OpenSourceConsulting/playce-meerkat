@@ -47,5 +47,5 @@ ALTER TABLE `mon_jmx_tbl` ADD COLUMN `mon_value2` DOUBLE NULL AFTER `mon_value`;
 
 
 ALTER TABLE `domain_tomcat_configuration` 
-ADD COLUMN `server_port` MEDIUMINT NULL AFTER `encoding` DEFAULT 8005 ;
+ADD COLUMN `server_port` MEDIUMINT NULL DEFAULT 8005 AFTER `encoding`;
 UPDATE domain_tomcat_configuration SET server_port=8005;

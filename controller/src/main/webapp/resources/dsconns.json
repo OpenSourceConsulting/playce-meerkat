@@ -1,0 +1,7 @@
+[
+	{"dsName" : "jdbc/TestDB", "monValue" : "245"},
+	{"dsName" : "jdbc/MeerkatDB", "monValue" : "10"},
+	{"dsName" : "jdbc/ApiDB", "monValue" : "178"},
+	{"dsName" : "jdbc/AdminDB", "monValue" : "20"},
+	{"dsName" : "jdbc/DevDB", "monValue" : "12"}
+]
