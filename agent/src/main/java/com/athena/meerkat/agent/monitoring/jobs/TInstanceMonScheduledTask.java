@@ -216,7 +216,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 				double connVal = parseDouble(active) + parseDouble(idle);
 				double maxConnVal = parseDouble(max);
 				
-				monDatas.add(createJmxJsonString("jmx." + entry.getKey(), tomcatInstanceId, connVal, maxConnVal));
+				monDatas.add(createJmxJsonString("jmx.ds." + entry.getKey(), tomcatInstanceId, connVal, maxConnVal));
 			}
 		} else {
 			LOGGER.debug("DataSource is empty.");
