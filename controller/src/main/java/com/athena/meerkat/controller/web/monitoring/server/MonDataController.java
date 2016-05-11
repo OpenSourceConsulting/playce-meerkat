@@ -157,12 +157,17 @@ public class MonDataController {
 
 		}
 		//sample data for demo
+		List<Integer> cpusUsage = new ArrayList<>();
+		Random r = new Random();
+		for (Server server : servers) {
+			cpusUsage.add(r.nextInt(90));
+		}
 		for (int i = 30; i > 0; i--) {
 			MonDataViewModel viewmodel = new MonDataViewModel();
 			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
 			Map<String, Double> value = new HashMap<>();
-			for (Server server : servers) {				
-				value.put(server.getName(), Math.random() * 100);
+			for (int j = 0; j < servers.size(); j++) {
+				value.put(servers.get(j).getName(), (double) (cpusUsage.get(j) + r.nextInt(10)));
 			}
 			viewmodel.setValue(value);
 			results.add(viewmodel);
