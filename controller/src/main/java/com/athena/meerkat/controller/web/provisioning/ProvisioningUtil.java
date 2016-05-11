@@ -57,7 +57,7 @@ public class ProvisioningUtil {
 	 * @param targetName
 	 * @throws Exception
 	 */
-	public static void runDefaultTarget(File commanderDir, File jobDir, String targetName) throws Exception {
+	public static boolean runDefaultTarget(File commanderDir, File jobDir, String targetName) throws Exception {
 		
 		String execFile = "runtarget.sh";
 		
@@ -70,8 +70,16 @@ public class ProvisioningUtil {
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
 		cmds.add(targetName);
 				
-		CommandUtil.execWithLog(commanderDir, cmds);
+		return runCmds(commanderDir, cmds);
+
 	}
+	
+	protected static boolean runCmds(File commanderDir, List<String> cmds) {
+		String isSuccess = CommandUtil.execWithLog(commanderDir, cmds);
+		
+		return Boolean.parseBoolean(isSuccess);
+	}
+	
 	/**
 	 * <pre>
 	 * send cmd.xml & run sshexec runCmd.sh
@@ -80,7 +88,7 @@ public class ProvisioningUtil {
 	 * @param jobDir
 	 * @throws Exception
 	 */
-	public static void sendCommand(File commanderDir, File jobDir) throws Exception {
+	public static boolean sendCommand(File commanderDir, File jobDir) throws Exception {
 		
 		String execFile = "sendcmd.sh";
 		
@@ -92,10 +100,10 @@ public class ProvisioningUtil {
 		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
 		
-		CommandUtil.execWithLog(commanderDir, cmds);
+		return runCmds(commanderDir, cmds);
 	}
 	
-	public static void runCommand(File commanderDir, File jobDir) throws Exception {
+	public static boolean runCommand(File commanderDir, File jobDir) throws Exception {
 		
 		String execFile = "runcmd.sh";
 		
@@ -107,7 +115,7 @@ public class ProvisioningUtil {
 		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "cmd.xml");
 		
-		CommandUtil.execWithLog(commanderDir, cmds);
+		return runCmds(commanderDir, cmds);
 	}
 	
 	

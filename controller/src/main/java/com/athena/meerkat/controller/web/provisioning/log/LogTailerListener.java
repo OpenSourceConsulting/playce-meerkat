@@ -96,11 +96,11 @@ public class LogTailerListener extends TailerListenerAdapter {
 	
 	protected void stop(){
 		this.tailer.stop();
-//		try{
-//			this.session.close();
-//		}catch(IOException e){
-//			LOGGER.error(e.toString(), e);
-//		}
+		try{
+			this.session.close();
+		}catch(IOException e){
+			LOGGER.error(e.toString(), e);
+		}
 		isStop = true;
 		LOGGER.debug("tailer stop!!");
 	}

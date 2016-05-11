@@ -46,6 +46,7 @@ ALTER TABLE `mon_jmx_tbl` CHANGE COLUMN `mon_factor_id` `mon_factor_id` VARCHAR(
 ALTER TABLE `mon_jmx_tbl` ADD COLUMN `mon_value2` DOUBLE NULL AFTER `mon_value`;
 
 
-ALTER TABLE `domain_tomcat_configuration` 
-ADD COLUMN `server_port` MEDIUMINT NULL DEFAULT 8005 AFTER `encoding`;
+ALTER TABLE `domain_tomcat_configuration` ADD COLUMN `server_port` MEDIUMINT NULL DEFAULT 8005 AFTER `encoding`;
 UPDATE domain_tomcat_configuration SET server_port=8005;
+
+ALTER TABLE `datagrid_server_group` CHANGE COLUMN `name` `name` VARCHAR(60) NULL DEFAULT NULL ;
