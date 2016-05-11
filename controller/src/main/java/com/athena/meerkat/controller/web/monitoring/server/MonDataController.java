@@ -2,8 +2,10 @@ package com.athena.meerkat.controller.web.monitoring.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -128,6 +130,43 @@ public class MonDataController {
 		types[0] = MeerkatConstants.MON_FACTOR_CPU_USED;
 		List<MonDataViewModel> results = service.getMonDataList(types, serverId, time, now);
 
+		jsonRes.setList(results);
+		jsonRes.setTotal(results.size());
+		return jsonRes;
+	}
+
+	@RequestMapping(value = "/cpumon/all", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getCPUMonData(GridJsonResponse jsonRes) {
+		List<MonDataViewModel> results = new ArrayList<>();
+		List<Server> servers = svrService.getList();
+		Date now = new Date();
+		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		types[0] = MeerkatConstants.MON_FACTOR_CPU_USED;
+		for (Server server : servers) {
+			//List<MonDataViewModel> datas = service.getMonDataList(types, server.getId(), time, now);
+			//			for (MonDataViewModel data : datas) {
+			//				MonDataViewModel viewmodel = new MonDataViewModel();
+			//				viewmodel.setMonDt(data.getMonDt());
+			//				Map<String, Double> value = new HashMap<>();
+			//				value.put(server.getName(), data.getValue().get(types[0]));
+			//				viewmodel.setValue(value);
+			//				results.add(viewmodel);
+			//			}
+
+		}
+		//sample data for demo
+		for (int i = 30; i > 0; i--) {
+			MonDataViewModel viewmodel = new MonDataViewModel();
+			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
+			Map<String, Double> value = new HashMap<>();
+			for (Server server : servers) {				
+				value.put(server.getName(), Math.random() * 100);
+			}
+			viewmodel.setValue(value);
+			results.add(viewmodel);
+		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
 		return jsonRes;

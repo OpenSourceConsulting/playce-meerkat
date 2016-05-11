@@ -63,7 +63,7 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat.controller" })
-@PropertySource(value = { "classpath:dolly-${spring.profiles.active:test}.properties" })
+@PropertySource(value = { "classpath:dolly-${spring.profiles.active:local}.properties" })
 public class MeerkatBoot {
 
 	public static void main(String[] args) {

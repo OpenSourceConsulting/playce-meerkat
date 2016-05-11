@@ -8,6 +8,7 @@ import com.athena.meerkat.controller.common.MeerkatUtils;
 public class MonDataViewModel {
 	private Date monDt;
 	Map<String, Double> value;
+
 	public Date getMonDt() {
 		return monDt;
 	}
