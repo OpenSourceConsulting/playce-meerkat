@@ -151,14 +151,16 @@ public class TomcatProvisioningService implements InitializingBean {
 
 	@Transactional
 	// @Async
-	public void installTomcatInstance(int domainId, WebSocketSession session) {
+	public boolean installTomcatInstance(int domainId, WebSocketSession session) {
 
+		boolean isSuccess = true;
+		
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		List<DataSource> dsList = domainService.getDatasources(domainId);
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
-			return;
+			return false;
 		}
 
 		List<TomcatConfigFile> confFiles = new ArrayList<TomcatConfigFile>();
@@ -172,16 +174,21 @@ public class TomcatProvisioningService implements InitializingBean {
 			for (TomcatInstance tomcatInstance : list) {
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
-				doInstallTomcatInstance(pModel, session);
+				
+				isSuccess = doInstallTomcatInstance(pModel, session) && isSuccess;
 			}
+			
+			return isSuccess;
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
 		}
 
+		return false;
 	}
 
-	private void doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
+	private boolean doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
 
+		boolean isSuccess = true;
 		File jobDir = generateBuildProperties(pModel, session);
 
 		try {
@@ -200,17 +207,17 @@ public class TomcatProvisioningService implements InitializingBean {
 			/*
 			 * 4. deploy agent
 			 */
-			ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "deploy-agent");
+			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "deploy-agent") && isSuccess;
 
 			/*
 			 * 5. send install .
 			 */
-			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
 
 			/*
 			 * 6. update server.xml & context.xml
 			 */
-			ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config");
+			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
 			instanceService.saveState(pModel.getTomcatInstance().getId(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 
@@ -223,6 +230,8 @@ public class TomcatProvisioningService implements InitializingBean {
 			MDC.remove("jobPath");
 			MDC.remove("serverIp");
 		}
+		
+		return isSuccess;
 	}
 
 	/**
@@ -625,7 +634,7 @@ public class TomcatProvisioningService implements InitializingBean {
 			/*
 			 * generate agentenv.sh
 			 */
-			createAgentEnvSHFile(jobDir, agentDeployDir, agentName);
+			createAgentEnvSHFile(jobDir, tomcatConfig.getJavaHome(), agentDeployDir, agentName);
 			generateTomcatEnvFile(jobDir, tomcatConfig, serverIp);
 
 			/*
@@ -725,8 +734,9 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 	}
 
-	private void createAgentEnvSHFile(File jobDir, String deployDir, String agentName) throws IOException {
+	private void createAgentEnvSHFile(File jobDir, String javaHome, String deployDir, String agentName) throws IOException {
 		Map<String, String> model = new HashMap<String, String>();
+		model.put("javaHome", javaHome);
 		model.put("deployDir", deployDir);
 		model.put("agentName", agentName);
 

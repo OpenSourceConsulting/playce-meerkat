@@ -21,20 +21,32 @@ public class CommandUtil {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommandUtil.class);
 	
+	private static final String[] ERROR_LOGS = new String[]{"BUILD FAILED", "[sshexec] Error", "[sshexec] Remote command failed"};
 	
-	
-	public static void execWithLog(File workingDir, List<String> cmds){
-		CommandUtil.exec(workingDir, cmds, true, new ProcessAction() {
+	public static String execWithLog(File workingDir, List<String> cmds){
+		
+		return CommandUtil.exec(workingDir, cmds, true, new ProcessAction() {
 			
 			@Override
 			public String actionPerform(Process p, BufferedReader br) throws Exception {
+				
+				boolean success = true;
 				String line;
-
+				
 				while ((line = br.readLine()) != null) {
+					
+					if (success) {
+						for (String errs : ERROR_LOGS) {
+							if (line.contains(errs)) {
+								success = false;
+							}
+						}
+					}
+					
 					LOGGER.info(line);
 				}
 				
-				return null;
+				return String.valueOf(success);
 			}
 		});
 	}
