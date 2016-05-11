@@ -634,7 +634,7 @@ public class TomcatProvisioningService implements InitializingBean {
 			/*
 			 * generate agentenv.sh
 			 */
-			createAgentEnvSHFile(jobDir, agentDeployDir, agentName);
+			createAgentEnvSHFile(jobDir, tomcatConfig.getJavaHome(), agentDeployDir, agentName);
 			generateTomcatEnvFile(jobDir, tomcatConfig, serverIp);
 
 			/*
@@ -734,8 +734,9 @@ public class TomcatProvisioningService implements InitializingBean {
 		}
 	}
 
-	private void createAgentEnvSHFile(File jobDir, String deployDir, String agentName) throws IOException {
+	private void createAgentEnvSHFile(File jobDir, String javaHome, String deployDir, String agentName) throws IOException {
 		Map<String, String> model = new HashMap<String, String>();
+		model.put("javaHome", javaHome);
 		model.put("deployDir", deployDir);
 		model.put("agentName", agentName);
 
