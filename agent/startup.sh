@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+. ./bin/agentenv.sh
 . ./env.sh
 
 AGENT_CLASS=com.athena.meerkat.agent.AgentMain
