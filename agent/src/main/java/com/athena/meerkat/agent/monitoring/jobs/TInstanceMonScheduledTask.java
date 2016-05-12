@@ -148,26 +148,40 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 			monitorJDBC(mbeanServerConn, tomcatInstanceId);
 			
 		}catch(ConnectException e){
-			try{
-				jmxc.close();
-			}catch(IOException ex){
-				//ignore.
-			}
-			jmxConnMap.remove(tomcatInstanceId);
+			closeJmx(jmxc, tomcatInstanceId);
 			
-			if (dsObjects != null) {
-				dsObjects.clear();
-				dsObjects = null;
+		}catch(IOException e) {
+			if (e.toString().contains("Connection closed")) {
+				closeJmx(jmxc, tomcatInstanceId);
+			} else {
+				handleException(e, tomcatInstanceId);
 			}
-			
 		}catch(Exception e){
-			//if (LOGGER.isDebugEnabled()) {
-			//	LOGGER.error(e.toString(), e);
-			//}else {
-				LOGGER.error("instanceId:{} - {}", tomcatInstanceId, e.toString());
-			//}
+			handleException(e, tomcatInstanceId);
 		}
 		
+	}
+	
+	private void closeJmx(JMXConnector jmxc, String tomcatInstanceId){
+		try{
+			jmxc.close();
+		}catch(IOException ex){
+			//ignore.
+		}
+		jmxConnMap.remove(tomcatInstanceId);
+		
+		if (dsObjects != null) {
+			dsObjects.clear();
+			dsObjects = null;
+		}
+	}
+	
+	private void handleException(Exception e, String tomcatInstanceId) {
+		//if (LOGGER.isDebugEnabled()) {
+		//	LOGGER.error(e.toString(), e);
+		//}else {
+			LOGGER.error("instanceId:{} - {}", tomcatInstanceId, e.toString());
+		//}
 	}
 	
 	private void monitorTomcatCpu(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
