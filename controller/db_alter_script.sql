@@ -50,3 +50,8 @@ ALTER TABLE `domain_tomcat_configuration` ADD COLUMN `server_port` MEDIUMINT NUL
 UPDATE domain_tomcat_configuration SET server_port=8005;
 
 ALTER TABLE `datagrid_server_group` CHANGE COLUMN `name` `name` VARCHAR(60) NULL DEFAULT NULL ;
+
+
+ALTER TABLE `server` 
+CHARACTER SET = DEFAULT , COLLATE = DEFAULT ,
+CHANGE COLUMN `host_name` `host_name` VARCHAR(60) CHARACTER SET 'euckr' NULL DEFAULT NULL ;
