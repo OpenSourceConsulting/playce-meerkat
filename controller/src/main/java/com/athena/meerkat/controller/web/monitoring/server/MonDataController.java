@@ -124,9 +124,12 @@ public class MonDataController {
 
 	@RequestMapping(value = "/cpumon", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getCPUMonData(GridJsonResponse jsonRes, Integer serverId) {
+	public GridJsonResponse getCPUMonData(GridJsonResponse jsonRes, Integer serverId, Integer minsAgo) {
 		Date now = new Date();
-		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		if (minsAgo <= 0) {
+			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		types[0] = MeerkatConstants.MON_FACTOR_CPU_USED;
 		Server s = svrService.getServer(serverId);
@@ -223,10 +226,13 @@ public class MonDataController {
 
 	@RequestMapping(value = "/memorymon", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getMemoryMonData(GridJsonResponse jsonRes, Integer serverId) {
+	public GridJsonResponse getMemoryMonData(GridJsonResponse jsonRes, Integer serverId, Integer minsAgo) {
 
 		Date now = new Date();
-		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		if (minsAgo <= 0) {
+			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		types[0] = MeerkatConstants.MON_FACTOR_MEM_USED;
 		//types[1] = MeerkatConstants.MON_FACTOR_MEM_USED_PER;
@@ -250,10 +256,14 @@ public class MonDataController {
 
 	@RequestMapping(value = "/nimon/{type}", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getNetworkTrafficMonitoringData(GridJsonResponse jsonRes, @PathVariable(value = "type") String trafficType, Integer serverId) {
+	public GridJsonResponse getNetworkTrafficMonitoringData(GridJsonResponse jsonRes, @PathVariable(value = "type") String trafficType, Integer serverId,
+			Integer minsAgo) {
 
 		Date now = new Date();
-		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		if (minsAgo <= 0) {
+			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		if (trafficType.contains(MeerkatConstants.MON_NI_TYPE_IN)) {
 			types[0] = MeerkatConstants.MON_FACTOR_NI_IN;
