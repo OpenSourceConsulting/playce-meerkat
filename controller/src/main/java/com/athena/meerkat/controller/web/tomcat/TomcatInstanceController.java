@@ -24,9 +24,12 @@
  */
 package com.athena.meerkat.controller.web.tomcat;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -140,19 +143,26 @@ public class TomcatInstanceController {
 			TomcatInstanceViewModel viewmodel = new TomcatInstanceViewModel(tomcat);
 			// get configurations that are different to domain tomcat config
 			List<TomcatInstConfig> changedConfigs = service.getTomcatInstConfigs(tomcat.getId());
-			if (changedConfigs == null || changedConfigs.size() <= 0) {
-				DomainTomcatConfiguration domainConf = domainService.getTomcatConfig(tomcat.getDomainId());
-				if (domainConf != null) {
-					viewmodel.setHttpPort(domainConf.getHttpPort());
-					viewmodel.setAjpPort(domainConf.getAjpPort());
-					viewmodel.setRedirectPort(domainConf.getRedirectPort());
-					viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
-					viewmodel.setJmxEnable(domainConf.isJmxEnable());
-				}
-			} else {
+			DomainTomcatConfiguration domainConf = domainService.getTomcatConfig(tomcat.getDomainId());
+			if (domainConf != null) {
+				viewmodel.setHttpPort(domainConf.getHttpPort());
+				viewmodel.setAjpPort(domainConf.getAjpPort());
+				viewmodel.setRedirectPort(domainConf.getRedirectPort());
+				viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
+				viewmodel.setJmxEnable(domainConf.isJmxEnable());
+			}
+			if (changedConfigs != null) {
 				for (TomcatInstConfig c : changedConfigs) {
-					if (c.getConfigName() == MeerkatConstants.TOMCAT_INST_CONFIG_HTTPPORT_NAME) {
+					if (c.getConfigName().equals("httpPort")) {
 						viewmodel.setHttpPort(Integer.parseInt(c.getConfigValue()));
+					} else if (c.getConfigName().equals("ajpPort")) {
+						viewmodel.setAjpPort(Integer.parseInt(c.getConfigValue()));
+					} else if (c.getConfigName().equals("redirectPort")) {
+						viewmodel.setRedirectPort(Integer.parseInt(c.getConfigValue()));
+					} else if (c.getConfigName().equals("tomcatVersion")) {
+						viewmodel.setTomcatVersion(c.getConfigValue());
+					} else if (c.getConfigName().equals("jmxEnable")) {
+						viewmodel.setJmxEnable(Boolean.parseBoolean(c.getConfigValue()));
 					}
 				}
 			}
