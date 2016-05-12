@@ -129,8 +129,19 @@ public class MonDataController {
 		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		types[0] = MeerkatConstants.MON_FACTOR_CPU_USED;
-		List<MonDataViewModel> results = service.getMonDataList(types, serverId, time, now);
-
+		Server s = svrService.getServer(serverId);
+		List<MonDataViewModel> results = new ArrayList<>();
+		if (s != null) {
+			List<MonDataViewModel> datas = service.getMonDataList(types, serverId, time, now);
+			for (MonDataViewModel data : datas) {
+				MonDataViewModel viewmodel = new MonDataViewModel();
+				viewmodel.setMonDt(data.getMonDt());
+				Map<String, Double> value = new HashMap<>();
+				value.put(s.getName(), data.getValue().get(types[0]));
+				viewmodel.setValue(value);
+				results.add(viewmodel);
+			}
+		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
 		return jsonRes;
@@ -216,11 +227,22 @@ public class MonDataController {
 
 		Date now = new Date();
 		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
-		String[] types = new String[2];
+		String[] types = new String[1];
 		types[0] = MeerkatConstants.MON_FACTOR_MEM_USED;
-		types[1] = MeerkatConstants.MON_FACTOR_MEM_USED_PER;
-		List<MonDataViewModel> results = service.getMonDataList(types, serverId, time, now);
-
+		//types[1] = MeerkatConstants.MON_FACTOR_MEM_USED_PER;
+		List<MonDataViewModel> results = new ArrayList<>();
+		Server s = svrService.getServer(serverId);
+		if (s != null) {
+			List<MonDataViewModel> datas = service.getMonDataList(types, serverId, time, now);
+			for (MonDataViewModel data : datas) {
+				MonDataViewModel viewmodel = new MonDataViewModel();
+				viewmodel.setMonDt(data.getMonDt());
+				Map<String, Double> value = new HashMap<>();
+				value.put(s.getName(), data.getValue().get(types[0]));
+				viewmodel.setValue(value);
+				results.add(viewmodel);
+			}
+		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
 		return jsonRes;
@@ -238,11 +260,19 @@ public class MonDataController {
 		} else if (trafficType.contains(MeerkatConstants.MON_NI_TYPE_OUT)) {
 			types[0] = MeerkatConstants.MON_FACTOR_NI_OUT;
 		}
-		List<MonDataViewModel> results = service.getMonDataList(types, serverId, time, now);
-		for (MonDataViewModel vm : results) {
-			Map<String, Double> value = vm.getValue();
-			value.put(types[0], value.get(types[0]) / 1000); //bytes to Kbytes
-			vm.setValue(value);
+
+		List<MonDataViewModel> results = new ArrayList<>();
+		Server s = svrService.getServer(serverId);
+		if (s != null) {
+			List<MonDataViewModel> datas = service.getMonDataList(types, serverId, time, now);
+			for (MonDataViewModel data : datas) {
+				MonDataViewModel viewmodel = new MonDataViewModel();
+				viewmodel.setMonDt(data.getMonDt());
+				Map<String, Double> value = new HashMap<>();
+				value.put(s.getName(), data.getValue().get(types[0]) / 1000);//bytes to Kbytes
+				viewmodel.setValue(value);
+				results.add(viewmodel);
+			}
 		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());
@@ -266,14 +296,14 @@ public class MonDataController {
 		List<Integer> niDatas = new ArrayList<>();
 		Random r = new Random();
 		for (Server server : servers) {
-			niDatas.add(r.nextInt(5000));
+			niDatas.add(r.nextInt(900));
 		}
 		for (int i = 30; i > 0; i--) {
 			MonDataViewModel viewmodel = new MonDataViewModel();
 			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
 			Map<String, Double> value = new LinkedHashMap<>();
 			for (int j = 0; j < servers.size(); j++) {
-				value.put(servers.get(j).getName(), (double) (niDatas.get(j) + r.nextInt(500)));
+				value.put(servers.get(j).getName(), (double) (niDatas.get(j) + r.nextInt(100)));
 			}
 			viewmodel.setValue(value);
 			results.add(viewmodel);
