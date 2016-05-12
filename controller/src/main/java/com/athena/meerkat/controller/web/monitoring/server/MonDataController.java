@@ -3,6 +3,7 @@ package com.athena.meerkat.controller.web.monitoring.server;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -165,9 +166,41 @@ public class MonDataController {
 		for (int i = 30; i > 0; i--) {
 			MonDataViewModel viewmodel = new MonDataViewModel();
 			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
-			Map<String, Double> value = new HashMap<>();
+			Map<String, Double> value = new LinkedHashMap<>();
 			for (int j = 0; j < servers.size(); j++) {
 				value.put(servers.get(j).getName(), (double) (cpusUsage.get(j) + r.nextInt(10)));
+			}
+			viewmodel.setValue(value);
+			results.add(viewmodel);
+		}
+		jsonRes.setList(results);
+		jsonRes.setTotal(results.size());
+		return jsonRes;
+	}
+
+	@RequestMapping(value = "/memorymon/all", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getMemoryMonData(GridJsonResponse jsonRes) {
+		List<MonDataViewModel> results = new ArrayList<>();
+		List<Server> servers = svrService.getList();
+		Date now = new Date();
+		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		types[0] = MeerkatConstants.MON_FACTOR_MEM_USED;
+		//types[1] = MeerkatConstants.MON_FACTOR_MEM_USED_PER;
+
+		//sample data for demo
+		List<Integer> memoryUsages = new ArrayList<>();
+		Random r = new Random();
+		for (Server server : servers) {
+			memoryUsages.add(r.nextInt(500));
+		}
+		for (int i = 30; i > 0; i--) {
+			MonDataViewModel viewmodel = new MonDataViewModel();
+			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
+			Map<String, Double> value = new LinkedHashMap<>();
+			for (int j = 0; j < servers.size(); j++) {
+				value.put(servers.get(j).getName(), (double) (memoryUsages.get(j) + r.nextInt(100)));
 			}
 			viewmodel.setValue(value);
 			results.add(viewmodel);
@@ -210,6 +243,40 @@ public class MonDataController {
 			Map<String, Double> value = vm.getValue();
 			value.put(types[0], value.get(types[0]) / 1000); //bytes to Kbytes
 			vm.setValue(value);
+		}
+		jsonRes.setList(results);
+		jsonRes.setTotal(results.size());
+		return jsonRes;
+	}
+
+	@RequestMapping(value = "/nimon/all/{type}", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getNetworkTrafficMonitoringData(GridJsonResponse jsonRes, @PathVariable(value = "type") String trafficType) {
+		List<MonDataViewModel> results = new ArrayList<>();
+		List<Server> servers = svrService.getList();
+		Date now = new Date();
+		Date time = new Date(now.getTime() - MeerkatConstants.MONITORING_MINUTE_INTERVAL * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		if (trafficType.contains(MeerkatConstants.MON_NI_TYPE_IN)) {
+			types[0] = MeerkatConstants.MON_FACTOR_NI_IN;
+		} else if (trafficType.contains(MeerkatConstants.MON_NI_TYPE_OUT)) {
+			types[0] = MeerkatConstants.MON_FACTOR_NI_OUT;
+		}
+		//sample data for demo
+		List<Integer> niDatas = new ArrayList<>();
+		Random r = new Random();
+		for (Server server : servers) {
+			niDatas.add(r.nextInt(5000));
+		}
+		for (int i = 30; i > 0; i--) {
+			MonDataViewModel viewmodel = new MonDataViewModel();
+			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
+			Map<String, Double> value = new LinkedHashMap<>();
+			for (int j = 0; j < servers.size(); j++) {
+				value.put(servers.get(j).getName(), (double) (niDatas.get(j) + r.nextInt(500)));
+			}
+			viewmodel.setValue(value);
+			results.add(viewmodel);
 		}
 		jsonRes.setList(results);
 		jsonRes.setTotal(results.size());

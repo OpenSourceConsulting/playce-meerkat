@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.ServiceResult;
@@ -269,7 +270,8 @@ public class ServerService {
 
 	public List<Server> getList() {
 
-		List<Server> list = serverRepo.findAll();
+		Sort sort = new Sort("name");
+		List<Server> list = serverRepo.findAll(sort);
 		return list;
 	}
 
