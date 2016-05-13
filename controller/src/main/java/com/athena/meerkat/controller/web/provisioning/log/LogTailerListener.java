@@ -47,13 +47,20 @@ public class LogTailerListener extends TailerListenerAdapter {
 	private Tailer tailer;
 	private WebSocketSession session;
 	private boolean isStop;
+	private boolean lastTailer;
+	
 	/**
 	 * <pre>
 	 * 
 	 * </pre>
 	 */
 	public LogTailerListener(WebSocketSession session) {
+		this(session, false);
+	}
+	
+	public LogTailerListener(WebSocketSession session, boolean lastTailer) {
 		this.session = session;
+		this.lastTailer = lastTailer;
 	}
 	
 	@Override
@@ -96,11 +103,15 @@ public class LogTailerListener extends TailerListenerAdapter {
 	
 	protected void stop(){
 		this.tailer.stop();
-		try{
-			this.session.close();
-		}catch(IOException e){
-			LOGGER.error(e.toString(), e);
+		
+		if (this.lastTailer) {
+			try{
+				this.session.close();
+			}catch(IOException e){
+				LOGGER.error(e.toString(), e);
+			}
 		}
+		
 		isStop = true;
 		LOGGER.debug("tailer stop!!");
 	}

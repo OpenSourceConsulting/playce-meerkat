@@ -171,19 +171,22 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		if (list != null && list.size() > 0) {
 
+			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
+				pModel.setLastTask(count == list.size());
 				
 				isSuccess = doInstallTomcatInstance(pModel, session) && isSuccess;
+				count++;
 			}
 			
-			return isSuccess;
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
+			isSuccess = false;
 		}
-
-		return false;
+		
+		return isSuccess;
 	}
 
 	private boolean doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
@@ -623,7 +626,7 @@ public class TomcatProvisioningService implements InitializingBean {
 
 			MDC.put("jobPath", jobDir.getAbsolutePath());
 
-			sendLog(session, jobDir.getAbsolutePath());
+			sendLog(session, jobDir.getAbsolutePath(), pModel.isLastTask());
 
 			if (CollectionUtils.isEmpty(accounts)) {
 				throw new RuntimeException("생성할 ssh 계정정보가 없습니다.");
@@ -669,11 +672,11 @@ public class TomcatProvisioningService implements InitializingBean {
 	 * @param session
 	 * @param jobPath
 	 */
-	private void sendLog(WebSocketSession session, String jobPath) {
+	private void sendLog(WebSocketSession session, String jobPath, boolean lastTask) {
 
 		if (session != null) {
 
-			LogTailerListener listener = new LogTailerListener(session);
+			LogTailerListener listener = new LogTailerListener(session, lastTask);
 			long delay = 2000;
 			File file = new File(jobPath + File.separator + "build.log");
 			LOGGER.debug("log file : {}", file.getAbsoluteFile());

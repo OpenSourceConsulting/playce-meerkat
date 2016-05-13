@@ -54,6 +54,8 @@ public class ProvisionModel {
 	
 	private Map<String, String> propsMap;// additional properties.
 	
+	private boolean lastTask;
+	
 	
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
 		this.tomcatConfig = tomcatConfig;
@@ -76,6 +78,14 @@ public class ProvisionModel {
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
 		this(tomcatConfig, tomcatInstance, dsList);
 		this.isFirstInstall = isFirstInstall;
+	}
+
+	public boolean isLastTask() {
+		return lastTask;
+	}
+
+	public void setLastTask(boolean lastTask) {
+		this.lastTask = lastTask;
 	}
 
 	public Map<String, String> getPropsMap() {
