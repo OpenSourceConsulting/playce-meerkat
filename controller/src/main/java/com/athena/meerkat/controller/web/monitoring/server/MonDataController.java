@@ -134,6 +134,25 @@ public class MonDataController {
 		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
 		String[] types = new String[1];
 		types[0] = monType;
+		List<MonData> datas = service.getAllMonDataList(types, time, now);
+
+		Map previousValues = new HashMap<>();
+		for (MonData data : datas) {
+			MonDataViewModel viewmodel = new MonDataViewModel();
+			viewmodel.setMonDt(data.getMonDt());
+			Map<String, Double> value = new HashMap<>();
+			for (Server server : servers) {
+				if (data.getServerId() == server.getId()) {
+					value.put(server.getName(), data.getMonValue());
+				} else {
+					value.put(server.getName(), -1D);
+				}
+			}
+			viewmodel.setValue(value);
+			results.add(viewmodel);
+		}
+		results = this.updateData(results, servers);
+		/*
 		for (Server server : servers) {
 			//List<MonDataViewModel> datas = service.getMonDataList(types, server.getId(), time, now);
 			//			for (MonDataViewModel data : datas) {
@@ -173,7 +192,7 @@ public class MonDataController {
 			}
 			viewmodel.setValue(value);
 			results.add(viewmodel);
-		}
+		}*/
 		json.setList(results);
 		json.setTotal(results.size());
 		return json;
@@ -256,6 +275,53 @@ public class MonDataController {
 		}
 
 		return messages;
+	}
+
+	private List<MonDataViewModel> updateData(List<MonDataViewModel> origin, List<Server> servers) {
+		for (int i = 0; i < origin.size(); i++) {
+			MonDataViewModel result = origin.get(i);
+			Map value = result.getValue();
+			for (Server server : servers) {
+				if (Double.parseDouble(value.get(server.getName()).toString()) == -1D) {
+					if (i == 0) {
+						value.put(server.getName(), this.getNextValue(i, server.getName(), origin));
+					} else {
+						value.put(server.getName(), (this.getNextValue(i, server.getName(), origin) + this.getPreviousValue(i, server.getName(), origin)) / 2);
+					}
+					if (i == origin.size() - 1) {
+						value.put(server.getName(), this.getPreviousValue(i, server.getName(), origin));
+					}
+
+				}
+			}
+			result.setValue(value);
+		}
+
+		return origin;
+	}
+
+	private Double getNextValue(int index, String key, List<MonDataViewModel> data) {
+		int i = index;
+		while (i < data.size()) {
+			Double value = data.get(i).value.get(key);
+			if (value != -1) {
+				return value;
+			}
+			i++;
+		}
+		return 0D;
+	}
+
+	private Double getPreviousValue(int index, String key, List<MonDataViewModel> data) {
+		int i = index;
+		while (i >= 0) {
+			Double value = data.get(i).value.get(key);
+			if (value != -1) {
+				return value;
+			}
+			i--;
+		}
+		return 0D;
 	}
 }
 // end of MonDataController.java

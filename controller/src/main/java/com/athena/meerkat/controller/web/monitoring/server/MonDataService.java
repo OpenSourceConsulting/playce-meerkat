@@ -37,10 +37,8 @@ public class MonDataService {
 		repository.save(monDatas);
 	}
 
-	public List<MonDataViewModel> getMonDataList(String[] types,
-			Integer serverId, Date time, Date now) {
-		List<MonData> list = repository.findByMonFactorIdAndServerId(types,
-				serverId, time, now);
+	public List<MonDataViewModel> getMonDataList(String[] types, Integer serverId, Date time, Date now) {
+		List<MonData> list = repository.findByMonFactorIdAndServerId(types, serverId, time, now);
 
 		List<MonDataViewModel> result = new ArrayList<>();
 		int step = types.length;
@@ -51,8 +49,7 @@ public class MonDataService {
 			Map<String, Double> value = new HashMap<>();
 			int count = 0;
 			while (count < step) {
-				value.put(list.get(i + count).getMonFactorId(),
-						list.get(i + count).getMonValue());
+				value.put(list.get(i + count).getMonFactorId(), list.get(i + count).getMonValue());
 				count++;
 			}
 			model.setValue(value);
@@ -68,6 +65,10 @@ public class MonDataService {
 
 	public List<MonFs> getDiskMonDataList(Integer serverId) {
 		return fsRepo.getFsMonData(serverId);
+	}
+
+	public List<MonData> getAllMonDataList(String[] types, Date time, Date now) {
+		return repository.findByMonFactorIds(types, time, now);
 	}
 }
 // end of MonDataService.java
