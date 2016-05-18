@@ -63,10 +63,6 @@ public class TomcatDomain {
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
 
-	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<ClusteringConfiguration> clusteringConfigurations;
-
 	@OneToOne
 	@JsonManagedReference(value = "domain-config")
 	@JoinColumn(name = "domain_tomcat_configuration_id")
@@ -168,14 +164,6 @@ public class TomcatDomain {
 
 	}
 
-	public List<ClusteringConfiguration> getClusteringConfigurations() {
-		return clusteringConfigurations;
-	}
-
-	public void setClusteringConfigurations(List<ClusteringConfiguration> clusteringConfigurations) {
-		this.clusteringConfigurations = clusteringConfigurations;
-	}
-
 	public boolean isClustering() {
 		if (serverGroup == null) {
 			return false;
@@ -222,5 +210,5 @@ public class TomcatDomain {
 	public void setLatestContextXmlVersion(int latestContextXmlVersion) {
 		this.latestContextXmlVersion = latestContextXmlVersion;
 	}
-	
+
 }

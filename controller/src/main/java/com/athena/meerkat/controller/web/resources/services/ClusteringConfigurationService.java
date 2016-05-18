@@ -13,7 +13,7 @@ import com.athena.meerkat.controller.web.entities.ClusteringConfigurationVersion
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
-import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationReposiroty;
+import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ClusteringConfigurationVersionRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.ClusteringConfComparisionViewModel;
@@ -23,16 +23,14 @@ public class ClusteringConfigurationService {
 	@Autowired
 	ClusteringConfigurationVersionRepository clusteringConfigVerRepo;
 	@Autowired
-	ClusteringConfigurationReposiroty clusteringConfigRepo;
+	ClusteringConfigurationRepository clusteringConfigRepo;
 	@Autowired
 	DomainRepository domainRepo;
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
 
-	public ClusteringConfigurationVersion getLatestClusteringConfVersionByServerGroup(
-			Integer groupId) {
-		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
-				.findFirstClusteringVersionByDatagridGroupId(groupId);
+	public ClusteringConfigurationVersion getLatestClusteringConfVersionByServerGroup(Integer groupId) {
+		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo.findFirstClusteringVersionByDatagridGroupId(groupId);
 		if (latestVersion.size() == 0) {
 			return null;
 		}
@@ -40,10 +38,8 @@ public class ClusteringConfigurationService {
 
 	}
 
-	public ClusteringConfigurationVersion getLatestClusteringConfVersionByDomain(
-			Integer domainId) {
-		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo
-				.findFirstClusteringVersionByDomainId(domainId);
+	public ClusteringConfigurationVersion getLatestClusteringConfVersionByDomain(Integer domainId) {
+		List<ClusteringConfigurationVersion> latestVersion = clusteringConfigVerRepo.findFirstClusteringVersionByDomainId(domainId);
 		if (latestVersion.size() == 0) {
 			return null;
 		}
@@ -51,25 +47,22 @@ public class ClusteringConfigurationService {
 
 	}
 
-	public List<ClusteringConfigurationVersion> getClusteringConfVersionsByGroup(
-			DatagridServerGroup group) {
+	public List<ClusteringConfigurationVersion> getClusteringConfVersionsByGroup(DatagridServerGroup group) {
 		return clusteringConfigRepo.getVersionsByServerGroup(group.getId());
 
 	}
 
-	public List<ClusteringConfiguration> getClusteringConfByDomain(
-			TomcatDomain domain, Integer version) {
-		List<ClusteringConfiguration> result = clusteringConfigRepo
-				.findByTomcatDomainAndClusteringConfigurationVersion_Id(domain,
-						version);
-		return result;
+	public List<ClusteringConfiguration> getClusteringConfByDomain(TomcatDomain domain, Integer version) {
+		if (domain.getServerGroup() != null) {
+			List<ClusteringConfiguration> result = clusteringConfigRepo.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(domain.getServerGroup(),
+					version);
+			return result;
+		}
+		return null;
 	}
 
-	public List<ClusteringConfiguration> getClusteringConfByServerGroup(
-			DatagridServerGroup group, Integer version) {
-		List<ClusteringConfiguration> result = clusteringConfigRepo
-				.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
-						group, version);
+	public List<ClusteringConfiguration> getClusteringConfByServerGroup(DatagridServerGroup group, Integer version) {
+		List<ClusteringConfiguration> result = clusteringConfigRepo.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(group, version);
 		return result;
 	}
 
@@ -86,53 +79,25 @@ public class ClusteringConfigurationService {
 		clusteringConfigRepo.save(confs);
 	}
 
-	public ClusteringConfigurationVersion saveCluteringConfVersion(
-			ClusteringConfigurationVersion version) {
+	public ClusteringConfigurationVersion saveCluteringConfVersion(ClusteringConfigurationVersion version) {
 		return clusteringConfigVerRepo.save(version);
 	}
 
-	public List<ClusteringConfiguration> searchClusteringConfByDomainAndVersionAndName(
-			int domainId, int versionId, String keyword) {
-		return clusteringConfigRepo
-				.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
-						domainId, versionId, keyword);
+	public List<ClusteringConfiguration> searchClusteringConfByServerGroupAndVersionAndName(Integer groupId, int versionId, String keyword) {
+		return clusteringConfigRepo.findByDatagridServerGroup_IdAndClusteringConfigurationVersion_IdAndNameContaining(groupId, versionId, keyword);
 	}
 
-	public List<ClusteringConfiguration> searchClusteringConfByServerGroupAndVersionAndName(
-			Integer groupId, int versionId, String keyword) {
-		return clusteringConfigRepo
-				.findByDatagridServerGroup_IdAndClusteringConfigurationVersion_IdAndNameContaining(
-						groupId, versionId, keyword);
-	}
-
-	public List<ClusteringConfComparisionViewModel> getClusteringConfComparison(
-			Integer objectId, String objectType, Integer firstVersion,
-			Integer secondVersion) {
+	public List<ClusteringConfComparisionViewModel> getClusteringConfComparison(Integer objectId, Integer firstVersion, Integer secondVersion) {
 		List<ClusteringConfComparisionViewModel> list = new ArrayList<ClusteringConfComparisionViewModel>();
 		List<ClusteringConfiguration> firstList = new ArrayList<ClusteringConfiguration>();
 		List<ClusteringConfiguration> secondList = new ArrayList<ClusteringConfiguration>();
-		if (objectType.equals(MeerkatConstants.OBJ_TYPE_DOMAIN)) {
-			TomcatDomain td = domainRepo.findOne(objectId);
-			if (td != null) {
-				firstList = clusteringConfigRepo
-						.findByTomcatDomainAndClusteringConfigurationVersion_Id(
-								td, firstVersion);
-				secondList = clusteringConfigRepo
-						.findByTomcatDomainAndClusteringConfigurationVersion_Id(
-								td, secondVersion);
-			}
-		} else if (objectType
-				.equals(MeerkatConstants.OBJ_TYPE_SESSION_SERVER_GROUP)) {
-			DatagridServerGroup group = groupRepo.findOne(objectId);
-			if (group != null) {
-				firstList = clusteringConfigRepo
-						.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
-								group, firstVersion);
-				secondList = clusteringConfigRepo
-						.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(
-								group, secondVersion);
-			}
+
+		DatagridServerGroup group = groupRepo.findOne(objectId);
+		if (group != null) {
+			firstList = clusteringConfigRepo.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(group, firstVersion);
+			secondList = clusteringConfigRepo.findByDatagridServerGroupAndClusteringConfigurationVersion_Id(group, secondVersion);
 		}
+
 		// order by name
 		firstList.addAll(secondList);
 		Collections.sort(firstList);
@@ -146,17 +111,13 @@ public class ClusteringConfigurationService {
 				second = firstList.get(i + 1);
 			}
 			if (second != null && first.getName().equals(second.getName())) {
-				list.add(new ClusteringConfComparisionViewModel(first.getId(),
-						first.getName(), first.getValue(), second.getId(),
-						second.getValue()));
+				list.add(new ClusteringConfComparisionViewModel(first.getId(), first.getName(), first.getValue(), second.getId(), second.getValue()));
 				i += 2;
 			} else {
 				if (first.getClusteringConfigurationVersion().getId() == firstVersion) {
-					list.add(new ClusteringConfComparisionViewModel(first
-							.getId(), first.getName(), first.getValue(), 0, ""));
+					list.add(new ClusteringConfComparisionViewModel(first.getId(), first.getName(), first.getValue(), 0, ""));
 				} else if (first.getClusteringConfigurationVersion().getId() == secondVersion) {
-					list.add(new ClusteringConfComparisionViewModel(0, first
-							.getName(), "", first.getId(), first.getValue()));
+					list.add(new ClusteringConfComparisionViewModel(0, first.getName(), "", first.getId(), first.getValue()));
 				}
 				i++;
 			}
@@ -166,13 +127,7 @@ public class ClusteringConfigurationService {
 		return list;
 	}
 
-	public List<ClusteringConfigurationVersion> getClusteringConfVersionsByDomain(
-			TomcatDomain td) {
-		return clusteringConfigRepo.getVersionsByDomain(td.getId());
-	}
-
-	public List<ClusteringConfiguration> getClusteringConfigurationByName(
-			String name) {
+	public List<ClusteringConfiguration> getClusteringConfigurationByName(String name) {
 		return clusteringConfigRepo.findByName(name);
 	}
 
