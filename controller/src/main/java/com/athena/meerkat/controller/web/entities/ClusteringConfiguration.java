@@ -25,8 +25,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @Table(name = "clustering_configuration")
-public class ClusteringConfiguration implements Serializable, Cloneable,
-		Comparable {
+public class ClusteringConfiguration implements Serializable, Cloneable, Comparable {
 
 	/**
 	 * 
@@ -46,11 +45,6 @@ public class ClusteringConfiguration implements Serializable, Cloneable,
 	@ManyToOne
 	@JsonBackReference(value = "grid-configs")
 	private DatagridServerGroup datagridServerGroup;
-
-	@ManyToOne
-	@JsonBackReference
-	@JoinColumn(name = "domain_id")
-	private TomcatDomain tomcatDomain;
 
 	@ManyToOne
 	@JoinColumn(name = "clustering_conf_version_id")
@@ -89,14 +83,6 @@ public class ClusteringConfiguration implements Serializable, Cloneable,
 		this.datagridServerGroup = datagridServerGroup;
 	}
 
-	public TomcatDomain getTomcatDomain() {
-		return tomcatDomain;
-	}
-
-	public void setTomcatDomain(TomcatDomain tomcatDomain) {
-		this.tomcatDomain = tomcatDomain;
-	}
-
 	public int getId() {
 		return Id;
 	}
@@ -105,27 +91,18 @@ public class ClusteringConfiguration implements Serializable, Cloneable,
 		this.Id = id;
 	}
 
-	public int getTomcatDomainId() {
-		if (tomcatDomain != null) {
-			return tomcatDomain.getId();
-		}
-		return 0;
-	}
-
 	public ClusteringConfigurationVersion getClusteringConfigurationVersion() {
 		return clusteringConfigurationVersion;
 	}
 
-	public void setClusteringConfigurationVersion(
-			ClusteringConfigurationVersion clusteringConfigurationVersion) {
+	public void setClusteringConfigurationVersion(ClusteringConfigurationVersion clusteringConfigurationVersion) {
 		this.clusteringConfigurationVersion = clusteringConfigurationVersion;
 	}
 
 	public ClusteringConfiguration clone() {
 		try {
 
-			ClusteringConfiguration clone = (ClusteringConfiguration) super
-					.clone();
+			ClusteringConfiguration clone = (ClusteringConfiguration) super.clone();
 			clone.setId(0);// reset ID;
 			return clone;
 		} catch (CloneNotSupportedException e) {
