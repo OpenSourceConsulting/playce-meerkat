@@ -1,19 +1,14 @@
 package com.athena.meerkat.controller.web.resources;
 
-import java.net.PasswordAuthentication;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.ServiceResult;
 import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
@@ -22,8 +17,6 @@ import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
-import com.athena.meerkat.controller.web.user.entities.User;
-import com.athena.meerkat.controller.web.user.entities.UserRole;
 
 @Controller
 @RequestMapping("/res/server")
