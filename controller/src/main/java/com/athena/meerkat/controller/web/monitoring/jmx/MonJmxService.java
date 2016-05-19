@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**
@@ -47,7 +48,26 @@ public class MonJmxService {
 		for (MonJmx monJmx : monJmxs) {
 
 			if (MeerkatConstants.MON_FACTOR_TI_RUN.equals(monJmx.getMonFactorId())) {
-				tiService.saveState(monJmx.getInstanceId(), monJmx.getMonValue().intValue());
+				
+				TomcatInstance instance = tiService.findOne(monJmx.getInstanceId());
+				
+				if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STARTING 
+						&& monJmx.getMonValue().intValue() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
+					
+					LOGGER.debug("{} instance is starting. don't save state.", monJmx.getInstanceId());
+					
+					
+				} else if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STOPPING 
+						&& monJmx.getMonValue().intValue() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
+					
+					LOGGER.debug("{} instance is stopping. don't save state.", monJmx.getInstanceId());
+					
+				} else if (instance != null){
+					tiService.saveState(monJmx.getInstanceId(), monJmx.getMonValue().intValue());
+					
+				} else {
+					LOGGER.debug("{} instance is null. don't save state.", monJmx.getInstanceId());
+				}
 			}
 
 		}
@@ -57,27 +77,5 @@ public class MonJmxService {
 		return repository.findByInstanceIdAndMonFactorIds(types, instanceId, time, now);
 	}
 
-	/*
-	public List<MonJmx> getMonJmxList(ExtjsGridParam gridParam){
-		return repository.getMonJmxList(gridParam);
-	}
-	
-	public int getMonJmxListTotalCount(ExtjsGridParam gridParam){
-		
-		return repository.getMonJmxListTotalCount(gridParam);
-	}
-	
-	public MonJmx getMonJmx(MonJmx monJmx){
-		return repository.getMonJmx(monJmx);
-	}
-	
-	public void updateMonJmx(MonJmx monJmx){
-		repository.updateMonJmx(monJmx);
-	}
-	
-	public void deleteMonJmx(MonJmx monJmx){
-		repository.deleteMonJmx(monJmx);
-	}
-	*/
 }
 //end of MonJmxService.java

@@ -76,7 +76,7 @@ public class JMXMonitorController {
 	public JMXMonitorController() {
 
 	}
-
+/*
 	@RequestMapping("/{tinstId}/threadpool/{attr}")
 	@ResponseBody
 	public SimpleJsonResponse threadpool(SimpleJsonResponse jsonRes, @PathVariable String tinstId, @PathVariable String attr) throws Exception {
@@ -115,40 +115,7 @@ public class JMXMonitorController {
 		return jsonRes;
 	}
 
-	@RequestMapping("/tomcat/{tinstId}/{type}/{minutesAgo}")
-	@ResponseBody
-	public GridJsonResponse getTomcatJMXData(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type, @PathVariable Integer minutesAgo,
-			@RequestParam(required = false) Integer dsId) throws Exception {
-		Date now = new Date();
-		if (minutesAgo <= 0) {
-			minutesAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
-		}
-		Date time = new Date(now.getTime() - minutesAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
-		String[] types = new String[1];
-		List<MonJmx> list = new ArrayList<>();
-		if (type.contains("memory")) {
-			types[0] = MeerkatConstants.MON_JMX_FACTOR_HEAP_MEMORY;
-		} else if (type.contains("cpu")) {
-			types[0] = MeerkatConstants.MON_JMX_FACTOR_CPU_USAGE;
-		} else if (type.contains("threads")) {
-			types[0] = MeerkatConstants.MON_JMX_FACTOR_ACTIVE_THREADS;
-		} else if (type.contains("jdbc")) {
-			DataSource ds = dsService.findOne(dsId);
-			if (ds != null) {
-				types[0] = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS + "." + ds.getName();
-			} else {
-				json.setMsg("Datasource does not exist");
-				json.setSuccess(false);
-				return json;
-			}
-
-		}
-		list = jmxService.getJmxMonDataList(types, tinstId, time, now);
-
-		json.setList(list);
-
-		return json;
-	}
+	
 
 	@RequestMapping("/{tinstId}/clear")
 	public void clear(@PathVariable String tinstId) throws Exception {
@@ -160,6 +127,6 @@ public class JMXMonitorController {
 
 		LOGGER.debug("chartDatas cleared!!");
 	}
-
+*/
 }
 //end of JMXMonitorController.java

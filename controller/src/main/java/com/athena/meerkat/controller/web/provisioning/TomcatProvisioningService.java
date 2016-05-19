@@ -329,6 +329,10 @@ public class TomcatProvisioningService implements InitializingBean {
 	public void startTomcatInstance(int instanceId, WebSocketSession session) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
+		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STARTING);
+		instanceService.save(tomcatInstance);// update state.
+		
+		
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "startTomcat.xml", session);
@@ -337,6 +341,9 @@ public class TomcatProvisioningService implements InitializingBean {
 	public void stopTomcatInstance(int instanceId, WebSocketSession session) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
+		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STOPPING);
+		instanceService.save(tomcatInstance);// update state.
+		
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "stopTomcat.xml", session);
