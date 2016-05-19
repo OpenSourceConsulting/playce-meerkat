@@ -15,17 +15,7 @@ import com.athena.meerkat.controller.web.entities.TomcatDomain;
 @Repository
 public interface ClusteringConfigurationRepository extends JpaRepository<ClusteringConfiguration, Integer> {
 
-	//	@Query(value = "select distinct ccv from TomcatDomain td inner join td.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where td.id = :domainId group by ccv.version")
-	//	List<ClusteringConfigurationVersion> getVersionsByDomain(
-	//			@Param("domainId") int domainId);
-
-	//	List<ClusteringConfiguration> findByTomcatDomainAndClusteringConfigurationVersion_Id(
-	//			TomcatDomain td, Integer versionId);
-
 	List<ClusteringConfiguration> findByName(String name);
-
-	//	List<ClusteringConfiguration> findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(
-	//			int domainId, int versionId, String keyword);
 
 	@Query(value = "select distinct ccv from DatagridServerGroup dsg inner join dsg.clusteringConfigurations cc inner join cc.clusteringConfigurationVersion ccv where dsg.id = :groupId group by ccv.version")
 	List<ClusteringConfigurationVersion> getVersionsByServerGroup(@Param("groupId") int groupId);
