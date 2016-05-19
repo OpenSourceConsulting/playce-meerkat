@@ -280,12 +280,15 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		if (list != null && list.size() > 0) {
 
+			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
+				pModel.setLastTask(count == list.size());
 				
 				sendCommand(pModel, "updateTomcatConfig.xml", session, addTask);
+				count++;
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -353,14 +356,18 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		if (list != null && list.size() > 0) {
 
+			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
 				pModel.addProps("warFilePath", configFileService.getFileFullPath(warFilePath));
 				pModel.addProps("warFileName", FileUtil.getFileName(warFilePath));
 				pModel.addProps("contextPath", contextPath);
+				pModel.setLastTask(count == list.size());
+				
 				
 				runCommand(pModel, "deployWar.xml", session);
+				count++;
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -395,12 +402,15 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		if (list != null && list.size() > 0) {
 
+			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
+				pModel.setLastTask(count == list.size());
 				
 				runDefaultTarget(pModel, targetName, session);
+				count++;
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
@@ -430,12 +440,15 @@ public class TomcatProvisioningService implements InitializingBean {
 
 		if (list != null && list.size() > 0) {
 
+			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
+				pModel.setLastTask(count == list.size());
 				
 				sendCommand(pModel, "installLibs.xml", session);
+				count++;
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");

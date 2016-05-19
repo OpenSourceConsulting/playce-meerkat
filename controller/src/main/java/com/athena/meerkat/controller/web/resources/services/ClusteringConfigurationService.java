@@ -53,8 +53,9 @@ public class ClusteringConfigurationService {
 	}
 
 	public List<ClusteringConfiguration> getClusteringConfByDomain(TomcatDomain domain, Integer version) {
-		List<ClusteringConfiguration> result = clusteringConfigRepo.findByTomcatDomainAndClusteringConfigurationVersion_Id(domain, version);
-		return result;
+		//List<ClusteringConfiguration> result = clusteringConfigRepo.findByTomcatDomainAndClusteringConfigurationVersion_Id(domain, version);
+		//return result;
+		return null;
 	}
 
 	public List<ClusteringConfiguration> getClusteringConfByServerGroup(DatagridServerGroup group, Integer version) {
@@ -80,7 +81,8 @@ public class ClusteringConfigurationService {
 	}
 
 	public List<ClusteringConfiguration> searchClusteringConfByDomainAndVersionAndName(int domainId, int versionId, String keyword) {
-		return clusteringConfigRepo.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(domainId, versionId, keyword);
+		//return clusteringConfigRepo.findByTomcatDomain_IdAndClusteringConfigurationVersion_IdAndNameContaining(domainId, versionId, keyword);
+		return null;
 	}
 
 	public List<ClusteringConfiguration> searchClusteringConfByServerGroupAndVersionAndName(Integer groupId, int versionId, String keyword) {
@@ -128,7 +130,8 @@ public class ClusteringConfigurationService {
 	}
 
 	public List<ClusteringConfigurationVersion> getClusteringConfVersionsByDomain(TomcatDomain td) {
-		return clusteringConfigRepo.getVersionsByDomain(td.getId());
+		//return clusteringConfigRepo.getVersionsByDomain(td.getId());
+		return null;
 	}
 
 	public List<ClusteringConfiguration> getClusteringConfigurationByName(String name) {
