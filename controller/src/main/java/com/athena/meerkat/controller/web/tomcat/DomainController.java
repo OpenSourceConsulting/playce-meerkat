@@ -202,14 +202,19 @@ public class DomainController {
 
 	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
-
+		DomainTomcatConfiguration savedConfig = null;
 		if (domainTomcatConfig.getId() == 0) {
-			domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
+			savedConfig = domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
 		} else {
-			domainService.saveDomainTomcatConfig(domainTomcatConfig);
+			savedConfig = domainService.saveDomainTomcatConfig(domainTomcatConfig);
 		}
-
-		proviService.updateTomcatInstanceConfig(domainTomcatConfig.getTomcatDomain().getId(), changeRMI, null);
+		if (savedConfig != null) {
+			proviService.updateTomcatInstanceConfig(savedConfig.getTomcatDomain().getId(), changeRMI, null);
+			json.setData(savedConfig.getId());
+		} else {
+			json.setMsg("Configuration is failed.");
+			json.setSuccess(false);
+		}
 
 		return json;
 	}
@@ -304,7 +309,7 @@ public class DomainController {
 	public SimpleJsonResponse deleteDatasourceMapping(SimpleJsonResponse json, int domainId, int dsId) {
 
 		domainService.deleteDomainDatasource(domainId, dsId);
-		
+
 		return json;
 	}
 

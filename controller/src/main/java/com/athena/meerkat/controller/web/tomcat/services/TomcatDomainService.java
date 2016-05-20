@@ -204,6 +204,7 @@ public class TomcatDomainService {
 		return domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
 	}
 
+	@Transactional
 	public DomainTomcatConfiguration saveNewDomainTomcatConfig(DomainTomcatConfiguration conf) {
 
 		/*
@@ -219,6 +220,7 @@ public class TomcatDomainService {
 
 	}
 
+	@Transactional
 	public DomainTomcatConfiguration saveDomainTomcatConfig(DomainTomcatConfiguration conf) {
 
 		return domainTomcatConfRepo.save(conf);
