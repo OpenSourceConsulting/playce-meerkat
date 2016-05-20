@@ -275,4 +275,19 @@ public class ServerController {
 		// }
 		return json;
 	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deleteServer(SimpleJsonResponse json, int serverId) {
+		Server server = service.getServer(serverId);
+		if (server != null) {
+			if (server.getTomcatInstanceNo() <= 0) {
+				service.deleteServer(server);
+			} else {
+				json.setMsg("Could not delete the server which is containing tomcat instances.");
+				json.setSuccess(false);
+			}
+		}
+		return json;
+	}
 }

@@ -126,4 +126,8 @@ public class ServerService {
 		serverRepo.save(servers);
 
 	}
+
+	public void deleteServer(Server server) {
+		serverRepo.delete(server);
+	}
 }
