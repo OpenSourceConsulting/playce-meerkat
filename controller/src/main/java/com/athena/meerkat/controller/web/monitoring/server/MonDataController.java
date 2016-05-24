@@ -152,47 +152,6 @@ public class MonDataController {
 			results.add(viewmodel);
 		}
 		results = this.updateData(results, servers);
-		/*
-		for (Server server : servers) {
-			//List<MonDataViewModel> datas = service.getMonDataList(types, server.getId(), time, now);
-			//			for (MonDataViewModel data : datas) {
-			//				MonDataViewModel viewmodel = new MonDataViewModel();
-			//				viewmodel.setMonDt(data.getMonDt());
-			//				Map<String, Double> value = new HashMap<>();
-			//				value.put(server.getName(), data.getValue().get(types[0]));
-			//				viewmodel.setValue(value);
-			//				results.add(viewmodel);
-			//			}
-
-		}
-		//sample data for demo
-		List<Integer> standardDatas = new ArrayList<>();
-		Random r = new Random();
-		int thred1 = 0;
-		int thred2 = 0;
-		if (monType.equals("cpu.used")) {
-			thred1 = 90;
-			thred2 = 10;
-		} else if (monType.equals("mem.used")) {
-			thred1 = 500;
-			thred2 = 100;
-		} else {
-			thred1 = 900;
-			thred2 = 100;
-		}
-		for (Server server : servers) {
-			standardDatas.add(r.nextInt(thred1));
-		}
-		for (int i = 30; i > 0; i--) {
-			MonDataViewModel viewmodel = new MonDataViewModel();
-			viewmodel.setMonDt(new Date((long) (now.getTime() - i * 1000)));
-			Map<String, Double> value = new LinkedHashMap<>();
-			for (int j = 0; j < servers.size(); j++) {
-				value.put(servers.get(j).getName(), (double) (standardDatas.get(j) + r.nextInt(thred2)));
-			}
-			viewmodel.setValue(value);
-			results.add(viewmodel);
-		}*/
 		json.setList(results);
 		json.setTotal(results.size());
 		return json;
@@ -280,16 +239,28 @@ public class MonDataController {
 	private List<MonDataViewModel> updateData(List<MonDataViewModel> origin, List<Server> servers) {
 		for (int i = 0; i < origin.size(); i++) {
 			MonDataViewModel result = origin.get(i);
-			Map value = result.getValue();
+			Map<String, Double> value = result.getValue();
 			for (Server server : servers) {
 				if (Double.parseDouble(value.get(server.getName()).toString()) == -1D) {
+					Double nextValue = this.getNextValue(i, server.getName(), origin);
+					Double prevValue = this.getPreviousValue(i, server.getName(), origin);
 					if (i == 0) {
-						value.put(server.getName(), this.getNextValue(i, server.getName(), origin));
+						value.put(server.getName(), nextValue);
 					} else {
-						value.put(server.getName(), (this.getNextValue(i, server.getName(), origin) + this.getPreviousValue(i, server.getName(), origin)) / 2);
+						Double avgValue = 0D;
+						if (nextValue != -1D && prevValue != -1D) {
+							avgValue = (nextValue + prevValue) / 2;
+						} else {
+							if (nextValue == -1D) {
+								avgValue = prevValue;
+							} else {
+								avgValue = nextValue;
+							}
+						}
+						value.put(server.getName(), avgValue);
 					}
 					if (i == origin.size() - 1) {
-						value.put(server.getName(), this.getPreviousValue(i, server.getName(), origin));
+						value.put(server.getName(), prevValue);
 					}
 
 				}
@@ -309,7 +280,7 @@ public class MonDataController {
 			}
 			i++;
 		}
-		return 0D;
+		return -1D;
 	}
 
 	private Double getPreviousValue(int index, String key, List<MonDataViewModel> data) {
@@ -321,7 +292,7 @@ public class MonDataController {
 			}
 			i--;
 		}
-		return 0D;
+		return -1D;
 	}
 }
 // end of MonDataController.java
