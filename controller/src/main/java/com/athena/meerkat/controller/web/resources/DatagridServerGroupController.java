@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.resources.services.ClusteringConfigurationService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 
@@ -22,6 +24,8 @@ import com.athena.meerkat.controller.web.resources.services.ServerService;
 public class DatagridServerGroupController {
 	@Autowired
 	private DataGridServerGroupService service;
+	@Autowired
+	private ClusteringConfigurationService clusteringConfService;
 	@Autowired
 	private ServerService serverService;
 
@@ -48,8 +52,7 @@ public class DatagridServerGroupController {
 
 	@RequestMapping(value = "/list/selected", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getSelectedServersByGroup(GridJsonResponse json,
-			Integer groupId) {
+	public GridJsonResponse getSelectedServersByGroup(GridJsonResponse json, Integer groupId) {
 		DatagridServerGroup group = service.getGroup(groupId);
 		if (group != null) {
 			List<Server> allServers = serverService.getList();
@@ -87,21 +90,23 @@ public class DatagridServerGroupController {
 	@ResponseBody
 	public SimpleJsonResponse deleteGroup(SimpleJsonResponse json, Integer id) {
 		DatagridServerGroup group = service.getGroup(id);
-		if(group != null){
+		if (group != null) {
 			List<Server> servers = group.getServers();
-			for(Server s: servers){
+			for (Server s : servers) {
 				s.setDatagridServerGroup(null);
 			}
 			serverService.saveList(servers);
+			List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
+			clusteringConfService.deleteClusteringConfig(configs);
 			service.delete(group);
+
 		}
 		return json;
 	}
 
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, Integer id,
-			String name, Integer typeCdId, String serverIds) {
+	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, Integer id, String name, Integer typeCdId, String serverIds) {
 		DatagridServerGroup group = new DatagridServerGroup();
 		if (id > 0) {
 			group = service.getGroup(id);

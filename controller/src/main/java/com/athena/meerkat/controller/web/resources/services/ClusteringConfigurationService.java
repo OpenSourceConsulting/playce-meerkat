@@ -75,6 +75,10 @@ public class ClusteringConfigurationService {
 
 	}
 
+	public void deleteClusteringConfig(List<ClusteringConfiguration> configs) {
+		clusteringConfigRepo.deleteInBatch(configs);
+	}
+
 	public void saveClusteringConfigs(List<ClusteringConfiguration> confs) {
 		clusteringConfigRepo.save(confs);
 	}
@@ -138,5 +142,4 @@ public class ClusteringConfigurationService {
 	public void saveClusteringConfig(ClusteringConfiguration config) {
 		clusteringConfigRepo.save(config);
 	}
-
 }
