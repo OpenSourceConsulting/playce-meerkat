@@ -129,8 +129,12 @@ public class ServerService {
 		
 		List<DatagridServer> dgServers = dgServerRepo.findByDatagridServerGroupId(groupId);
 		
-		for (DatagridServer datagridServers : dgServers) {
-			servers.add(datagridServers.getServer());
+		for (DatagridServer datagridServer : dgServers) {
+			
+			Server server = datagridServer.getServer();
+			server.setPort(datagridServer.getPort());
+			
+			servers.add(server);
 		}
 		
 		return servers;

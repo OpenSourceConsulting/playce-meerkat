@@ -80,6 +80,9 @@ public class Server implements Serializable {
 
 	@Transient
 	private boolean selected; // use for checked grid on UI
+	
+	@Transient
+	private int port;	// session server port
 
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
@@ -115,6 +118,18 @@ public class Server implements Serializable {
 		return "";
 	}
 */
+	public int getPort() {
+		
+		if (port == 0) {
+			return 11222;
+		}
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+	
 	public String getName() {
 		return name;
 	}
