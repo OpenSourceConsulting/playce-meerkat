@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * <pre>
@@ -46,10 +46,12 @@ public class DatagridServerGroup implements Serializable {
 	@Transient
 	private String typeNm;
 
+
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Server> servers;
-	//
+	private List<DatagridServer> datagridServers;
+	
+	
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
@@ -70,15 +72,31 @@ public class DatagridServerGroup implements Serializable {
 		this.id = id;
 	}
 
+	public List<DatagridServer> getDatagridServers() {
+		return datagridServers;
+	}
+
+	public void setDatagridServers(List<DatagridServer> datagridServers) {
+		this.datagridServers = datagridServers;
+	}
+
 	public List<Server> getServers() {
+		
+		List<Server> servers = new ArrayList<Server>();
+		
+		List<DatagridServer> dgServers = getDatagridServers();
+		
+		for (DatagridServer datagridServers : dgServers) {
+			servers.add(datagridServers.getServer());
+		}
+		
 		return servers;
 	}
 
-	public void setServers(List<Server> servers) {
-		this.servers = servers;
-	}
 
 	public int getServerNo() {
+		
+		List<Server> servers = getServers();
 		if (servers != null) {
 			return servers.size();
 		}

@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -98,21 +100,21 @@ public class Server implements Serializable {
 	@JsonIgnore
 	private Collection<SshAccount> sshAccounts;
 
-	@ManyToOne
-	@JsonBackReference(value = "grid-server")
-	private DatagridServerGroup datagridServerGroup;
+	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<DatagridServer> datagridServers;
 
 	// number of session for datagrid server
 	@Transient
 	private int sessionNo;
-
+/*
 	public String getGroupName() {
 		if (datagridServerGroup != null) {
 			return datagridServerGroup.getName();
 		}
 		return "";
 	}
-
+*/
 	public String getName() {
 		return name;
 	}
@@ -398,17 +400,20 @@ public class Server implements Serializable {
 
 	}
 
-	public DatagridServerGroup getDatagridServerGroup() {
+/*	public DatagridServerGroup getDatagridServerGroup() {
 		return datagridServerGroup;
 	}
 
 	public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
 		this.datagridServerGroup = datagridServerGroup;
-	}
+	}*/
+	
+	
 
 	public int getSessionNo() {
 		return sessionNo;
 	}
+
 
 	public void setSessionNo(int sessionNo) {
 		this.sessionNo = sessionNo;

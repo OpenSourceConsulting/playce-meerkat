@@ -17,7 +17,7 @@ public interface ServerRepository extends JpaRepository<Server, Integer>, Paging
 
 	Server findByName(String name);
 
-	List<Server> findByDatagridServerGroup_Id(Integer id);
+	//List<Server> findByDatagridServerGroup_Id(Integer id);
 
 	Server findBySshNi_ipv4(String sshIPAddr);
 

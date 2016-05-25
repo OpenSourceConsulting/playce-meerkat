@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,8 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DatagridServer;
+import com.athena.meerkat.controller.web.entities.DatagridServerPK;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.services.ClusteringConfigurationService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
@@ -41,12 +44,10 @@ public class DatagridServerGroupController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getByGroup(GridJsonResponse json, Integer groupId) {
-		DatagridServerGroup group = service.getGroup(groupId);
-		if (group != null) {
-			List<Server> list = serverService.getListByGroupId(groupId);
-			json.setList(list);
-			json.setTotal(list.size());
-		}
+		List<Server> list = serverService.getListByGroupId(groupId);
+		json.setList(list);
+		json.setTotal(list.size());
+		
 		return json;
 	}
 
@@ -92,9 +93,9 @@ public class DatagridServerGroupController {
 		DatagridServerGroup group = service.getGroup(id);
 		if (group != null) {
 			List<Server> servers = group.getServers();
-			for (Server s : servers) {
-				s.setDatagridServerGroup(null);
-			}
+			/*for (Server s : servers) {
+				s.setDatagridServerGroups(null);
+			}*/
 			serverService.saveList(servers);
 			List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
 			clusteringConfService.deleteClusteringConfig(configs);
@@ -106,43 +107,27 @@ public class DatagridServerGroupController {
 
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, Integer id, String name, Integer typeCdId, String serverIds) {
-		DatagridServerGroup group = new DatagridServerGroup();
-		if (id > 0) {
-			group = service.getGroup(id);
+	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, DatagridServerGroup group, String[] serverIds) {
+		
+		int id = group.getId();
+		service.save(group);
+		
+		List<DatagridServer> servers = new ArrayList<DatagridServer>();
+		
+		for (int i = 0; i < serverIds.length; i++) {
+			
+			servers.add(new DatagridServer(group.getId(), Integer.parseInt(serverIds[i])));
 		}
-		if (group != null) {
-			group.setName(name);
-			group.setTypeCdId(typeCdId);
-		}
-		List<Server> servers = new ArrayList<>();
-		String[] idStrings = serverIds.split("#", 0);
-		for (int i = 1; i < idStrings.length; i++) { // the first element is
-														// empty
-			Server s = serverService.getServer(Integer.parseInt(idStrings[i]));
-			if (s != null) {
-				servers.add(s);
-			}
-		}
+		
 		if (id > 0) { // edit case
-			List<Server> removedServers = new ArrayList<>();
-			List<Server> currentServers = group.getServers();
-			for (Server s : currentServers) {
-				if (!servers.contains(s)) {
-					s.setDatagridServerGroup(null);
-					removedServers.add(s);
-				}
-			}
-			serverService.saveList(removedServers);
+			List<DatagridServer> currentServers = service.getDatagridServers(id);
+			
+			service.remove(currentServers);
 		}
-		// }
-		group.setServers(servers);
-		group = service.save(group);
+		
+		service.save(servers);
+		
 		json.setData(group.getId());
-		for (Server s : servers) {
-			s.setDatagridServerGroup(group);
-		}
-		serverService.saveList(servers);
 
 		return json;
 	}

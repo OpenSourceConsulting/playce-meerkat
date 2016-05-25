@@ -9,7 +9,10 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DatagridServer;
+import com.athena.meerkat.controller.web.entities.DatagridServerPK;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
+import com.athena.meerkat.controller.web.resources.repositories.DatagridServersRepository;
 
 @Service
 public class DataGridServerGroupService {
@@ -17,6 +20,9 @@ public class DataGridServerGroupService {
 	DatagridServerGroupRepository groupRepo;
 	@Autowired
 	CommonCodeRepository commonCodeRepo;
+	
+	@Autowired
+	DatagridServersRepository datagridServerRepo;
 
 	public List<DatagridServerGroup> getAll() {
 		List<DatagridServerGroup> list = groupRepo.findAll();
@@ -40,4 +46,22 @@ public class DataGridServerGroupService {
 		groupRepo.delete(group);
 
 	}
+	
+	public List<DatagridServer> getDatagridServers(int groupId) {
+		return datagridServerRepo.findByDatagridServerGroupId(groupId);
+	}
+	
+	public DatagridServer getDatagridServer(DatagridServerPK id) {
+		return datagridServerRepo.findOne(id);
+	}
+	
+	public void remove(List<DatagridServer> datagridServers) {
+		datagridServerRepo.delete(datagridServers);
+	}
+	
+	public void save(List<DatagridServer> datagridServers) {
+		datagridServerRepo.save(datagridServers);
+	}
+	
+	
 }

@@ -52,6 +52,27 @@ UPDATE domain_tomcat_configuration SET server_port=8005;
 ALTER TABLE `datagrid_server_group` CHANGE COLUMN `name` `name` VARCHAR(60) NULL DEFAULT NULL ;
 
 
-ALTER TABLE `server` 
-CHARACTER SET = DEFAULT , COLLATE = DEFAULT ,
-CHANGE COLUMN `host_name` `host_name` VARCHAR(60) CHARACTER SET 'euckr' NULL DEFAULT NULL ;
+ALTER TABLE `server` CHANGE COLUMN `host_name` `host_name` VARCHAR(60) NULL DEFAULT NULL ;
+
+
+CREATE TABLE IF NOT EXISTS `datagrid_servers` (
+  `datagrid_server_group_Id` INT(11) NOT NULL,
+  `server_Id` INT(11) NOT NULL,
+  `port` MEDIUMINT NULL,
+  PRIMARY KEY (`datagrid_server_group_Id`, `server_Id`),
+  INDEX `fk_datagrid_servers_server1_idx` (`server_Id` ASC),
+  CONSTRAINT `fk_datagrid_servers_datagrid_server_group1`
+    FOREIGN KEY (`datagrid_server_group_Id`)
+    REFERENCES `athena_meerkat_local`.`datagrid_server_group` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_datagrid_servers_server1`
+    FOREIGN KEY (`server_Id`)
+    REFERENCES `athena_meerkat_local`.`server` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+ALTER TABLE `server` DROP FOREIGN KEY `fk_server_datagrid_server_group1`;
+ALTER TABLE `server` DROP COLUMN `datagrid_server_group_id`, DROP INDEX `fk_server_datagrid_server_group1_idx` ;

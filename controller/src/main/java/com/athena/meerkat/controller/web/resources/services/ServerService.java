@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.controller.web.entities.DatagridServer;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
+import com.athena.meerkat.controller.web.resources.repositories.DatagridServersRepository;
 import com.athena.meerkat.controller.web.resources.repositories.NetworkInterfaceRepository;
 import com.athena.meerkat.controller.web.resources.repositories.SSHAccountRepository;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
@@ -29,6 +31,9 @@ public class ServerService {
 
 	@Autowired
 	private SSHAccountRepository sshRepo;
+	
+	@Autowired
+	private DatagridServersRepository dgServerRepo;
 
 	public ServerService() {
 
@@ -119,7 +124,16 @@ public class ServerService {
 	}
 
 	public List<Server> getListByGroupId(Integer groupId) {
-		return serverRepo.findByDatagridServerGroup_Id(groupId);
+		
+		List<Server> servers = new ArrayList<Server>();
+		
+		List<DatagridServer> dgServers = dgServerRepo.findByDatagridServerGroupId(groupId);
+		
+		for (DatagridServer datagridServers : dgServers) {
+			servers.add(datagridServers.getServer());
+		}
+		
+		return servers;
 	}
 
 	public void saveList(List<Server> servers) {
@@ -129,5 +143,9 @@ public class ServerService {
 
 	public void deleteServer(Server server) {
 		serverRepo.delete(server);
+	}
+
+	public long getServerNo() {
+		return serverRepo.count();
 	}
 }
