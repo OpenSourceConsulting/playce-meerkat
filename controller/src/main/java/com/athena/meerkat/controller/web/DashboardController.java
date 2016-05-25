@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
@@ -47,6 +49,22 @@ public class DashboardController {
 		value.put("serverCount", serverCount);
 		value.put("dsCount", dsCount);
 		json.setData(value);
+
+		return json;
+	}
+
+	@RequestMapping(value = "/get/domain/stats", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getDomainStats(GridJsonResponse json) {
+		List<TomcatDomain> domains = domainService.getAll();
+		//List<TomcatDomain> returnedList = new ArrayList<>();
+		//		for (TomcatDomain domain : domains) {
+		//			TomcatDomain d = new TomcatDomain();
+		//			d.setName(domain.getName());
+		//			d.setTomcatInstance
+		//			returnedList.add(d);
+		//		}
+		json.setList(domains);
 
 		return json;
 	}
