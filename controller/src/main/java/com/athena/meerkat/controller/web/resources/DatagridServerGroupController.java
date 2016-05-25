@@ -112,20 +112,13 @@ public class DatagridServerGroupController {
 		int id = group.getId();
 		service.save(group);
 		
-		List<DatagridServer> servers = new ArrayList<DatagridServer>();
-		
-		for (int i = 0; i < serverIds.length; i++) {
-			
-			servers.add(new DatagridServer(group.getId(), Integer.parseInt(serverIds[i])));
-		}
-		
+		List<DatagridServer> removalServers = null;
 		if (id > 0) { // edit case
-			List<DatagridServer> currentServers = service.getDatagridServers(id);
-			
-			service.remove(currentServers);
+			removalServers = service.getDatagridServers(id);
 		}
 		
-		service.save(servers);
+		service.saveDatagridServers(group.getId(), serverIds, removalServers);
+
 		
 		json.setData(group.getId());
 

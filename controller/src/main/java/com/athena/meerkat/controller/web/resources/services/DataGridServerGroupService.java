@@ -1,9 +1,11 @@
 package com.athena.meerkat.controller.web.resources.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
@@ -61,6 +63,24 @@ public class DataGridServerGroupService {
 	
 	public void save(List<DatagridServer> datagridServers) {
 		datagridServerRepo.save(datagridServers);
+	}
+	
+	@Transactional
+	public void saveDatagridServers(int groupId, String[] serverIds, List<DatagridServer> removalServers) {
+		
+		List<DatagridServer> servers = new ArrayList<DatagridServer>();
+		
+		for (int i = 0; i < serverIds.length; i++) {
+			
+			servers.add(new DatagridServer(groupId, Integer.parseInt(serverIds[i])));
+		}
+		
+		if (removalServers != null) { // edit case
+			
+			remove(removalServers);
+		}
+		
+		save(servers);
 	}
 	
 	
