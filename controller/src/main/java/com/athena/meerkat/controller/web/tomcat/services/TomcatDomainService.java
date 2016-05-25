@@ -172,12 +172,22 @@ public class TomcatDomainService {
 		if (domain == null) {
 			return false;
 		}
-		// delete all associated tomcats
-		// tomcatRepo.delete(domain.getTomcats());
-		// delete relation between domain and datagridgroup
-		// if (domain.getServerGroup() != null) {
-		// domain.getServerGroup().setDomain(null);
-		// }
+		//		// delete all associated tomcats
+		//		tomcatRepo.delete(domain.getTomcats());
+		//		//delete domain tomcat config
+		//		DomainTomcatConfiguration conf = domain.getDomainTomcatConfig();
+		//		conf.setTomcatDomain(null);
+		//		domainTomcatConfRepo.delete(conf);
+		//		//delete config files
+		//		List<TomcatConfigFile> confFiles = domain.getTomcatConfigFiles();
+		//		confFileService.delete(confFiles);
+		//
+		//		List<TomcatApplication> apps = domain.getTomcatApplication();
+		//		appRepo.delete(apps);
+		//
+		//		List<DataSource> dss = domain.getDatasources();
+		//		dsRepo.delete(dss);
+		//		
 		domainRepo.delete(domain);
 		return true;
 	}
@@ -264,5 +274,9 @@ public class TomcatDomainService {
 
 	public List<Server> getAvailableServers(int domainId) {
 		return serverRepo.getAvailableServersByDomain(domainId);
+	}
+
+	public long getDomainNo() {
+		return domainRepo.count();
 	}
 }

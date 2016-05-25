@@ -386,4 +386,8 @@ public class TomcatInstanceService {
 	public List<TomcatInstance> findByDomain(int domainId) {
 		return repo.findByTomcatDomain_Id(domainId);
 	}
+
+	public long getTomcatInstNo() {
+		return repo.count();
+	}
 }

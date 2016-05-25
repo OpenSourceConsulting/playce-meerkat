@@ -120,4 +120,8 @@ public class DataSourceService {
 		return datasourceRepo.listNotAssigned(domainId);
 	}
 
+	public long getDatasourceNo() {
+		return datasourceRepo.count();
+	}
+
 }

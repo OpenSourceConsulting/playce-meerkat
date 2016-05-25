@@ -11,4 +11,5 @@ import com.athena.meerkat.controller.web.entities.TomcatDomain;
 @Repository
 public interface DomainRepository extends JpaRepository<TomcatDomain, Integer> {
 	List<TomcatDomain> findByName(String name);
+
 }

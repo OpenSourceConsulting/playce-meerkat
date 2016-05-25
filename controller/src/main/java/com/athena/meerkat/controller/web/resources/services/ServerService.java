@@ -130,4 +130,8 @@ public class ServerService {
 	public void deleteServer(Server server) {
 		serverRepo.delete(server);
 	}
+
+	public long getServerNo() {
+		return serverRepo.count();
+	}
 }
