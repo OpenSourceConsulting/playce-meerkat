@@ -30,21 +30,21 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bong-Jin Kwon
  * @version 1.0
  */
 @Controller
 @RequestMapping("/monitor/jmx")
 public class MonJmxController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonJmxController.class);
-	
+
 	@Autowired
 	private MonJmxService service;
-	
+
 	@Autowired
 	private DataSourceService dsService;
-	
 
 	/**
 	 * <pre>
@@ -53,24 +53,23 @@ public class MonJmxController {
 	 */
 	public MonJmxController() {
 	}
-	
+
 	@MessageMapping("/monitor/jmx/create")
 	@SendToUser("/queue/jmx/agents")
 	public SimpleJsonResponse create(List<Map> datas) {
-		
+
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse();
-		
+
 		List<MonJmx> monJmxs = copyProperties(datas);
-		
+
 		service.insertMonJmxs(monJmxs);
 		service.saveInstanceState(monJmxs);
-		
+
 		LOGGER.debug("saved. ----------------");
 
 		return jsonRes;
 	}
-	
-	
+
 	@RequestMapping("/tomcat/{tinstId}/{type}/{minutesAgo}")
 	@ResponseBody
 	public GridJsonResponse getTomcatJMXData(GridJsonResponse json, @PathVariable Integer tinstId, @PathVariable String type, @PathVariable Integer minutesAgo,
@@ -105,26 +104,47 @@ public class MonJmxController {
 
 		return json;
 	}
-	
-	
+
+	@RequestMapping("/tomcat/all/{type}/{minutesAgo}")
+	@ResponseBody
+	public GridJsonResponse getAllTomcatJMXData(GridJsonResponse json, @PathVariable String type, @PathVariable Integer minutesAgo) {
+		Date now = new Date();
+		if (minutesAgo <= 0) {
+			minutesAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minutesAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		String[] types = new String[1];
+		List<MonJmx> list = new ArrayList<>();
+		if (type.contains("jdbc")) {
+			types[0] = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS + ".";
+		}
+		if (type.contains("jdbc")) {
+			list = service.getJmxJDBCConnectionList(time, now);
+		} else {
+			list = service.getJmxMonDataList(types, time, now);
+		}
+		json.setList(list);
+		return json;
+	}
+
 	private List<MonJmx> copyProperties(List<Map> maps) {
-		
+
 		List<MonJmx> messages = new ArrayList<MonJmx>();
-    	
-		try{
-	    	for (Map map : maps) {
-	    		
-	    		MonJmx msg = new MonJmx();
-				
-	    		PropertyUtils.copyProperties(msg, map);
-	    		
+
+		try {
+			for (Map map : maps) {
+
+				MonJmx msg = new MonJmx();
+
+				PropertyUtils.copyProperties(msg, map);
+
 				messages.add(msg);
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-    	
-    	return messages;
+
+		return messages;
 	}
 }
 //end of MonJmxController.java

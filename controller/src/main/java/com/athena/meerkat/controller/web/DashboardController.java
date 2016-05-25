@@ -1,5 +1,7 @@
 package com.athena.meerkat.controller.web;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,14 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
+import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -34,6 +39,8 @@ public class DashboardController {
 	private ServerService serverService;
 	@Autowired
 	private DataSourceService dsService;
+	@Autowired
+	private MonJmxService monJmxService;
 
 	@RequestMapping(value = "/get/stats", method = RequestMethod.GET)
 	@ResponseBody
@@ -57,15 +64,30 @@ public class DashboardController {
 	@ResponseBody
 	public GridJsonResponse getDomainStats(GridJsonResponse json) {
 		List<TomcatDomain> domains = domainService.getAll();
-		//List<TomcatDomain> returnedList = new ArrayList<>();
-		//		for (TomcatDomain domain : domains) {
-		//			TomcatDomain d = new TomcatDomain();
-		//			d.setName(domain.getName());
-		//			d.setTomcatInstance
-		//			returnedList.add(d);
-		//		}
 		json.setList(domains);
 
 		return json;
+	}
+
+	@RequestMapping(value = "/get/jdbc/stats/{minsAgo}", method = RequestMethod.GET)
+	@ResponseBody
+	public List getJDBCStats(GridJsonResponse json, @PathVariable Integer minsAgo) {
+		Date now = new Date();
+		if (minsAgo <= 0) {
+			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		List<HashMap<String, Object>> list = new ArrayList<>();
+		List<DataSource> dss = dsService.getAll();
+		for (DataSource ds : dss) {
+			HashMap<String, Object> value = new HashMap<>();
+			Long connectionCount = monJmxService.getJDBCConnectionCount(ds.getName(), time, now);
+			value.put("dsName", ds.getName());
+			value.put("monValue", connectionCount == null ? 0 : connectionCount);
+			list.add(value);
+		}
+		//json.setList(list);
+		return list;
+		//return json;
 	}
 }

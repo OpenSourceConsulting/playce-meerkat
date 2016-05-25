@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.jgroups.util.Average;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,7 +246,7 @@ public class MonDataController {
 					Double nextValue = this.getNextValue(i, server.getName(), origin);
 					Double prevValue = this.getPreviousValue(i, server.getName(), origin);
 					if (i == 0) {
-						value.put(server.getName(), nextValue);
+						value.put(server.getName(), nextValue == -1D ? 0 : nextValue);
 					} else {
 						Double avgValue = 0D;
 						if (nextValue != -1D && prevValue != -1D) {
@@ -256,11 +257,14 @@ public class MonDataController {
 							} else {
 								avgValue = nextValue;
 							}
+							if (nextValue == -1D && prevValue == -1D) {
+								avgValue = 0D;
+							}
 						}
 						value.put(server.getName(), avgValue);
 					}
 					if (i == origin.size() - 1) {
-						value.put(server.getName(), prevValue);
+						value.put(server.getName(), prevValue == -1D ? 0 : prevValue);
 					}
 
 				}

@@ -48,23 +48,22 @@ public class MonJmxService {
 		for (MonJmx monJmx : monJmxs) {
 
 			if (MeerkatConstants.MON_FACTOR_TI_RUN.equals(monJmx.getMonFactorId())) {
-				
+
 				TomcatInstance instance = tiService.findOne(monJmx.getInstanceId());
-				
-				if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STARTING 
+
+				if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STARTING
 						&& monJmx.getMonValue().intValue() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
-					
+
 					LOGGER.debug("{} instance is starting. don't save state.", monJmx.getInstanceId());
-					
-					
-				} else if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STOPPING 
+
+				} else if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STOPPING
 						&& monJmx.getMonValue().intValue() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
-					
+
 					LOGGER.debug("{} instance is stopping. don't save state.", monJmx.getInstanceId());
-					
-				} else if (instance != null){
+
+				} else if (instance != null) {
 					tiService.saveState(monJmx.getInstanceId(), monJmx.getMonValue().intValue());
-					
+
 				} else {
 					LOGGER.debug("{} instance is null. don't save state.", monJmx.getInstanceId());
 				}
@@ -77,5 +76,17 @@ public class MonJmxService {
 		return repository.findByInstanceIdAndMonFactorIds(types, instanceId, time, now);
 	}
 
+	public List<MonJmx> getJmxMonDataList(String[] types, Date time, Date now) {
+		return repository.findByMonFactorIds(types, time, now);
+	}
+
+	public List<MonJmx> getJmxJDBCConnectionList(Date time, Date now) {
+		return repository.findByJdbcConnection(time, now);
+	}
+
+	public Long getJDBCConnectionCount(String name, Date time, Date now) {
+		String type = MeerkatConstants.MON_JMX_FACTOR_JDBC_CONNECTIONS + "." + name;
+		return repository.getJdbcConnectionSum(type, time, now);
+	}
 }
 //end of MonJmxService.java
