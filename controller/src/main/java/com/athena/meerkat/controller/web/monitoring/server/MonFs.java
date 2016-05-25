@@ -74,8 +74,7 @@ public class MonFs {
 	public MonFs() {
 	}
 
-	public MonFs(int _serverId, String _fsName, Date _monDt, int _total,
-			int _used, Double _usePer, int _avail) {
+	public MonFs(int _serverId, String _fsName, Date _monDt, int _total, int _used, Double _usePer, int _avail) {
 		serverId = _serverId;
 		fsName = _fsName;
 		monDt = _monDt;
@@ -197,6 +196,10 @@ public class MonFs {
 
 	public Double getAvailPer() {
 		return 100 - usePer;
+	}
+
+	public Double getReCalUsePer() {
+		return usePer / 100;
 	}
 
 }
