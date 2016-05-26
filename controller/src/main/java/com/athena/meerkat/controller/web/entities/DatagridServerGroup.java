@@ -86,8 +86,12 @@ public class DatagridServerGroup implements Serializable {
 		
 		List<DatagridServer> dgServers = getDatagridServers();
 		
-		for (DatagridServer datagridServers : dgServers) {
-			servers.add(datagridServers.getServer());
+		for (DatagridServer datagridServer : dgServers) {
+			
+			Server server = datagridServer.getServer();
+			server.setPort(datagridServer.getPort());
+			
+			servers.add(server);
 		}
 		
 		return servers;
