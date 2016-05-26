@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +24,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.validator.cfg.context.Cascadable;
 import org.springframework.context.annotation.Lazy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -56,27 +58,27 @@ public class TomcatDomain {
 	@Transient
 	private int latestContextXmlVersion;
 	@OneToOne
-	@JsonBackReference
+	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
-	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
 
-	@OneToOne
-	@JsonManagedReference(value = "domain-config")
+	@OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@JsonIgnore
 	@JoinColumn(name = "domain_tomcat_configuration_id")
 	private DomainTomcatConfiguration domainTomcatConfig;
 
-	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
-	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatApplication> tomcatApplication;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
 	private List<DataSource> datasources;
@@ -209,6 +211,14 @@ public class TomcatDomain {
 
 	public void setLatestContextXmlVersion(int latestContextXmlVersion) {
 		this.latestContextXmlVersion = latestContextXmlVersion;
+	}
+
+	public List<TomcatConfigFile> getTomcatConfigFiles() {
+		return tomcatConfigFiles;
+	}
+
+	public void setTomcatConfigFiles(List<TomcatConfigFile> tomcatConfigFiles) {
+		this.tomcatConfigFiles = tomcatConfigFiles;
 	}
 
 }

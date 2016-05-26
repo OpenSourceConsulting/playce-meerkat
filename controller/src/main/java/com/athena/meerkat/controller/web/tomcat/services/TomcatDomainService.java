@@ -172,22 +172,9 @@ public class TomcatDomainService {
 		if (domain == null) {
 			return false;
 		}
-		//		// delete all associated tomcats
-		//		tomcatRepo.delete(domain.getTomcats());
-		//		//delete domain tomcat config
-		//		DomainTomcatConfiguration conf = domain.getDomainTomcatConfig();
-		//		conf.setTomcatDomain(null);
-		//		domainTomcatConfRepo.delete(conf);
-		//		//delete config files
-		//		List<TomcatConfigFile> confFiles = domain.getTomcatConfigFiles();
-		//		confFileService.delete(confFiles);
-		//
-		//		List<TomcatApplication> apps = domain.getTomcatApplication();
-		//		appRepo.delete(apps);
-		//
-		//		List<DataSource> dss = domain.getDatasources();
-		//		dsRepo.delete(dss);
-		//		
+		DomainTomcatConfiguration conf = domain.getDomainTomcatConfig();
+		domain.setDomainTomcatConfig(null);
+		domainTomcatConfRepo.delete(conf);
 		domainRepo.delete(domain);
 		return true;
 	}
@@ -233,7 +220,14 @@ public class TomcatDomainService {
 	@Transactional
 	public DomainTomcatConfiguration saveDomainTomcatConfig(DomainTomcatConfiguration conf) {
 
-		return domainTomcatConfRepo.save(conf);
+		DomainTomcatConfiguration savedConf = domainTomcatConfRepo.save(conf);
+		//update domain 
+		TomcatDomain domain = savedConf.getTomcatDomain();
+		if (domain != null) {
+			domain.setDomainTomcatConfig(savedConf);
+		}
+		domainRepo.save(domain);
+		return savedConf;
 	}
 
 	public List<DataSource> getDatasources(Integer domainId) {
