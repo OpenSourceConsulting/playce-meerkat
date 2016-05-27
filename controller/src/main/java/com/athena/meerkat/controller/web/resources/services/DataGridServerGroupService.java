@@ -24,10 +24,10 @@ public class DataGridServerGroupService {
 	DatagridServerGroupRepository groupRepo;
 	@Autowired
 	CommonCodeRepository commonCodeRepo;
-	
+
 	@Autowired
 	private ClusteringConfigurationService clusteringConfService;
-	
+
 	@Autowired
 	DatagridServersRepository datagridServerRepo;
 
@@ -41,8 +41,7 @@ public class DataGridServerGroupService {
 	}
 
 	public List<CommonCode> getSessionServerGroupTypes() {
-		return commonCodeRepo
-				.findByGropId(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE);
+		return commonCodeRepo.findByGropId(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE);
 	}
 
 	public DatagridServerGroup save(DatagridServerGroup group) {
@@ -51,50 +50,48 @@ public class DataGridServerGroupService {
 
 	@Transactional
 	public void delete(DatagridServerGroup group) {
-		
+
 		List<DatagridServer> dServers = group.getDatagridServers();
 		List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
-		
+
 		datagridServerRepo.deleteInBatch(dServers);
 		clusteringConfService.deleteClusteringConfig(configs);
-		
-		
+
 		groupRepo.delete(group);
 
 	}
-	
+
 	public List<DatagridServer> getDatagridServers(int groupId) {
 		return datagridServerRepo.findByDatagridServerGroupId(groupId);
 	}
-	
+
 	public DatagridServer getDatagridServer(DatagridServerPK id) {
 		return datagridServerRepo.findOne(id);
 	}
-	
+
 	public void remove(List<DatagridServer> datagridServers) {
 		datagridServerRepo.delete(datagridServers);
 	}
-	
+
 	public void save(List<DatagridServer> datagridServers) {
 		datagridServerRepo.save(datagridServers);
 	}
-	
+
 	@Transactional
 	public void saveDatagridServers(int groupId, String sessionServersJson, List<DatagridServer> removalServers) {
-		
+
 		List<DatagridServer> servers = JSONUtil.jsonToList(sessionServersJson, List.class, DatagridServer.class);
-		
+
 		for (DatagridServer datagridServer : servers) {
 			datagridServer.setDatagridServerGroupId(groupId);
 		}
-		
+
 		if (removalServers != null) { // edit case
-			
+
 			remove(removalServers);
 		}
-		
+
 		save(servers);
 	}
-	
-	
+
 }

@@ -92,22 +92,15 @@ public class DatagridServerGroupController {
 	public SimpleJsonResponse deleteGroup(SimpleJsonResponse json, Integer id) {
 		DatagridServerGroup group = service.getGroup(id);
 		if (group != null) {
-			List<Server> servers = group.getServers();
-			/*for (Server s : servers) {
-				s.setDatagridServerGroups(null);
-			}*/
-			serverService.saveList(servers);
-			List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
-			clusteringConfService.deleteClusteringConfig(configs);
-			service.delete(group);
 
+			service.delete(group);
 		}
 		return json;
 	}
 
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, DatagridServerGroup group, String[] serverIds) {
+	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, DatagridServerGroup group, String sessionServers) {
 
 		int id = group.getId();
 		service.save(group);
@@ -116,8 +109,7 @@ public class DatagridServerGroupController {
 		if (id > 0) { // edit case
 			removalServers = service.getDatagridServers(id);
 		}
-
-		service.saveDatagridServers(group.getId(), serverIds, removalServers);
+		service.saveDatagridServers(group.getId(), sessionServers, removalServers);
 
 		json.setData(group.getId());
 

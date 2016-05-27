@@ -2,11 +2,13 @@ package com.athena.meerkat.controller.web.common.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 /**
  * json convert util class.
@@ -16,6 +18,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public abstract class JSONUtil {
 
 	private static final ObjectMapper MAPPER = new ObjectMapper();
+	
+	
+	public static <T> T jsonToList(String json, Class<?> parametrized, Class<?>... parameterClasses) {
+		try {
+			TypeFactory typeFactory = MAPPER.getTypeFactory();
+			
+			return MAPPER.readValue(json, typeFactory.constructParametricType(parametrized, parameterClasses));
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 	/**
 	 * <pre>
