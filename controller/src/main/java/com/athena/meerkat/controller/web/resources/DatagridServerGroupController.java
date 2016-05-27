@@ -47,7 +47,7 @@ public class DatagridServerGroupController {
 		List<Server> list = serverService.getListByGroupId(groupId);
 		json.setList(list);
 		json.setTotal(list.size());
-		
+
 		return json;
 	}
 
@@ -108,18 +108,17 @@ public class DatagridServerGroupController {
 	@RequestMapping(value = "/group/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveGroup(SimpleJsonResponse json, DatagridServerGroup group, String[] serverIds) {
-		
+
 		int id = group.getId();
 		service.save(group);
-		
+
 		List<DatagridServer> removalServers = null;
 		if (id > 0) { // edit case
 			removalServers = service.getDatagridServers(id);
 		}
-		
+
 		service.saveDatagridServers(group.getId(), serverIds, removalServers);
 
-		
 		json.setData(group.getId());
 
 		return json;

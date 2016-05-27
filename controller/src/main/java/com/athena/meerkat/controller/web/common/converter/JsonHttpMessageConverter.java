@@ -38,6 +38,7 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
@@ -52,11 +53,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @version 1.0
  */
 @Component
-public class JsonHttpMessageConverter extends
-		MappingJackson2HttpMessageConverter {
+public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverter {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JsonHttpMessageConverter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonHttpMessageConverter.class);
 
 	@Autowired
 	private CommonCodeHandler codeHandler;
@@ -81,8 +80,7 @@ public class JsonHttpMessageConverter extends
 	}
 
 	@Override
-	protected void writeInternal(Object object, HttpOutputMessage outputMessage)
-			throws IOException, HttpMessageNotWritableException {
+	protected void writeInternal(Object object, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
 
 		if (object instanceof SimpleJsonResponse) {
 			handleResponse((SimpleJsonResponse) object);
@@ -121,36 +119,41 @@ public class JsonHttpMessageConverter extends
 
 		} else if (object instanceof DomainTomcatConfiguration) {
 			handleEntity((DomainTomcatConfiguration) object);
+		} else if (object instanceof DatagridServerGroup) {
+			handleEntity((DatagridServerGroup) object);
 		} else {
-			LOGGER.debug("Not found convert method for {}", object.getClass()
-					.getName());
+			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
 	}
 
 	protected void handleEntity(DataSource entity) {
-		entity.setDbTypeName(codeHandler.getCodeNm(
-				MeerkatConstants.CODE_GROP_DB_TYPE, entity.getDbType()));
+		entity.setDbTypeName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_DB_TYPE, entity.getDbType()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
 	protected void handleEntity(TomcatInstance entity) {
-		entity.setStateNm(codeHandler.getCodeNm(
-				MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
+		entity.setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
 	protected void handleEntity(TomcatInstanceViewModel entity) {
-		entity.setStateNm(codeHandler.getCodeNm(
-				MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
+		entity.setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
 	protected void handleEntity(DomainTomcatConfiguration entity) {
-		
-		entity.setTomcatVersionNm((codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION,	entity.getTomcatVersionCd())));
+
+		entity.setTomcatVersionNm((codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, entity.getTomcatVersionCd())));
+
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+
+	protected void handleEntity(DatagridServerGroup entity) {
+
+		entity.setTypeNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE, entity.getTypeCdId()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}

@@ -86,8 +86,12 @@ public class DatagridServerGroup implements Serializable {
 		
 		List<DatagridServer> dgServers = getDatagridServers();
 		
-		for (DatagridServer datagridServers : dgServers) {
-			servers.add(datagridServers.getServer());
+		for (DatagridServer datagridServer : dgServers) {
+			
+			Server server = datagridServer.getServer();
+			server.setPort(datagridServer.getPort());
+			
+			servers.add(server);
 		}
 		
 		return servers;
@@ -122,5 +126,9 @@ public class DatagridServerGroup implements Serializable {
 
 	public String getTypeNm() {
 		return typeNm;
+	}
+
+	public void setTypeNm(String typeNm) {
+		this.typeNm = typeNm;
 	}
 }

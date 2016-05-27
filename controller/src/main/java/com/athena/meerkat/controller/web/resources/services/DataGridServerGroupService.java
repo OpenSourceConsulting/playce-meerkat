@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
+import com.athena.meerkat.controller.web.common.util.JSONUtil;
+import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServer;
@@ -24,6 +26,9 @@ public class DataGridServerGroupService {
 	CommonCodeRepository commonCodeRepo;
 	
 	@Autowired
+	private ClusteringConfigurationService clusteringConfService;
+	
+	@Autowired
 	DatagridServersRepository datagridServerRepo;
 
 	public List<DatagridServerGroup> getAll() {
@@ -37,14 +42,23 @@ public class DataGridServerGroupService {
 
 	public List<CommonCode> getSessionServerGroupTypes() {
 		return commonCodeRepo
-				.findByGropId(MeerkatConstants.SESSION_SERVER_TYPE_GROUP_ID);
+				.findByGropId(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE);
 	}
 
 	public DatagridServerGroup save(DatagridServerGroup group) {
 		return groupRepo.save(group);
 	}
 
+	@Transactional
 	public void delete(DatagridServerGroup group) {
+		
+		List<DatagridServer> dServers = group.getDatagridServers();
+		List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
+		
+		datagridServerRepo.deleteInBatch(dServers);
+		clusteringConfService.deleteClusteringConfig(configs);
+		
+		
 		groupRepo.delete(group);
 
 	}
@@ -66,13 +80,12 @@ public class DataGridServerGroupService {
 	}
 	
 	@Transactional
-	public void saveDatagridServers(int groupId, String[] serverIds, List<DatagridServer> removalServers) {
+	public void saveDatagridServers(int groupId, String sessionServersJson, List<DatagridServer> removalServers) {
 		
-		List<DatagridServer> servers = new ArrayList<DatagridServer>();
+		List<DatagridServer> servers = JSONUtil.jsonToList(sessionServersJson, List.class, DatagridServer.class);
 		
-		for (int i = 0; i < serverIds.length; i++) {
-			
-			servers.add(new DatagridServer(groupId, Integer.parseInt(serverIds[i])));
+		for (DatagridServer datagridServer : servers) {
+			datagridServer.setDatagridServerGroupId(groupId);
 		}
 		
 		if (removalServers != null) { // edit case

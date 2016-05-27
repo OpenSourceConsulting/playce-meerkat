@@ -141,7 +141,7 @@ public abstract class MeerkatConstants {
 	 */
 	public static final String TOMCAT_INST_CONFIG_JAVAHOME_NAME = "java_home";
 	public static final String TOMCAT_INST_CONFIG_HTTPPORT_NAME = "http_port";
-	
+
 	public static final String TOMCAT_INST_CONFIG_SESSION_TIMEOUT_NAME = "session_timeout";
 
 	public static final String OBJ_TYPE_DOMAIN = "tomcat_domain";
@@ -150,7 +150,7 @@ public abstract class MeerkatConstants {
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 
-	public static final String SESSION_SERVER_TYPE_GROUP_ID = "SESSION_GROUP_TYPE";
+	public static final String CODE_GROP_DATAGRID_SEVER_TYPE = "SESSION_GROUP_TYPE";
 
 	/**
 	 * Monitoring Factor id

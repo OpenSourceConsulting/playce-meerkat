@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -80,9 +81,9 @@ public class Server implements Serializable {
 
 	@Transient
 	private boolean selected; // use for checked grid on UI
-	
+
 	@Transient
-	private int port;	// session server port
+	private int port; // session server port
 
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
@@ -91,7 +92,7 @@ public class Server implements Serializable {
 	@Column(name = "state")
 	private int state;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "server")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "server", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<NetworkInterface> networkInterfaces;
 
@@ -99,7 +100,7 @@ public class Server implements Serializable {
 	@JsonIgnore
 	private Collection<TomcatInstance> tomcatInstances;
 
-	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Collection<SshAccount> sshAccounts;
 
@@ -110,16 +111,17 @@ public class Server implements Serializable {
 	// number of session for datagrid server
 	@Transient
 	private int sessionNo;
-/*
-	public String getGroupName() {
-		if (datagridServerGroup != null) {
-			return datagridServerGroup.getName();
+
+	/*
+		public String getGroupName() {
+			if (datagridServerGroup != null) {
+				return datagridServerGroup.getName();
+			}
+			return "";
 		}
-		return "";
-	}
-*/
+	*/
 	public int getPort() {
-		
+
 		if (port == 0) {
 			return 11222;
 		}
@@ -129,7 +131,7 @@ public class Server implements Serializable {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -286,8 +288,7 @@ public class Server implements Serializable {
 	 * @param mDescription
 	 *            description of machine
 	 */
-	public Server(String mName, String mSSHIpaddr, String mSSHUserName,
-			String mSSHPassword, int mSSHPort, String mDescription) {
+	public Server(String mName, String mSSHIpaddr, String mSSHUserName, String mSSHPassword, int mSSHPort, String mDescription) {
 	}
 
 	/**
@@ -415,20 +416,17 @@ public class Server implements Serializable {
 
 	}
 
-/*	public DatagridServerGroup getDatagridServerGroup() {
-		return datagridServerGroup;
-	}
+	/*	public DatagridServerGroup getDatagridServerGroup() {
+			return datagridServerGroup;
+		}
 
-	public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
-		this.datagridServerGroup = datagridServerGroup;
-	}*/
-	
-	
+		public void setDatagridServerGroup(DatagridServerGroup datagridServerGroup) {
+			this.datagridServerGroup = datagridServerGroup;
+		}*/
 
 	public int getSessionNo() {
 		return sessionNo;
 	}
-
 
 	public void setSessionNo(int sessionNo) {
 		this.sessionNo = sessionNo;
