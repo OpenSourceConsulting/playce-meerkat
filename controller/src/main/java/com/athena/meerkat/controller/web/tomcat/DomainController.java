@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.common.model.TreeNode;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
@@ -320,5 +321,38 @@ public class DomainController {
 		json.setList(result);
 		json.setTotal(result.size());
 		return json;
+	}
+	
+	@RequestMapping(value = "/menu/list", method = RequestMethod.GET)
+	@ResponseBody
+	public List<TreeNode> menu(String path, String node) {
+		
+		List<TreeNode> nodeList = new ArrayList<TreeNode>();
+		
+		if ("tomcatMng".equals(node)) {
+			List<TomcatDomain> result = domainService.getAll();
+			for (TomcatDomain tomcatDomain : result) {
+				TreeNode treeNode = new TreeNode();
+				treeNode.put("text", tomcatDomain.getName());
+				treeNode.put("id", "tomcatDomain_" + tomcatDomain.getId());
+				
+				nodeList.add(treeNode);
+			}
+		} else if(node.startsWith("tomcatDomain_")) {
+			String domainId = node.substring(node.indexOf("_")+1);
+			
+			List<TomcatInstance> instances = tomcatService.getTomcatListByDomainId(Integer.parseInt(domainId));
+			for (TomcatInstance tomcatInstance : instances) {
+				TreeNode treeNode = new TreeNode();
+				treeNode.put("text", tomcatInstance.getName());
+				treeNode.put("id", "tomcatInstance_" + tomcatInstance.getId());
+				treeNode.put("leaf", true);
+				
+				nodeList.add(treeNode);
+			}
+			
+		}
+
+		return nodeList;
 	}
 }

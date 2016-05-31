@@ -28,10 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.athena.meerkat.controller.web.provisioning.util.OSUtil;
 
 public class ProvisioningUtil {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProvisioningUtil.class);
 	
 	private static final String JOB_NUM_FILE_NAME = "job";
 	
@@ -57,20 +61,9 @@ public class ProvisioningUtil {
 	 * @param targetName
 	 * @throws Exception
 	 */
-	public static boolean runDefaultTarget(File commanderDir, File jobDir, String targetName) throws Exception {
+	public static boolean runDefaultTarget(File commanderDir, File jobDir, String targetName, String... args) throws Exception {
 		
-		String execFile = "runtarget.sh";
-		
-		if(OSUtil.isWindows()) {
-			execFile = "runTarget.bat";
-		}
-		
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
-		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
-		cmds.add(targetName);
-				
-		return runCmds(commanderDir, cmds);
+		return runAntTarget(commanderDir, jobDir, "default.xml", targetName, args);
 
 	}
 	
@@ -89,7 +82,7 @@ public class ProvisioningUtil {
 	 * @throws Exception
 	 */
 	public static boolean sendCommand(File commanderDir, File jobDir) throws Exception {
-		
+		/*
 		String execFile = "sendcmd.sh";
 		
 		if(OSUtil.isWindows()) {
@@ -101,10 +94,13 @@ public class ProvisioningUtil {
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
 		
 		return runCmds(commanderDir, cmds);
+		*/
+		
+		return runAntTarget(commanderDir, jobDir, "default.xml", "send-cmd");
 	}
 	
 	public static boolean runCommand(File commanderDir, File jobDir) throws Exception {
-		
+		/*
 		String execFile = "runcmd.sh";
 		
 		if(OSUtil.isWindows()) {
@@ -115,7 +111,38 @@ public class ProvisioningUtil {
 		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
 		cmds.add(jobDir.getAbsolutePath() + File.separator + "cmd.xml");
 		
+		
 		return runCmds(commanderDir, cmds);
+		*/
+		return runAntTarget(commanderDir, jobDir, "cmd.xml", null);
+	}
+	
+	public static boolean runAntTarget(File commanderDir, File jobDir, String antScript, String targetName, String... args) throws Exception {
+		
+		String execFile = "runtarget.sh";
+		
+		if(OSUtil.isWindows()) {
+			execFile = "runTarget.bat";
+		}
+		
+		List<String> cmds = new ArrayList<String>();
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
+		cmds.add(jobDir.getAbsolutePath() + File.separator + antScript);
+		
+		if (targetName != null) {
+			cmds.add(targetName);
+		}
+		
+		if (args != null) {
+			for (String argument : args) {
+				LOGGER.debug("%%%%%%%%%%%%%% {}", argument);
+				cmds.add(argument);
+			}
+		}
+		
+				
+		return runCmds(commanderDir, cmds);
+
 	}
 	
 	
