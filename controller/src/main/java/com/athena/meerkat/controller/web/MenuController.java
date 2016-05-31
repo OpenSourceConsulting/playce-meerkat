@@ -40,68 +40,17 @@ public class MenuController {
 
 	@RequestMapping(value = "/getNodes", method = RequestMethod.GET)
 	@ResponseBody
-	public List<HashMap> getNodes(String node) {
+	public List<HashMap<String, Object>> getNodes(String node) {
 		boolean isLeaf = false;
 		String prefixMeuId = "";
-		List<HashMap> nodes = new ArrayList<>();
-		if (node.equals("tomcatMngRoot")) {
-			HashMap n = new HashMap();
-			n.put("text", "도메인 및 톰캣 구성");
-			n.put("id", "create-wizard");
-			n.put("leaf", true);
-			nodes.add(n);
-
-			n = new HashMap();
-			n.put("text", "톰캣 도메인");
-			n.put("id", "tomcatMng");
-			n.put("leaf", false);
-			nodes.add(n);
-
-		} else if (node.equals("monitoringRoot")) {
-			HashMap n = new HashMap();
-			n.put("text", "머신");
-			n.put("id", "mon_servers");
-			n.put("leaf", false);
-			nodes.add(n);
-
-			n = new HashMap();
-			n.put("text", "톰캣 인스턴스");
-			n.put("id", "mon_tomcats");
-			n.put("leaf", false);
-			nodes.add(n);
-
-		} else if (node.equals("resourceMngRoot")) {
-			HashMap n = new HashMap();
-			n.put("text", "머신");
-			n.put("id", "resm_servers");
-			n.put("leaf", true);
-			nodes.add(n);
-
-			n = new HashMap();
-			n.put("text", "세션그룹");
-			n.put("id", "resm_sessions");
-			n.put("leaf", true);
-			nodes.add(n);
-
-			n = new HashMap();
-			n.put("text", "데이타소스");
-			n.put("id", "resm_ds");
-			n.put("leaf", true);
-			nodes.add(n);
-
-		} else if (node.equals("userMngRoot")) {
-			HashMap n = new HashMap();
-			n.put("text", "UserManagement");
-			n.put("id", "usermnt");
-			n.put("leaf", true);
-			nodes.add(n);
-		} else if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
+		List<HashMap<String, Object>> nodes = new ArrayList<>();
+		if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
 			List<TomcatDomain> domains = new ArrayList<>();
 			domains = domainService.getAll();
 			isLeaf = false;
 			prefixMeuId = node + "_domain_";
 			for (TomcatDomain d : domains) {
-				HashMap n = new HashMap();
+				HashMap<String, Object> n = new HashMap<String, Object>();
 				n.put("text", d.getName());
 				n.put("id", prefixMeuId + d.getId());
 				n.put("leaf", isLeaf);
@@ -114,7 +63,7 @@ public class MenuController {
 			prefixMeuId = node + "_tomcat_";
 			tomcats = tomcatService.getTomcatListByDomainId(objId);
 			for (TomcatInstance t : tomcats) {
-				HashMap n = new HashMap();
+				HashMap<String, Object> n = new HashMap<String, Object>();
 				n.put("text", t.getName());
 				n.put("id", prefixMeuId + t.getId());
 				n.put("leaf", isLeaf);
@@ -126,7 +75,7 @@ public class MenuController {
 			prefixMeuId = node + "_server_";
 			servers = serverService.getList();
 			for (Server s : servers) {
-				HashMap n = new HashMap();
+				HashMap<String, Object> n = new HashMap<String, Object>();
 				n.put("text", s.getName());
 				n.put("id", prefixMeuId + s.getId());
 				n.put("leaf", isLeaf);
