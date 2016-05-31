@@ -100,7 +100,7 @@ public class MeerkatBoot {
 					"/monitor/**", 
 					"/provi/**",
 					"/code/**",
-					
+					"/menu/**",
 					"/getServerList", 
 					"/auth/notLogin*", 
 					"/auth/loginFail*",
