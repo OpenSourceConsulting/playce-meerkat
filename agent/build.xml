@@ -46,7 +46,7 @@
 	</target>
 	
 	<target name="deploy.commander.local">
-		<property name="gunzip.dest" value="D:/git/athena-meerkat/_test" />
+		<property name="gunzip.dest" value="G:/project/AthenaMeerkat" />
 		<property name="file.name" value="athena-meerkat-commander-1.0.0-SNAPSHOT" />
 		
 		<gunzip src="${basedir}/target/${file.name}-bin.tar.gz" dest="${gunzip.dest}"/>

@@ -53,17 +53,33 @@
 	
 	<target name="send-cmd" description="send cmd build file to server and exec">
 
-		<echo>send build.properties</echo>
+		<echo>send *.xml and build.properties</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
 			<fileset dir="${basedir}" defaultexcludes="true">
-				<include name="cmd.xml"/>
+				<include name="*.xml"/>
 				<include name="build.properties"/>
+				<exclude name="default.xml"/>
 			</fileset>
 		</scp>
 		
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
 			command="cd ${agent.deploy.dir}/${agent.name}/bin; ./runCmd.sh" trust="true" failonerror="false" />
+
+	</target>
+	
+	<target name="send-script" description="send other build file to server and exec">
+
+		<echo>send build.properties</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
+			password="${user.passwd}">
+			<fileset dir="${basedir}" defaultexcludes="true">
+				<include name="${ant.script.file}"/>
+			</fileset>
+		</scp>
+		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="cd ${agent.deploy.dir}/${agent.name}/bin; ./runCmd.sh ${ant.script.file}" trust="true" failonerror="false" />
 
 	</target>
 	

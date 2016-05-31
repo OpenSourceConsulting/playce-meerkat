@@ -26,10 +26,10 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 @Controller
-@RequestMapping("dashboard")
+@RequestMapping("/dashboard")
 public class DashboardController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ConsoleController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.class);
 
 	@Autowired
 	private TomcatDomainService domainService;

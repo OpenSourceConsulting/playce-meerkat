@@ -11,5 +11,17 @@ fi
 echo ANT_HOME: $ANT_HOME
 
 
-$ANT_HOME/bin/ant -buildfile $1 $2
+export MRUN_OPTS="$1"
+
+if [ e$2 != "e" ] ; then
+    export MRUN_OPTS="$MRUN_OPTS $2"
+fi
+
+if [ e$3 != "e" ] ; then
+    export MRUN_OPTS="$MRUN_OPTS $3"
+fi
+
+echo ant run $MRUN_OPTS
+
+$ANT_HOME/bin/ant -buildfile $MRUN_OPTS
 
