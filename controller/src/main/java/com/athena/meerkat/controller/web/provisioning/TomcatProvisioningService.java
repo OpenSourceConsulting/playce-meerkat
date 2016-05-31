@@ -23,57 +23,32 @@
 package com.athena.meerkat.controller.web.provisioning;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.Tailer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.util.FileUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
-import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
-import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
-import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
+import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
-
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 
 /**
  * <pre>
@@ -94,7 +69,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@Autowired
 	private TomcatInstanceService instanceService;
-
+	
 
 	@PersistenceContext
     private EntityManager entityManager;
@@ -135,6 +110,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 		boolean isSuccess = true;
 		
+		int sessionGroupId = domainService.getDomain(domainId).getDataGridServerGroupId();
+		
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		List<DataSource> dsList = domainService.getDatasources(domainId);
 
@@ -153,11 +130,15 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
+				
 				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
 				pModel.setLastTask(count == list.size());
-				pModel.addProps("dolly.jar.name", "core-1.0.0-SNAPSHOT-bin.tar.gz");
-				pModel.addProps("ant.script.file", "installDolly.xml");
+				
+				if (sessionGroupId > 0) {
+					pModel.setSessionServerGroupId(sessionGroupId);
+					addDollyDefaultProperties(pModel, sessionGroupId);
+				}
 				
 				isSuccess = doInstallTomcatInstance(pModel, session) && isSuccess;
 				count++;
@@ -182,7 +163,11 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 * 1. make job dir & copy install.xml with default.xml.
 			 */
 			copyCmds("install.xml", jobDir);
-			copyAntScript("installDolly.xml", jobDir);
+			
+			if (pModel.getSessionServerGroupId() > 0) {
+				copyAntScript("installDolly.xml", jobDir);
+			}
+			
 
 
 			/*
@@ -205,7 +190,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			/*
 			 * 5. install dolly agent
 			 */
-			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
+			if (pModel.getSessionServerGroupId() > 0) {
+				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
+			}
 			
 
 		} catch (Exception e) {

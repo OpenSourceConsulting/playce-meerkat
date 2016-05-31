@@ -56,6 +56,8 @@ public class ProvisionModel {
 	
 	private boolean lastTask;
 	
+	private int sessionServerGroupId;
+	
 	
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
 		this.tomcatConfig = tomcatConfig;
@@ -167,6 +169,14 @@ public class ProvisionModel {
 		}
 		
 		return tcFile;
+	}
+
+	public int getSessionServerGroupId() {
+		return sessionServerGroupId;
+	}
+
+	public void setSessionServerGroupId(int sessionServerGroupId) {
+		this.sessionServerGroupId = sessionServerGroupId;
 	}
 
 }

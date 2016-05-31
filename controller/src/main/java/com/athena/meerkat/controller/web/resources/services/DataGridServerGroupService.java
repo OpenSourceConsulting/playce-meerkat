@@ -15,6 +15,7 @@ import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServer;
 import com.athena.meerkat.controller.web.entities.DatagridServerPK;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServersRepository;
 
@@ -63,6 +64,46 @@ public class DataGridServerGroupService {
 
 	public List<DatagridServer> getDatagridServers(int groupId) {
 		return datagridServerRepo.findByDatagridServerGroupId(groupId);
+	}
+	
+	public List<Server> getServerList(Integer groupId) {
+		
+		List<Server> servers = new ArrayList<Server>();
+		
+		List<DatagridServer> dgServers = datagridServerRepo.findByDatagridServerGroupId(groupId);
+		
+		for (DatagridServer datagridServer : dgServers) {
+			
+			Server server = datagridServer.getServer();
+			server.setPort(datagridServer.getPort());
+			
+			servers.add(server);
+		}
+		
+		return servers;
+	}
+	
+	/**
+	 * <pre>
+	 * dolly.properties 의 infinispan.client.hotrod.server_list property value 반환.
+	 * </pre>
+	 * @param groupId
+	 * @return
+	 */
+	public String getServerListPropertyValue(Integer groupId) {
+		StringBuffer sb = new StringBuffer();
+		
+		List<Server> serverList = getServerList(groupId);
+		for (Server server : serverList) {
+			
+			if (sb.length() > 0) {
+				sb.append(";");
+			}
+			
+			sb.append(server.getSshIPAddr() + ":" + server.getPort());
+		}
+		
+		return sb.toString();
 	}
 
 	public DatagridServer getDatagridServer(DatagridServerPK id) {

@@ -32,8 +32,6 @@ public class ServerService {
 	@Autowired
 	private SSHAccountRepository sshRepo;
 	
-	@Autowired
-	private DatagridServersRepository dgServerRepo;
 
 	public ServerService() {
 
@@ -121,23 +119,6 @@ public class ServerService {
 	public void deleteSSHAccount(SshAccount ssh) {
 		sshRepo.delete(ssh);
 
-	}
-
-	public List<Server> getListByGroupId(Integer groupId) {
-		
-		List<Server> servers = new ArrayList<Server>();
-		
-		List<DatagridServer> dgServers = dgServerRepo.findByDatagridServerGroupId(groupId);
-		
-		for (DatagridServer datagridServer : dgServers) {
-			
-			Server server = datagridServer.getServer();
-			server.setPort(datagridServer.getPort());
-			
-			servers.add(server);
-		}
-		
-		return servers;
 	}
 
 	public void saveList(List<Server> servers) {
