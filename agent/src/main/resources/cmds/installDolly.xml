@@ -1,0 +1,22 @@
+<project name="install Dolly" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# Install 3rd party libraries
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+	<property name="dest.dir" value="${agent.deploy.dir}/${agent.name}" />
+
+	<target name="cmd">
+		
+		<echo message="downloading ${dolly.jar.name}" />
+		<get src="${tomcat.down.url}/${dolly.jar.name}" dest="${dest.dir}"/>
+		
+		<gunzip src="${dest.dir}/${dolly.jar.name}" />
+
+	</target>
+
+</project>
