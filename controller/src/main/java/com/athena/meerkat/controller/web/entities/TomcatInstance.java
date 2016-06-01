@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -88,7 +89,7 @@ public class TomcatInstance implements Serializable {
 	@Column(name = "server_id", insertable = false, updatable = false)
 	private int serverId;
 
-	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonManagedReference(value = "inst-configFile")
 	private List<TomcatConfigFile> tomcatConfigFiles;
 
@@ -102,14 +103,13 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "domain_id")
 	private TomcatDomain tomcatDomain;
 
-	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonManagedReference(value = "inst-app")
 	private List<TomcatApplication> tomcatApplications;
 
-	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	//@JsonManagedReference(value = "config-tomcat")
 	private List<TomcatInstConfig> tomcatConfigs;
-	
 
 	@JsonIgnore
 	@Transient
@@ -261,9 +261,9 @@ public class TomcatInstance implements Serializable {
 	public void setTomcatConfigs(List<TomcatInstConfig> tomcatConfigs) {
 		this.tomcatConfigs = tomcatConfigs;
 	}
-	
+
 	@PrePersist
-	public void onPreSave(){
+	public void onPreSave() {
 		this.createdTime = new Date();
 		this.createUserId = WebUtil.getLoginUserId();
 	}
