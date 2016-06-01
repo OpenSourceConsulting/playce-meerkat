@@ -62,47 +62,43 @@ public class DomainController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
 	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json, TomcatDomain domain) {
-		boolean isEdit = !(domain.getId() == 0);
-		try {
-			List<TomcatDomain> existingDomains = domainService.getDomainByName(domain.getName());
-			if (existingDomains.size() > 0) {
-				if (!isEdit) { // add new domain
-					json.setSuccess(false);
-					json.setMsg("Domain name is already used.");
-					return json;
-				} else {
-					if (domain.getId() != existingDomains.get(0).getId()) {
+		boolean isEdit = domain.getId() > 0;
+		
+		List<TomcatDomain> existingDomains = domainService.getDomainByName(domain.getName());
+		if (existingDomains.size() > 0) {
+			if (isEdit) { 
+				
+				for (TomcatDomain tomcatDomain : existingDomains) {
+					if(tomcatDomain.getId() != domain.getId()) {
 						json.setSuccess(false);
 						json.setMsg("Domain name is already used.");
-						return json;
+						break;
 					}
 				}
+				
+			} else {
+				// add new domain
+				json.setSuccess(false);
+				json.setMsg("Domain name is already used.");
 			}
-			if (isEdit) {
-				TomcatDomain dbDomain = domainService.getDomain(domain.getId());
-				if (dbDomain == null) { // edit domain
-					json.setSuccess(false);
-					json.setMsg("Domain does not exist.");
-					return json;
-				}
-			}
-			if (domain.getServerGroup() != null) {
-				DatagridServerGroup group = datagridGroupService.getGroup(domain.getServerGroup().getId());
-				if (group == null) {
-					json.setSuccess(false);
-					json.setMsg("Datagrid server group does not exist.");
-					return json;
-				}
-				domain.setServerGroup(group);
-			}
-
-			domain.setCreateUser(WebUtil.getLoginUserId());
-			domain = domainService.save(domain);
-		} catch (Exception ex) {
-			LOGGER.debug(ex.getMessage());
 		}
-		json.setSuccess(true);
-		json.setData(domain.getId());
+		
+		if (json.isSuccess() == false) {
+			
+			return json;
+		}
+		
+
+		domain.setCreateUser(WebUtil.getLoginUserId());
+		domain = domainService.save(domain);
+		
+		if(isEdit) {
+			// for configure session clustering.
+			List<TomcatInstance> tomcats = tomcatService.getTomcatListByDomainId(domain.getId());
+			domain.setTomcats(tomcats);
+		}
+		
+		json.setData(domain);
 		return json;
 	}
 
@@ -139,13 +135,7 @@ public class DomainController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
 		TomcatDomain domain = domainService.getDomain(id);
-		if (domain == null) {
-			json.setSuccess(false);
-			json.setMsg("Domain does not exist.");
-		} else {
-			json.setSuccess(true);
-			json.setData(domain);
-		}
+		json.setData(domain);
 		return json;
 	}
 

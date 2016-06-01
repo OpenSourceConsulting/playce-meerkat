@@ -65,9 +65,8 @@ public class TomcatDomain {
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
 
-	@OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToOne(mappedBy = "tomcatDomain", cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	@JoinColumn(name = "domain_tomcat_configuration_id")
 	private DomainTomcatConfiguration domainTomcatConfig;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
