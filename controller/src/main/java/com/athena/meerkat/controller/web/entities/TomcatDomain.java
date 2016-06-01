@@ -57,6 +57,7 @@ public class TomcatDomain {
 	private int latestServerXmlVersion;
 	@Transient
 	private int latestContextXmlVersion;
+	
 	@OneToOne
 	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
