@@ -44,9 +44,22 @@ public class MenuController {
 		boolean isLeaf = false;
 		String prefixMeuId = "";
 		List<HashMap<String, Object>> nodes = new ArrayList<>();
-		if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
-			List<TomcatDomain> domains = new ArrayList<>();
-			domains = domainService.getAll();
+		
+		if (node.equals("tomcatMngRoot")) {
+			HashMap<String, Object> n = new HashMap<String, Object>();
+			n.put("text", "도메인 및 톰캣 구성");
+			n.put("id", "create-wizard");
+			n.put("leaf", true);
+			nodes.add(n);
+
+			n = new HashMap<String, Object>();
+			n.put("text", "톰캣 도메인");
+			n.put("id", "tomcatMng");
+			n.put("leaf", false);
+			nodes.add(n);
+
+		} else if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
+			List<TomcatDomain> domains = domainService.getAll();
 			isLeaf = false;
 			prefixMeuId = node + "_domain_";
 			for (TomcatDomain d : domains) {
@@ -88,4 +101,5 @@ public class MenuController {
 		//		return json;
 		return nodes;
 	}
+	
 }

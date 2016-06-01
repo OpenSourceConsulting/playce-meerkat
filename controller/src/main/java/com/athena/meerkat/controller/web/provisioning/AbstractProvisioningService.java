@@ -52,6 +52,7 @@ import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -79,6 +80,9 @@ public abstract class AbstractProvisioningService {
 	
 	@Autowired
 	protected TomcatConfigFileService configFileService;
+	
+	@Autowired
+	private DataGridServerGroupService dataGridGroupService;
 	
 	@Autowired
 	private CommonCodeHandler codeHandler;
@@ -445,6 +449,12 @@ public abstract class AbstractProvisioningService {
 		
 		Assert.notNull(commanderHome);
 		commanderDir = new File(commanderHome);
+	}
+	
+	protected void addDollyDefaultProperties(ProvisionModel pModel, int sessionGroupId) {
+		pModel.addProps("dolly.jar.name", "core-1.0.0-SNAPSHOT");
+		pModel.addProps("ant.script.file", "installDolly.xml");
+		pModel.addProps("infinispan.hotrod.server_list", dataGridGroupService.getServerListPropertyValue(sessionGroupId));
 	}
 
 }

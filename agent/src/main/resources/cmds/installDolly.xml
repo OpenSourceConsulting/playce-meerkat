@@ -2,21 +2,38 @@
 	
 	<!-- 
 	#########################################
-	# Install 3rd party libraries
+	# Install Dolly agent.
 	#########################################
 	-->
 	
 	<property file="${basedir}/build.properties" />
 	
 	<property name="dest.dir" value="${agent.deploy.dir}/${agent.name}" />
+	<property name="down.file.name" value="${dolly.jar.name}-bin.tar.gz" />
 
-	<target name="cmd">
+	<target name="cmd" description="install dolly agent.">
 		
-		<echo message="downloading ${dolly.jar.name}" />
-		<get src="${tomcat.down.url}/${dolly.jar.name}" dest="${dest.dir}"/>
+		<echo message="install ${down.file.name}" />
+		<get src="${tomcat.down.url}/${down.file.name}" dest="${dest.dir}"/>
 		
-		<gunzip src="${dest.dir}/${dolly.jar.name}" />
+		<gunzip src="${dest.dir}/${down.file.name}" />
+		<untar src="${dest.dir}/${dolly.jar.name}-bin.tar" dest="${dest.dir}"/>
 
+		<delete file="${dest.dir}/${down.file.name}"/>
+		<delete file="${dest.dir}/${dolly.jar.name}-bin.tar"/>
+		
+		<echo message="configure dolly.properties" />
+		<propertyfile file="${dest.dir}/dolly-agent/dolly.properties">
+			
+			<entry key="dolly.client.type"   					value="infinispan" 			operation="=" />
+		    <entry key="dolly.use.infinispan.embedded" 			value="false" 				operation="=" />
+		    <entry key="infinispan.client.hotrod.server_list"   value="${infinispan.hotrod.server_list}" operation="=" />
+		</propertyfile>
+		
+		<echo message="configure ${catalina.base}/env.sh" />
+		<echo file="${catalina.base}/env.sh" append="true">export CATALINA_OPTS="$CATALINA_OPTS -Ddolly.properties=${dest.dir}/dolly-agent/dolly.properties"${line.separator}</echo>
+		<echo file="${catalina.base}/env.sh" append="true">export CATALINA_OPTS="$CATALINA_OPTS -javaagent:${dest.dir}/dolly-agent/lib/${dolly.jar.name}.jar"${line.separator}</echo>
+		
 	</target>
 
 </project>

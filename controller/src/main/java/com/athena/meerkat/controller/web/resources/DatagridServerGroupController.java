@@ -44,7 +44,7 @@ public class DatagridServerGroupController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getByGroup(GridJsonResponse json, Integer groupId) {
-		List<Server> list = serverService.getListByGroupId(groupId);
+		List<Server> list = service.getServerList(groupId);
 		json.setList(list);
 		json.setTotal(list.size());
 
@@ -57,7 +57,7 @@ public class DatagridServerGroupController {
 		DatagridServerGroup group = service.getGroup(groupId);
 		if (group != null) {
 			List<Server> allServers = serverService.getList();
-			List<Server> list = serverService.getListByGroupId(groupId);
+			List<Server> list = service.getServerList(groupId);
 			for (Server s : allServers) {
 				if (list.contains(s)) {
 					s.setSelected(true);
