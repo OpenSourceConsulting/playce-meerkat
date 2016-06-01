@@ -44,8 +44,19 @@ public class MenuController {
 		boolean isLeaf = false;
 		String prefixMeuId = "";
 		List<HashMap<String, Object>> nodes = new ArrayList<>();
-
-		if ((node.indexOf("mon_tomcats") >= 0 || node.indexOf("tomcatMng_domain") >= 0) && node.indexOf("_domain_") > 0) {
+		
+	    if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
+			List<TomcatDomain> domains = domainService.getAll();
+			isLeaf = false;
+			prefixMeuId = node + "_domain_";
+			for (TomcatDomain d : domains) {
+				HashMap<String, Object> n = new HashMap<String, Object>();
+				n.put("text", d.getName());
+				n.put("id", prefixMeuId + d.getId());
+				n.put("leaf", isLeaf);
+				nodes.add(n);
+			}
+		} else if ((node.indexOf("mon_tomcats") >= 0 || node.indexOf("tomcatMng_domain") >= 0) && node.indexOf("_domain_") > 0) {
 			Integer objId = Integer.parseInt(node.substring(node.indexOf("_domain_") + "_domain_".length()));
 			List<TomcatInstance> tomcats = new ArrayList<>();
 			isLeaf = true;
@@ -73,9 +84,8 @@ public class MenuController {
 		} else {
 
 		}
-		//		json.setChildren(nodes);
-		//		return json;
+		
 		return nodes;
 	}
-
+	
 }
