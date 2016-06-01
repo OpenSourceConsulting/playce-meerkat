@@ -172,9 +172,7 @@ public class TomcatDomainService {
 		if (domain == null) {
 			return false;
 		}
-		DomainTomcatConfiguration conf = domain.getDomainTomcatConfig();
-		domain.setDomainTomcatConfig(null);
-		domainTomcatConfRepo.delete(conf);
+
 		domainRepo.delete(domain);
 		return true;
 	}
