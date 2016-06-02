@@ -124,7 +124,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD));
 		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD));
 
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		List<TomcatInstance> list = instanceService.getTomcatListWillInstallByDomainId(domainId);
 
 		if (list != null && list.size() > 0) {
 

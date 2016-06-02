@@ -89,6 +89,7 @@ public abstract class MeerkatConstants {
 	/**
 	 * Tomcat status - 'TS_STATE' common code
 	 */
+	public static final int TOMCAT_STATUS_NOTINSTALLED = 5;
 	public static final int TOMCAT_STATUS_INSTALLED = 6;
 	public static final int TOMCAT_STATUS_SHUTDOWN = 7;
 	public static final int TOMCAT_STATUS_RUNNING = 8;

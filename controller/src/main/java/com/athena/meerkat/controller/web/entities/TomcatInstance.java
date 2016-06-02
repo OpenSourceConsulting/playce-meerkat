@@ -45,6 +45,7 @@ import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -73,7 +74,7 @@ public class TomcatInstance implements Serializable {
 	private String name;
 
 	@Column(name = "state")
-	private int state = 5; //default value.
+	private int state = MeerkatConstants.TOMCAT_STATUS_NOTINSTALLED; //default value.
 
 	@Transient
 	private String stateNm;

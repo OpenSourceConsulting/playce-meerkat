@@ -131,14 +131,14 @@ public class DomainController {
 
 		return json;
 	}
-
+/*
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
 		TomcatDomain domain = domainService.getDomain(id);
 		json.setData(domain);
 		return json;
 	}
-
+*/
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getDomainList(GridJsonResponse json) {
 		List<TomcatDomain> result = domainService.getAll();
