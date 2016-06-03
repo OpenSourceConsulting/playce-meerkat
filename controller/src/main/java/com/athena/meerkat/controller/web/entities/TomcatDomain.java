@@ -12,10 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-<<<<<<< HEAD
 import javax.persistence.ManyToOne;
-=======
->>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -52,11 +49,7 @@ public class TomcatDomain {
 	@Transient
 	private int latestContextXmlVersion;
 
-<<<<<<< HEAD
 	@ManyToOne
-=======
-	@OneToOne
->>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
