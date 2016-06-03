@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -48,10 +49,11 @@ public class TomcatDomain {
 	@Transient
 	private int latestContextXmlVersion;
 
-	@OneToOne
+	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
+	
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
@@ -111,6 +113,13 @@ public class TomcatDomain {
 	public int getTomcatInstancesCount() {
 		if (tomcatInstances != null) {
 			return tomcatInstances.size();
+		}
+		return 0;
+	}
+
+	public int getApplicationCount() {
+		if (tomcatApplication != null) {
+			return tomcatApplication.size();
 		}
 		return 0;
 	}
