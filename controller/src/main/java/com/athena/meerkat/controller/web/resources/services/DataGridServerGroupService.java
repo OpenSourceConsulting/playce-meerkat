@@ -3,6 +3,8 @@ package com.athena.meerkat.controller.web.resources.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +14,8 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.CommonCode;
-import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServer;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServerPK;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
@@ -21,6 +23,9 @@ import com.athena.meerkat.controller.web.resources.repositories.DatagridServersR
 
 @Service
 public class DataGridServerGroupService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataGridServerGroupService.class);
+	
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
 	@Autowired
@@ -102,6 +107,8 @@ public class DataGridServerGroupService {
 			
 			sb.append(server.getSshIPAddr() + ":" + server.getPort());
 		}
+		
+		LOGGER.debug("session server list property : {}", sb.toString());
 		
 		return sb.toString();
 	}
