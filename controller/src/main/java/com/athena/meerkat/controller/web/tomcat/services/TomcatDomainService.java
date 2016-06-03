@@ -172,7 +172,7 @@ public class TomcatDomainService {
 		if (domain == null) {
 			return false;
 		}
-		
+		domain.setDatasources(null);
 		domainRepo.delete(domain);
 		return true;
 	}

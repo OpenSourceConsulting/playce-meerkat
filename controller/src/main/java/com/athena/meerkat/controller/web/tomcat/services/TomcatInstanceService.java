@@ -108,6 +108,10 @@ public class TomcatInstanceService {
 	public List<TomcatInstance> getTomcatListByDomainId(int domainId) {
 		return repo.findByTomcatDomain_Id(domainId);
 	}
+	
+	public List<TomcatInstance> getTomcatListWillInstallByDomainId(int domainId) {
+		return repo.findByTomcatDomain_IdAndState(domainId, MeerkatConstants.TOMCAT_STATUS_NOTINSTALLED);
+	}
 
 	/**
 	 * insert or update

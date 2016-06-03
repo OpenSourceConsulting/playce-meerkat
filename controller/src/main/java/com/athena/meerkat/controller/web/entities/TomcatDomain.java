@@ -99,8 +99,7 @@ public class TomcatDomain {
 		this.id = id;
 	}
 
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
+
 	public List<TomcatInstance> getTomcats() {
 		return tomcatInstances;
 	}
