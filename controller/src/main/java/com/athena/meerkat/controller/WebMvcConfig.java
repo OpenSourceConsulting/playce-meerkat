@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.athena.meerkat.controller.web.common.converter.JsonHttpMessageConverter;
 import com.athena.meerkat.controller.web.common.converter.StringToNumberConverterFactory;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * Spring MVC Configuration
@@ -42,8 +43,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Override
-	public void configureMessageConverters(
-			List<HttpMessageConverter<?>> converters) {
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		
+		jsonCustomConverter.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
 		converters.add(jsonCustomConverter);
 	}

@@ -54,7 +54,7 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 /**
  * Main class with Spring Boot
  * 
- * - required java option : -Dspring.config.name=dolly -Dspring.profiles.active=[local|dev|prd]
+ * - required java option : -Dspring.config.name=meerkat -Dspring.profiles.active=[local|dev|prd]
  * 
  * @author BongJin Kwon
  * 
@@ -63,7 +63,7 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat.controller" })
-@PropertySource(value = { "classpath:dolly-${spring.profiles.active:local}.properties" })
+@PropertySource(value = { "classpath:meerkat-${spring.profiles.active:local}.properties" })
 public class MeerkatBoot {
 
 	public static void main(String[] args) {

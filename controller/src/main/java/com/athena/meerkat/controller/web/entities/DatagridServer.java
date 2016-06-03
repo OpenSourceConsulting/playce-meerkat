@@ -22,6 +22,8 @@
  */
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +44,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "datagrid_servers")
 @IdClass(DatagridServerPK.class)
-public class DatagridServer {
+public class DatagridServer implements Serializable {
+
+
+	private static final long serialVersionUID = 914419525672292226L;
 
 	@Id
 	@Column(name = "datagrid_server_group_Id")

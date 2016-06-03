@@ -28,10 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "datagrid_server_group")
 public class DatagridServerGroup implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 977431664311727091L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

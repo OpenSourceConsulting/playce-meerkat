@@ -43,6 +43,7 @@ import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * <pre>
@@ -77,6 +78,13 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	 */
 	public JsonHttpMessageConverter(ObjectMapper objectMapper) {
 		super(objectMapper);
+	}
+	
+	
+	@Override
+	public void setObjectMapper(ObjectMapper objectMapper) {
+		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+		super.setObjectMapper(objectMapper);
 	}
 
 	@Override

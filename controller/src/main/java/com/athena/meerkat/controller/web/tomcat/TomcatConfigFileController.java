@@ -1,11 +1,9 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +16,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.CommonCode;
-import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;

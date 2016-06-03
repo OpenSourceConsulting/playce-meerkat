@@ -34,10 +34,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "server")
 public class Server implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 3719644423368537008L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")

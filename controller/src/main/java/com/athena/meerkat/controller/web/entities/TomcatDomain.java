@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,8 +32,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "tomcat_domain")
 @Lazy
-public class TomcatDomain {
+public class TomcatDomain implements Serializable {
 
+	private static final long serialVersionUID = -158159581038603435L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
@@ -113,6 +116,13 @@ public class TomcatDomain {
 	public int getTomcatInstancesCount() {
 		if (tomcatInstances != null) {
 			return tomcatInstances.size();
+		}
+		return 0;
+	}
+
+	public int getApplicationCount() {
+		if (tomcatApplication != null) {
+			return tomcatApplication.size();
 		}
 		return 0;
 	}
