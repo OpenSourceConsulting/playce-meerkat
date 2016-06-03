@@ -1,9 +1,7 @@
 package com.athena.meerkat.controller.web.entities;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,23 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedEntityGraph;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.transaction.Transactional;
 
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.validator.cfg.context.Cascadable;
 import org.springframework.context.annotation.Lazy;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * A domain is used for grouping one or more tomcat instance. It is associated to domain table in database
@@ -57,11 +48,12 @@ public class TomcatDomain {
 	private int latestServerXmlVersion;
 	@Transient
 	private int latestContextXmlVersion;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
+	
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
@@ -98,7 +90,6 @@ public class TomcatDomain {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public List<TomcatInstance> getTomcats() {
 		return tomcatInstances;

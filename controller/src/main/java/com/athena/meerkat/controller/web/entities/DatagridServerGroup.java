@@ -46,15 +46,26 @@ public class DatagridServerGroup implements Serializable {
 	@Transient
 	private String typeNm;
 
+	@OneToMany(mappedBy = "serverGroup", fetch = FetchType.LAZY)
+	private List<TomcatDomain> tomcatDomains;
 
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<DatagridServer> datagridServers;
 	
-	
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
+
+	
+	
+	public List<TomcatDomain> getTomcatDomains() {
+		return tomcatDomains;
+	}
+
+	public void setTomcatDomains(List<TomcatDomain> tomcatDomains) {
+		this.tomcatDomains = tomcatDomains;
+	}
 
 	public String getName() {
 		return name;
@@ -103,6 +114,14 @@ public class DatagridServerGroup implements Serializable {
 		List<Server> servers = getServers();
 		if (servers != null) {
 			return servers.size();
+		}
+		return 0;
+	}
+	
+	public int getDomainSize(){
+		List<TomcatDomain> domains = getTomcatDomains();
+		if(domains != null) {
+			return domains.size();
 		}
 		return 0;
 	}
