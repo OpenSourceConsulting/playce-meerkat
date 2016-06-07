@@ -25,10 +25,10 @@
 package com.athena.meerkat.controller.web.dolly;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,16 +112,23 @@ public class DollyController {
     }
     
 
-    @RequestMapping(value="/getSessionData", method=RequestMethod.GET)
+    @RequestMapping(value="/getSessionData", method=RequestMethod.POST)
     @ResponseBody
-    public Object getSessionData(int domainId, String key) {
+    public SimpleJsonResponse getSessionData(SimpleJsonResponse jsonRes, int domainId, String key) {
     	
     	Integer sessionServerGroupId = getSessionServerGroupId(domainId);
     	
-    	return getDollyClient(sessionServerGroupId).get(key);
+    	Map<String, Object> modelMap = new HashMap<String, Object>();
+    	
+    	modelMap.put("sessionKey", key);
+    	modelMap.put("sessionData", getDollyClient(sessionServerGroupId).get(key));
+    	
+    	jsonRes.setData(modelMap);
+    	
+    	return jsonRes;
     }
 
-    @RequestMapping(value="/deleteSessionData", method=RequestMethod.GET)
+    @RequestMapping(value="/deleteSessionData", method=RequestMethod.POST)
     @ResponseBody
     public SimpleJsonResponse deleteSessionData(int domainId, String key) throws Exception {
     	
