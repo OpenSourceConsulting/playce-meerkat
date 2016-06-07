@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,16 +47,14 @@ public class DatagridServerGroup implements Serializable {
 	@OneToMany(mappedBy = "serverGroup", fetch = FetchType.LAZY)
 	private List<TomcatDomain> tomcatDomains;
 
-	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<DatagridServer> datagridServers;
-	
+
 	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
-	
-	
 	public List<TomcatDomain> getTomcatDomains() {
 		return tomcatDomains;
 	}
@@ -89,35 +88,34 @@ public class DatagridServerGroup implements Serializable {
 	}
 
 	public List<Server> getServers() {
-		
+
 		List<Server> servers = new ArrayList<Server>();
-		
+
 		List<DatagridServer> dgServers = getDatagridServers();
-		
+
 		for (DatagridServer datagridServer : dgServers) {
-			
+
 			Server server = datagridServer.getServer();
 			server.setPort(datagridServer.getPort());
-			
+
 			servers.add(server);
 		}
-		
+
 		return servers;
 	}
 
-
 	public int getServerNo() {
-		
+
 		List<Server> servers = getServers();
 		if (servers != null) {
 			return servers.size();
 		}
 		return 0;
 	}
-	
-	public int getDomainSize(){
+
+	public int getDomainSize() {
 		List<TomcatDomain> domains = getTomcatDomains();
-		if(domains != null) {
+		if (domains != null) {
 			return domains.size();
 		}
 		return 0;
@@ -135,8 +133,7 @@ public class DatagridServerGroup implements Serializable {
 		return clusteringConfigurations;
 	}
 
-	public void setClusteringConfigurations(
-			List<ClusteringConfiguration> clusteringConfigurations) {
+	public void setClusteringConfigurations(List<ClusteringConfiguration> clusteringConfigurations) {
 		this.clusteringConfigurations = clusteringConfigurations;
 	}
 

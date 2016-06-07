@@ -3,6 +3,8 @@ package com.athena.meerkat.controller.web.resources.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +14,8 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.ClusteringConfiguration;
 import com.athena.meerkat.controller.web.entities.CommonCode;
-import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServer;
+import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DatagridServerPK;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.resources.repositories.DatagridServerGroupRepository;
@@ -21,6 +23,9 @@ import com.athena.meerkat.controller.web.resources.repositories.DatagridServersR
 
 @Service
 public class DataGridServerGroupService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataGridServerGroupService.class);
+	
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
 	@Autowired
@@ -65,43 +70,46 @@ public class DataGridServerGroupService {
 	public List<DatagridServer> getDatagridServers(int groupId) {
 		return datagridServerRepo.findByDatagridServerGroupId(groupId);
 	}
-	
+
 	public List<Server> getServerList(Integer groupId) {
-		
+
 		List<Server> servers = new ArrayList<Server>();
-		
+
 		List<DatagridServer> dgServers = datagridServerRepo.findByDatagridServerGroupId(groupId);
-		
+
 		for (DatagridServer datagridServer : dgServers) {
-			
+
 			Server server = datagridServer.getServer();
 			server.setPort(datagridServer.getPort());
-			
+
 			servers.add(server);
 		}
-		
+
 		return servers;
 	}
-	
+
 	/**
 	 * <pre>
 	 * dolly.properties 의 infinispan.client.hotrod.server_list property value 반환.
 	 * </pre>
+	 * 
 	 * @param groupId
 	 * @return
 	 */
 	public String getServerListPropertyValue(Integer groupId) {
 		StringBuffer sb = new StringBuffer();
-		
+
 		List<Server> serverList = getServerList(groupId);
 		for (Server server : serverList) {
-			
+
 			if (sb.length() > 0) {
 				sb.append(";");
 			}
-			
+
 			sb.append(server.getSshIPAddr() + ":" + server.getPort());
 		}
+
+		LOGGER.debug("session server list property : {}", sb.toString());
 		
 		return sb.toString();
 	}
@@ -112,6 +120,10 @@ public class DataGridServerGroupService {
 
 	public void remove(List<DatagridServer> datagridServers) {
 		datagridServerRepo.delete(datagridServers);
+	}
+
+	public void remove(DatagridServer datagridServer) {
+		datagridServerRepo.delete(datagridServer);
 	}
 
 	public void save(List<DatagridServer> datagridServers) {

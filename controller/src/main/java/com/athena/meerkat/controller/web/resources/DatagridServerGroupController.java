@@ -115,4 +115,24 @@ public class DatagridServerGroupController {
 
 		return json;
 	}
+
+	@RequestMapping(value = "/group/remove", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse removeFromGroup(SimpleJsonResponse json, Integer groupId, Integer serverId) {
+		DatagridServerGroup group = service.getGroup(groupId);
+		if (group != null) {
+			group.getDatagridServers();
+			DatagridServerPK pk = new DatagridServerPK();
+			pk.setDatagridServerGroupId(group.getId());
+			pk.setServerId(serverId);
+			DatagridServer server = service.getDatagridServer(pk);
+			if (server != null) {
+				service.remove(server);
+			}
+		} else {
+			json.setMsg("Group does not exist.");
+			json.setSuccess(false);
+		}
+		return json;
+	}
 }
