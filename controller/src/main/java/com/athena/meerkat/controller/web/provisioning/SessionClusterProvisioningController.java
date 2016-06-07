@@ -60,6 +60,16 @@ public class SessionClusterProvisioningController {
 		return new SimpleJsonResponse();
 	}
 	
+	@RequestMapping(value = "/cluster/unconfigure", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse unConfigureSessionClustering(int domainId) {
+		
+		proviService.unconfigureSessionClustering(domainId, null);
+		
+		
+		return new SimpleJsonResponse();
+	}
+	
 
 }
 //end of ProvisioningController.java

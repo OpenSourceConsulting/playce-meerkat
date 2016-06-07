@@ -1,0 +1,26 @@
+<project name="unInstall Dolly" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# UnInstall Dolly agent.
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+		
+	<property name="replace.file" value="${catalina.base}/env.sh" />
+	<!--
+	<property name="replace.file" value="G://env.sh" />
+	-->
+	
+	<property name="match1" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-Ddolly\.properties=.+</property>
+	<property name="match2" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-javaagent:.+</property>
+
+	<target name="cmd" description="unInstall dolly agent.">
+		
+		<replaceregexp file="${replace.file}" match="${match1}" replace="" byline="true" />
+		<replaceregexp file="${replace.file}" match="${match2}" replace="" byline="true" />
+
+	</target>
+
+</project>

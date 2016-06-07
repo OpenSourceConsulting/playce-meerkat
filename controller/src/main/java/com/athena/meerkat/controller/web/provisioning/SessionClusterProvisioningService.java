@@ -137,7 +137,7 @@ public class SessionClusterProvisioningService extends AbstractProvisioningServi
 		try {
 
 			/*
-			 * 1. make job dir & copy install.xml with default.xml.
+			 * 1. copy cmdFile with default.xml.
 			 */
 			copyCmds("installDolly.xml", jobDir);
 
@@ -169,6 +169,85 @@ public class SessionClusterProvisioningService extends AbstractProvisioningServi
 
 		//domainService.setProvService(this);
 
+	}
+	
+	@Transactional
+	public boolean unconfigureSessionClustering(int domainId, WebSocketSession session) {
+
+		boolean isSuccess = true;
+		
+		int sessionGroupId = domainService.getDomain(domainId).getDataGridServerGroupId();
+		
+		if (sessionGroupId > 0) {
+			throw new RuntimeException("Can not unconfigure session clustering. exist session group : id = " + sessionGroupId);
+		}
+		
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		List<DataSource> dsList = domainService.getDatasources(domainId);
+
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return false;
+		}
+
+		List<TomcatConfigFile> confFiles = new ArrayList<TomcatConfigFile>();
+		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD));
+		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD));
+
+		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+
+		if (list != null && list.size() > 0) {
+
+			int count = 1;
+			for (TomcatInstance tomcatInstance : list) {
+				
+				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
+				pModel.setConfFiles(confFiles);
+				pModel.setLastTask(count == list.size());
+				
+		
+				isSuccess = doUnconfigureSessionClustering(pModel, session) && isSuccess;
+				count++;
+			}
+			
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+			isSuccess = false;
+		}
+		
+		return isSuccess;
+	}
+	
+	private boolean doUnconfigureSessionClustering(ProvisionModel pModel, WebSocketSession session) {
+
+		boolean isSuccess = true;
+		File jobDir = generateBuildProperties(pModel, session);
+
+		try {
+
+			/*
+			 * 1. copy cmdFile with default.xml.
+			 */
+			copyCmds("unInstallDolly.xml", jobDir);
+
+
+			/*
+			 * 2. send cmd.xml and run cmd.xml .
+			 */
+			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
+
+
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+			throw new RuntimeException(e);
+
+		} finally {
+			LOGGER.debug(LOG_END);
+			MDC.remove("jobPath");
+			MDC.remove("serverIp");
+		}
+		
+		return isSuccess;
 	}
 
 	
