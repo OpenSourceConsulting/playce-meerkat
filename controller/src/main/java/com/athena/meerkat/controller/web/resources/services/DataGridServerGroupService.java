@@ -111,6 +111,8 @@ public class DataGridServerGroupService {
 
 		LOGGER.debug("session server list property : {}", sb.toString());
 		
+		LOGGER.debug("session server list property : {}", sb.toString());
+		
 		return sb.toString();
 	}
 

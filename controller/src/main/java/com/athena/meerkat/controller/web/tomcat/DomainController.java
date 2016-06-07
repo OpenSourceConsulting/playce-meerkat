@@ -131,14 +131,7 @@ public class DomainController {
 
 		return json;
 	}
-/*
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public @ResponseBody SimpleJsonResponse edit(SimpleJsonResponse json, int id) {
-		TomcatDomain domain = domainService.getDomain(id);
-		json.setData(domain);
-		return json;
-	}
-*/
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getDomainList(GridJsonResponse json) {
 		List<TomcatDomain> result = domainService.getAll();
@@ -166,30 +159,6 @@ public class DomainController {
 		return json;
 	}
 
-	@RequestMapping(value = "/{domainId}/sessions", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getSessions(GridJsonResponse json, @PathVariable Integer domainId) {
-
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td == null) {
-			json.setSuccess(false);
-			json.setMsg("Tomcat domain does not exist.");
-		} else {
-			// get from session severs
-			// TODO idkbj get from session servers
-			List<Session> sessions = new ArrayList<Session>();
-			Session e = new Session();
-			e.setId(1);
-			e.setKey("Session 1");
-			e.setValue("Value session asdasdkjad kajdah dk");
-			e.setLocation("Server 1");
-			sessions.add(0, e);
-
-			json.setList(sessions);
-			json.setTotal(sessions.size());
-			json.setSuccess(true);
-		}
-		return json;
-	}
 
 	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
