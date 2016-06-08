@@ -57,11 +57,11 @@ public class DataGridServerGroupService {
 	@Transactional
 	public void delete(DatagridServerGroup group) {
 
-		List<DatagridServer> dServers = group.getDatagridServers();
-		List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
+		//List<DatagridServer> dServers = group.getDatagridServers();
+		//List<ClusteringConfiguration> configs = group.getClusteringConfigurations();
 
-		datagridServerRepo.deleteInBatch(dServers);
-		clusteringConfService.deleteClusteringConfig(configs);
+		//datagridServerRepo.deleteInBatch(dServers);
+		//clusteringConfService.deleteClusteringConfig(configs);
 
 		groupRepo.delete(group);
 

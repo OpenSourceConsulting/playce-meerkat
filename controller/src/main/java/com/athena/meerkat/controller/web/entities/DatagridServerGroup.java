@@ -47,11 +47,11 @@ public class DatagridServerGroup implements Serializable {
 	@OneToMany(mappedBy = "serverGroup", fetch = FetchType.LAZY)
 	private List<TomcatDomain> tomcatDomains;
 
-	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<DatagridServer> datagridServers;
 
-	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "datagridServerGroup", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<ClusteringConfiguration> clusteringConfigurations;
 
