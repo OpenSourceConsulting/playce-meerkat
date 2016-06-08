@@ -189,5 +189,10 @@ public abstract class MeerkatConstants {
 
 	public static final String MON_NI_TYPE_IN = "traffic_in";
 	public static final String MON_NI_TYPE_OUT = "traffic_out";
+	
+	/**
+	 * 
+	 */
+	public static final int TASK_CD_TOMCAT_INSTALL = 30;//install tomcat instance.
 
 }

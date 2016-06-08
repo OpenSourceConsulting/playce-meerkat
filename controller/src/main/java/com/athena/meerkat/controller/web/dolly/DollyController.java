@@ -25,6 +25,7 @@
 package com.athena.meerkat.controller.web.dolly;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,10 @@ public class DollyController {
     public List<SessionKey> getSessionKeyList(int domainId) {
     	
     	Integer sessionServerGroupId = getSessionServerGroupId(domainId);
+    	
+    	if(sessionServerGroupId == 0) {
+    		return new ArrayList<SessionKey>();
+    	}
     	
     	return getDollyClient(sessionServerGroupId).getKeys(null);
     }

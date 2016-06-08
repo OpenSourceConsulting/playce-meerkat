@@ -124,6 +124,9 @@ public class TomcatInstanceService {
 
 	public void saveList(List<TomcatInstance> entities) {
 		repo.save(entities);
+		
+		
+		
 	}
 
 	public TomcatInstance findOne(int id) {
@@ -368,9 +371,10 @@ public class TomcatInstanceService {
 						field.setAccessible(true);
 						value = field.get(conf).toString();
 						field.setAccessible(false);
-					} catch (IllegalArgumentException | IllegalAccessException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (IllegalAccessException e) {
+						
+						LOGGER.error(e.toString(), e);
+						throw new RuntimeException(e);
 					}
 
 					TomcatInstConfig tomcatConf = tomcatInstConfigRepo.findByConfigNameAndTomcatInstance(name, tomcat);

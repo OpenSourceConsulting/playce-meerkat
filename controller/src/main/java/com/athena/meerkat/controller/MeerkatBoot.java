@@ -97,12 +97,13 @@ public class MeerkatBoot {
 					"/app.js",
 					"/app.json",
 					"/resources/**", 
+					
 					"/monitor/**", 
-					"/provi/**",
+					/*"/provi/**",
 					"/code/**",
 					"/menu/**",
-					"/dashboard/**",
-					"/getServerList", 
+					"/dashboard/**", */
+					
 					"/auth/notLogin*", 
 					"/auth/loginFail*",
 					"/auth/accessDenied*", 
