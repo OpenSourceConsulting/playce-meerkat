@@ -23,6 +23,7 @@ import com.athena.meerkat.controller.web.common.model.TreeNode;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.Session;
@@ -63,41 +64,40 @@ public class DomainController {
 	@Transactional
 	public @ResponseBody SimpleJsonResponse save(SimpleJsonResponse json, TomcatDomain domain) {
 		boolean isEdit = domain.getId() > 0;
-		
+
 		List<TomcatDomain> existingDomains = domainService.getDomainByName(domain.getName());
 		if (existingDomains.size() > 0) {
-			if (isEdit) { 
-				
+			if (isEdit) {
+
 				for (TomcatDomain tomcatDomain : existingDomains) {
-					if(tomcatDomain.getId() != domain.getId()) {
+					if (tomcatDomain.getId() != domain.getId()) {
 						json.setSuccess(false);
 						json.setMsg("Domain name is already used.");
 						break;
 					}
 				}
-				
+
 			} else {
 				// add new domain
 				json.setSuccess(false);
 				json.setMsg("Domain name is already used.");
 			}
 		}
-		
+
 		if (json.isSuccess() == false) {
-			
+
 			return json;
 		}
-		
 
 		domain.setCreateUser(WebUtil.getLoginUserId());
 		domain = domainService.save(domain);
-		
-		if(isEdit) {
+
+		if (isEdit) {
 			// for configure session clustering.
 			List<TomcatInstance> tomcats = tomcatService.getTomcatListByDomainId(domain.getId());
 			domain.setTomcats(tomcats);
 		}
-		
+
 		json.setData(domain);
 		return json;
 	}
@@ -158,7 +158,6 @@ public class DomainController {
 		json.setData(domainService.getTomcatConfig(domainId));
 		return json;
 	}
-
 
 	@RequestMapping(value = "/conf/save", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
@@ -281,37 +280,16 @@ public class DomainController {
 		json.setTotal(result.size());
 		return json;
 	}
-	
-	@RequestMapping(value = "/menu/list", method = RequestMethod.GET)
-	@ResponseBody
-	public List<TreeNode> menu(String path, String node) {
-		
-		List<TreeNode> nodeList = new ArrayList<TreeNode>();
-		
-		if ("tomcatMng".equals(node)) {
-			List<TomcatDomain> result = domainService.getAll();
-			for (TomcatDomain tomcatDomain : result) {
-				TreeNode treeNode = new TreeNode();
-				treeNode.put("text", tomcatDomain.getName());
-				treeNode.put("id", "tomcatDomain_" + tomcatDomain.getId());
-				
-				nodeList.add(treeNode);
-			}
-		} else if(node.startsWith("tomcatDomain_")) {
-			String domainId = node.substring(node.indexOf("_")+1);
-			
-			List<TomcatInstance> instances = tomcatService.getTomcatListByDomainId(Integer.parseInt(domainId));
-			for (TomcatInstance tomcatInstance : instances) {
-				TreeNode treeNode = new TreeNode();
-				treeNode.put("text", tomcatInstance.getName());
-				treeNode.put("id", "tomcatInstance_" + tomcatInstance.getId());
-				treeNode.put("leaf", true);
-				
-				nodeList.add(treeNode);
-			}
-			
-		}
 
-		return nodeList;
+	@RequestMapping(value = "/{domainId}/alertsettings", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getAlertSettingList(GridJsonResponse json, @PathVariable Integer domainId) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td != null) {
+			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
+			json.setList(alertSettings);
+			json.setTotal(alertSettings.size());
+		}
+		return json;
 	}
 }

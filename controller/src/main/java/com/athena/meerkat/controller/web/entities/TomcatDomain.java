@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TomcatDomain implements Serializable {
 
 	private static final long serialVersionUID = -158159581038603435L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
@@ -56,7 +56,7 @@ public class TomcatDomain implements Serializable {
 	@JsonIgnore
 	@JoinColumn(name = "datagrid_server_group_id")
 	private DatagridServerGroup serverGroup;
-	
+
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<TomcatInstance> tomcatInstances;
@@ -77,6 +77,11 @@ public class TomcatDomain implements Serializable {
 	@JsonIgnore
 	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
 	private List<DataSource> datasources;
+
+	@OneToMany(cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	@JoinColumn(name = "tomcat_domain_id")
+	private List<DomainAlertSetting> alertSettings;
 
 	public String getName() {
 		return name;
@@ -219,6 +224,14 @@ public class TomcatDomain implements Serializable {
 
 	public void setTomcatConfigFiles(List<TomcatConfigFile> tomcatConfigFiles) {
 		this.tomcatConfigFiles = tomcatConfigFiles;
+	}
+
+	public List<DomainAlertSetting> getAlertSettings() {
+		return alertSettings;
+	}
+
+	public void setAlertSettings(List<DomainAlertSetting> alertSettings) {
+		this.alertSettings = alertSettings;
 	}
 
 }

@@ -39,6 +39,7 @@ import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
+import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
@@ -79,8 +80,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	public JsonHttpMessageConverter(ObjectMapper objectMapper) {
 		super(objectMapper);
 	}
-	
-	
+
 	@Override
 	public void setObjectMapper(ObjectMapper objectMapper) {
 		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -129,6 +129,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleEntity((DomainTomcatConfiguration) object);
 		} else if (object instanceof DatagridServerGroup) {
 			handleEntity((DatagridServerGroup) object);
+		} else if (object instanceof DomainAlertSetting) {
+			handleEntity((DomainAlertSetting) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
@@ -162,6 +164,14 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	protected void handleEntity(DatagridServerGroup entity) {
 
 		entity.setTypeNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE, entity.getTypeCdId()));
+
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+
+	protected void handleEntity(DomainAlertSetting entity) {
+
+		entity.setAlertItemCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_ITEM, entity.getAlertItemCdId()));
+		entity.setThresholdOpCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR, entity.getThresholdOpCdId()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
