@@ -130,8 +130,9 @@ public abstract class MeerkatConstants {
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CODE_GROP_CONFIG_FILE_TYPE = "configFileType";
 	public static final String CODE_GROP_ALERT_ITEM = "ALERT_ITEM";
-	public static final String CODE_GROP_ALERT_THRESHOLD_OPERATOR= "ALERT_THRESHOLD_OPERATOR";
-	
+	public static final String CODE_GROP_ALERT_THRESHOLD_OPERATOR = "ALERT_THRESHOLD_OPERATOR";
+	public static final Integer ALERT_ITEM_AGENT = 21;
+
 	public static final String CONFIG_FILE_TYPE_SERVER_XML = "server.xml";
 	public static final int CONFIG_FILE_TYPE_SERVER_XML_CD = 3;
 	public static final String CONFIG_FILE_TYPE_CONTEXT_XML = "context.xml";
@@ -192,7 +193,7 @@ public abstract class MeerkatConstants {
 
 	public static final String MON_NI_TYPE_IN = "traffic_in";
 	public static final String MON_NI_TYPE_OUT = "traffic_out";
-	
+
 	/**
 	 * 
 	 */

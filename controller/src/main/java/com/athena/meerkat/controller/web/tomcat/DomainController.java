@@ -1,6 +1,7 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.common.model.TreeNode;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
+import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
@@ -287,9 +290,23 @@ public class DomainController {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td != null) {
 			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
+			for (DomainAlertSetting alert : alertSettings) {
+				if (alert.getAlertItemCdId() == MeerkatConstants.ALERT_ITEM_AGENT) {
+					alert.setCanEdit(false);
+					alert.setAgentSetting(true);
+				}
+			}
 			json.setList(alertSettings);
 			json.setTotal(alertSettings.size());
 		}
+		return json;
+	}
+
+	@RequestMapping(value = "/alert", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getAlert(SimpleJsonResponse json, Integer alertId) {
+		DomainAlertSetting alert = domainService.getDomainAlert(alertId);
+		json.setData(alert);
 		return json;
 	}
 
@@ -323,6 +340,29 @@ public class DomainController {
 			 */
 			domainService.saveAllAlertSettings(alertSettings);
 		}
+		return json;
+	}
+
+	@RequestMapping(value = "/alert/operator/list")
+	@ResponseBody
+	public GridJsonResponse getAllAlertOperators(GridJsonResponse json) {
+
+		List<CommonCode> list = commonHandler.getCodes(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR);
+		json.setList(list);
+		json.setTotal(list.size());
+		return json;
+	}
+
+	@RequestMapping(value = "/alert/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveAlertSetting(SimpleJsonResponse json, DomainAlertSetting alert) {
+		if (alert.getThresholdValue() < 0 || alert.getThresholdValue() > 100) {
+			json.setMsg("Threshold value should be 0 to 100");
+			json.setSuccess(false);
+			return json;
+		}
+		alert.setStatus(false);
+		domainService.saveAlertSetting(alert);
 		return json;
 	}
 }

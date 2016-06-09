@@ -28,7 +28,7 @@ public class DomainAlertSetting {
 	private int thresholdOpCdId;
 
 	@Column(name = "threshold_value")
-	private int thresholdValue;
+	private Integer thresholdValue;
 
 	@Column(name = "status")
 	private boolean status;
@@ -37,10 +37,11 @@ public class DomainAlertSetting {
 	private String alertItemCdNm;
 	@Transient
 	private String thresholdOpCdNm;
+	@Transient
+	private boolean isAgentSetting;
 
-	public String getThreshold() {
-		return thresholdOpCdNm + " " + thresholdValue;
-	}
+	@Transient
+	private boolean canEdit = true;
 
 	public boolean isStatus() {
 		return status;
@@ -50,7 +51,7 @@ public class DomainAlertSetting {
 		this.status = status;
 	}
 
-	public int getThresholdValue() {
+	public Integer getThresholdValue() {
 		return thresholdValue;
 	}
 
@@ -96,6 +97,22 @@ public class DomainAlertSetting {
 
 	public void setThresholdOpCdNm(String thresholdOpCdNm) {
 		this.thresholdOpCdNm = thresholdOpCdNm;
+	}
+
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+
+	public boolean isAgentSetting() {
+		return isAgentSetting;
+	}
+
+	public void setAgentSetting(boolean isAgentSetting) {
+		this.isAgentSetting = isAgentSetting;
 	}
 
 }
