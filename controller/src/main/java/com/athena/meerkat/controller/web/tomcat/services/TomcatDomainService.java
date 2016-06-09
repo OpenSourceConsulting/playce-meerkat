@@ -15,6 +15,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
@@ -26,6 +27,7 @@ import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainTomcatConfigurationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatDomainDatasourceRepository;
@@ -43,6 +45,9 @@ public class TomcatDomainService {
 	private ServerRepository serverRepo;
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
+
+	@Autowired
+	private DomainAlertSettingRepository domainAlertRepo;
 
 	@Autowired
 	private CommonCodeRepository commonRepo;
@@ -270,5 +275,13 @@ public class TomcatDomainService {
 
 	public long getDomainNo() {
 		return domainRepo.count();
+	}
+
+	public DomainAlertSetting getDomainAlert(Integer alertId) {
+		return domainAlertRepo.findOne(alertId);
+	}
+
+	public DomainAlertSetting saveAlertSetting(DomainAlertSetting alert) {
+		return domainAlertRepo.save(alert);
 	}
 }

@@ -292,4 +292,16 @@ public class DomainController {
 		}
 		return json;
 	}
+
+	@RequestMapping(value = "/alert/changeStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse getAlertSettingList(SimpleJsonResponse json, Integer alertId, boolean status) {
+		DomainAlertSetting alert = domainService.getDomainAlert(alertId);
+		if (alert != null) {
+			alert.setStatus(status);
+			alert = domainService.saveAlertSetting(alert);
+			json.setData(alert.isStatus());
+		}
+		return json;
+	}
 }
