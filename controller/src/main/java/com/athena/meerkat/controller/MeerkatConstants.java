@@ -197,6 +197,6 @@ public abstract class MeerkatConstants {
 	/**
 	 * 
 	 */
-	public static final int TASK_CD_TOMCAT_INSTALL = 30;//install tomcat instance.
+	public static final int TASK_CD_TOMCAT_INSTALL = 100;//install tomcat instance.
 
 }
