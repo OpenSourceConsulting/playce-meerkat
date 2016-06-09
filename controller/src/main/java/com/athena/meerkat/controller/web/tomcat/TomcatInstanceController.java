@@ -24,12 +24,8 @@
  */
 package com.athena.meerkat.controller.web.tomcat;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +40,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.entities.Session;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
@@ -53,6 +49,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -85,6 +82,9 @@ public class TomcatInstanceController {
 	private TomcatProvisioningService proviService;
 	@Autowired
 	private ServerService serverService;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 
 	public TomcatInstanceController() {
 	}
@@ -217,18 +217,6 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	/*
-	@RequestMapping(value = "/{serverId}/conf2", method = RequestMethod.GET)
-	@ResponseBody
-	public SimpleJsonResponse getTomcatConf(SimpleJsonResponse json, @PathVariable int serverId) {
-
-		List<DomainTomcatConfiguration> list = service.findInstanceConfigs(serverId);
-
-		json.setData(list);
-
-		return json;
-	}
-	*/
 
 	@RequestMapping("/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
@@ -271,25 +259,6 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	@RequestMapping(value = "/{id}/sessions", method = RequestMethod.GET)
-	public @ResponseBody GridJsonResponse getSessionsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
-		TomcatInstance tomcat = service.findOne(id);
-		if (tomcat != null) {
-			// TODO idkjwon get from clustering session server
-			List<Session> sessions = new ArrayList<Session>();
-			Session e = new Session();
-			e.setId(1);
-			e.setKey("Session 1");
-			e.setValue("Value session asdasdkjad kajdah dk");
-			e.setLocation("Server 1");
-			sessions.add(0, e);
-
-			json.setList(sessions);
-			json.setTotal(sessions.size());
-		}
-		return json;
-	}
-
 	@RequestMapping(value = "/saveList", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
@@ -327,6 +296,9 @@ public class TomcatInstanceController {
 		}
 		if (isUniqueCataBase) {
 			service.saveList(tomcats);
+			
+			TaskHistory task = taskService.createTomcatInstallTasks(tomcats);
+			json.setData(task);
 		}
 
 		return json;

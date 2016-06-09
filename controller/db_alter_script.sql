@@ -76,3 +76,49 @@ ENGINE = InnoDB;
 
 ALTER TABLE `server` DROP FOREIGN KEY `fk_server_datagrid_server_group1`;
 ALTER TABLE `server` DROP COLUMN `datagrid_server_group_id`, DROP INDEX `fk_server_datagrid_server_group1_idx` ;
+
+
+CREATE TABLE IF NOT EXISTS `tomcat_domain_alert` (
+  `Id` INT(11) NOT NULL,
+  `tomcat_domain_Id` INT(11) NOT NULL,
+  `alert_item_cd_id` INT(11) NULL COMMENT 'alert item code id',
+  `threshold_op_cd_id` INT(11) NULL,
+  `threshold_value` INT(11) NULL,
+  `status` SMALLINT NULL DEFAULT 0 COMMENT '0 : disabled, 1:enabled',
+  PRIMARY KEY (`Id`),
+  INDEX `fk_tomcat_domain_alert_tomcat_domain1_idx` (`tomcat_domain_Id` ASC),
+  CONSTRAINT `fk_tomcat_domain_alert_tomcat_domain1`
+    FOREIGN KEY (`tomcat_domain_Id`)
+    REFERENCES `tomcat_domain` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `task_history` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `task_cd_id` INT(11) NOT NULL COMMENT 'task code id',
+  `create_user_id` INT(11) NULL,
+  `create_time` DATETIME NULL,
+  PRIMARY KEY (`Id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `task_history_detail` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `task_history_id` INT(11) NOT NULL,
+  `tomcat_instance_id` INT(11) NOT NULL,
+  `status` SMALLINT NULL DEFAULT 0 COMMENT '0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패',
+  `finished_time` DATETIME NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_task_history_domain_task_history1_idx` (`task_history_id` ASC),
+  INDEX `fk_task_history_detail_tomcat_instance1_idx` (`tomcat_instance_id` ASC),
+  CONSTRAINT `fk_task_history_domain_task_history1`
+    FOREIGN KEY (`task_history_id`)
+    REFERENCES `task_history` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_task_history_detail_tomcat_instance1`
+    FOREIGN KEY (`tomcat_instance_id`)
+    REFERENCES `tomcat_instance` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

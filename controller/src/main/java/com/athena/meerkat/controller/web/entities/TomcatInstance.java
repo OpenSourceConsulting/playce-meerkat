@@ -111,6 +111,10 @@ public class TomcatInstance implements Serializable {
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	//@JsonManagedReference(value = "config-tomcat")
 	private List<TomcatInstConfig> tomcatConfigs;
+	
+	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<TaskHistoryDetail> taskHistoryDetails;
 
 	@JsonIgnore
 	@Transient

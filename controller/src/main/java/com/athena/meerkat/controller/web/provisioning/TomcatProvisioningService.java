@@ -44,9 +44,8 @@ import com.athena.meerkat.controller.web.common.util.FileUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
-import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -73,6 +72,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 
 
 	/**
