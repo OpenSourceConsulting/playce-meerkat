@@ -49,7 +49,7 @@ public class TaskHistoryController {
 		rootMap.put("expanded", true);
 		
 		List<TaskDetailViewModel> domains = null;
-		List<TaskHistoryDetail> taskDetails = service.getTaskHistoryDetailList(taskHistoryId);//TODO order by domainId, tomcatInstanceId
+		List<TaskHistoryDetail> taskDetails = service.getTaskHistoryDetailList(taskHistoryId);
 		
 		if (taskDetails.size() > 0) {
 			domains = new ArrayList<TaskDetailViewModel>();

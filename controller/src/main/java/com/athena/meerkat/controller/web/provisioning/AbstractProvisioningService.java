@@ -266,7 +266,7 @@ public abstract class AbstractProvisioningService {
 			jobDir = makeJobDir(serverIp, jobNum);
 			
 			if (pModel.getTaskHistoryId() > 0) {
-				taskService.createTaskHistoryDetails(pModel.getTaskHistoryId(), pModel.getTomcatInstance(), jobDir);
+				taskService.updateTaskLogFile(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), jobDir);
 			}
 
 			MDC.put("jobPath", jobDir.getAbsolutePath());
@@ -463,6 +463,10 @@ public abstract class AbstractProvisioningService {
 		pModel.addProps("dolly.jar.name", "core-1.0.0-SNAPSHOT");
 		pModel.addProps("ant.script.file", "installDolly.xml");
 		pModel.addProps("infinispan.hotrod.server_list", dataGridGroupService.getServerListPropertyValue(sessionGroupId));
+	}
+	
+	protected void updateTaskStatus(ProvisionModel pModel, int status) {
+		taskService.updateTaskStatus(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), status);
 	}
 
 }

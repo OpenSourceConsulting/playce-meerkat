@@ -73,7 +73,7 @@ public class TaskHistoryDetail {
 	private String logFilePath;
 	
 	@Column(name = "status")
-	private short status;//0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패
+	private int status;//0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패
 	
 	@Column(name = "finished_time")
 	private Date finishedTime;//
@@ -215,14 +215,14 @@ public class TaskHistoryDetail {
 	/**
 	 * @return the status
 	 */
-	public short getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(short status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

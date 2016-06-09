@@ -39,7 +39,7 @@ public class TaskDetailViewModel {
 	private String name; // domain name or tomcat instance name.
 	private String hostName;
 	private String ipaddress;
-	private short status;
+	private int status;
 	private String statusName;
 	private String logFilePath;
 	private boolean leaf;
@@ -87,11 +87,11 @@ public class TaskDetailViewModel {
 		this.ipaddress = ipaddress;
 	}
 
-	public short getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(short status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

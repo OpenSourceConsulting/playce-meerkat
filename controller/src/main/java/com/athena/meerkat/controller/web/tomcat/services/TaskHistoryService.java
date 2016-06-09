@@ -46,19 +46,19 @@ public class TaskHistoryService {
 		return detailRepo.findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(taskHistoryId);
 	}
 	
-	public TaskHistory createTomcatInstallTask() {
+	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
 		
 		TaskHistory task = createTask(MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
 		
 		save(task);
-		/*
+		
 		List<TaskHistoryDetail> taskDetails = new ArrayList<TaskHistoryDetail>();
 		for (TomcatInstance tomcatInstance : tomcats) {
-			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance.getId());
+			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance);
 			taskDetails.add(taskDetail);
 		}
 		
-		detailRepo.save(taskDetails);*/
+		detailRepo.save(taskDetails);
 		
 		return task;
 	}
@@ -71,14 +71,20 @@ public class TaskHistoryService {
 		detailRepo.save(taskHistoryDetail);
 	}
 	
-	public void createTaskHistoryDetails(int taskHistoryId, TomcatInstance tomcatInstance, File jobDir) {
+	public void updateTaskLogFile(int taskHistoryId, int tomcatInstanceId, File jobDir) {
 		
-		TaskHistoryDetail taskDetail = null;
-		if (jobDir != null) {
-			taskDetail = new TaskHistoryDetail(taskHistoryId, tomcatInstance, jobDir.getAbsolutePath() + File.separator + "build.log");
-		} else {
-			taskDetail = new TaskHistoryDetail(taskHistoryId, tomcatInstance);
-		}
+		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
+		taskDetail.setLogFilePath(jobDir.getAbsolutePath() + File.separator + "build.log");
+		taskDetail.setStatus(MeerkatConstants.TASK_STATUS_WORKING);
+		
+		saveDetail(taskDetail);
+	}
+	
+	public void updateTaskStatus(int taskHistoryId, int tomcatInstanceId, int status) {
+		
+		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
+		taskDetail.setStatus(status);
+		
 		saveDetail(taskDetail);
 	}
 	
