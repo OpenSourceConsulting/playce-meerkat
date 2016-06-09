@@ -284,4 +284,9 @@ public class TomcatDomainService {
 	public DomainAlertSetting saveAlertSetting(DomainAlertSetting alert) {
 		return domainAlertRepo.save(alert);
 	}
+
+	public void saveAllAlertSettings(List<DomainAlertSetting> alertSettings) {
+		domainAlertRepo.save(alertSettings);
+
+	}
 }

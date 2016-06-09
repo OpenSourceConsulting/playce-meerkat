@@ -295,12 +295,33 @@ public class DomainController {
 
 	@RequestMapping(value = "/alert/changeStatus", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse getAlertSettingList(SimpleJsonResponse json, Integer alertId, boolean status) {
+	public SimpleJsonResponse changeStatus(SimpleJsonResponse json, Integer alertId, boolean status) {
 		DomainAlertSetting alert = domainService.getDomainAlert(alertId);
 		if (alert != null) {
 			alert.setStatus(status);
+			/**
+			 * TODO: kwon provisoning
+			 */
 			alert = domainService.saveAlertSetting(alert);
 			json.setData(alert.isStatus());
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "/changeAllStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse changeAllStatus(SimpleJsonResponse json, Integer domainId, boolean status) {
+		TomcatDomain td = domainService.getDomain(domainId);
+		if (td != null) {
+			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
+			for (DomainAlertSetting alert : alertSettings) {
+				alert.setStatus(status);
+			}
+
+			/**
+			 * TODO: kwon provisoning
+			 */
+			domainService.saveAllAlertSettings(alertSettings);
 		}
 		return json;
 	}
