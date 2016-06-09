@@ -107,7 +107,7 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 		
 			if (MeerkatConstants.WS_EVENT_INSTALL.equals(event)) {
 				
-				service.installTomcatInstance(domainId, session);
+				service.installTomcatInstance(0, domainId, session);
 				
 			} else if (MeerkatConstants.WS_EVENT_DEPLOY.equals(event)) {
 				

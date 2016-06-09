@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,23 +43,22 @@ public class TaskHistoryService {
 	}
 	
 	public List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId){
-		return detailRepo.findByTaskHistoryId(taskHistoryId);
+		return detailRepo.findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(taskHistoryId);
 	}
 	
-	@Transactional
-	public TaskHistory createTomcatInstallTasks(List<TomcatInstance> tomcats) {
+	public TaskHistory createTomcatInstallTask() {
 		
 		TaskHistory task = createTask(MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
 		
 		save(task);
-		
+		/*
 		List<TaskHistoryDetail> taskDetails = new ArrayList<TaskHistoryDetail>();
 		for (TomcatInstance tomcatInstance : tomcats) {
 			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance.getId());
 			taskDetails.add(taskDetail);
 		}
 		
-		detailRepo.save(taskDetails);
+		detailRepo.save(taskDetails);*/
 		
 		return task;
 	}
@@ -69,6 +69,17 @@ public class TaskHistoryService {
 	
 	public void saveDetail(TaskHistoryDetail taskHistoryDetail){
 		detailRepo.save(taskHistoryDetail);
+	}
+	
+	public void createTaskHistoryDetails(int taskHistoryId, TomcatInstance tomcatInstance, File jobDir) {
+		
+		TaskHistoryDetail taskDetail = null;
+		if (jobDir != null) {
+			taskDetail = new TaskHistoryDetail(taskHistoryId, tomcatInstance, jobDir.getAbsolutePath() + File.separator + "build.log");
+		} else {
+			taskDetail = new TaskHistoryDetail(taskHistoryId, tomcatInstance);
+		}
+		saveDetail(taskDetail);
 	}
 	
 	/*

@@ -51,14 +51,34 @@ public class TaskHistoryDetail {
 	@Column(name = "task_history_id", insertable = false, updatable = false)
 	private int taskHistoryId;//
 	
+	@Column(name = "tomcat_domain_id")
+	private int tomcatDomainId;
+	
 	@Column(name = "tomcat_instance_id", insertable = false, updatable = false)
 	private int tomcatInstanceId;//
+	
+	@Column(name = "tomcat_domain_name")
+	private String tomcatDomainName;
+	
+	@Column(name = "tomcat_instance_name")
+	private String tomcatInstanceName;
+	
+	@Column(name = "host_name")
+	private String hostName;
+	
+	@Column(name = "ip_addr")
+	private String ipaddress;
+	
+	@Column(name = "logfile_path")
+	private String logFilePath;
 	
 	@Column(name = "status")
 	private short status;//0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패
 	
 	@Column(name = "finished_time")
 	private Date finishedTime;//
+	
+	
 	
 	@ManyToOne
 	private TaskHistory taskHistory;
@@ -74,10 +94,21 @@ public class TaskHistoryDetail {
 	public TaskHistoryDetail() {
 	}
 	
-	public TaskHistoryDetail(int taskHistoryId, int tomcatInstanceId) {
+	public TaskHistoryDetail(int taskHistoryId, TomcatInstance tomcatInstance) {
+		this(taskHistoryId, tomcatInstance, null);
+	}
+	
+	public TaskHistoryDetail(int taskHistoryId, TomcatInstance tomcatInstance, String logFilePath) {
 		super();
-		this.taskHistoryId = taskHistoryId;
-		this.tomcatInstanceId = tomcatInstanceId;
+		setTaskHistoryId(taskHistoryId);
+		
+		this.tomcatDomainId = tomcatInstance.getDomainId();
+		setTomcatInstanceId(tomcatInstance.getId());
+		this.tomcatDomainName = tomcatInstance.getDomainName();
+		this.tomcatInstanceName = tomcatInstance.getName();
+		this.hostName = tomcatInstance.getHostName();
+		this.ipaddress = tomcatInstance.getIpaddress();
+		this.logFilePath = logFilePath;
 	}
 
 	/**
@@ -106,6 +137,12 @@ public class TaskHistoryDetail {
 	 */
 	public void setTaskHistoryId(int taskHistoryId) {
 		this.taskHistoryId = taskHistoryId;
+		
+		if (this.taskHistory == null) {
+			this.taskHistory = new TaskHistory();
+		}
+		
+		this.taskHistory.setId(taskHistoryId);
 	}
 
 	/**
@@ -120,6 +157,59 @@ public class TaskHistoryDetail {
 	 */
 	public void setTomcatInstanceId(int tomcatInstanceId) {
 		this.tomcatInstanceId = tomcatInstanceId;
+		
+		if(this.tomcatInstance == null) {
+			this.tomcatInstance = new TomcatInstance();
+		}
+		this.tomcatInstance.setId(tomcatInstanceId);
+	}
+
+	public int getTomcatDomainId() {
+		return tomcatDomainId;
+	}
+
+	public void setTomcatDomainId(int tomcatDomainId) {
+		this.tomcatDomainId = tomcatDomainId;
+	}
+
+	public String getTomcatDomainName() {
+		return tomcatDomainName;
+	}
+
+	public void setTomcatDomainName(String tomcatDomainName) {
+		this.tomcatDomainName = tomcatDomainName;
+	}
+
+	public String getTomcatInstanceName() {
+		return tomcatInstanceName;
+	}
+
+	public void setTomcatInstanceName(String tomcatInstanceName) {
+		this.tomcatInstanceName = tomcatInstanceName;
+	}
+
+	public String getHostName() {
+		return hostName;
+	}
+
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+
+	public String getIpaddress() {
+		return ipaddress;
+	}
+
+	public void setIpaddress(String ipaddress) {
+		this.ipaddress = ipaddress;
+	}
+
+	public String getLogFilePath() {
+		return logFilePath;
+	}
+
+	public void setLogFilePath(String logFilePath) {
+		this.logFilePath = logFilePath;
 	}
 
 	/**
@@ -164,6 +254,14 @@ public class TaskHistoryDetail {
 
 	public void setTomcatInstance(TomcatInstance tomcatInstance) {
 		this.tomcatInstance = tomcatInstance;
+	}
+	
+	public String getDomainName() {
+		if(this.tomcatInstance != null) {
+			return this.tomcatInstance.getDomainName();
+		}
+		
+		return "";
 	}
 
 }

@@ -53,6 +53,7 @@ import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -96,6 +97,9 @@ public abstract class AbstractProvisioningService {
 	protected File commanderDir;
 	
 	private Configuration cfg;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 	
 	
 
@@ -260,6 +264,10 @@ public abstract class AbstractProvisioningService {
 			int jobNum = getJobNumber(serverIp);
 			targetProps.setProperty("job.number", String.valueOf(jobNum));
 			jobDir = makeJobDir(serverIp, jobNum);
+			
+			if (pModel.getTaskHistoryId() > 0) {
+				taskService.createTaskHistoryDetails(pModel.getTaskHistoryId(), pModel.getTomcatInstance(), jobDir);
+			}
 
 			MDC.put("jobPath", jobDir.getAbsolutePath());
 

@@ -72,9 +72,6 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	@Autowired
-	private TaskHistoryService taskService;
 
 
 	/**
@@ -106,9 +103,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
-	@Transactional
-	// @Async
-	public boolean installTomcatInstance(int domainId, WebSocketSession session) {
+	//@Transactional
+	//@Async
+	public boolean installTomcatInstance(int domainId, int taskHistoryId, WebSocketSession session) {
 
 		boolean isSuccess = true;
 		
@@ -133,7 +130,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
 				pModel.setLastTask(count == list.size());
 				
@@ -187,7 +184,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 */
 			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
-			instanceService.saveState(pModel.getTomcatInstance().getId(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
+			instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 			
 			/*
 			 * 5. install dolly agent

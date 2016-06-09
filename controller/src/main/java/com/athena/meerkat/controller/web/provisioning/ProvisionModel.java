@@ -45,6 +45,7 @@ public class ProvisionModel {
 	private static final String CONFIG_OP_ADD = "+";
 	private static final String CONFIG_OP_SET = "=";
 	
+	private int taskHistoryId;
 	private DomainTomcatConfiguration tomcatConfig;
 	private TomcatInstance tomcatInstance;
 	private List<TomcatConfigFile> confFiles;
@@ -69,6 +70,13 @@ public class ProvisionModel {
 		
 	}
 	
+	public ProvisionModel(int taskHistoryId, DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
+		this(tomcatConfig, tomcatInstance, dsList);
+		
+		this.taskHistoryId = taskHistoryId;
+		this.isFirstInstall = isFirstInstall;
+	}
+	
 	/**
 	 * <pre>
 	 * 
@@ -78,8 +86,15 @@ public class ProvisionModel {
 	 * @param isFirstInstall 첫 설치 여부.
 	 */
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
-		this(tomcatConfig, tomcatInstance, dsList);
-		this.isFirstInstall = isFirstInstall;
+		this(0, tomcatConfig, tomcatInstance, dsList, isFirstInstall);
+	}
+
+	public int getTaskHistoryId() {
+		return taskHistoryId;
+	}
+
+	public void setTaskHistoryId(int taskHistoryId) {
+		this.taskHistoryId = taskHistoryId;
 	}
 
 	public boolean isLastTask() {

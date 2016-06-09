@@ -297,7 +297,7 @@ public class TomcatInstanceController {
 		if (isUniqueCataBase) {
 			service.saveList(tomcats);
 			
-			TaskHistory task = taskService.createTomcatInstallTasks(tomcats);
+			TaskHistory task = taskService.createTomcatInstallTask();
 			json.setData(task);
 		}
 

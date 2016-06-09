@@ -1,6 +1,9 @@
 package com.athena.meerkat.controller.web.tomcat;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskDetailViewModel;
 
 /**
  * <pre>
@@ -36,12 +40,36 @@ public class TaskHistoryController {
 	public TaskHistoryController() {
 	}
 
-	@RequestMapping(value="/list/{taskId}", method = RequestMethod.GET)
+	@RequestMapping(value="/list/{taskHistoryId}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<TaskHistoryDetail> list(@PathVariable Integer taskId){
+	public Map<String, Object> list(@PathVariable Integer taskHistoryId){
 	
+		Map<String, Object> rootMap = new HashMap<String, Object>();
+		rootMap.put("text", "Root");
+		rootMap.put("expanded", true);
 		
-		return service.getTaskHistoryDetailList(taskId);
+		List<TaskDetailViewModel> domains = null;
+		List<TaskHistoryDetail> taskDetails = service.getTaskHistoryDetailList(taskHistoryId);//TODO order by domainId, tomcatInstanceId
+		
+		if (taskDetails.size() > 0) {
+			domains = new ArrayList<TaskDetailViewModel>();
+			
+			TaskDetailViewModel domainModel = null;
+			for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
+				
+				if (domainModel == null || taskHistoryDetail.getDomainName().equals(domainModel.getName()) == false) {
+					domainModel = new TaskDetailViewModel(taskHistoryDetail.getDomainName());
+					
+					domains.add(domainModel);
+				}
+				
+				domainModel.addChild(new TaskDetailViewModel(taskHistoryDetail));
+			}
+			
+			rootMap.put("children", domains);
+		}
+		
+		return rootMap;
 	}
 	
 	
