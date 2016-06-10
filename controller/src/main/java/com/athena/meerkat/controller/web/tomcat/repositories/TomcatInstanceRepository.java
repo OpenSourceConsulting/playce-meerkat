@@ -50,8 +50,8 @@ public interface TomcatInstanceRepository extends JpaRepository<TomcatInstance, 
 
 	List<TomcatInstance> findByServer_Id(int serverId);
 
-	@Modifying
+	/*@Modifying
 	@Query("update TomcatInstance ti set ti.state = ?2 where ti.id = ?1")
 	int setState(int instanceId, int state);
-
+	*/
 }

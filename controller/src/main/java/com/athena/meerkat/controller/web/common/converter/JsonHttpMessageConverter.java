@@ -41,8 +41,9 @@ import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskHistoryViewModel;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskDetailViewModel;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -132,8 +133,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleEntity((DatagridServerGroup) object);
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
-		} else if (object instanceof TaskHistoryViewModel) {
-			handleEntity((TaskHistoryViewModel) object);
+		} else if (object instanceof TaskDetailViewModel) {
+			handleEntity((TaskHistory) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
@@ -171,16 +172,17 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
-	protected void handleEntity(TaskHistoryViewModel entity) {
-
-		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK_HISTORY, entity.getTaskCdId()));
-		LOGGER.debug("converted for {}", entity.getClass().getName());
-	}
-
 	protected void handleEntity(DomainAlertSetting entity) {
 
 		entity.setAlertItemCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_ITEM, entity.getAlertItemCdId()));
 		entity.setThresholdOpCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR, entity.getThresholdOpCdId()));
+
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+	
+	protected void handleEntity(TaskHistory entity) {
+
+		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK, entity.getTaskCdId()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}

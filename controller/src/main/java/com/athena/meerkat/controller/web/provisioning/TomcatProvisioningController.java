@@ -49,11 +49,11 @@ public class TomcatProvisioningController {
 	@Autowired
 	private TomcatProvisioningService proviService;
 	
-	@RequestMapping(value = "/install/{domainId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/install/{domainId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse install(@PathVariable("domainId") int domainId) {
+	public SimpleJsonResponse install(@PathVariable("domainId") int domainId, int taskHistoryId) {
 		
-		proviService.installTomcatInstance2(domainId, null);
+		proviService.installTomcatInstance(domainId, taskHistoryId, null);
 		//System.out.println("call install "+ domainId + "******************************");
 		
 		return new SimpleJsonResponse();

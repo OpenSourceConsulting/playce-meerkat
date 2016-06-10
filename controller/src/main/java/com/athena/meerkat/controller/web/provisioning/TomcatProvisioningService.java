@@ -72,9 +72,6 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@PersistenceContext
     private EntityManager entityManager;
-	
-	@Autowired
-	private TaskHistoryService taskService;
 
 
 	/**
@@ -106,12 +103,10 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
-	@Transactional
-	// @Async
-	public boolean installTomcatInstance(int domainId, WebSocketSession session) {
+	
+	public void installTomcatInstance(int domainId, int taskHistoryId, WebSocketSession session) {
 
-		boolean isSuccess = true;
-		
+
 		int sessionGroupId = domainService.getDomain(domainId).getDataGridServerGroupId();
 		
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
@@ -119,7 +114,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
-			return false;
+			return;
 		}
 
 		List<TomcatConfigFile> confFiles = new ArrayList<TomcatConfigFile>();
@@ -133,7 +128,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, dsList, true);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
 				pModel.setLastTask(count == list.size());
 				
@@ -142,19 +137,18 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 					addDollyDefaultProperties(pModel, sessionGroupId);
 				}
 				
-				isSuccess = doInstallTomcatInstance(pModel, session) && isSuccess;
+				doInstallTomcatInstance(pModel, session);
 				count++;
 			}
 			
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
-			isSuccess = false;
+			
 		}
 		
-		return isSuccess;
 	}
 
-	private boolean doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
+	private void doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
 
 		boolean isSuccess = true;
 		File jobDir = generateBuildProperties(pModel, session);
@@ -187,7 +181,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 */
 			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
-			instanceService.saveState(pModel.getTomcatInstance().getId(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
+			instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 			
 			/*
 			 * 5. install dolly agent
@@ -196,18 +190,25 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
 			}
 			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
+			
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			
+			//throw new RuntimeException(e);
 
 		} finally {
 			LOGGER.debug(LOG_END);
 			MDC.remove("jobPath");
 			MDC.remove("serverIp");
 		}
-		
-		return isSuccess;
+
 	}
 
 	/**

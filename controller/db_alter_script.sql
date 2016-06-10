@@ -105,20 +105,21 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `task_history_detail` (
   `Id` INT(11) NOT NULL AUTO_INCREMENT,
   `task_history_id` INT(11) NOT NULL,
+  `tomcat_domain_id` INT(11) NOT NULL,
   `tomcat_instance_id` INT(11) NOT NULL,
+  `tomcat_domain_name` VARCHAR(30) NULL,
+  `tomcat_instance_name` VARCHAR(30) NULL,
+  `host_name` VARCHAR(60) NULL,
+  `ip_addr` VARCHAR(20) NULL,
   `status` SMALLINT NULL DEFAULT 0 COMMENT '0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패',
+  `logfile_path` VARCHAR(200) NULL,
   `finished_time` DATETIME NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_task_history_domain_task_history1_idx` (`task_history_id` ASC),
-  INDEX `fk_task_history_detail_tomcat_instance1_idx` (`tomcat_instance_id` ASC),
+  INDEX `idx_domain_id_instance_id` (`tomcat_domain_id` ASC, `tomcat_instance_id` ASC),
   CONSTRAINT `fk_task_history_domain_task_history1`
     FOREIGN KEY (`task_history_id`)
     REFERENCES `task_history` (`Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_task_history_detail_tomcat_instance1`
-    FOREIGN KEY (`tomcat_instance_id`)
-    REFERENCES `tomcat_instance` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

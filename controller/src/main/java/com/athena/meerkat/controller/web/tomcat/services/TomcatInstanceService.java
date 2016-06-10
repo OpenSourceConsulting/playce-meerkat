@@ -159,47 +159,6 @@ public class TomcatInstanceService {
 					LOGGER.error(e.toString(), e);
 					throw new RuntimeException(e);
 				}
-
-				/*
-				Method[] methods = DomainTomcatConfiguration.class.getMethods();
-				for (Method m : methods) {
-					// check the setter method
-					// Get the param type
-					Class<?>[] types = m.getParameterTypes();
-					if (m.getName()
-							.toLowerCase()
-							.contains(
-									"set"
-											+ changedConf.getConfigName()
-													.toLowerCase())) {
-						try {
-							// run setter method to update value
-							// because the setter has only one param, just get
-							// the 1st param
-							if (types[0].toString().toLowerCase()
-									.contains("string")) {
-								m.invoke(conf,
-										(String) changedConf.getConfigValue());
-							} else if (types[0].toString().toLowerCase()
-									.contains("int")) {
-								m.invoke(conf, Integer.parseInt(changedConf
-										.getConfigValue()));
-							} else if (types[0].toString().toLowerCase()
-									.contains("boolean")) {
-								m.invoke(conf, Boolean.parseBoolean(changedConf
-										.getConfigValue()));
-							}
-
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				*/
 			}
 		}
 
@@ -241,93 +200,13 @@ public class TomcatInstanceService {
 		return null;
 	}
 
-	@Async
-	public void loadTomcatConfig(TomcatInstance inst) {
 
-		int state = 0;
+	public void saveState(TomcatInstance instance, int state) {
+		//repo.setState(instanceId, state);
+		instance.setState(state);
+		repo.save(instance);
 
-		// SSHManager sshMng = new SSHManager(inst.getSshUsername(),
-		// inst.getSshPassword(), inst.getIpAddr(), "", inst.getSshPort());
-		//
-		// String errorMsg = sshMng.connect();
-		//
-		// try {
-		// if (errorMsg != null) {
-		// inst.setErrMsg(errorMsg);
-		// saveState(inst, 1);
-		// } else {
-		//
-		// state = DollyConstants.INSTANCE_STATE_PEND1;
-		// loadEnvSH(sshMng, inst, state);
-		//
-		// state = DollyConstants.INSTANCE_STATE_PEND2;
-		// loadServerXML(sshMng, inst, state);
-		//
-		// state = DollyConstants.INSTANCE_STATE_PEND3;
-		// loadContextXML(sshMng, inst, state);
-		//
-		// state = DollyConstants.INSTANCE_STATE_VALID;
-		// saveState(inst, state);
-		// }
-		//
-		// } catch (Exception e) {
-		//
-		// logger.error("", e);
-		// state++;
-		// inst.setErrMsg(e.toString());
-		// saveState(inst, state);
-		//
-		// } finally {
-		// sshMng.close();
-		// }
-
-	}
-
-	/**
-	 * env.sh 파일을 로딩 & 없으면 생성??
-	 * 
-	 * @param inst
-	 */
-	public void loadEnvSH(SSHManager sshMng, TomcatInstance inst, int state) throws UnsupportedEncodingException {
-
-		// String remoteFile = inst.getCatalinaBase()
-		// + inst.getEnvScriptFile().replaceFirst("$CATALINA_BASE", "");
-		//
-		// // sshMng.scpDown(remoteFile, "D:/env.sh");
-		//
-		// byte[] fileByte = sshMng.scpDown(remoteFile);
-		//
-		// String envStr = new String(fileByte, "UTF-8");
-		//
-		// QConfigFileVersion confVer = QConfigFileVersion.configFileVersion;
-		// EntityManager entityManager = this.entityManagerFactory
-		// .createEntityManager();
-		// JPAQuery query = new JPAQuery(entityManager);
-		//
-		// Integer maxRevision = query
-		// .from(confVer)
-		// .where(confVer.tomcatInstanceId.eq(inst.getId()),
-		// confVer.fileType.eq(1))
-		// .uniqueResult(confVer.revision.max());
-		//
-		// int revision = 0;
-		// if (maxRevision != null) {
-		// revision = maxRevision.intValue();
-		// }
-		//
-		// ConfigFileVersion fileVer = new ConfigFileVersion(inst.getId(), 1,
-		// remoteFile, envStr);
-		// fileVer.setRevision(revision + 1);
-		//
-		// configRepo.save(fileVer);
-		//
-		// saveState(inst, state);
-	}
-
-	public void saveState(int instanceId, int state) {
-		repo.setState(instanceId, state);
-
-		LOGGER.debug("tomcat instance({}) state({}) saved.", instanceId, state);
+		LOGGER.debug("tomcat instance({}) state({}) saved.", instance.getId(), state);
 	}
 
 	public List<TomcatInstance> getAll() {

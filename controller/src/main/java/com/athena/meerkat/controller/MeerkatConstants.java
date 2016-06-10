@@ -124,14 +124,14 @@ public abstract class MeerkatConstants {
 	 * Common code
 	 */
 	public static final String CODE_GROP_TE_VERSION = "tever";// tomcat version
-																// (involve
-																// name)
 	public static final String CODE_GROP_TS_STATE = "TS_STATE";
 	public static final String CODE_GROP_DB_TYPE = "dbType";
 	public static final String CODE_GROP_CONFIG_FILE_TYPE = "configFileType";
 	public static final String CODE_GROP_ALERT_ITEM = "ALERT_ITEM";
 	public static final String CODE_GROP_ALERT_THRESHOLD_OPERATOR = "ALERT_THRESHOLD_OPERATOR";
-	public static final String CODE_GROP_TASK_HISTORY = "TASK";
+	public static final String CODE_GROP_DATAGRID_SEVER_TYPE = "SESSION_GROUP_TYPE";
+	public static final String CODE_GROP_TASK = "TASK";
+	
 	public static final Integer ALERT_ITEM_AGENT = 21;
 
 	public static final String CONFIG_FILE_TYPE_SERVER_XML = "server.xml";
@@ -156,7 +156,7 @@ public abstract class MeerkatConstants {
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 
-	public static final String CODE_GROP_DATAGRID_SEVER_TYPE = "SESSION_GROUP_TYPE";
+	
 
 	/**
 	 * Monitoring Factor id
@@ -196,8 +196,12 @@ public abstract class MeerkatConstants {
 	public static final String MON_NI_TYPE_OUT = "traffic_out";
 
 	/**
-	 * 
+	 * Task constants
 	 */
-	public static final int TASK_CD_TOMCAT_INSTALL = 30;//install tomcat instance.
+	public static final int TASK_CD_TOMCAT_INSTALL = 100;//install tomcat instance.
+	
+	public static final int TASK_STATUS_WORKING = 1;
+	public static final int TASK_STATUS_SUCCESS = 2;
+	public static final int TASK_STATUS_FAIL = 3;
 
 }

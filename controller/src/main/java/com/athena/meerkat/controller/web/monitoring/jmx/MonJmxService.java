@@ -62,7 +62,7 @@ public class MonJmxService {
 					LOGGER.debug("{} instance is stopping. don't save state.", monJmx.getInstanceId());
 
 				} else if (instance != null) {
-					tiService.saveState(monJmx.getInstanceId(), monJmx.getMonValue().intValue());
+					tiService.saveState(instance, monJmx.getMonValue().intValue());
 
 				} else {
 					LOGGER.debug("{} instance is null. don't save state.", monJmx.getInstanceId());
