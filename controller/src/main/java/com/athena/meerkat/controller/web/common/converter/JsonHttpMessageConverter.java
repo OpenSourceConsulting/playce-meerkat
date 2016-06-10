@@ -42,6 +42,7 @@ import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
 import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskHistoryViewModel;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -131,6 +132,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleEntity((DatagridServerGroup) object);
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
+		} else if (object instanceof TaskHistoryViewModel) {
+			handleEntity((TaskHistoryViewModel) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
@@ -165,6 +168,12 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		entity.setTypeNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_DATAGRID_SEVER_TYPE, entity.getTypeCdId()));
 
+		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+
+	protected void handleEntity(TaskHistoryViewModel entity) {
+
+		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK_HISTORY, entity.getTaskCdId()));
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 

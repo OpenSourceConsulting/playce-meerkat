@@ -18,6 +18,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryReposito
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bong-Jin Kwon
  * @version 1.0
  */
@@ -26,51 +27,51 @@ public class TaskHistoryService {
 
 	@Autowired
 	private TaskHistoryRepository repository;
-	
+
 	@Autowired
 	private TaskHistoryDetailRepository detailRepo;
-	
+
 	public TaskHistoryService() {
-		
+
 	}
-	
+
 	private TaskHistory createTask(int taskCdId) {
 		TaskHistory task = new TaskHistory();
 		task.setTaskCdId(taskCdId);
-		
+
 		return task;
 	}
-	
-	public List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId){
+
+	public List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId) {
 		return detailRepo.findByTaskHistoryId(taskHistoryId);
 	}
-	
+
 	@Transactional
 	public TaskHistory createTomcatInstallTasks(List<TomcatInstance> tomcats) {
-		
+
 		TaskHistory task = createTask(MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
-		
+
 		save(task);
-		
+
 		List<TaskHistoryDetail> taskDetails = new ArrayList<TaskHistoryDetail>();
 		for (TomcatInstance tomcatInstance : tomcats) {
 			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance.getId());
 			taskDetails.add(taskDetail);
 		}
-		
+
 		detailRepo.save(taskDetails);
-		
+
 		return task;
 	}
-	
-	public void save(TaskHistory taskHistory){
+
+	public void save(TaskHistory taskHistory) {
 		repository.save(taskHistory);
 	}
-	
-	public void saveDetail(TaskHistoryDetail taskHistoryDetail){
+
+	public void saveDetail(TaskHistoryDetail taskHistoryDetail) {
 		detailRepo.save(taskHistoryDetail);
 	}
-	
+
 	/*
 	public List<TaskHistory> getTaskHistoryList(ExtjsGridParam gridParam){
 		return repository.getTaskHistoryList(gridParam);
@@ -81,14 +82,17 @@ public class TaskHistoryService {
 		return repository.getTaskHistoryListTotalCount(gridParam);
 	}
 	*/
-	
-	public TaskHistory getTaskHistory(int taskId){
+
+	public TaskHistory getTaskHistory(int taskId) {
 		return repository.findOne(taskId);
 	}
-	
-	public void delete(int taskId){
+
+	public void delete(int taskId) {
 		repository.delete(taskId);
 	}
 
+	public List<TaskHistoryDetail> getTaskHistoryDetailListByDomain(Integer domainId) {
+		return detailRepo.findByTomcatDomainId(domainId);
+	}
 }
 //end of TaskHistoryService.java

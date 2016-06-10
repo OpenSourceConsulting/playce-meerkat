@@ -30,6 +30,7 @@ import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.Session;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;

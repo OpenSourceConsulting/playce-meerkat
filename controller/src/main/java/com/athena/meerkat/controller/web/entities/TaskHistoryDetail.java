@@ -36,6 +36,7 @@ import javax.persistence.Table;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -47,22 +48,30 @@ public class TaskHistoryDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int id;//
-	
+
 	@Column(name = "task_history_id", insertable = false, updatable = false)
 	private int taskHistoryId;//
-	
+
 	@Column(name = "tomcat_instance_id", insertable = false, updatable = false)
-	private int tomcatInstanceId;//
-	
+	private Integer tomcatInstanceId;//
+	@Column(name = "tomcat_instance_name", insertable = false, updatable = false)
+	private String tomcatInstanceName;//
+
+	@Column(name = "tomcat_domain_id", insertable = false, updatable = false)
+	private int tomcatDomainId;//
+
 	@Column(name = "status")
 	private short status;//0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패
-	
+
 	@Column(name = "finished_time")
 	private Date finishedTime;//
-	
+
+	@Column(name = "ip_addr")
+	private String ipAddr;//
+
 	@ManyToOne
 	private TaskHistory taskHistory;
-	
+
 	@ManyToOne
 	private TomcatInstance tomcatInstance;
 
@@ -73,8 +82,8 @@ public class TaskHistoryDetail {
 	 */
 	public TaskHistoryDetail() {
 	}
-	
-	public TaskHistoryDetail(int taskHistoryId, int tomcatInstanceId) {
+
+	public TaskHistoryDetail(int taskHistoryId, Integer tomcatInstanceId) {
 		super();
 		this.taskHistoryId = taskHistoryId;
 		this.tomcatInstanceId = tomcatInstanceId;
@@ -88,7 +97,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -102,7 +112,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param taskHistoryId the taskHistoryId to set
+	 * @param taskHistoryId
+	 *            the taskHistoryId to set
 	 */
 	public void setTaskHistoryId(int taskHistoryId) {
 		this.taskHistoryId = taskHistoryId;
@@ -116,7 +127,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param tomcatInstanceId the tomcatInstanceId to set
+	 * @param tomcatInstanceId
+	 *            the tomcatInstanceId to set
 	 */
 	public void setTomcatInstanceId(int tomcatInstanceId) {
 		this.tomcatInstanceId = tomcatInstanceId;
@@ -130,7 +142,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(short status) {
 		this.status = status;
@@ -144,7 +157,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param finishedTime the finishedTime to set
+	 * @param finishedTime
+	 *            the finishedTime to set
 	 */
 	public void setFinishedTime(java.util.Date finishedTime) {
 		this.finishedTime = finishedTime;
@@ -164,6 +178,30 @@ public class TaskHistoryDetail {
 
 	public void setTomcatInstance(TomcatInstance tomcatInstance) {
 		this.tomcatInstance = tomcatInstance;
+	}
+
+	public int getTomcatDomainId() {
+		return tomcatDomainId;
+	}
+
+	public void setTomcatDomainId(int tomcatDomainId) {
+		this.tomcatDomainId = tomcatDomainId;
+	}
+
+	public String getIpAddr() {
+		return ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
+	public String getTomcatInstanceName() {
+		return tomcatInstanceName;
+	}
+
+	public void setTomcatInstanceName(String tomcatInstanceName) {
+		this.tomcatInstanceName = tomcatInstanceName;
 	}
 
 }
