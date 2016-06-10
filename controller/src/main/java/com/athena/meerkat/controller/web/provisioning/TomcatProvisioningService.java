@@ -29,6 +29,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.collections.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -37,15 +38,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.util.FileUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
+import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
-import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -102,9 +105,42 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
+	
+	public void rework(int taskHistoryDetailId) {
+		TaskHistoryDetail taskDetail = taskService.getTaskHistoryDetail(taskHistoryDetailId);
+		
+		TaskHistory taskHistory = taskDetail.getTaskHistory();
+		
+		if (taskDetail.getTomcatDomainId() == 0 || taskHistory.getId() == 0) {
+			throw new IllegalArgumentException("domain id and task history id must not be zero(0).");
+		}
+		
+		if(MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
+			installSingleTomcatInstance(taskDetail.getTomcatDomainId(), taskHistory.getId(), taskDetail.getTomcatInstance());
+		}
+		
+	}
+	
+	/**
+	 * <pre>
+	 * 
+	 * </pre>
+	 * @param domainId
+	 * @param taskHistoryId
+	 * @param tomcatInstance
+	 */
+	public void installSingleTomcatInstance(int domainId, int taskHistoryId, TomcatInstance tomcatInstance) {
+		
+		Assert.notNull(tomcatInstance, "tomcatInstance must not be null.");
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+
+		installTomcatInstances(domainId, taskHistoryId, singleList);
+	}
 
 	
-	public void installTomcatInstance(int domainId, int taskHistoryId, WebSocketSession session) {
+	public void installTomcatInstances(int domainId, int taskHistoryId, List<TomcatInstance> list) {
 
 
 		int sessionGroupId = domainService.getDomain(domainId).getDataGridServerGroupId();
@@ -121,7 +157,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD));
 		confFiles.add(configFileService.getLatestConfVersion(tomcatConfig.getTomcatDomain(), null, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD));
 
-		List<TomcatInstance> list = instanceService.getTomcatListWillInstallByDomainId(domainId);
+		if (list == null) {
+			list = instanceService.getTomcatListWillInstallByDomainId(domainId);
+		}
 
 		if (list != null && list.size() > 0) {
 
@@ -137,7 +175,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 					addDollyDefaultProperties(pModel, sessionGroupId);
 				}
 				
-				doInstallTomcatInstance(pModel, session);
+				doInstallTomcatInstance(pModel, null);
 				count++;
 			}
 			

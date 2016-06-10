@@ -50,6 +50,7 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
+import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
@@ -99,7 +100,7 @@ public abstract class AbstractProvisioningService {
 	private Configuration cfg;
 	
 	@Autowired
-	private TaskHistoryService taskService;
+	protected TaskHistoryService taskService;
 	
 	
 
@@ -359,6 +360,20 @@ public abstract class AbstractProvisioningService {
 			Tailer tailer = new Tailer(file, listener, delay);
 			new Thread(tailer).start();
 		}
+
+	}
+	
+	public void sendLog(WebSocketSession session, int taskHistoryDetailId) {
+
+		TaskHistoryDetail taskDetail = taskService.getTaskHistoryDetail(taskHistoryDetailId);
+
+		LogTailerListener listener = new LogTailerListener(session, true);
+		long delay = 2000;
+		File file = new File(taskDetail.getLogFilePath());
+		LOGGER.debug("log file : {}", file.getAbsoluteFile());
+
+		Tailer tailer = new Tailer(file, listener, delay);
+		new Thread(tailer).start();
 
 	}
 

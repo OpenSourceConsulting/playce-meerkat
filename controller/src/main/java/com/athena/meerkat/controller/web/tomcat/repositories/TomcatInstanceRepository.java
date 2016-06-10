@@ -49,6 +49,8 @@ public interface TomcatInstanceRepository extends JpaRepository<TomcatInstance, 
 	List<TomcatInstance> findByNameContainingAndTomcatDomain_Id(String name, int domainId);
 
 	List<TomcatInstance> findByServer_Id(int serverId);
+	
+	TomcatInstance findByTomcatDomainIdAndServerId(int domainId, int serverId);
 
 	/*@Modifying
 	@Query("update TomcatInstance ti set ti.state = ?2 where ti.id = ?1")

@@ -36,6 +36,7 @@ import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
  */
 public class TaskDetailViewModel {
 
+	private int taskDetailId;
 	private String name; // domain name or tomcat instance name.
 	private String hostName;
 	private String ipaddress;
@@ -55,12 +56,21 @@ public class TaskDetailViewModel {
 	
 	public TaskDetailViewModel(TaskHistoryDetail taskDetail) {
 		
+		this.taskDetailId = taskDetail.getId();
 		this.name 		= taskDetail.getTomcatInstanceName();
 		this.hostName 	= taskDetail.getHostName();
 		this.ipaddress  = taskDetail.getIpaddress();
 		this.status		= taskDetail.getStatus();
 		this.logFilePath= taskDetail.getLogFilePath();
 		this.leaf = true;
+	}
+
+	public int getTaskDetailId() {
+		return taskDetailId;
+	}
+
+	public void setTaskDetailId(int taskDetailId) {
+		this.taskDetailId = taskDetailId;
 	}
 
 	public String getName() {

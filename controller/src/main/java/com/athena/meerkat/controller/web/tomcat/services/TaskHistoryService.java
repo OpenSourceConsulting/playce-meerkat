@@ -2,11 +2,11 @@ package com.athena.meerkat.controller.web.tomcat.services;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
@@ -76,6 +76,7 @@ public class TaskHistoryService {
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setLogFilePath(jobDir.getAbsolutePath() + File.separator + "build.log");
 		taskDetail.setStatus(MeerkatConstants.TASK_STATUS_WORKING);
+		taskDetail.setFinishedTime(null);
 		
 		saveDetail(taskDetail);
 	}
@@ -85,7 +86,20 @@ public class TaskHistoryService {
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setStatus(status);
 		
+		if (status > 1) {
+			taskDetail.setFinishedTime(new Date());
+		}
+		
 		saveDetail(taskDetail);
+	}
+	
+	public void updateTomcatInstanceToNull(int tomcatInstanceId) {
+		List<TaskHistoryDetail> taskDetails = detailRepo.findByTomcatInstanceId(tomcatInstanceId);
+		for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
+			taskHistoryDetail.setTomcatInstance(null);
+		}
+		
+		detailRepo.save(taskDetails);
 	}
 	
 	/*
@@ -105,6 +119,10 @@ public class TaskHistoryService {
 	
 	public void delete(int taskId){
 		repository.delete(taskId);
+	}
+	
+	public TaskHistoryDetail getTaskHistoryDetail(int taskDetailId){
+		return detailRepo.findOne(taskDetailId);
 	}
 
 }

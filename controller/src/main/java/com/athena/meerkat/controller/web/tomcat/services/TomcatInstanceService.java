@@ -40,6 +40,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.common.SSHManager;
@@ -52,6 +53,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryDetailRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
@@ -96,6 +98,9 @@ public class TomcatInstanceService {
 
 	@Autowired
 	private TomcatDomainService domainService;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 
 	public TomcatInstanceService() {
 		// TODO Auto-generated constructor stub
@@ -190,7 +195,11 @@ public class TomcatInstanceService {
 		return configs;
 	}
 
+	@Transactional
 	public void delete(TomcatInstance tomcat) {
+		
+		taskService.updateTomcatInstanceToNull(tomcat.getId());
+		
 		repo.delete(tomcat);
 	}
 
@@ -232,6 +241,10 @@ public class TomcatInstanceService {
 
 	public List<TomcatApplication> getApplicationByTomcat(int id) {
 		return appRepo.findByTomcatInstance_Id(id);
+	}
+	
+	public TomcatInstance getTomcatInstance(int domainId, int serverId) {
+		return repo.findByTomcatDomainIdAndServerId(domainId, serverId);
 	}
 
 	public void saveTomcatConfig(TomcatInstance tomcat, DomainTomcatConfiguration conf) {

@@ -18,6 +18,8 @@ public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDe
 
 	List<TaskHistoryDetail> findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(int taskHistoryId);
 	
+	List<TaskHistoryDetail> findByTomcatInstanceId(int tomcatInstanceId);
+	
 	TaskHistoryDetail findByTaskHistoryIdAndTomcatInstanceId(int taskHistoryId, int tomcatInstanceId);
 	
 }

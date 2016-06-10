@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**
  * <pre>
@@ -49,16 +51,38 @@ public class TomcatProvisioningController {
 	@Autowired
 	private TomcatProvisioningService proviService;
 	
-	@RequestMapping(value = "/install/{domainId}", method = RequestMethod.POST)
+	@Autowired
+	private TomcatInstanceService tomcatServer;
+	
+	@RequestMapping(value = "/installs/{domainId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse install(@PathVariable("domainId") int domainId, int taskHistoryId) {
+	public SimpleJsonResponse installs(@PathVariable("domainId") int domainId, int taskHistoryId) {
 		
-		proviService.installTomcatInstance(domainId, taskHistoryId, null);
-		//System.out.println("call install "+ domainId + "******************************");
+		proviService.installTomcatInstances(domainId, taskHistoryId, null);
 		
 		return new SimpleJsonResponse();
 	}
 	
+	@RequestMapping(value = "/install", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse installSingleTomcat(int domainId, int serverId, int taskHistoryId) {
+		
+		TomcatInstance tomcatInstance = tomcatServer.getTomcatInstance(domainId, serverId);
+		
+		proviService.installSingleTomcatInstance(tomcatInstance.getDomainId(), taskHistoryId, tomcatInstance);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/rework/{taskDetailId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse install(@PathVariable("taskDetailId") int taskDetailId) {
+		
+		proviService.rework(taskDetailId);
+
+		
+		return new SimpleJsonResponse();
+	}
 
 }
 //end of ProvisioningController.java

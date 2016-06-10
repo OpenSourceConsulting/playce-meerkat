@@ -133,7 +133,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleEntity((DatagridServerGroup) object);
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
-		} else if (object instanceof TaskDetailViewModel) {
+		} else if (object instanceof TaskHistory) {
 			handleEntity((TaskHistory) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
