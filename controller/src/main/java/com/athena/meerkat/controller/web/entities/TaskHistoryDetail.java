@@ -36,6 +36,7 @@ import javax.persistence.Table;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -47,42 +48,40 @@ public class TaskHistoryDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int id;//
-	
+
 	@Column(name = "task_history_id", insertable = false, updatable = false)
 	private int taskHistoryId;//
-	
+
 	@Column(name = "tomcat_domain_id")
 	private int tomcatDomainId;
-	
+
 	@Column(name = "tomcat_instance_id", insertable = false, updatable = false)
-	private int tomcatInstanceId;//
-	
+	private Integer tomcatInstanceId;//
+
 	@Column(name = "tomcat_domain_name")
 	private String tomcatDomainName;
-	
+
 	@Column(name = "tomcat_instance_name")
 	private String tomcatInstanceName;
-	
+
 	@Column(name = "host_name")
 	private String hostName;
-	
+
 	@Column(name = "ip_addr")
 	private String ipaddress;
-	
+
 	@Column(name = "logfile_path")
 	private String logFilePath;
-	
+
 	@Column(name = "status")
 	private int status;//0:작업대기중, 1: 작업진행중, 2: 작업완료, 3: 작업실패
-	
+
 	@Column(name = "finished_time")
 	private Date finishedTime;//
-	
-	
-	
+
 	@ManyToOne
 	private TaskHistory taskHistory;
-	
+
 	@ManyToOne
 	private TomcatInstance tomcatInstance;
 
@@ -93,15 +92,15 @@ public class TaskHistoryDetail {
 	 */
 	public TaskHistoryDetail() {
 	}
-	
+
 	public TaskHistoryDetail(int taskHistoryId, TomcatInstance tomcatInstance) {
 		this(taskHistoryId, tomcatInstance, null);
 	}
-	
+
 	public TaskHistoryDetail(int taskHistoryId, TomcatInstance tomcatInstance, String logFilePath) {
 		super();
 		setTaskHistoryId(taskHistoryId);
-		
+
 		this.tomcatDomainId = tomcatInstance.getDomainId();
 		setTomcatInstanceId(tomcatInstance.getId());
 		this.tomcatDomainName = tomcatInstance.getDomainName();
@@ -119,7 +118,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -133,15 +133,16 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param taskHistoryId the taskHistoryId to set
+	 * @param taskHistoryId
+	 *            the taskHistoryId to set
 	 */
 	public void setTaskHistoryId(int taskHistoryId) {
 		this.taskHistoryId = taskHistoryId;
-		
+
 		if (this.taskHistory == null) {
 			this.taskHistory = new TaskHistory();
 		}
-		
+
 		this.taskHistory.setId(taskHistoryId);
 	}
 
@@ -153,12 +154,13 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param tomcatInstanceId the tomcatInstanceId to set
+	 * @param tomcatInstanceId
+	 *            the tomcatInstanceId to set
 	 */
 	public void setTomcatInstanceId(int tomcatInstanceId) {
 		this.tomcatInstanceId = tomcatInstanceId;
-		
-		if(this.tomcatInstance == null) {
+
+		if (this.tomcatInstance == null) {
 			this.tomcatInstance = new TomcatInstance();
 		}
 		this.tomcatInstance.setId(tomcatInstanceId);
@@ -220,7 +222,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(int status) {
 		this.status = status;
@@ -234,7 +237,8 @@ public class TaskHistoryDetail {
 	}
 
 	/**
-	 * @param finishedTime the finishedTime to set
+	 * @param finishedTime
+	 *            the finishedTime to set
 	 */
 	public void setFinishedTime(java.util.Date finishedTime) {
 		this.finishedTime = finishedTime;
@@ -255,12 +259,12 @@ public class TaskHistoryDetail {
 	public void setTomcatInstance(TomcatInstance tomcatInstance) {
 		this.tomcatInstance = tomcatInstance;
 	}
-	
+
 	public String getDomainName() {
-		if(this.tomcatInstance != null) {
+		if (this.tomcatInstance != null) {
 			return this.tomcatInstance.getDomainName();
 		}
-		
+
 		return "";
 	}
 

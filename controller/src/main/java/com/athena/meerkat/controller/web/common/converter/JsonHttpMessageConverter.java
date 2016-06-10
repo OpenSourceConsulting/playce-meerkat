@@ -133,8 +133,10 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 			handleEntity((DatagridServerGroup) object);
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
+
 		} else if (object instanceof TaskHistory) {
 			handleEntity((TaskHistory) object);
+
 		} else if (object instanceof TaskDetailViewModel) {
 			handleEntity((TaskDetailViewModel) object);
 		} else {
@@ -181,7 +183,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
-	
+
 	protected void handleEntity(TaskHistory entity) {
 
 		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK, entity.getTaskCdId()));

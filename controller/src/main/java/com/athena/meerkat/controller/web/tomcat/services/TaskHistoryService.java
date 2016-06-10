@@ -94,6 +94,7 @@ public class TaskHistoryService {
 		saveDetail(taskDetail);
 	}
 
+
 	public void updateTomcatInstanceToNull(int tomcatInstanceId) {
 		List<TaskHistoryDetail> taskDetails = detailRepo.findByTomcatInstanceId(tomcatInstanceId);
 		for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
@@ -102,17 +103,7 @@ public class TaskHistoryService {
 		
 		detailRepo.save(taskDetails);
 	}
-	
-	/*
-	public List<TaskHistory> getTaskHistoryList(ExtjsGridParam gridParam){
-		return repository.getTaskHistoryList(gridParam);
-	}
-	
-	public int getTaskHistoryListTotalCount(ExtjsGridParam gridParam){
-		
-		return repository.getTaskHistoryListTotalCount(gridParam);
-	}
-	*/
+
 
 	public TaskHistory getTaskHistory(int taskId) {
 		return repository.findOne(taskId);
