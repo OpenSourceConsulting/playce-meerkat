@@ -17,7 +17,8 @@ import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDetail, Integer> {
 
 	List<TaskHistoryDetail> findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(int taskHistoryId);
-	
+
 	TaskHistoryDetail findByTaskHistoryIdAndTomcatInstanceId(int taskHistoryId, int tomcatInstanceId);
-	
+
+	List<TaskHistoryDetail> findByTomcatDomainId(Integer domainId);
 }

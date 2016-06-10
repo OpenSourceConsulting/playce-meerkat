@@ -134,7 +134,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
 		} else if (object instanceof TaskDetailViewModel) {
-			handleEntity((TaskHistory) object);
+			handleEntity((TaskDetailViewModel) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
@@ -179,8 +179,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
-	
-	protected void handleEntity(TaskHistory entity) {
+
+	protected void handleEntity(TaskDetailViewModel entity) {
 
 		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK, entity.getTaskCdId()));
 
