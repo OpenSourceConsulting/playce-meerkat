@@ -23,14 +23,18 @@
 package com.athena.meerkat.controller.web.tomcat.viewmodels;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.athena.meerkat.controller.web.common.converter.JsonDateYMDSerializer;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -38,6 +42,8 @@ public class TaskDetailViewModel {
 
 	private int taskDetailId;
 	private String name; // domain name or tomcat instance name.
+	private String taskName;
+	private int taskCdId;
 	private String hostName;
 	private String ipaddress;
 	private int status;
@@ -45,15 +51,19 @@ public class TaskDetailViewModel {
 	private String logFilePath;
 	private boolean leaf;
 	private boolean expanded;
-	
+	private String username;
+	private Integer userId;
+	private Date finishedTime;
+	private Integer id;
+
 	private List<TaskDetailViewModel> children;
-	
+
 	public TaskDetailViewModel(String domainName) {
 		this.name = domainName;
 		this.children = new ArrayList<TaskDetailViewModel>();
 		this.expanded = true;
 	}
-	
+
 	public TaskDetailViewModel(TaskHistoryDetail taskDetail) {
 		
 		this.taskDetailId = taskDetail.getId();
@@ -63,6 +73,14 @@ public class TaskDetailViewModel {
 		this.status		= taskDetail.getStatus();
 		this.logFilePath= taskDetail.getLogFilePath();
 		this.leaf = true;
+		
+		this.finishedTime = taskDetail.getFinishedTime();
+		this.id = taskDetail.getId();
+		if (taskDetail.getTaskHistory() != null) {
+			this.taskName = taskDetail.getTaskHistory().getTaskName();
+			this.userId = taskDetail.getTaskHistory().getCreateUserId();
+			this.taskCdId = taskDetail.getTaskHistory().getTaskCdId();
+		}
 	}
 
 	public int getTaskDetailId() {
@@ -136,7 +154,7 @@ public class TaskDetailViewModel {
 	public void setChildren(List<TaskDetailViewModel> children) {
 		this.children = children;
 	}
-	
+
 	public void addChild(TaskDetailViewModel child) {
 		this.children.add(child);
 	}
@@ -147,6 +165,55 @@ public class TaskDetailViewModel {
 
 	public void setExpanded(boolean expanded) {
 		this.expanded = expanded;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@JsonSerialize(using = JsonDateYMDSerializer.class)
+	public Date getFinishedTime() {
+		return finishedTime;
+	}
+
+	public void setFinishedTime(Date finisedTime) {
+		this.finishedTime = finisedTime;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public int getTaskCdId() {
+		return taskCdId;
+	}
+
+	public void setTaskCdId(int taskCdId) {
+		this.taskCdId = taskCdId;
 	}
 
 }
