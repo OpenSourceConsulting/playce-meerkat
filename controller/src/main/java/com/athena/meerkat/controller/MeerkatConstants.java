@@ -199,6 +199,7 @@ public abstract class MeerkatConstants {
 	 * Task constants
 	 */
 	public static final int TASK_CD_TOMCAT_INSTALL = 100;//install tomcat instance.
+	public static final int TASK_CD_WAR_DEPLOY = 101;
 	
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;

@@ -105,8 +105,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `task_history_detail` (
   `Id` INT(11) NOT NULL AUTO_INCREMENT,
   `task_history_id` INT(11) NOT NULL,
-  `tomcat_domain_id` INT(11) NOT NULL,
-  `tomcat_instance_id` INT(11) NOT NULL,
+  `tomcat_domain_id` INT(11) NULL,
+  `tomcat_instance_id` INT(11) NULL,
   `tomcat_domain_name` VARCHAR(30) NULL,
   `tomcat_instance_name` VARCHAR(30) NULL,
   `host_name` VARCHAR(60) NULL,

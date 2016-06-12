@@ -70,6 +70,10 @@ public class ProvisionModel {
 		
 	}
 	
+	public ProvisionModel(int taskHistoryId, DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
+		this(taskHistoryId, tomcatConfig, tomcatInstance, dsList, false);
+	}
+	
 	public ProvisionModel(int taskHistoryId, DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
 		this(tomcatConfig, tomcatInstance, dsList);
 		

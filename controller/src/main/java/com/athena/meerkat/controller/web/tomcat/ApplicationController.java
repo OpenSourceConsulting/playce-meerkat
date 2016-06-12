@@ -1,6 +1,9 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 
 @Controller
@@ -20,16 +25,29 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService appService;
+	
 	@Autowired
 	private TomcatDomainService domainService;
-
+	
+	@Autowired
+	private TaskHistoryService taskService;
+	
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
 		
 		
 		TomcatApplication tApp = appService.save(app);
-		json.setData(tApp);
+		
+		
+		TaskHistory task = taskService.createApplicationDeployTask(app.getTomcatDomain().getId());
+		
+		Map<String, Object> resultMap= new HashMap<String, Object>();
+		resultMap.put("applicationId", tApp.getId());
+		resultMap.put("task", task);
+		
+		
+		json.setData(resultMap);
 		
 		
 		return json;

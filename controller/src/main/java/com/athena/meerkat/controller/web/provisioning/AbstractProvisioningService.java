@@ -153,11 +153,19 @@ public abstract class AbstractProvisioningService {
 			/*
 			 * 2. run cmd.
 			 */
-			ProvisioningUtil.runCommand(commanderDir, jobDir);
+			boolean isSuccess = ProvisioningUtil.runCommand(commanderDir, jobDir);
+			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			//throw new RuntimeException(e);
 
 		} finally {
 			LOGGER.debug(LOG_END);

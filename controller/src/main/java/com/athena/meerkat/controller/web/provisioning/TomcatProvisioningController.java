@@ -83,6 +83,15 @@ public class TomcatProvisioningController {
 		
 		return new SimpleJsonResponse();
 	}
+	
+	@RequestMapping(value = "/deployWar/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse deployWar(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, int applicationId) {
+		
+		proviService.deployWar(tomcatInstanceId, taskHistoryId, applicationId);
+		
+		return new SimpleJsonResponse();
+	}
 
 }
 //end of ProvisioningController.java

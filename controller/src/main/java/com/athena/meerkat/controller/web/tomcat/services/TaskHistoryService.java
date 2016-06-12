@@ -31,6 +31,9 @@ public class TaskHistoryService {
 
 	@Autowired
 	private TaskHistoryDetailRepository detailRepo;
+	
+	@Autowired
+	private TomcatInstanceService tomcatService;
 
 	public TaskHistoryService() {
 
@@ -49,7 +52,19 @@ public class TaskHistoryService {
 
 	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
 
-		TaskHistory task = createTask(MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
+		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
+	}
+	
+	public TaskHistory createApplicationDeployTask(int domainId) {
+		
+		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
+
+		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_DEPLOY);
+	}
+	
+	public TaskHistory createTaskDetails(List<TomcatInstance> tomcats, int taskCdId) {
+
+		TaskHistory task = createTask(taskCdId);
 
 		save(task);
 

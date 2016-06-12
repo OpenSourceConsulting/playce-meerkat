@@ -47,8 +47,10 @@ import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -75,6 +77,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	private ApplicationService appService;
 
 
 	/**
@@ -361,12 +366,27 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "stopTomcat.xml", session);
 	}
 	
-	@Transactional
-	public void deployWar(int domainId, String warFilePath, String contextPath, WebSocketSession session) {
+
+	public void deployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+		
+		TomcatApplication app = appService.getApplication(applicationId);
+		
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		deployWar(tomcatInstance.getDomainId(), taskHistoryId, app.getWarPath(), app.getContextPath(), singleList);
+		
+	}
+	
+	public void deployWar(int domainId, int taskHistoryId, String warFilePath, String contextPath, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if(list == null){
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
@@ -378,14 +398,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("warFilePath", configFileService.getFileFullPath(warFilePath));
 				pModel.addProps("warFileName", FileUtil.getFileName(warFilePath));
 				pModel.addProps("contextPath", contextPath);
 				pModel.setLastTask(count == list.size());
 				
 				
-				runCommand(pModel, "deployWar.xml", session);
+				runCommand(pModel, "deployWar.xml", null);
 				count++;
 			}
 		} else {
