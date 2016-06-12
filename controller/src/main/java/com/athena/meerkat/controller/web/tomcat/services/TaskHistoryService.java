@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.input.Tailer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
 import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryDetailRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryRepository;
 
@@ -25,6 +31,10 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryReposito
  */
 @Service
 public class TaskHistoryService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskHistoryService.class);
+	
+	private static final String LOG_TAILER = "logTailer";
 
 	@Autowired
 	private TaskHistoryRepository repository;
@@ -135,6 +145,37 @@ public class TaskHistoryService {
 	public List<TaskHistoryDetail> getTaskHistoryDetailListByDomain(Integer domainId) {
 
 		return detailRepo.findByTomcatDomainId(domainId);
+	}
+	
+	public List<String> getLog(int taskDetailId, HttpSession session) {
+		
+		LogTailerListener listener = (LogTailerListener)session.getAttribute(LOG_TAILER);
+
+		if (listener == null) {
+			TaskHistoryDetail taskDetail = getTaskHistoryDetail(taskDetailId);
+
+			listener = new LogTailerListener(new ArrayList<String>());
+			session.setAttribute(LOG_TAILER, listener);
+			
+			long delay = 3000;
+			File file = new File(taskDetail.getLogFilePath());
+			LOGGER.debug("log file : {}", file.getAbsoluteFile());
+
+			Tailer tailer = new Tailer(file, listener, delay);
+			new Thread(tailer).start();
+		}
+		
+		List<String> logs = listener.getLogs();
+		
+		LOGGER.debug("logs size is {}", logs.size());
+		
+		if (listener.isStop()) {
+			logs.add("end");
+			session.removeAttribute(LOG_TAILER);
+		}
+		
+		return logs;
+		
 	}
 
 }

@@ -23,6 +23,9 @@
 package com.athena.meerkat.controller.web.provisioning.log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
@@ -46,8 +49,14 @@ public class LogTailerListener extends TailerListenerAdapter {
 
 	private Tailer tailer;
 	private WebSocketSession session;
-	private boolean isStop;
+	private boolean stop;
 	private boolean lastTailer;
+	private ArrayList<String> logList;
+	
+	public LogTailerListener(ArrayList<String> logList) {
+		this.lastTailer = true;
+		this.logList = logList;
+	}
 	
 	/**
 	 * <pre>
@@ -73,7 +82,7 @@ public class LogTailerListener extends TailerListenerAdapter {
 	@Override
 	public void handle(String line) {
 		
-		if(isStop){
+		if(stop){
 			LOGGER.warn("trailer already was stopped!!");
 			stop();
 			return;
@@ -83,7 +92,12 @@ public class LogTailerListener extends TailerListenerAdapter {
 			LOGGER.warn("log is null!!");
 		} else {
 			try{
-				this.session.sendMessage(new TextMessage(line));
+				if (this.session != null) {
+					this.session.sendMessage(new TextMessage(line));
+				}
+				
+				add(line);
+				
 			}catch(IOException e) {
 				LOGGER.error(e.toString(),e);
 			} finally {
@@ -101,10 +115,24 @@ public class LogTailerListener extends TailerListenerAdapter {
 		LOGGER.error(ex.toString(),ex);
 	}
 	
+	public synchronized void add(String log) {
+		if (this.logList != null) {
+			this.logList.add(log);
+		}
+	}
+	
+	public synchronized ArrayList<String> getLogs() {
+		
+		ArrayList<String> logs = (ArrayList<String>)this.logList.clone();
+		this.logList.clear();
+		
+		return logs;
+	}
+	
 	protected void stop(){
 		this.tailer.stop();
 		
-		if (this.lastTailer) {
+		if (this.session != null && this.lastTailer) {
 			try{
 				this.session.close();
 			}catch(IOException e){
@@ -112,11 +140,14 @@ public class LogTailerListener extends TailerListenerAdapter {
 			}
 		}
 		
-		isStop = true;
+		stop = true;
 		LOGGER.debug("tailer stop!!");
 	}
 
-	
+	public boolean isStop() {
+		return stop;
+	}
+
 	
 }
 //end of LogTailerListener.java
