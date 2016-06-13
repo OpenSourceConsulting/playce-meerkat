@@ -22,5 +22,5 @@ public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDe
 	
 	TaskHistoryDetail findByTaskHistoryIdAndTomcatInstanceId(int taskHistoryId, int tomcatInstanceId);
 
-	List<TaskHistoryDetail> findByTomcatDomainId(Integer domainId);
+	List<TaskHistoryDetail> findByTomcatDomainIdOrderByFinishedTimeDesc(Integer domainId);
 }

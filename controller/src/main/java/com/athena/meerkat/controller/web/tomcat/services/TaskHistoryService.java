@@ -144,7 +144,7 @@ public class TaskHistoryService {
 
 	public List<TaskHistoryDetail> getTaskHistoryDetailListByDomain(Integer domainId) {
 
-		return detailRepo.findByTomcatDomainId(domainId);
+		return detailRepo.findByTomcatDomainIdOrderByFinishedTimeDesc(domainId);
 	}
 	
 	public List<String> getLog(int taskDetailId, HttpSession session) {
