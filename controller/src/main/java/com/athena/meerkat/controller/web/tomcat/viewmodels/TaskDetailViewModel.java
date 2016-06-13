@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.athena.meerkat.controller.web.common.converter.JsonDateYMDSerializer;
+import com.athena.meerkat.controller.web.common.converter.JsonDateSerializer;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -65,15 +65,15 @@ public class TaskDetailViewModel {
 	}
 
 	public TaskDetailViewModel(TaskHistoryDetail taskDetail) {
-		
+
 		this.taskDetailId = taskDetail.getId();
-		this.name 		= taskDetail.getTomcatInstanceName();
-		this.hostName 	= taskDetail.getHostName();
-		this.ipaddress  = taskDetail.getIpaddress();
-		this.status		= taskDetail.getStatus();
-		this.logFilePath= taskDetail.getLogFilePath();
+		this.name = taskDetail.getTomcatInstanceName();
+		this.hostName = taskDetail.getHostName();
+		this.ipaddress = taskDetail.getIpaddress();
+		this.status = taskDetail.getStatus();
+		this.logFilePath = taskDetail.getLogFilePath();
 		this.leaf = true;
-		
+
 		this.finishedTime = taskDetail.getFinishedTime();
 		this.id = taskDetail.getId();
 		if (taskDetail.getTaskHistory() != null) {
@@ -183,7 +183,7 @@ public class TaskDetailViewModel {
 		this.username = username;
 	}
 
-	@JsonSerialize(using = JsonDateYMDSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFinishedTime() {
 		return finishedTime;
 	}
