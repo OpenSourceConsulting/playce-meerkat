@@ -62,7 +62,6 @@ public class TomcatDomain implements Serializable {
 	private List<TomcatInstance> tomcatInstances;
 
 	@OneToOne(mappedBy = "tomcatDomain", cascade = CascadeType.REMOVE)
-	@JsonIgnore
 	private DomainTomcatConfiguration domainTomcatConfig;
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -99,24 +98,20 @@ public class TomcatDomain implements Serializable {
 		this.id = id;
 	}
 
-	public List<TomcatInstance> getTomcats() {
-		return tomcatInstances;
-	}
-
-	public void setTomcats(List<TomcatInstance> tomcats) {
-		this.tomcatInstances = tomcats;
-	}
-
+	
 	/**
 	 * Constructor
 	 */
 	public TomcatDomain() {
 	}
 
-	// public TomcatDomain(String name, boolean is_clustering) {
-	// this.name = name;
-	// this.isClustering = is_clustering;
-	// }
+	public List<TomcatInstance> getTomcatInstances() {
+		return tomcatInstances;
+	}
+
+	public void setTomcatInstances(List<TomcatInstance> tomcatInstances) {
+		this.tomcatInstances = tomcatInstances;
+	}
 
 	public int getTomcatInstancesCount() {
 		if (tomcatInstances != null) {

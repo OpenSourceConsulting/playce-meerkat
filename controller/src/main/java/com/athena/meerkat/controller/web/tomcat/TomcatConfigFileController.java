@@ -1,8 +1,11 @@
 package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,11 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.CommonCode;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -27,14 +32,21 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @Controller
 @RequestMapping("/configfile")
 public class TomcatConfigFileController {
+	
 	@Autowired
 	private TomcatDomainService domainService;
+	
 	@Autowired
 	private CommonCodeHandler commonHandler;
+	
 	@Autowired
 	private TomcatInstanceService tomcatService;
+	
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse saveConfigFile(SimpleJsonResponse json, String content, String confType, String objType, int id, int objId) {
@@ -67,7 +79,16 @@ public class TomcatConfigFileController {
 
 		conf.setContent(content);
 		conf = tomcatConfigFileService.saveConfigFile(conf, td.getDomainTomcatConfig());
-		json.setData(conf);
+		
+		// create task
+		TaskHistory task = taskService.createConfigXmlUpdateTask(conf.getTomcatDomain().getId(), conf.getFileTypeCdId());
+		
+		Map<String, Object> resultMap= new HashMap<String, Object>();
+		resultMap.put("configFileId", conf.getId());
+		resultMap.put("task", task);
+		
+		
+		json.setData(resultMap);
 		
 		return json;
 	}

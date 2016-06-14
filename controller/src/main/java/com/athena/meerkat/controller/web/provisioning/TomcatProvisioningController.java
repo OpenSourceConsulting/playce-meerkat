@@ -25,6 +25,7 @@ package com.athena.meerkat.controller.web.provisioning;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,9 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 public class TomcatProvisioningController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningController.class);
+	
+	@Value("${meerkat.jdbc.driver.mysql}")
+    private String mysqlDriverFile;
 	
 	@Autowired
 	private TomcatProvisioningService proviService;
@@ -89,6 +93,48 @@ public class TomcatProvisioningController {
 	public SimpleJsonResponse deployWar(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, int applicationId) {
 		
 		proviService.deployWar(tomcatInstanceId, taskHistoryId, applicationId);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/undeployWar/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse undeployWar(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, int applicationId) {
+		
+		//proviService.deployWar(tomcatInstanceId, taskHistoryId, applicationId);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/updateXml/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse updateXml(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int configFileId, int taskHistoryId) {
+		
+		proviService.updateXml(tomcatInstanceId, configFileId, taskHistoryId);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/updateConfig/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse updateConfig(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
+		
+		proviService.updateTomcatInstanceConfig(tomcatInstanceId, taskHistoryId, changeRMI);
+		
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/installJDBCDriver/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse installJDBCDriver(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, String dbType) {
+		
+		String installJarName = mysqlDriverFile;
+		/*
+		if ("MySQL".equals(dbType)) {
+			installJarName = mysqlDriverFile;
+		}
+		*/
+		proviService.installJar(tomcatInstanceId, installJarName, taskHistoryId);
 		
 		return new SimpleJsonResponse();
 	}

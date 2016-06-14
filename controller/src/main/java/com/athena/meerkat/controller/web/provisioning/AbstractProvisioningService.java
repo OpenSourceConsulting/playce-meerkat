@@ -122,15 +122,23 @@ public abstract class AbstractProvisioningService {
 			/*
 			 * 2. send cmd.
 			 */
-			ProvisioningUtil.sendCommand(commanderDir, jobDir);
+			boolean isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir);
 			
 			if(task != null) {
 				task.runTask(jobDir);
 			}
+			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			//throw new RuntimeException(e);
 
 		} finally {
 			LOGGER.debug(LOG_END);
@@ -188,11 +196,19 @@ public abstract class AbstractProvisioningService {
 			/*
 			 * 2. run cmd.
 			 */
-			ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+			boolean isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			//throw new RuntimeException(e);
 
 		} finally {
 			LOGGER.debug(LOG_END);
@@ -489,7 +505,11 @@ public abstract class AbstractProvisioningService {
 	}
 	
 	protected void updateTaskStatus(ProvisionModel pModel, int status) {
-		taskService.updateTaskStatus(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), status);
+		if (pModel.getTaskHistoryId() > 0) {
+			taskService.updateTaskStatus(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), status);
+		} else {
+			LOGGER.warn("TaskHistory id is zero.");
+		}
 	}
 
 }

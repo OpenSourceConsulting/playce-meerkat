@@ -24,6 +24,7 @@ package com.athena.meerkat.controller.web.common.converter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,8 +130,10 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		} else if (object instanceof DomainTomcatConfiguration) {
 			handleEntity((DomainTomcatConfiguration) object);
+			
 		} else if (object instanceof DatagridServerGroup) {
 			handleEntity((DatagridServerGroup) object);
+			
 		} else if (object instanceof DomainAlertSetting) {
 			handleEntity((DomainAlertSetting) object);
 
@@ -139,6 +142,9 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		} else if (object instanceof TaskDetailViewModel) {
 			handleEntity((TaskDetailViewModel) object);
+			
+		} else if (object instanceof Map) {
+			handleEntity((Map<String, Object>) object);
 		} else {
 			LOGGER.debug("Not found convert method for {}", object.getClass().getName());
 		}
@@ -196,6 +202,14 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK, entity.getTaskCdId()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
+	}
+	
+	protected void handleEntity(Map<String, Object> entity) {
+
+		Object object = entity.get("task");
+		if (object instanceof TaskHistory) {
+			handleEntity((TaskHistory) object);
+		}
 	}
 
 	protected void handleResponse(SimpleJsonResponse jsRes) {

@@ -203,6 +203,7 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_WAR_UNDEPLOY = 105;
 	public static final int TASK_CD_SERVER_XML_UPDATE = 102;//update server.xml file
 	public static final int TASK_CD_CONTEXT_XML_UPDATE = 103;//update context.xml file
+	public static final int TASK_CD_TOMCAT_CONFIG_UPDATE = 104;
 	
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;

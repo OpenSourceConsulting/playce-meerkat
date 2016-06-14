@@ -265,7 +265,7 @@ public class TomcatDomainService {
 
 		TomcatConfigFile configFile = updateContextXml(domainId);
 
-		getProvService().updateXml(domainId, configFile.getId(), null);
+		getProvService().updateXml(domainId, configFile.getId(), 0, null);
 
 	}
 
