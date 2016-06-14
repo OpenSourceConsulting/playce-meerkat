@@ -1,0 +1,27 @@
+<project name="undeploy war" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# undeploy war file.
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	<property file="${basedir}/build-ssh.properties" />
+	
+
+	<target name="cmd">
+		
+		<property name="upload.path" value="${catalina.base}/temp" />
+		<property name="webapp.path" value="${catalina.base}/webapps${contextPath}" />
+		
+		<property name="cmd1" value="rm -rf ${webapp.path}*" />
+
+
+		<echo>remove ${webapp.path}</echo>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+			command="${cmd1}" trust="true" failonerror="true" />
+		
+	</target>
+
+</project>
