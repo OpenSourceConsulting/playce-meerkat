@@ -22,6 +22,10 @@
  */
 package com.athena.meerkat.controller.web.provisioning;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +37,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
+import com.athena.meerkat.controller.web.entities.TomcatApplication;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
@@ -48,86 +58,97 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 public class TomcatProvisioningController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningController.class);
-	
+
 	@Value("${meerkat.jdbc.driver.mysql}")
-    private String mysqlDriverFile;
-	
+	private String mysqlDriverFile;
+
 	@Autowired
 	private TomcatProvisioningService proviService;
-	
 	@Autowired
-	private TomcatInstanceService tomcatServer;
-	
+	private TaskHistoryService taskService;
+	@Autowired
+	private TomcatInstanceService tomcatService;
+	@Autowired
+	private ApplicationService appService;
+
 	@RequestMapping(value = "/installs/{domainId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse installs(@PathVariable("domainId") int domainId, int taskHistoryId) {
-		
+
 		proviService.installTomcatInstances(domainId, taskHistoryId, null);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
+
 	@RequestMapping(value = "/install", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse installSingleTomcat(int domainId, int serverId, int taskHistoryId) {
-		
-		TomcatInstance tomcatInstance = tomcatServer.getTomcatInstance(domainId, serverId);
-		
+
+		TomcatInstance tomcatInstance = tomcatService.getTomcatInstance(domainId, serverId);
+
 		proviService.installSingleTomcatInstance(tomcatInstance.getDomainId(), taskHistoryId, tomcatInstance);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
+
 	@RequestMapping(value = "/rework/{taskDetailId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse install(@PathVariable("taskDetailId") int taskDetailId) {
-		
+
 		proviService.rework(taskDetailId);
 
-		
 		return new SimpleJsonResponse();
 	}
-	
+
 	@RequestMapping(value = "/deployWar/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse deployWar(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, int applicationId) {
-		
+
 		proviService.deployWar(tomcatInstanceId, taskHistoryId, applicationId);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
-	@RequestMapping(value = "/undeployWar/{tomcatInstanceId}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/undeployWar", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse undeployWar(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, int applicationId) {
-		
-		//proviService.deployWar(tomcatInstanceId, taskHistoryId, applicationId);
-		
-		return new SimpleJsonResponse();
+	public SimpleJsonResponse undeployWar(SimpleJsonResponse json, int appId) {
+		//TomcatInstance tomcat = tomcatService.findOne(tomcatInstanceId);
+		TomcatApplication app = appService.getApplication(appId);
+		TomcatDomain domain = app.getTomcatDomain();
+		TaskHistory task = taskService.createApplicationUnDeployTask(domain.getId());
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("applicationId", app.getId());
+		resultMap.put("task", task);
+
+		json.setData(resultMap);
+		proviService.undeployWar(domain.getId(), task.getId(), app.getContextPath(), null);
+
+		return json;
 	}
-	
+
 	@RequestMapping(value = "/updateXml/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse updateXml(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int configFileId, int taskHistoryId) {
-		
+
 		proviService.updateXml(tomcatInstanceId, configFileId, taskHistoryId);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
+
 	@RequestMapping(value = "/updateConfig/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse updateConfig(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
-		
+
 		proviService.updateTomcatInstanceConfig(tomcatInstanceId, taskHistoryId, changeRMI);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
+
 	@RequestMapping(value = "/installJDBCDriver/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse installJDBCDriver(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, String dbType) {
-		
+
 		String installJarName = mysqlDriverFile;
 		/*
 		if ("MySQL".equals(dbType)) {
@@ -135,10 +156,9 @@ public class TomcatProvisioningController {
 		}
 		*/
 		proviService.installJar(tomcatInstanceId, installJarName, taskHistoryId);
-		
+
 		return new SimpleJsonResponse();
 	}
-	
 
 }
 //end of ProvisioningController.java

@@ -31,9 +31,9 @@ import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryReposito
  */
 @Service
 public class TaskHistoryService {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskHistoryService.class);
-	
+
 	private static final String LOG_TAILER = "logTailer";
 
 	@Autowired
@@ -41,7 +41,7 @@ public class TaskHistoryService {
 
 	@Autowired
 	private TaskHistoryDetailRepository detailRepo;
-	
+
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
@@ -64,54 +64,61 @@ public class TaskHistoryService {
 
 		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
 	}
-	
+
 	public TaskHistory createApplicationDeployTask(int domainId) {
-		
+
 		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
 
 		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_DEPLOY);
 	}
-	
+
+	public TaskHistory createApplicationUnDeployTask(int domainId) {
+
+		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
+
+		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_UNDEPLOY);
+	}
+
 	public TaskHistory createConfigXmlUpdateSingleTask(int tomcatInstanceId, int fileTypeCdId) {
-		
+
 		int taskCdId = 0;
-		
+
 		if (MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId) {
 			taskCdId = MeerkatConstants.TASK_CD_SERVER_XML_UPDATE;
 		} else if (MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == fileTypeCdId) {
 			taskCdId = MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE;
 		}
-		
+
 		TomcatInstance instance = tomcatService.findOne(tomcatInstanceId);
-		
+
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(instance);
 
 		return createTaskDetails(singleList, taskCdId);
 	}
-	
+
 	public TaskHistory createConfigXmlUpdateTask(int domainId, int fileTypeCdId) {
-		
+
 		int taskCdId = 0;
-		
+
 		if (MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId) {
 			taskCdId = MeerkatConstants.TASK_CD_SERVER_XML_UPDATE;
 		} else if (MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == fileTypeCdId) {
 			taskCdId = MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE;
 		}
-		
+
 		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
 
 		return createTaskDetails(tomcats, taskCdId);
 	}
-	
+
 	public TaskHistory createTomcatConfigUpdateTask(int domainId) {
-		
+
 		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
 
 		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE);
 	}
-	
+
 	public TaskHistory createTaskDetails(List<TomcatInstance> tomcats, int taskCdId) {
 
 		TaskHistory task = createTask(taskCdId);
@@ -119,7 +126,7 @@ public class TaskHistoryService {
 		if (tomcats.size() == 0) {
 			return task;
 		}
-		
+
 		save(task);
 
 		List<TaskHistoryDetail> taskDetails = new ArrayList<TaskHistoryDetail>();
@@ -132,11 +139,11 @@ public class TaskHistoryService {
 
 		return task;
 	}
-	
+
 	public TaskHistory createTasks(int domainId, int taskCdId) {
-		
+
 		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-		
+
 		return createTaskDetails(tomcats, taskCdId);
 	}
 
@@ -166,20 +173,18 @@ public class TaskHistoryService {
 		if (status > 1) {
 			taskDetail.setFinishedTime(new Date());
 		}
-		
+
 		saveDetail(taskDetail);
 	}
-
 
 	public void updateTomcatInstanceToNull(int tomcatInstanceId) {
 		List<TaskHistoryDetail> taskDetails = detailRepo.findByTomcatInstanceId(tomcatInstanceId);
 		for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
 			taskHistoryDetail.setTomcatInstance(null);
 		}
-		
+
 		detailRepo.save(taskDetails);
 	}
-
 
 	public TaskHistory getTaskHistory(int taskId) {
 		return repository.findOne(taskId);
@@ -188,8 +193,8 @@ public class TaskHistoryService {
 	public void delete(int taskId) {
 		repository.delete(taskId);
 	}
-	
-	public TaskHistoryDetail getTaskHistoryDetail(int taskDetailId){
+
+	public TaskHistoryDetail getTaskHistoryDetail(int taskDetailId) {
 		return detailRepo.findOne(taskDetailId);
 	}
 
@@ -197,17 +202,17 @@ public class TaskHistoryService {
 
 		return detailRepo.findByTomcatDomainIdOrderByFinishedTimeDesc(domainId);
 	}
-	
+
 	public List<String> getLog(int taskDetailId, HttpSession session) {
-		
-		LogTailerListener listener = (LogTailerListener)session.getAttribute(LOG_TAILER);
+
+		LogTailerListener listener = (LogTailerListener) session.getAttribute(LOG_TAILER);
 
 		if (listener == null) {
 			TaskHistoryDetail taskDetail = getTaskHistoryDetail(taskDetailId);
 
 			listener = new LogTailerListener(new ArrayList<String>());
 			session.setAttribute(LOG_TAILER, listener);
-			
+
 			long delay = 3000;
 			File file = new File(taskDetail.getLogFilePath());
 			LOGGER.debug("log file : {}", file.getAbsoluteFile());
@@ -215,18 +220,18 @@ public class TaskHistoryService {
 			Tailer tailer = new Tailer(file, listener, delay);
 			new Thread(tailer).start();
 		}
-		
+
 		List<String> logs = listener.getLogs();
-		
+
 		LOGGER.debug("logs size is {}", logs.size());
-		
+
 		if (listener.isStop()) {
 			logs.add("end");
 			session.removeAttribute(LOG_TAILER);
 		}
-		
+
 		return logs;
-		
+
 	}
 
 }

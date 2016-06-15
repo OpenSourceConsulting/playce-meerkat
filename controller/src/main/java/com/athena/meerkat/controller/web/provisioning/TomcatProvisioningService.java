@@ -67,20 +67,17 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningService.class);
 
-
 	@Autowired
 	private TomcatDomainService domainService;
 
 	@Autowired
 	private TomcatInstanceService instanceService;
-	
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Autowired
 	private ApplicationService appService;
-
 
 	/**
 	 * <pre>
@@ -88,14 +85,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * </pre>
 	 */
 	public TomcatProvisioningService() {
-		
+
 	}
-	
-	
+
 	/**
 	 * <pre>
 	 * for test. skip provisioning.
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @param session
 	 */
@@ -110,32 +107,33 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-	
+
 	public void rework(int taskHistoryDetailId) {
 		TaskHistoryDetail taskDetail = taskService.getTaskHistoryDetail(taskHistoryDetailId);
-		
+
 		TaskHistory taskHistory = taskDetail.getTaskHistory();
-		
+
 		if (taskDetail.getTomcatDomainId() == 0 || taskHistory.getId() == 0) {
 			throw new IllegalArgumentException("domain id and task history id must not be zero(0).");
 		}
-		
-		if(MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
+
+		if (MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
 			installSingleTomcatInstance(taskDetail.getTomcatDomainId(), taskHistory.getId(), taskDetail.getTomcatInstance());
 		}
-		
+
 	}
-	
+
 	/**
 	 * <pre>
 	 * 
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @param taskHistoryId
 	 * @param tomcatInstance
 	 */
 	public void installSingleTomcatInstance(int domainId, int taskHistoryId, TomcatInstance tomcatInstance) {
-		
+
 		Assert.notNull(tomcatInstance, "tomcatInstance must not be null.");
 
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
@@ -144,12 +142,10 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		installTomcatInstances(domainId, taskHistoryId, singleList);
 	}
 
-	
 	public void installTomcatInstances(int domainId, int taskHistoryId, List<TomcatInstance> list) {
 
-
 		int sessionGroupId = domainService.getDomain(domainId).getDataGridServerGroupId();
-		
+
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		List<DataSource> dsList = domainService.getDatasources(domainId);
 
@@ -170,25 +166,25 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
 				pModel.setLastTask(count == list.size());
-				
+
 				if (sessionGroupId > 0) {
 					pModel.setSessionServerGroupId(sessionGroupId);
 					addDollyDefaultProperties(pModel, sessionGroupId);
 				}
-				
+
 				doInstallTomcatInstance(pModel, null);
 				count++;
 			}
-			
+
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
-			
+
 		}
-		
+
 	}
 
 	private void doInstallTomcatInstance(ProvisionModel pModel, WebSocketSession session) {
@@ -202,12 +198,10 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 * 1. make job dir & copy install.xml with default.xml.
 			 */
 			copyCmds("install.xml", jobDir);
-			
+
 			if (pModel.getSessionServerGroupId() > 0) {
 				copyAntScript("installDolly.xml", jobDir);
 			}
-			
-
 
 			/*
 			 * 2. deploy agent
@@ -225,25 +219,24 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
 			instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
-			
+
 			/*
 			 * 5. install dolly agent
 			 */
 			if (pModel.getSessionServerGroupId() > 0) {
 				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
 			}
-			
+
 			if (isSuccess) {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
 			} else {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
 			}
-			
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
 			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
-			
+
 			//throw new RuntimeException(e);
 
 		} finally {
@@ -253,70 +246,70 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-	
+
 	public void updateTomcatInstanceConfig(int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
-		
+
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
-		
-		
+
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
-		
+
 		updateTomcatInstanceConfig(tomcatInstance.getDomainId(), taskHistoryId, changeRMI, singleList);
 	}
 
 	/**
 	 * <pre>
 	 * update ${catalina.base}/conf/catalina.properties
-	 * - with updating rmi config in server.xml 
+	 * - with updating rmi config in server.xml
 	 * </pre>
+	 * 
 	 * @param domainId
-	 * @param changeRMI JMX 설정변경 여부.
+	 * @param changeRMI
+	 *            JMX 설정변경 여부.
 	 * @param session
 	 */
 	public void updateTomcatInstanceConfig(int domainId, int taskHistoryId, boolean changeRMI, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		
+
 		if (list == null) {
 			list = instanceService.getTomcatListByDomainId(domainId);
 		}
-		
+
 		TomcatConfigFile confFile = configFileService.getLatestServerXmlFile(domainId);
-		
+
 		//final String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
-		
+
 		AdditionalTask addTask = null;
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
-		
+
 		if (changeRMI) {
 			updateRMIConfig(domainId, tomcatConfig);
-			
-			addTask = new AdditionalTask(){
+
+			addTask = new AdditionalTask() {
 
 				@Override
 				public void runTask(File jobDir) throws Exception {
 					ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-server.xml");
 				}
-				
+
 			};
 		}
-		
 
 		if (list != null && list.size() > 0) {
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
 				pModel.setLastTask(count == list.size());
-				
+
 				sendCommand(pModel, "updateTomcatConfig.xml", null, addTask);
 				count++;
 			}
@@ -325,24 +318,25 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-	
+
 	/**
 	 * <pre>
 	 * server.xml 의 rmi 설정을 update 한다.
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @param tomcatConfig
 	 */
 	private void updateRMIConfig(int domainId, DomainTomcatConfiguration tomcatConfig) {
-		
+
 		TomcatConfigFile serverXmlFile = configFileService.getLatestServerXmlFile(domainId);
 		String serverXml = configFileService.getConfigFileContents(serverXmlFile.getFilePath());
 		serverXmlFile.setContent(serverXml);
-		
+
 		entityManager.detach(serverXmlFile);
 		serverXmlFile.setId(0);//for insert.
 		serverXmlFile.increaseVersion();
-		
+
 		configFileService.saveConfigFile(serverXmlFile, tomcatConfig);
 	}
 
@@ -361,8 +355,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
 		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STARTING);
 		instanceService.save(tomcatInstance);// update state.
-		
-		
+
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "startTomcat.xml", session);
@@ -373,31 +366,30 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
 		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STOPPING);
 		instanceService.save(tomcatInstance);// update state.
-		
+
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "stopTomcat.xml", session);
 	}
-	
 
 	public void deployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
-		
+
 		TomcatApplication app = appService.getApplication(applicationId);
-		
+
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
-		
+
 		deployWar(tomcatInstance.getDomainId(), taskHistoryId, app.getWarPath(), app.getContextPath(), singleList);
-		
+
 	}
-	
+
 	public void deployWar(int domainId, int taskHistoryId, String warFilePath, String contextPath, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		
-		if(list == null){
+
+		if (list == null) {
 			list = instanceService.getTomcatListByDomainId(domainId);
 		}
 
@@ -410,14 +402,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("warFilePath", configFileService.getFileFullPath(warFilePath));
 				pModel.addProps("warFileName", FileUtil.getFileName(warFilePath));
 				pModel.addProps("contextPath", contextPath);
 				pModel.setLastTask(count == list.size());
-				
-				
+
 				runCommand(pModel, "deployWar.xml", null);
 				count++;
 			}
@@ -426,37 +417,68 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-	
-	public void updateXml(int tomcatInstanceId, int configFileId, int taskHistoryId) {
+
+	public void undeployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
-		
+
+		TomcatApplication app = appService.getApplication(applicationId);
+
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
-		
+		undeployWar(app.getTomcatDomain().getId(), taskHistoryId, app.getContextPath(), singleList);
+	}
+
+	public void undeployWar(int domainId, int taskHistoryId, String contextPath, List<TomcatInstance> list) {
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
+		if (list != null && list.size() > 0) {
+			int count = 1;
+			for (TomcatInstance tomcatInstance : list) {
+				ProvisionModel pModel = new ProvisionModel(0, tomcatConfig, tomcatInstance, null);
+
+				pModel.addProps("contextPath", contextPath);
+				pModel.setLastTask(count == list.size());
+				runCommand(pModel, "unDeployWar.xml", null);
+				count++;
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+	}
+
+	public void updateXml(int tomcatInstanceId, int configFileId, int taskHistoryId) {
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+
 		updateXml(tomcatInstance.getDomainId(), configFileId, taskHistoryId, singleList);
 	}
-	
+
 	/**
 	 * <pre>
 	 * server.xml or context.xml 파일을 tomcat instance 에 적용한다.
 	 * </pre>
+	 * 
 	 * @param domainId
-	 * @param configFileId 적용할 TomcatConfigFile id
+	 * @param configFileId
+	 *            적용할 TomcatConfigFile id
 	 * @param session
 	 */
 	public void updateXml(int domainId, int configFileId, int taskHistoryId, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		
+
 		if (list == null) {
 			list = instanceService.getTomcatListByDomainId(domainId);
 		}
-		
+
 		TomcatConfigFile confFile = configFileService.getTomcatConfigFileById(configFileId);
-		
+
 		String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
-		
 
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
@@ -467,11 +489,11 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
 				pModel.setLastTask(count == list.size());
-				
+
 				runDefaultTarget(pModel, targetName, null);
 				count++;
 			}
@@ -480,46 +502,46 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-	
+
 	public void installJar(int tomcatInstanceId, String installJarName, int taskHistoryId) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
-		
+
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
-		
+
 		installJar(tomcatInstance.getDomainId(), installJarName, taskHistoryId, singleList);
 	}
-	
+
 	/**
 	 * <pre>
 	 * install jar libs in catalina.base/lib
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @param session
 	 */
 	public void installJar(int domainId, String installJarName, int taskHistoryId, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
-		
+
 		if (list == null) {
 			list = instanceService.getTomcatListByDomainId(domainId);
 		}
-		
+
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
 			return;
 		}
-		
 
 		if (list != null && list.size() > 0) {
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
 				pModel.setLastTask(count == list.size());
-				
+
 				sendCommand(pModel, "installLibs.xml", null);
 				count++;
 			}
@@ -529,16 +551,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
-	
-
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		
+
 		initService();
 
 		domainService.setProvService(this);
 
 	}
 
-	
 }
