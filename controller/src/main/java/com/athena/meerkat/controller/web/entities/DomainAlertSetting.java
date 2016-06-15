@@ -37,11 +37,7 @@ public class DomainAlertSetting {
 	private String alertItemCdNm;
 	@Transient
 	private String thresholdOpCdNm;
-	@Transient
-	private boolean isAgentSetting;
 
-	@Transient
-	private boolean canEdit = true;
 
 	public boolean isStatus() {
 		return status;
@@ -97,22 +93,6 @@ public class DomainAlertSetting {
 
 	public void setThresholdOpCdNm(String thresholdOpCdNm) {
 		this.thresholdOpCdNm = thresholdOpCdNm;
-	}
-
-	public boolean isCanEdit() {
-		return canEdit;
-	}
-
-	public void setCanEdit(boolean canEdit) {
-		this.canEdit = canEdit;
-	}
-
-	public boolean isAgentSetting() {
-		return isAgentSetting;
-	}
-
-	public void setAgentSetting(boolean isAgentSetting) {
-		this.isAgentSetting = isAgentSetting;
 	}
 
 }

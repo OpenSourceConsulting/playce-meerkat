@@ -310,12 +310,7 @@ public class DomainController {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td != null) {
 			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
-			for (DomainAlertSetting alert : alertSettings) {
-				if (alert.getAlertItemCdId() == MeerkatConstants.ALERT_ITEM_AGENT) {
-					alert.setCanEdit(false);
-					alert.setAgentSetting(true);
-				}
-			}
+
 			json.setList(alertSettings);
 			json.setTotal(alertSettings.size());
 		}
