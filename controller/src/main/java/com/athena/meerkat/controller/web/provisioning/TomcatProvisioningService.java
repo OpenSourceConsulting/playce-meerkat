@@ -253,6 +253,17 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
+	
+	public void updateTomcatInstanceConfig(int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
+		
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+		
+		
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		updateTomcatInstanceConfig(tomcatInstance.getDomainId(), taskHistoryId, changeRMI, singleList);
+	}
 
 	/**
 	 * <pre>
@@ -260,19 +271,21 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * - with updating rmi config in server.xml 
 	 * </pre>
 	 * @param domainId
-	 * @param changeRMI
+	 * @param changeRMI JMX 설정변경 여부.
 	 * @param session
 	 */
-	@Transactional
-	public void updateTomcatInstanceConfig(int domainId, boolean changeRMI, WebSocketSession session) {
+	public void updateTomcatInstanceConfig(int domainId, int taskHistoryId, boolean changeRMI, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 		
 		TomcatConfigFile confFile = configFileService.getLatestServerXmlFile(domainId);
 		
-		final String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
+		//final String targetName = "update-" + configFileService.getFileTypeName(confFile.getFileTypeCdId(), 0);
 		
 		AdditionalTask addTask = null;
 
@@ -288,7 +301,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 				@Override
 				public void runTask(File jobDir) throws Exception {
-					ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+					ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-server.xml");
 				}
 				
 			};
@@ -300,11 +313,11 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
 				pModel.setLastTask(count == list.size());
 				
-				sendCommand(pModel, "updateTomcatConfig.xml", session, addTask);
+				sendCommand(pModel, "updateTomcatConfig.xml", null, addTask);
 				count++;
 			}
 		} else {
@@ -414,6 +427,15 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 	
+	public void updateXml(int tomcatInstanceId, int configFileId, int taskHistoryId) {
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+		
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		updateXml(tomcatInstance.getDomainId(), configFileId, taskHistoryId, singleList);
+	}
+	
 	/**
 	 * <pre>
 	 * server.xml or context.xml 파일을 tomcat instance 에 적용한다.
@@ -422,12 +444,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * @param configFileId 적용할 TomcatConfigFile id
 	 * @param session
 	 */
-	@Transactional
-	public void updateXml(int domainId, int configFileId, WebSocketSession session) {
+	public void updateXml(int domainId, int configFileId, int taskHistoryId, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		// List<Tomcat> TomcatInstanceService
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 		
 		TomcatConfigFile confFile = configFileService.getTomcatConfigFileById(configFileId);
 		
@@ -444,17 +468,26 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addConfFile(confFile);
 				pModel.setLastTask(count == list.size());
 				
-				runDefaultTarget(pModel, targetName, session);
+				runDefaultTarget(pModel, targetName, null);
 				count++;
 			}
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
 		}
 
+	}
+	
+	public void installJar(int tomcatInstanceId, String installJarName, int taskHistoryId) {
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+		
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		installJar(tomcatInstance.getDomainId(), installJarName, taskHistoryId, singleList);
 	}
 	
 	/**
@@ -464,12 +497,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * @param domainId
 	 * @param session
 	 */
-	@Transactional
-	public void installJar(int domainId, String installJarName, WebSocketSession session) {
+	public void installJar(int domainId, String installJarName, int taskHistoryId, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 		
 		if (tomcatConfig == null) {
 			LOGGER.warn("tomcat config is not set!!");
@@ -482,11 +516,11 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
 				pModel.setLastTask(count == list.size());
 				
-				sendCommand(pModel, "installLibs.xml", session);
+				sendCommand(pModel, "installLibs.xml", null);
 				count++;
 			}
 		} else {

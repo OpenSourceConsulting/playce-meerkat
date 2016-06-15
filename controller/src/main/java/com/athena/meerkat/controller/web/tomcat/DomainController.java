@@ -3,6 +3,7 @@ package com.athena.meerkat.controller.web.tomcat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -30,6 +31,7 @@ import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.Session;
+import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
@@ -38,6 +40,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -46,14 +49,19 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @RequestMapping("/domain")
 public class DomainController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DomainController.class);
+	
 	@Autowired
 	private TomcatDomainService domainService;
+	
 	@Autowired
 	private DataSourceService dsService;
+	
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
+	
 	@Autowired
 	private DataGridServerGroupService datagridGroupService;
+	
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
@@ -62,6 +70,9 @@ public class DomainController {
 
 	@Autowired
 	private TomcatProvisioningService proviService;
+	
+	@Autowired
+	private TaskHistoryService taskService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -98,7 +109,7 @@ public class DomainController {
 		if (isEdit) {
 			// for configure session clustering.
 			List<TomcatInstance> tomcats = tomcatService.getTomcatListByDomainId(domain.getId());
-			domain.setTomcats(tomcats);
+			domain.setTomcatInstances(tomcats);
 		}
 
 		json.setData(domain);
@@ -171,8 +182,17 @@ public class DomainController {
 			savedConfig = domainService.saveDomainTomcatConfig(domainTomcatConfig);
 		}
 		if (savedConfig != null) {
-			proviService.updateTomcatInstanceConfig(savedConfig.getTomcatDomain().getId(), changeRMI, null);
-			json.setData(savedConfig.getId());
+			//proviService.updateTomcatInstanceConfig(savedConfig.getTomcatDomain().getId(), changeRMI, null);
+			
+			TaskHistory task = taskService.createTomcatConfigUpdateTask(savedConfig.getTomcatDomain().getId());
+			
+			Map<String, Object> resultMap= new HashMap<String, Object>();
+			resultMap.put("configId", savedConfig.getId());
+			resultMap.put("task", task);
+			
+			json.setData(resultMap);
+			
+			
 		} else {
 			json.setMsg("Configuration is failed.");
 			json.setSuccess(false);

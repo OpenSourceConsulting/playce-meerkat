@@ -111,23 +111,27 @@ public class LogWebSocketHandler extends TextWebSocketHandler {
 				int taskHistoryDetailId = data.get("taskDetailId").asInt();
 				service.sendLog(session, taskHistoryDetailId);
 				
-				
-			/*} else if (MeerkatConstants.WS_EVENT_DEPLOY.equals(event)) {
+			/*
+			 * TaskWorkingWindow.js 로 변경. 아래 나중에 지울것임.
+			 * 
+			} else if (MeerkatConstants.WS_EVENT_DEPLOY.equals(event)) {
 				
 				String contextPath = data.get("contextPath").asText();
 				String warFilePath = data.get("warFilePath").asText();
 				
 				service.deployWar(domainId, warFilePath, contextPath, session);
-			*/	
+			
 			} else if (MeerkatConstants.WS_EVENT_UXMLFILE.equals(event)) {
 				
 				int configFileId = data.get("configFileId").asInt();
 				
 				service.updateXml(domainId, configFileId, session);
+			
 			} else if (MeerkatConstants.WS_EVENT_INSTALL_MYSQL_DRIVER.equals(event)) {
 				
 				
 				service.installJar(domainId, "mysql-connector-java-5.1.38.jar", session);
+			*/	
 			}
 		
 		}catch(Exception e) {

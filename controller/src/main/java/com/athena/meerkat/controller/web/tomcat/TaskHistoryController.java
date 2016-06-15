@@ -81,11 +81,13 @@ public class TaskHistoryController {
 		return rootMap;
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse save(SimpleJsonResponse jsonRes, TaskHistory taskHistory) {
+	public SimpleJsonResponse create(SimpleJsonResponse jsonRes, int domainId, int taskCdId) {
 
-		service.save(taskHistory);
+		
+		TaskHistory task = service.createTasks(domainId, taskCdId);
+		jsonRes.setData(task);
 
 		return jsonRes;
 	}

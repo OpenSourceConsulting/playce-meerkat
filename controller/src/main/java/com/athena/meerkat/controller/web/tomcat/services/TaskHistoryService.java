@@ -72,10 +72,54 @@ public class TaskHistoryService {
 		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_DEPLOY);
 	}
 	
+	public TaskHistory createConfigXmlUpdateSingleTask(int tomcatInstanceId, int fileTypeCdId) {
+		
+		int taskCdId = 0;
+		
+		if (MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId) {
+			taskCdId = MeerkatConstants.TASK_CD_SERVER_XML_UPDATE;
+		} else if (MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == fileTypeCdId) {
+			taskCdId = MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE;
+		}
+		
+		TomcatInstance instance = tomcatService.findOne(tomcatInstanceId);
+		
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(instance);
+
+		return createTaskDetails(singleList, taskCdId);
+	}
+	
+	public TaskHistory createConfigXmlUpdateTask(int domainId, int fileTypeCdId) {
+		
+		int taskCdId = 0;
+		
+		if (MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId) {
+			taskCdId = MeerkatConstants.TASK_CD_SERVER_XML_UPDATE;
+		} else if (MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == fileTypeCdId) {
+			taskCdId = MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE;
+		}
+		
+		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
+
+		return createTaskDetails(tomcats, taskCdId);
+	}
+	
+	public TaskHistory createTomcatConfigUpdateTask(int domainId) {
+		
+		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
+
+		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE);
+	}
+	
 	public TaskHistory createTaskDetails(List<TomcatInstance> tomcats, int taskCdId) {
 
 		TaskHistory task = createTask(taskCdId);
 
+		if (tomcats.size() == 0) {
+			return task;
+		}
+		
 		save(task);
 
 		List<TaskHistoryDetail> taskDetails = new ArrayList<TaskHistoryDetail>();
@@ -87,6 +131,13 @@ public class TaskHistoryService {
 		detailRepo.save(taskDetails);
 
 		return task;
+	}
+	
+	public TaskHistory createTasks(int domainId, int taskCdId) {
+		
+		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
+		
+		return createTaskDetails(tomcats, taskCdId);
 	}
 
 	public void save(TaskHistory taskHistory) {
