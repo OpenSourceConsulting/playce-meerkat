@@ -57,6 +57,9 @@ public class TomcatApplication implements Serializable, Cloneable {
 	private Date lastModifiedTime;
 	
 	private int state;
+	
+	@Column(name = "task_history_id")
+	private int taskHistoryId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
@@ -172,6 +175,14 @@ public class TomcatApplication implements Serializable, Cloneable {
 		this.deployedTime = deployedTime;
 	}
 	
+	public int getTaskHistoryId() {
+		return taskHistoryId;
+	}
+
+	public void setTaskHistoryId(int taskHistoryId) {
+		this.taskHistoryId = taskHistoryId;
+	}
+
 	@PrePersist
 	public void onPreSave(){
 		this.lastModifiedTime = new Date();

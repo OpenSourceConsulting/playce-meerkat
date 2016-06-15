@@ -77,9 +77,8 @@ public class TomcatDomain implements Serializable {
 	@JoinTable(name = "tomcat_domain_datasource", joinColumns = @JoinColumn(name = "tomcat_domain_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "datasource_id", referencedColumnName = "id"))
 	private List<DataSource> datasources;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	@JoinColumn(name = "tomcat_domain_id")
 	private List<DomainAlertSetting> alertSettings;
 
 	public String getName() {

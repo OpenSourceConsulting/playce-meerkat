@@ -79,7 +79,7 @@ ALTER TABLE `server` DROP COLUMN `datagrid_server_group_id`, DROP INDEX `fk_serv
 
 
 CREATE TABLE IF NOT EXISTS `tomcat_domain_alert` (
-  `Id` INT(11) NOT NULL,
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
   `tomcat_domain_Id` INT(11) NOT NULL,
   `alert_item_cd_id` INT(11) NULL COMMENT 'alert item code id',
   `threshold_op_cd_id` INT(11) NULL,
@@ -123,3 +123,8 @@ CREATE TABLE IF NOT EXISTS `task_history_detail` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+ALTER TABLE `tomcat_application` 
+CHARACTER SET = DEFAULT , COLLATE = DEFAULT ,
+ADD COLUMN `task_history_id` INT(11) NULL AFTER `tomcat_instance_id`;

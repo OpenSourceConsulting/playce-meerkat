@@ -27,14 +27,14 @@ public class ApplicationService {
 	public TomcatApplication getApplication(int id) {
 		return appRepo.findOne(id);
 	}
-
+/*
 	public boolean start(TomcatApplication app) {
 		boolean success = false;
 		// provisioning
 		// ....
 		app.setState(MeerkatConstants.APP_STATE_STARTED);
 		// app.setLastStartedDate(new Date());
-		this.save(app);
+		this.update(app);
 		success = true;
 		return success;
 	}
@@ -45,11 +45,12 @@ public class ApplicationService {
 		// ....
 		app.setState(MeerkatConstants.APP_STATE_STOPPED);
 		// app.setLastStoppedDate(new Date());
-		this.save(app);
+		this.update(app);
 		success = true;
 		return success;
 	}
-
+	*/
+	
 	/**
 	 * <pre>
 	 * save to filesystem and db
@@ -57,7 +58,7 @@ public class ApplicationService {
 	 * @param app
 	 * @return saved war file path.
 	 */
-	public TomcatApplication save(TomcatApplication app) {
+	public TomcatApplication saveFileAndData(TomcatApplication app) {
 		
 		MultipartFile warFile = app.getWarFile();
 		String filePath = tcfService.getDomainFilePath(app.getTomcatDomain().getId(), null) + File.separator + warFile.getOriginalFilename();
@@ -83,6 +84,10 @@ public class ApplicationService {
 		appRepo.save(app);
 		
 		return app;
+	}
+	
+	public void update(TomcatApplication app) {
+		appRepo.save(app);
 	}
 
 	public boolean delete(TomcatApplication app) {

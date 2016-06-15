@@ -40,6 +40,7 @@ import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
+import com.athena.meerkat.controller.web.tomcat.services.DomainAlertSettingService;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -73,6 +74,9 @@ public class DomainController {
 	
 	@Autowired
 	private TaskHistoryService taskService;
+	
+	@Autowired
+	private DomainAlertSettingService alertService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -320,7 +324,7 @@ public class DomainController {
 	@RequestMapping(value = "/alert", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getAlert(SimpleJsonResponse json, Integer alertId) {
-		DomainAlertSetting alert = domainService.getDomainAlert(alertId);
+		DomainAlertSetting alert = alertService.getDomainAlert(alertId);
 		json.setData(alert);
 		return json;
 	}
@@ -328,13 +332,11 @@ public class DomainController {
 	@RequestMapping(value = "/alert/changeStatus", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse changeStatus(SimpleJsonResponse json, Integer alertId, boolean status) {
-		DomainAlertSetting alert = domainService.getDomainAlert(alertId);
+		DomainAlertSetting alert = alertService.getDomainAlert(alertId);
 		if (alert != null) {
 			alert.setStatus(status);
-			/**
-			 * TODO: kwon provisoning
-			 */
-			alert = domainService.saveAlertSetting(alert);
+
+			alert = alertService.saveAlertSetting(alert);
 			json.setData(alert.isStatus());
 		}
 		return json;
@@ -350,10 +352,8 @@ public class DomainController {
 				alert.setStatus(status);
 			}
 
-			/**
-			 * TODO: kwon provisoning
-			 */
-			domainService.saveAllAlertSettings(alertSettings);
+
+			alertService.saveAllAlertSettings(alertSettings);
 		}
 		return json;
 	}
@@ -377,7 +377,7 @@ public class DomainController {
 			return json;
 		}
 		alert.setStatus(false);
-		domainService.saveAlertSetting(alert);
+		alertService.saveAlertSetting(alert);
 		return json;
 	}
 }

@@ -37,10 +37,13 @@ public class ApplicationController {
 	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
 		
 		
-		TomcatApplication tApp = appService.save(app);
+		TomcatApplication tApp = appService.saveFileAndData(app);
 		
 		
 		TaskHistory task = taskService.createApplicationDeployTask(app.getTomcatDomain().getId());
+		
+		tApp.setTaskHistoryId(task.getId());
+		appService.update(app);
 		
 		Map<String, Object> resultMap= new HashMap<String, Object>();
 		resultMap.put("applicationId", tApp.getId());
@@ -68,7 +71,7 @@ public class ApplicationController {
 		}
 		return json;
 	}
-
+/*
 	@RequestMapping("/start")
 	public @ResponseBody SimpleJsonResponse start(SimpleJsonResponse json,
 			int id) {
@@ -139,7 +142,7 @@ public class ApplicationController {
 
 		return json;
 	}
-
+*/
 	@RequestMapping("/list")
 	public @ResponseBody SimpleJsonResponse getAppListByDomain(
 			SimpleJsonResponse json, int domainId) {

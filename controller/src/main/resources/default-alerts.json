@@ -1,0 +1,24 @@
+[{
+	"alertItemCdId": 18,
+	"thresholdOpCdId": 16,
+	"thresholdValue": 80,
+	"status": false
+},
+{
+	"alertItemCdId": 19,
+	"thresholdOpCdId": 16,
+	"thresholdValue": 80,
+	"status": false
+},
+{
+	"alertItemCdId": 20,
+	"thresholdOpCdId": 16,
+	"thresholdValue": 80,
+	"status": false
+},
+{
+	"alertItemCdId": 21,
+	"thresholdOpCdId": 0,
+	"thresholdValue": null,
+	"status": true
+}]
