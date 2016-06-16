@@ -436,8 +436,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		if (list != null && list.size() > 0) {
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				ProvisionModel pModel = new ProvisionModel(0, tomcatConfig, tomcatInstance, null);
-
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
+					
 				pModel.addProps("contextPath", contextPath);
 				pModel.setLastTask(count == list.size());
 				runCommand(pModel, "unDeployWar.xml", null);
