@@ -30,9 +30,9 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.common.MeerkatUtils;
+import com.athena.meerkat.controller.web.monitoring.MonitoringData;
 
 /**
  * <pre>
@@ -45,7 +45,7 @@ import com.athena.meerkat.controller.common.MeerkatUtils;
 @Entity
 @Table(name = "mon_jmx_tbl")
 @IdClass(MonJmxPK.class)
-public class MonJmx {
+public class MonJmx implements MonitoringData{
 
 	@Id
 	@Column(name = "mon_factor_id")

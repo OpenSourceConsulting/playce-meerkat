@@ -21,6 +21,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 
 /**
@@ -42,6 +43,9 @@ public class MonJmxController {
 
 	@Autowired
 	private DataSourceService dsService;
+	
+	@Autowired
+	private MonStatisticsAnalyzer monAnalyzer;
 
 	/**
 	 * <pre>
@@ -62,7 +66,7 @@ public class MonJmxController {
 		service.insertMonJmxs(monJmxs);
 		service.saveInstanceState(monJmxs);
 
-		LOGGER.debug("saved. ----------------");
+		monAnalyzer.analyze(monJmxs);
 
 		return jsonRes;
 	}

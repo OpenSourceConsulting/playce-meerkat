@@ -34,6 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.common.MeerkatUtils;
+import com.athena.meerkat.controller.web.monitoring.MonitoringData;
 
 /**
  * <pre>
@@ -46,7 +47,7 @@ import com.athena.meerkat.controller.common.MeerkatUtils;
 @Entity
 @Table(name = "mon_data_tbl")
 @IdClass(MonDataPK.class)
-public class MonData implements Serializable {
+public class MonData implements Serializable, MonitoringData {
 
 	private static final long serialVersionUID = 8781936650855661482L;
 

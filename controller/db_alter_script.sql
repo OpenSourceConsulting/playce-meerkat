@@ -128,3 +128,14 @@ ENGINE = InnoDB;
 ALTER TABLE `tomcat_application` 
 CHARACTER SET = DEFAULT , COLLATE = DEFAULT ,
 ADD COLUMN `task_history_id` INT(11) NULL AFTER `tomcat_instance_id`;
+
+
+CREATE TABLE IF NOT EXISTS `mon_util_stat` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `server_id` INT NULL,
+  `tomcat_instance_id` INT NULL,
+  `mon_factor_id` VARCHAR(40) NOT NULL,
+  `mon_value` DOUBLE NULL DEFAULT 0 COMMENT 'percentage value.',
+  `update_dt` DATETIME NULL COMMENT '최근 업데이트 일시.',
+  PRIMARY KEY (`Id`))
+ENGINE = InnoDB;

@@ -30,7 +30,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.athena.meerkat.controller.web.monitoring.MonitoringData;
 
 /**
  * <pre>
@@ -43,7 +44,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "mon_fs_tbl")
 @IdClass(MonFsPK.class)
-public class MonFs {
+public class MonFs implements MonitoringData{
 
 	@Id
 	@Column(name = "server_id")
