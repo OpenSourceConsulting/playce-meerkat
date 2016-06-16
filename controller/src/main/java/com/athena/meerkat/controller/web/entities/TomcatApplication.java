@@ -73,8 +73,7 @@ public class TomcatApplication implements Serializable, Cloneable {
 	@JsonIgnore
 	@Transient
 	private MultipartFile warFile;
-	@Transient
-	private int domainId;
+
 
 	/**
 	 * Constructor

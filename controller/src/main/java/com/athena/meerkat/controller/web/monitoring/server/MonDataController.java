@@ -3,13 +3,10 @@ package com.athena.meerkat.controller.web.monitoring.server;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.jgroups.util.Average;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,8 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.monitoring.MonitoringData;
+import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -53,6 +52,9 @@ public class MonDataController {
 
 	@Autowired
 	private TomcatInstanceService tiService;
+	
+	@Autowired
+	private MonStatisticsAnalyzer monAnalyzer;
 
 	/**
 	 * <pre>
@@ -97,13 +99,10 @@ public class MonDataController {
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
 
 		List<MonData> monDatas = copyProperties(datas);
-		//recalculate  
-		for (MonData data : monDatas) {
-
-		}
+		
 		service.insertMonDatas(monDatas);
-
-		LOGGER.debug("saved. ----------------");
+		
+		monAnalyzer.analyze(monDatas);
 
 		return jsonRes;
 	}
@@ -118,7 +117,7 @@ public class MonDataController {
 
 		service.saveMonFsList(monFsList);
 
-		LOGGER.debug("saved fs. ----------------");
+		monAnalyzer.analyze(monFsList);
 
 		return jsonRes;
 	}

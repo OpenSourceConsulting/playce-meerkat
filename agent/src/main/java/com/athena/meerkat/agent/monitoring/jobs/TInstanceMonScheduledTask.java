@@ -187,8 +187,8 @@ public class TInstanceMonScheduledTask extends MonitoringTask{
 	private void monitorTomcatCpu(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
 		
 		
-		Object used = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_PROC_CPU);
-		Object sysCpuUsed = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_SYS_CPU);
+		Object used = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_PROC_CPU);//returns the CPU usage of the JVM
+		Object sysCpuUsed = mbeanServerConn.getAttribute(cpuObj, JMX_ATTR_SYS_CPU);// returns the CPU usage of the whole system
 		
 		double usedVal = parseDouble(used) * 100d;
 		double sysVal = parseDouble(sysCpuUsed) * 100d;
