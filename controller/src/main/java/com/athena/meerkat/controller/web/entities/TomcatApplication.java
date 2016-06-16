@@ -39,31 +39,31 @@ public class TomcatApplication implements Serializable, Cloneable {
 	@Column(name = "Id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
-	
+
 	@Column(name = "context_path")
 	private String contextPath;
-	
+
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@Column(name = "deployed_time")
 	private Date deployedTime;
-	
+
 	@Column(name = "version")
 	private String version;
-	
+
 	@Column(name = "war_path")
 	private String warPath;
-	
+
 	@Column(name = "last_modified_time")
 	private Date lastModifiedTime;
-	
+
 	private int state;
-	
+
 	@Column(name = "task_history_id")
 	private int taskHistoryId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	// using this annotation to prevent Infinite recursion json mapping
-	@JsonBackReference(value="inst-app")
+	@JsonBackReference(value = "inst-app")
 	private TomcatInstance tomcatInstance;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -73,13 +73,15 @@ public class TomcatApplication implements Serializable, Cloneable {
 	@JsonIgnore
 	@Transient
 	private MultipartFile warFile;
+	@Transient
+	private int domainId;
 
 	/**
 	 * Constructor
 	 */
 	public TomcatApplication() {
 	}
-	
+
 	public MultipartFile getWarFile() {
 		return warFile;
 	}
@@ -174,7 +176,7 @@ public class TomcatApplication implements Serializable, Cloneable {
 	public void setDeployedTime(Date deployedTime) {
 		this.deployedTime = deployedTime;
 	}
-	
+
 	public int getTaskHistoryId() {
 		return taskHistoryId;
 	}
@@ -184,7 +186,7 @@ public class TomcatApplication implements Serializable, Cloneable {
 	}
 
 	@PrePersist
-	public void onPreSave(){
+	public void onPreSave() {
 		this.lastModifiedTime = new Date();
 		this.deployedTime = new Date();
 	}

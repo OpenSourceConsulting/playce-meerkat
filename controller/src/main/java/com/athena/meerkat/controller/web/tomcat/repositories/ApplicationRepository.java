@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 
 @Repository
-public interface ApplicationRepository extends
-		JpaRepository<TomcatApplication, Integer> {
+public interface ApplicationRepository extends JpaRepository<TomcatApplication, Integer> {
 
 	List<TomcatApplication> findByTomcatDomain_Id(int domainId);
 
@@ -17,4 +16,7 @@ public interface ApplicationRepository extends
 	// int domainId);
 
 	List<TomcatApplication> findByTomcatInstance_Id(int tomcatId);
+
+	TomcatApplication findByContextPathAndTomcatDomain_Id(String contextPath, int domainId);
+
 }

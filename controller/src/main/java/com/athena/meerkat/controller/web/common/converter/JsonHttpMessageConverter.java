@@ -237,8 +237,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	protected void handleResponse(GridJsonResponse jsRes) {
 
 		List<Object> list = (List<Object>) jsRes.getList();
-
-		if (list.size() > 0) {
+		
+		if (list !=null && list.size() > 0) {
 
 			for (Object object : list) {
 				handleObject(object);

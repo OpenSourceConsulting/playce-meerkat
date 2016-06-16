@@ -1,6 +1,5 @@
 package com.athena.meerkat.controller.web.tomcat;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
@@ -25,34 +23,42 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService appService;
-	
+
 	@Autowired
 	private TomcatDomainService domainService;
-	
+
 	@Autowired
 	private TaskHistoryService taskService;
-	
+
 	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app) {
-		
-		
-		TomcatApplication tApp = appService.saveFileAndData(app);
-		
-		
+	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app, boolean update) {
+
+		TomcatApplication dbApp = appService.getApplicationByContextPathAndDomainId(app.getContextPath(), app.getTomcatDomain().getId());
+		if (!update) {
+			if (dbApp != null) {
+				json.setMsg("Application exists.");
+
+				json.setData(app);
+				json.setSuccess(false);
+				return json;
+			}
+		}
+
+		dbApp = app;
+		TomcatApplication tApp = appService.saveFileAndData(dbApp);
+
 		TaskHistory task = taskService.createApplicationDeployTask(app.getTomcatDomain().getId());
-		
+
 		tApp.setTaskHistoryId(task.getId());
 		appService.update(app);
-		
-		Map<String, Object> resultMap= new HashMap<String, Object>();
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("applicationId", tApp.getId());
 		resultMap.put("task", task);
-		
-		
+
 		json.setData(resultMap);
-		
-		
+
 		return json;
 	}
 
@@ -71,81 +77,81 @@ public class ApplicationController {
 		}
 		return json;
 	}
-/*
-	@RequestMapping("/start")
-	public @ResponseBody SimpleJsonResponse start(SimpleJsonResponse json,
-			int id) {
-		TomcatApplication app = appService.getApplication(id);
-		if (app == null) {
-			json.setSuccess(false);
-			json.setMsg("Application does not exist.");
+
+	/*
+		@RequestMapping("/start")
+		public @ResponseBody SimpleJsonResponse start(SimpleJsonResponse json,
+				int id) {
+			TomcatApplication app = appService.getApplication(id);
+			if (app == null) {
+				json.setSuccess(false);
+				json.setMsg("Application does not exist.");
+				return json;
+			}
+
+			if (app.getState() == MeerkatConstants.APP_STATE_STARTED) {
+				json.setSuccess(false);
+				json.setMsg("Application has been already started.");
+				return json;
+			}
+
+			if (appService.start(app)) {
+				json.setSuccess(true);
+				json.setData(MeerkatConstants.APP_STATE_STARTED);
+			}
 			return json;
 		}
 
-		if (app.getState() == MeerkatConstants.APP_STATE_STARTED) {
-			json.setSuccess(false);
-			json.setMsg("Application has been already started.");
-			return json;
-		}
+		@RequestMapping("/stop")
+		public @ResponseBody SimpleJsonResponse stop(SimpleJsonResponse json, int id) {
+			TomcatApplication app = appService.getApplication(id);
+			if (app == null) {
+				json.setSuccess(false);
+				json.setMsg("Application does not exist.");
+				return json;
+			}
 
-		if (appService.start(app)) {
-			json.setSuccess(true);
-			json.setData(MeerkatConstants.APP_STATE_STARTED);
-		}
-		return json;
-	}
+			if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
+				json.setSuccess(false);
+				json.setMsg("Application has been already stopped.");
+				return json;
+			}
 
-	@RequestMapping("/stop")
-	public @ResponseBody SimpleJsonResponse stop(SimpleJsonResponse json, int id) {
-		TomcatApplication app = appService.getApplication(id);
-		if (app == null) {
-			json.setSuccess(false);
-			json.setMsg("Application does not exist.");
-			return json;
-		}
-
-		if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
-			json.setSuccess(false);
-			json.setMsg("Application has been already stopped.");
-			return json;
-		}
-
-		if (appService.stop(app)) {
-			json.setSuccess(true);
-			json.setData(MeerkatConstants.APP_STATE_STOPPED);
-		}
-		return json;
-	}
-
-	@RequestMapping("/restart")
-	public @ResponseBody SimpleJsonResponse restart(SimpleJsonResponse json,
-			int id) {
-		TomcatApplication app = appService.getApplication(id);
-		if (app == null) {
-			json.setSuccess(false);
-			json.setMsg("Application does not exist.");
-			return json;
-		}
-
-		if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
-			json.setSuccess(false);
-			json.setMsg("Application has been already stopped.");
-			return json;
-		} else {
 			if (appService.stop(app)) {
-				if (appService.start(app)) {
-					json.setSuccess(true);
-					json.setData(MeerkatConstants.APP_STATE_STARTED);
+				json.setSuccess(true);
+				json.setData(MeerkatConstants.APP_STATE_STOPPED);
+			}
+			return json;
+		}
+
+		@RequestMapping("/restart")
+		public @ResponseBody SimpleJsonResponse restart(SimpleJsonResponse json,
+				int id) {
+			TomcatApplication app = appService.getApplication(id);
+			if (app == null) {
+				json.setSuccess(false);
+				json.setMsg("Application does not exist.");
+				return json;
+			}
+
+			if (app.getState() == MeerkatConstants.APP_STATE_STOPPED) {
+				json.setSuccess(false);
+				json.setMsg("Application has been already stopped.");
+				return json;
+			} else {
+				if (appService.stop(app)) {
+					if (appService.start(app)) {
+						json.setSuccess(true);
+						json.setData(MeerkatConstants.APP_STATE_STARTED);
+					}
 				}
 			}
-		}
 
-		return json;
-	}
-*/
+			return json;
+		}
+	*/
 	@RequestMapping("/list")
-	public @ResponseBody SimpleJsonResponse getAppListByDomain(
-			SimpleJsonResponse json, int domainId) {
+	public @ResponseBody SimpleJsonResponse getAppListByDomain(SimpleJsonResponse json, int domainId) {
 		TomcatDomain domain = domainService.getDomain(domainId);
 		if (domain == null) {
 			json.setSuccess(false);
