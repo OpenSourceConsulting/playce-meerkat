@@ -109,20 +109,14 @@ public class TomcatProvisioningController {
 		return new SimpleJsonResponse();
 	}
 
-	@RequestMapping(value = "/undeployWar", method = RequestMethod.POST)
+	@RequestMapping(value = "/undeployWar/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse undeployWar(SimpleJsonResponse json, int appId) {
-		//TomcatInstance tomcat = tomcatService.findOne(tomcatInstanceId);
+	public SimpleJsonResponse undeployWar(SimpleJsonResponse json, @PathVariable int tomcatInstanceId, int appId, int taskId) {
+		TomcatInstance tomcat = tomcatService.findOne(tomcatInstanceId);
 		TomcatApplication app = appService.getApplication(appId);
 		TomcatDomain domain = app.getTomcatDomain();
-		TaskHistory task = taskService.createApplicationUnDeployTask(domain.getId());
-
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("applicationId", app.getId());
-		resultMap.put("task", task);
-
-		json.setData(resultMap);
-		proviService.undeployWar(domain.getId(), task.getId(), app.getContextPath(), null);
+		TaskHistory task = taskService.getTaskHistory(taskId);
+		proviService.undeployWar(tomcat.getId(), task.getId(), app);
 
 		return json;
 	}

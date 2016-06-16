@@ -418,11 +418,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
-	public void undeployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {
+	public void undeployWar(int tomcatInstanceId, int taskHistoryId, TomcatApplication app) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
-
-		TomcatApplication app = appService.getApplication(applicationId);
-
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
 		undeployWar(app.getTomcatDomain().getId(), taskHistoryId, app.getContextPath(), singleList);
@@ -437,7 +434,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
-					
+
 				pModel.addProps("contextPath", contextPath);
 				pModel.setLastTask(count == list.size());
 				runCommand(pModel, "unDeployWar.xml", null);
