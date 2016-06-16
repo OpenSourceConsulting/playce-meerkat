@@ -112,11 +112,10 @@ public class TomcatProvisioningController {
 	@RequestMapping(value = "/undeployWar/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse undeployWar(SimpleJsonResponse json, @PathVariable int tomcatInstanceId, int appId, int taskId) {
-		TomcatInstance tomcat = tomcatService.findOne(tomcatInstanceId);
+		
 		TomcatApplication app = appService.getApplication(appId);
-		TomcatDomain domain = app.getTomcatDomain();
-		TaskHistory task = taskService.getTaskHistory(taskId);
-		proviService.undeployWar(tomcat.getId(), task.getId(), app);
+
+		proviService.undeployWar(tomcatInstanceId, taskId, app);
 
 		return json;
 	}
