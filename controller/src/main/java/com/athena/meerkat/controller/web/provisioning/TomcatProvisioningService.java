@@ -51,6 +51,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -78,6 +79,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	@Autowired
 	private ApplicationService appService;
+	
+	@Autowired
+	private TomcatConfigFileService confFileService;
 
 	/**
 	 * <pre>
@@ -119,6 +123,23 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 		if (MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
 			installSingleTomcatInstance(taskDetail.getTomcatDomainId(), taskHistory.getId(), taskDetail.getTomcatInstance());
+			
+			
+		} else if (MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE == taskHistory.getTaskCdId()) {
+			
+			updateTomcatInstanceConfig(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), true);
+			
+		} else if (MeerkatConstants.TASK_CD_SERVER_XML_UPDATE == taskHistory.getTaskCdId()) {
+			
+			TomcatConfigFile confFile = confFileService.getLatestServerXmlFile(taskDetail.getTomcatDomainId());
+			
+			updateXml(taskDetail.getTomcatInstance().getId(), confFile.getId(), taskHistory.getId());
+			
+		} else if (MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE == taskHistory.getTaskCdId()) {
+			
+			TomcatConfigFile confFile = confFileService.getLatestContextXmlFile(taskDetail.getTomcatDomainId());
+			
+			updateXml(taskDetail.getTomcatInstance().getId(), confFile.getId(), taskHistory.getId());
 			
 		} else if (MeerkatConstants.TASK_CD_WAR_DEPLOY == taskHistory.getTaskCdId()) {
 			
@@ -277,7 +298,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * 
 	 * @param domainId
 	 * @param changeRMI
-	 *            JMX 설정변경 여부.
+	 *            JMX 설정변경 여부. true 이면 server.xml파일의 jmx 설정을 변경하고 추가 업데이트 시킨다.
 	 * @param session
 	 */
 	public void updateTomcatInstanceConfig(int domainId, int taskHistoryId, boolean changeRMI, List<TomcatInstance> list) {
@@ -301,7 +322,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 		if (changeRMI) {
-			updateRMIConfig(domainId, tomcatConfig);
+			updateJMXConfig(domainId, tomcatConfig);
 
 			addTask = new AdditionalTask() {
 
@@ -333,13 +354,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	/**
 	 * <pre>
-	 * server.xml 의 rmi 설정을 update 한다.
+	 * server.xml 의  jmx 설정을 update 한다.
 	 * </pre>
 	 * 
 	 * @param domainId
 	 * @param tomcatConfig
 	 */
-	private void updateRMIConfig(int domainId, DomainTomcatConfiguration tomcatConfig) {
+	private void updateJMXConfig(int domainId, DomainTomcatConfiguration tomcatConfig) {
 
 		TomcatConfigFile serverXmlFile = configFileService.getLatestServerXmlFile(domainId);
 		String serverXml = configFileService.getConfigFileContents(serverXmlFile.getFilePath());
@@ -349,7 +370,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		serverXmlFile.setId(0);//for insert.
 		serverXmlFile.increaseVersion();
 
-		configFileService.saveConfigFile(serverXmlFile, tomcatConfig);
+		configFileService.saveConfigXmlFile(serverXmlFile, tomcatConfig);
 	}
 
 	@Transactional

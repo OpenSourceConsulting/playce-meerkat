@@ -82,7 +82,7 @@ public class TomcatConfigFileService {
 
 	/**
 	 * <pre>
-	 * server.xml or context.xml 파일을 db & filesystem 같이 저장한다.
+	 * server.xml or context.xml 파일을 db & filesystem에 같이 저장한다.
 	 * - version 을 증가시키지는 않는다.
 	 * - xmlConfig 의 content field 가 not null 이어야 함.
 	 * </pre>
@@ -91,7 +91,7 @@ public class TomcatConfigFileService {
 	 * @return
 	 */
 	@Transactional
-	public TomcatConfigFile saveConfigFile(TomcatConfigFile xmlConfig, DomainTomcatConfiguration tomcatConf) {
+	public TomcatConfigFile saveConfigXmlFile(TomcatConfigFile xmlConfig, DomainTomcatConfiguration tomcatConf) {
 
 		/*
 		 * save to filesystem.
@@ -101,7 +101,7 @@ public class TomcatConfigFileService {
 
 		File newFile = new File(getFileFullPath(filePath));
 
-		updateRMIConfig(tomcatConf, xmlConfig, xmlConfig.getContent());
+		modifyJMXConfig(tomcatConf, xmlConfig, xmlConfig.getContent());
 
 		try {
 			FileUtils.writeStringToFile(newFile, xmlConfig.getContent(), MeerkatConstants.UTF8);
@@ -118,15 +118,18 @@ public class TomcatConfigFileService {
 
 	/**
 	 * <pre>
-	 * server.xml 의 rmi 설정 주석 update.
+	 * server.xml 의 jmx 설정 주석 update.
+	 * - jmx enable 설정 변경이 없다면 변경하지 않는다.
+	 * - 다른 파일은 skip 한다.
 	 * </pre>
 	 * 
 	 * @param conf
 	 * @param confContents
 	 */
-	private void updateRMIConfig(DomainTomcatConfiguration tomcatConfig, TomcatConfigFile xmlConfig, String confContents) {
+	private void modifyJMXConfig(DomainTomcatConfiguration tomcatConfig, TomcatConfigFile xmlConfig, String confContents) {
 
 		if (MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD != xmlConfig.getFileTypeCdId()) {
+			// skip other file.
 			return;
 		}
 
@@ -209,8 +212,8 @@ public class TomcatConfigFileService {
 		TomcatConfigFile contextXml = createNewTomcatConfigFile(tomcatVersion, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
 		contextXml.setDominaId(domainId);
 
-		saveConfigFile(serverXml, conf);
-		saveConfigFile(contextXml, conf);
+		saveConfigXmlFile(serverXml, conf);
+		saveConfigXmlFile(contextXml, conf);
 	}
 
 	private TomcatConfigFile createNewTomcatConfigFile(String tomcatVersion, int fileTypeCdId) {

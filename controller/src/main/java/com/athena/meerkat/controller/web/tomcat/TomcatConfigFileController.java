@@ -78,7 +78,7 @@ public class TomcatConfigFileController {
 		}
 
 		conf.setContent(content);
-		conf = tomcatConfigFileService.saveConfigFile(conf, td.getDomainTomcatConfig());
+		conf = tomcatConfigFileService.saveConfigXmlFile(conf, td.getDomainTomcatConfig());
 		
 		// create task
 		TaskHistory task = taskService.createConfigXmlUpdateTask(conf.getTomcatDomain().getId(), conf.getFileTypeCdId());
