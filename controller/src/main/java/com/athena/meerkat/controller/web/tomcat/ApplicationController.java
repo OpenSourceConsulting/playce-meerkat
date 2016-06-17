@@ -34,7 +34,7 @@ public class ApplicationController {
 	@ResponseBody
 	public SimpleJsonResponse deploy(SimpleJsonResponse json, TomcatApplication app, boolean update) {
 
-		TomcatApplication dbApp = appService.getApplicationByContextPathAndDomainId(app.getContextPath(), app.getTomcatDomain().getId());
+		TomcatApplication dbApp = appService.getApplication(app.getContextPath(), app.getTomcatDomain().getId());
 		if (!update) {
 			if (dbApp != null) {
 				json.setMsg("Application exists.");

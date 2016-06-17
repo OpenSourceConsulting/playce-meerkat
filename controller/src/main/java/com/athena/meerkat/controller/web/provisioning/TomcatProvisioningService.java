@@ -119,6 +119,18 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 		if (MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
 			installSingleTomcatInstance(taskDetail.getTomcatDomainId(), taskHistory.getId(), taskDetail.getTomcatInstance());
+			
+		} else if (MeerkatConstants.TASK_CD_WAR_DEPLOY == taskHistory.getTaskCdId()) {
+			
+			TomcatApplication app = appService.getApplicationByTask(taskHistory.getId());
+			
+			deployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app.getId());
+			
+		} else if (MeerkatConstants.TASK_CD_WAR_UNDEPLOY == taskHistory.getTaskCdId()) {
+			
+			TomcatApplication app = appService.getApplicationByTask(taskHistory.getId());
+			
+			undeployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app);
 		}
 
 	}

@@ -98,7 +98,11 @@ public class ApplicationService {
 
 	}
 
-	public TomcatApplication getApplicationByContextPathAndDomainId(String contextPath, int domainId) {
+	public TomcatApplication getApplication(String contextPath, int domainId) {
 		return appRepo.findByContextPathAndTomcatDomain_Id(contextPath, domainId);
+	}
+	
+	public TomcatApplication getApplicationByTask(int taskHistoryId) {
+		return appRepo.findByTaskHistoryId(taskHistoryId);
 	}
 }

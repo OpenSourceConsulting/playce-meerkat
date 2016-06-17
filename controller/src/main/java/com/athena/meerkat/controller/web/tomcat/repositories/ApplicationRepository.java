@@ -18,5 +18,7 @@ public interface ApplicationRepository extends JpaRepository<TomcatApplication, 
 	List<TomcatApplication> findByTomcatInstance_Id(int tomcatId);
 
 	TomcatApplication findByContextPathAndTomcatDomain_Id(String contextPath, int domainId);
+	
+	TomcatApplication findByTaskHistoryId(int taskHistoryId);
 
 }
