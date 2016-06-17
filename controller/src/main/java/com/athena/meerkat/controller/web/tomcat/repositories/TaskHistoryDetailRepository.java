@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +24,6 @@ public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDe
 	TaskHistoryDetail findByTaskHistoryIdAndTomcatInstanceId(int taskHistoryId, int tomcatInstanceId);
 
 	List<TaskHistoryDetail> findByTomcatDomainIdOrderByFinishedTimeDesc(Integer domainId);
+	
+	List<TaskHistoryDetail> findByTomcatDomainIdAndTomcatInstanceIdNotNullAndFinishedTimeBetweenOrderByFinishedTimeDesc(int domainId, Date from, Date to);
 }

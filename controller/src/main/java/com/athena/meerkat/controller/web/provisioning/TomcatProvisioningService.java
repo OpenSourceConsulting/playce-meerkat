@@ -112,6 +112,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
+	/**
+	 * <pre>
+	 * 실패 task 를 재실행한다.
+	 * </pre>
+	 * @param taskHistoryDetailId
+	 */
 	public void rework(int taskHistoryDetailId) {
 		TaskHistoryDetail taskDetail = taskService.getTaskHistoryDetail(taskHistoryDetailId);
 
@@ -251,8 +257,6 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 */
 			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
-			instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
-
 			/*
 			 * 5. install dolly agent
 			 */
@@ -261,6 +265,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			}
 
 			if (isSuccess) {
+				instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
 			} else {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);

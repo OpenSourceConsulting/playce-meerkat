@@ -89,6 +89,9 @@ public class TomcatInstance implements Serializable {
 
 	@Column(name = "server_id", insertable = false, updatable = false)
 	private int serverId;
+	
+	@Column(name = "task_history_id")
+	private int lastTaskHistoryId;// last task id (maybe install or remove task).
 
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonManagedReference(value = "inst-configFile")
@@ -265,6 +268,14 @@ public class TomcatInstance implements Serializable {
 
 	public void setTomcatConfigs(List<TomcatInstConfig> tomcatConfigs) {
 		this.tomcatConfigs = tomcatConfigs;
+	}
+
+	public int getLastTaskHistoryId() {
+		return lastTaskHistoryId;
+	}
+
+	public void setLastTaskHistoryId(int lastTaskHistoryId) {
+		this.lastTaskHistoryId = lastTaskHistoryId;
 	}
 
 	@PrePersist

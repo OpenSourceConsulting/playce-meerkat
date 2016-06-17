@@ -123,7 +123,7 @@ public class TaskHistoryController {
 	@ResponseBody
 	public GridJsonResponse getByDomain(GridJsonResponse jsonRes, @PathVariable Integer domainId) {
 		List<TaskDetailViewModel> viewmodels = new ArrayList<>();
-		List<TaskHistoryDetail> list = service.getTaskHistoryDetailListByDomain(domainId);
+		List<TaskHistoryDetail> list = service.getAllTaskHistoryDetailsByDomain(domainId);
 		for (TaskHistoryDetail detail : list) {
 			TaskDetailViewModel viewmodel = new TaskDetailViewModel(detail);
 			viewmodel.setUsername(userService.findUser(viewmodel.getUserId()).getUsername());
@@ -131,6 +131,17 @@ public class TaskHistoryController {
 		}
 		jsonRes.setList(viewmodels);
 		jsonRes.setTotal(viewmodels.size());
+		return jsonRes;
+	}
+	
+	@RequestMapping(value = "/latest/failed/{domainId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getLastTaskDetail(SimpleJsonResponse jsonRes, @PathVariable Integer domainId) {
+		
+		TaskHistory task = service.getLatestFailedTaskHistory(domainId);
+		
+		jsonRes.setData(task);
+		
 		return jsonRes;
 	}
 	
