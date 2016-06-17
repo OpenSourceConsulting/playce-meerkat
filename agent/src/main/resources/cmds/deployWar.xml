@@ -20,7 +20,7 @@
 		<property name="cmd3" value="cd ${agent.deploy.dir}/${agent.name}/bin" />
 		<property name="cmd4" value="${server.ant.home}/bin/ant -Dsrc=${upload.path}/${warFileName} -Ddest=${webapp.path} unzip" />
 
-		<echo>upload ${filename}</echo>
+		<echo>upload ${warFilePath}</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${upload.path}" trust="true" keyfile="${key.file}"
 			password="${user.passwd}" failonerror="true" file="${warFilePath}">
 		</scp>
