@@ -1,14 +1,27 @@
 package com.athena.meerkat.controller.web.monitoring.stat;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
+import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingRepository;
+import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
 
 /**
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bong-Jin Kwon
  * @version 1.0
  */
@@ -17,25 +30,80 @@ public class MonUtilStatService {
 
 	@Autowired
 	private MonUtilStatRepository repository;
-	
+	@Autowired
+	private DomainAlertSettingRepository alertRepository;
+
+	@Autowired
+	private ServerRepository serverRepo;
+
+	@Autowired
+	private TomcatInstanceRepository tomcatRepo;
+
 	public MonUtilStatService() {
-		
+
 	}
-	
-	public void save(List<MonUtilStat> monUtilStats){
+
+	public void save(List<MonUtilStat> monUtilStats) {
 		repository.save(monUtilStats);
 	}
-	
-	public void save(MonUtilStat monUtilStat){
+
+	public void save(MonUtilStat monUtilStat) {
 		repository.save(monUtilStat);
 	}
-	
-	public MonUtilStat getMonUtilStat(int monUtilStatId){
+
+	public MonUtilStat getMonUtilStat(int monUtilStatId) {
 		return repository.findOne(monUtilStatId);
 	}
 
 	public List<MonUtilStat> getAll() {
 		return repository.findAll();
+	}
+
+	public List<MonUtilStat> getAlerts(Date time, Date now, Integer count) {
+		List<MonUtilStat> list = repository.findAllByOrderByMonValueDescUpdateDtDesc(new PageRequest(0, 10));
+		HashMap<Integer, List<DomainAlertSetting>> settingMap = new HashMap<Integer, List<DomainAlertSetting>>();
+		List<DomainAlertSetting> alertSettings = new ArrayList<>();
+		for (MonUtilStat alert : list) {
+			Integer serverId = alert.getServerId();
+
+			//set name and server id
+			if (serverId == 0) {
+				TomcatInstance tc = tomcatRepo.findOne(alert.getTomcatInstanceId());
+				if (tc != null) {
+					serverId = tc.getServerId();
+					alert.setName(tc.getDomainName() + " - " + tc.getName());
+				}
+			} else {
+				Server s = serverRepo.getOne(serverId);
+				if (s != null) {
+					alert.setName(s.getName());
+				}
+			}
+			//set type
+			if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_CPU_USED)) {
+				alert.setType("CPU");
+			} else if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_MEM_USED_PER)) {
+				alert.setType("Memory");
+			}
+
+			if (!settingMap.containsKey(alert.getServerId())) {
+				alertSettings = alertRepository.findAlertSettingsByServerId(serverId);
+				settingMap.put(serverId, alertSettings);
+			} else {
+				alertSettings = settingMap.get(serverId);
+			}
+
+			for (DomainAlertSetting setting : alertSettings) {
+				if (alert.getMonFactorId().equals(setting.getMonFactorId())) {
+					if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_GREATER_THAN_ID) {
+						alert.setAlertStatus(alert.getMonValue() > setting.getThresholdValue());
+					} else if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_LESS_THAN_ID) {
+						alert.setAlertStatus(alert.getMonValue() < setting.getThresholdValue());
+					}
+				}
+			}
+		}
+		return list;
 	}
 }
 //end of MonUtilStatService.java

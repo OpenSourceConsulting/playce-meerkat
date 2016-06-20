@@ -27,6 +27,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingRepository;
 
@@ -34,12 +35,13 @@ import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingR
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
 @Service
 public class DomainAlertSettingService {
-	
+
 	@Autowired
 	private DomainAlertSettingRepository domainAlertRepo;
 
@@ -49,14 +51,22 @@ public class DomainAlertSettingService {
 	 * </pre>
 	 */
 	public DomainAlertSettingService() {
-		
+
 	}
-	
+
 	public DomainAlertSetting getDomainAlert(Integer alertId) {
 		return domainAlertRepo.findOne(alertId);
 	}
 
 	public DomainAlertSetting saveAlertSetting(DomainAlertSetting alert) {
+		Integer alertItem = alert.getAlertItemCdId();
+		if (alertItem == MeerkatConstants.ALERT_ITEM_CPU_USED) {
+			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_CPU_USED);
+		} else if (alertItem == MeerkatConstants.ALERT_ITEM_MEM_USED) {
+			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_MEM_USED);
+		} else if (alertItem == MeerkatConstants.ALERT_ITEM_DISK_USED) {
+			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_DISK_USED);
+		}
 		return domainAlertRepo.save(alert);
 	}
 

@@ -32,6 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmx;
 import com.athena.meerkat.controller.web.monitoring.server.MonData;
@@ -41,38 +42,47 @@ import com.athena.meerkat.controller.web.monitoring.server.MonFs;
  * <pre>
  * 
  * </pre>
+ * 
  * @author Bongjin Kwon
  * @version 1.0
  */
 @Entity
 @Table(name = "mon_util_stat")
 public class MonUtilStat {
-	
+
 	private static final String JMX_PROCESS_CPU_LOAD = "jmx.ProcessCpuLoad";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int id;//
-	
+
 	@Column(name = "server_id")
 	private int serverId;//
-	
+
 	@Column(name = "tomcat_instance_id")
 	private int tomcatInstanceId;//
-	
+
 	@Column(name = "mon_factor_id")
 	private String monFactorId;//
-	
+
 	@Column(name = "mon_value")
 	private Double monValue;//percentage value.
-	
+
 	@Column(name = "update_dt")
 	private java.util.Date updateDt;//최근 업데이트 일시.
-	
+
+	@Transient
+	private String name; // name of tomcat instance OR server
+	@Transient
+	private String type; //type of alert
+
 	public MonUtilStat() {
-		
+
 	}
+
+	@Transient
+	private boolean alertStatus;
 
 	/**
 	 * <pre>
@@ -84,19 +94,19 @@ public class MonUtilStat {
 		this.monFactorId = monData.getMonFactorId();
 		this.monValue = monData.getMonValue();
 	}
-	
+
 	public MonUtilStat(MonJmx monJmx) {
 		this.tomcatInstanceId = monJmx.getInstanceId();
 		this.monFactorId = monJmx.getMonFactorId();
-		
-		if(JMX_PROCESS_CPU_LOAD.equals(this.monFactorId)) {
+
+		if (JMX_PROCESS_CPU_LOAD.equals(this.monFactorId)) {
 			this.monValue = monJmx.getMonValue();
-			
+
 		} else if (monJmx.getMonValue2() > 0) {
-			this.monValue = monJmx.getMonValue()*100D / monJmx.getMonValue2();
+			this.monValue = monJmx.getMonValue() * 100D / monJmx.getMonValue2();
 		}
 	}
-	
+
 	public MonUtilStat(MonFs monFs) {
 		this.serverId = monFs.getServerId();
 		this.monFactorId = monFs.getFsName();
@@ -111,7 +121,8 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -125,7 +136,8 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param serverId the serverId to set
+	 * @param serverId
+	 *            the serverId to set
 	 */
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
@@ -139,7 +151,8 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param tomcatInstanceId the tomcatInstanceId to set
+	 * @param tomcatInstanceId
+	 *            the tomcatInstanceId to set
 	 */
 	public void setTomcatInstanceId(int tomcatInstanceId) {
 		this.tomcatInstanceId = tomcatInstanceId;
@@ -153,7 +166,8 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param monFactorId the monFactorId to set
+	 * @param monFactorId
+	 *            the monFactorId to set
 	 */
 	public void setMonFactorId(String monFactorId) {
 		this.monFactorId = monFactorId;
@@ -167,7 +181,8 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param monValue the monValue to set
+	 * @param monValue
+	 *            the monValue to set
 	 */
 	public void setMonValue(Double monValue) {
 		this.monValue = monValue;
@@ -181,16 +196,45 @@ public class MonUtilStat {
 	}
 
 	/**
-	 * @param updateDt the updateDt to set
+	 * @param updateDt
+	 *            the updateDt to set
 	 */
 	public void setUpdateDt(java.util.Date updateDt) {
 		this.updateDt = updateDt;
 	}
-	
+
 	@PrePersist
 	@PreUpdate
-	public void onPreSave(){
+	public void onPreSave() {
 		this.updateDt = new Date();
+	}
+
+	public boolean isAlertStatus() {
+		return alertStatus;
+	}
+
+	public void setAlertStatus(boolean alertStatus) {
+		this.alertStatus = alertStatus;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Double getDecimalMonValue() {
+		return monValue / 100;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

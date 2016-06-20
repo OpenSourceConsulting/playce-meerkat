@@ -20,7 +20,7 @@ public class DomainAlertSetting {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "tomcat_domain_id", insertable = false, updatable = false)
 	private int domainId;
 
@@ -35,15 +35,16 @@ public class DomainAlertSetting {
 
 	@Column(name = "status")
 	private boolean status;
+	@Column(name = "mon_factor_id")
+	private String monFactorId;
 
 	@Transient
 	private String alertItemCdNm;
 	@Transient
 	private String thresholdOpCdNm;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TomcatDomain tomcatDomain;
-
 
 	public boolean isStatus() {
 		return status;
@@ -91,7 +92,7 @@ public class DomainAlertSetting {
 
 	public void setDomainId(int domainId) {
 		this.domainId = domainId;
-		if(this.tomcatDomain == null) {
+		if (this.tomcatDomain == null) {
 			this.tomcatDomain = new TomcatDomain();
 		}
 		this.tomcatDomain.setId(domainId);
@@ -111,6 +112,14 @@ public class DomainAlertSetting {
 
 	public void setThresholdOpCdNm(String thresholdOpCdNm) {
 		this.thresholdOpCdNm = thresholdOpCdNm;
+	}
+
+	public String getMonFactorId() {
+		return monFactorId;
+	}
+
+	public void setMonFactorId(String monFactorId) {
+		this.monFactorId = monFactorId;
 	}
 
 }

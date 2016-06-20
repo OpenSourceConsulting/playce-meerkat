@@ -131,8 +131,14 @@ public abstract class MeerkatConstants {
 	public static final String CODE_GROP_ALERT_THRESHOLD_OPERATOR = "ALERT_THRESHOLD_OPERATOR";
 	public static final String CODE_GROP_DATAGRID_SEVER_TYPE = "SESSION_GROUP_TYPE";
 	public static final String CODE_GROP_TASK = "TASK";
-	
+
+	public static final Integer ALERT_ITEM_CPU_USED = 18;
+	public static final Integer ALERT_ITEM_MEM_USED = 19;
+	public static final Integer ALERT_ITEM_DISK_USED = 20;
 	public static final Integer ALERT_ITEM_AGENT = 21;
+
+	public static final Integer ALERT_ITEM_OPPERATOR_GREATER_THAN_ID = 16;
+	public static final Integer ALERT_ITEM_OPPERATOR_LESS_THAN_ID = 17;
 
 	public static final String CONFIG_FILE_TYPE_SERVER_XML = "server.xml";
 	public static final int CONFIG_FILE_TYPE_SERVER_XML_CD = 3;
@@ -156,13 +162,12 @@ public abstract class MeerkatConstants {
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;// millisecs
 
-	
-
 	/**
 	 * Monitoring Factor id
 	 */
 	public static final String MON_FACTOR_CPU_USED = "cpu.used";
 	public static final String MON_FACTOR_MEM_USED = "mem.used";
+	public static final String MON_FACTOR_DISK_USED = "disk.used";
 	public static final String MON_FACTOR_MEM_USED_PER = "mem.used_per";
 	public static final String MON_FACTOR_TI_RUN = "ti.run"; // tomcat instance
 																// running
@@ -204,9 +209,11 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_SERVER_XML_UPDATE = 102;//update server.xml file
 	public static final int TASK_CD_CONTEXT_XML_UPDATE = 103;//update context.xml file
 	public static final int TASK_CD_TOMCAT_CONFIG_UPDATE = 104;
-	
+
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;
 	public static final int TASK_STATUS_FAIL = 3;
+
+	public static final Integer DASHBOARD_ALERT_COUNT = 10;
 
 }

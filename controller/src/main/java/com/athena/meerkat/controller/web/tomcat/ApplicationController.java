@@ -77,19 +77,19 @@ public class ApplicationController {
 		}
 		return json;
 	}
-	
+
 	@RequestMapping("/updateTask")
 	@ResponseBody
 	public SimpleJsonResponse updateTask(SimpleJsonResponse json, int applicationId, int taskCdId) {
 		TomcatApplication app = appService.getApplication(applicationId);
 
 		TaskHistory task = taskService.createTasks(app.getTomcatDomain().getId(), taskCdId);
-		
+
 		app.setTaskHistoryId(task.getId());
 		appService.update(app);
-		
+
 		json.setData(task);
-		
+
 		return json;
 	}
 

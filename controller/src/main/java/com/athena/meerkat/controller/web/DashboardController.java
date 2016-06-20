@@ -20,6 +20,8 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
+import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
+import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStatService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -41,6 +43,9 @@ public class DashboardController {
 	private DataSourceService dsService;
 	@Autowired
 	private MonJmxService monJmxService;
+
+	@Autowired
+	private MonUtilStatService monUtilStatService;
 
 	@RequestMapping(value = "/get/stats", method = RequestMethod.GET)
 	@ResponseBody
@@ -89,5 +94,19 @@ public class DashboardController {
 		//json.setList(list);
 		return list;
 		//return json;
+	}
+
+	@RequestMapping(value = "/get/alerts/{minsAgo}", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getAlertList(GridJsonResponse json, @PathVariable Integer minsAgo) {
+		Date now = new Date();
+		if (minsAgo <= 0) {
+			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
+		}
+		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
+		List<MonUtilStat> alerts = monUtilStatService.getAlerts(time, now, MeerkatConstants.DASHBOARD_ALERT_COUNT);
+		json.setList(alerts);
+		json.setTotal(alerts.size());
+		return json;
 	}
 }
