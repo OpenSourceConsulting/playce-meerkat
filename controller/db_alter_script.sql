@@ -139,3 +139,11 @@ CREATE TABLE IF NOT EXISTS `mon_util_stat` (
   `update_dt` DATETIME NULL COMMENT '최근 업데이트 일시.',
   PRIMARY KEY (`Id`))
 ENGINE = InnoDB;
+
+ALTER TABLE `tomcat_instance` 
+ADD COLUMN `task_history_id` INT(11) NULL COMMENT '최근 install task history id.' AFTER `create_user_id`;
+update tomcat_instance set task_history_id = 0;
+
+ALTER TABLE `server` 
+ADD COLUMN `agent_installed` BIT(1) NULL DEFAULT 0 COMMENT 'agent 설치 여부.' AFTER `ssh_port`;
+

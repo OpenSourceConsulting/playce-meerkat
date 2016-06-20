@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.input.Tailer;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,16 @@ public class TaskHistoryService {
 	}
 
 	public List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId) {
-		return detailRepo.findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(taskHistoryId);
+		return detailRepo.getTaskHistoryDetailList(taskHistoryId);
 	}
 
 	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
 
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
+		TaskHistory task = createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
+		
+		tomcatService.saveList(tomcats);// update lastTaskHistoryId.
+		
+		return task;
 	}
 
 	public TaskHistory createApplicationDeployTask(int domainId) {
@@ -133,6 +138,8 @@ public class TaskHistoryService {
 		for (TomcatInstance tomcatInstance : tomcats) {
 			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance);
 			taskDetails.add(taskDetail);
+			
+			tomcatInstance.setLastTaskHistoryId(task.getId());
 		}
 
 		detailRepo.save(taskDetails);
@@ -198,7 +205,7 @@ public class TaskHistoryService {
 		return detailRepo.findOne(taskDetailId);
 	}
 
-	public List<TaskHistoryDetail> getTaskHistoryDetailListByDomain(Integer domainId) {
+	public List<TaskHistoryDetail> getAllTaskHistoryDetailsByDomain(Integer domainId) {
 
 		return detailRepo.findByTomcatDomainIdOrderByFinishedTimeDesc(domainId);
 	}
@@ -232,6 +239,33 @@ public class TaskHistoryService {
 
 		return logs;
 
+	}
+	
+	/**
+	 * <pre>
+	 * 24시간 이내의 task 중 실패한 detail task가  하나라도 있는 task 반환.
+	 * </pre>
+	 * @param domainId
+	 * @return
+	 */
+	public TaskHistory getLatestFailedTaskHistory(int domainId) {
+		
+		Date now = new Date();
+		
+		Date from = DateUtils.addDays(now, -1);
+		
+		List<TaskHistoryDetail> details = detailRepo.findByTomcatDomainIdAndTomcatInstanceIdNotNullAndFinishedTimeBetweenOrderByFinishedTimeDesc(domainId, from, now);
+		
+		TaskHistory failedTask = null;
+		
+		for (TaskHistoryDetail taskHistoryDetail : details) {
+			if (MeerkatConstants.TASK_STATUS_FAIL == taskHistoryDetail.getStatus()) {
+				failedTask = taskHistoryDetail.getTaskHistory();
+				break;
+			}
+		}
+		
+		return failedTask;
 	}
 
 }

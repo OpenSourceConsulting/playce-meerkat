@@ -29,7 +29,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.collections.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -45,11 +44,13 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.util.FileUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -82,6 +83,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	
 	@Autowired
 	private TomcatConfigFileService confFileService;
+	
+	@Autowired
+	private ServerService serverService;
 
 	/**
 	 * <pre>
@@ -112,6 +116,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 	}
 
+	/**
+	 * <pre>
+	 * 실패 task 를 재실행한다.
+	 * </pre>
+	 * @param taskHistoryDetailId
+	 */
 	public void rework(int taskHistoryDetailId) {
 		TaskHistoryDetail taskDetail = taskService.getTaskHistoryDetail(taskHistoryDetailId);
 
@@ -236,10 +246,19 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 				copyAntScript("installDolly.xml", jobDir);
 			}
 
-			/*
-			 * 2. deploy agent
-			 */
-			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "deploy-agent") && isSuccess;
+			Server server = pModel.getServer();
+			if (server.isAgentInstalled() == false) {
+				/*
+				 * 2. install agent
+				 */
+				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "deploy-agent") && isSuccess;
+				
+				if (isSuccess) {
+					server.setAgentInstalled(isSuccess);
+					serverService.save(server);
+				}
+			}
+			
 
 			/*
 			 * 3. send cmd.xml and run cmd.xml .
@@ -251,8 +270,6 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 */
 			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
-			instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
-
 			/*
 			 * 5. install dolly agent
 			 */
@@ -261,6 +278,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			}
 
 			if (isSuccess) {
+				instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
 			} else {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
