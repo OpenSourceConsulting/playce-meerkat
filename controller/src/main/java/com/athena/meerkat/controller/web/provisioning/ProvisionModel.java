@@ -30,6 +30,7 @@ import java.util.Map;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 
@@ -196,6 +197,10 @@ public class ProvisionModel {
 
 	public void setSessionServerGroupId(int sessionServerGroupId) {
 		this.sessionServerGroupId = sessionServerGroupId;
+	}
+	
+	public Server getServer() {
+		return this.getTomcatInstance().getServer();
 	}
 
 }

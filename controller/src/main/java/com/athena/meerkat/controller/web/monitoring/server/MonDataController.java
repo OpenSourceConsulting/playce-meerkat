@@ -82,6 +82,7 @@ public class MonDataController {
 		Server dbServer = svrService.getServer(serverId);
 
 		PropertyUtils.copyProperties(dbServer, initMon);
+		dbServer.setAgentInstalled(true);
 
 		svrService.save(dbServer);
 

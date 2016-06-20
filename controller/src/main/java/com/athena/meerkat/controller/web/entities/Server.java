@@ -77,6 +77,9 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
+	
+	@Column(name = "agent_installed")
+	private boolean agentInstalled;
 
 	@Transient
 	private boolean selected; // use for checked grid on UI
@@ -447,4 +450,13 @@ public class Server implements Serializable {
 		}
 		return 0;
 	}
+
+	public boolean isAgentInstalled() {
+		return agentInstalled;
+	}
+
+	public void setAgentInstalled(boolean agentInstalled) {
+		this.agentInstalled = agentInstalled;
+	}
+	
 }
