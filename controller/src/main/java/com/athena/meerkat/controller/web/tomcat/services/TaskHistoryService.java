@@ -58,7 +58,7 @@ public class TaskHistoryService {
 	}
 
 	public List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId) {
-		return detailRepo.findByTaskHistoryIdOrderByTomcatDomainIdAscTomcatInstanceIdAsc(taskHistoryId);
+		return detailRepo.getTaskHistoryDetailList(taskHistoryId);
 	}
 
 	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
