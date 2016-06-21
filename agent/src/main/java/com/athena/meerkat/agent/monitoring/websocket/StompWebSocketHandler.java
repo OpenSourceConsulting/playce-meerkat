@@ -33,6 +33,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompDecoder;
 import org.springframework.messaging.simp.stomp.StompEncoder;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -72,8 +73,8 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	 * 
 	 * </pre>
 	 */
-	public StompWebSocketHandler(StompWebSocketClient webSocketClient, String topic) {
-		subscribeMsg = StompTextMessageBuilder.create(StompCommand.SUBSCRIBE).headers("id:subs1", "destination:"+topic).build();
+	public StompWebSocketHandler(String subscriptionId, StompWebSocketClient webSocketClient, String topic) {
+		subscribeMsg = StompTextMessageBuilder.create(StompCommand.SUBSCRIBE).headers("id:" + subscriptionId, "destination:" + topic).build();
 		this.webSocketClient = webSocketClient;
 	}
 
