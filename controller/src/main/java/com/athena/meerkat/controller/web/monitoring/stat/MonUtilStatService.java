@@ -59,7 +59,7 @@ public class MonUtilStatService {
 		return repository.findAll();
 	}
 
-	public List<MonUtilStat> getAlerts(Date time, Date now, Integer count) {
+	public List<MonUtilStat> getAlerts(Integer count) {
 		List<MonUtilStat> list = repository.findAllByOrderByMonValueDescUpdateDtDesc(new PageRequest(0, 10));
 		HashMap<Integer, List<DomainAlertSetting>> settingMap = new HashMap<Integer, List<DomainAlertSetting>>();
 		List<DomainAlertSetting> alertSettings = new ArrayList<>();
@@ -71,7 +71,7 @@ public class MonUtilStatService {
 				TomcatInstance tc = tomcatRepo.findOne(alert.getTomcatInstanceId());
 				if (tc != null) {
 					serverId = tc.getServerId();
-					alert.setName(tc.getDomainName() + " - " + tc.getName());
+					alert.setName(tc.getDomainName() + " > " + tc.getName());
 				}
 			} else {
 				Server s = serverRepo.getOne(serverId);
@@ -84,6 +84,8 @@ public class MonUtilStatService {
 				alert.setType("CPU");
 			} else if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_MEM_USED_PER)) {
 				alert.setType("Memory");
+			} else if (alert.getMonFactorId().contains("/")) {//disk
+				alert.setType("Disk(" + alert.getMonFactorId() + ")");
 			}
 
 			if (!settingMap.containsKey(alert.getServerId())) {

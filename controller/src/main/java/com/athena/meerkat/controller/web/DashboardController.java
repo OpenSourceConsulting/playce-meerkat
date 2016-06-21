@@ -96,15 +96,10 @@ public class DashboardController {
 		//return json;
 	}
 
-	@RequestMapping(value = "/get/alerts/{minsAgo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/get/alerts/", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getAlertList(GridJsonResponse json, @PathVariable Integer minsAgo) {
-		Date now = new Date();
-		if (minsAgo <= 0) {
-			minsAgo = (int) MeerkatConstants.MONITORING_MINUTE_INTERVAL;
-		}
-		Date time = new Date(now.getTime() - minsAgo * MeerkatConstants.ONE_MINUTE_IN_MILLIS);
-		List<MonUtilStat> alerts = monUtilStatService.getAlerts(time, now, MeerkatConstants.DASHBOARD_ALERT_COUNT);
+		List<MonUtilStat> alerts = monUtilStatService.getAlerts(MeerkatConstants.DASHBOARD_ALERT_COUNT);
 		json.setList(alerts);
 		json.setTotal(alerts.size());
 		return json;
