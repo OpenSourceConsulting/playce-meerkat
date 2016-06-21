@@ -17,16 +17,15 @@
 			<pathelement location="${meerkat.agent.home}/lib/cargo-ant-1.4.19.jar" />
 		</classpath>
 	</taskdef>
-
-	<target name="cmd">
-
+	
+	<target name="create-instance">
 		<echo message="making ${catalina.home}" />
 		<mkdir dir="${catalina.home}" />
 		
 		<echo message="making ${catalina.base}" />
 		<mkdir dir="${catalina.base}" />
 
-		<echo message="Installing Tomcat..." />
+		<echo message="create ${catalina.base}" />
 
 		<cargo containerId="tomcat7x" action="configure">
 			<zipUrlInstaller 
@@ -37,11 +36,25 @@
 			<configuration home="${catalina.base}">
 			</configuration>
 		</cargo>
-		
+	</target>
+	
+	<target name="check-installed">
+    	<condition property="installed.tomcat">
+        	<resourceexists>
+                <file file="${catalina.home}/bin/catalina.sh"/>
+            </resourceexists>
+        </condition>
+        <echo>installed.tomcat : ${installed.tomcat}</echo>
+    </target>
+	
+	<target name="copy-catalina-home" depends="create-instance, check-installed" unless="installed.tomcat">
 		<copy todir="${catalina.home}" description="copy to catalina.home">
 			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
 		</copy>
-		
+	</target>
+
+	<target name="cmd" depends="copy-catalina-home">
+
 		<echo message="downloading catalina-jmx-remote-7.0.68.jar" />
 		<get src="${tomcat.down.url}/catalina-jmx-remote-7.0.68.jar" dest="${catalina.home}/lib"/>
 
