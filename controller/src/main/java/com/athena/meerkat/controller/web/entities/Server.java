@@ -475,14 +475,6 @@ public class Server implements Serializable {
 		this.runningAgent = runningAgent;
 	}
 
-	public boolean isRunningAgent() {
-		return runningAgent;
-	}
-
-	public void setRunningAgent(boolean runningAgent) {
-		this.runningAgent = runningAgent;
-	}
-
 	public List<MonAlertConfig> getMonAlertConfigs() {
 		return monAlertConfigs;
 	}
