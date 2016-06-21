@@ -21,25 +21,18 @@ public class MonAlertConfig {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "tomcat_domain_id", insertable = false, updatable = false)
-	private int domainId;
-	
-	@Column(name = "server_id", insertable = false, updatable = false)
-	private int serverId;
-
 	@Column(name = "alert_item_cd_id")
 	private int alertItemCdId;
 
 	@Column(name = "threshold_op_cd_id")
-	private int thresholdOpCdId;
+	private Integer thresholdOpCdId;
 
 	@Column(name = "threshold_value")
 	private Integer thresholdValue;
 
 	@Column(name = "status")
 	private boolean status;
-	
-	
+
 	@Column(name = "mon_factor_id")
 	private String monFactorId;
 
@@ -50,7 +43,7 @@ public class MonAlertConfig {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TomcatDomain tomcatDomain;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Server server;
 
@@ -74,11 +67,11 @@ public class MonAlertConfig {
 		return thresholdOpCdId;
 	}
 
-	public void setThresholdOpCdId(int thresholdOpCdId) {
+	public void setThresholdOpCdId(Integer thresholdOpCdId) {
 		this.thresholdOpCdId = thresholdOpCdId;
 	}
 
-	public int getAlertItemCdId() {
+	public Integer getAlertItemCdId() {
 		return alertItemCdId;
 	}
 
@@ -95,15 +88,7 @@ public class MonAlertConfig {
 	}
 
 	public int getDomainId() {
-		return domainId;
-	}
-
-	public void setDomainId(int domainId) {
-		this.domainId = domainId;
-		if (this.tomcatDomain == null) {
-			this.tomcatDomain = new TomcatDomain();
-		}
-		this.tomcatDomain.setId(domainId);
+		return tomcatDomain == null ? 0 : tomcatDomain.getId();
 	}
 
 	public String getAlertItemCdNm() {
@@ -131,16 +116,7 @@ public class MonAlertConfig {
 	}
 
 	public int getServerId() {
-		return serverId;
-	}
-
-	public void setServerId(int serverId) {
-		this.serverId = serverId;
-		
-		if (this.server == null) {
-			this.server = new Server();
-		}
-		this.server.setId(serverId);
+		return server == null ? 0 : server.getId();
 	}
 
 	public TomcatDomain getTomcatDomain() {
