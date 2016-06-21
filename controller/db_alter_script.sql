@@ -147,3 +147,28 @@ update tomcat_instance set task_history_id = 0;
 ALTER TABLE `server` 
 ADD COLUMN `agent_installed` BIT(1) NULL DEFAULT 0 COMMENT 'agent 설치 여부.' AFTER `ssh_port`;
 
+
+
+CREATE TABLE IF NOT EXISTS `mon_alert_config` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `tomcat_domain_id` INT(11) NULL,
+  `server_Id` INT(11) NULL,
+  `alert_item_cd_id` INT(11) NULL COMMENT 'alert item code id',
+  `threshold_op_cd_id` INT(11) NULL,
+  `threshold_value` INT(11) NULL,
+  `status` SMALLINT NULL DEFAULT 0 COMMENT '0 : disabled, 1:enabled',
+  `mon_factor_id` VARCHAR(40) NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_tomcat_domain_alert_tomcat_domain2_idx` (`tomcat_domain_id` ASC),
+  INDEX `fk_tomcat_domain_alert_server1_idx` (`server_Id` ASC),
+  CONSTRAINT `fk_tomcat_domain_alert_tomcat_domain2`
+    FOREIGN KEY (`tomcat_domain_id`)
+    REFERENCES `tomcat_domain` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tomcat_domain_alert_server1`
+    FOREIGN KEY (`server_Id`)
+    REFERENCES `server` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

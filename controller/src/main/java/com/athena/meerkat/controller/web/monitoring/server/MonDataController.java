@@ -10,6 +10,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
@@ -22,7 +24,6 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.monitoring.MonitoringData;
 import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -37,7 +38,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  */
 @Controller
 @RequestMapping("/monitor/server")
-public class MonDataController {
+public class MonDataController implements ApplicationEventPublisherAware{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonDataController.class);
 
@@ -297,6 +298,12 @@ public class MonDataController {
 			i--;
 		}
 		return -1D;
+	}
+
+	@Override
+	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 // end of MonDataController.java

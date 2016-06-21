@@ -6,9 +6,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "mon_alert_config")
@@ -18,17 +21,25 @@ public class MonAlertConfig {
 	@Column(name = "id")
 	private int id;
 
+	@Column(name = "tomcat_domain_id", insertable = false, updatable = false)
+	private int domainId;
+	
+	@Column(name = "server_id", insertable = false, updatable = false)
+	private int serverId;
+
 	@Column(name = "alert_item_cd_id")
 	private int alertItemCdId;
 
 	@Column(name = "threshold_op_cd_id")
-	private Integer thresholdOpCdId;
+	private int thresholdOpCdId;
 
 	@Column(name = "threshold_value")
 	private Integer thresholdValue;
 
 	@Column(name = "status")
 	private boolean status;
+	
+	
 	@Column(name = "mon_factor_id")
 	private String monFactorId;
 
@@ -39,7 +50,7 @@ public class MonAlertConfig {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private TomcatDomain tomcatDomain;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Server server;
 
@@ -59,11 +70,11 @@ public class MonAlertConfig {
 		this.thresholdValue = thresholdValue;
 	}
 
-	public Integer getThresholdOpCdId() {
+	public int getThresholdOpCdId() {
 		return thresholdOpCdId;
 	}
 
-	public void setThresholdOpCdId(Integer thresholdOpCdId) {
+	public void setThresholdOpCdId(int thresholdOpCdId) {
 		this.thresholdOpCdId = thresholdOpCdId;
 	}
 
@@ -83,11 +94,16 @@ public class MonAlertConfig {
 		this.id = id;
 	}
 
-	public Integer getDomainId() {
-		if (getTomcatDomain() != null) {
-			return getTomcatDomain().getId();
+	public int getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(int domainId) {
+		this.domainId = domainId;
+		if (this.tomcatDomain == null) {
+			this.tomcatDomain = new TomcatDomain();
 		}
-		return 0;
+		this.tomcatDomain.setId(domainId);
 	}
 
 	public String getAlertItemCdNm() {
@@ -114,11 +130,17 @@ public class MonAlertConfig {
 		this.monFactorId = monFactorId;
 	}
 
-	public Integer getServerId() {
-		if (getServer() != null) {
-			return getServer().getId();
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
+		
+		if (this.server == null) {
+			this.server = new Server();
 		}
-		return 0;
+		this.server.setId(serverId);
 	}
 
 	public TomcatDomain getTomcatDomain() {
