@@ -89,15 +89,15 @@ public class Server implements Serializable {
 
 	@Column(name = "state")
 	private int state;
-	
+
 	// number of session for datagrid server
 	@Transient
 	private int sessionNo;
-	
+
 	// number of session for datagrid server
 	@Transient
 	private boolean runningAgent;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
 	private NetworkInterface sshNi;
@@ -465,6 +465,14 @@ public class Server implements Serializable {
 
 	public void setAgentInstalled(boolean agentInstalled) {
 		this.agentInstalled = agentInstalled;
+	}
+
+	public boolean isRunningAgent() {
+		return runningAgent;
+	}
+
+	public void setRunningAgent(boolean runningAgent) {
+		this.runningAgent = runningAgent;
 	}
 
 	public boolean isRunningAgent() {
