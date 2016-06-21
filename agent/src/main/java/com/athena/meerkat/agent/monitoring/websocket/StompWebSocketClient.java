@@ -75,6 +75,9 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.reconnect.interval:10000}")
 	private long reconnectInterval;
 	
+	@Value("${meerkat.agent.server.id:0}")
+    private String serverId;
+	
 	private String initDestHeader;
 	private String jmxDestHeader;
 	private String serverDestHeader;
@@ -96,7 +99,7 @@ public class StompWebSocketClient implements InitializingBean{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
-		webSocketHandler = new StompWebSocketHandler(this, topic);
+		webSocketHandler = new StompWebSocketHandler("subs_" + serverId, this, topic);
 		connect();
 	}
 	
