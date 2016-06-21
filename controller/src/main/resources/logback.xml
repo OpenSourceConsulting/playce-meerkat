@@ -32,6 +32,7 @@
 	<logger name="org.springframework.web.context.support.StandardServletEnvironment" level="INFO"/>
 	<logger name="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" level="INFO"/>
 	<logger name="org.springframework.security" level="DEBUG"/>
+	<logger name="org.springframework.messaging" level="DEBUG"/> <!-- for stomp -->
 
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.hibernate.SQL" level="ERROR" /> <!-- sql log -->

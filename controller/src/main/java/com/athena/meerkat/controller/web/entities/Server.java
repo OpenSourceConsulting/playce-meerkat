@@ -87,12 +87,20 @@ public class Server implements Serializable {
 	@Transient
 	private int port; // session server port
 
+	@Column(name = "state")
+	private int state;
+	
+	// number of session for datagrid server
+	@Transient
+	private int sessionNo;
+	
+	// number of session for datagrid server
+	@Transient
+	private boolean runningAgent;
+	
 	@OneToOne
 	@JoinColumn(name = "ssh_ni_id")
 	private NetworkInterface sshNi;
-
-	@Column(name = "state")
-	private int state;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "server", cascade = CascadeType.REMOVE)
 	@JsonIgnore
@@ -109,10 +117,6 @@ public class Server implements Serializable {
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<DatagridServer> datagridServers;
-
-	// number of session for datagrid server
-	@Transient
-	private int sessionNo;
 
 	/*
 		public String getGroupName() {
@@ -457,6 +461,14 @@ public class Server implements Serializable {
 
 	public void setAgentInstalled(boolean agentInstalled) {
 		this.agentInstalled = agentInstalled;
+	}
+
+	public boolean isRunningAgent() {
+		return runningAgent;
+	}
+
+	public void setRunningAgent(boolean runningAgent) {
+		this.runningAgent = runningAgent;
 	}
 	
 }

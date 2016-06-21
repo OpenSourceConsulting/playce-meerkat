@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.athena.meerkat.controller.web.entities.DatagridServer;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
-import com.athena.meerkat.controller.web.resources.repositories.DatagridServersRepository;
+import com.athena.meerkat.controller.web.monitoring.StompEventListener;
 import com.athena.meerkat.controller.web.resources.repositories.NetworkInterfaceRepository;
 import com.athena.meerkat.controller.web.resources.repositories.SSHAccountRepository;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
@@ -31,6 +30,9 @@ public class ServerService {
 
 	@Autowired
 	private SSHAccountRepository sshRepo;
+	
+	@Autowired
+	private StompEventListener agentEventListener;
 	
 
 	public ServerService() {
@@ -55,6 +57,11 @@ public class ServerService {
 
 		Sort sort = new Sort("name");
 		List<Server> list = serverRepo.findAll(sort);
+		
+		for (Server server : list) {
+			server.setRunningAgent(agentEventListener.isRunningAgent(server.getId()));
+		}
+		
 		return list;
 	}
 
