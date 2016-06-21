@@ -19,15 +19,15 @@
             //var socket = new SockJS('monitor/endpoint');
             var socket = new WebSocket('ws://localhost:8080/controller/monitor/endpoint');
             stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
+            stompClient.connect({login:'abcd'}, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                //stompClient.subscribe('/user/queue/greetings', function(greeting){
-                	stompClient.subscribe('/user/queue/agents', function(greeting){
+                stompClient.subscribe('/user/queue/greetings', function(greeting){
+                //stompClient.subscribe('/user/queue/agents', function(greeting){
                 	//alert("response!!");
                     //showGreeting(JSON.parse(greeting.body).content);
                 	showGreeting(greeting.body);
-                });
+                }, {id:'subs_1', simpUser:'admin'});
             });
         }
 
@@ -41,8 +41,8 @@
 
         function sendName() {
             var name = document.getElementById('name').value;
-            //stompClient.send("/app/monitor/hello", {}, JSON.stringify([{ 'name': name }]));
-            stompClient.send("/app/monitor/init", {}, JSON.stringify({ 'id': name }));
+            stompClient.send("/app/monitor/hello", {}, JSON.stringify([{ 'name': name }]));
+            //stompClient.send("/app/monitor/init", {}, JSON.stringify({ 'id': name }));
         }
 
         function showGreeting(message) {
@@ -90,8 +90,8 @@
     Javascript and reload this page!</h2></noscript>
 <div>
     <div>
-        <button id="connect" onclick="connect();">Connect</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+        <button id="connect" onclick="connect();">STOMP Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">STOMP Disconnect</button>
         <button onclick="wconnect();">WConnect</button>
         <button onclick="wdisconnect();">WDisconnect</button>
         <button onclick="wsend();">WSend</button>
