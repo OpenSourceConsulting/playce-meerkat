@@ -86,7 +86,7 @@ public class TomcatProvisioningController {
 
 		TomcatInstance tomcatInstance = tomcatService.getTomcatInstance(domainId, serverId);
 
-		proviService.installSingleTomcatInstance(tomcatInstance.getDomainId(), taskHistoryId, tomcatInstance);
+		proviService.installSingleTomcatInstance(tomcatInstance, taskHistoryId);
 
 		return new SimpleJsonResponse();
 	}
@@ -142,6 +142,9 @@ public class TomcatProvisioningController {
 	@ResponseBody
 	public SimpleJsonResponse installJDBCDriver(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, String dbType) {
 
+		/*
+		 * TODO JDBC Driver file 을 사용자가 직접 upload 해서 설치하도록 수정.
+		 */
 		String installJarName = mysqlDriverFile;
 		/*
 		if ("MySQL".equals(dbType)) {
@@ -149,6 +152,16 @@ public class TomcatProvisioningController {
 		}
 		*/
 		proviService.installJar(tomcatInstanceId, installJarName, taskHistoryId);
+
+		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/uninstall/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse uninstallTomcatInstance(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId) {
+
+
+		proviService.uninstallTomcatInstance(tomcatInstanceId, taskHistoryId);
 
 		return new SimpleJsonResponse();
 	}

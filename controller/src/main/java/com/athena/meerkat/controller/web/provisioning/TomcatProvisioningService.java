@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +87,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	
 	@Autowired
 	private ServerService serverService;
+	
+	@Value("${meerkat.jdbc.driver.mysql}")
+	private String mysqlDriverFile;
 
 	/**
 	 * <pre>
@@ -131,9 +135,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			throw new IllegalArgumentException("domain id and task history id must not be zero(0).");
 		}
 
-		if (MeerkatConstants.TASK_CD_TOMCAT_INSTALL == taskHistory.getTaskCdId()) {
-			installSingleTomcatInstance(taskDetail.getTomcatDomainId(), taskHistory.getId(), taskDetail.getTomcatInstance());
+		if (MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_INSTALL == taskHistory.getTaskCdId()) {
+			installSingleTomcatInstance(taskDetail.getTomcatInstance(), taskHistory.getId());
 			
+		} else if (MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL == taskHistory.getTaskCdId()) {
+			
+			uninstallTomcatInstance(taskDetail.getTomcatInstanceId(), taskHistory.getId());
 			
 		} else if (MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE == taskHistory.getTaskCdId()) {
 			
@@ -162,6 +169,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			TomcatApplication app = appService.getApplicationByTask(taskHistory.getId());
 			
 			undeployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app);
+		} else if (MeerkatConstants.TASK_CD_JDBC_MYSQL_INSTALL == taskHistory.getTaskCdId()) {
+			
+			installJar(taskDetail.getTomcatInstance().getId(), mysqlDriverFile, taskHistory.getId());
 		}
 
 	}
@@ -175,14 +185,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	 * @param taskHistoryId
 	 * @param tomcatInstance
 	 */
-	public void installSingleTomcatInstance(int domainId, int taskHistoryId, TomcatInstance tomcatInstance) {
+	public void installSingleTomcatInstance(TomcatInstance tomcatInstance, int taskHistoryId) {
 
 		Assert.notNull(tomcatInstance, "tomcatInstance must not be null.");
 
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
 
-		installTomcatInstances(domainId, taskHistoryId, singleList);
+		installTomcatInstances(tomcatInstance.getDomainId(), taskHistoryId, singleList);
 	}
 
 	public void installTomcatInstances(int domainId, int taskHistoryId, List<TomcatInstance> list) {
@@ -591,6 +601,47 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 				pModel.setLastTask(count == list.size());
 
 				sendCommand(pModel, "installLibs.xml", null);
+				count++;
+			}
+		} else {
+			LOGGER.warn("tomcat instances is empty!!");
+		}
+
+	}
+	
+	public void uninstallTomcatInstance(int tomcatInstanceId, int taskHistoryId) {
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		uninstallTomcatInstanceList(tomcatInstance.getDomainId(), taskHistoryId, singleList);
+	}
+	
+	public void uninstallTomcatInstanceList(int domainId, int taskHistoryId, List<TomcatInstance> list) {
+
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
+		
+		taskService.createTaskDetails(list, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
+
+		if (tomcatConfig == null) {
+			LOGGER.warn("tomcat config is not set!!");
+			return;
+		}
+
+		if (list != null && list.size() > 0) {
+
+			int count = 1;
+			for (TomcatInstance tomcatInstance : list) {
+
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
+				pModel.setLastTask(count == list.size());
+
+				runCommand(pModel, "uninstallTomcatInstance.xml", null);
 				count++;
 			}
 		} else {

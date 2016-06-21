@@ -75,7 +75,7 @@ public class ProvisioningUtil {
 	
 	/**
 	 * <pre>
-	 * send cmd.xml & run sshexec runCmd.sh
+	 * default.xml 의 send-cmd 실행.
 	 * </pre>
 	 * @param commanderDir
 	 * @param jobDir
@@ -99,6 +99,15 @@ public class ProvisioningUtil {
 		return runAntTarget(commanderDir, jobDir, "default.xml", "send-cmd");
 	}
 	
+	/**
+	 * <pre>
+	 * jobDir 의 cmd.xml 을 실행.
+	 * </pre>
+	 * @param commanderDir
+	 * @param jobDir
+	 * @return
+	 * @throws Exception
+	 */
 	public static boolean runCommand(File commanderDir, File jobDir) throws Exception {
 		/*
 		String execFile = "runcmd.sh";

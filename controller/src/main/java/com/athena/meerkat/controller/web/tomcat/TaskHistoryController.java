@@ -91,6 +91,17 @@ public class TaskHistoryController {
 
 		return jsonRes;
 	}
+	
+	@RequestMapping(value = "/create/uninstall/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse createTomcatUninstallTask(SimpleJsonResponse jsonRes, @PathVariable Integer tomcatInstanceId) {
+
+		
+		TaskHistory task = service.createTomcatUninstallTask(tomcatInstanceId);
+		jsonRes.setData(task);
+
+		return jsonRes;
+	}
 
 	@RequestMapping(value = "/save/detail", method = RequestMethod.POST)
 	@ResponseBody

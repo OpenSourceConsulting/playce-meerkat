@@ -184,10 +184,7 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse deleteTomcat(SimpleJsonResponse json, int id) {
 		TomcatInstance tomcat = service.findOne(id);
-		if (tomcat != null) {
-			service.delete(tomcat);
-			//TODO kwonbj delete provisoning
-		}
+		service.delete(tomcat);
 		return json;
 	}
 

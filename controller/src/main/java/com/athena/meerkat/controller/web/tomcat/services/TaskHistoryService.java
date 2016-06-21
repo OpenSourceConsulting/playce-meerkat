@@ -63,9 +63,23 @@ public class TaskHistoryService {
 
 	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
 
-		TaskHistory task = createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTALL);
+		TaskHistory task = createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_INSTALL);
 		
 		tomcatService.saveList(tomcats);// update lastTaskHistoryId.
+		
+		return task;
+	}
+	
+	public TaskHistory createTomcatUninstallTask(int tomcatInstanceId) {
+
+		TomcatInstance tomcatInstance = tomcatService.findOne(tomcatInstanceId);
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+
+		TaskHistory task = createTaskDetails(singleList, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
+		
+		tomcatService.saveList(singleList);// update lastTaskHistoryId.
 		
 		return task;
 	}
@@ -153,7 +167,7 @@ public class TaskHistoryService {
 
 		return createTaskDetails(tomcats, taskCdId);
 	}
-
+	
 	public void save(TaskHistory taskHistory) {
 		repository.save(taskHistory);
 	}

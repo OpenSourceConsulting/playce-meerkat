@@ -147,6 +147,15 @@ public abstract class AbstractProvisioningService {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * jobDir 에서 cmdFileName ant script를 실행.
+	 * - 주로 commander가 직접  scp or sshexec 등의 명령을 수행.
+	 * </pre>
+	 * @param pModel
+	 * @param cmdFileName
+	 * @param session
+	 */
 	protected void runCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
 
 		File jobDir = generateBuildProperties(pModel, session);
