@@ -17,13 +17,14 @@ import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
-import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
+import com.athena.meerkat.controller.web.monitoring.stat.AlertSettingService;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.provisioning.xml.ContextXmlHandler;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
@@ -44,7 +45,7 @@ public class TomcatDomainService {
 
 	@Autowired
 	private ServerRepository serverRepo;
-	
+
 	@Autowired
 	private TomcatInstanceRepository tomcatRepo;
 
@@ -74,13 +75,13 @@ public class TomcatDomainService {
 
 	@Autowired
 	private CommonCodeHandler codeHandler;
-	
+
 	@Autowired
 	private FileHandler fileHandler;
-	
+
 	@Autowired
-	private DomainAlertSettingService alertService;
-	
+	private AlertSettingService alertService;
+
 	private TomcatProvisioningService provService;
 
 	public TomcatProvisioningService getProvService() {
@@ -217,14 +218,14 @@ public class TomcatDomainService {
 		 */
 		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, conf.getTomcatVersionCd());
 		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion, conf);
-		
+
 		/*
 		 * save default alert config.
 		 */
 		String defaultAlertJson = fileHandler.readFileToString("classpath:/default-alerts.json");
-		List<DomainAlertSetting> alertSettings = JSONUtil.jsonToList(defaultAlertJson, List.class, DomainAlertSetting.class);
-		for (DomainAlertSetting domainAlertSetting : alertSettings) {
-			domainAlertSetting.setDomainId(conf.getTomcatDomain().getId());
+		List<MonAlertConfig> alertSettings = JSONUtil.jsonToList(defaultAlertJson, List.class, MonAlertConfig.class);
+		for (MonAlertConfig MonAlertConfig : alertSettings) {
+			MonAlertConfig.setTomcatDomain(conf.getTomcatDomain());
 		}
 		alertService.saveAllAlertSettings(alertSettings);
 
@@ -291,5 +292,5 @@ public class TomcatDomainService {
 	public long getDomainNo() {
 		return domainRepo.count();
 	}
-	
+
 }

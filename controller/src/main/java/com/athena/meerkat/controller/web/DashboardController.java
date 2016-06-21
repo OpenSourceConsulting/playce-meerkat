@@ -96,9 +96,9 @@ public class DashboardController {
 		//return json;
 	}
 
-	@RequestMapping(value = "/get/alerts/", method = RequestMethod.GET)
+	@RequestMapping(value = "/get/alerts", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getAlertList(GridJsonResponse json, @PathVariable Integer minsAgo) {
+	public GridJsonResponse getAlertList(GridJsonResponse json) {
 		List<MonUtilStat> alerts = monUtilStatService.getAlerts(MeerkatConstants.DASHBOARD_ALERT_COUNT);
 		json.setList(alerts);
 		json.setTotal(alerts.size());

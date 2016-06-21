@@ -1,6 +1,5 @@
 package com.athena.meerkat.controller.web.tomcat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,25 +21,22 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.common.model.TreeNode;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.entities.CommonCode;
 import com.athena.meerkat.controller.web.entities.DataSource;
-import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
-import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.entities.Session;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatDomainDatasource;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.monitoring.stat.AlertSettingService;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
-import com.athena.meerkat.controller.web.tomcat.services.DomainAlertSettingService;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -50,19 +46,19 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @RequestMapping("/domain")
 public class DomainController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DomainController.class);
-	
+
 	@Autowired
 	private TomcatDomainService domainService;
-	
+
 	@Autowired
 	private DataSourceService dsService;
-	
+
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
-	
+
 	@Autowired
 	private DataGridServerGroupService datagridGroupService;
-	
+
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
@@ -71,12 +67,12 @@ public class DomainController {
 
 	@Autowired
 	private TomcatProvisioningService proviService;
-	
+
 	@Autowired
 	private TaskHistoryService taskService;
-	
+
 	@Autowired
-	private DomainAlertSettingService alertService;
+	private AlertSettingService alertService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Transactional
@@ -187,16 +183,15 @@ public class DomainController {
 		}
 		if (savedConfig != null) {
 			//proviService.updateTomcatInstanceConfig(savedConfig.getTomcatDomain().getId(), changeRMI, null);
-			
+
 			TaskHistory task = taskService.createTomcatConfigUpdateTask(savedConfig.getTomcatDomain().getId());
-			
-			Map<String, Object> resultMap= new HashMap<String, Object>();
+
+			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("configId", savedConfig.getId());
 			resultMap.put("task", task);
-			
+
 			json.setData(resultMap);
-			
-			
+
 		} else {
 			json.setMsg("Configuration is failed.");
 			json.setSuccess(false);
@@ -313,71 +308,11 @@ public class DomainController {
 	public GridJsonResponse getAlertSettingList(GridJsonResponse json, @PathVariable Integer domainId) {
 		TomcatDomain td = domainService.getDomain(domainId);
 		if (td != null) {
-			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
+			List<MonAlertConfig> alertSettings = td.getMonAlertConfigs();
 
 			json.setList(alertSettings);
 			json.setTotal(alertSettings.size());
 		}
-		return json;
-	}
-
-	@RequestMapping(value = "/alert", method = RequestMethod.GET)
-	@ResponseBody
-	public SimpleJsonResponse getAlert(SimpleJsonResponse json, Integer alertId) {
-		DomainAlertSetting alert = alertService.getDomainAlert(alertId);
-		json.setData(alert);
-		return json;
-	}
-
-	@RequestMapping(value = "/alert/changeStatus", method = RequestMethod.POST)
-	@ResponseBody
-	public SimpleJsonResponse changeStatus(SimpleJsonResponse json, Integer alertId, boolean status) {
-		DomainAlertSetting alert = alertService.getDomainAlert(alertId);
-		if (alert != null) {
-			alert.setStatus(status);
-
-			alert = alertService.saveAlertSetting(alert);
-			json.setData(alert.isStatus());
-		}
-		return json;
-	}
-
-	@RequestMapping(value = "/changeAllStatus", method = RequestMethod.POST)
-	@ResponseBody
-	public SimpleJsonResponse changeAllStatus(SimpleJsonResponse json, Integer domainId, boolean status) {
-		TomcatDomain td = domainService.getDomain(domainId);
-		if (td != null) {
-			List<DomainAlertSetting> alertSettings = td.getAlertSettings();
-			for (DomainAlertSetting alert : alertSettings) {
-				alert.setStatus(status);
-			}
-
-
-			alertService.saveAllAlertSettings(alertSettings);
-		}
-		return json;
-	}
-
-	@RequestMapping(value = "/alert/operator/list")
-	@ResponseBody
-	public GridJsonResponse getAllAlertOperators(GridJsonResponse json) {
-
-		List<CommonCode> list = commonHandler.getCodes(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR);
-		json.setList(list);
-		json.setTotal(list.size());
-		return json;
-	}
-
-	@RequestMapping(value = "/alert/save", method = RequestMethod.POST)
-	@ResponseBody
-	public SimpleJsonResponse saveAlertSetting(SimpleJsonResponse json, DomainAlertSetting alert) {
-		if (alert.getThresholdValue() < 0 || alert.getThresholdValue() > 100) {
-			json.setMsg("Threshold value should be 0 to 100");
-			json.setSuccess(false);
-			return json;
-		}
-		alert.setStatus(false);
-		alertService.saveAlertSetting(alert);
 		return json;
 	}
 }

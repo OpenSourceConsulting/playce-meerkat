@@ -1,8 +1,6 @@
 package com.athena.meerkat.controller.web.monitoring.stat;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.resources.repositories.ServerRepository;
@@ -31,7 +29,7 @@ public class MonUtilStatService {
 	@Autowired
 	private MonUtilStatRepository repository;
 	@Autowired
-	private DomainAlertSettingRepository alertRepository;
+	private DomainAlertSettingRepository settingRepository;
 
 	@Autowired
 	private ServerRepository serverRepo;
@@ -61,8 +59,8 @@ public class MonUtilStatService {
 
 	public List<MonUtilStat> getAlerts(Integer count) {
 		List<MonUtilStat> list = repository.findAllByOrderByMonValueDescUpdateDtDesc(new PageRequest(0, 10));
-		HashMap<Integer, List<DomainAlertSetting>> settingMap = new HashMap<Integer, List<DomainAlertSetting>>();
-		List<DomainAlertSetting> alertSettings = new ArrayList<>();
+		//	HashMap<Integer, List<MonAlertConfig>> settingMap = new HashMap<Integer, List<MonAlertConfig>>();
+		List<MonAlertConfig> alertSettings = new ArrayList<>();
 		for (MonUtilStat alert : list) {
 			Integer serverId = alert.getServerId();
 
@@ -72,11 +70,13 @@ public class MonUtilStatService {
 				if (tc != null) {
 					serverId = tc.getServerId();
 					alert.setName(tc.getDomainName() + " > " + tc.getName());
+					alertSettings = settingRepository.findByServer_Id(tc.getDomainId());
 				}
 			} else {
 				Server s = serverRepo.getOne(serverId);
 				if (s != null) {
 					alert.setName(s.getName());
+					alertSettings = settingRepository.findByServer_Id(s.getId());
 				}
 			}
 			//set type
@@ -88,14 +88,14 @@ public class MonUtilStatService {
 				alert.setType("Disk(" + alert.getMonFactorId() + ")");
 			}
 
-			if (!settingMap.containsKey(alert.getServerId())) {
-				alertSettings = alertRepository.findAlertSettingsByServerId(serverId);
-				settingMap.put(serverId, alertSettings);
-			} else {
-				alertSettings = settingMap.get(serverId);
-			}
+			//			if (!settingMap.containsKey(serverId)) {
+			//				alertSettings = alertRepository.findByServerId(serverId);
+			//				settingMap.put(serverId, alertSettings);
+			//			} else {
+			//				alertSettings = settingMap.get(serverId);
+			//			}
 
-			for (DomainAlertSetting setting : alertSettings) {
+			for (MonAlertConfig setting : alertSettings) {
 				if (alert.getMonFactorId().equals(setting.getMonFactorId())) {
 					if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_GREATER_THAN_ID) {
 						alert.setAlertStatus(alert.getMonValue() > setting.getThresholdValue());

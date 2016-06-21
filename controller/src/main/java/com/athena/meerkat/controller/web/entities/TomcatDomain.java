@@ -79,7 +79,7 @@ public class TomcatDomain implements Serializable {
 
 	@OneToMany(mappedBy = "tomcatDomain", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	private List<DomainAlertSetting> alertSettings;
+	private List<MonAlertConfig> monAlertConfigs;
 
 	public String getName() {
 		return name;
@@ -97,7 +97,6 @@ public class TomcatDomain implements Serializable {
 		this.id = id;
 	}
 
-	
 	/**
 	 * Constructor
 	 */
@@ -220,12 +219,12 @@ public class TomcatDomain implements Serializable {
 		this.tomcatConfigFiles = tomcatConfigFiles;
 	}
 
-	public List<DomainAlertSetting> getAlertSettings() {
-		return alertSettings;
+	public List<MonAlertConfig> getMonAlertConfigs() {
+		return monAlertConfigs;
 	}
 
-	public void setAlertSettings(List<DomainAlertSetting> alertSettings) {
-		this.alertSettings = alertSettings;
+	public void setMonAlertConfigs(List<MonAlertConfig> monAlertConfigs) {
+		this.monAlertConfigs = monAlertConfigs;
 	}
 
 }

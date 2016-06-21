@@ -77,7 +77,7 @@ public class Server implements Serializable {
 	private String jvmVersion;
 	@Column(name = "ssh_port")
 	private int sshPort;
-	
+
 	@Column(name = "agent_installed")
 	private boolean agentInstalled;
 
@@ -109,6 +109,10 @@ public class Server implements Serializable {
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<DatagridServer> datagridServers;
+
+	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	private List<MonAlertConfig> monAlertConfigs;
 
 	// number of session for datagrid server
 	@Transient
@@ -458,5 +462,13 @@ public class Server implements Serializable {
 	public void setAgentInstalled(boolean agentInstalled) {
 		this.agentInstalled = agentInstalled;
 	}
-	
+
+	public List<MonAlertConfig> getMonAlertConfigs() {
+		return monAlertConfigs;
+	}
+
+	public void setMonAlertConfigs(List<MonAlertConfig> monAlertConfigs) {
+		this.monAlertConfigs = monAlertConfigs;
+	}
+
 }

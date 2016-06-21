@@ -13,6 +13,7 @@ import com.athena.meerkat.controller.common.MeerkatUtils;
 import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
@@ -95,6 +96,16 @@ public class ServerController {
 			json.setMsg("Server does not exist.");
 			json.setSuccess(false);
 		}
+		return json;
+	}
+
+	@RequestMapping(value = "/{serverId}/alertsettings", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getAlertSettings(GridJsonResponse json, @PathVariable Integer serverId) {
+		Server m = service.getServer(serverId);
+		List<MonAlertConfig> list = m.getMonAlertConfigs();
+		json.setList(list);
+		json.setTotal(list.size());
 		return json;
 	}
 

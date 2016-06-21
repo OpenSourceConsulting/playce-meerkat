@@ -40,8 +40,8 @@ import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DatagridServerGroup;
-import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskDetailViewModel;
@@ -130,19 +130,19 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		} else if (object instanceof DomainTomcatConfiguration) {
 			handleEntity((DomainTomcatConfiguration) object);
-			
+
 		} else if (object instanceof DatagridServerGroup) {
 			handleEntity((DatagridServerGroup) object);
-			
-		} else if (object instanceof DomainAlertSetting) {
-			handleEntity((DomainAlertSetting) object);
+
+		} else if (object instanceof MonAlertConfig) {
+			handleEntity((MonAlertConfig) object);
 
 		} else if (object instanceof TaskHistory) {
 			handleEntity((TaskHistory) object);
 
 		} else if (object instanceof TaskDetailViewModel) {
 			handleEntity((TaskDetailViewModel) object);
-			
+
 		} else if (object instanceof Map) {
 			handleEntity((Map<String, Object>) object);
 		} else {
@@ -182,10 +182,12 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
-	protected void handleEntity(DomainAlertSetting entity) {
+	protected void handleEntity(MonAlertConfig entity) {
 
 		entity.setAlertItemCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_ITEM, entity.getAlertItemCdId()));
-		entity.setThresholdOpCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR, entity.getThresholdOpCdId()));
+		if (entity.getThresholdOpCdId() != null) {
+			entity.setThresholdOpCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR, entity.getThresholdOpCdId()));
+		}
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
@@ -196,14 +198,14 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
-	
+
 	protected void handleEntity(TaskDetailViewModel entity) {
 
 		entity.setTaskName(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TASK, entity.getTaskCdId()));
 
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
-	
+
 	protected void handleEntity(Map<String, Object> entity) {
 
 		Object object = entity.get("task");
@@ -237,8 +239,8 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	protected void handleResponse(GridJsonResponse jsRes) {
 
 		List<Object> list = (List<Object>) jsRes.getList();
-		
-		if (list !=null && list.size() > 0) {
+
+		if (list != null && list.size() > 0) {
 
 			for (Object object : list) {
 				handleObject(object);

@@ -8,6 +8,7 @@
 		<property name="user.id" value="centos" />
 		<property name="user.passwd" value="centos" />
 		<property name="deploy.dir" value="/home/centos/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT/lib" />
+		<property name="script.dir" value="/home/centos/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT" />
 		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
 
 		<echo>send agent jar file.</echo>
@@ -17,7 +18,9 @@
 				<include name="athena-meerkat-agent-1.0.0-SNAPSHOT.jar"/>
 			</fileset>
 		</scp>
-		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+					command="cd ${script.dir}; sh kill.sh; sh startup.sh " 
+					trust="true" failonerror="true"  />
 
 	</target>
 	

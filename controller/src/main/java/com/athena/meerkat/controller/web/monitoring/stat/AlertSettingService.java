@@ -20,7 +20,7 @@
  * ---------------	----------------	------------
  * BongJin Kwon		2016. 6. 15.		First Draft.
  */
-package com.athena.meerkat.controller.web.tomcat.services;
+package com.athena.meerkat.controller.web.monitoring.stat;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.entities.DomainAlertSetting;
+import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingRepository;
 
 /**
@@ -40,7 +40,7 @@ import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingR
  * @version 1.0
  */
 @Service
-public class DomainAlertSettingService {
+public class AlertSettingService {
 
 	@Autowired
 	private DomainAlertSettingRepository domainAlertRepo;
@@ -50,15 +50,15 @@ public class DomainAlertSettingService {
 	 * 
 	 * </pre>
 	 */
-	public DomainAlertSettingService() {
+	public AlertSettingService() {
 
 	}
 
-	public DomainAlertSetting getDomainAlert(Integer alertId) {
+	public MonAlertConfig getAlertConfig(Integer alertId) {
 		return domainAlertRepo.findOne(alertId);
 	}
 
-	public DomainAlertSetting saveAlertSetting(DomainAlertSetting alert) {
+	public MonAlertConfig saveAlertSetting(MonAlertConfig alert) {
 		Integer alertItem = alert.getAlertItemCdId();
 		if (alertItem == MeerkatConstants.ALERT_ITEM_CPU_USED) {
 			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_CPU_USED);
@@ -70,7 +70,7 @@ public class DomainAlertSettingService {
 		return domainAlertRepo.save(alert);
 	}
 
-	public void saveAllAlertSettings(List<DomainAlertSetting> alertSettings) {
+	public void saveAllAlertSettings(List<MonAlertConfig> alertSettings) {
 		domainAlertRepo.save(alertSettings);
 
 	}

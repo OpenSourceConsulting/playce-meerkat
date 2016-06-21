@@ -58,7 +58,7 @@ public class MonUtilStat {
 	private int id;//
 
 	@Column(name = "server_id")
-	private int serverId;//
+	private Integer serverId;//
 
 	@Column(name = "tomcat_instance_id")
 	private int tomcatInstanceId;//
