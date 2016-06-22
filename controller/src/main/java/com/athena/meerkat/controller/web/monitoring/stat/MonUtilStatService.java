@@ -80,7 +80,7 @@ public class MonUtilStatService {
 				}
 			}
 			//set type
-			if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_CPU_USED)) {
+			if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_CPU_USED_PER)) {
 				alert.setType("CPU");
 			} else if (alert.getMonFactorId().equals(MeerkatConstants.MON_FACTOR_MEM_USED_PER)) {
 				alert.setType("Memory");

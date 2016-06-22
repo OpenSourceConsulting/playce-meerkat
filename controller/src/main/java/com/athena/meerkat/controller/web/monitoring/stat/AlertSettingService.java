@@ -22,13 +22,19 @@
  */
 package com.athena.meerkat.controller.web.monitoring.stat;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.FileHandler;
+import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.MonAlertConfig;
+import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingRepository;
 
 /**
@@ -40,10 +46,15 @@ import com.athena.meerkat.controller.web.tomcat.repositories.DomainAlertSettingR
  * @version 1.0
  */
 @Service
-public class AlertSettingService {
+public class AlertSettingService implements InitializingBean{
 
 	@Autowired
 	private DomainAlertSettingRepository domainAlertRepo;
+	
+	@Autowired
+	private FileHandler fileHandler;
+	
+	private String defaultAlertJson;
 
 	/**
 	 * <pre>
@@ -59,20 +70,46 @@ public class AlertSettingService {
 	}
 
 	public MonAlertConfig saveAlertSetting(MonAlertConfig alert) {
-		Integer alertItem = alert.getAlertItemCdId();
-		if (alertItem == MeerkatConstants.ALERT_ITEM_CPU_USED) {
-			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_CPU_USED);
-		} else if (alertItem == MeerkatConstants.ALERT_ITEM_MEM_USED) {
-			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_MEM_USED);
-		} else if (alertItem == MeerkatConstants.ALERT_ITEM_DISK_USED) {
-			alert.setMonFactorId(MeerkatConstants.MON_FACTOR_DISK_USED);
-		}
+		
 		return domainAlertRepo.save(alert);
 	}
 
 	public void saveAllAlertSettings(List<MonAlertConfig> alertSettings) {
 		domainAlertRepo.save(alertSettings);
 
+	}
+	
+	public void saveDomainDefaultAlertSetting(TomcatDomain domain) {
+		List<MonAlertConfig> alertSettings = JSONUtil.jsonToList(defaultAlertJson, List.class, MonAlertConfig.class);
+		List<MonAlertConfig> newConfigs = new ArrayList<MonAlertConfig>();
+		
+		for (MonAlertConfig alertConfig : alertSettings) {
+			
+			if (alertConfig.getAlertItemCdId() == MeerkatConstants.ALERT_ITEM_CPU_USED
+				|| alertConfig.getAlertItemCdId() == MeerkatConstants.ALERT_ITEM_MEM_USED) {
+				
+				alertConfig.setTomcatDomain(domain);
+				newConfigs.add(alertConfig);
+			}
+			
+			
+		}
+		saveAllAlertSettings(newConfigs);
+	}
+	
+	public void saveServerDefaultAlertSetting(Server server) {
+		List<MonAlertConfig> alertSettings = JSONUtil.jsonToList(defaultAlertJson, List.class, MonAlertConfig.class);
+		
+		for (MonAlertConfig alertConfig : alertSettings) {
+			alertConfig.setServer(server);
+		}
+		saveAllAlertSettings(alertSettings);
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		defaultAlertJson = fileHandler.readFileToString("classpath:/default-alerts.json");
+		
 	}
 
 }

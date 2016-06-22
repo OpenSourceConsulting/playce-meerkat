@@ -36,9 +36,9 @@
 
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.hibernate.SQL" level="ERROR" /> <!-- sql log -->
-	<logger name="org.hibernate.type" level="TRACE" /> <!-- on off sql parameters & result -->
+	<logger name="org.hibernate.type" level="ERROR" /> <!-- on off sql parameters & result -->
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" /> <!-- sql result (TRACE) -->
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" /> <!-- sql parameter (TRACE) -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="ERROR" /> <!-- sql parameter (TRACE) -->
     <logger name="org.hibernate.type.BasicTypeRegistry" level="DEBUG" />
 	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
 	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />

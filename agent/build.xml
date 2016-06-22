@@ -72,14 +72,20 @@
 		
 		<property name="user.root" value="/home/${user.id}" />
 		<property name="tinstance.home" value="${user.root}/apps/msa2" />
-		
-		
-		<antcall target="remove.agent.tomcat">
+		<!--
+		<antcall target="remove.agent.tomcat" description="centos01">
+			<param name="server.ip" value="192.168.0.177" />
+		</antcall> -->
+		<antcall target="remove.agent.tomcat" description="centos02">
+			<param name="server.ip" value="192.168.0.178" />
+		</antcall>
+		<antcall target="remove.agent.tomcat" description="centos03">
 			<param name="server.ip" value="192.168.0.174" />
 		</antcall>
-		<antcall target="remove.agent.tomcat">
+		<antcall target="remove.agent.tomcat" description="centos04">
 			<param name="server.ip" value="192.168.0.180" />
 		</antcall>
+
 	</target>
 	
 	<target name="remove.agent.tomcat" description="remove agent and tomcat.">
@@ -87,15 +93,17 @@
 		<property name="server.port" value="22" />
 		<property name="agent.home" value="${user.root}/athena-meerkat-agent/athena-meerkat-agent-1.0.0-SNAPSHOT" />
 		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
+		<property name="kill.all">ps -efww | grep java | grep -v grep | awk {'print "kill -9 " $2'} | sh -x</property>
 
+		<!--
 		<echo>shutdown ${tinstance.home} on ${server.ip}</echo>
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
 					command="cd ${tinstance.home}; ./shutdown.sh;" 
 					trust="true" failonerror="true" />
-		
+		-->
 		<echo>remove all on ${server.ip}</echo>
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-			command="cd ${agent.home}; ./kill.sh; rm -rf ${user.root}/*" 
+			command="${kill.all}; rm -rf ${user.root}/*" 
 			trust="true" failonerror="true" />
 
 	</target>
