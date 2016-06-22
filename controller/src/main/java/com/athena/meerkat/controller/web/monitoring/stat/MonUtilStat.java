@@ -102,12 +102,7 @@ public class MonUtilStat {
 		this.tomcatInstanceId = monJmx.getInstanceId();
 		this.monFactorId = monJmx.getMonFactorId();
 
-		if (JMX_PROCESS_CPU_LOAD.equals(this.monFactorId)) {
-			this.monValue = monJmx.getMonValue();
-
-		} else if (monJmx.getMonValue2() > 0) {
-			this.monValue = monJmx.getMonValue() * 100D / monJmx.getMonValue2();
-		}
+		this.monValue = monJmx.getMonValue();
 	}
 
 	public MonUtilStat(MonFs monFs) {

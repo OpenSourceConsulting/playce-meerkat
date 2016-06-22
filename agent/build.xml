@@ -3,7 +3,7 @@
 	
 	<target name="scp.agent.jar" description="deploy only agent jar file.">
 		
-		<property name="server.ip" value="192.168.0.157" />
+		<property name="server.ip" value="192.168.0.152" />
 		<property name="server.port" value="22" />
 		<property name="user.id" value="centos" />
 		<property name="user.passwd" value="centos" />
@@ -19,7 +19,7 @@
 			</fileset>
 		</scp>
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-					command="cd ${script.dir}; sh kill.sh; sh startup.sh " 
+					command="cd ${script.dir}; sh kill.sh; sh startup.sh nolog" 
 					trust="true" failonerror="true"  />
 
 	</target>
