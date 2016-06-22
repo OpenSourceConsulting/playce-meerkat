@@ -63,7 +63,7 @@ public class MonAlertConfig {
 		this.thresholdValue = thresholdValue;
 	}
 
-	public int getThresholdOpCdId() {
+	public Integer getThresholdOpCdId() {
 		return thresholdOpCdId;
 	}
 

@@ -185,7 +185,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 	protected void handleEntity(MonAlertConfig entity) {
 
 		entity.setAlertItemCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_ITEM, entity.getAlertItemCdId()));
-		if (entity.getThresholdOpCdId() != 0) {
+		if (entity.getThresholdOpCdId() != null) {
 			entity.setThresholdOpCdNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_ALERT_THRESHOLD_OPERATOR, entity.getThresholdOpCdId()));
 		}
 

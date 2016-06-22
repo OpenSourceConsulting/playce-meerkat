@@ -29,11 +29,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmx;
 import com.athena.meerkat.controller.web.monitoring.server.MonData;
 import com.athena.meerkat.controller.web.monitoring.server.MonFs;
@@ -61,7 +64,7 @@ public class MonUtilStat {
 	private Integer serverId;//
 
 	@Column(name = "tomcat_instance_id")
-	private int tomcatInstanceId;//
+	private Integer tomcatInstanceId;//
 
 	@Column(name = "mon_factor_id")
 	private String monFactorId;//
@@ -76,6 +79,11 @@ public class MonUtilStat {
 	private String name; // name of tomcat instance OR server
 	@Transient
 	private String type; //type of alert
+
+	@ManyToOne
+	private Server server;
+	@ManyToOne
+	private TomcatInstance tomcatInstance;
 
 	public MonUtilStat() {
 
@@ -131,31 +139,15 @@ public class MonUtilStat {
 	/**
 	 * @return the serverId
 	 */
-	public int getServerId() {
-		return serverId;
-	}
-
-	/**
-	 * @param serverId
-	 *            the serverId to set
-	 */
-	public void setServerId(int serverId) {
-		this.serverId = serverId;
+	public Integer getServerId() {
+		return server == null ? 0 : server.getId();
 	}
 
 	/**
 	 * @return the tomcatInstanceId
 	 */
-	public int getTomcatInstanceId() {
-		return tomcatInstanceId;
-	}
-
-	/**
-	 * @param tomcatInstanceId
-	 *            the tomcatInstanceId to set
-	 */
-	public void setTomcatInstanceId(int tomcatInstanceId) {
-		this.tomcatInstanceId = tomcatInstanceId;
+	public Integer getTomcatInstanceId() {
+		return tomcatInstance == null ? 0 : tomcatInstance.getId();
 	}
 
 	/**
@@ -235,6 +227,22 @@ public class MonUtilStat {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
+	}
+
+	public TomcatInstance getTomcatInstance() {
+		return tomcatInstance;
+	}
+
+	public void setTomcatInstance(TomcatInstance tomcatInstance) {
+		this.tomcatInstance = tomcatInstance;
 	}
 
 }

@@ -58,7 +58,7 @@ public class AlertSettingController {
 	@ResponseBody
 	public SimpleJsonResponse changeAllStatus(SimpleJsonResponse json, String objType, Integer objId, boolean status) {
 		List<MonAlertConfig> alertSettings = new ArrayList<>();
-		if (objType == MeerkatConstants.OBJ_TYPE_DOMAIN) {
+		if (objType.equals(MeerkatConstants.OBJ_TYPE_DOMAIN)) {
 			TomcatDomain td = domainService.getDomain(objId);
 			if (td != null) {
 				alertSettings = td.getMonAlertConfigs();
@@ -92,14 +92,20 @@ public class AlertSettingController {
 	@RequestMapping(value = "/setting/save", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveAlertSetting(SimpleJsonResponse json, MonAlertConfig alert) {
+		MonAlertConfig dbAlertConf = alertService.getAlertConfig(alert.getId());
 		if (alert.getThresholdValue() < 0 || alert.getThresholdValue() > 100) {
 			json.setMsg("Threshold value should be 0 to 100");
 			json.setSuccess(false);
 			return json;
 		}
-		alert.setStatus(false);
+		if (dbAlertConf != null) {
+			dbAlertConf.setAlertItemCdId(alert.getAlertItemCdId());
+			dbAlertConf.setThresholdOpCdId(alert.getThresholdOpCdId());
+			dbAlertConf.setThresholdValue(alert.getThresholdValue());
+			dbAlertConf.setStatus(false);
+		}
 
-		alertService.saveAlertSetting(alert);
+		alertService.saveAlertSetting(dbAlertConf);
 		return json;
 	}
 }
