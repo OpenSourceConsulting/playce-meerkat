@@ -65,7 +65,7 @@ public class MonUtilStatService {
 			Integer serverId = alert.getServerId();
 
 			//set name and server id
-			if (serverId == 0) {
+			if (serverId == null || serverId == 0) {
 				TomcatInstance tc = tomcatRepo.findOne(alert.getTomcatInstanceId());
 				if (tc != null) {
 					serverId = tc.getServerId();

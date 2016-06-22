@@ -172,3 +172,25 @@ CREATE TABLE IF NOT EXISTS `mon_alert_config` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mon_util_stat` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `server_id` INT(11) NULL,
+  `tomcat_instance_id` INT(11) NULL,
+  `mon_factor_id` VARCHAR(40) NOT NULL,
+  `mon_value` DOUBLE NULL DEFAULT 0 COMMENT 'percentage value.',
+  `update_dt` DATETIME NULL COMMENT '최근 업데이트 일시.',
+  PRIMARY KEY (`Id`),
+  INDEX `fk_mon_util_stat_tomcat_instance1_idx` (`tomcat_instance_id` ASC),
+  INDEX `fk_mon_util_stat_server1_idx` (`server_id` ASC),
+  CONSTRAINT `fk_mon_util_stat_tomcat_instance1`
+    FOREIGN KEY (`tomcat_instance_id`)
+    REFERENCES `tomcat_instance` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_mon_util_stat_server1`
+    FOREIGN KEY (`server_id`)
+    REFERENCES `server` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

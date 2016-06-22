@@ -61,7 +61,7 @@ public class MonUtilStat {
 	private Integer serverId;//
 
 	@Column(name = "tomcat_instance_id")
-	private int tomcatInstanceId;//
+	private Integer tomcatInstanceId;//
 
 	@Column(name = "mon_factor_id")
 	private String monFactorId;//
@@ -131,7 +131,7 @@ public class MonUtilStat {
 	/**
 	 * @return the serverId
 	 */
-	public int getServerId() {
+	public Integer getServerId() {
 		return serverId;
 	}
 
@@ -139,14 +139,14 @@ public class MonUtilStat {
 	 * @param serverId
 	 *            the serverId to set
 	 */
-	public void setServerId(int serverId) {
+	public void setServerId(Integer serverId) {
 		this.serverId = serverId;
 	}
 
 	/**
 	 * @return the tomcatInstanceId
 	 */
-	public int getTomcatInstanceId() {
+	public Integer getTomcatInstanceId() {
 		return tomcatInstanceId;
 	}
 
@@ -154,7 +154,7 @@ public class MonUtilStat {
 	 * @param tomcatInstanceId
 	 *            the tomcatInstanceId to set
 	 */
-	public void setTomcatInstanceId(int tomcatInstanceId) {
+	public void setTomcatInstanceId(Integer tomcatInstanceId) {
 		this.tomcatInstanceId = tomcatInstanceId;
 	}
 
