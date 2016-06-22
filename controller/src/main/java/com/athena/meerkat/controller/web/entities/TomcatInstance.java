@@ -48,6 +48,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
+import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -118,11 +119,12 @@ public class TomcatInstance implements Serializable {
 	@OneToMany(mappedBy = "tomcatInstance", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<TaskHistoryDetail> taskHistoryDetails;
-
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	@Transient
-	@Autowired
-	private CommonCodeHandler codeHandler;
+	@JoinColumn(name = "tomcat_instance_id")
+	private List<MonUtilStat> monUtilStats;
+
 
 	public TomcatInstance() {
 	}

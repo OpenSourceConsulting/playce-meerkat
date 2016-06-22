@@ -275,17 +275,22 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			 */
 			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
 
-			/*
-			 * 4. update server.xml & context.xml
-			 */
-			isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
+			if (isSuccess) {
+				
+				/*
+				 * 4. update server.xml & context.xml
+				 */
+				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "update-config") && isSuccess;
 
-			/*
-			 * 5. install dolly agent
-			 */
-			if (pModel.getSessionServerGroupId() > 0) {
-				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
+				/*
+				 * 5. install dolly agent
+				 */
+				if (pModel.getSessionServerGroupId() > 0) {
+					isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
+				}
+				
 			}
+			
 
 			if (isSuccess) {
 				instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);

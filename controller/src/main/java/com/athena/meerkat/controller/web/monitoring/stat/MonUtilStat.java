@@ -140,14 +140,38 @@ public class MonUtilStat {
 	 * @return the serverId
 	 */
 	public Integer getServerId() {
+<<<<<<< HEAD
 		return server == null ? 0 : server.getId();
+=======
+		return serverId;
+	}
+
+	/**
+	 * @param serverId
+	 *            the serverId to set
+	 */
+	public void setServerId(Integer serverId) {
+		this.serverId = serverId;
+>>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 	}
 
 	/**
 	 * @return the tomcatInstanceId
 	 */
 	public Integer getTomcatInstanceId() {
+<<<<<<< HEAD
 		return tomcatInstance == null ? 0 : tomcatInstance.getId();
+=======
+		return tomcatInstanceId;
+	}
+
+	/**
+	 * @param tomcatInstanceId
+	 *            the tomcatInstanceId to set
+	 */
+	public void setTomcatInstanceId(Integer tomcatInstanceId) {
+		this.tomcatInstanceId = tomcatInstanceId;
+>>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 	}
 
 	/**

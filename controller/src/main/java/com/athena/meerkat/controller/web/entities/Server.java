@@ -22,6 +22,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -121,6 +122,11 @@ public class Server implements Serializable {
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<MonAlertConfig> monAlertConfigs;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	@JoinColumn(name = "server_id")
+	private List<MonUtilStat> monUtilStats;
 
 	/*
 		public String getGroupName() {
