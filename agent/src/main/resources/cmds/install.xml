@@ -18,7 +18,12 @@
 		</classpath>
 	</taskdef>
 	
-	<target name="create-instance">
+	<target name="check-catalina.base">
+		<available file="${catalina.base}" type="dir" property="exist.instance" />
+        <echo>exist.instance : ${exist.instance}</echo>
+    </target>
+	
+	<target name="create-instance" depends="check-catalina.base" unless="exist.instance">
 		<echo message="making ${catalina.home}" />
 		<mkdir dir="${catalina.home}" />
 		
@@ -38,7 +43,7 @@
 		</cargo>
 	</target>
 	
-	<target name="check-installed">
+	<target name="check-catalina.home">
     	<condition property="installed.tomcat">
         	<resourceexists>
                 <file file="${catalina.home}/bin/catalina.sh"/>
@@ -47,13 +52,17 @@
         <echo>installed.tomcat : ${installed.tomcat}</echo>
     </target>
 	
-	<target name="copy-catalina-home" depends="create-instance, check-installed" unless="installed.tomcat">
+	<target name="copy-catalina-home" depends="create-instance, check-catalina.home" unless="installed.tomcat">
 		<copy todir="${catalina.home}" description="copy to catalina.home">
 			<fileset dir="${down.dir}/${tomcat.name}/${tomcat.name}"/>
 		</copy>
 	</target>
+	
+	
 
-	<target name="cmd" depends="copy-catalina-home">
+	<target name="cmd" depends="copy-catalina-home" >
+		
+		<fail if="exist.instance" message="already exist ${catalina.base}"/>
 
 		<echo message="downloading catalina-jmx-remote-7.0.68.jar" />
 		<get src="${tomcat.down.url}/catalina-jmx-remote-7.0.68.jar" dest="${catalina.home}/lib"/>
