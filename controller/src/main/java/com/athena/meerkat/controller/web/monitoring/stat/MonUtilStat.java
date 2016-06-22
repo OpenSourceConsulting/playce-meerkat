@@ -80,17 +80,12 @@ public class MonUtilStat {
 	@Transient
 	private String type; //type of alert
 
-	@ManyToOne
-	private Server server;
-	@ManyToOne
-	private TomcatInstance tomcatInstance;
-
+	@Transient
+	private boolean alertStatus;
+	
 	public MonUtilStat() {
 
 	}
-
-	@Transient
-	private boolean alertStatus;
 
 	/**
 	 * <pre>
@@ -140,14 +135,14 @@ public class MonUtilStat {
 	 * @return the serverId
 	 */
 	public Integer getServerId() {
-		return server == null ? 0 : server.getId();
+		return serverId;
 	}
 
 	/**
 	 * @return the tomcatInstanceId
 	 */
 	public Integer getTomcatInstanceId() {
-		return tomcatInstance == null ? 0 : tomcatInstance.getId();
+		return tomcatInstanceId;
 	}
 
 	/**
@@ -227,22 +222,6 @@ public class MonUtilStat {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public Server getServer() {
-		return server;
-	}
-
-	public void setServer(Server server) {
-		this.server = server;
-	}
-
-	public TomcatInstance getTomcatInstance() {
-		return tomcatInstance;
-	}
-
-	public void setTomcatInstance(TomcatInstance tomcatInstance) {
-		this.tomcatInstance = tomcatInstance;
 	}
 
 }

@@ -50,7 +50,7 @@ public class MonStatisticsAnalyzer implements InitializingBean{
 	
 	private static final String KEY_SEPERATOR = "_";
 	private static final String[] SKIP_MON_FACTORS = new String[]{"mem.used", "net.in", "net.out"};
-	private static final String[] SKIP_JMX_MON_FACTORS = new String[]{"ti.run", "jmx.tomcatThreads", "mem.used"};
+	private static final String[] SKIP_JMX_MON_FACTORS = new String[]{"ti.run", "jmx.tomcatThreads"};
 	
 	@Autowired
 	private MonUtilStatService statService;
