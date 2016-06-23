@@ -19,11 +19,31 @@
 	        </layout>
 	      </appender>
 	    </sift>
-	  </appender>
+	</appender>
+	
+	<appender name="MONITOR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/monitor.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>../logs/monitor.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+				<!-- keep 30 days' worth of history -->
+			    <maxHistory>30</maxHistory>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d @%X{serverIp} @TI_%X{tInstanceId} [%thread] %-5level %-35logger{30} - %msg%n</pattern>
+		</encoder>
+	</appender>
 
 	<logger name="com.athena" level="DEBUG"/>
 	<logger name="com.athena.meerkat.controller.web.provisioning" level="DEBUG">
 		<appender-ref ref="PROVI_LOG" />
+	</logger>
+	<logger name="com.athena.meerkat.controller.web.monitoring" level="DEBUG">
+		<appender-ref ref="MONITOR_FILE" />
 	</logger>
 
 	<logger name="org.springframework" level="ERROR"/>

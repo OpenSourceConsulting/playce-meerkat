@@ -65,7 +65,7 @@ public class MonJmxService {
 					tiService.saveState(instance, monJmx.getMonValue().intValue());
 
 				} else {
-					LOGGER.debug("{} instance is null. don't save state.", monJmx.getInstanceId());
+					LOGGER.warn("{} instance is null. don't save state.", monJmx.getInstanceId());
 				}
 			}
 
