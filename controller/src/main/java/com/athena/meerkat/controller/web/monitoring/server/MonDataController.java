@@ -44,7 +44,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonDataController.class);
 	
-	public static final String MDC_SERVER_KEY = "serverIp";
+	public static final String MDC_SERVER_KEY = "serverIP";
 
 	private static final String MSG_MON = "mon";
 	private static final String MSG_FS = "fs";
@@ -119,7 +119,6 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			mdcEnable = true;
 			
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
-			
 			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
 		}
 		
