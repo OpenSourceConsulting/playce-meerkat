@@ -26,11 +26,11 @@
 	
 	<target name="deploy.commander" description="deploy only agent tar.gz file.">
 			
-		<property name="server.ip" value="192.168.0.87" />
+		<property name="server.ip" value="192.168.0.153" />
 		<property name="server.port" value="22" />
-		<property name="user.id" value="meerkat" />
-		<property name="user.passwd" value="meerkat" />
-		<property name="deploy.dir" value="/home/meerkat/.aMeerkat" />
+		<property name="user.id" value="root" />
+		<property name="user.passwd" value="jan01jan" />
+		<property name="deploy.dir" value="/home/centos/.aMeerkat" />
 		<property name="file.name" value="athena-meerkat-commander-1.0.0-SNAPSHOT" />
 		<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
 
@@ -47,6 +47,30 @@
 			trust="true" failonerror="true" />
 
 	</target>
+	
+	<!--<target name="deploy.commander" description="deploy only agent tar.gz file.">
+				
+			<property name="server.ip" value="192.168.0.87" />
+			<property name="server.port" value="22" />
+			<property name="user.id" value="meerkat" />
+			<property name="user.passwd" value="meerkat" />
+			<property name="deploy.dir" value="/home/meerkat/.aMeerkat" />
+			<property name="file.name" value="athena-meerkat-commander-1.0.0-SNAPSHOT" />
+			<property name="key.file" value="${basedir}/src/main/resources/ssh/svn_key.pem" />
+
+			<echo>upload ${file.name}-bin.tar.gz</echo>
+			<scp port="${server.port}" todir="${user.id}@${server.ip}:/home/meerkat" trust="true" keyfile="${key.file}"
+				password="${user.passwd}">
+				<fileset dir="${basedir}/target" defaultexcludes="true">
+					<include name="${file.name}-bin.tar.gz"/>
+				</fileset>
+			</scp>
+			
+			<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				command="tar xvfz /home/meerkat/${file.name}-bin.tar.gz; cp -r /home/meerkat/${file.name}/* ${deploy.dir};rm -rf /home/meerkat/${file.name}*;" 
+				trust="true" failonerror="true" />
+
+		</target>-->
 	
 	<target name="deploy.commander.local">
 		<property name="gunzip.dest" value="G:/project/AthenaMeerkat" />
