@@ -85,6 +85,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 		int serverId = Integer.valueOf(initMon.get("id").toString());
 		Server dbServer = svrService.getServer(serverId);
+
 		MDC.put(MDC_SERVER_KEY, dbServer.getSshIPAddr());
 
 		try {

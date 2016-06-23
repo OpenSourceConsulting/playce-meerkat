@@ -74,12 +74,13 @@ public class MonJmxController {
 		
 		boolean mdcEnable = monJmxs != null && monJmxs.size() > 0;
 		if (mdcEnable) {
-			mdcEnable = true;
-			
 			TomcatInstance ti = tiService.findOne(monJmxs.get(0).getInstanceId());
 			
-			MDC.put(MonDataController.MDC_SERVER_KEY, ti.getIpaddress());
-			MDC.put(MDC_TI_KEY, String.valueOf(ti.getId()));
+			if (ti != null) {
+				mdcEnable = true;
+				MDC.put(MonDataController.MDC_SERVER_KEY, ti.getIpaddress());
+				MDC.put(MDC_TI_KEY, String.valueOf(ti.getId()));
+			}
 		}
 		
 		try {
