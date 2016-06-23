@@ -190,7 +190,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 		double usedVal = parseDouble(used) * 100d;
 		double sysVal = parseDouble(sysCpuUsed) * 100d;
 
-		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_CPU_USED, tomcatInstanceId, usedVal, sysVal));
+		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_CPU_USED_PER, tomcatInstanceId, usedVal, sysVal));
 	}
 
 	private void monitorTomcatHeapMemory(MBeanServerConnection mbeanServerConn, String tomcatInstanceId) throws Exception {
@@ -199,6 +199,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 
 		double used = memUsage.getUsed() / asMB;//mbytes
 		double max = memUsage.getMax() / asMB;//mbytes
+		double used_per = used * 100D / max;
 
 		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED, tomcatInstanceId, used, max));
 

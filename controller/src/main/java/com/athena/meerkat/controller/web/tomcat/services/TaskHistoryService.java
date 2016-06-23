@@ -232,26 +232,46 @@ public class TaskHistoryService {
 	public List<String> getLog(int taskDetailId, HttpSession session) {
 
 		LogTailerListener listener = (LogTailerListener) session.getAttribute(LOG_TAILER);
-
+		int errCode = 0;
+		String logFile = null;
+		
 		if (listener == null) {
 			TaskHistoryDetail taskDetail = getTaskHistoryDetail(taskDetailId);
 
 			listener = new LogTailerListener(new ArrayList<String>());
 			session.setAttribute(LOG_TAILER, listener);
 
-			long delay = 3000;
-			File file = new File(taskDetail.getLogFilePath());
-			LOGGER.debug("log file : {}", file.getAbsoluteFile());
-
-			Tailer tailer = new Tailer(file, listener, delay);
-			new Thread(tailer).start();
+			logFile = taskDetail.getLogFilePath();
+			LOGGER.debug("log file : {}", logFile);
+			
+			if (logFile != null) {
+				
+				long delay = 3000;
+				
+				File file = new File(logFile);
+				
+				if (file.exists()) {
+					Tailer tailer = new Tailer(file, listener, delay);
+					new Thread(tailer).start();
+				} else {
+					errCode = 2;
+				}
+				
+			} else {
+				errCode = 1;
+			}
+			
 		}
 
 		List<String> logs = listener.getLogs();
 
 		LOGGER.debug("logs size is {}", logs.size());
+		
+		if (errCode > 0){
+			logs.add("로그 파일이 없습니다. " + logFile);
+		}
 
-		if (listener.isStop()) {
+		if (errCode > 0 || listener.isStop()) {
 			logs.add("end");
 			session.removeAttribute(LOG_TAILER);
 		}
