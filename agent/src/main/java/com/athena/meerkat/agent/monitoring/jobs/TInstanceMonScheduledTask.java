@@ -201,6 +201,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 		double max = memUsage.getMax() / asMB;//mbytes
 
 		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED, tomcatInstanceId, used, max));
+
 	}
 
 	private void monitorTomcatThreads(MBeanServerConnection mbeanServerConn, String tomcatInstanceId, String httpPort) throws Exception {

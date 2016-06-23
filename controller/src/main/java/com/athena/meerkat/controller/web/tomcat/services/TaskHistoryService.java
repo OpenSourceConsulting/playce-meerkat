@@ -12,6 +12,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
@@ -64,12 +65,12 @@ public class TaskHistoryService {
 	public TaskHistory createTomcatInstallTask(List<TomcatInstance> tomcats) {
 
 		TaskHistory task = createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_INSTALL);
-		
+
 		tomcatService.saveList(tomcats);// update lastTaskHistoryId.
-		
+
 		return task;
 	}
-	
+
 	public TaskHistory createTomcatUninstallTask(int tomcatInstanceId) {
 
 		TomcatInstance tomcatInstance = tomcatService.findOne(tomcatInstanceId);
@@ -78,9 +79,9 @@ public class TaskHistoryService {
 		singleList.add(tomcatInstance);
 
 		TaskHistory task = createTaskDetails(singleList, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
-		
+
 		tomcatService.saveList(singleList);// update lastTaskHistoryId.
-		
+
 		return task;
 	}
 
@@ -152,7 +153,7 @@ public class TaskHistoryService {
 		for (TomcatInstance tomcatInstance : tomcats) {
 			TaskHistoryDetail taskDetail = new TaskHistoryDetail(task.getId(), tomcatInstance);
 			taskDetails.add(taskDetail);
-			
+
 			tomcatInstance.setLastTaskHistoryId(task.getId());
 		}
 
@@ -167,7 +168,7 @@ public class TaskHistoryService {
 
 		return createTaskDetails(tomcats, taskCdId);
 	}
-	
+
 	public void save(TaskHistory taskHistory) {
 		repository.save(taskHistory);
 	}
@@ -219,9 +220,13 @@ public class TaskHistoryService {
 		return detailRepo.findOne(taskDetailId);
 	}
 
-	public List<TaskHistoryDetail> getAllTaskHistoryDetailsByDomain(Integer domainId) {
+	public Integer getAllTaskHistoryDetailsByDomainCount(Integer domainId) {
+		return detailRepo.countByTomcatDomainId(domainId);
+	}
 
-		return detailRepo.findByTomcatDomainIdOrderByFinishedTimeDesc(domainId);
+	public List<TaskHistoryDetail> getAllTaskHistoryDetailsByDomain(Integer domainId, Pageable p) {
+
+		return detailRepo.findByTomcatDomainIdOrderByFinishedTimeDesc(domainId, p);
 	}
 
 	public List<String> getLog(int taskDetailId, HttpSession session) {
@@ -254,31 +259,33 @@ public class TaskHistoryService {
 		return logs;
 
 	}
-	
+
 	/**
 	 * <pre>
 	 * 24시간 이내의 task 중 실패한 detail task가  하나라도 있는 task 반환.
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @return
 	 */
 	public TaskHistory getLatestFailedTaskHistory(int domainId) {
-		
+
 		Date now = new Date();
-		
+
 		Date from = DateUtils.addDays(now, -1);
-		
-		List<TaskHistoryDetail> details = detailRepo.findByTomcatDomainIdAndTomcatInstanceIdNotNullAndFinishedTimeBetweenOrderByFinishedTimeDesc(domainId, from, now);
-		
+
+		List<TaskHistoryDetail> details = detailRepo.findByTomcatDomainIdAndTomcatInstanceIdNotNullAndFinishedTimeBetweenOrderByFinishedTimeDesc(domainId,
+				from, now);
+
 		TaskHistory failedTask = null;
-		
+
 		for (TaskHistoryDetail taskHistoryDetail : details) {
 			if (MeerkatConstants.TASK_STATUS_FAIL == taskHistoryDetail.getStatus()) {
 				failedTask = taskHistoryDetail.getTaskHistory();
 				break;
 			}
 		}
-		
+
 		return failedTask;
 	}
 

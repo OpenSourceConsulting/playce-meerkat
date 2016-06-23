@@ -8,11 +8,15 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
@@ -85,18 +89,16 @@ public class TaskHistoryController {
 	@ResponseBody
 	public SimpleJsonResponse create(SimpleJsonResponse jsonRes, int domainId, int taskCdId) {
 
-		
 		TaskHistory task = service.createTasks(domainId, taskCdId);
 		jsonRes.setData(task);
 
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/create/uninstall/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse createTomcatUninstallTask(SimpleJsonResponse jsonRes, @PathVariable Integer tomcatInstanceId) {
 
-		
 		TaskHistory task = service.createTomcatUninstallTask(tomcatInstanceId);
 		jsonRes.setData(task);
 
@@ -132,40 +134,43 @@ public class TaskHistoryController {
 
 	@RequestMapping(value = "/list/domain/{domainId}", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getByDomain(GridJsonResponse jsonRes, @PathVariable Integer domainId) {
+	public GridJsonResponse getByDomain(GridJsonResponse jsonRes, @PathVariable Integer domainId, @RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "limit", required = false) Integer limit) {
+		Pageable p = new PageRequest(page - 1, limit);
+
 		List<TaskDetailViewModel> viewmodels = new ArrayList<>();
-		List<TaskHistoryDetail> list = service.getAllTaskHistoryDetailsByDomain(domainId);
+		List<TaskHistoryDetail> list = service.getAllTaskHistoryDetailsByDomain(domainId, p);
 		for (TaskHistoryDetail detail : list) {
 			TaskDetailViewModel viewmodel = new TaskDetailViewModel(detail);
 			viewmodel.setUsername(userService.findUser(viewmodel.getUserId()).getUsername());
 			viewmodels.add(viewmodel);
 		}
 		jsonRes.setList(viewmodels);
-		jsonRes.setTotal(viewmodels.size());
+		jsonRes.setTotal(service.getAllTaskHistoryDetailsByDomainCount(domainId));
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/latest/failed/{domainId}", method = RequestMethod.GET)
 	@ResponseBody
 	public SimpleJsonResponse getLastTaskDetail(SimpleJsonResponse jsonRes, @PathVariable Integer domainId) {
-		
+
 		TaskHistory task = service.getLatestFailedTaskHistory(domainId);
-		
+
 		jsonRes.setData(task);
-		
+
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/viewLogs/{taskDetailId}", method = RequestMethod.GET)
 	public String viewLogs(Model model, @PathVariable("taskDetailId") int taskDetailId) {
 		model.addAttribute("taskDetailId", taskDetailId);
 		return "viewlogs";
 	}
-	
+
 	@RequestMapping(value = "/getLogs/{taskDetailId}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> getLogs(Model model, @PathVariable("taskDetailId") int taskDetailId, HttpSession session) {
-		
+
 		return service.getLog(taskDetailId, session);
 	}
 
