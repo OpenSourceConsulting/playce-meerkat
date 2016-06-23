@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -21,8 +22,11 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.monitoring.server.MonDataController;
 import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
 /**
  * <pre>
@@ -37,6 +41,8 @@ import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 public class MonJmxController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonJmxController.class);
+	
+	private static final String MDC_TI_KEY = "tInstanceId";
 
 	@Autowired
 	private MonJmxService service;
@@ -46,6 +52,9 @@ public class MonJmxController {
 	
 	@Autowired
 	private MonStatisticsAnalyzer monAnalyzer;
+	
+	@Autowired
+	private TomcatInstanceService tiService;
 
 	/**
 	 * <pre>
@@ -62,11 +71,32 @@ public class MonJmxController {
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse();
 
 		List<MonJmx> monJmxs = copyProperties(datas);
+		
+		boolean mdcEnable = monJmxs != null && monJmxs.size() > 0;
+		if (mdcEnable) {
+			TomcatInstance ti = tiService.findOne(monJmxs.get(0).getInstanceId());
+			
+			if (ti != null) {
+				mdcEnable = true;
+				MDC.put(MonDataController.MDC_SERVER_KEY, ti.getIpaddress());
+				MDC.put(MDC_TI_KEY, String.valueOf(ti.getId()));
+			}
+		}
+		
+		try {
 
-		service.insertMonJmxs(monJmxs);
-		service.saveInstanceState(monJmxs);
-
-		monAnalyzer.analyze(monJmxs);
+			service.insertMonJmxs(monJmxs);
+			service.saveInstanceState(monJmxs);
+	
+			monAnalyzer.analyze(monJmxs);
+		} finally {
+			if (mdcEnable) {
+				MDC.remove(MonDataController.MDC_SERVER_KEY);
+				MDC.remove(MDC_TI_KEY);
+			}
+		}
+		
+		
 
 		return jsonRes;
 	}

@@ -38,16 +38,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.util.WebUtil;
+import com.athena.meerkat.controller.web.monitoring.jmx.MonJmx;
 import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -124,6 +121,11 @@ public class TomcatInstance implements Serializable {
 	@JsonIgnore
 	@JoinColumn(name = "tomcat_instance_id")
 	private List<MonUtilStat> monUtilStats;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	@JoinColumn(name = "instance_id")
+	private List<MonJmx> monJmxs;
 
 
 	public TomcatInstance() {

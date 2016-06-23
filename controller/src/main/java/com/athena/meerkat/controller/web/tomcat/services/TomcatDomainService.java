@@ -77,9 +77,6 @@ public class TomcatDomainService {
 	private CommonCodeHandler codeHandler;
 
 	@Autowired
-	private FileHandler fileHandler;
-
-	@Autowired
 	private AlertSettingService alertService;
 
 	private TomcatProvisioningService provService;
@@ -222,12 +219,7 @@ public class TomcatDomainService {
 		/*
 		 * save default alert config.
 		 */
-		String defaultAlertJson = fileHandler.readFileToString("classpath:/default-alerts.json");
-		List<MonAlertConfig> alertSettings = JSONUtil.jsonToList(defaultAlertJson, List.class, MonAlertConfig.class);
-		for (MonAlertConfig MonAlertConfig : alertSettings) {
-			MonAlertConfig.setTomcatDomain(conf.getTomcatDomain());
-		}
-		alertService.saveAllAlertSettings(alertSettings);
+		alertService.saveDomainDefaultAlertSetting(conf.getTomcatDomain());
 
 		/*
 		 * save tomcat config

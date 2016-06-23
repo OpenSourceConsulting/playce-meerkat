@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -24,6 +25,7 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -41,6 +43,8 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 public class MonDataController implements ApplicationEventPublisherAware{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonDataController.class);
+	
+	public static final String MDC_SERVER_KEY = "serverIp";
 
 	private static final String MSG_MON = "mon";
 	private static final String MSG_FS = "fs";
@@ -82,17 +86,25 @@ public class MonDataController implements ApplicationEventPublisherAware{
 		int serverId = Integer.valueOf(initMon.get("id").toString());
 		Server dbServer = svrService.getServer(serverId);
 
-		PropertyUtils.copyProperties(dbServer, initMon);
-		dbServer.setAgentInstalled(true);
+		MDC.put(MDC_SERVER_KEY, dbServer.getSshIPAddr());
 
-		svrService.save(dbServer);
-
-		LOGGER.debug("init saved. ---------------- {}", serverId);
-
-		jsonRes.setData(tiService.findInstanceConfigs(serverId));
+		try {
+			PropertyUtils.copyProperties(dbServer, initMon);
+			dbServer.setAgentInstalled(true);
+	
+			svrService.save(dbServer);
+	
+			LOGGER.debug("init saved. ---------------- {}", serverId);
+	
+			jsonRes.setData(tiService.findInstanceConfigs(serverId));
+		
+		} finally {
+			MDC.remove(MDC_SERVER_KEY);
+		}
 
 		return jsonRes;
 	}
+	
 
 	@MessageMapping("/monitor/create")
 	@SendToUser("/queue/agents")
@@ -102,9 +114,25 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 		List<MonData> monDatas = copyProperties(datas);
 		
-		service.insertMonDatas(monDatas);
+		boolean mdcEnable = monDatas != null && monDatas.size() > 0;
+		if (mdcEnable) {
+			mdcEnable = true;
+			
+			Server server = svrService.getServer(monDatas.get(0).getServerId());
+			
+			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
+		}
 		
-		monAnalyzer.analyze(monDatas);
+		try {
+			service.insertMonDatas(monDatas);
+			
+			monAnalyzer.analyze(monDatas);
+		
+		} finally {
+			if (mdcEnable) {
+				MDC.remove(MDC_SERVER_KEY);
+			}
+		}
 
 		return jsonRes;
 	}
@@ -116,10 +144,26 @@ public class MonDataController implements ApplicationEventPublisherAware{
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_FS);
 
 		List<MonFs> monFsList = copyFSProperties(datas);
+		
+		boolean mdcEnable = monFsList != null && monFsList.size() > 0;
+		if (mdcEnable) {
+			mdcEnable = true;
+			
+			Server server = svrService.getServer(monFsList.get(0).getServerId());
+			
+			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
+		}
 
-		service.saveMonFsList(monFsList);
-
-		monAnalyzer.analyze(monFsList);
+		try{
+			service.saveMonFsList(monFsList);
+	
+			monAnalyzer.analyze(monFsList);
+			
+		} finally {
+			if (mdcEnable) {
+				MDC.remove(MDC_SERVER_KEY);
+			}
+		}
 
 		return jsonRes;
 	}

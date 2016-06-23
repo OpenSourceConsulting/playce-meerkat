@@ -202,7 +202,11 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 		double used_per = used * 100D / max;
 
 		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED, tomcatInstanceId, used, max));
+<<<<<<< HEAD
 
+=======
+		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED_PER, tomcatInstanceId, used_per, 0));
+>>>>>>> branch 'master' of https://github.com/OpenSourceConsulting/athena-meerkat.git
 	}
 
 	private void monitorTomcatThreads(MBeanServerConnection mbeanServerConn, String tomcatInstanceId, String httpPort) throws Exception {

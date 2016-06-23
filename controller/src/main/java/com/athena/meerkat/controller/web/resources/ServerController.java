@@ -17,14 +17,19 @@ import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.NetworkInterface;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
+import com.athena.meerkat.controller.web.monitoring.stat.AlertSettingService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 
 @Controller
 @RequestMapping("/res/server")
 // public class MachineController implements InitializingBean {
 public class ServerController {
+	
 	@Autowired
 	private ServerService service;
+	
+	@Autowired
+	private AlertSettingService alertService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
@@ -187,6 +192,11 @@ public class ServerController {
 			service.saveNI(ni);
 			service.saveSSHAccount(sshAccount);
 			service.save(currentServer);
+			
+			/*
+			 * save default alert config.
+			 */
+			alertService.saveServerDefaultAlertSetting(currentServer);
 
 		} else { // edit case
 			if (server.getName().trim() == "" || server.getSshPort() < 0 || server.getHostName() == "" || server.getSshNiId() <= 0) {

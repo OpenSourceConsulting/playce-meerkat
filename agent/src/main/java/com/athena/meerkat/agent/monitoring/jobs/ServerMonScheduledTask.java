@@ -49,12 +49,12 @@ public class ServerMonScheduledTask extends MonitoringTask {
 				netData = new NetworkData(SigarUtil.getInstance());
 			}
 
-			double cpuUsed = (cpu.getCombined()) * 100.0d;
+			double cpuUsedPer = (cpu.getCombined()) * 100.0d;
 			double memUsed = mem.getActualUsed() / (1024L * 1024L);//mb
 			double memUsedPer = mem.getUsedPercent();
 			Long[] netDatas = netData.getMetric();
 
-			monDatas.add(createJsonString(MeerkatAgentConstants.MON_FACTOR_ID_CPU_USED, serverId, cpuUsed));
+			monDatas.add(createJsonString(MeerkatAgentConstants.MON_FACTOR_ID_CPU_USED_PER, serverId, cpuUsedPer));
 			monDatas.add(createJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED, serverId, memUsed));
 			monDatas.add(createJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED_PER, serverId, memUsedPer));
 			monDatas.add(createJsonString(MeerkatAgentConstants.MON_FACTOR_ID_NET_IN, serverId, netDatas[0]));
