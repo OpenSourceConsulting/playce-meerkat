@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -119,6 +120,12 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			mdcEnable = true;
 			
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
+			String serverIP = server.getSshIPAddr();
+			if(StringUtils.isEmpty(serverIP)) {
+				LOGGER.debug("=============== server id is empty. {}", monDatas.get(0).getServerId());
+			}
+			
+			
 			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
 		}
 		
