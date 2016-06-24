@@ -148,16 +148,6 @@ CREATE TABLE `datagrid_server_group` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `datagrid_server_group`
---
-
-LOCK TABLES `datagrid_server_group` WRITE;
-/*!40000 ALTER TABLE `datagrid_server_group` DISABLE KEYS */;
-INSERT INTO `datagrid_server_group` VALUES (5,'Frontend Session Group',10),(6,'API Session Group',10);
-/*!40000 ALTER TABLE `datagrid_server_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `datagrid_servers`
 --
 
