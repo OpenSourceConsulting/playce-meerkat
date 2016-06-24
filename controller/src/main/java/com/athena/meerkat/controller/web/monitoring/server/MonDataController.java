@@ -120,10 +120,10 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			mdcEnable = true;
 			
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
-			String serverIP = server.getSshIPAddr();
+			/*String serverIP = server.getSshIPAddr();
 			if(StringUtils.isEmpty(serverIP)) {
 				LOGGER.debug("=============== server id is empty. {}", monDatas.get(0).getServerId());
-			}
+			}*/
 			
 			
 			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
