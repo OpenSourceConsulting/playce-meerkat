@@ -3,7 +3,7 @@
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 	
 		<!-- except monitoring log -->
-		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">      
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter" >      
 	      <evaluator class="ch.qos.logback.classic.boolex.GEventEvaluator"> 
 	        <expression>
 	        	e.MDCPropertyMap.get("serverIP") == null &amp;&amp; 
@@ -52,16 +52,34 @@
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">      
 	      <evaluator class="ch.qos.logback.classic.boolex.GEventEvaluator"> 
 	        <expression>
-	        	e.MDCPropertyMap.get("serverIP") == null &amp;&amp; 
-	        	!e.threadName.contains("clientInboundChannel") &amp;&amp; 
-	        	!e.loggerName.contains("WsFrameServer") &amp;&amp; 
-	        	!e.loggerName.contains("MonChannelInterceptor")
+	        	(e.MDCPropertyMap.get("serverIP") != null || 
+	        	e.threadName.contains("clientInboundChannel") ||
+	        	e.loggerName.contains("WsFrameServer") || 
+	        	e.loggerName.contains("MonChannelInterceptor")) &amp;&amp; 
+	        	e.level.toInt() >= INFO.toInt()
 	        </expression>
 	      </evaluator>
-	      <OnMatch>DENY</OnMatch>
-	      <OnMismatch>NEUTRAL</OnMismatch>
+	      <OnMatch>ACCEPT</OnMatch>
+	      <OnMismatch>DENY</OnMismatch>
 	    </filter>
 
+		<encoder>
+			<pattern>%d @%X{serverIP}@ @TI_%X{tInstanceId}@ [%thread] %-5level %-35logger{30} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="ALL_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/home/meerkat/apps/meerkat/logs/all.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>/home/meerkat/apps/meerkat/logs/all.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+				<!-- keep 30 days' worth of history -->
+			    <maxHistory>30</maxHistory>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		
 		<encoder>
 			<pattern>%d @%X{serverIP}@ @TI_%X{tInstanceId}@ [%thread] %-5level %-35logger{30} - %msg%n</pattern>
 		</encoder>
@@ -71,8 +89,9 @@
 	<logger name="com.athena.meerkat.controller.web.provisioning" level="DEBUG">
 		<appender-ref ref="PROVI_LOG" />
 	</logger>
-	<logger name="com.athena.meerkat.controller.web.monitoring" level="DEBUG" />
-
+	<logger name="com.athena.meerkat.controller.web.monitoring" level="DEBUG">
+		
+	</logger>
 
 	<logger name="org.springframework" level="ERROR"/>
 	<logger name="org.springframework.web" level="DEBUG"/>
@@ -83,10 +102,10 @@
 	<logger name="org.springframework.messaging" level="DEBUG"/> <!-- for stomp -->
 
 	<logger name="org.hibernate" level="ERROR" />
-	<logger name="org.hibernate.SQL" level="ERROR" /> <!-- sql log -->
-	<logger name="org.hibernate.type" level="ERROR" /> <!-- on off sql parameters & result -->
+	<logger name="org.hibernate.SQL" level="DEBUG" /> <!-- sql log -->
+	<logger name="org.hibernate.type" level="DEBUG" /> <!-- on off sql parameters & result -->
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" /> <!-- sql result (TRACE) -->
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="ERROR" /> <!-- sql parameter (TRACE) -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" /> <!-- sql parameter (TRACE) -->
     <logger name="org.hibernate.type.BasicTypeRegistry" level="DEBUG" />
 	<logger name="org.hibernate.engine.transaction" level="DEBUG" />
 	<logger name="org.hibernate.internal.util.EntityPrinter" level="DEBUG" />
@@ -104,5 +123,6 @@
 	<root level="ERROR">
 	    <appender-ref ref="CONSOLE" />
 	    <appender-ref ref="MONITOR_FILE" />
+	    <!-- <appender-ref ref="ALL_LOG_FILE" /> -->
 	</root>
 </included>
