@@ -51,6 +51,7 @@ import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
@@ -90,6 +91,10 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
+	
+
+	@Autowired
+	private MonJmxService monJmxService;
 
 	/**
 	 * <pre>
@@ -203,7 +208,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		List<DataSource> dsList = domainService.getDatasources(domainId);
 
 		if (tomcatConfig == null) {
-			LOGGER.warn("tomcat config is not set!!");
+			LOGGER.warn("### tomcat config is not set!!");
 			return;
 		}
 
@@ -219,6 +224,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
+				
+				monJmxService.requestTomcatInstanceAdding(tomcatInstance.getServer(), tomcatConfig);
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);
@@ -642,6 +649,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
+				
+				monJmxService.requestTomcatInstanceRemoving(tomcatInstance.getServer(), tomcatInstance.getId());
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.setLastTask(count == list.size());

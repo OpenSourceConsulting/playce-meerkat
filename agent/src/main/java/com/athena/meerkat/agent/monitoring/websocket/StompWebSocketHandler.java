@@ -24,6 +24,7 @@ package com.athena.meerkat.agent.monitoring.websocket;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -33,15 +34,16 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompDecoder;
 import org.springframework.messaging.simp.stomp.StompEncoder;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.athena.meerkat.agent.MeerkatAgentConstants;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * <pre>
@@ -62,7 +64,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	private ArrayNode instanceConfigs;
+	private ArrayNode instanceConfigs;//DomainTomcatConfiguration array
 	
 	private TextMessage subscribeMsg;
 	
@@ -121,24 +123,38 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 			
 			if (StompCommand.CONNECTED.equals(headers.getCommand())) {
 				
-				LOGGER.debug("<< Connected!!");
-				//session.sendMessage(subscribeMsg);
-				
-				 
-				
-				//this.stompMessageHandler.afterConnected(session, headers);
+				LOGGER.info("<< Connected!!");
+
 			} else if (StompCommand.MESSAGE.equals(headers.getCommand())) {
 				
 				String content = new String(msg.getPayload());
 				
 				JsonNode node = mapper.readTree(content);
-				JsonNode dataNode = node.get("data");
+				JsonNode dataNode = node.get("data"); // data of SimpleJsonResponse
 				
-				LOGGER.debug("MESSAGE : {}", content);
 				
 				if (dataNode instanceof ArrayNode) {
 					instanceConfigs = (ArrayNode)dataNode;
 					LOGGER.debug("MESSAGE instance size : {}", instanceConfigs.size());
+					
+				}else if (dataNode instanceof ObjectNode) {
+					ObjectNode cmdObj = (ObjectNode)dataNode;
+					
+					JsonNode cmd = cmdObj.get("cmd");
+					
+					if (cmd == null) {
+						LOGGER.warn("###### cmd is null.");
+					} 
+					
+					if ("add_tomcat_instnace".equals(cmd.asText())) {
+						LOGGER.debug("cmd is 'add_tomcat_instnace'");
+						
+						addInstanceConfig(cmdObj);
+					} else if ("remove_tomcat_instnace".equals(cmd.asText())) {
+						LOGGER.debug("cmd is 'remove_tomcat_instnace'");
+						
+						removeInstanceConfig(cmdObj);
+					}
 				}
 				
 				
@@ -165,9 +181,41 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 		LOGGER.debug("Connection closed!!");
 		this.webSocketClient.connect();
 	}
-
-	public ArrayNode getInstanceConfigs() {
+	
+	public synchronized ArrayNode getInstanceConfigs() {
 		return instanceConfigs;
+	}
+	
+	private synchronized void addInstanceConfig(ObjectNode cmdObj){
+		
+		ObjectNode instanceConfig = (ObjectNode)cmdObj.get("tomcatInstanceConfig");
+		
+		this.instanceConfigs.add(instanceConfig);
+	}
+	
+	public synchronized void removeInstanceConfig(ObjectNode cmdObj){
+		int removalInstanceId = cmdObj.get("tomcatInstanceId").asInt();
+		removeInstanceConfig(removalInstanceId);
+	}
+	
+	private void removeInstanceConfig(int removalInstanceId){
+		boolean removed = false;
+		for (Iterator<JsonNode> iterator = this.instanceConfigs.elements(); iterator.hasNext();) {
+			JsonNode instanceConfig = iterator.next();
+			
+			int tomcatInstanceId = instanceConfig.get(MeerkatAgentConstants.JSON_KEY_TOMCAT_INSTANCE_ID).asInt();
+			
+			if (removalInstanceId == tomcatInstanceId) {
+				iterator.remove();
+				removed = true;
+				LOGGER.info("## removed tomcatInstanceId : {}", removalInstanceId);
+				break;
+			}
+		}
+		
+		if(removed == false) {
+			LOGGER.warn("## remove fail. not found tomcatInstanceId : {}", removalInstanceId);
+		}
 	}
 	
 }

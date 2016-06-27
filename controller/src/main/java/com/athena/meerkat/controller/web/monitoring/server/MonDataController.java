@@ -49,6 +49,8 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 	private static final String MSG_MON = "mon";
 	private static final String MSG_FS = "fs";
+	
+	public static final String STOMP_USER_DEST = "/queue/agents";
 
 	@Autowired
 	private MonDataService service;
@@ -81,7 +83,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	 * @return
 	 */
 	@MessageMapping("/monitor/init")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse init(SimpleJsonResponse jsonRes, Map<String, Object> initMon) throws Exception {
 
 		int serverId = Integer.valueOf(initMon.get("id").toString());
@@ -108,7 +110,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	
 
 	@MessageMapping("/monitor/create")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse saveMon(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
@@ -120,13 +122,13 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			mdcEnable = true;
 			
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
-			/*String serverIP = server.getSshIPAddr();
+			String serverIP = server.getSshIPAddr();
 			if(StringUtils.isEmpty(serverIP)) {
-				LOGGER.debug("=============== server id is empty. {}", monDatas.get(0).getServerId());
-			}*/
+				LOGGER.warn("=============== server IP is empty. serverId : {}", monDatas.get(0).getServerId());
+			}
 			
 			
-			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
+			MDC.put(MDC_SERVER_KEY, serverIP);
 		}
 		
 		try {
@@ -144,7 +146,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	}
 
 	@MessageMapping("/monitor/fs")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse saveFs(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_FS);

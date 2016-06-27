@@ -22,10 +22,6 @@
  */
 package com.athena.meerkat.controller.web.provisioning;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
-import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
-import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
@@ -70,6 +64,7 @@ public class TomcatProvisioningController {
 	private TomcatInstanceService tomcatService;
 	@Autowired
 	private ApplicationService appService;
+	
 
 	@RequestMapping(value = "/installs/{domainId}", method = RequestMethod.POST)
 	@ResponseBody
@@ -162,7 +157,7 @@ public class TomcatProvisioningController {
 
 
 		proviService.uninstallTomcatInstance(tomcatInstanceId, taskHistoryId);
-
+		
 		return new SimpleJsonResponse();
 	}
 

@@ -90,7 +90,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 
 			for (JsonNode tomcatConfig : tomcatConfigs) {
 
-				String tomcatInstanceId = tomcatConfig.get("tomcatInstanceId").asText();
+				String tomcatInstanceId = tomcatConfig.get(MeerkatAgentConstants.JSON_KEY_TOMCAT_INSTANCE_ID).asText();
 				long port = tomcatConfig.get("httpPort").asLong();
 				int isRun = 7; // TS_STATE common code id.
 				for (NetConnection netConnection : listenPorts) {
@@ -103,7 +103,6 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 				monitorJMX(monDatas, tomcatInstanceId, tomcatConfig);
 			}
 
-			//TODO add another jmx monitoring.
 
 			sendInstanceMonData(monDatas);
 

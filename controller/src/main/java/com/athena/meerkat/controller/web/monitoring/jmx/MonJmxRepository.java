@@ -28,5 +28,8 @@ public interface MonJmxRepository extends JpaRepository<MonJmx, MonJmxPK> {
 
 	@Query(value = "SELECT sum(mon_value) FROM athena_meerkat.mon_jmx_tbl mj where mj.mon_factor_id like :type and mj.mon_dt BETWEEN :time AND :now", nativeQuery = true)
 	Long getJdbcConnectionSum(@Param("type") String type, @Param("time") Date time, @Param("now") Date now);
+	
+	@Query("delete from MonJmx mj where mj.instanceId = :instanceId")
+	Long deleteByInstanceId(@Param("instanceId") Integer instanceId);
 
 }

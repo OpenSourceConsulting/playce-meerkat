@@ -65,7 +65,7 @@ public class MonJmxController {
 	}
 
 	@MessageMapping("/monitor/jmx/create")
-	@SendToUser("/queue/jmx/agents")
+	@SendToUser(MonDataController.STOMP_USER_DEST)
 	public SimpleJsonResponse create(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse();
