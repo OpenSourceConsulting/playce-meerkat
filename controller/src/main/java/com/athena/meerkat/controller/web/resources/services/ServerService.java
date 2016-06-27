@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +33,9 @@ public class ServerService {
 
 	@Autowired
 	private SSHAccountRepository sshRepo;
-	
+
 	@Autowired
 	private StompEventListener agentEventListener;
-	
 
 	public ServerService() {
 
@@ -57,11 +59,11 @@ public class ServerService {
 
 		Sort sort = new Sort("name");
 		List<Server> list = serverRepo.findAll(sort);
-		
+
 		for (Server server : list) {
 			server.setRunningAgent(agentEventListener.isRunningAgent(server.getId()));
 		}
-		
+
 		return list;
 	}
 
@@ -139,5 +141,28 @@ public class ServerService {
 
 	public long getServerNo() {
 		return serverRepo.count();
+	}
+
+	public List<Server> getList(Pageable p) {
+
+		Page<Server> list = serverRepo.findAll(p);
+
+		for (Server server : list) {
+			server.setRunningAgent(agentEventListener.isRunningAgent(server.getId()));
+		}
+
+		return list == null ? null : list.getContent();
+	}
+
+	public long getAllServerCount() {
+		return serverRepo.count();
+	}
+
+	public List<Server> searchByName(Pageable p, String keyword) {
+		return serverRepo.findByNameContaining(p, keyword);
+	}
+
+	public long getCount(String keyword) {
+		return serverRepo.countByNameContaining(keyword);
 	}
 }

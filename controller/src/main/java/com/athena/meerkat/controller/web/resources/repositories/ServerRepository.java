@@ -24,6 +24,10 @@ public interface ServerRepository extends JpaRepository<Server, Integer>, Paging
 	@Query("select s from Server s where s.id not in (select tc.serverId from TomcatDomain td join td.tomcatInstances tc where td.id= ?1)")
 	List<Server> getAvailableServersByDomain(int domainId);
 
+	List<Server> findByNameContaining(Pageable p, String keyword);
+
+	long countByNameContaining(String keyword);
+
 	// List<Server> findByMachineServerType(int type);
 	// List<Server> findByNameOrSshIPAddr(String name, String sshIPAddr);
 }

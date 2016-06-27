@@ -1,12 +1,18 @@
 package com.athena.meerkat.controller.web.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.common.MeerkatUtils;
@@ -24,20 +30,34 @@ import com.athena.meerkat.controller.web.resources.services.ServerService;
 @RequestMapping("/res/server")
 // public class MachineController implements InitializingBean {
 public class ServerController {
-	
+
 	@Autowired
 	private ServerService service;
-	
+
 	@Autowired
 	private AlertSettingService alertService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public GridJsonResponse getList(GridJsonResponse json) {
-		List<Server> result = service.getList();
+	public GridJsonResponse getList(GridJsonResponse json, @RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "keyword", required = false) String keyword) {
+		Sort sort = new Sort("name");
+		Pageable p = new PageRequest(page - 1, limit, sort);
+		List<Server> result = new ArrayList<>();
+		int count = 0;
+		if (keyword == null) {
+			keyword = StringUtils.EMPTY;
+		}
+		if (keyword.equals(StringUtils.EMPTY)) {
+			result = service.getList(p);
+			count = (int) service.getAllServerCount();
+		} else {
+			result = service.searchByName(p, keyword);
+			count = (int) service.getCount(keyword);
+		}
 		json.setSuccess(true);
 		json.setList(result);
-		json.setTotal(result.size());
+		json.setTotal(count);
 		return json;
 	}
 
@@ -192,7 +212,7 @@ public class ServerController {
 			service.saveNI(ni);
 			service.saveSSHAccount(sshAccount);
 			service.save(currentServer);
-			
+
 			/*
 			 * save default alert config.
 			 */
