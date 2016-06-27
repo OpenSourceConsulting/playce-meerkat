@@ -260,7 +260,10 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
 		boolean isUniqueCataBase = false;
+		int domainId = 0;
 		for (TomcatInstance tomcatInstance : tomcats) {
+			
+			domainId = tomcatInstance.getDomainId();
 
 			//checkUnique tomcat name within domain
 			if (!checkUniqueTomcatName(tomcatInstance, tomcatInstance.getDomainId())) {
@@ -291,6 +294,15 @@ public class TomcatInstanceController {
 				return json;
 			}
 		}
+		
+		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		
+		if (tomcatConfig == null) {
+			json.setSuccess(false);
+			json.setMsg("톰캣 인스턴스 설정 정보가 없어서 추가할수 없습니다. 톰캣 인스턴스 설정 정보를 먼저 입력해주세요.");
+			return json;
+		}
+		
 		if (isUniqueCataBase) {
 			service.saveList(tomcats);
 			
