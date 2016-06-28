@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat.services;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -124,7 +125,7 @@ public class TomcatDomainService {
 
 	/**
 	 * <pre>
-	 * 
+	 * 현재시점의 DataSource list 로 context.xml 을 새로 만든다.
 	 * </pre>
 	 * 
 	 * @param domainId
@@ -133,11 +134,18 @@ public class TomcatDomainService {
 	@Transactional
 	public TomcatConfigFile updateContextXml(int domainId) {
 
+		
+		List<DataSource> dsList = getDatasources(domainId);
+		return updateContextXml(domainId, dsList);
+	}
+	
+	@Transactional
+	public TomcatConfigFile updateContextXml(int domainId, List<DataSource> dsList) {
+
 		/*
 		 * make updated context.xml contents.
 		 */
 		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
-		List<DataSource> dsList = getDatasources(domainId);
 
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
 		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
@@ -248,7 +256,7 @@ public class TomcatDomainService {
 		return domain.getDatasources();
 	}
 
-	@Transactional
+	//@Transactional
 	public void deleteDomainDatasource(int domainId, int dsId) {
 
 		domainDatasoureRepo.deleteByTomcatDomainIdAndDatasourceId(domainId, dsId);
@@ -271,11 +279,36 @@ public class TomcatDomainService {
 		save(domain);//real delete db;
 		*/
 
+		/*
 		TomcatConfigFile configFile = updateContextXml(domainId);
 
 		getProvService().updateXml(domainId, configFile.getId(), 0, null);
-
+		*/
 	}
+	
+	/**
+	 * <pre>
+	 * dsId 를 제외한 context.xml를 만들고 업데이트 한다.
+	 * </pre>
+	 * @param domainId
+	 * @param dsId
+	 * @return
+	 */
+	public TomcatConfigFile rmUpdateContextXml(int domainId, int dsId) {
+		List<DataSource> dsList = getDatasources(domainId);
+		
+		for (Iterator<DataSource> iterator = dsList.iterator(); iterator.hasNext();) {
+			DataSource dataSource = iterator.next();
+			
+			if (dsId == dataSource.getId()) {
+				iterator.remove();
+			}
+			
+		}
+		
+		return updateContextXml(domainId, dsList);
+	}
+	
 
 	public List<Server> getAvailableServers(int domainId) {
 		return serverRepo.getAvailableServersByDomain(domainId);

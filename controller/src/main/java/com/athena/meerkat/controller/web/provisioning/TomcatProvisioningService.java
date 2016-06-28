@@ -656,6 +656,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 				pModel.setLastTask(count == list.size());
 
 				runCommand(pModel, "uninstallTomcatInstance.xml", null);
+				
+				instanceService.delete(tomcatInstance);
 				count++;
 			}
 		} else {

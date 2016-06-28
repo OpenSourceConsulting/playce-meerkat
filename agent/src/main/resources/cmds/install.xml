@@ -67,9 +67,12 @@
 		<echo message="downloading catalina-jmx-remote-7.0.68.jar" />
 		<get src="${tomcat.down.url}/catalina-jmx-remote-7.0.68.jar" dest="${catalina.home}/lib"/>
 
-		<copy todir="${catalina.base}" verbose="true" description="copy env/start/stop script.">
+		<copy todir="${catalina.base}" verbose="true" description="copy start/stop script.">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">
 		      <include name="*"/>
+		    </fileset>
+			<fileset dir="${meerkat.agent.home}/bin" defaultexcludes="true">
+		      <include name="env.sh"/>
 		    </fileset>
 		</copy>
 

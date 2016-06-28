@@ -36,6 +36,7 @@
   <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener"
        rmiRegistryPortPlatform="${am.rmi.registry.port}" rmiServerPortPlatform="${am.rmi.server.port}"/>
 am.rmi.disable.end-->
+
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html
   -->

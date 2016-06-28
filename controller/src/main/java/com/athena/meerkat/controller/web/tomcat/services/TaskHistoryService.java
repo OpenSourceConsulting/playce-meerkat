@@ -86,20 +86,6 @@ public class TaskHistoryService {
 		return task;
 	}
 
-	public TaskHistory createApplicationDeployTask(int domainId) {
-
-		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_DEPLOY);
-	}
-
-	public TaskHistory createApplicationUnDeployTask(int domainId) {
-
-		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_WAR_UNDEPLOY);
-	}
-
 	public TaskHistory createConfigXmlUpdateSingleTask(int tomcatInstanceId, int fileTypeCdId) {
 
 		int taskCdId = 0;
@@ -131,27 +117,6 @@ public class TaskHistoryService {
 		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
 
 		return createTaskDetails(tomcats, taskCdId);
-	}
-
-	public TaskHistory createTomcatConfigUpdateTask(int domainId) {
-
-		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE);
-	}
-	
-	public TaskHistory createAddDatasourceTask(int domainId) {
-
-		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_DATASOURCE_ADD);
-	}
-	
-	public TaskHistory createRemoveDatasourceTask(int domainId) {
-
-		List<TomcatInstance> tomcats = tomcatService.findByDomain(domainId);
-
-		return createTaskDetails(tomcats, MeerkatConstants.TASK_CD_DATASOURCE_REMOVE);
 	}
 
 	public TaskHistory createTaskDetails(List<TomcatInstance> tomcats, int taskCdId) {

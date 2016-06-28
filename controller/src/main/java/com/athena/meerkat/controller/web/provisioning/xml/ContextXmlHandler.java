@@ -84,6 +84,14 @@ public class ContextXmlHandler {
 		}
 	}
 	
+	/**
+	 * <pre>
+	 * 기존 datasource 를 모두 삭제후 dsList 로 대체한다.
+	 * </pre>
+	 * @param dsList
+	 * @return
+	 * @throws Exception
+	 */
 	protected Document changeXML(List<DataSource> dsList) throws Exception {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();

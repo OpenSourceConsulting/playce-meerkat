@@ -188,7 +188,7 @@ public class DomainController {
 		if (savedConfig != null) {
 			//proviService.updateTomcatInstanceConfig(savedConfig.getTomcatDomain().getId(), changeRMI, null);
 
-			TaskHistory task = taskService.createTomcatConfigUpdateTask(savedConfig.getTomcatDomain().getId());
+			TaskHistory task = taskService.createTasks(savedConfig.getTomcatDomain().getId(), MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE);
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("configId", savedConfig.getId());
@@ -266,7 +266,7 @@ public class DomainController {
 
 		TomcatConfigFile confFile = domainService.addDatasources(datasources);
 		
-		TaskHistory task = taskService.createAddDatasourceTask(confFile.getTomcatDomain().getId());
+		TaskHistory task = taskService.createTasks(confFile.getTomcatDomain().getId(), MeerkatConstants.TASK_CD_DATASOURCE_ADD);
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("updatedXml", confFile);
@@ -300,7 +300,24 @@ public class DomainController {
 	public SimpleJsonResponse deleteDatasourceMapping(SimpleJsonResponse json, int domainId, int dsId) {
 
 		domainService.deleteDomainDatasource(domainId, dsId);
+		
+		return json;
+	}
+	
+	@RequestMapping(value = "/datasource/rmupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse rmUpdateContextXml(SimpleJsonResponse json, int domainId, int dsId) {
 
+		TomcatConfigFile updatedXml = domainService.rmUpdateContextXml(domainId, dsId);
+		
+		TaskHistory task = taskService.createTasks(domainId, MeerkatConstants.TASK_CD_DATASOURCE_REMOVE);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("updatedXml", updatedXml);
+		resultMap.put("task", task);
+
+		json.setData(resultMap);
+		
 		return json;
 	}
 

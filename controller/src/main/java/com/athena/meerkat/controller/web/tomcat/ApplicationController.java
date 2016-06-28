@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
@@ -53,7 +54,7 @@ public class ApplicationController {
 		}
 		TomcatApplication tApp = appService.saveFileAndData(dbApp);
 
-		TaskHistory task = taskService.createApplicationDeployTask(app.getTomcatDomain().getId());
+		TaskHistory task = taskService.createTasks(app.getTomcatDomain().getId(), MeerkatConstants.TASK_CD_WAR_DEPLOY);
 
 		tApp.setTaskHistoryId(task.getId());
 
