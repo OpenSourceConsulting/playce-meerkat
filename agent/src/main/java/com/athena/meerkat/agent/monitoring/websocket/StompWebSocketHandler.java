@@ -40,6 +40,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.athena.meerkat.agent.MeerkatAgentConstants;
+import com.athena.meerkat.agent.monitoring.jobs.ServerInitialMonTask;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -135,6 +136,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 				
 				if (dataNode instanceof ArrayNode) {
 					instanceConfigs = (ArrayNode)dataNode;
+					ServerInitialMonTask.ENABLE_MNITORING = true;
 					LOGGER.debug("MESSAGE instance size : {}", instanceConfigs.size());
 					
 				}else if (dataNode instanceof ObjectNode) {
@@ -147,11 +149,11 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 					} 
 					
 					if ("add_tomcat_instnace".equals(cmd.asText())) {
-						LOGGER.debug("cmd is 'add_tomcat_instnace'");
+						LOGGER.info("cmd is 'add_tomcat_instnace'");
 						
 						addInstanceConfig(cmdObj);
 					} else if ("remove_tomcat_instnace".equals(cmd.asText())) {
-						LOGGER.debug("cmd is 'remove_tomcat_instnace'");
+						LOGGER.info("cmd is 'remove_tomcat_instnace'");
 						
 						removeInstanceConfig(cmdObj);
 					}
@@ -191,6 +193,8 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 		ObjectNode instanceConfig = (ObjectNode)cmdObj.get("tomcatInstanceConfig");
 		
 		this.instanceConfigs.add(instanceConfig);
+		
+		LOGGER.info("## added tomcatInstanceId : {}", instanceConfig.get(MeerkatAgentConstants.JSON_KEY_TOMCAT_INSTANCE_ID).asText());
 	}
 	
 	public synchronized void removeInstanceConfig(ObjectNode cmdObj){

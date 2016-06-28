@@ -225,7 +225,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				monJmxService.requestTomcatInstanceAdding(tomcatInstance.getServer(), tomcatConfig);
+				monJmxService.requestTomcatInstanceAdding(tomcatInstance.getServer(), tomcatInstance.getId(), tomcatConfig);
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
 				pModel.setConfFiles(confFiles);

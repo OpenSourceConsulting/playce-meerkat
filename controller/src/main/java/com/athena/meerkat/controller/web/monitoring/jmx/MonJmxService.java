@@ -111,19 +111,15 @@ public class MonJmxService {
 	 * @param server
 	 * @param tomcatConfig
 	 */
-	public void requestTomcatInstanceAdding(Server server, DomainTomcatConfiguration tomcatConfig) {
+	public void requestTomcatInstanceAdding(Server server, int tomcatInstanceId, DomainTomcatConfiguration tomcatConfig) {
 		
 		if (stompEventListener.isRunningAgent(server.getId())) {
 			
-			SimpleJsonResponse cmdRes = createCommandRes("add_tomcat_instnace", "tomcatInstanceConfig", tomcatConfig);
-
-			String userDest = stompEventListener.getUserDestination(server.getId());
+			tomcatConfig.setTomcatInstanceId(tomcatInstanceId);
+			requestCommand(server.getId(), "add_tomcat_instnace", "tomcatInstanceConfig", tomcatConfig);
 			
-			this.messagingTemplate.convertAndSendToUser(userDest, MonDataController.STOMP_USER_DEST, cmdRes);
-			
-			LOGGER.debug("sent 'add_tomcat_instnace' command. server:{}, userDest: {}, tomcatInstanceId: {}", server.getSshIPAddr(), userDest, tomcatConfig.getTomcatInstanceId());
 		} else {
-			LOGGER.warn("server ({}) agent is not running.", server.getSshIPAddr());
+			LOGGER.warn("==== server ({}) agent is not running.", server.getSshIPAddr());
 		}
 		
 	}
@@ -139,17 +135,24 @@ public class MonJmxService {
 		
 		if (stompEventListener.isRunningAgent(server.getId())) {
 			
-			SimpleJsonResponse cmdRes = createCommandRes("remove_tomcat_instnace", "tomcatInstanceId", tomcatInstanceId);
-
-			String userDest = stompEventListener.getUserDestination(server.getId());
+			requestCommand(server.getId(), "remove_tomcat_instnace", "tomcatInstanceId", tomcatInstanceId);
 			
-			this.messagingTemplate.convertAndSendToUser(userDest, MonDataController.STOMP_USER_DEST, cmdRes);
-			
-			LOGGER.debug("sent 'remove_tomcat_instnace' command. server:{}, userDest: {}, tomcatInstanceId: {}", server.getSshIPAddr(), userDest, tomcatInstanceId);
 		} else {
-			LOGGER.warn("server ({}) agent is not running.", server.getSshIPAddr());
+			LOGGER.warn("==== server ({}) agent is not running.", server.getSshIPAddr());
 		}
 		
+	}
+	
+	public void requestCommand(Integer serverId, String command, String paramKey, Object paramObj) {
+		SimpleJsonResponse cmdRes = createCommandRes(command, paramKey, paramObj);
+
+		String userDest = stompEventListener.getUserDestination(serverId);
+		
+		String destination = MonDataController.STOMP_USER_DEST +"-"+ userDest;
+		
+		this.messagingTemplate.convertAndSend(destination, cmdRes);
+		
+		LOGGER.info("======= sent '{}' command. server:{}, agent dest: {}, {}: {}", command, serverId, destination, paramKey, paramObj);
 	}
 	
 	private SimpleJsonResponse createCommandRes(String command, String paramKey, Object paramObj) {

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.athena.meerkat.agent.monitoring.utils.SigarUtil;
@@ -14,6 +15,8 @@ import com.athena.meerkat.agent.monitoring.utils.SigarUtil;
 public class ServerInitialMonTask extends MonitoringTask implements InitializingBean{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerInitialMonTask.class);
+	
+	public static boolean ENABLE_MNITORING = false;
 
     //private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     
@@ -27,11 +30,21 @@ public class ServerInitialMonTask extends MonitoringTask implements Initializing
 	public void setServerId(String serverId) {
 		this.serverId = serverId;
 	}
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		monitor();
+	}
 
-	//@Scheduled(fixedRate = 5000)
+	//@Scheduled(fixedRate = 10000)
 	@Override
     public void monitor() {
-    	
+		/*
+		if (ENABLE_MNITORING) {
+			LOGGER.debug("======== send init skip.");
+			return;
+		}
+    	*/
     	try{
     		String hostName 	= SigarUtil.getNetInfo().getHostName();
     		String osName 		= System.getProperty("os.name");
@@ -68,9 +81,4 @@ public class ServerInitialMonTask extends MonitoringTask implements Initializing
 				+" ,\"diskSize\": "+diskSize+"}";
 	}
 	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		monitor();
-	}
-    
 }

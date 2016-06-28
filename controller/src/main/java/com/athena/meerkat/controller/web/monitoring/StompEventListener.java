@@ -108,7 +108,7 @@ public class StompEventListener implements ApplicationListener<ApplicationEvent>
 		
 		if (serverId != null) {
 			runningAgentCache.put(sessionId, serverId);
-			LOGGER.debug("save sessionId = {}, serverId = {}", sessionId, serverId);
+			LOGGER.info("====== save sessionId = {}, serverId = {}", sessionId, serverId);
 		}
 		
 	}
@@ -127,7 +127,7 @@ public class StompEventListener implements ApplicationListener<ApplicationEvent>
 		if (subscriptionId.startsWith("subs_")) {
 			return new Integer(subscriptionId.substring(5));
 		} else {
-			LOGGER.warn("@@@@ invalid subscription id : {}", subscriptionId);
+			LOGGER.warn("====== invalid subscription id : {}", subscriptionId);
 			return null;
 		}
 	}

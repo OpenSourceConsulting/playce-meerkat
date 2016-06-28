@@ -78,11 +78,17 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 	public void monitor() {
 
 		monDatas.clear();
+		
+		if (ServerInitialMonTask.ENABLE_MNITORING == false) {
+			LOGGER.debug("======== skip.");
+			return;
+		}
+		
 		try {
 			ArrayNode tomcatConfigs = webSocketClient.getInstanceConfigs();//DomainTomcatConfiguration array
 
 			if (tomcatConfigs == null || tomcatConfigs.size() == 0) {
-				LOGGER.debug("tomcat instance configs is empty. monitoring skip!");
+				LOGGER.debug("tomcat instance configs is empty. jmx monitoring skip!");
 				return;
 			}
 

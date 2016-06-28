@@ -88,6 +88,15 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 		int serverId = Integer.valueOf(initMon.get("id").toString());
 		Server dbServer = svrService.getServer(serverId);
+		
+		if (dbServer == null) {
+			jsonRes.setSuccess(false);
+			jsonRes.setMsg("serverId ("+ serverId +") not found.");
+			
+			LOGGER.warn("======= init. serverId ({}) not found. monitoring denied.", serverId);
+			
+			return jsonRes;
+		}
 
 		MDC.put(MDC_SERVER_KEY, dbServer.getSshIPAddr());
 
@@ -97,7 +106,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	
 			svrService.save(dbServer);
 	
-			LOGGER.debug("init saved. ---------------- {}", serverId);
+			LOGGER.info("init saved. ---------------- {}", serverId);
 	
 			jsonRes.setData(tiService.findInstanceConfigs(serverId));
 		
@@ -135,6 +144,8 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			service.insertMonDatas(monDatas);
 			
 			monAnalyzer.analyze(monDatas);
+			
+			LOGGER.info("saved.");
 		
 		} finally {
 			if (mdcEnable) {
@@ -166,7 +177,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			service.saveMonFsList(monFsList);
 	
 			monAnalyzer.analyze(monFsList);
-			
+			LOGGER.info("saved. fs.");
 		} finally {
 			if (mdcEnable) {
 				MDC.remove(MDC_SERVER_KEY);
