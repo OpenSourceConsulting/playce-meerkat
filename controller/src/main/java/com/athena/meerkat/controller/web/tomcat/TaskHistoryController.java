@@ -65,7 +65,7 @@ public class TaskHistoryController {
 
 		if (taskDetails.size() > 0) {
 			domains = new ArrayList<TaskDetailViewModel>();
-
+			
 			TaskDetailViewModel domainModel = null;
 			for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
 

@@ -1,5 +1,6 @@
 package com.athena.meerkat.controller.web.tomcat;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,14 +45,17 @@ public class ApplicationController {
 				return json;
 			}
 		}
-
-		dbApp = app;
+		if (dbApp != null) {
+			dbApp.setDeployedTime(new Date());
+			dbApp.setWarFile(app.getWarFile());
+		} else {
+			dbApp = app;
+		}
 		TomcatApplication tApp = appService.saveFileAndData(dbApp);
 
 		TaskHistory task = taskService.createApplicationDeployTask(app.getTomcatDomain().getId());
 
 		tApp.setTaskHistoryId(task.getId());
-		appService.update(app);
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("applicationId", tApp.getId());

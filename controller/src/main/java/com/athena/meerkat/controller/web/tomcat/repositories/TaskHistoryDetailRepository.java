@@ -34,4 +34,6 @@ public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDe
 	List<TaskHistoryDetail> findByTomcatDomainIdAndTomcatInstanceIdNotNullAndFinishedTimeBetweenOrderByFinishedTimeDesc(int domainId, Date from, Date to);
 
 	Integer countByTomcatDomainId(Integer domainId);
+
+	List<TaskHistoryDetail> findAllByOrderByFinishedTimeDesc(Pageable p);
 }

@@ -18,14 +18,18 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
 import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
 import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStatService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
+import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskDetailViewModel;
+import com.athena.meerkat.controller.web.user.services.UserService;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -43,7 +47,10 @@ public class DashboardController {
 	private DataSourceService dsService;
 	@Autowired
 	private MonJmxService monJmxService;
-
+	@Autowired
+	private TaskHistoryService taskService;
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private MonUtilStatService monUtilStatService;
 
@@ -102,6 +109,21 @@ public class DashboardController {
 		List<MonUtilStat> alerts = monUtilStatService.getAlerts(MeerkatConstants.DASHBOARD_ALERT_COUNT);
 		json.setList(alerts);
 		json.setTotal(alerts.size());
+		return json;
+	}
+
+	@RequestMapping(value = "/get/logs", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getTaskLogs(GridJsonResponse json) {
+		List<TaskHistoryDetail> logs = taskService.getTaskHistories(MeerkatConstants.DASHBOARD_LOGS_COUNT);
+		List<TaskDetailViewModel> viewmodels = new ArrayList<>();
+		for (TaskHistoryDetail detail : logs) {
+			TaskDetailViewModel viewmodel = new TaskDetailViewModel(detail);
+			viewmodel.setUsername(userService.findUser(viewmodel.getUserId()).getUsername());
+			viewmodels.add(viewmodel);
+		}
+		json.setList(viewmodels);
+		json.setTotal(logs.size());
 		return json;
 	}
 }
