@@ -218,5 +218,6 @@ public abstract class MeerkatConstants {
 	public static final int TASK_STATUS_FAIL = 3;
 
 	public static final Integer DASHBOARD_ALERT_COUNT = 10;
+	public static final Integer DASHBOARD_LOGS_COUNT = 10;
 
 }

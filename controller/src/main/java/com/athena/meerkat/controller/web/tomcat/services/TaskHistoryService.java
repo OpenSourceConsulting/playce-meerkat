@@ -12,6 +12,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -234,7 +235,7 @@ public class TaskHistoryService {
 		LogTailerListener listener = (LogTailerListener) session.getAttribute(LOG_TAILER);
 		int errCode = 0;
 		String logFile = null;
-		
+
 		if (listener == null) {
 			TaskHistoryDetail taskDetail = getTaskHistoryDetail(taskDetailId);
 
@@ -243,31 +244,31 @@ public class TaskHistoryService {
 
 			logFile = taskDetail.getLogFilePath();
 			LOGGER.debug("log file : {}", logFile);
-			
+
 			if (logFile != null) {
-				
+
 				long delay = 3000;
-				
+
 				File file = new File(logFile);
-				
+
 				if (file.exists()) {
 					Tailer tailer = new Tailer(file, listener, delay);
 					new Thread(tailer).start();
 				} else {
 					errCode = 2;
 				}
-				
+
 			} else {
 				errCode = 1;
 			}
-			
+
 		}
 
 		List<String> logs = listener.getLogs();
 
 		LOGGER.debug("logs size is {}", logs.size());
-		
-		if (errCode > 0){
+
+		if (errCode > 0) {
 			logs.add("로그 파일이 없습니다. " + logFile);
 		}
 
@@ -309,5 +310,10 @@ public class TaskHistoryService {
 		return failedTask;
 	}
 
+	public List<TaskHistoryDetail> getTaskHistories(Integer dashboardLogsCount) {
+		Pageable p = new PageRequest(0, dashboardLogsCount);
+		List<TaskHistoryDetail> details = detailRepo.findAllByOrderByFinishedTimeDesc(p);
+		return details;
+	}
 }
 //end of TaskHistoryService.java
