@@ -122,12 +122,7 @@ public class TomcatInstance implements Serializable {
 	@JoinColumn(name = "tomcat_instance_id")
 	private List<MonUtilStat> monUtilStats;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JsonIgnore
-	@JoinColumn(name = "instance_id")
-	private List<MonJmx> monJmxs;
-
-
+	
 	public TomcatInstance() {
 	}
 

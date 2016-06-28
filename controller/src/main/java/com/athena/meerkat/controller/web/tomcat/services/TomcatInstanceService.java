@@ -24,7 +24,6 @@
  */
 package com.athena.meerkat.controller.web.tomcat.services;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,12 +37,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.common.SSHManager;
 import com.athena.meerkat.controller.tomcat.instance.domain.ConfigFileVersionRepository;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
 import com.athena.meerkat.controller.web.entities.DataSource;
@@ -51,9 +48,9 @@ import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
-import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryDetailRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
@@ -101,9 +98,12 @@ public class TomcatInstanceService {
 	
 	@Autowired
 	private TaskHistoryService taskService;
+	
+	@Autowired
+	private MonJmxService monJmxService;
 
 	public TomcatInstanceService() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Page<TomcatInstance> getList(Pageable pageable) {
@@ -129,8 +129,6 @@ public class TomcatInstanceService {
 
 	public void saveList(List<TomcatInstance> entities) {
 		repo.save(entities);
-		
-		
 		
 	}
 
@@ -201,6 +199,8 @@ public class TomcatInstanceService {
 		taskService.updateTomcatInstanceToNull(tomcat.getId());
 		
 		repo.delete(tomcat);
+		
+		monJmxService.deleteAll(tomcat.getId());
 	}
 
 	public List<DataSource> getDataSourceListByTomcat(TomcatInstance tomcat) {

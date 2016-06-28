@@ -40,6 +40,12 @@ public class ServerMonScheduledTask extends MonitoringTask {
 	public void monitor() {
 
 		monDatas.clear();
+		
+		if (ServerInitialMonTask.ENABLE_MNITORING == false) {
+			LOGGER.debug("======== skip.");
+			return;
+		}
+		
 		try {
 			CpuPerc cpu = SigarUtil.getCpuPerc();
 			Mem mem = SigarUtil.getMem();

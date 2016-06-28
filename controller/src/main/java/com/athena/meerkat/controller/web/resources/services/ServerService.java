@@ -45,7 +45,13 @@ public class ServerService {
 	// return new ServiceResult(Status.DONE, "", machineRepo.findOne(id));
 	// }
 	public Server getServer(int id) {
-		return serverRepo.findOne(id);
+		Server server = serverRepo.findOne(id);
+		
+		if(server != null) {
+			server.setRunningAgent(agentEventListener.isRunningAgent(server.getId()));
+		}
+		
+		return server;
 	}
 
 	public List<Server> getListByType(int type) {

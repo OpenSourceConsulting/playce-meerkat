@@ -65,7 +65,7 @@ public class MonJmxController {
 	}
 
 	@MessageMapping("/monitor/jmx/create")
-	@SendToUser("/queue/jmx/agents")
+	@SendToUser(MonDataController.STOMP_USER_DEST)
 	public SimpleJsonResponse create(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse();
@@ -89,14 +89,14 @@ public class MonJmxController {
 			service.saveInstanceState(monJmxs);
 	
 			monAnalyzer.analyze(monJmxs);
+			
+			LOGGER.info("saved. jmx.");
 		} finally {
 			if (mdcEnable) {
 				MDC.remove(MonDataController.MDC_SERVER_KEY);
 				MDC.remove(MDC_TI_KEY);
 			}
 		}
-		
-		
 
 		return jsonRes;
 	}
@@ -176,6 +176,15 @@ public class MonJmxController {
 		}
 
 		return messages;
+	}
+	
+	@RequestMapping("/test/send/command")
+	@ResponseBody
+	public GridJsonResponse testSendCommandToAgent(GridJsonResponse json, Integer serverId, String command, String paramKey, String paramStr) {
+		
+		service.requestCommand(serverId, command, paramKey, paramStr);
+		
+		return json;
 	}
 }
 //end of MonJmxController.java

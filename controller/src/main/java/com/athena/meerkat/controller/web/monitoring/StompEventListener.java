@@ -25,6 +25,7 @@ package com.athena.meerkat.controller.web.monitoring;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +80,20 @@ public class StompEventListener implements ApplicationListener<ApplicationEvent>
 		return runningAgentCache.containsValue(serverId);
 	}
 	
+	public String getUserDestination(Integer serverId) {
+		
+		String userDestination = null;
+		for (Entry<String, Integer> entry : runningAgentCache.entrySet()) {
+			
+			if(serverId.equals(entry.getValue())) {
+				userDestination = "user" + entry.getKey();
+				break;
+			}
+		}
+		
+		return userDestination;
+	}
+	
 	
 	private void handleEvent(SessionSubscribeEvent event) {
 		//#### SessionSubscribeEvent[GenericMessage [payload=byte[0], headers={stompCommand=SUBSCRIBE, nativeHeaders={id=[subs1], destination=[/user/queue/agents]}, simpSessionAttributes={}, simpMessageType=SUBSCRIBE, simpSubscriptionId=subs1, simpDestination=/user/queue/agents, simpSessionId=1}]]
@@ -93,7 +108,7 @@ public class StompEventListener implements ApplicationListener<ApplicationEvent>
 		
 		if (serverId != null) {
 			runningAgentCache.put(sessionId, serverId);
-			LOGGER.debug("save sessionId = {}, serverId = {}", sessionId, serverId);
+			LOGGER.info("====== save sessionId = {}, serverId = {}", sessionId, serverId);
 		}
 		
 	}
@@ -112,7 +127,7 @@ public class StompEventListener implements ApplicationListener<ApplicationEvent>
 		if (subscriptionId.startsWith("subs_")) {
 			return new Integer(subscriptionId.substring(5));
 		} else {
-			LOGGER.warn("@@@@ invalid subscription id : {}", subscriptionId);
+			LOGGER.warn("====== invalid subscription id : {}", subscriptionId);
 			return null;
 		}
 	}

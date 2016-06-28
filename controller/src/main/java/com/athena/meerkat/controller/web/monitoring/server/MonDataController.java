@@ -49,6 +49,8 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 	private static final String MSG_MON = "mon";
 	private static final String MSG_FS = "fs";
+	
+	public static final String STOMP_USER_DEST = "/queue/agents";
 
 	@Autowired
 	private MonDataService service;
@@ -81,11 +83,20 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	 * @return
 	 */
 	@MessageMapping("/monitor/init")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse init(SimpleJsonResponse jsonRes, Map<String, Object> initMon) throws Exception {
 
 		int serverId = Integer.valueOf(initMon.get("id").toString());
 		Server dbServer = svrService.getServer(serverId);
+		
+		if (dbServer == null) {
+			jsonRes.setSuccess(false);
+			jsonRes.setMsg("serverId ("+ serverId +") not found.");
+			
+			LOGGER.warn("======= init. serverId ({}) not found. monitoring denied.", serverId);
+			
+			return jsonRes;
+		}
 
 		MDC.put(MDC_SERVER_KEY, dbServer.getSshIPAddr());
 
@@ -95,7 +106,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	
 			svrService.save(dbServer);
 	
-			LOGGER.debug("init saved. ---------------- {}", serverId);
+			LOGGER.info("init saved. ---------------- {}", serverId);
 	
 			jsonRes.setData(tiService.findInstanceConfigs(serverId));
 		
@@ -108,7 +119,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	
 
 	@MessageMapping("/monitor/create")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse saveMon(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
@@ -120,19 +131,21 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			mdcEnable = true;
 			
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
-			/*String serverIP = server.getSshIPAddr();
+			String serverIP = server.getSshIPAddr();
 			if(StringUtils.isEmpty(serverIP)) {
-				LOGGER.debug("=============== server id is empty. {}", monDatas.get(0).getServerId());
-			}*/
+				LOGGER.warn("=============== server IP is empty. serverId : {}", monDatas.get(0).getServerId());
+			}
 			
 			
-			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
+			MDC.put(MDC_SERVER_KEY, serverIP);
 		}
 		
 		try {
 			service.insertMonDatas(monDatas);
 			
 			monAnalyzer.analyze(monDatas);
+			
+			LOGGER.info("saved.");
 		
 		} finally {
 			if (mdcEnable) {
@@ -144,7 +157,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	}
 
 	@MessageMapping("/monitor/fs")
-	@SendToUser("/queue/agents")
+	@SendToUser(STOMP_USER_DEST)
 	public SimpleJsonResponse saveFs(List<Map> datas) {
 
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_FS);
@@ -164,7 +177,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 			service.saveMonFsList(monFsList);
 	
 			monAnalyzer.analyze(monFsList);
-			
+			LOGGER.info("saved. fs.");
 		} finally {
 			if (mdcEnable) {
 				MDC.remove(MDC_SERVER_KEY);
