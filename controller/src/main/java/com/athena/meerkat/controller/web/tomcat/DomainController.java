@@ -177,6 +177,10 @@ public class DomainController {
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
 		DomainTomcatConfiguration savedConfig = null;
 		if (domainTomcatConfig.getId() == 0) {
+			CommonCode tomcatVersion = commonHandler.getCode(domainTomcatConfig.getTomcatVersionCd());
+			if (tomcatVersion != null) {
+				domainTomcatConfig.setCatalinaHome(domainTomcatConfig.getCatalinaHome() + "/" + tomcatVersion.getCodeNm());
+			}
 			savedConfig = domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
 		} else {
 			savedConfig = domainService.saveDomainTomcatConfig(domainTomcatConfig);
@@ -261,8 +265,14 @@ public class DomainController {
 	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
 
 		TomcatConfigFile confFile = domainService.addDatasources(datasources);
+		
+		TaskHistory task = taskService.createAddDatasourceTask(confFile.getTomcatDomain().getId());
 
-		json.setData(confFile);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("updatedXml", confFile);
+		resultMap.put("task", task);
+
+		json.setData(resultMap);
 
 		return json;
 	}

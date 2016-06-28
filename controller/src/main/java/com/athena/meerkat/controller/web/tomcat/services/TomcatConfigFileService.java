@@ -235,11 +235,15 @@ public class TomcatConfigFileService {
 
 		String fileName = getFileTypeName(fileTypeCdId, 0);
 
-		//TODO read tomcat version's file;
-
 		Resource file = resourceLoader.getResource("classpath:/tomcatconfigs/" + fileName);
+		
+		String contents = FileUtils.readFileToString(file.getFile(), MeerkatConstants.UTF8);
+		
+		if(MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId && getMajorVersion(tomcatVersion) == 8) {
+			return contents.replace("<Listener className=\"org.apache.catalina.core.JasperListener\" />", "");
+		}
 
-		return FileUtils.readFileToString(file.getFile(), MeerkatConstants.UTF8);
+		return contents;
 	}
 
 	/**
@@ -252,7 +256,9 @@ public class TomcatConfigFileService {
 	 * @return
 	 */
 	public String getFileTypeName(int fileTypeCdId, int version) {
-		String fileName = codeHandler.getFileTypeName(fileTypeCdId);
+		
+		//int version = getMajorVersion(tomcatVersion);
+		String fileName = codeHandler.getFileTypeName(fileTypeCdId);// server.xml or context.xml
 
 		if (version == 0) {
 			return fileName;
@@ -261,10 +267,16 @@ public class TomcatConfigFileService {
 		int pos = fileName.lastIndexOf(".");
 
 		if (pos > -1) {
-			return fileName.substring(0, pos) + "_" + version + fileName.substring(pos);
+			return fileName.substring(0, pos) + "_" + version + fileName.substring(pos);// e.g. "server" + "_" + version + ".xml"
 		}
 
 		return fileName + "_" + version;
+	}
+	
+	public static int getMajorVersion(String tomcatVersion) {
+		int majorVersion = Integer.parseInt(tomcatVersion.substring(14, 15));
+		
+		return majorVersion;
 	}
 
 	public String getDomainFilePath(int domainId, TomcatInstance ti) {

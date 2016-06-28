@@ -201,6 +201,7 @@ public class TomcatInstanceService {
 		repo.delete(tomcat);
 		
 		monJmxService.deleteAll(tomcat.getId());
+		LOGGER.debug("deleted tomcat instance ({})", tomcat.getId());
 	}
 
 	public List<DataSource> getDataSourceListByTomcat(TomcatInstance tomcat) {

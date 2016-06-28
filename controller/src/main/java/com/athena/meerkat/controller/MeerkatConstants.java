@@ -212,11 +212,14 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_TOMCAT_CONFIG_UPDATE = 104;
 	public static final int TASK_CD_JDBC_MYSQL_INSTALL = 106;
 	public static final int TASK_CD_TOMCAT_INSTANCE_UNINSTALL = 107;
+	public static final int TASK_CD_DATASOURCE_ADD = 108;
+	public static final int TASK_CD_DATASOURCE_REMOVE = 109;
 
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;
 	public static final int TASK_STATUS_FAIL = 3;
 
 	public static final Integer DASHBOARD_ALERT_COUNT = 10;
+	public static final Integer DASHBOARD_LOGS_COUNT = 10;
 
 }
