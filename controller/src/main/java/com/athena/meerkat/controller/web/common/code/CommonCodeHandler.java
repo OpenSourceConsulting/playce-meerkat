@@ -25,8 +25,7 @@ import com.athena.meerkat.controller.web.entities.CommonCode;
 @Service
 public class CommonCodeHandler implements InitializingBean {
 
-	protected final Logger logger = LoggerFactory
-			.getLogger(CommonCodeHandler.class);
+	protected final Logger logger = LoggerFactory.getLogger(CommonCodeHandler.class);
 
 	private static final String CODE_GROUPS = "groups";
 
@@ -144,15 +143,15 @@ public class CommonCodeHandler implements InitializingBean {
 			logger.debug("{}, {} is not found.", cd_grp, codeId);
 			return "";
 		}
-		
+
 		if (codef.getCodeNm() == null) {
 			logger.debug("{}, {} code name is not found.", cd_grp, codeId);
 		}
 
 		return codef.getCodeNm();
 	}
-	
-	public String getFileTypeName(int fileTypeCdId){
+
+	public String getFileTypeName(int fileTypeCdId) {
 		return getCodeNm(MeerkatConstants.CODE_GROP_CONFIG_FILE_TYPE, fileTypeCdId);
 	}
 
@@ -163,11 +162,10 @@ public class CommonCodeHandler implements InitializingBean {
 		List<CommonCode> list = new ArrayList<CommonCode>();
 
 		try {
-			list = repository.findAll(new Sort(Sort.Direction.ASC, "gropId",
-					"prtoSeq"));
+			list = repository.findAll(new Sort(Sort.Direction.ASC, "gropId", "prtoSeq"));
 
 		} catch (Exception e) {
-			
+
 			logger.error(e.toString(), e);
 		}
 
@@ -196,6 +194,10 @@ public class CommonCodeHandler implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		loadCodesProcess();
+	}
+
+	public CommonCode getCode(int tomcatVersionCd) {
+		return repository.findOne(tomcatVersionCd);
 	}
 
 }

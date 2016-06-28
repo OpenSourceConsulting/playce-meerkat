@@ -177,6 +177,10 @@ public class DomainController {
 	public @ResponseBody SimpleJsonResponse saveTomcatConfig(SimpleJsonResponse json, DomainTomcatConfiguration domainTomcatConfig, boolean changeRMI) {
 		DomainTomcatConfiguration savedConfig = null;
 		if (domainTomcatConfig.getId() == 0) {
+			CommonCode tomcatVersion = commonHandler.getCode(domainTomcatConfig.getTomcatVersionCd());
+			if (tomcatVersion != null) {
+				domainTomcatConfig.setCatalinaHome(domainTomcatConfig.getCatalinaHome() + "/" + tomcatVersion.getCodeNm());
+			}
 			savedConfig = domainService.saveNewDomainTomcatConfig(domainTomcatConfig);
 		} else {
 			savedConfig = domainService.saveDomainTomcatConfig(domainTomcatConfig);
