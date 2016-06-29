@@ -120,6 +120,7 @@ public class DashboardController {
 		for (TaskHistoryDetail detail : logs) {
 			TaskDetailViewModel viewmodel = new TaskDetailViewModel(detail);
 			viewmodel.setUsername(userService.findUser(viewmodel.getUserId()).getUsername());
+			viewmodel.setTargetName(detail.getDomainName() + " > " + detail.getTomcatInstanceName());
 			viewmodels.add(viewmodel);
 		}
 		json.setList(viewmodels);

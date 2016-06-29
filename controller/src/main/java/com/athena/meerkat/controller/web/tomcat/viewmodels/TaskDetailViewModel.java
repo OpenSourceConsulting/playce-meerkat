@@ -54,6 +54,7 @@ public class TaskDetailViewModel {
 	private String username;
 	private Integer userId;
 	private Date finishedTime;
+	private String targetName;
 
 	private List<TaskDetailViewModel> children;
 
@@ -65,13 +66,13 @@ public class TaskDetailViewModel {
 
 	public TaskDetailViewModel(TaskHistoryDetail taskDetail) {
 
-		this.taskDetailId 	= taskDetail.getId();
-		this.name 			= taskDetail.getTomcatInstanceName();
-		this.hostName 		= taskDetail.getHostName();
-		this.ipaddress 		= taskDetail.getIpaddress();
-		this.status 		= taskDetail.getStatus();
-		this.logFilePath 	= taskDetail.getLogFilePath();
-		this.leaf 			= true;
+		this.taskDetailId = taskDetail.getId();
+		this.name = taskDetail.getTomcatInstanceName();
+		this.hostName = taskDetail.getHostName();
+		this.ipaddress = taskDetail.getIpaddress();
+		this.status = taskDetail.getStatus();
+		this.logFilePath = taskDetail.getLogFilePath();
+		this.leaf = true;
 
 		this.finishedTime = taskDetail.getFinishedTime();
 		if (taskDetail.getTaskHistory() != null) {
@@ -204,6 +205,14 @@ public class TaskDetailViewModel {
 
 	public void setTaskCdId(int taskCdId) {
 		this.taskCdId = taskCdId;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
 	}
 
 }

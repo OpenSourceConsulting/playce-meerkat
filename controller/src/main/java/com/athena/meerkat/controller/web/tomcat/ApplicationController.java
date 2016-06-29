@@ -40,7 +40,6 @@ public class ApplicationController {
 		if (!update) {
 			if (dbApp != null) {
 				json.setMsg("Application exists.");
-
 				json.setData(app);
 				json.setSuccess(false);
 				return json;
