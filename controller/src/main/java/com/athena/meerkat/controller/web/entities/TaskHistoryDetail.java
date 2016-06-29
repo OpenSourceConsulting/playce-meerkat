@@ -102,7 +102,9 @@ public class TaskHistoryDetail {
 		super();
 		setTaskHistoryId(taskHistoryId);
 
-		this.tomcatDomainId = tomcatInstance.getDomainId();
+		if (tomcatInstance.getDomainId() > 0) {
+			this.tomcatDomainId = tomcatInstance.getDomainId();
+		}
 		setTomcatInstanceId(tomcatInstance.getId());
 		this.tomcatDomainName = tomcatInstance.getDomainName();
 		this.tomcatInstanceName = tomcatInstance.getName();
@@ -159,12 +161,15 @@ public class TaskHistoryDetail {
 	 *            the tomcatInstanceId to set
 	 */
 	public void setTomcatInstanceId(int tomcatInstanceId) {
-		this.tomcatInstanceId = tomcatInstanceId;
+		
+		if (tomcatInstanceId > 0) {
+			this.tomcatInstanceId = tomcatInstanceId;
 
-		if (this.tomcatInstance == null) {
-			this.tomcatInstance = new TomcatInstance();
+			if (this.tomcatInstance == null) {
+				this.tomcatInstance = new TomcatInstance();
+			}
+			this.tomcatInstance.setId(tomcatInstanceId);
 		}
-		this.tomcatInstance.setId(tomcatInstanceId);
 	}
 
 	public int getTomcatDomainId() {

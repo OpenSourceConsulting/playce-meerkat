@@ -214,6 +214,9 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_TOMCAT_INSTANCE_UNINSTALL = 107;
 	public static final int TASK_CD_DATASOURCE_ADD = 108;
 	public static final int TASK_CD_DATASOURCE_REMOVE = 109;
+	public static final int TASK_CD_AGENT_INSTALL = 110;
+	public static final int TASK_CD_AGENT_REMOVE = 111;
+	public static final int TASK_CD_AGENT_REINSTALL = 112;
 
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;

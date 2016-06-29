@@ -52,6 +52,7 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
+import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.ApplicationService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
@@ -67,7 +68,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  * @version 1.0
  */
 @Service
-public class TomcatProvisioningService extends AbstractProvisioningService implements InitializingBean {
+public class TomcatProvisioningService extends AbstractProvisioningService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TomcatProvisioningService.class);
 
@@ -91,10 +92,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
-	
 
 	@Autowired
 	private MonJmxService monJmxService;
+	
+	@Autowired
+	private AgentProvisioningService agentProviService;
 
 	/**
 	 * <pre>
@@ -136,8 +139,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 
 		TaskHistory taskHistory = taskDetail.getTaskHistory();
 
-		if (taskDetail.getTomcatDomainId() == 0 || taskHistory.getId() == 0) {
-			throw new IllegalArgumentException("domain id and task history id must not be zero(0).");
+		if (taskHistory.getId() == 0) {
+			throw new IllegalArgumentException("task history id must not be zero(0).");
 		}
 
 		if (MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_INSTALL == taskHistory.getTaskCdId()) {
@@ -177,6 +180,18 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		} else if (MeerkatConstants.TASK_CD_JDBC_MYSQL_INSTALL == taskHistory.getTaskCdId()) {
 			
 			installJar(taskDetail.getTomcatInstance().getId(), mysqlDriverFile, taskHistory.getId());
+			
+		} else if (MeerkatConstants.TASK_CD_AGENT_INSTALL == taskHistory.getTaskCdId()) {
+			
+			Server server = serverService.getServerBySSHIPAddress(taskDetail.getIpaddress());
+			
+			agentProviService.installAgent(server, taskHistory.getId(), null);
+			
+		} else if (MeerkatConstants.TASK_CD_AGENT_REINSTALL == taskHistory.getTaskCdId()) {
+			
+			Server server = serverService.getServerBySSHIPAddress(taskDetail.getIpaddress());
+			
+			agentProviService.reinstallAgent(server, taskHistory.getId(), null);
 		}
 
 	}
@@ -319,7 +334,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 		}
 
 	}
-
+	
 	public void updateTomcatInstanceConfig(int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
@@ -564,7 +579,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 				pModel.addConfFile(confFile);
 				pModel.setLastTask(count == list.size());
 
-				runDefaultTarget(pModel, targetName, null);
+				runDefaultTargets(pModel, null, targetName);
 				count++;
 			}
 		} else {
@@ -669,7 +684,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService imple
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
-		initService();
+		super.afterPropertiesSet();
 
 		domainService.setProvService(this);
 

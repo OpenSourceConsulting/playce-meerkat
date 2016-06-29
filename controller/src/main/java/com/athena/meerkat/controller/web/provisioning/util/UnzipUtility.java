@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.provisioning;
+package com.athena.meerkat.controller.web.provisioning.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

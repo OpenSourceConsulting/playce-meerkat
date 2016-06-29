@@ -44,6 +44,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
+import com.athena.meerkat.controller.web.provisioning.util.UnzipUtility;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;

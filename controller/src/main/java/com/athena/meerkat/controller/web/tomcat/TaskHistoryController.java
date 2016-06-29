@@ -93,6 +93,16 @@ public class TaskHistoryController {
 
 		return jsonRes;
 	}
+	
+	@RequestMapping(value = "/create/agent", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse createAgentTask(SimpleJsonResponse jsonRes, int serverId, int taskCdId) {
+
+		TaskHistory task = service.createTaskByServer(serverId, taskCdId);
+		jsonRes.setData(task);
+
+		return jsonRes;
+	}
 
 	@RequestMapping(value = "/create/uninstall/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody

@@ -262,7 +262,7 @@ public class TomcatDomainService {
 		domainDatasoureRepo.deleteByTomcatDomainIdAndDatasourceId(domainId, dsId);
 
 		/*
-		 * don't delete below.
+		 * don't delete below. JPA 소스 참고를 위해.
 		 * 
 		TomcatDomain domain = getDomain(domainId);
 		List<DataSource> mappedDatasources = domain.getDatasources();
@@ -279,11 +279,6 @@ public class TomcatDomainService {
 		save(domain);//real delete db;
 		*/
 
-		/*
-		TomcatConfigFile configFile = updateContextXml(domainId);
-
-		getProvService().updateXml(domainId, configFile.getId(), 0, null);
-		*/
 	}
 	
 	/**

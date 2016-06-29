@@ -6,16 +6,6 @@
 
 	<target name="deploy-agent" description="deploy to server">
 		
-		<!--
-		<setproxy socksproxyhost="localhost" socksproxyport="20024"/>
-		<property name="server.ip" value="192.168.0.87" />
-		<property name="server.port" value="22" />
-		<property name="user.id" value="meerkat" />
-		<property name="user.passwd" value="meerkat" />
-		<property name="agent.deploy.dir" value="/home/meerkat/athena-meerkat-agent" />
-		<property name="agent.name" value="athena-meerkat-agent-1.0.0-SNAPSHOT" />
-		 -->
-
 		<property name="filename" value="${agent.name}-bin.tar.gz" />
 		
 		<property name="cmd1" value="cd ${agent.deploy.dir}" />
@@ -48,6 +38,20 @@
 			command="${cmd1}; ${cmd2}; ${cmd3}; ${cmd4}; ${cmd6}; ${cmd7}" trust="true" failonerror="true" />
 		
 		<echo>running agent.</echo>
+		
+	</target>
+	
+	
+	<target name="remove-agent" description="remove agent">
+
+		<echo>stopping agent.</echo>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				command="cd ${agent.deploy.dir}/${agent.name}; ./kill.sh;" trust="true" failonerror="false" />
+		
+		<echo>remove agent.</echo>
+		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				command="rm -rf ${agent.deploy.dir}/${agent.name}*;" trust="true" failonerror="true" />
 		
 	</target>
 	

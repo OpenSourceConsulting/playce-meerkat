@@ -46,6 +46,7 @@ import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -59,7 +60,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  * @version 1.0
  */
 @Service
-public class SessionClusterProvisioningService extends AbstractProvisioningService implements InitializingBean {
+public class SessionClusterProvisioningService extends AbstractProvisioningService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionClusterProvisioningService.class);
 
@@ -161,15 +162,6 @@ public class SessionClusterProvisioningService extends AbstractProvisioningServi
 		return isSuccess;
 	}
 
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		
-		initService();
-
-		//domainService.setProvService(this);
-
-	}
 	
 	@Transactional
 	public boolean unconfigureSessionClustering(int domainId, WebSocketSession session) {

@@ -53,9 +53,14 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 	private static final String JMX_ATTR_SYS_CPU = "SystemCpuLoad";
 
 	private static final String JMX_ATTR_HEAPMEM = "HeapMemoryUsage";
-	private static final String JMX_ATTR_THREAD_POOL = "Catalina:type=ThreadPool,name=\"http-bio-";
+	private static final String JMX_ATTR_THREAD_POOL7 = "Catalina:type=ThreadPool,name=\"http-bio-";
+	private static final String JMX_ATTR_THREAD_POOL8 = "Catalina:type=ThreadPool,name=\"http-nio-";
 	private static final String JMX_ATTR_THREAD_USED = "currentThreadsBusy";
 	private static final String JMX_ATTR_THREAD_MAX = "maxThreads";
+	
+	private static final int TOMCAT_VER6 = 12;// tomcatVersionCd value.
+	private static final int TOMCAT_VER7 = 9;
+	private static final int TOMCAT_VER8 = 13;
 
 	private static final double asMB = 1024.d * 1024.d;
 
@@ -66,11 +71,16 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 	private ObjectName memoryObj;
 	private ObjectName cpuObj;
 	private Map<String, ObjectName> dsObjects;
+	
+	private Map<Integer, String> tVersionThreadAttrMap = new HashMap<Integer, String>();// tomcatVersionCd : JMX_ATTR_THREAD_POOL*
 
 	@Autowired
 	private StompWebSocketClient webSocketClient;
 
 	public TInstanceMonScheduledTask() {
+		tVersionThreadAttrMap.put(TOMCAT_VER6, JMX_ATTR_THREAD_POOL7);
+		tVersionThreadAttrMap.put(TOMCAT_VER7, JMX_ATTR_THREAD_POOL7);
+		tVersionThreadAttrMap.put(TOMCAT_VER8, JMX_ATTR_THREAD_POOL8);
 	}
 
 	@Scheduled(fixedRate = 10000)
@@ -97,8 +107,10 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 			for (JsonNode tomcatConfig : tomcatConfigs) {
 
 				String tomcatInstanceId = tomcatConfig.get(MeerkatAgentConstants.JSON_KEY_TOMCAT_INSTANCE_ID).asText();
-				long port = tomcatConfig.get("httpPort").asLong();
-				int isRun = 7; // TS_STATE common code id.
+				long port 				= tomcatConfig.get("httpPort").asLong();
+				int tomcatVersionCd 	= tomcatConfig.get("tomcatVersionCd").asInt();
+				int isRun 				= 7; // TS_STATE common code id.
+				
 				for (NetConnection netConnection : listenPorts) {
 					if (netConnection.getLocalPort() == port) {
 						isRun = 8;
@@ -106,7 +118,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 				}
 
 				monDatas.add(createJmxJsonString("ti.run", tomcatInstanceId, isRun, 0));//tomcat instance running status.
-				monitorJMX(monDatas, tomcatInstanceId, tomcatConfig);
+				monitorJMX(monDatas, tomcatInstanceId, tomcatConfig, tomcatVersionCd);
 			}
 
 
@@ -119,7 +131,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 		}
 	}
 
-	private void monitorJMX(List<String> monDatas, String tomcatInstanceId, JsonNode tomcatConfig) {
+	private void monitorJMX(List<String> monDatas, String tomcatInstanceId, JsonNode tomcatConfig, int tomcatVersionCd) {
 
 		String rmiRegistryPort = JSONUtil.getString(tomcatConfig, "rmiRegistryPort");
 		String httpPort = JSONUtil.getString(tomcatConfig, "httpPort");
@@ -147,7 +159,7 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 
 			monitorTomcatCpu(mbeanServerConn, tomcatInstanceId);
 			monitorTomcatHeapMemory(mbeanServerConn, tomcatInstanceId);
-			monitorTomcatThreads(mbeanServerConn, tomcatInstanceId, httpPort);
+			monitorTomcatThreads(mbeanServerConn, tomcatInstanceId, httpPort, tomcatVersionCd);
 			monitorJDBC(mbeanServerConn, tomcatInstanceId);
 
 		} catch (ConnectException e) {
@@ -210,9 +222,9 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 		monDatas.add(createJmxJsonString(MeerkatAgentConstants.MON_FACTOR_ID_MEM_USED_PER, tomcatInstanceId, used_per, 0));
 	}
 
-	private void monitorTomcatThreads(MBeanServerConnection mbeanServerConn, String tomcatInstanceId, String httpPort) throws Exception {
+	private void monitorTomcatThreads(MBeanServerConnection mbeanServerConn, String tomcatInstanceId, String httpPort, int tomcatVersionCd) throws Exception {
 
-		ObjectName name = new ObjectName(JMX_ATTR_THREAD_POOL + httpPort + "\"");
+		ObjectName name = new ObjectName(tVersionThreadAttrMap.get(tomcatVersionCd) + httpPort + "\"");
 		Object used = mbeanServerConn.getAttribute(name, JMX_ATTR_THREAD_USED);// currentThreadsBusy
 		Object max = mbeanServerConn.getAttribute(name, JMX_ATTR_THREAD_MAX);// maxThreads
 

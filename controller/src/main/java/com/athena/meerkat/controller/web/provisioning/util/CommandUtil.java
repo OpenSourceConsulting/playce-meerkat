@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.provisioning;
+package com.athena.meerkat.controller.web.provisioning.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +11,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.athena.meerkat.controller.web.provisioning.ProcessAction;
+
 /**
  * <pre>
  * 
@@ -21,7 +23,7 @@ public class CommandUtil {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommandUtil.class);
 	
-	private static final String[] ERROR_LOGS = new String[]{"BUILD FAILED", "[sshexec] Error", "[sshexec] Remote command failed", "[sshexec] Caught exception:"};
+	private static final String[] ERROR_LOGS = new String[]{"BUILD FAILED", "[sshexec] Error", "[sshexec] Caught exception:"};// except "[sshexec] Remote command failed", 
 	
 	public static String execWithLog(File workingDir, List<String> cmds){
 		

@@ -17,10 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryDetailRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TaskHistoryRepository;
 
@@ -47,6 +49,9 @@ public class TaskHistoryService {
 
 	@Autowired
 	private TomcatInstanceService tomcatService;
+	
+	@Autowired
+	private ServerService serverService;
 
 	public TaskHistoryService() {
 
@@ -148,6 +153,21 @@ public class TaskHistoryService {
 
 		return createTaskDetails(tomcats, taskCdId);
 	}
+	
+	public TaskHistory createTaskByServer(int serverId, int taskCdId) {
+		
+		Server server = serverService.getServer(serverId);
+		TomcatInstance tomcatInstance = new TomcatInstance();
+		
+		//tomcatInstance.setTomcatDomain(new TomcatDomain());
+		tomcatInstance.setServer(server);
+		tomcatInstance.setName(server.getName());
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+
+		return createTaskDetails(singleList, taskCdId);
+	}
 
 	public void save(TaskHistory taskHistory) {
 		repository.save(taskHistory);
@@ -157,7 +177,9 @@ public class TaskHistoryService {
 		detailRepo.save(taskHistoryDetail);
 	}
 
-	public void updateTaskLogFile(int taskHistoryId, int tomcatInstanceId, File jobDir) {
+	public void updateTaskLogFile(int taskHistoryId, TomcatInstance tomcatInstance, File jobDir) {
+		
+		Integer tomcatInstanceId = (tomcatInstance == null)? null: tomcatInstance.getId();
 
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setLogFilePath(jobDir.getAbsolutePath() + File.separator + "build.log");
@@ -167,8 +189,10 @@ public class TaskHistoryService {
 		saveDetail(taskDetail);
 	}
 
-	public void updateTaskStatus(int taskHistoryId, int tomcatInstanceId, int status) {
+	public void updateTaskStatus(int taskHistoryId, TomcatInstance tomcatInstance, int status) {
 
+		Integer tomcatInstanceId = (tomcatInstance == null)? null: tomcatInstance.getId();
+		
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setStatus(status);
 

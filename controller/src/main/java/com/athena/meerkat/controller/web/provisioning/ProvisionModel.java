@@ -60,10 +60,16 @@ public class ProvisionModel {
 	
 	private int sessionServerGroupId;
 	
+	private Server server;
+	
 	
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList) {
 		this.tomcatConfig = tomcatConfig;
 		this.tomcatInstance = tomcatInstance;
+		
+		if (tomcatInstance != null) {
+			this.server = tomcatInstance.getServer();
+		}
 		
 		if (dsList != null) {
 			this.dsList = dsList;
@@ -92,6 +98,11 @@ public class ProvisionModel {
 	 */
 	public ProvisionModel(DomainTomcatConfiguration tomcatConfig, TomcatInstance tomcatInstance, List<DataSource> dsList, boolean isFirstInstall) {
 		this(0, tomcatConfig, tomcatInstance, dsList, isFirstInstall);
+	}
+	
+	public ProvisionModel(Server server, int taskHistoryId){
+		this.server = server;
+		this.taskHistoryId = taskHistoryId;
 	}
 
 	public int getTaskHistoryId() {
@@ -200,7 +211,11 @@ public class ProvisionModel {
 	}
 	
 	public Server getServer() {
-		return this.getTomcatInstance().getServer();
+		return this.server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
 	}
 
 }

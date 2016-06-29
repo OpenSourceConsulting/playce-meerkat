@@ -39,6 +39,7 @@ import org.apache.commons.io.input.Tailer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
@@ -53,6 +54,7 @@ import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
+import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
@@ -71,7 +73,7 @@ import freemarker.template.TemplateExceptionHandler;
  * @author Bongjin Kwon
  * @version 1.0
  */
-public abstract class AbstractProvisioningService {
+public abstract class AbstractProvisioningService implements InitializingBean{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractProvisioningService.class);
 	
@@ -94,6 +96,9 @@ public abstract class AbstractProvisioningService {
 	
 	@Value("${meerkat.tomcat.down.url}")
 	private String tomcatDownUrl;
+	
+	@Value("${meerkat.agent.file.name:athena-meerkat-agent-1.0.0-SNAPSHOT}")
+	private String agentFileName;// 확장자 제외 파일명.
 	
 	protected File commanderDir;
 	
@@ -191,10 +196,11 @@ public abstract class AbstractProvisioningService {
 		}
 	}
 	
-	protected void runDefaultTarget(ProvisionModel pModel, String targetName, WebSocketSession session) {
+	protected boolean runDefaultTargets(ProvisionModel pModel, WebSocketSession session, String... targetNames) {
 
 		File jobDir = generateBuildProperties(pModel, session);
 
+		boolean isSuccess = true;
 		try {
 
 			/*
@@ -203,9 +209,11 @@ public abstract class AbstractProvisioningService {
 			copyDefault(jobDir);
 
 			/*
-			 * 2. run cmd.
+			 * 2. run targetNames.
 			 */
-			boolean isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName);
+			for (String targetName : targetNames) {
+				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, targetName) && isSuccess;
+			}
 			
 			if (isSuccess) {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
@@ -224,6 +232,8 @@ public abstract class AbstractProvisioningService {
 			MDC.remove("jobPath");
 			MDC.remove("serverIp");
 		}
+		
+		return isSuccess;
 	}
 	
 	/**
@@ -241,7 +251,7 @@ public abstract class AbstractProvisioningService {
 		DomainTomcatConfiguration tomcatConfig = pModel.getTomcatConfig();
 		List<TomcatConfigFile> confFiles = pModel.getConfFiles();
 
-		Server targetServer = pModel.getTomcatInstance().getServer();
+		Server targetServer = pModel.getServer();
 		String serverIp = targetServer.getSshIPAddr();
 		MDC.put("serverIp", serverIp);
 
@@ -259,23 +269,26 @@ public abstract class AbstractProvisioningService {
 		prop.setProperty("key.file", commanderDir + "/ssh/svn_key.pem");
 
 		String agentDeployDir = "/home/" + userId + "/athena-meerkat-agent";
-		String agentName = "athena-meerkat-agent-1.0.0-SNAPSHOT";
+		//String agentName = "athena-meerkat-agent-1.0.0-SNAPSHOT";
 
 		Properties targetProps = new Properties(); // build.properties
 		targetProps.setProperty("agent.deploy.dir", agentDeployDir);
-		targetProps.setProperty("agent.name", 		agentName);
-		targetProps.setProperty("server.ant.home", 	agentDeployDir + "/" + agentName + "/apache-ant-1.9.6");
+		targetProps.setProperty("agent.name", 		agentFileName);
+		targetProps.setProperty("server.ant.home", 	agentDeployDir + "/" + agentFileName + "/apache-ant-1.9.6");
 		targetProps.setProperty("tomcat.down.url", 	tomcatDownUrl);
 		
-		targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
-		targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
-		targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));
-		targetProps.setProperty("am.server.port", 	String.valueOf(tomcatConfig.getServerPort()));
-		targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
-		targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
-		targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
-		targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
-		targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
+		if (tomcatConfig != null) {
+			targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
+			targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
+			targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));
+			targetProps.setProperty("am.server.port", 	String.valueOf(tomcatConfig.getServerPort()));
+			targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
+			targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
+			targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
+			targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
+			targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
+		}
+		
 
 		targetProps.setProperty("am.conf.op", pModel.getConfigOP());
 		
@@ -300,7 +313,8 @@ public abstract class AbstractProvisioningService {
 			jobDir = makeJobDir(serverIp, jobNum);
 			
 			if (pModel.getTaskHistoryId() > 0) {
-				taskService.updateTaskLogFile(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), jobDir);
+				
+				taskService.updateTaskLogFile(pModel.getTaskHistoryId(), pModel.getTomcatInstance(), jobDir);
 			}
 
 			MDC.put("jobPath", jobDir.getAbsolutePath());
@@ -316,8 +330,13 @@ public abstract class AbstractProvisioningService {
 			/*
 			 * generate agentenv.sh
 			 */
-			createAgentEnvSHFile(jobDir, tomcatConfig.getJavaHome(), agentDeployDir, agentName);
-			generateTomcatEnvFile(jobDir, tomcatConfig, serverIp);
+			if (tomcatConfig != null) {
+				createAgentEnvSHFile(jobDir, tomcatConfig.getJavaHome(), agentDeployDir, agentFileName);
+				generateTomcatEnvFile(jobDir, tomcatConfig, serverIp);
+			} else {
+				createAgentEnvSHFile(jobDir, null, agentDeployDir, agentFileName);
+			}
+			
 
 			/*
 			 * generate build properties
@@ -452,7 +471,10 @@ public abstract class AbstractProvisioningService {
 
 	private void createAgentEnvSHFile(File jobDir, String javaHome, String deployDir, String agentName) throws IOException {
 		Map<String, String> model = new HashMap<String, String>();
-		model.put("javaHome", javaHome);
+		
+		if (javaHome != null) {
+			model.put("javaHome", javaHome);
+		}
 		model.put("deployDir", deployDir);
 		model.put("agentName", agentName);
 
@@ -515,10 +537,15 @@ public abstract class AbstractProvisioningService {
 	
 	protected void updateTaskStatus(ProvisionModel pModel, int status) {
 		if (pModel.getTaskHistoryId() > 0) {
-			taskService.updateTaskStatus(pModel.getTaskHistoryId(), pModel.getTomcatInstance().getId(), status);
+			taskService.updateTaskStatus(pModel.getTaskHistoryId(), pModel.getTomcatInstance(), status);
 		} else {
 			LOGGER.warn("TaskHistory id is zero.");
 		}
+	}
+	
+	public void afterPropertiesSet() throws Exception {
+
+		initService();
 	}
 
 }
