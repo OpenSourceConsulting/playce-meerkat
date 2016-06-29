@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 192.168.0.87    Database: athena_meerkat_trystack
+-- Host: 192.168.0.153    Database: athena_meerkat
 -- ------------------------------------------------------
--- Server version	5.5.44-MariaDB
+-- Server version	5.5.47-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -120,7 +120,7 @@ CREATE TABLE `data_source` (
   `jdbc_url` varchar(500) CHARACTER SET euckr DEFAULT NULL,
   `dbtype_cd_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,6 +129,7 @@ CREATE TABLE `data_source` (
 
 LOCK TABLES `data_source` WRITE;
 /*!40000 ALTER TABLE `data_source` DISABLE KEYS */;
+INSERT INTO `data_source` VALUES (1,'192.168.0.153','meerkat','meerkat',8,1500,16,16,'jdbc:mysql://192.168.0.153:3306/test?useUnicode=true&characterEncoding=UTF-8',1);
 /*!40000 ALTER TABLE `data_source` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,6 +147,15 @@ CREATE TABLE `datagrid_server_group` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `datagrid_server_group`
+--
+
+LOCK TABLES `datagrid_server_group` WRITE;
+/*!40000 ALTER TABLE `datagrid_server_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `datagrid_server_group` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `datagrid_servers`
@@ -203,7 +213,7 @@ CREATE TABLE `domain_tomcat_configuration` (
   PRIMARY KEY (`Id`,`domain_id`),
   KEY `fk_domain_tomcat_configuration_tomcat_domain1_idx` (`domain_id`),
   CONSTRAINT `fk_domain_tomcat_configuration_tomcat_domain1` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +222,7 @@ CREATE TABLE `domain_tomcat_configuration` (
 
 LOCK TABLES `domain_tomcat_configuration` WRITE;
 /*!40000 ALTER TABLE `domain_tomcat_configuration` DISABLE KEYS */;
+INSERT INTO `domain_tomcat_configuration` VALUES (2,129,'/usr/java/jdk1.8.0_91/','/home/meerkat/servers/apache-tomcat-8.0.36','/home/meerkat/apps/instance1',8081,30,8009,0,'\0',8225,8226,'export CATALINA_OPTS=\"-server -Xms512m -Xmx512m\"',23,'2016-06-29 04:44:23',13,'UTF-8',8005);
 /*!40000 ALTER TABLE `domain_tomcat_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +247,7 @@ CREATE TABLE `mon_alert_config` (
   KEY `fk_tomcat_domain_alert_server1_idx` (`server_Id`),
   CONSTRAINT `fk_tomcat_domain_alert_tomcat_domain2` FOREIGN KEY (`tomcat_domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_domain_alert_server1` FOREIGN KEY (`server_Id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,6 +256,7 @@ CREATE TABLE `mon_alert_config` (
 
 LOCK TABLES `mon_alert_config` WRITE;
 /*!40000 ALTER TABLE `mon_alert_config` DISABLE KEYS */;
+INSERT INTO `mon_alert_config` VALUES (1,NULL,32,18,16,80,0,'cpu.used_per'),(2,NULL,32,19,16,80,0,'mem.used_per'),(3,NULL,32,20,16,80,0,NULL),(4,NULL,32,21,0,NULL,1,NULL),(7,129,NULL,18,16,80,0,'cpu.used_per'),(8,129,NULL,19,16,80,0,'mem.used_per');
 /*!40000 ALTER TABLE `mon_alert_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +388,7 @@ CREATE TABLE `network_interface` (
   PRIMARY KEY (`Id`),
   KEY `ni_machine_fk_idx` (`server_id`),
   CONSTRAINT `ni_server_fk` FOREIGN KEY (`server_id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,6 +397,7 @@ CREATE TABLE `network_interface` (
 
 LOCK TABLES `network_interface` WRITE;
 /*!40000 ALTER TABLE `network_interface` DISABLE KEYS */;
+INSERT INTO `network_interface` VALUES (22,NULL,'192.168.0.153',NULL,32,NULL,NULL);
 /*!40000 ALTER TABLE `network_interface` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,7 +434,7 @@ CREATE TABLE `server` (
   PRIMARY KEY (`Id`),
   KEY `fk_server_ni_idx` (`ssh_ni_id`),
   CONSTRAINT `fk_server_ni` FOREIGN KEY (`ssh_ni_id`) REFERENCES `network_interface` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='	';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='	';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,6 +443,7 @@ CREATE TABLE `server` (
 
 LOCK TABLES `server` WRITE;
 /*!40000 ALTER TABLE `server` DISABLE KEYS */;
+INSERT INTO `server` VALUES (32,'192.168.0.153',NULL,0,NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,'\0',NULL,0,NULL,0,NULL,22,22,'');
 /*!40000 ALTER TABLE `server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -449,7 +463,7 @@ CREATE TABLE `ssh_account` (
   PRIMARY KEY (`Id`),
   KEY `fk_ssh_account_server1_idx` (`server_id`),
   CONSTRAINT `fk_ssh_account_server1` FOREIGN KEY (`server_id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,6 +472,7 @@ CREATE TABLE `ssh_account` (
 
 LOCK TABLES `ssh_account` WRITE;
 /*!40000 ALTER TABLE `ssh_account` DISABLE KEYS */;
+INSERT INTO `ssh_account` VALUES (1,'meerkat','meerkat',32,NULL);
 /*!40000 ALTER TABLE `ssh_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -474,7 +489,7 @@ CREATE TABLE `task_history` (
   `create_user_id` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,6 +498,7 @@ CREATE TABLE `task_history` (
 
 LOCK TABLES `task_history` WRITE;
 /*!40000 ALTER TABLE `task_history` DISABLE KEYS */;
+INSERT INTO `task_history` VALUES (12,100,23,'2016-06-29 04:33:29'),(13,100,23,'2016-06-29 04:44:34'),(14,101,23,'2016-06-29 05:30:10'),(15,107,23,'2016-06-29 05:52:32'),(16,107,23,'2016-06-29 05:52:32');
 /*!40000 ALTER TABLE `task_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,7 +525,7 @@ CREATE TABLE `task_history_detail` (
   KEY `fk_task_history_domain_task_history1_idx` (`task_history_id`),
   KEY `idx_domain_id_instance_id` (`tomcat_domain_id`,`tomcat_instance_id`),
   CONSTRAINT `fk_task_history_domain_task_history1` FOREIGN KEY (`task_history_id`) REFERENCES `task_history` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,6 +534,7 @@ CREATE TABLE `task_history_detail` (
 
 LOCK TABLES `task_history_detail` WRITE;
 /*!40000 ALTER TABLE `task_history_detail` DISABLE KEYS */;
+INSERT INTO `task_history_detail` VALUES (1,12,128,91,NULL,'Tomcat 1',NULL,'192.168.0.153',3,'/home/centos/.aMeerkat/jobs/192.168.0.153/3/build.log','2016-06-29 04:41:15'),(2,13,129,NULL,NULL,'Tomcat 1',NULL,'192.168.0.153',2,'/home/centos/.aMeerkat/jobs/192.168.0.153/5/build.log','2016-06-29 04:52:13'),(3,14,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',0,NULL,NULL),(4,15,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',3,'/home/centos/.aMeerkat/jobs/192.168.0.153/9/build.log','2016-06-29 05:52:32'),(5,16,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',0,NULL,NULL);
 /*!40000 ALTER TABLE `task_history_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -545,7 +562,7 @@ CREATE TABLE `tomcat_application` (
   KEY `fk_domain_application_tomcat_instance1_idx` (`tomcat_instance_id`),
   CONSTRAINT `fk_domain_application_tomcat_domain1` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_domain_application_tomcat_instance1` FOREIGN KEY (`tomcat_instance_id`) REFERENCES `tomcat_instance` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -554,6 +571,7 @@ CREATE TABLE `tomcat_application` (
 
 LOCK TABLES `tomcat_application` WRITE;
 /*!40000 ALTER TABLE `tomcat_application` DISABLE KEYS */;
+INSERT INTO `tomcat_application` VALUES (1,'/test',0,'2016-06-29 05:30:10',NULL,'conffiles/129_null/test.war','2016-06-29 05:30:10',129,NULL,0);
 /*!40000 ALTER TABLE `tomcat_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,7 +599,7 @@ CREATE TABLE `tomcat_config_file` (
   CONSTRAINT `fk_server_xml_domain10` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_config_file_tomcat_instance1` FOREIGN KEY (`tomcat_instance_id`) REFERENCES `tomcat_instance` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_config_file_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,6 +608,7 @@ CREATE TABLE `tomcat_config_file` (
 
 LOCK TABLES `tomcat_config_file` WRITE;
 /*!40000 ALTER TABLE `tomcat_config_file` DISABLE KEYS */;
+INSERT INTO `tomcat_config_file` VALUES (3,129,3,1,NULL,'conffiles/129_null/server_1.xml','2016-06-29 04:44:23',NULL,23),(4,129,4,1,NULL,'conffiles/129_null/context_1.xml','2016-06-29 04:44:23',NULL,23);
 /*!40000 ALTER TABLE `tomcat_config_file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -610,7 +629,7 @@ CREATE TABLE `tomcat_domain` (
   KEY `fk_tomcat_domain_user1_idx` (`create_user_id`),
   CONSTRAINT `datagrid_server_group` FOREIGN KEY (`datagrid_server_group_id`) REFERENCES `datagrid_server_group` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_domain_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -619,6 +638,7 @@ CREATE TABLE `tomcat_domain` (
 
 LOCK TABLES `tomcat_domain` WRITE;
 /*!40000 ALTER TABLE `tomcat_domain` DISABLE KEYS */;
+INSERT INTO `tomcat_domain` VALUES (129,'Domain 1',NULL,23);
 /*!40000 ALTER TABLE `tomcat_domain` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -667,7 +687,7 @@ CREATE TABLE `tomcat_domain_datasource` (
   KEY `fk_tomcat_datasource_tomcat_domain1_idx` (`tomcat_domain_id`),
   CONSTRAINT `fk_tomcat_datasource_tomcat_domain1` FOREIGN KEY (`tomcat_domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `td_datasource_fk` FOREIGN KEY (`datasource_id`) REFERENCES `data_source` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -676,6 +696,7 @@ CREATE TABLE `tomcat_domain_datasource` (
 
 LOCK TABLES `tomcat_domain_datasource` WRITE;
 /*!40000 ALTER TABLE `tomcat_domain_datasource` DISABLE KEYS */;
+INSERT INTO `tomcat_domain_datasource` VALUES (2,1,129);
 /*!40000 ALTER TABLE `tomcat_domain_datasource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -734,7 +755,7 @@ CREATE TABLE `tomcat_instance` (
   CONSTRAINT `fk_tomcat_instance_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tomcat_domain_fk` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tomcat_server_fk` FOREIGN KEY (`server_id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -838,4 +859,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-24 13:40:01
+-- Dump completed on 2016-06-29 14:53:40
