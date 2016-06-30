@@ -26,7 +26,6 @@ import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.Server;
-import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.stat.MonStatisticsAnalyzer;
 import com.athena.meerkat.controller.web.resources.services.ServerService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
@@ -41,15 +40,15 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
  */
 @Controller
 @RequestMapping("/monitor/server")
-public class MonDataController implements ApplicationEventPublisherAware{
+public class MonDataController implements ApplicationEventPublisherAware {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MonDataController.class);
-	
+
 	public static final String MDC_SERVER_KEY = "serverIP";
 
 	private static final String MSG_MON = "mon";
 	private static final String MSG_FS = "fs";
-	
+
 	public static final String STOMP_USER_DEST = "/queue/agents";
 
 	@Autowired
@@ -60,7 +59,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 	@Autowired
 	private TomcatInstanceService tiService;
-	
+
 	@Autowired
 	private MonStatisticsAnalyzer monAnalyzer;
 
@@ -88,13 +87,13 @@ public class MonDataController implements ApplicationEventPublisherAware{
 
 		int serverId = Integer.valueOf(initMon.get("id").toString());
 		Server dbServer = svrService.getServer(serverId);
-		
+
 		if (dbServer == null) {
 			jsonRes.setSuccess(false);
-			jsonRes.setMsg("serverId ("+ serverId +") not found.");
-			
+			jsonRes.setMsg("serverId (" + serverId + ") not found.");
+
 			LOGGER.warn("======= init. serverId ({}) not found. monitoring denied.", serverId);
-			
+
 			return jsonRes;
 		}
 
@@ -103,20 +102,19 @@ public class MonDataController implements ApplicationEventPublisherAware{
 		try {
 			PropertyUtils.copyProperties(dbServer, initMon);
 			dbServer.setAgentInstalled(true);
-	
+
 			svrService.save(dbServer);
-	
+
 			LOGGER.info("init saved. ---------------- {}", serverId);
-	
+
 			jsonRes.setData(tiService.findInstanceConfigs(serverId));
-		
+
 		} finally {
 			MDC.remove(MDC_SERVER_KEY);
 		}
 
 		return jsonRes;
 	}
-	
 
 	@MessageMapping("/monitor/create")
 	@SendToUser(STOMP_USER_DEST)
@@ -125,28 +123,27 @@ public class MonDataController implements ApplicationEventPublisherAware{
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_MON);
 
 		List<MonData> monDatas = copyProperties(datas);
-		
+
 		boolean mdcEnable = monDatas != null && monDatas.size() > 0;
 		if (mdcEnable) {
 			mdcEnable = true;
-			
+
 			Server server = svrService.getServer(monDatas.get(0).getServerId());
 			String serverIP = server.getSshIPAddr();
-			if(StringUtils.isEmpty(serverIP)) {
+			if (StringUtils.isEmpty(serverIP)) {
 				LOGGER.warn("=============== server IP is empty. serverId : {}", monDatas.get(0).getServerId());
 			}
-			
-			
+
 			MDC.put(MDC_SERVER_KEY, serverIP);
 		}
-		
+
 		try {
 			service.insertMonDatas(monDatas);
-			
+
 			monAnalyzer.analyze(monDatas);
-			
+
 			LOGGER.info("saved.");
-		
+
 		} finally {
 			if (mdcEnable) {
 				MDC.remove(MDC_SERVER_KEY);
@@ -163,19 +160,19 @@ public class MonDataController implements ApplicationEventPublisherAware{
 		SimpleJsonResponse jsonRes = new SimpleJsonResponse(MSG_FS);
 
 		List<MonFs> monFsList = copyFSProperties(datas);
-		
+
 		boolean mdcEnable = monFsList != null && monFsList.size() > 0;
 		if (mdcEnable) {
 			mdcEnable = true;
-			
+
 			Server server = svrService.getServer(monFsList.get(0).getServerId());
-			
+
 			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
 		}
 
-		try{
+		try {
 			service.saveMonFsList(monFsList);
-	
+
 			monAnalyzer.analyze(monFsList);
 			LOGGER.info("saved. fs.");
 		} finally {
@@ -366,7 +363,7 @@ public class MonDataController implements ApplicationEventPublisherAware{
 	@Override
 	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
 // end of MonDataController.java
