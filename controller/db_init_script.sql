@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 192.168.0.153    Database: athena_meerkat
+-- Host: 192.168.0.87    Database: athena_meerkat_trystack
 -- ------------------------------------------------------
--- Server version	5.5.47-MariaDB
+-- Server version	5.5.44-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -97,7 +97,7 @@ CREATE TABLE `common_code` (
 
 LOCK TABLES `common_code` WRITE;
 /*!40000 ALTER TABLE `common_code` DISABLE KEYS */;
-INSERT INTO `common_code` VALUES (1,'dbType','MySQL',1,'Datasource Type','N'),(2,'dbType','Oracle',2,NULL,'N'),(3,'configFileType','server.xml',1,'설정파일 Type','N'),(4,'configFileType','context.xml',2,NULL,'N'),(5,'TS_STATE','not installed',1,'톰캣instance 상태','N'),(6,'TS_STATE','installed',2,NULL,'N'),(7,'TS_STATE','stop',3,NULL,'N'),(8,'TS_STATE','running',4,NULL,'N'),(9,'tever','apache-tomcat-7.0.68',2,'Tomcat Engine Version, 반드시 download url 에 사용될 zip file name 을 사용해야함.','N'),(10,'SESSION_GROUP_TYPE','Infinispan',1,NULL,'N'),(11,'SESSION_GROUP_TYPE','Couchbase',2,NULL,'N'),(12,'tever','apache-tomcat-6.0.45',1,NULL,'N'),(13,'tever','apache-tomcat-8.0.36',3,NULL,'N'),(14,'TS_STATE','starting',5,NULL,'N'),(15,'TS_STATE','stopping',6,NULL,'N'),(16,'ALERT_THRESHOLD_OPERATOR','Greater than (>)',1,NULL,'N'),(17,'ALERT_THRESHOLD_OPERATOR','Less than (<)',2,NULL,'N'),(18,'ALERT_ITEM','Memory Usage',1,NULL,'N'),(19,'ALERT_ITEM','CPU Usage',2,NULL,'N'),(20,'ALERT_ITEM','Disk Usage',3,NULL,'N'),(21,'ALERT_ITEM','Agent Running',4,NULL,'N'),(100,'TASK','Tomcat Instance 설치',1,'task code','N'),(101,'TASK','Application(war) 배포',2,NULL,'N'),(102,'TASK','server.xml 수정',3,NULL,'N'),(103,'TASK','context.xml 수정',4,NULL,'N'),(104,'TASK','Tomcat 설정 수정',5,NULL,'N'),(105,'TASK','Application(war) 삭제',6,NULL,'N'),(106,'TASK','MySQL JDBC Driver 설치',7,NULL,'N'),(107,'TASK','Tomcat Instance 삭제',8,NULL,'N');
+INSERT INTO `common_code` VALUES (1,'dbType','MySQL',1,'Datasource Type','N'),(2,'dbType','Oracle',2,NULL,'N'),(3,'configFileType','server.xml',1,'설정파일 Type','N'),(4,'configFileType','context.xml',2,NULL,'N'),(5,'TS_STATE','not installed',1,'톰캣instance 상태','N'),(6,'TS_STATE','installed',2,NULL,'N'),(7,'TS_STATE','stop',3,NULL,'N'),(8,'TS_STATE','running',4,NULL,'N'),(9,'tever','apache-tomcat-7.0.68',2,'Tomcat Engine Version, 반드시 download url 에 사용될 zip file name 을 사용해야함.','N'),(10,'SESSION_GROUP_TYPE','Infinispan',1,NULL,'N'),(11,'SESSION_GROUP_TYPE','Couchbase',2,NULL,'N'),(12,'tever','apache-tomcat-6.0.45',1,NULL,'N'),(13,'tever','apache-tomcat-8.0.36',3,NULL,'N'),(14,'TS_STATE','starting',5,NULL,'N'),(15,'TS_STATE','stopping',6,NULL,'N'),(16,'ALERT_THRESHOLD_OPERATOR','Greater than (>)',1,NULL,'N'),(17,'ALERT_THRESHOLD_OPERATOR','Less than (<)',2,NULL,'N'),(18,'ALERT_ITEM','Memory Usage',1,NULL,'N'),(19,'ALERT_ITEM','CPU Usage',2,NULL,'N'),(20,'ALERT_ITEM','Disk Usage',3,NULL,'N'),(21,'ALERT_ITEM','Agent Running',4,NULL,'N'),(100,'TASK','Tomcat Instance 설치',1,'task code','N'),(101,'TASK','Application(war) 배포',2,NULL,'N'),(102,'TASK','server.xml 수정',3,NULL,'N'),(103,'TASK','context.xml 수정',4,NULL,'N'),(104,'TASK','Tomcat 설정 수정',5,NULL,'N'),(105,'TASK','Application(war) 삭제',6,NULL,'N'),(106,'TASK','MySQL JDBC Driver 설치',7,NULL,'N'),(107,'TASK','Tomcat Instance 삭제',8,NULL,'N'),(108,'TASK','Datasource 추가',9,NULL,'N'),(109,'TASK','Datasource 삭제',10,NULL,'N'),(112,'TASK','Agent 재설치',13,NULL,'N');
 /*!40000 ALTER TABLE `common_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +154,7 @@ CREATE TABLE `datagrid_server_group` (
 
 LOCK TABLES `datagrid_server_group` WRITE;
 /*!40000 ALTER TABLE `datagrid_server_group` DISABLE KEYS */;
+INSERT INTO `datagrid_server_group` VALUES (5,'Frontend Session Group',10),(6,'API Session Group',10);
 /*!40000 ALTER TABLE `datagrid_server_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +214,7 @@ CREATE TABLE `domain_tomcat_configuration` (
   PRIMARY KEY (`Id`,`domain_id`),
   KEY `fk_domain_tomcat_configuration_tomcat_domain1_idx` (`domain_id`),
   CONSTRAINT `fk_domain_tomcat_configuration_tomcat_domain1` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +223,7 @@ CREATE TABLE `domain_tomcat_configuration` (
 
 LOCK TABLES `domain_tomcat_configuration` WRITE;
 /*!40000 ALTER TABLE `domain_tomcat_configuration` DISABLE KEYS */;
-INSERT INTO `domain_tomcat_configuration` VALUES (2,129,'/usr/java/jdk1.8.0_91/','/home/meerkat/servers/apache-tomcat-8.0.36','/home/meerkat/apps/instance1',8081,30,8009,0,'\0',8225,8226,'export CATALINA_OPTS=\"-server -Xms512m -Xmx512m\"',23,'2016-06-29 04:44:23',13,'UTF-8',8005);
+INSERT INTO `domain_tomcat_configuration` VALUES (1,128,'/usr/java/jdk1.8.0_91','/home/centos/servers/apache-tomcat-8.0.36','/home/centos/apps/instance1',8080,30,8009,0,'\0',8225,8226,'export CATALINA_OPTS=\"-server -Xms512m -Xmx512m\"',23,'2016-06-29 13:21:02',13,'UTF-8',8005);
 /*!40000 ALTER TABLE `domain_tomcat_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +248,7 @@ CREATE TABLE `mon_alert_config` (
   KEY `fk_tomcat_domain_alert_server1_idx` (`server_Id`),
   CONSTRAINT `fk_tomcat_domain_alert_tomcat_domain2` FOREIGN KEY (`tomcat_domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_domain_alert_server1` FOREIGN KEY (`server_Id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +257,7 @@ CREATE TABLE `mon_alert_config` (
 
 LOCK TABLES `mon_alert_config` WRITE;
 /*!40000 ALTER TABLE `mon_alert_config` DISABLE KEYS */;
-INSERT INTO `mon_alert_config` VALUES (1,NULL,32,18,16,80,0,'cpu.used_per'),(2,NULL,32,19,16,80,0,'mem.used_per'),(3,NULL,32,20,16,80,0,NULL),(4,NULL,32,21,0,NULL,1,NULL),(7,129,NULL,18,16,80,0,'cpu.used_per'),(8,129,NULL,19,16,80,0,'mem.used_per');
+INSERT INTO `mon_alert_config` VALUES (1,NULL,32,18,16,80,0,'cpu.used_per'),(2,NULL,32,19,16,80,0,'mem.used_per'),(3,NULL,32,20,16,80,0,NULL),(4,NULL,32,21,0,NULL,1,NULL),(5,128,NULL,18,16,80,0,'cpu.used_per'),(6,128,NULL,19,16,80,0,'mem.used_per');
 /*!40000 ALTER TABLE `mon_alert_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +444,7 @@ CREATE TABLE `server` (
 
 LOCK TABLES `server` WRITE;
 /*!40000 ALTER TABLE `server` DISABLE KEYS */;
-INSERT INTO `server` VALUES (32,'192.168.0.153',NULL,0,NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,'\0',NULL,0,NULL,0,NULL,22,22,'');
+INSERT INTO `server` VALUES (32,'Local test',NULL,0,NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,'\0',NULL,0,NULL,0,NULL,22,22,'\0');
 /*!40000 ALTER TABLE `server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,7 +490,7 @@ CREATE TABLE `task_history` (
   `create_user_id` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -498,7 +499,7 @@ CREATE TABLE `task_history` (
 
 LOCK TABLES `task_history` WRITE;
 /*!40000 ALTER TABLE `task_history` DISABLE KEYS */;
-INSERT INTO `task_history` VALUES (12,100,23,'2016-06-29 04:33:29'),(13,100,23,'2016-06-29 04:44:34'),(14,101,23,'2016-06-29 05:30:10'),(15,107,23,'2016-06-29 05:52:32'),(16,107,23,'2016-06-29 05:52:32');
+INSERT INTO `task_history` VALUES (12,100,23,'2016-06-29 13:21:36');
 /*!40000 ALTER TABLE `task_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,7 +526,7 @@ CREATE TABLE `task_history_detail` (
   KEY `fk_task_history_domain_task_history1_idx` (`task_history_id`),
   KEY `idx_domain_id_instance_id` (`tomcat_domain_id`,`tomcat_instance_id`),
   CONSTRAINT `fk_task_history_domain_task_history1` FOREIGN KEY (`task_history_id`) REFERENCES `task_history` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -534,7 +535,7 @@ CREATE TABLE `task_history_detail` (
 
 LOCK TABLES `task_history_detail` WRITE;
 /*!40000 ALTER TABLE `task_history_detail` DISABLE KEYS */;
-INSERT INTO `task_history_detail` VALUES (1,12,128,91,NULL,'Tomcat 1',NULL,'192.168.0.153',3,'/home/centos/.aMeerkat/jobs/192.168.0.153/3/build.log','2016-06-29 04:41:15'),(2,13,129,NULL,NULL,'Tomcat 1',NULL,'192.168.0.153',2,'/home/centos/.aMeerkat/jobs/192.168.0.153/5/build.log','2016-06-29 04:52:13'),(3,14,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',0,NULL,NULL),(4,15,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',3,'/home/centos/.aMeerkat/jobs/192.168.0.153/9/build.log','2016-06-29 05:52:32'),(5,16,129,NULL,'Domain 1','Tomcat 1',NULL,'192.168.0.153',0,NULL,NULL);
+INSERT INTO `task_history_detail` VALUES (1,12,128,91,NULL,'Test Tomcat',NULL,'192.168.0.153',3,'D:\\git\\athena-meerkat\\_test\\.aMeerkat\\jobs\\192.168.0.153\\1\\build.log','2016-06-29 13:21:43');
 /*!40000 ALTER TABLE `task_history_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -562,7 +563,7 @@ CREATE TABLE `tomcat_application` (
   KEY `fk_domain_application_tomcat_instance1_idx` (`tomcat_instance_id`),
   CONSTRAINT `fk_domain_application_tomcat_domain1` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_domain_application_tomcat_instance1` FOREIGN KEY (`tomcat_instance_id`) REFERENCES `tomcat_instance` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -571,7 +572,6 @@ CREATE TABLE `tomcat_application` (
 
 LOCK TABLES `tomcat_application` WRITE;
 /*!40000 ALTER TABLE `tomcat_application` DISABLE KEYS */;
-INSERT INTO `tomcat_application` VALUES (1,'/test',0,'2016-06-29 05:30:10',NULL,'conffiles/129_null/test.war','2016-06-29 05:30:10',129,NULL,0);
 /*!40000 ALTER TABLE `tomcat_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -599,7 +599,7 @@ CREATE TABLE `tomcat_config_file` (
   CONSTRAINT `fk_server_xml_domain10` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_config_file_tomcat_instance1` FOREIGN KEY (`tomcat_instance_id`) REFERENCES `tomcat_instance` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_config_file_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -608,7 +608,7 @@ CREATE TABLE `tomcat_config_file` (
 
 LOCK TABLES `tomcat_config_file` WRITE;
 /*!40000 ALTER TABLE `tomcat_config_file` DISABLE KEYS */;
-INSERT INTO `tomcat_config_file` VALUES (3,129,3,1,NULL,'conffiles/129_null/server_1.xml','2016-06-29 04:44:23',NULL,23),(4,129,4,1,NULL,'conffiles/129_null/context_1.xml','2016-06-29 04:44:23',NULL,23);
+INSERT INTO `tomcat_config_file` VALUES (1,128,3,1,NULL,'conffiles\\128_null\\server_1.xml','2016-06-29 13:21:02',NULL,23),(2,128,4,1,NULL,'conffiles\\128_null\\context_1.xml','2016-06-29 13:21:02',NULL,23);
 /*!40000 ALTER TABLE `tomcat_config_file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -629,7 +629,7 @@ CREATE TABLE `tomcat_domain` (
   KEY `fk_tomcat_domain_user1_idx` (`create_user_id`),
   CONSTRAINT `datagrid_server_group` FOREIGN KEY (`datagrid_server_group_id`) REFERENCES `datagrid_server_group` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tomcat_domain_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -638,7 +638,7 @@ CREATE TABLE `tomcat_domain` (
 
 LOCK TABLES `tomcat_domain` WRITE;
 /*!40000 ALTER TABLE `tomcat_domain` DISABLE KEYS */;
-INSERT INTO `tomcat_domain` VALUES (129,'Domain 1',NULL,23);
+INSERT INTO `tomcat_domain` VALUES (128,'Domain 1',NULL,23);
 /*!40000 ALTER TABLE `tomcat_domain` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -687,7 +687,7 @@ CREATE TABLE `tomcat_domain_datasource` (
   KEY `fk_tomcat_datasource_tomcat_domain1_idx` (`tomcat_domain_id`),
   CONSTRAINT `fk_tomcat_datasource_tomcat_domain1` FOREIGN KEY (`tomcat_domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `td_datasource_fk` FOREIGN KEY (`datasource_id`) REFERENCES `data_source` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=euckr COLLATE=euckr_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -696,7 +696,7 @@ CREATE TABLE `tomcat_domain_datasource` (
 
 LOCK TABLES `tomcat_domain_datasource` WRITE;
 /*!40000 ALTER TABLE `tomcat_domain_datasource` DISABLE KEYS */;
-INSERT INTO `tomcat_domain_datasource` VALUES (2,1,129);
+INSERT INTO `tomcat_domain_datasource` VALUES (1,1,128);
 /*!40000 ALTER TABLE `tomcat_domain_datasource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -755,7 +755,7 @@ CREATE TABLE `tomcat_instance` (
   CONSTRAINT `fk_tomcat_instance_user1` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tomcat_domain_fk` FOREIGN KEY (`domain_id`) REFERENCES `tomcat_domain` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tomcat_server_fk` FOREIGN KEY (`server_id`) REFERENCES `server` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -764,6 +764,7 @@ CREATE TABLE `tomcat_instance` (
 
 LOCK TABLES `tomcat_instance` WRITE;
 /*!40000 ALTER TABLE `tomcat_instance` DISABLE KEYS */;
+INSERT INTO `tomcat_instance` VALUES (91,128,32,5,'Test Tomcat',NULL,'2016-06-29 13:21:36',23,12);
 /*!40000 ALTER TABLE `tomcat_instance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,4 +860,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-29 14:53:40
+-- Dump completed on 2016-06-29 15:47:27
