@@ -225,8 +225,7 @@ public class TomcatDomainService {
 		/*
 		 * save server.xml & context.xml
 		 */
-		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, conf.getTomcatVersionCd());
-		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion, conf);
+		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), conf.getTomcatVersionCd(), conf);
 
 		/*
 		 * save default alert config.

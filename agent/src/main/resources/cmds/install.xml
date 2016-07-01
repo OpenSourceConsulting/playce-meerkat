@@ -32,7 +32,7 @@
 
 		<echo message="create ${catalina.base}" />
 
-		<cargo containerId="tomcat7x" action="configure">
+		<cargo containerId="tomcat${tomcat.major.ver}x" action="configure">
 			<zipUrlInstaller 
 					installUrl="${tomcat.down.url}/${tomcat.name}.zip" 
 					downloadDir="${down.dir}" 
@@ -64,8 +64,8 @@
 		
 		<fail if="exist.instance" message="already exist ${catalina.base}"/>
 
-		<echo message="downloading catalina-jmx-remote-7.0.68.jar" />
-		<get src="${tomcat.down.url}/catalina-jmx-remote-7.0.68.jar" dest="${catalina.home}/lib"/>
+		<echo message="downloading catalina-jmx-remote-${tomcat.full.ver}.jar" />
+		<get src="${tomcat.down.url}/catalina-jmx-remote-${tomcat.full.ver}.jar" dest="${catalina.home}/lib"/>
 
 		<copy todir="${catalina.base}" verbose="true" description="copy start/stop script.">
 		    <fileset dir="${meerkat.agent.home}/scripts" defaultexcludes="true">

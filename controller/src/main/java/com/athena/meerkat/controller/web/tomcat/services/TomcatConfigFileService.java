@@ -17,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.common.tomcat.TomcatVersionsProperties;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
@@ -62,6 +63,9 @@ public class TomcatConfigFileService {
 
 	@Value("${meerkat.config.dir:conffiles}")
 	private String configFileDir;
+	
+	@Autowired
+	protected TomcatVersionsProperties tomcatVerProps;
 
 	public List<TomcatConfigFile> getConfigFileVersions(int domainId, String type) {
 		CommonCode codeValue = commonRepo.findByCodeNm(type);
@@ -205,24 +209,24 @@ public class TomcatConfigFileService {
 	 * @param domainId
 	 * @param tomcatVersion
 	 */
-	public void saveNewTomcatConfigFiles(int domainId, String tomcatVersion, DomainTomcatConfiguration conf) {
-		TomcatConfigFile serverXml = createNewTomcatConfigFile(tomcatVersion, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
+	public void saveNewTomcatConfigFiles(int domainId, int tomcatVersionCd, DomainTomcatConfiguration conf) {
+		TomcatConfigFile serverXml = createNewTomcatConfigFile(tomcatVersionCd, MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD);
 		serverXml.setDominaId(domainId);
 
-		TomcatConfigFile contextXml = createNewTomcatConfigFile(tomcatVersion, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
+		TomcatConfigFile contextXml = createNewTomcatConfigFile(tomcatVersionCd, MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD);
 		contextXml.setDominaId(domainId);
 
 		saveConfigXmlFile(serverXml, conf);
 		saveConfigXmlFile(contextXml, conf);
 	}
 
-	private TomcatConfigFile createNewTomcatConfigFile(String tomcatVersion, int fileTypeCdId) {
+	private TomcatConfigFile createNewTomcatConfigFile(int tomcatVersionCd, int fileTypeCdId) {
 		TomcatConfigFile tcFile = new TomcatConfigFile();
 
 		try {
 			tcFile.setFileTypeCdId(fileTypeCdId);
 			tcFile.setVersion(1);
-			tcFile.setContent(readNewConfigFile(tomcatVersion, fileTypeCdId));
+			tcFile.setContent(readNewConfigFile(tomcatVersionCd, fileTypeCdId));
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -231,17 +235,15 @@ public class TomcatConfigFileService {
 		return tcFile;
 	}
 
-	private String readNewConfigFile(String tomcatVersion, int fileTypeCdId) throws IOException {
+	private String readNewConfigFile(int tomcatVersionCd, int fileTypeCdId) throws IOException {
 
-		String fileName = getFileTypeName(fileTypeCdId, 0);
+		int tomcatMajorVersion = tomcatVerProps.getTomcatMajorVersion(tomcatVersionCd);
+		
+		String fileName = getFileTypeName(fileTypeCdId, tomcatMajorVersion);
 
 		Resource file = resourceLoader.getResource("classpath:/tomcatconfigs/" + fileName);
 		
 		String contents = FileUtils.readFileToString(file.getFile(), MeerkatConstants.UTF8);
-		
-		if(MeerkatConstants.CONFIG_FILE_TYPE_SERVER_XML_CD == fileTypeCdId && getMajorVersion(tomcatVersion) == 8) {
-			return contents.replace("<Listener className=\"org.apache.catalina.core.JasperListener\" />", "");
-		}
 
 		return contents;
 	}
@@ -252,31 +254,25 @@ public class TomcatConfigFileService {
 	 * </pre>
 	 * 
 	 * @param fileTypeCdId
-	 * @param version
+	 * @param tomcatMajorVersion
 	 * @return
 	 */
-	public String getFileTypeName(int fileTypeCdId, int version) {
+	public String getFileTypeName(int fileTypeCdId, int tomcatMajorVersion) {
 		
-		//int version = getMajorVersion(tomcatVersion);
+		
 		String fileName = codeHandler.getFileTypeName(fileTypeCdId);// server.xml or context.xml
 
-		if (version == 0) {
+		if (tomcatMajorVersion == 0 || MeerkatConstants.CONFIG_FILE_TYPE_CONTEXT_XML_CD == fileTypeCdId) {
 			return fileName;
 		}
 
 		int pos = fileName.lastIndexOf(".");
 
 		if (pos > -1) {
-			return fileName.substring(0, pos) + "_" + version + fileName.substring(pos);// e.g. "server" + "_" + version + ".xml"
+			return fileName.substring(0, pos) + tomcatMajorVersion + fileName.substring(pos);// e.g. "server" + version + ".xml"
 		}
 
-		return fileName + "_" + version;
-	}
-	
-	public static int getMajorVersion(String tomcatVersion) {
-		int majorVersion = Integer.parseInt(tomcatVersion.substring(14, 15));
-		
-		return majorVersion;
+		return fileName + "_" + tomcatMajorVersion;
 	}
 
 	public String getDomainFilePath(int domainId, TomcatInstance ti) {
