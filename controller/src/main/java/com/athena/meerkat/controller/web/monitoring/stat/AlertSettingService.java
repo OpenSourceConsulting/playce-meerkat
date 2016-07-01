@@ -29,9 +29,9 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.athena.meerkat.common.util.JSONUtil;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.FileHandler;
-import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;

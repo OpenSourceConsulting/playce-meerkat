@@ -1,3 +1,4 @@
+package com.athena.meerkat.common;
 /* 
  * Copyright (C) 2012-2015 Open Source Consulting, Inc. All rights reserved by Open Source Consulting, Inc.
  *
@@ -20,23 +21,26 @@
  * ---------------	----------------	------------
  * BongJin Kwon		2016. 3. 22.		First Draft.
  */
-package com.athena.meerkat.agent;
+
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan(basePackages = { "com.athena.meerkat" })
-@EnableScheduling
-public class AgentMain {
+@SpringBootApplication
+@PropertySource(value = { "classpath:meerkat-test.properties" })
+public class CommonTestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AgentMain.class, args);
+		/*
+		SpringApplication application = new SpringApplication(
+				CommonTestApplication.class);
+		application.setApplicationContextClass(AnnotationConfigApplicationContext.class);
+		*/
+		SpringApplication.run(CommonTestApplication.class, args);
+		//SpringApplication.run(CommonTestApplication.class, args);
 	}
 
 }

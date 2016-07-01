@@ -34,6 +34,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.athena.meerkat</groupId>
+			<artifactId>athena-meerkat-common</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
         
 		<dependency>
 			<groupId>org.influxdb</groupId>
@@ -149,6 +155,7 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<resources>
@@ -196,7 +203,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.10</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -213,7 +219,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.5.3</version>
 				<configuration>
 					<descriptors>
 						<descriptor>/src/main/assembly/bin.xml</descriptor>

@@ -18,25 +18,28 @@
  * Revision History
  * Author			Date				Description
  * ---------------	----------------	------------
- * BongJin Kwon		2016. 4. 22.		First Draft.
+ * BongJin Kwon		2016. 6. 30.		First Draft.
  */
-package com.athena.meerkat.controller.web.provisioning.xml;
+package com.athena.meerkat.common.tomcat;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.core.io.DefaultResourceLoader;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.athena.meerkat.controller.web.entities.DataSource;
+import com.athena.meerkat.common.CommonTestApplication;
 
-public class ContextXmlHandlerTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration( classes = {CommonTestApplication.class})
+public class TomcatVersionsPropertiesTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -53,30 +56,24 @@ public class ContextXmlHandlerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Autowired
+	ApplicationContext ctx;
+	
+	@Autowired
+	TomcatVersionsProperties tomcatVerProps;
+	
+	@Test
+	public void testContextLoads() throws Exception {
+		assertNotNull(this.ctx);
+		assertTrue(this.ctx.containsBean("tomcatVersionsProperties"));
+	}
 
 	@Test
-	public void testUpdateDatasource() {
-		
-		DefaultResourceLoader resLoader = new DefaultResourceLoader();
-		
-		try{
-			//String file = ContextXmlHandlerTest.class.getResource("context_3.xml").getFile();
-			String file = resLoader.getResource("file:src/test/resources/context_3.xml").getFile().getAbsolutePath();
-			System.out.println(file);
-			//ContextXmlHandler xmlHandler = new ContextXmlHandler(file);
-			
-			List<DataSource> dsList = new ArrayList<DataSource>();
-			DataSource ds = new DataSource();
-			ds.setName("ddddd");
-			dsList.add(ds);
-			
-			//xmlHandler.updateDatasource(dsList);
-		
-		}catch(Exception e) {
-			fail(e.toString());
-			
-		}
+	public void testGetTomcatJmxThreadMap() {
+		System.out.println(tomcatVerProps.getTomcatThreadAttr(8));
+		System.out.println(tomcatVerProps.getDBCPMaxActive(8));
 	}
 
 }
-//end of ContextXmlHandlerTest.java
+//end of TomcatVersionsPropertiesTest.java

@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.common.util;
+package com.athena.meerkat.common.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -48,6 +49,15 @@ public abstract class JSONUtil {
 			throw new RuntimeException(ex);
 		}
 
+	}
+	
+	public static <T> T jsonToObj(String json, TypeReference<T> typeRef) {
+
+		try {
+			return MAPPER.readValue(json, typeRef);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 
 	}
 

@@ -11,7 +11,6 @@
 		<project.build.compile.version>1.7</project.build.compile.version>
 		<project.build.source.version>1.7</project.build.source.version>
 		<project.build.target.version>1.7</project.build.target.version>
-		<apache.ant.artifact.version>1.9.2</apache.ant.artifact.version>
 	</properties>
 
 	<!-- Inherit defaults from Spring Boot -->
@@ -162,6 +161,17 @@
 		  	<artifactId>groovy-all</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.athena.meerkat</groupId>
+			<artifactId>athena-meerkat-common</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -180,7 +190,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.athena.dolly.controller.DollyBoot</mainClass>
+					<mainClass>com.athena.meerkat.controller.MeerkatBoot</mainClass>
 					<layout>ZIP</layout>
 				</configuration>
 			</plugin>

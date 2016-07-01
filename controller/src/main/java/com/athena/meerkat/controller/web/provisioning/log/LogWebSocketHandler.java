@@ -22,9 +22,6 @@
  */
 package com.athena.meerkat.controller.web.provisioning.log;
 
-import java.io.File;
-
-import org.apache.commons.io.input.Tailer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +31,9 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.common.util.JSONUtil;
+import com.athena.meerkat.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * <pre>
