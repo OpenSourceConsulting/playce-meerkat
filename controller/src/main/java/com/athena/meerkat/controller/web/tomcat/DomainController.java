@@ -221,12 +221,14 @@ public class DomainController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {
-		if (domainService.delete(domainId)) {
-			json.setMsg("Domain is deleted successfully.");
-			json.setSuccess(true);
-		} else {
+		
+		List<TomcatInstance> tomcats =  tomcatService.getTomcatListByDomainId(domainId);
+		
+		if (tomcats.size() > 0) {
 			json.setSuccess(false);
-			json.setMsg("Domain does not exist.");
+			json.setMsg("Tomcat instance가 존재합니다. <br/>Tomcat instance를 먼저 삭제한후 삭제할수 있습니다.");
+		} else {
+			domainService.delete(domainId);
 		}
 		return json;
 	}

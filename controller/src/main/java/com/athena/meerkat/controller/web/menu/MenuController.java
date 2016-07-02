@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web;
+package com.athena.meerkat.controller.web.menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
@@ -43,11 +44,8 @@ public class MenuController {
 			isLeaf = false;
 			prefixMeuId = node + "_domain_";
 			for (TomcatDomain d : domains) {
-				HashMap<String, Object> n = new HashMap<String, Object>();
-				n.put("text", d.getName());
-				n.put("id", prefixMeuId + d.getId());
-				n.put("leaf", isLeaf);
-				nodes.add(n);
+
+				nodes.add(createMenuMap(d.getName(), prefixMeuId + d.getId(), isLeaf));
 			}
 		} else if ((node.indexOf("mon_tomcats") >= 0 || node.indexOf("tomcatMng_domain") >= 0) && node.indexOf("_domain_") > 0) {
 			Integer objId = Integer.parseInt(node.substring(node.indexOf("_domain_") + "_domain_".length()));
@@ -56,11 +54,11 @@ public class MenuController {
 			prefixMeuId = node + "_tomcat_";
 			tomcats = tomcatService.getTomcatListByDomainId(objId);
 			for (TomcatInstance t : tomcats) {
-				HashMap<String, Object> n = new HashMap<String, Object>();
-				n.put("text", t.getName());
-				n.put("id", prefixMeuId + t.getId());
-				n.put("leaf", isLeaf);
-				nodes.add(n);
+				
+				DomainTomcatConfiguration domainConfig = tomcatService.getTomcatConfig(t.getId());
+				
+				String menuText = t.getName() + "(" + domainConfig.getHttpPort()  + ")";
+				nodes.add(createMenuMap(menuText, prefixMeuId + t.getId(), isLeaf));
 			}
 		} else if (node.equals("mon_servers")) {
 			List<Server> servers = new ArrayList<>();
@@ -68,11 +66,8 @@ public class MenuController {
 			prefixMeuId = node + "_server_";
 			servers = serverService.getList();
 			for (Server s : servers) {
-				HashMap<String, Object> n = new HashMap<String, Object>();
-				n.put("text", s.getName());
-				n.put("id", prefixMeuId + s.getId());
-				n.put("leaf", isLeaf);
-				nodes.add(n);
+
+				nodes.add(createMenuMap(s.getName(), prefixMeuId + s.getId(), isLeaf));
 			}
 		} else {
 
@@ -81,4 +76,12 @@ public class MenuController {
 		return nodes;
 	}
 	
+	private HashMap<String, Object> createMenuMap(String text, String menuId, boolean isLeaf) {
+		HashMap<String, Object> n = new HashMap<String, Object>();
+		n.put("text", text);
+		n.put("id", menuId);
+		n.put("leaf", isLeaf);
+		
+		return n;
+	}
 }

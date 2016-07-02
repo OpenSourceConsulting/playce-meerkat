@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web;
+package com.athena.meerkat.controller.web.dashboard;
 
 import java.util.ArrayList;
 import java.util.Date;

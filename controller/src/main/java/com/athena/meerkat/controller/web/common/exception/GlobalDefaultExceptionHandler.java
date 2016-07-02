@@ -1,4 +1,4 @@
-package com.athena.meerkat.controller.web.exception;
+package com.athena.meerkat.controller.web.common.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
