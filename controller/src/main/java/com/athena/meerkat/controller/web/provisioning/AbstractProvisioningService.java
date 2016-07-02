@@ -293,6 +293,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 			targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
 			targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
 			targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
+			targetProps.setProperty("am.ssion.timeout", 	String.valueOf(tomcatConfig.getSessionTimeout()));
 		}
 		
 

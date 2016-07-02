@@ -88,8 +88,16 @@
 		     <entry key="am.ajp.port"    	value="${am.ajp.port}" 		operation="${am.conf.op}" />
 			 <entry key="am.rmi.registry.port"  value="${am.rmi.registry.port}" operation="${am.conf.op}" />
 			 <entry key="am.rmi.server.port" 	value="${am.rmi.server.port}" 	operation="${am.conf.op}" />
+			 <entry key="am.session.timeout" 	value="${am.ssion.timeout}" 	operation="${am.conf.op}" />
 		</propertyfile>
 
+		<property name="match1" >(&lt;session-timeout&gt;)30(&lt;/session-timeout&gt;)</property>
+		<property name="replace1" >\1${am.session.timeout}\2</property>
+		
+		<echo message="updating ${catalina.base}/conf/web.xml" />
+		<replaceregexp file="${catalina.base}/conf/web.xml" match="${match1}" replace="${replace1}" byline="true" />
+		
 	</target>
+
 
 </project>
