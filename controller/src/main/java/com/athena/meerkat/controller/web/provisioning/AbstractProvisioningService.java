@@ -54,6 +54,7 @@ import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.SshAccount;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.log.LogTailerListener;
 import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
 import com.athena.meerkat.controller.web.resources.services.DataGridServerGroupService;
@@ -100,6 +101,9 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	
 	@Value("${meerkat.agent.file.name:athena-meerkat-agent-1.0.0-SNAPSHOT}")
 	private String agentFileName;// 확장자 제외 파일명.
+	
+	@Value("${meerkat.dolly.jar.name}")
+	private String dollyAgentJarName;
 	
 	protected File commanderDir;
 	
@@ -252,6 +256,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	 */
 	protected File generateBuildProperties(ProvisionModel pModel, WebSocketSession session) {
 
+		TomcatInstance tomcatInstance = pModel.getTomcatInstance();
 		DomainTomcatConfiguration tomcatConfig = pModel.getTomcatConfig();
 		List<TomcatConfigFile> confFiles = pModel.getConfFiles();
 
@@ -280,6 +285,10 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 		targetProps.setProperty("agent.name", 		agentFileName);
 		targetProps.setProperty("server.ant.home", 	agentDeployDir + "/" + agentFileName + "/apache-ant-1.9.6");
 		targetProps.setProperty("tomcat.down.url", 	tomcatDownUrl);
+		
+		if (tomcatInstance != null) {
+			targetProps.setProperty("tomcat.instance.name",	tomcatInstance.getName());
+		}
 		
 		if (tomcatConfig != null) {
 			targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
@@ -550,7 +559,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	}
 	
 	protected void addDollyDefaultProperties(ProvisionModel pModel, int sessionGroupId) {
-		pModel.addProps("dolly.jar.name", "core-1.0.0-SNAPSHOT");
+		pModel.addProps("dolly.jar.name", dollyAgentJarName);
 		pModel.addProps("ant.script.file", "installDolly.xml");
 		pModel.addProps("infinispan.hotrod.server_list", dataGridGroupService.getServerListPropertyValue(sessionGroupId));
 	}

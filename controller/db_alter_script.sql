@@ -194,3 +194,8 @@ CREATE TABLE IF NOT EXISTS `mon_util_stat` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+ALTER TABLE `tomcat_domain` 
+ADD COLUMN `scouter_agent_install_path` VARCHAR(60) NULL AFTER `datagrid_server_group_id`;
+

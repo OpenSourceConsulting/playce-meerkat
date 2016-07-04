@@ -40,10 +40,15 @@ public class TomcatDomain implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int id;
+	
 	@Column(name = "name")
 	private String name;
+	
 	@Column(name = "create_user_id")
 	private int createUser;
+	
+	@Column(name = "scouter_agent_install_path")
+	private String scouterAgentInstallPath;
 
 	@Transient
 	private int latestConfVersionId;
@@ -81,6 +86,13 @@ public class TomcatDomain implements Serializable {
 	@JsonIgnore
 	private List<MonAlertConfig> monAlertConfigs;
 
+
+	/**
+	 * Constructor
+	 */
+	public TomcatDomain() {
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -95,12 +107,6 @@ public class TomcatDomain implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	/**
-	 * Constructor
-	 */
-	public TomcatDomain() {
 	}
 
 	public List<TomcatInstance> getTomcatInstances() {
@@ -225,6 +231,14 @@ public class TomcatDomain implements Serializable {
 
 	public void setMonAlertConfigs(List<MonAlertConfig> monAlertConfigs) {
 		this.monAlertConfigs = monAlertConfigs;
+	}
+
+	public String getScouterAgentInstallPath() {
+		return scouterAgentInstallPath;
+	}
+
+	public void setScouterAgentInstallPath(String scouterAgentInstallPath) {
+		this.scouterAgentInstallPath = scouterAgentInstallPath;
 	}
 
 }

@@ -1,0 +1,43 @@
+<project name="install Scouter" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# Install Scouter agent.
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+	<property name="dest.dir" value="${agent.install.path}" />
+	<property name="down.file.name" value="${scouter.jar.name}-bin.tar.gz" />
+	<property name="prop.file.name" value="${dest.dir}/scouter/agent.java/${tomcat.instance.name}.conf" />
+
+	<target name="check-exist.agent">
+		<available file="${dest.dir}/scouter/agent.java/" type="dir" property="exist.agent" />
+        <echo>exist.agent : ${exist.agent}</echo>
+    </target>
+	
+	<target name="install-agent" depends="check-exist.agent" unless="exist.agent" description="install scouter agent.">
+		<echo message="install ${down.file.name} in ${dest.dir}" />
+		<get src="${tomcat.down.url}/${down.file.name}" dest="${dest.dir}"/>
+		
+		<gunzip src="${dest.dir}/${down.file.name}" />
+		<untar src="${dest.dir}/${dolly.jar.name}-bin.tar" dest="${dest.dir}"/>
+
+		<delete file="${dest.dir}/${down.file.name}"/>
+		<delete file="${dest.dir}/${dolly.jar.name}-bin.tar"/>
+	</target>
+	
+	<target name="cmd" depends="install-agent" description="configure scouter agent.">
+		
+		<move file="${dest.dir}/${tomcat.instance.name}.conf" todir="${dest.dir}/scouter/agent.java"/>
+		
+	
+		<echo message="configure ${catalina.base}/env.sh" />
+		<echo file="${catalina.base}/env.sh" append="true">export CATALINA_OPTS="$CATALINA_OPTS -Dscouter.config=${prop.file.name}"${line.separator}</echo>
+		<echo file="${catalina.base}/env.sh" append="true">export CATALINA_OPTS="$CATALINA_OPTS -javaagent:${dest.dir}/scouter/agent.java/scouter.agent.jar"${line.separator}</echo>
+		
+	</target>
+
+
+</project>

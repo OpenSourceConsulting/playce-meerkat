@@ -1,23 +1,22 @@
-<project name="unInstall Dolly" basedir="." default="cmd">
+<project name="unInstall Scouter Agent" basedir="." default="cmd">
 	
 	<!-- 
 	#########################################
-	# UnInstall Dolly agent.
+	# UnInstall Scouter agent.
 	#########################################
 	-->
 	
 	<property file="${basedir}/build.properties" />
-		
 	
-	<!--
 	<property name="replace.file" value="${catalina.base}/env.sh" />
-	-->
+	<!--
 	<property name="replace.file" value="G://env.sh" />
+	-->
 	
-	<property name="match1" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-Ddolly\.properties=.+</property>
-	<property name="match2" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-javaagent:.+/dolly-agent/lib/.+</property>
+	<property name="match1" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-Dscouter\.config=.+</property>
+	<property name="match2" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-javaagent:.+/scouter/agent\.java/.+</property>
 
-	<target name="cmd" description="unInstall dolly agent.">
+	<target name="cmd" description="unInstall scouter agent.">
 		
 		<replaceregexp file="${replace.file}" match="${match1}" replace="" byline="true" />
 		<replaceregexp file="${replace.file}" match="${match2}" replace="" byline="true" />

@@ -8,12 +8,12 @@
 	
 	<property file="${basedir}/build.properties" />
 	
-	<property name="dest.dir" value="${agent.deploy.dir}/${agent.name}" />
+	<property name="dest.dir" value="${agent.deploy.dir}" />
 	<property name="down.file.name" value="${dolly.jar.name}-bin.tar.gz" />
 
 	<target name="cmd" description="install dolly agent.">
 		
-		<echo message="install ${down.file.name}" />
+		<echo message="install ${down.file.name} in ${dest.dir}" />
 		<get src="${tomcat.down.url}/${down.file.name}" dest="${dest.dir}"/>
 		
 		<gunzip src="${dest.dir}/${down.file.name}" />

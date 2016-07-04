@@ -75,7 +75,7 @@
 	
 	<target name="send-script" description="send other build file to server and exec">
 
-		<echo>send build.properties</echo>
+		<echo>send ${ant.script.file}</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${agent.deploy.dir}/${agent.name}/bin" trust="true" keyfile="${key.file}"
 			password="${user.passwd}">
 			<fileset dir="${basedir}" defaultexcludes="true">
@@ -110,6 +110,18 @@
 
 		<antcall target="update-server.xml"></antcall>
 		<antcall target="update-context.xml"></antcall>
+
+	</target>
+	
+	<target name="upload-files" description="upload to server">
+
+		<echo>upload ${upload.files}</echo>
+		<scp port="${server.port}" todir="${user.id}@${server.ip}:${upload.dir}" trust="true" keyfile="${key.file}"
+			password="${user.passwd}">
+			<fileset dir="${basedir}" defaultexcludes="true">
+				<include name="${upload.files}"/>
+			</fileset>
+		</scp>
 
 	</target>
 
