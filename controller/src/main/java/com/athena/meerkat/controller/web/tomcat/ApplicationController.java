@@ -51,11 +51,12 @@ public class ApplicationController {
 		} else {
 			dbApp = app;
 		}
-		TomcatApplication tApp = appService.saveFileAndData(dbApp);
-
+		
 		TaskHistory task = taskService.createTasks(app.getTomcatDomain().getId(), MeerkatConstants.TASK_CD_WAR_DEPLOY);
 
-		tApp.setTaskHistoryId(task.getId());
+		dbApp.setTaskHistoryId(task.getId());
+		TomcatApplication tApp = appService.saveFileAndData(dbApp);
+		
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("applicationId", tApp.getId());

@@ -36,6 +36,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+import com.athena.meerkat.common.tomcat.TomcatVersionsProperties;
 import com.athena.meerkat.controller.web.entities.DataSource;
 
 /**
@@ -56,8 +57,11 @@ public class ContextXmlHandler {
 
 	private String filepath;
 	
-	public ContextXmlHandler(String filepath) {
+	private TomcatVersionsProperties tomcatVersionProps;
+	
+	public ContextXmlHandler(String filepath, TomcatVersionsProperties tomcatVersionProps) {
 		this.filepath = filepath;
+		this.tomcatVersionProps = tomcatVersionProps;
 	}
 	
 	/**
@@ -66,7 +70,7 @@ public class ContextXmlHandler {
 	 * </pre>
 	 * @param dsList
 	 */
-	public void updateDatasource(List<DataSource> dsList) {
+	public void updateDatasource(List<DataSource> dsList, int tomcatVersionCd) {
 		
 		if (dsList == null || dsList.size() == 0) {
 			
@@ -75,7 +79,7 @@ public class ContextXmlHandler {
 		}
 		
 		try {
-			Document doc = changeXML(dsList);
+			Document doc = changeXML(dsList, tomcatVersionCd);
 	
 			XMLUtil.writeToFile(doc, new File(this.filepath));
 			
@@ -92,7 +96,7 @@ public class ContextXmlHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	protected Document changeXML(List<DataSource> dsList) throws Exception {
+	protected Document changeXML(List<DataSource> dsList, int tomcatVersionCd) throws Exception {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document doc = docBuilder.parse(filepath);
@@ -121,10 +125,10 @@ public class ContextXmlHandler {
 			res.setAttribute("name", 			ds.getName());
 			res.setAttribute("auth", 			"Container");
 			res.setAttribute("type", 			DS_TYPE);
-			res.setAttribute("maxActive", 		String.valueOf(ds.getMaxConnection()));
+			res.setAttribute(tomcatVersionProps.getDBCPMaxActive(tomcatVersionCd), String.valueOf(ds.getMaxConnection()));
 			res.setAttribute("maxIdle", 		String.valueOf(ds.getMaxConnectionPool()));
 			res.setAttribute("minIdle", 		String.valueOf(ds.getMinConnectionPool()));
-			res.setAttribute("maxWait", 		String.valueOf(ds.getTimeout()));
+			res.setAttribute(tomcatVersionProps.getDBCPMaxWait(tomcatVersionCd), String.valueOf(ds.getTimeout()));
 			res.setAttribute("username", 		ds.getUserName());
 			res.setAttribute("password", 		ds.getPassword());
 			res.setAttribute("driverClassName", "com.mysql.jdbc.Driver");
@@ -140,7 +144,7 @@ public class ContextXmlHandler {
 		return doc;
 	}
 	
-	public String updateDatasourceContents(List<DataSource> dsList) {
+	public String updateDatasourceContents(List<DataSource> dsList, int tomcatVersionCd) {
 		/*
 		if (dsList == null || dsList.size() == 0) {
 			
@@ -148,7 +152,7 @@ public class ContextXmlHandler {
 		}
 		*/
 		try {
-			Document doc = changeXML(dsList);
+			Document doc = changeXML(dsList, tomcatVersionCd);
 			
 			return XMLUtil.nodeToString(doc);
 			

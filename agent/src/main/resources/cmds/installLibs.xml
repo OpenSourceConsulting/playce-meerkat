@@ -12,7 +12,7 @@
 	<target name="cmd">
 		
 		<echo message="downloading ${install.jar.name}" />
-		<get src="${tomcat.down.url}/${install.jar.name}" dest="${catalina.home}/lib"/>
+		<get src="${tomcat.down.url}/${install.jar.name}" dest="${catalina.base}/shared/lib"/>
 
 	</target>
 

@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.athena.meerkat.common.tomcat.TomcatVersionsProperties;
 import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.web.common.FileHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.common.code.CommonCodeRepository;
-import com.athena.meerkat.controller.web.common.util.JSONUtil;
 import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
-import com.athena.meerkat.controller.web.entities.MonAlertConfig;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
@@ -81,6 +79,9 @@ public class TomcatDomainService {
 	private AlertSettingService alertService;
 
 	private TomcatProvisioningService provService;
+	
+	@Autowired
+	private TomcatVersionsProperties tomcatVersionsProps;
 
 	public TomcatProvisioningService getProvService() {
 		return provService;
@@ -142,15 +143,16 @@ public class TomcatDomainService {
 	@Transactional
 	public TomcatConfigFile updateContextXml(int domainId, List<DataSource> dsList) {
 
+		DomainTomcatConfiguration tomcatConfig = getTomcatConfig(domainId);
 		/*
 		 * make updated context.xml contents.
 		 */
 		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
 
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
-		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
+		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath, tomcatVersionsProps);
 
-		contextFile.setContent(contextXml.updateDatasourceContents(dsList));
+		contextFile.setContent(contextXml.updateDatasourceContents(dsList, tomcatConfig.getTomcatVersionCd()));
 
 		/*
 		 * save new version TomcatConfigFile.
@@ -174,13 +176,15 @@ public class TomcatDomainService {
 		domainDatasoureRepo.save(datasources);
 
 		int domainId = datasources.get(0).getTomcatDomainId();
+		DomainTomcatConfiguration tomcatConfig = getTomcatConfig(domainId);
+		
 		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
 		List<DataSource> dsList = getDatasources(domainId);
 
 		String contextFilePath = confFileService.getFileFullPath(contextFile);
-		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath);
+		ContextXmlHandler contextXml = new ContextXmlHandler(contextFilePath, tomcatVersionsProps);
 
-		contextXml.updateDatasource(dsList);
+		contextXml.updateDatasource(dsList, tomcatConfig.getTomcatVersionCd());
 	}
 
 	public boolean delete(int domainId) {
@@ -221,8 +225,7 @@ public class TomcatDomainService {
 		/*
 		 * save server.xml & context.xml
 		 */
-		String tomcatVersion = codeService.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, conf.getTomcatVersionCd());
-		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), tomcatVersion, conf);
+		confFileService.saveNewTomcatConfigFiles(conf.getTomcatDomain().getId(), conf.getTomcatVersionCd(), conf);
 
 		/*
 		 * save default alert config.

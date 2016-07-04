@@ -46,6 +46,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.athena.meerkat.common.tomcat.TomcatVersionsProperties;
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
@@ -106,6 +107,9 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	
 	@Autowired
 	protected TaskHistoryService taskService;
+	
+	@Autowired
+	protected TomcatVersionsProperties tomcatVerProps;
 	
 	
 
@@ -281,12 +285,15 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 			targetProps.setProperty("catalina.home", 	tomcatConfig.getCatalinaHome());
 			targetProps.setProperty("catalina.base", 	tomcatConfig.getCatalinaBase());
 			targetProps.setProperty("tomcat.name", 		getTomcatName(tomcatConfig.getTomcatVersionCd()));
+			targetProps.setProperty("tomcat.major.ver", String.valueOf(tomcatVerProps.getTomcatMajorVersion(tomcatConfig.getTomcatVersionCd())));
+			targetProps.setProperty("tomcat.full.ver",  getTomcatVersion(tomcatConfig.getTomcatVersionCd()));
 			targetProps.setProperty("am.server.port", 	String.valueOf(tomcatConfig.getServerPort()));
 			targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
 			targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
 			targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
 			targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
 			targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));
+			targetProps.setProperty("am.ssion.timeout", 	String.valueOf(tomcatConfig.getSessionTimeout()));
 		}
 		
 
@@ -509,6 +516,19 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 
 	private String getTomcatName(int tomcatVersionCd) {
 		return codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, tomcatVersionCd);
+	}
+	
+	/**
+	 * <pre>
+	 * get tomcat full version (e.g. "7.0.68")
+	 * </pre>
+	 * @param tomcatVersionCd
+	 * @return
+	 */
+	protected String getTomcatVersion(int tomcatVersionCd) {
+		
+		String tomcatName = getTomcatName(tomcatVersionCd);
+		return tomcatName.substring(tomcatName.lastIndexOf("-")+1);
 	}
 	
 	protected void initService() {
