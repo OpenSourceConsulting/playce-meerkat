@@ -114,6 +114,10 @@
 	</target>
 	
 	<target name="upload-files" description="upload to server">
+		
+		<echo>make ${upload.dir}</echo>
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+					command="mkdir ${upload.dir}" trust="true" failonerror="false" />
 
 		<echo>upload ${upload.files}</echo>
 		<scp port="${server.port}" todir="${user.id}@${server.ip}:${upload.dir}" trust="true" keyfile="${key.file}"

@@ -24,7 +24,10 @@ package com.athena.meerkat.controller.web.provisioning;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -35,10 +38,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.athena.meerkat.controller.MeerkatConstants;
+import com.athena.meerkat.controller.web.common.FileHandler;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
+import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
+import com.athena.meerkat.controller.web.provisioning.util.ScpUtil;
+import com.athena.meerkat.controller.web.provisioning.util.TargetHost;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 
@@ -65,6 +73,12 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 	@Value("${meerkat.scouter.jar.name}")
 	private String scouterAgentJarName;
 	
+	@Value("${meerkat.scouter.agent.install.path}")
+	private String scouterAgentInstallPath;
+	
+	@Autowired
+	private FileHandler fileHandler;
+	
 
 	/**
 	 * <pre>
@@ -75,15 +89,78 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 		
 	}
 	
+	/**
+	 * <pre>
+	 * 첫번째 tomcat instance 에 설치된 agent 설정파일을 가져온다.
+	 * 없으면 default 설정을 반환.
+	 * </pre>
+	 * @param domainId
+	 * @return
+	 */
+	public Map<String, String> getAgentConfig(int domainId) {
+		
+		Map<String, String> configMap = new HashMap<String, String>();
+		String scouterAgentConfigs = null;
+		
+		TomcatDomain domain = domainService.getDomain(domainId);
+		
+		List<TomcatInstance> tomcats = domain.getTomcatInstances();
+		
+		if (domain.getScouterAgentInstallPath() != null) {
+			
+			configMap.put("scouterAgentInstallPath", domain.getScouterAgentInstallPath());
+		} else {
+			configMap.put("scouterAgentInstallPath", scouterAgentInstallPath);
+		}
+		
+		if (domain.getScouterAgentInstallPath() != null && tomcats.size() > 0) {
+			
+			
+			try {
+				scouterAgentConfigs = getInstalledAgentConfig(tomcats.get(0), domain.getScouterAgentInstallPath());
+			} catch (IOException e) {
+				LOGGER.error(e.toString(), e);
+				throw new RuntimeException(e);
+			}
+			
+			configMap.put("isDefault", "false");
+			
+			
+		} else {
+			/*
+			 * default config
+			 */
+			scouterAgentConfigs = fileHandler.readFileToString("classpath:/scouterconfig/scouterAgent.conf");
+			
+			configMap.put("isDefault", "true");
+		}
+		
+		configMap.put("scouterAgentConfigs", scouterAgentConfigs);
+		
+		
+		return configMap;
+		
+	}
+	
+	public void installSingleScouterAgent(int tomcatInstanceId, String scouterAgentInstallPath, String scouterAgentConfigs, int taskHistoryId, boolean isDefault) {
+		
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		installScouterAgent(tomcatInstance.getDomainId(), scouterAgentInstallPath, scouterAgentConfigs, taskHistoryId, singleList, isDefault);
+	}
 	
 
-	public boolean installScouterAgent(int domainId, String scouterAgentInstallPath, String scouterAgentConfigs) {
+	public boolean installScouterAgent(int domainId, String scouterAgentInstallPath, String scouterAgentConfigs, int taskHistoryId, List<TomcatInstance> list, boolean isDefault) {
 
 		boolean isSuccess = true;
-		
+		/*
 		TomcatDomain domain = domainService.getDomain(domainId);
 		domain.setScouterAgentInstallPath(scouterAgentInstallPath);
 		domainService.save(domain);
+		*/
 		
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 		//List<DataSource> dsList = domainService.getDatasources(domainId);
@@ -94,7 +171,9 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 		}
 
 
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 
 		if (list != null && list.size() > 0) {
 
@@ -103,7 +182,7 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 				
 				String scouterConfigFileName = tomcatInstance.getName() + ".conf";
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null, true);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null, true);
 				pModel.setLastTask(count == list.size());
 				pModel.addProps("agent.install.path", scouterAgentInstallPath);
 				pModel.addProps("scouter.jar.name", scouterAgentJarName);
@@ -111,7 +190,7 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 				pModel.addProps("upload.dir", scouterAgentInstallPath);
 
 				
-				isSuccess = doIntallScouterAgent(pModel, scouterConfigFileName, scouterAgentConfigs) && isSuccess;
+				isSuccess = doIntallScouterAgent(pModel, scouterConfigFileName, scouterAgentConfigs, isDefault) && isSuccess;
 				count++;
 			}
 			
@@ -123,7 +202,7 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 		return isSuccess;
 	}
 
-	private boolean doIntallScouterAgent(ProvisionModel pModel, String scouterConfigFileName, String scouterAgentConfigs) {
+	private boolean doIntallScouterAgent(ProvisionModel pModel, String scouterConfigFileName, String scouterAgentConfigs, boolean isDefault) {
 
 		boolean isSuccess = true;
 		File jobDir = generateBuildProperties(pModel, null);
@@ -133,7 +212,12 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 			/*
 			 * 1. copy cmdFile with default.xml.
 			 */
-			copyCmds("installScouterAgent.xml", jobDir);
+			if (isDefault) {
+				copyCmds("installScouterAgent.xml", jobDir);
+			} else {
+				copyCmds("updateScouterAgentConfig.xml", jobDir);
+			}
+			
 			
 			/*
 			 * 2. make scouter agent configuraton file
@@ -151,11 +235,18 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 			 * 4. send cmd.xml and run cmd.xml .
 			 */
 			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
+			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
 
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			//throw new RuntimeException(e);
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
 
 		} finally {
 			LOGGER.debug(LOG_END);
@@ -166,8 +257,17 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 		return isSuccess;
 	}
 
+	public void uninstallSingleScouterAgent(int tomcatInstanceId, int taskHistoryId) {
+		
+		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
+
+		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
+		singleList.add(tomcatInstance);
+		
+		unintallScouterAgent(tomcatInstance.getDomainId(), taskHistoryId, singleList);
+	}
 	
-	public boolean unintallScouterAgent(int domainId, WebSocketSession session) {
+	public boolean unintallScouterAgent(int domainId, int taskHistoryId, List<TomcatInstance> list) {
 
 		boolean isSuccess = true;
 		
@@ -184,18 +284,20 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 			return false;
 		}
 
-		List<TomcatInstance> list = instanceService.getTomcatListByDomainId(domainId);
+		if (list == null) {
+			list = instanceService.getTomcatListByDomainId(domainId);
+		}
 
 		if (list != null && list.size() > 0) {
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
 				
-				ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null, true);
+				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null, true);
 				pModel.setLastTask(count == list.size());
 				
 		
-				isSuccess = doUnintallScouterAgent(pModel, session) && isSuccess;
+				isSuccess = doUnintallScouterAgent(pModel, null) && isSuccess;
 				count++;
 			}
 			
@@ -224,11 +326,19 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 			 * 2. send cmd.xml and run cmd.xml .
 			 */
 			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
+			
+			if (isSuccess) {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
+			} else {
+				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
+			}
 
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
-			throw new RuntimeException(e);
+			//throw new RuntimeException(e);
+			
+			updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_FAIL);
 
 		} finally {
 			LOGGER.debug(LOG_END);
@@ -242,6 +352,23 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 	private void makeAgentConfigurationFile(File jobDir, String scouterConfigFileName, String scouterAgentConfigs) throws IOException {
 		
 		FileUtils.writeStringToFile(new File(jobDir.getAbsolutePath() + File.separator + scouterConfigFileName), scouterAgentConfigs, "UTF-8");
+	}
+	
+	private String getInstalledAgentConfig(TomcatInstance tomcatInstance, String scouterAgentInstallPath) throws IOException{
+		
+		String downFileName = tomcatInstance.getName() + ".conf";
+		String remoteDownFile = scouterAgentInstallPath + "/scouter/agent.java/" + downFileName;
+		File todirFile = new File(commanderDir.getAbsolutePath() + File.separator + "temp");
+		
+		if (todirFile.exists() == false) {
+			todirFile.mkdir();
+			LOGGER.info("create {}", todirFile.getAbsolutePath());
+		}
+		
+		ScpUtil.download(new TargetHost(tomcatInstance.getServer()), remoteDownFile, todirFile.getAbsolutePath());
+		
+		return FileUtils.readFileToString(new File(todirFile.getAbsolutePath() + File.separator + downFileName));
+		
 	}
 
 	

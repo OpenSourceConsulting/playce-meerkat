@@ -199,3 +199,8 @@ ENGINE = InnoDB;
 ALTER TABLE `tomcat_domain` 
 ADD COLUMN `scouter_agent_install_path` VARCHAR(60) NULL AFTER `datagrid_server_group_id`;
 
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('113', 'TASK', 'Scouter Agent 설치/설정', '14', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('114', 'TASK', 'Scouter Agent 설정 제거', '15', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('115', 'TASK', 'Scouter Agent 설정 변경', '16', 'N');
+
+

@@ -50,23 +50,32 @@ public class ScouterProvisioningController {
 	private ScouterProvisioningService proviService;
 
 	
-	@RequestMapping(value = "/install/agent", method = RequestMethod.POST)
+	@RequestMapping(value = "/install/agent/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse installScouterAgent(int domainId, String scouterAgentInstallPath, String scouterAgentConfigs, int taskHistoryId) {
+	public SimpleJsonResponse installScouterAgent(@PathVariable("tomcatInstanceId") int tomcatInstanceId, String scouterAgentInstallPath, String scouterAgentConfigs, int taskHistoryId, boolean isDefault) {
 		
-		proviService.installScouterAgent(domainId, scouterAgentInstallPath, scouterAgentConfigs);
+		proviService.installSingleScouterAgent(tomcatInstanceId, scouterAgentInstallPath, scouterAgentConfigs, taskHistoryId, isDefault);
 		
 		return new SimpleJsonResponse();
 	}
 	
-	@RequestMapping(value = "/uninstall/agent", method = RequestMethod.POST)
+	@RequestMapping(value = "/uninstall/agent/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse unintallScouterAgent(int domainId, int taskHistoryId) {
+	public SimpleJsonResponse unintallScouterAgent(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId) {
 		
-		proviService.unintallScouterAgent(domainId, null);
+		proviService.uninstallSingleScouterAgent(tomcatInstanceId, taskHistoryId);
 		
 		
 		return new SimpleJsonResponse();
+	}
+	
+	@RequestMapping(value = "/config/{domainId}", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getConfig(SimpleJsonResponse jsonRes, @PathVariable("domainId") int domainId) {
+		
+		jsonRes.setData(proviService.getAgentConfig(domainId));
+		
+		return jsonRes;
 	}
 	
 

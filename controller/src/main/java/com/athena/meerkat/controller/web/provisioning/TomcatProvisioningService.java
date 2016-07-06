@@ -50,6 +50,7 @@ import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
+import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
 import com.athena.meerkat.controller.web.provisioning.util.ProvisioningUtil;
@@ -675,6 +676,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 				instanceService.delete(tomcatInstance);
 				count++;
 			}
+			
+			TomcatDomain domain = domainService.getDomain(domainId);
+			if (domain.getTomcatInstancesCount() == 0) {
+				domain.setScouterAgentInstallPath(null);
+				
+				domainService.save(domain);
+			}
+			
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
 		}

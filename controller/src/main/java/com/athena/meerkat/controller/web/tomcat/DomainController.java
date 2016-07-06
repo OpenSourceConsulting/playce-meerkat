@@ -207,6 +207,7 @@ public class DomainController {
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json, int id) {
 		TomcatDomain result = domainService.getDomain(id);
+		
 		json.setData(result);
 
 		return json;
@@ -343,5 +344,18 @@ public class DomainController {
 			json.setTotal(alertSettings.size());
 		}
 		return json;
+	}
+	
+	@RequestMapping(value = "/saveScouterInstallPath", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveScouterInstallPath(Integer domainId, String scouterAgentInstallPath) {
+
+		TomcatDomain td = domainService.getDomain(domainId);
+		
+		td.setScouterAgentInstallPath(scouterAgentInstallPath);
+		
+		domainService.save(td);
+
+		return new SimpleJsonResponse();
 	}
 }

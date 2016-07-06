@@ -1,0 +1,28 @@
+<project name="update Scouter Agent Config" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# update Scouter Agent Config
+	#########################################
+	-->
+	
+	<property file="${basedir}/build.properties" />
+	
+	<property name="dest.dir" value="${agent.install.path}" />
+	<property name="down.file.name" value="${scouter.jar.name}-bin.tar.gz" />
+	<property name="prop.file.name" value="${dest.dir}/scouter/agent.java/${tomcat.instance.name}.conf" />
+
+	
+	<target name="cmd" description="update scouter agent config.">
+		
+		<echo>update ${prop.file.name}</echo>
+		<move file="${dest.dir}/${tomcat.instance.name}.conf" todir="${dest.dir}/scouter/agent.java"/>
+		
+		<propertyfile file="${prop.file.name}">
+			<entry key="obj_name"  value="${tomcat.instance.name}" operation="=" />
+		</propertyfile>
+	
+	</target>
+
+
+</project>

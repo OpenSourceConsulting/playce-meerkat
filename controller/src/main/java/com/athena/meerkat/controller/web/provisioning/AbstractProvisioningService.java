@@ -508,7 +508,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 
 	}
 
-	private boolean generate(String templateFileName, Object dataModel, Writer out) throws IOException {
+	protected boolean generate(String templateFileName, Object dataModel, Writer out) throws IOException {
 
 		/* Get the template */
 		Template temp = cfg.getTemplate(templateFileName);

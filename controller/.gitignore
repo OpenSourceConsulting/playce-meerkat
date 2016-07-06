@@ -1,5 +1,5 @@
 /.settings
-/.settings/*
+/.settings/**
 *.class
 
 # Package Files #

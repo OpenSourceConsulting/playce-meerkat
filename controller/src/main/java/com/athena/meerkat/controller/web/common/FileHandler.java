@@ -52,6 +52,16 @@ public class FileHandler {
 		
 	}
 	
+	/**
+	 * <pre>
+	 * •Must support fully qualified URLs, e.g. "file:C:/test.dat". 
+	 * •Must support classpath pseudo-URLs, e.g. "classpath:test.dat". 
+	 * •Should support relative file paths, e.g. "WEB-INF/test.dat". (This will be implementation-specific, typically provided by an ApplicationContext implementation.) 
+	 * </pre>
+	 * @param fileLocation
+	 * @return
+	 * @see org.springframework.core.io.ResourceLoader#getResource(String)
+	 */
 	public String readFileToString(String fileLocation) {
 		Resource resource = resourceLoader.getResource(fileLocation);
 		
