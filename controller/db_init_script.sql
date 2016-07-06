@@ -97,7 +97,7 @@ CREATE TABLE `common_code` (
 
 LOCK TABLES `common_code` WRITE;
 /*!40000 ALTER TABLE `common_code` DISABLE KEYS */;
-INSERT INTO `common_code` VALUES (1,'dbType','MySQL',1,'Datasource Type','N'),(2,'dbType','Oracle',2,NULL,'N'),(3,'configFileType','server.xml',1,'설정파일 Type','N'),(4,'configFileType','context.xml',2,NULL,'N'),(5,'TS_STATE','not installed',1,'톰캣instance 상태','N'),(6,'TS_STATE','installed',2,NULL,'N'),(7,'TS_STATE','stop',3,NULL,'N'),(8,'TS_STATE','running',4,NULL,'N'),(9,'tever','apache-tomcat-7.0.68',2,'Tomcat Engine Version, 반드시 download url 에 사용될 zip file name 을 사용해야함.','N'),(10,'SESSION_GROUP_TYPE','Infinispan',1,NULL,'N'),(11,'SESSION_GROUP_TYPE','Couchbase',2,NULL,'N'),(12,'tever','apache-tomcat-6.0.45',1,NULL,'N'),(13,'tever','apache-tomcat-8.0.36',3,NULL,'N'),(14,'TS_STATE','starting',5,NULL,'N'),(15,'TS_STATE','stopping',6,NULL,'N'),(16,'ALERT_THRESHOLD_OPERATOR','Greater than (>)',1,NULL,'N'),(17,'ALERT_THRESHOLD_OPERATOR','Less than (<)',2,NULL,'N'),(18,'ALERT_ITEM','Memory Usage',1,NULL,'N'),(19,'ALERT_ITEM','CPU Usage',2,NULL,'N'),(20,'ALERT_ITEM','Disk Usage',3,NULL,'N'),(21,'ALERT_ITEM','Agent Running',4,NULL,'N'),(100,'TASK','Tomcat Instance 설치',1,'task code','N'),(101,'TASK','Application(war) 배포',2,NULL,'N'),(102,'TASK','server.xml 수정',3,NULL,'N'),(103,'TASK','context.xml 수정',4,NULL,'N'),(104,'TASK','Tomcat 설정 수정',5,NULL,'N'),(105,'TASK','Application(war) 삭제',6,NULL,'N'),(106,'TASK','MySQL JDBC Driver 설치',7,NULL,'N'),(107,'TASK','Tomcat Instance 삭제',8,NULL,'N'),(108,'TASK','Datasource 추가',9,NULL,'N'),(109,'TASK','Datasource 삭제',10,NULL,'N'),(112,'TASK','Agent 재설치',13,NULL,'N');
+INSERT INTO `common_code` VALUES (1,'dbType','MySQL',1,'Datasource Type','N'),(2,'dbType','Oracle',2,NULL,'N'),(3,'configFileType','server.xml',1,'설정파일 Type','N'),(4,'configFileType','context.xml',2,NULL,'N'),(5,'TS_STATE','not installed',1,'톰캣instance 상태','N'),(6,'TS_STATE','installed',2,NULL,'N'),(7,'TS_STATE','stop',3,NULL,'N'),(8,'TS_STATE','running',4,NULL,'N'),(9,'tever','apache-tomcat-7.0.68',2,'Tomcat Engine Version, 반드시 download url 에 사용될 zip file name 을 사용해야함.','N'),(10,'SESSION_GROUP_TYPE','Infinispan',1,NULL,'N'),(11,'SESSION_GROUP_TYPE','Couchbase',2,NULL,'N'),(12,'tever','apache-tomcat-6.0.45',1,NULL,'N'),(13,'tever','apache-tomcat-8.0.36',3,NULL,'N'),(14,'TS_STATE','starting',5,NULL,'N'),(15,'TS_STATE','stopping',6,NULL,'N'),(16,'ALERT_THRESHOLD_OPERATOR','Greater than (>)',1,NULL,'N'),(17,'ALERT_THRESHOLD_OPERATOR','Less than (<)',2,NULL,'N'),(18,'ALERT_ITEM','Memory Usage',1,NULL,'N'),(19,'ALERT_ITEM','CPU Usage',2,NULL,'N'),(20,'ALERT_ITEM','Disk Usage',3,NULL,'N'),(21,'ALERT_ITEM','Agent Running',4,NULL,'N'),(22,'TS_STATE','start fail',NULL,NULL,'N'),(23,'TS_STATE','stop fail',NULL,NULL,'N'),(100,'TASK','Tomcat Instance 설치',1,'task code','N'),(101,'TASK','Application(war) 배포',2,NULL,'N'),(102,'TASK','server.xml 수정',3,NULL,'N'),(103,'TASK','context.xml 수정',4,NULL,'N'),(104,'TASK','Tomcat 설정 수정',5,NULL,'N'),(105,'TASK','Application(war) 삭제',6,NULL,'N'),(106,'TASK','MySQL JDBC Driver 설치',7,NULL,'N'),(107,'TASK','Tomcat Instance 삭제',8,NULL,'N'),(108,'TASK','Datasource 추가',9,NULL,'N'),(109,'TASK','Datasource 삭제',10,NULL,'N'),(112,'TASK','Agent 재설치',13,NULL,'N'),(113,'TASK','Scouter Agent 설치/설정',14,NULL,'N'),(114,'TASK','Scouter Agent 설정 제거',15,NULL,'N'),(115,'TASK','Scouter Agent 설정 변경',16,NULL,'N'),(116,'TASK','Tomcat Instance 시작',17,NULL,'N'),(117,'TASK','Tomcat Instance 정지',18,NULL,'N');
 /*!40000 ALTER TABLE `common_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -623,6 +623,7 @@ CREATE TABLE `tomcat_domain` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) CHARACTER SET euckr NOT NULL,
   `datagrid_server_group_id` int(11) DEFAULT NULL,
+  `scouter_agent_install_path` varchar(60) COLLATE euckr_bin DEFAULT NULL,
   `create_user_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `datagrid_server_group_idx` (`datagrid_server_group_id`),
@@ -638,7 +639,7 @@ CREATE TABLE `tomcat_domain` (
 
 LOCK TABLES `tomcat_domain` WRITE;
 /*!40000 ALTER TABLE `tomcat_domain` DISABLE KEYS */;
-INSERT INTO `tomcat_domain` VALUES (128,'Domain 1',NULL,23);
+INSERT INTO `tomcat_domain` VALUES (128,'Domain 1',NULL,NULL,23);
 /*!40000 ALTER TABLE `tomcat_domain` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -860,4 +861,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-29 15:47:27
+-- Dump completed on 2016-07-06 15:03:59
