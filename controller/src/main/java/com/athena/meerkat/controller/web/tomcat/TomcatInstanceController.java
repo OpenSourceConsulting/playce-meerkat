@@ -82,7 +82,7 @@ public class TomcatInstanceController {
 	private TomcatProvisioningService proviService;
 	@Autowired
 	private ServerService serverService;
-	
+
 	@Autowired
 	private TaskHistoryService taskService;
 
@@ -98,7 +98,7 @@ public class TomcatInstanceController {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already started.");
 		} else {
-			
+
 			proviService.startTomcatInstance(id, taskHistoryId);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 			json.setMsg("Tomcat is started.");
@@ -127,7 +127,7 @@ public class TomcatInstanceController {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already stopped.");
 		} else {
-			
+
 			proviService.stopTomcatInstance(id, taskHistoryId);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
 
@@ -216,7 +216,6 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-
 	@RequestMapping("/list")
 	public @ResponseBody SimpleJsonResponse getTomcatInstance(SimpleJsonResponse json) {
 		List<TomcatInstance> tomcats = service.getAll();
@@ -262,9 +261,10 @@ public class TomcatInstanceController {
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
 		boolean isUniqueCataBase = false;
+		boolean isUniquePort = false;
 		int domainId = 0;
 		for (TomcatInstance tomcatInstance : tomcats) {
-			
+
 			domainId = tomcatInstance.getDomainId();
 
 			//checkUnique tomcat name within domain
@@ -287,27 +287,34 @@ public class TomcatInstanceController {
 			}
 			List<DomainTomcatConfiguration> configs = service.findInstanceConfigs(server.getId());
 			isUniqueCataBase = checkUniqueCatalinaBase(configs);
-			if (isUniqueCataBase) {
+			isUniquePort = checkUniquePort(configs);
+			if (isUniqueCataBase && isUniquePort) {
 				tomcatInstance.setTomcatDomain(domain);
 				tomcatInstance.setServer(server);
 			} else {
 				json.setSuccess(false);
-				json.setMsg(String.format("Catalina base is duplicated in server (%s).", server.getName()));
+				if (!isUniqueCataBase) {
+					json.setMsg(String.format("Catalina base is duplicated in server (%s).", server.getName()));
+				}
+				if (!isUniquePort) {
+					json.setMsg(String.format("HTTP Port is duplicated in server (%s).", server.getName()));
+				}
 				return json;
 			}
+
 		}
-		
+
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
-		
+
 		if (tomcatConfig == null) {
 			json.setSuccess(false);
 			json.setMsg("톰캣 인스턴스 설정 정보가 없어서 추가할수 없습니다. 톰캣 인스턴스 설정 정보를 먼저 입력해주세요.");
 			return json;
 		}
-		
+
 		if (isUniqueCataBase) {
 			service.saveList(tomcats);
-			
+
 			TaskHistory task = taskService.createTomcatInstallTask(tomcats);
 			json.setData(task);
 		}
@@ -331,10 +338,21 @@ public class TomcatInstanceController {
 		return json;
 	}
 
+	private boolean checkUniquePort(List<DomainTomcatConfiguration> configs) {
+		for (int i = 0; i < configs.size() - 1; i++) {
+			for (int j = i; j < configs.size(); j++) {
+				if (configs.get(i).getHttpPort() == configs.get(j).getHttpPort()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	private boolean checkUniqueCatalinaBase(List<DomainTomcatConfiguration> configs) {
 		for (int i = 0; i < configs.size() - 1; i++) {
 			for (int j = i; j < configs.size(); j++) {
-				if (!configs.get(i).getCatalinaBase().equals(configs.get(j).getCatalinaBase())) {
+				if (configs.get(i).getCatalinaBase().equals(configs.get(j).getCatalinaBase())) {
 					return false;
 				}
 			}
