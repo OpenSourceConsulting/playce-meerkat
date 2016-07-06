@@ -199,7 +199,10 @@ public class TomcatInstance implements Serializable {
 	}
 
 	public String getHostName() {
-		return server.getHostName();
+		if (server != null) {
+			return server.getHostName();
+		}
+		return "";
 	}
 
 	public String getOSName() {

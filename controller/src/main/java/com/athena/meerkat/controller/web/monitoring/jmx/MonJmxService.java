@@ -66,7 +66,11 @@ public class MonJmxService {
 
 				TomcatInstance instance = tiService.findOne(monJmx.getInstanceId());
 
-				if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STARTING
+				if (instance != null && instance.getState() >= MeerkatConstants.TOMCAT_STATUS_START_FAIL){
+					
+					LOGGER.debug("{} instance is start(stop) fail. don't save state.", monJmx.getInstanceId());
+					
+				} else if (instance != null && instance.getState() == MeerkatConstants.TOMCAT_STATUS_STARTING
 						&& monJmx.getMonValue().intValue() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
 
 					LOGGER.debug("{} instance is starting. don't save state.", monJmx.getInstanceId());

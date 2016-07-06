@@ -95,6 +95,8 @@ public abstract class MeerkatConstants {
 	public static final int TOMCAT_STATUS_RUNNING = 8;
 	public static final int TOMCAT_STATUS_STARTING = 14;
 	public static final int TOMCAT_STATUS_STOPPING = 15;
+	public static final int TOMCAT_STATUS_START_FAIL = 22;
+	public static final int TOMCAT_STATUS_STOP_FAIL = 23;
 
 	/* State of application */
 	public static int APP_STATE_STARTED = 1;
@@ -219,6 +221,8 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_AGENT_INSTALL = 110;
 	public static final int TASK_CD_AGENT_REMOVE = 111;
 	public static final int TASK_CD_AGENT_REINSTALL = 112;
+	public static final int TASK_CD_TOMCAT_START = 116;
+	public static final int TASK_CD_TOMCAT_STOP = 117;
 
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;

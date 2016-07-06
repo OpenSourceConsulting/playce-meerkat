@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,9 @@ import com.athena.meerkat.controller.web.common.model.GridJsonResponse;
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
+import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
+import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TaskDetailViewModel;
 import com.athena.meerkat.controller.web.user.services.UserService;
 
@@ -43,6 +46,9 @@ public class TaskHistoryController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TomcatInstanceService tomcatService;
 
 	/**
 	 * <pre>
@@ -89,6 +95,37 @@ public class TaskHistoryController {
 	public SimpleJsonResponse create(SimpleJsonResponse jsonRes, int domainId, int taskCdId) {
 
 		TaskHistory task = service.createTasks(domainId, taskCdId);
+		jsonRes.setData(task);
+
+		return jsonRes;
+	}
+	
+	@RequestMapping(value = "/create/tomcat/{tomcatInstanceId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse createTomcatInstanceTask(SimpleJsonResponse jsonRes, @PathVariable Integer tomcatInstanceId, int taskCdId) {
+
+		TaskHistory task = service.createTomcatInstanceTask(tomcatInstanceId, taskCdId);
+		TaskHistoryDetail taskDetail = task.getTaskHistoryDetails().get(0);
+		
+		jsonRes.setData(taskDetail);
+
+		return jsonRes;
+	}
+	
+	@RequestMapping(value = "/create/tomcats/{taskCdId}", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse createTomcatInstanceTasks(SimpleJsonResponse jsonRes, @PathVariable Integer taskCdId, @RequestBody List<TomcatInstance> tomcatIds) {
+		
+		
+		List<TomcatInstance> tomcats = new ArrayList<TomcatInstance>();
+		for (TomcatInstance t : tomcatIds) {
+			tomcats.add(tomcatService.findOne(t.getId()));
+		}
+		
+		TaskHistory task = service.createTaskDetails(tomcats, taskCdId);
+		
+		tomcatService.saveList(tomcats);// update lastTaskHistoryId.
+		
 		jsonRes.setData(task);
 
 		return jsonRes;

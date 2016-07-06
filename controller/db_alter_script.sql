@@ -202,5 +202,8 @@ ADD COLUMN `scouter_agent_install_path` VARCHAR(60) NULL AFTER `datagrid_server_
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('113', 'TASK', 'Scouter Agent 설치/설정', '14', 'N');
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('114', 'TASK', 'Scouter Agent 설정 제거', '15', 'N');
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('115', 'TASK', 'Scouter Agent 설정 변경', '16', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('116', 'TASK', 'Tomcat Instance 시작', '17', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('117', 'TASK', 'Tomcat Instance 정지', '18', 'N');
+
 
 

@@ -91,14 +91,15 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/start", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id) {
+	public SimpleJsonResponse startTomcat(SimpleJsonResponse json, int id, int taskHistoryId) {
 		TomcatInstance tomcat = service.findOne(id);
 
 		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_RUNNING) {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already started.");
 		} else {
-			proviService.startTomcatInstance(id, null);
+			
+			proviService.startTomcatInstance(id, taskHistoryId);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 			json.setMsg("Tomcat is started.");
 		}
@@ -109,24 +110,25 @@ public class TomcatInstanceController {
 	@RequestMapping(value = "/restart", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse restartTomcat(SimpleJsonResponse json, int id) {
-		stopTomcat(json, id);
+		stopTomcat(json, id, 0);
 
 		json = new SimpleJsonResponse();
 
-		startTomcat(json, id);
+		startTomcat(json, id, 0);
 		return json;
 	}
 
 	@RequestMapping(value = "/stop", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id) {
+	public SimpleJsonResponse stopTomcat(SimpleJsonResponse json, int id, int taskHistoryId) {
 		TomcatInstance tomcat = service.findOne(id);
 
 		if (tomcat.getState() == MeerkatConstants.TOMCAT_STATUS_SHUTDOWN) {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already stopped.");
 		} else {
-			proviService.stopTomcatInstance(id, null);
+			
+			proviService.stopTomcatInstance(id, taskHistoryId);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
 
 			json.setMsg("Tomcat is stopped.");

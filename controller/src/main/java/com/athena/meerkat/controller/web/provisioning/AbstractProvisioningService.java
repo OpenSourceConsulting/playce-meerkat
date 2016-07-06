@@ -169,10 +169,10 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	 * @param cmdFileName
 	 * @param session
 	 */
-	protected void runCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
+	protected boolean runCommand(ProvisionModel pModel, String cmdFileName, WebSocketSession session) {
 
 		File jobDir = generateBuildProperties(pModel, session);
-
+		boolean isSuccess = true;
 		try {
 
 			/*
@@ -183,7 +183,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 			/*
 			 * 2. run cmd.
 			 */
-			boolean isSuccess = ProvisioningUtil.runCommand(commanderDir, jobDir);
+			isSuccess = ProvisioningUtil.runCommand(commanderDir, jobDir);
 			
 			if (isSuccess) {
 				updateTaskStatus(pModel, MeerkatConstants.TASK_STATUS_SUCCESS);
@@ -202,6 +202,8 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 			MDC.remove("jobPath");
 			MDC.remove("serverIp");
 		}
+		
+		return isSuccess;
 	}
 	
 	protected boolean runDefaultTargets(ProvisionModel pModel, WebSocketSession session, String... targetNames) {

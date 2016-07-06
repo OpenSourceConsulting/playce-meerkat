@@ -155,6 +155,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 			
 			updateTomcatInstanceConfig(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), true);
 			
+		} else if (MeerkatConstants.TASK_CD_TOMCAT_START == taskHistory.getTaskCdId()) {
+			
+			startTomcatInstance(taskDetail.getTomcatInstance().getId(), taskHistory.getId());
+			
+		} else if (MeerkatConstants.TASK_CD_TOMCAT_STOP == taskHistory.getTaskCdId()) {
+			
+			stopTomcatInstance(taskDetail.getTomcatInstance().getId(), taskHistory.getId());
+			
 		} else if (MeerkatConstants.TASK_CD_SERVER_XML_UPDATE == taskHistory.getTaskCdId()) {
 			
 			TomcatConfigFile confFile = confFileService.getLatestServerXmlFile(taskDetail.getTomcatDomainId());
@@ -439,7 +447,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		sendCommand(new ProvisionModel(tomcatConfig, tomcat, null), "updateTomcatConfig.xml", session);
 	}
 
-	public void startTomcatInstance(int instanceId, WebSocketSession session) {
+	public void startTomcatInstance(int instanceId, int taskHistoryId) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
 		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STARTING);
@@ -447,10 +455,15 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
-		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "startTomcat.xml", session);
+		boolean isSuccess = runCommand(new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null), "startTomcat.xml", null);
+		
+		if(isSuccess == false){
+			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_START_FAIL);
+			instanceService.save(tomcatInstance);// update state.
+		}
 	}
 
-	public void stopTomcatInstance(int instanceId, WebSocketSession session) {
+	public void stopTomcatInstance(int instanceId, int taskHistoryId) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(instanceId);
 		tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STOPPING);
@@ -458,7 +471,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
-		runCommand(new ProvisionModel(tomcatConfig, tomcatInstance, null), "stopTomcat.xml", session);
+		boolean isSuccess = runCommand(new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null), "stopTomcat.xml", null);
+		
+		if(isSuccess == false){
+			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STOP_FAIL);
+			instanceService.save(tomcatInstance);// update state.
+		}
 	}
 
 	public void deployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {

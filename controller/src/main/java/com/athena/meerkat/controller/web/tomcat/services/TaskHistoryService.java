@@ -79,12 +79,26 @@ public class TaskHistoryService {
 
 	public TaskHistory createTomcatUninstallTask(int tomcatInstanceId) {
 
+		return createTomcatInstanceTask(tomcatInstanceId, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
+	}
+	
+	/**
+	 * <pre>
+	 * TomcatInstance 의 lastTaskHistoryId 로 등록될 task 생성.
+	 * - tomcat list grid 에서 최근 작업 로그를 조회할수 있음.
+	 * </pre>
+	 * @param tomcatInstanceId
+	 * @param taskCdId
+	 * @return
+	 */
+	public TaskHistory createTomcatInstanceTask(int tomcatInstanceId, int taskCdId) {
+
 		TomcatInstance tomcatInstance = tomcatService.findOne(tomcatInstanceId);
 
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
 
-		TaskHistory task = createTaskDetails(singleList, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
+		TaskHistory task = createTaskDetails(singleList, taskCdId);
 
 		tomcatService.saveList(singleList);// update lastTaskHistoryId.
 
@@ -143,6 +157,8 @@ public class TaskHistoryService {
 		}
 
 		detailRepo.save(taskDetails);
+		
+		task.setTaskHistoryDetails(taskDetails);
 
 		return task;
 	}
