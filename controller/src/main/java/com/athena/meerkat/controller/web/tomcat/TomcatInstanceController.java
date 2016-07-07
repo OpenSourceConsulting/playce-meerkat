@@ -293,12 +293,17 @@ public class TomcatInstanceController {
 				tomcatInstance.setServer(server);
 			} else {
 				json.setSuccess(false);
-				if (!isUniqueCataBase) {
-					json.setMsg(String.format("Catalina base is duplicated in server (%s).", server.getName()));
+				if (!isUniqueCataBase && !isUniquePort) {
+					json.setMsg(String.format("Catalina base and HTTP Port are duplicated in server (%s).", server.getName()));
+				} else {
+					if (!isUniqueCataBase) {
+						json.setMsg(String.format("Catalina base  is duplicated in server (%s).", server.getName()));
+					}
+					if (!isUniquePort) {
+						json.setMsg(String.format("HTTP Port is duplicated in server (%s).", server.getName()));
+					}
 				}
-				if (!isUniquePort) {
-					json.setMsg(String.format("HTTP Port is duplicated in server (%s).", server.getName()));
-				}
+
 				return json;
 			}
 
