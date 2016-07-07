@@ -1,21 +1,33 @@
 package com.athena.meerkat.controller.web.tomcat;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.athena.meerkat.controller.MeerkatConstants;
 import com.athena.meerkat.controller.web.common.code.CommonCodeHandler;
@@ -46,7 +58,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @RequestMapping("/domain")
 public class DomainController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DomainController.class);
-
+	
 	@Autowired
 	private TomcatDomainService domainService;
 
@@ -207,7 +219,7 @@ public class DomainController {
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody SimpleJsonResponse getDomain(SimpleJsonResponse json, int id) {
 		TomcatDomain result = domainService.getDomain(id);
-		
+
 		json.setData(result);
 
 		return json;
@@ -222,9 +234,9 @@ public class DomainController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody SimpleJsonResponse delete(SimpleJsonResponse json, int domainId) {
-		
-		List<TomcatInstance> tomcats =  tomcatService.getTomcatListByDomainId(domainId);
-		
+
+		List<TomcatInstance> tomcats = tomcatService.getTomcatListByDomainId(domainId);
+
 		if (tomcats.size() > 0) {
 			json.setSuccess(false);
 			json.setMsg("Tomcat instance가 존재합니다. <br/>Tomcat instance를 먼저 삭제한후 삭제할수 있습니다.");
@@ -268,7 +280,7 @@ public class DomainController {
 	public SimpleJsonResponse saveDatasources(SimpleJsonResponse json, @RequestBody List<TomcatDomainDatasource> datasources) {
 
 		TomcatConfigFile confFile = domainService.addDatasources(datasources);
-		
+
 		TaskHistory task = taskService.createTasks(confFile.getTomcatDomain().getId(), MeerkatConstants.TASK_CD_DATASOURCE_ADD);
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -303,24 +315,24 @@ public class DomainController {
 	public SimpleJsonResponse deleteDatasourceMapping(SimpleJsonResponse json, int domainId, int dsId) {
 
 		domainService.deleteDomainDatasource(domainId, dsId);
-		
+
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/datasource/rmupdate", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse rmUpdateContextXml(SimpleJsonResponse json, int domainId, int dsId) {
 
 		TomcatConfigFile updatedXml = domainService.rmUpdateContextXml(domainId, dsId);
-		
+
 		TaskHistory task = taskService.createTasks(domainId, MeerkatConstants.TASK_CD_DATASOURCE_REMOVE);
-		
+
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("updatedXml", updatedXml);
 		resultMap.put("task", task);
 
 		json.setData(resultMap);
-		
+
 		return json;
 	}
 
@@ -345,17 +357,69 @@ public class DomainController {
 		}
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/saveScouterInstallPath", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveScouterInstallPath(Integer domainId, String scouterAgentInstallPath) {
 
 		TomcatDomain td = domainService.getDomain(domainId);
-		
+
 		td.setScouterAgentInstallPath(scouterAgentInstallPath);
-		
+
 		domainService.save(td);
 
 		return new SimpleJsonResponse();
+	}
+
+	@RequestMapping(value = "/upload/jdbc", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse handleJDBCUpload(SimpleJsonResponse jsonRes, @RequestParam("file") MultipartFile file, int domainId) {
+
+		File downPath = proviService.getCommanderTempFile();
+
+		try {
+			Files.copy(file.getInputStream(), Paths.get(downPath.getAbsolutePath(), file.getOriginalFilename()));
+		} catch (FileAlreadyExistsException e) {
+			//ignore. use exist file.
+			LOGGER.info("---- file already exist. {}", e.getFile());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		TaskHistory task = taskService.createTasks(domainId, MeerkatConstants.TASK_CD_JDBC_UPLOAD_INSTALL);
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("fileName", file.getOriginalFilename());
+		resultMap.put("task", task);
+
+		jsonRes.setData(resultMap);
+
+		return jsonRes;
+	}
+
+	@RequestMapping(value = "/down/jar/{fileName:.+}", method = RequestMethod.GET)
+	public void downloadJar(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		
+		LOGGER.debug("-------------- down file : {}", fileName);
+		
+		File commanderTempDir = proviService.getCommanderTempFile();
+		File downloadFile = new File(commanderTempDir.getAbsolutePath() + File.separator + fileName);
+
+
+		response.setContentType("application/octet-stream");
+		response.setContentLength((int) downloadFile.length());
+
+		// set headers for the response
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
+		response.setHeader(headerKey, headerValue);
+
+
+		InputStream inputStream = new BufferedInputStream(new FileInputStream(downloadFile));
+		 
+        //Copy bytes from source to destination(outputstream in this example), closes both streams.
+        FileCopyUtils.copy(inputStream, response.getOutputStream());
+
 	}
 }

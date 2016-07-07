@@ -358,12 +358,7 @@ public class ScouterProvisioningService extends AbstractProvisioningService {
 		
 		String downFileName = tomcatInstance.getName() + ".conf";
 		String remoteDownFile = scouterAgentInstallPath + "/scouter/agent.java/" + downFileName;
-		File todirFile = new File(commanderDir.getAbsolutePath() + File.separator + "temp");
-		
-		if (todirFile.exists() == false) {
-			todirFile.mkdir();
-			LOGGER.info("create {}", todirFile.getAbsolutePath());
-		}
+		File todirFile = getCommanderTempFile();
 		
 		ScpUtil.download(new TargetHost(tomcatInstance.getServer()), remoteDownFile, todirFile.getAbsolutePath());
 		

@@ -204,6 +204,12 @@ INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VAL
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('115', 'TASK', 'Scouter Agent 설정 변경', '16', 'N');
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('116', 'TASK', 'Tomcat Instance 시작', '17', 'N');
 INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('117', 'TASK', 'Tomcat Instance 정지', '18', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('118', 'TASK', 'Oracle JDBC Driver 설치', '19', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `prto_seq`, `mng_yn`) VALUES ('119', 'TASK', 'JDBC Driver 업로드&설치', '20', 'N');
+
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `mng_yn`) VALUES ('22', 'TS_STATE', 'start fail', 'N');
+INSERT INTO `common_code` (`id`, `grop_id`, `code_nm`, `mng_yn`) VALUES ('23', 'TS_STATE', 'stop fail', 'N');
+
 
 
 

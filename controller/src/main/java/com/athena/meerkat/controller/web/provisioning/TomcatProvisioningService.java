@@ -93,6 +93,9 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 	
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
+	
+	@Value("${meerkat.jar.down.url}")
+	private String jarDownUrl;
 
 	@Autowired
 	private MonJmxService monJmxService;
@@ -188,7 +191,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 			undeployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app);
 		} else if (MeerkatConstants.TASK_CD_JDBC_MYSQL_INSTALL == taskHistory.getTaskCdId()) {
 			
-			installJar(taskDetail.getTomcatInstance().getId(), mysqlDriverFile, taskHistory.getId());
+			installJar(taskDetail.getTomcatInstance().getId(), mysqlDriverFile, taskHistory.getId(), false);
 			
 		} else if (MeerkatConstants.TASK_CD_AGENT_INSTALL == taskHistory.getTaskCdId()) {
 			
@@ -607,13 +610,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 	}
 
-	public void installJar(int tomcatInstanceId, String installJarName, int taskHistoryId) {
+	public void installJar(int tomcatInstanceId, String installJarName, int taskHistoryId, boolean isUploaded) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
 
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
 
-		installJar(tomcatInstance.getDomainId(), installJarName, taskHistoryId, singleList);
+		installJar(tomcatInstance.getDomainId(), installJarName, taskHistoryId, singleList, isUploaded);
 	}
 
 	/**
@@ -624,7 +627,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 	 * @param domainId
 	 * @param session
 	 */
-	public void installJar(int domainId, String installJarName, int taskHistoryId, List<TomcatInstance> list) {
+	public void installJar(int domainId, String installJarName, int taskHistoryId, List<TomcatInstance> list, boolean isUploaded) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
 
@@ -644,6 +647,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
+				pModel.addProps("jar.down.url", (isUploaded)? jarDownUrl: tomcatDownUrl);
 				pModel.setLastTask(count == list.size());
 
 				sendCommand(pModel, "installLibs.xml", null);

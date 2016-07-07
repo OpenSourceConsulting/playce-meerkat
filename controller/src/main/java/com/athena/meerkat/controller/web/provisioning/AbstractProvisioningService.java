@@ -97,7 +97,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	protected String commanderHome;// = "G:/project/AthenaMeerkat/.aMeerkat";
 	
 	@Value("${meerkat.tomcat.down.url}")
-	private String tomcatDownUrl;
+	protected String tomcatDownUrl;
 	
 	@Value("${meerkat.agent.file.name:athena-meerkat-agent-1.0.0-SNAPSHOT}")
 	private String agentFileName;// 확장자 제외 파일명.
@@ -577,6 +577,17 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	public void afterPropertiesSet() throws Exception {
 
 		initService();
+	}
+	
+	public File getCommanderTempFile() {
+		File tempFile = new File(commanderDir.getAbsolutePath() + File.separator + "temp");
+		
+		if (tempFile.exists() == false) {
+			tempFile.mkdir();
+			LOGGER.info("create {}", tempFile.getAbsolutePath());
+		}
+		
+		return tempFile;
 	}
 
 }

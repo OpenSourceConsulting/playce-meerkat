@@ -55,6 +55,9 @@ public class TomcatProvisioningController {
 
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
+	
+	@Value("${meerkat.jdbc.driver.oracle}")
+	private String oracleDriverFile;
 
 	@Autowired
 	private TomcatProvisioningService proviService;
@@ -135,18 +138,22 @@ public class TomcatProvisioningController {
 
 	@RequestMapping(value = "/installJDBCDriver/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse installJDBCDriver(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, String dbType) {
+	public SimpleJsonResponse installJDBCDriver(@PathVariable("tomcatInstanceId") int tomcatInstanceId, int taskHistoryId, String fileName) {
 
-		/*
-		 * TODO JDBC Driver file 을 사용자가 직접 upload 해서 설치하도록 수정.
-		 */
-		String installJarName = mysqlDriverFile;
-		/*
-		if ("MySQL".equals(dbType)) {
+
+		String installJarName = null;
+		boolean isUploaded = false;
+		
+		if ("MySQL".equals(fileName)) {
 			installJarName = mysqlDriverFile;
+		} else if ("Oracle".equals(fileName)) {
+			installJarName = oracleDriverFile;
+		} else {
+			installJarName = fileName;
+			isUploaded = true;
 		}
-		*/
-		proviService.installJar(tomcatInstanceId, installJarName, taskHistoryId);
+		
+		proviService.installJar(tomcatInstanceId, installJarName, taskHistoryId, isUploaded);
 
 		return new SimpleJsonResponse();
 	}

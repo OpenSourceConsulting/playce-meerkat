@@ -99,10 +99,7 @@ public class MeerkatBoot {
 					"/resources/**", 
 					
 					"/monitor/**", 
-					/*"/provi/**",
-					"/code/**",
-					"/menu/**",
-					"/dashboard/**", */
+					"/domain/down/**",
 					
 					"/auth/notLogin*", 
 					"/auth/loginFail*",

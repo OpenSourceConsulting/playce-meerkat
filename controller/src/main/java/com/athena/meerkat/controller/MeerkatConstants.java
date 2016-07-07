@@ -223,6 +223,8 @@ public abstract class MeerkatConstants {
 	public static final int TASK_CD_AGENT_REINSTALL = 112;
 	public static final int TASK_CD_TOMCAT_START = 116;
 	public static final int TASK_CD_TOMCAT_STOP = 117;
+	public static final int TASK_CD_JDBC_ORACLE_INSTALL = 118;
+	public static final int TASK_CD_JDBC_UPLOAD_INSTALL = 119;
 
 	public static final int TASK_STATUS_WORKING = 1;
 	public static final int TASK_STATUS_SUCCESS = 2;
