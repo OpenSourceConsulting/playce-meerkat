@@ -36,5 +36,9 @@ public interface MonJmxRepository extends JpaRepository<MonJmx, MonJmxPK> {
 	@Modifying
 	@Query("delete from MonJmx mj where mj.instanceId = :instanceId")
 	int deleteByInstanceId(@Param("instanceId") Integer instanceId);
+	
+	@Modifying
+	@Query("delete from MonJmx mj where mj.monDt < :time")
+	int deleteOldData(@Param("time") Date time);
 
 }

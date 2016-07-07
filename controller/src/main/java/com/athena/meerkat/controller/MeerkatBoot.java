@@ -26,6 +26,7 @@ package com.athena.meerkat.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -34,6 +35,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -64,7 +70,8 @@ import com.athena.meerkat.controller.web.user.services.UserService;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.athena.meerkat" })
 @PropertySource(value = { "classpath:meerkat-${spring.profiles.active:local}.properties" })
-public class MeerkatBoot {
+@EnableScheduling
+public class MeerkatBoot implements SchedulingConfigurer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(MeerkatBoot.class, args);
@@ -189,21 +196,21 @@ public class MeerkatBoot {
 			// return new BCryptPasswordEncoder();
 		}
 
-		/*
-		 * for netty below
-		 
-		@Bean(name = "bossGroup", destroyMethod = "shutdownGracefully")
-		public NioEventLoopGroup getBossGroup() {
-			NioEventLoopGroup group = new NioEventLoopGroup();
-			return group;
-		}
+	}
+	
+	@Bean(name = "monDataRemoverTaskScheduler")
+	public ThreadPoolTaskScheduler taskScheduler() {
+	    return new ThreadPoolTaskScheduler();
+	}
+	
+	@Autowired
+	@Qualifier(value = "monDataRemoverTaskScheduler")
+	private TaskScheduler taskScheduler;
 
-		@Bean(name = "workerGroup", destroyMethod = "shutdownGracefully")
-		public NioEventLoopGroup getWorkerGroup() {
-			NioEventLoopGroup group = new NioEventLoopGroup();
-			return group;
-		}
-		*/
+	@Override
+	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+		taskRegistrar.setTaskScheduler(taskScheduler);
+		
 	}
 	
 }
