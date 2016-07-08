@@ -260,8 +260,8 @@ public class TomcatInstanceController {
 	@RequestMapping(value = "/saveList", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse saveList(SimpleJsonResponse json, @RequestBody List<TomcatInstance> tomcats) {
-		boolean isUniqueCataBase = false;
-		boolean isUniquePort = false;
+
+		
 		int domainId = 0;
 		for (TomcatInstance tomcatInstance : tomcats) {
 
@@ -285,44 +285,38 @@ public class TomcatInstanceController {
 				json.setMsg(String.format("Server of tomcat instance \"%s\" has been used in this domain", tomcatInstance.getName()));
 				return json;
 			}
+			
+			DomainTomcatConfiguration thisConfig = domainService.getTomcatConfig(domainId);
+			
+			if (thisConfig == null) {
+				json.setSuccess(false);
+				json.setMsg("톰캣 인스턴스 설정 정보가 없어서 추가할수 없습니다. 톰캣 인스턴스 설정 정보를 먼저 입력해주세요.");
+				return json;
+			}
+			
 			List<DomainTomcatConfiguration> configs = service.findInstanceConfigs(server.getId());
-			isUniqueCataBase = checkUniqueCatalinaBase(configs);
-			isUniquePort = checkUniquePort(configs);
-			if (isUniqueCataBase && isUniquePort) {
+			
+			String inValidMsg = checkConfigureValidation(thisConfig, configs, server.getName());
+			
+			if (inValidMsg != null) {
+				
+				json.setSuccess(false);
+				json.setMsg(inValidMsg);
+				
+				return json;
+				
+			} else {
 				tomcatInstance.setTomcatDomain(domain);
 				tomcatInstance.setServer(server);
-			} else {
-				json.setSuccess(false);
-				if (!isUniqueCataBase && !isUniquePort) {
-					json.setMsg(String.format("Catalina base and HTTP Port are duplicated in server (%s).", server.getName()));
-				} else {
-					if (!isUniqueCataBase) {
-						json.setMsg(String.format("Catalina base  is duplicated in server (%s).", server.getName()));
-					}
-					if (!isUniquePort) {
-						json.setMsg(String.format("HTTP Port is duplicated in server (%s).", server.getName()));
-					}
-				}
-
-				return json;
 			}
 
 		}
+		
+		service.saveList(tomcats);
 
-		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
+		TaskHistory task = taskService.createTomcatInstallTask(tomcats);
+		json.setData(task);
 
-		if (tomcatConfig == null) {
-			json.setSuccess(false);
-			json.setMsg("톰캣 인스턴스 설정 정보가 없어서 추가할수 없습니다. 톰캣 인스턴스 설정 정보를 먼저 입력해주세요.");
-			return json;
-		}
-
-		if (isUniqueCataBase) {
-			service.saveList(tomcats);
-
-			TaskHistory task = taskService.createTomcatInstallTask(tomcats);
-			json.setData(task);
-		}
 
 		return json;
 	}
@@ -343,26 +337,63 @@ public class TomcatInstanceController {
 		return json;
 	}
 
-	private boolean checkUniquePort(List<DomainTomcatConfiguration> configs) {
-		for (int i = 0; i < configs.size() - 1; i++) {
-			for (int j = i; j < configs.size(); j++) {
-				if (configs.get(i).getHttpPort() == configs.get(j).getHttpPort()) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 
-	private boolean checkUniqueCatalinaBase(List<DomainTomcatConfiguration> configs) {
-		for (int i = 0; i < configs.size() - 1; i++) {
-			for (int j = i; j < configs.size(); j++) {
-				if (configs.get(i).getCatalinaBase().equals(configs.get(j).getCatalinaBase())) {
-					return false;
-				}
+	/**
+	 * 
+	 * <pre>
+	 * 
+	 * </pre>
+	 * @param thisConfig
+	 * @param configs
+	 * @return null is valid, otherwise is invalid.
+	 */
+	private String checkConfigureValidation(DomainTomcatConfiguration thisConfig, List<DomainTomcatConfiguration> configs, String serverName) {
+		
+		String invalidMessage = null;
+		for (DomainTomcatConfiguration otherConfig : configs) {
+			
+			if (thisConfig.getId() == otherConfig.getId()) {
+				continue;
 			}
+			
+			if (thisConfig.getCatalinaBase().equals(otherConfig.getCatalinaBase())) {
+				invalidMessage = serverName + "에서 CATALINA_BASE("+thisConfig.getCatalinaBase()+")가 이미 사용중입니다.";
+				break;
+			}
+			
+			if (thisConfig.getHttpPort() == otherConfig.getHttpPort()) {
+				invalidMessage = serverName + "에서 HTTP 포트("+thisConfig.getHttpPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			
+			if (thisConfig.getServerPort() == otherConfig.getServerPort()) {
+				invalidMessage = serverName + "에서 서버 포트("+thisConfig.getServerPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			
+			if (thisConfig.getAjpPort() == otherConfig.getAjpPort()) {
+				invalidMessage = serverName + "에서 AJP 포트("+thisConfig.getAjpPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			/*
+			if (thisConfig.getRedirectPort() == otherConfig.getRedirectPort()) {
+				invalidMessage = serverName + "에서 서버 포트("+thisConfig.getServerPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			*/
+			if (thisConfig.isJmxEnable() && thisConfig.getRmiRegistryPort() == otherConfig.getRmiRegistryPort()) {
+				invalidMessage = serverName + "에서 JMX RMI 레지스트리 포트("+thisConfig.getRmiRegistryPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			
+			if (thisConfig.isJmxEnable() && thisConfig.getRmiServerPort() == otherConfig.getRmiServerPort()) {
+				invalidMessage = serverName + "에서 JMX RMI 서버 포트("+thisConfig.getRmiServerPort()+")가 이미 사용중입니다.";
+				break;
+			}
+			
 		}
-		return true;
+		
+		return invalidMessage;
 	}
 
 	private boolean checkUniqueTomcatName(TomcatInstance tomcat, int domainId) {
