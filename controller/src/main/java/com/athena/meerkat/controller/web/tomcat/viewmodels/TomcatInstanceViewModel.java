@@ -183,7 +183,7 @@ public class TomcatInstanceViewModel {
 	}
 
 	public String getTomcatPorts() {
-		return "{HTTP:" + httpPort + ", AJP:" + ajpPort + ", redirect:" + redirectPort + "}";
+		return "HTTP:" + httpPort + ", AJP:" + ajpPort + ", redirect:" + redirectPort;
 	}
 
 	public String getDomainType() {

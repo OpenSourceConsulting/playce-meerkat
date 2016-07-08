@@ -85,7 +85,6 @@ public class User implements UserDetails {
 	private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
 	@ManyToMany
-	@JsonIgnore
 	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<UserRole> userRoles;
 

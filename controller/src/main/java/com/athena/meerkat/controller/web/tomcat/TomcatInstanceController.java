@@ -152,6 +152,7 @@ public class TomcatInstanceController {
 				viewmodel.setRedirectPort(domainConf.getRedirectPort());
 				viewmodel.setTomcatVersion(domainConf.getTomcatVersionNm());
 				viewmodel.setJmxEnable(domainConf.isJmxEnable());
+				viewmodel.setJvmVersion(domainConf.getJavaHome());
 			}
 			if (changedConfigs != null) {
 				for (TomcatInstConfig c : changedConfigs) {
