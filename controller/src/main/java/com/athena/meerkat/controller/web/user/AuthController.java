@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -39,6 +40,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.user.entities.User;
+import com.athena.meerkat.controller.web.user.services.UserService;
 
 /**
  * <pre>
@@ -51,9 +54,11 @@ import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
+	@Autowired
+	private UserService service;
 
 	/**
 	 * <pre>
@@ -61,13 +66,12 @@ public class AuthController {
 	 * </pre>
 	 */
 	public AuthController() {
-		
+
 	}
 
 	@RequestMapping("/onAfterLogout")
 	@ResponseBody
-	public SimpleJsonResponse logout(SimpleJsonResponse jsonRes,
-			HttpSession session) {
+	public SimpleJsonResponse logout(SimpleJsonResponse jsonRes, HttpSession session) {
 
 		session.invalidate();
 
@@ -80,10 +84,9 @@ public class AuthController {
 	@ResponseBody
 	public SimpleJsonResponse onAfterLogin(SimpleJsonResponse jsonRes) {
 
-		UserDetails loginUser = (UserDetails) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		UserDetails loginUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		jsonRes.setData(loginUser);
-		//service.updateLastLogin(loginUser.getId());
+		service.updateLastLogin(((User) loginUser).getId());
 		return jsonRes;
 	}
 
@@ -113,22 +116,19 @@ public class AuthController {
 	@RequestMapping("/loginFail")
 	@ResponseBody
 	public SimpleJsonResponse loginFail(HttpServletRequest request, SimpleJsonResponse jsonRes) {
-		
-		
+
 		jsonRes.setSuccess(false);
-		
-		AuthenticationException ex = (AuthenticationException)request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-		
+
+		AuthenticationException ex = (AuthenticationException) request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+
 		if (ex instanceof AuthenticationServiceException) {
 			jsonRes.setMsg(ex.toString());
 		} else {
 			jsonRes.setMsg("login ID 또는 password 가 잘못되었습니다.");
 		}
-		
 
 		return jsonRes;
 	}
-	
 
 }
 // end of UserController.java
