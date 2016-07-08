@@ -180,20 +180,37 @@ public class MonDataController implements ApplicationEventPublisherAware {
 			mdcEnable = true;
 
 			Server server = svrService.getServer(monFsList.get(0).getServerId());
+			
+			if (server == null) {
+				LOGGER.warn("{} server is null. don't save data.", monFsList.get(0).getServerId());
+				
+				jsonRes.setSuccess(false);
+				return jsonRes;
+			}
+			
+			String serverIP = server.getSshIPAddr();
+			if (StringUtils.isEmpty(serverIP)) {
+				LOGGER.warn("server IP is empty. serverId : {}", monFsList.get(0).getServerId());
+				
+				jsonRes.setSuccess(false);
+				return jsonRes;
+			}
 
-			MDC.put(MDC_SERVER_KEY, server.getSshIPAddr());
-		}
+			MDC.put(MDC_SERVER_KEY, serverIP);
+			
+			try {
+				service.saveMonFsList(monFsList);
 
-		try {
-			service.saveMonFsList(monFsList);
-
-			monAnalyzer.analyze(monFsList);
-			LOGGER.info("saved. fs.");
-		} finally {
-			if (mdcEnable) {
-				MDC.remove(MDC_SERVER_KEY);
+				monAnalyzer.analyze(monFsList);
+				LOGGER.info("saved. fs.");
+			} finally {
+				if (mdcEnable) {
+					MDC.remove(MDC_SERVER_KEY);
+				}
 			}
 		}
+
+		
 
 		return jsonRes;
 	}
