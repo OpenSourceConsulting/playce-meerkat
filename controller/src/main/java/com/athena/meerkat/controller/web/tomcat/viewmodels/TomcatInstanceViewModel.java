@@ -11,6 +11,7 @@ public class TomcatInstanceViewModel {
 	private int state;
 	private String ipAddress;
 	private String tomcatVersion;
+	private int tomcatVersionCd;
 	private String osName;
 	private int httpPort;
 	private int ajpPort;
@@ -123,9 +124,9 @@ public class TomcatInstanceViewModel {
 		id = tc.getId();
 		name = tc.getName();
 		if (tc.getServer() != null) {
-			hostName = tc.getServer().getName();
+			hostName = tc.getServer().getHostName();
 			ipAddress = tc.getServer().getSshIPAddr();
-			osName = tc.getServer().getName();
+			osName = tc.getServer().getOsName();
 
 		}
 		stateNm = tc.getStateNm();
@@ -133,14 +134,13 @@ public class TomcatInstanceViewModel {
 		if (tc.getTomcatDomain() != null) {
 			domainName = tc.getTomcatDomain().getName();
 			domainId = tc.getTomcatDomain().getId();
-			DomainTomcatConfiguration conf = tc.getTomcatDomain()
-					.getDomainTomcatConfig();
+			DomainTomcatConfiguration conf = tc.getTomcatDomain().getDomainTomcatConfig();
 			if (conf != null) {
 				httpPort = conf.getHttpPort();
 				ajpPort = conf.getAjpPort();
 				redirectPort = conf.getRedirectPort();
 				jvmVersion = "";
-				tomcatVersion = conf.getTomcatVersionNm();
+				setTomcatVersionCd(conf.getTomcatVersionCd());
 			}
 		}
 
@@ -183,8 +183,7 @@ public class TomcatInstanceViewModel {
 	}
 
 	public String getTomcatPorts() {
-		return "{HTTP:" + httpPort + ", AJP:" + ajpPort + ", redirect:"
-				+ redirectPort + "}";
+		return "{HTTP:" + httpPort + ", AJP:" + ajpPort + ", redirect:" + redirectPort + "}";
 	}
 
 	public String getDomainType() {
@@ -201,5 +200,13 @@ public class TomcatInstanceViewModel {
 
 	public void setJmxEnable(boolean jmxEnable) {
 		this.jmxEnable = jmxEnable;
+	}
+
+	public int getTomcatVersionCd() {
+		return tomcatVersionCd;
+	}
+
+	public void setTomcatVersionCd(int tomcatVersionCd) {
+		this.tomcatVersionCd = tomcatVersionCd;
 	}
 }

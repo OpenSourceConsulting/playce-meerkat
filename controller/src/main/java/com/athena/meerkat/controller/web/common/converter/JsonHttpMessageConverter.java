@@ -164,7 +164,7 @@ public class JsonHttpMessageConverter extends MappingJackson2HttpMessageConverte
 
 	protected void handleEntity(TomcatInstanceViewModel entity) {
 		entity.setStateNm(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TS_STATE, entity.getState()));
-
+		entity.setTomcatVersion(codeHandler.getCodeNm(MeerkatConstants.CODE_GROP_TE_VERSION, entity.getTomcatVersionCd()));
 		LOGGER.debug("converted for {}", entity.getClass().getName());
 	}
 
