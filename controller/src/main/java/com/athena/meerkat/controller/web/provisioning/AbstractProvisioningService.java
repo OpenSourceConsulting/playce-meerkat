@@ -301,6 +301,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 			targetProps.setProperty("am.server.port", 	String.valueOf(tomcatConfig.getServerPort()));
 			targetProps.setProperty("am.http.port", 	String.valueOf(tomcatConfig.getHttpPort()));
 			targetProps.setProperty("am.ajp.port", 		String.valueOf(tomcatConfig.getAjpPort()));
+			targetProps.setProperty("am.redirect.port", String.valueOf(tomcatConfig.getRedirectPort()));
 			targetProps.setProperty("am.uri.encoding", 	tomcatConfig.getEncoding());
 			targetProps.setProperty("am.rmi.registry.port", String.valueOf(tomcatConfig.getRmiRegistryPort()));
 			targetProps.setProperty("am.rmi.server.port", 	String.valueOf(tomcatConfig.getRmiServerPort()));

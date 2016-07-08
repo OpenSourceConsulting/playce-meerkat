@@ -72,7 +72,7 @@ am.rmi.disable.end-->
     -->
     <Connector port="${am.http.port}" protocol="HTTP/1.1" 
                connectionTimeout="20000" 
-               redirectPort="8443" 
+               redirectPort="${am.redirect.port}" 
                URIEncoding="${am.uri.encoding}" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
@@ -92,7 +92,7 @@ am.rmi.disable.end-->
     -->
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="${am.ajp.port}" protocol="AJP/1.3" redirectPort="8443" />
+    <Connector port="${am.ajp.port}" protocol="AJP/1.3" redirectPort="${am.redirect.port}" />
 
 
     <!-- An Engine represents the entry point (within Catalina) that processes

@@ -375,12 +375,12 @@ public class TomcatInstanceController {
 				invalidMessage = serverName + "에서 AJP 포트("+thisConfig.getAjpPort()+")가 이미 사용중입니다.";
 				break;
 			}
-			/*
+			
 			if (thisConfig.getRedirectPort() == otherConfig.getRedirectPort()) {
 				invalidMessage = serverName + "에서 서버 포트("+thisConfig.getServerPort()+")가 이미 사용중입니다.";
 				break;
 			}
-			*/
+			
 			if (thisConfig.isJmxEnable() && thisConfig.getRmiRegistryPort() == otherConfig.getRmiRegistryPort()) {
 				invalidMessage = serverName + "에서 JMX RMI 레지스트리 포트("+thisConfig.getRmiRegistryPort()+")가 이미 사용중입니다.";
 				break;

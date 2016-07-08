@@ -86,6 +86,7 @@
 		     <entry key="am.http.port"   	value="${am.http.port}" 	operation="${am.conf.op}" />
 		     <entry key="am.uri.encoding"   value="${am.uri.encoding}" 	operation="${am.conf.op}" />
 		     <entry key="am.ajp.port"    	value="${am.ajp.port}" 		operation="${am.conf.op}" />
+			 <entry key="am.redirect.port"    	value="${am.redirect.port}" operation="${am.conf.op}" />
 			 <entry key="am.rmi.registry.port"  value="${am.rmi.registry.port}" operation="${am.conf.op}" />
 			 <entry key="am.rmi.server.port" 	value="${am.rmi.server.port}" 	operation="${am.conf.op}" />
 			 <entry key="am.session.timeout" 	value="${am.ssion.timeout}" 	operation="${am.conf.op}" />
