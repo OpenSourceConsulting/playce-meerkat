@@ -104,8 +104,11 @@ public class MeerkatBoot implements SchedulingConfigurer{
 					"/app.js",
 					"/app.json",
 					"/resources/**", 
+					"/error", 
 					
-					"/monitor/**", 
+					"/monitor/endpoint", 
+					"/monitor/init", 
+					"/monitor/*/create", 
 					"/domain/down/**",
 					
 					"/auth/notLogin*", 
@@ -122,17 +125,26 @@ public class MeerkatBoot implements SchedulingConfigurer{
 
 					.expressionHandler(webExpressionHandler())
 					
-					.antMatchers("/auth/onAfterLogin")
-					.fullyAuthenticated()
+					.antMatchers("/auth/onAfterLogin").fullyAuthenticated()
+					.antMatchers("/dashboard/**").fullyAuthenticated()
+					.antMatchers("/menu/**").fullyAuthenticated()
+					.antMatchers("/code/**").fullyAuthenticated()
 
-					//.antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					.antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
 					.antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
-					//.antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
+					.antMatchers(HttpMethod.POST, "/application/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					.antMatchers(HttpMethod.POST, "/task/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					.antMatchers(HttpMethod.POST, "/configfile/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					.antMatchers(HttpMethod.POST, "/provi/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
+					
+					.antMatchers(HttpMethod.GET, "/domain/**").access("hasRole('ROLE_TOMCAT_USER')")
 					.antMatchers(HttpMethod.GET, "/tomcat/**").access("hasRole('ROLE_TOMCAT_USER')")
+					.antMatchers(HttpMethod.GET, "/application/**").access("hasRole('ROLE_TOMCAT_USER')")
+					.antMatchers(HttpMethod.GET, "/task/**").access("hasRole('ROLE_TOMCAT_USER')")
+					.antMatchers(HttpMethod.GET, "/configfile/**").access("hasRole('ROLE_TOMCAT_USER')")
+					.antMatchers(HttpMethod.GET, "/provi/**").access("hasRole('ROLE_TOMCAT_USER')")
 
-					// .antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
-
-					.antMatchers("/dbmonitor/**").access("hasRole('ROLE_MONITOR_DB')")
+					.antMatchers("/monitor/**").access("hasRole('ROLE_MONITOR_ADMIN')")
 
 					.antMatchers(HttpMethod.POST, "/res/**").access("hasRole('ROLE_RES_ADMIN')")
 					.antMatchers(HttpMethod.GET, "/res/**").access("hasRole('ROLE_RES_USER')")

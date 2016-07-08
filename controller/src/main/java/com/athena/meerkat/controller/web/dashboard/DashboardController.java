@@ -21,6 +21,7 @@ import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
+import com.athena.meerkat.controller.web.monitoring.server.MonDataController;
 import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStat;
 import com.athena.meerkat.controller.web.monitoring.stat.MonUtilStatService;
 import com.athena.meerkat.controller.web.resources.services.DataSourceService;
@@ -53,6 +54,10 @@ public class DashboardController {
 	private UserService userService;
 	@Autowired
 	private MonUtilStatService monUtilStatService;
+	
+	@Autowired
+	private MonDataController monController;
+
 
 	@RequestMapping(value = "/get/stats", method = RequestMethod.GET)
 	@ResponseBody
@@ -126,5 +131,21 @@ public class DashboardController {
 		json.setList(viewmodels);
 		json.setTotal(logs.size());
 		return json;
+	}
+	
+	/**
+	 * <pre>
+	 * spring security 권한 설정때문에..
+	 * </pre>
+	 * @param json
+	 * @param monType
+	 * @param minsAgo
+	 * @return
+	 */
+	@RequestMapping(value = "/{monType}/{minsAgo}/all", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getServersMonData(GridJsonResponse json, @PathVariable String monType, @PathVariable Integer minsAgo) {
+		
+		return monController.getServersMonData(json, monType, minsAgo);
 	}
 }

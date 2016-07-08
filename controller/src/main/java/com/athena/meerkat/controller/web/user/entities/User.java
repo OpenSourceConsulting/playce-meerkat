@@ -81,8 +81,6 @@ public class User implements UserDetails {
 	@Column(name = "created_date")
 	private Date createdDate;
 
-	@Transient
-	private Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
 	@ManyToMany
 	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -95,15 +93,17 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		if (userRoles != null) {
 			for (UserRole userRole : userRoles) {
-				if (userRole != null && authorities.size() == 0) {
-					addAuthority(new SimpleGrantedAuthority(userRole.getName()));
+				if (userRole != null) {
+					authorities.add(new SimpleGrantedAuthority(userRole.getName()));
 				}
 			}
 		}
 
-		return this.authorities;
+		return authorities;
 	}
 
 	@Override
@@ -233,10 +233,6 @@ public class User implements UserDetails {
 
 	public User() {
 
-	}
-
-	public void addAuthority(SimpleGrantedAuthority authority) {
-		this.authorities.add(authority);
 	}
 
 	public List<UserRole> getUserRoles() {
