@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.junit.Ignore;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,8 +37,8 @@ public class UserRole implements Serializable {
 	private int Id;
 	@Column(name = "name")
 	private String name;
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonBackReference
+	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name = "user_multi_role", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private List<User> users;
 	@Transient
