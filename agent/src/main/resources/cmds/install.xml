@@ -41,6 +41,10 @@
 			<configuration home="${catalina.base}">
 			</configuration>
 		</cargo>
+		
+		<delete includeemptydirs="true">
+		    <fileset dir="${catalina.base}/webapps" includes="**/*"/>
+		</delete>
 	</target>
 	
 	<target name="check-catalina.home">
