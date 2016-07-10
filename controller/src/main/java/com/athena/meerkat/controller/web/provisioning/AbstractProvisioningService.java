@@ -246,6 +246,37 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 		return isSuccess;
 	}
 	
+	public List<String> runCommandWithLogs(ProvisionModel pModel, String cmdFileName) {
+
+		File jobDir = generateBuildProperties(pModel, null);
+		List<String> logs = null;
+		try {
+
+			/*
+			 * 1. copy cmd.xml & default.xml.
+			 */
+			copyCmds(cmdFileName, jobDir);
+
+			/*
+			 * 2. run cmd.
+			 */
+			logs = ProvisioningUtil.runAntTargetWithLogs(commanderDir, jobDir, "cmd.xml", null);
+			
+
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+			
+			throw new RuntimeException(e);
+
+		} finally {
+			LOGGER.debug(LOG_END);
+			MDC.remove("jobPath");
+			MDC.remove("serverIp");
+		}
+		
+		return logs;
+	}
+	
 	/**
 	 * <pre>
 	 * generate build-ssh.properties & build.properties in job path.

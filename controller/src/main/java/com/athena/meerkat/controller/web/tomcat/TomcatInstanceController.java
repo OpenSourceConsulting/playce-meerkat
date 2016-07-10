@@ -41,7 +41,6 @@ import com.athena.meerkat.controller.web.entities.DataSource;
 import com.athena.meerkat.controller.web.entities.DomainTomcatConfiguration;
 import com.athena.meerkat.controller.web.entities.Server;
 import com.athena.meerkat.controller.web.entities.TaskHistory;
-import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
@@ -53,6 +52,7 @@ import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceAppModel;
 import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceViewModel;
 
 /**
@@ -245,16 +245,12 @@ public class TomcatInstanceController {
 
 	@RequestMapping(value = "/{id}/apps", method = RequestMethod.GET)
 	public @ResponseBody GridJsonResponse getAppsByTomcat(GridJsonResponse json, @PathVariable Integer id) {
-		TomcatInstance tomcat = service.findOne(id);
-		if (tomcat != null) {
-			/* example */
-			// TODO idkjwon loading
-			List<TomcatApplication> domainApps = domainService.getApplicationListByDomain(tomcat.getDomainId());
-			List<TomcatApplication> tomcatApps = service.getApplicationByTomcat(tomcat.getId());
-			tomcatApps.addAll(domainApps);
-			json.setList(tomcatApps);
-			json.setTotal(tomcatApps.size());
-		}
+		
+		List<TomcatInstanceAppModel> tomcatApps = service.getApplicationByTomcat(id);
+		
+		json.setList(tomcatApps);
+		json.setTotal(tomcatApps.size());
+		
 		return json;
 	}
 

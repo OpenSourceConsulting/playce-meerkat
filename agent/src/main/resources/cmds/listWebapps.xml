@@ -1,0 +1,20 @@
+<project name="la -al webapps" basedir="." default="cmd">
+	
+	<!-- 
+	#########################################
+	# ls -al ${catalina.base}/webapps;
+	#########################################
+	-->
+	
+	<property file="${basedir}/build-ssh.properties" />
+	<property file="${basedir}/build.properties" />
+	
+
+	<target name="cmd">
+		
+		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
+				 command="export TIME_STYLE='long-iso'; ls -al ${catalina.base}/webapps;" trust="true" failonerror="true" />
+
+	</target>
+
+</project>

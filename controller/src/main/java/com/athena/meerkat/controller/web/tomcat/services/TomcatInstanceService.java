@@ -49,11 +49,14 @@ import com.athena.meerkat.controller.web.entities.TomcatApplication;
 import com.athena.meerkat.controller.web.entities.TomcatInstConfig;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
 import com.athena.meerkat.controller.web.monitoring.jmx.MonJmxService;
+import com.athena.meerkat.controller.web.provisioning.ProvisionModel;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.resources.repositories.DataSourceRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.ApplicationRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatConfigFileRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstConfigRepository;
 import com.athena.meerkat.controller.web.tomcat.repositories.TomcatInstanceRepository;
+import com.athena.meerkat.controller.web.tomcat.viewmodels.TomcatInstanceAppModel;
 
 /**
  * <pre>
@@ -101,6 +104,9 @@ public class TomcatInstanceService {
 	
 	@Autowired
 	private MonJmxService monJmxService;
+	
+	@Autowired
+	private TomcatProvisioningService proviService;
 
 	public TomcatInstanceService() {
 		
@@ -240,8 +246,47 @@ public class TomcatInstanceService {
 		return tomcatInstConfigRepo.findByTomcatInstance_Id(tomcatId);
 	}
 
-	public List<TomcatApplication> getApplicationByTomcat(int id) {
-		return appRepo.findByTomcatInstance_Id(id);
+	public List<TomcatInstanceAppModel> getApplicationByTomcat(int instanceId) {
+		
+		TomcatInstance tomcatInstance = findOne(instanceId);
+		DomainTomcatConfiguration tomcatConfig = getTomcatConfig(instanceId);
+		ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
+		
+		List<TomcatInstanceAppModel> apps = new ArrayList<TomcatInstanceAppModel>();
+		List<String> logs = proviService.runCommandWithLogs(pModel, "listWebapps.xml");
+		
+		boolean involve = false;
+		for (String line : logs) {
+			
+			if (involve && line.startsWith("  [sshexec]")) {
+				apps.add(createTomcatInstanceAppModel(line));
+			}
+			
+			if (involve == false && line.endsWith("..")) {
+				involve = true;
+			}
+		}
+		
+		return apps;
+	}
+	
+	private TomcatInstanceAppModel createTomcatInstanceAppModel(String line) {
+		TomcatInstanceAppModel model = new TomcatInstanceAppModel();
+		
+		int pos = line.indexOf("[sshexec]");
+		String[] tokens = line.substring(pos + 9).split(" ");
+		for (int i = 0; i < tokens.length; i++) {
+			System.out.print(tokens[i]);
+			System.out.print(",");
+		}
+		System.out.println("");
+		
+		model.setPerm(tokens[1]);
+		model.setOwn(tokens[3] + " " + tokens[4]);
+		model.setDate(tokens[tokens.length-3] + " " + tokens[tokens.length-2]);
+		model.setAppName(tokens[tokens.length-1]);
+		
+		return model;
 	}
 	
 	public TomcatInstance getTomcatInstance(int domainId, int serverId) {

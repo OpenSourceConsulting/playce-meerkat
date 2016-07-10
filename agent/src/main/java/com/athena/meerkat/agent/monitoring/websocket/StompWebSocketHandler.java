@@ -139,7 +139,7 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 					ServerInitialMonTask.ENABLE_MNITORING = true;
 					LOGGER.debug("MESSAGE instance size : {}", instanceConfigs.size());
 					
-				}else if (dataNode instanceof ObjectNode) {
+				} else if (dataNode instanceof ObjectNode) {
 					ObjectNode cmdObj = (ObjectNode)dataNode;
 					
 					JsonNode cmd = cmdObj.get("cmd");
@@ -149,6 +149,8 @@ public class StompWebSocketHandler extends TextWebSocketHandler {
 					} 
 					
 					if ("add_tomcat_instnace".equals(cmd.asText())) {
+						
+						//see MonJmxService.requestTomcatInstanceAdding(..)
 						LOGGER.info("cmd is 'add_tomcat_instnace'");
 						
 						addInstanceConfig(cmdObj);

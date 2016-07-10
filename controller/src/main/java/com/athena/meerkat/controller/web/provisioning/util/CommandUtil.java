@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +52,55 @@ public class CommandUtil {
 			}
 		});
 	}
+	
+	/**
+	 * <pre>
+	 * not loging, return logs.
+	 * </pre>
+	 * @param workingDir
+	 * @param cmds
+	 * @return logs.
+	 */
+	public static List<String> execAndReturnLogs(File workingDir, List<String> cmds){
+		
+		ProcessBuilder bld = new ProcessBuilder(cmds);
+		BufferedReader br = null;
+		Process p = null;
+		String result = null;
+		List<String> logs = new ArrayList<String>();
+		try {
+			
+			bld.redirectErrorStream(true);
+			bld.directory(workingDir);
+			p = bld.start();
+			
+			InputStream is = p.getInputStream();
+			InputStreamReader isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
+			
+			String line;
+			
+			while ((line = br.readLine()) != null) {
+				
+				logs.add(line);
+				LOGGER.info(line);
+			}
+			
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		} finally {
+			if(br != null){
+				try{ br.close(); }catch(IOException e){}
+			}
+			
+			if(p != null){
+				p.destroy();
+			}
+		}
+		
+		return logs;
+	}
+
 	/*
 	public static void execWaitFor(List<String> cmds){
 		CommandUtil.exec(cmds, false, new ProcessAction() {

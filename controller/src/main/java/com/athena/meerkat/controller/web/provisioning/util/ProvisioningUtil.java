@@ -71,6 +71,11 @@ public class ProvisioningUtil {
 		return Boolean.parseBoolean(isSuccess);
 	}
 	
+	protected static List<String> runAndReturnLogs(File commanderDir, List<String> cmds) {
+		
+		return CommandUtil.execAndReturnLogs(commanderDir, cmds);
+	}
+	
 	/**
 	 * <pre>
 	 * default.xml 의 send-cmd 실행.
@@ -80,19 +85,6 @@ public class ProvisioningUtil {
 	 * @throws Exception
 	 */
 	public static boolean sendCommand(File commanderDir, File jobDir) throws Exception {
-		/*
-		String execFile = "sendcmd.sh";
-		
-		if(OSUtil.isWindows()) {
-			execFile = "sendCommand.bat";
-		}
-		
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
-		cmds.add(jobDir.getAbsolutePath() + File.separator + "default.xml");
-		
-		return runCmds(commanderDir, cmds);
-		*/
 		
 		return runAntTarget(commanderDir, jobDir, "default.xml", "send-cmd");
 	}
@@ -107,20 +99,7 @@ public class ProvisioningUtil {
 	 * @throws Exception
 	 */
 	public static boolean runCommand(File commanderDir, File jobDir) throws Exception {
-		/*
-		String execFile = "runcmd.sh";
-		
-		if(OSUtil.isWindows()) {
-			execFile = "runCommand.bat";
-		}
-		
-		List<String> cmds = new ArrayList<String>();
-		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
-		cmds.add(jobDir.getAbsolutePath() + File.separator + "cmd.xml");
-		
-		
-		return runCmds(commanderDir, cmds);
-		*/
+
 		return runAntTarget(commanderDir, jobDir, "cmd.xml", null);
 	}
 	
@@ -149,6 +128,34 @@ public class ProvisioningUtil {
 		
 				
 		return runCmds(commanderDir, cmds);
+
+	}
+	
+	public static List<String> runAntTargetWithLogs(File commanderDir, File jobDir, String antScript, String targetName, String... args) throws Exception {
+		
+		String execFile = "runtarget.sh";
+		
+		if(OSUtil.isWindows()) {
+			execFile = "runTarget.bat";
+		}
+		
+		List<String> cmds = new ArrayList<String>();
+		cmds.add(commanderDir.getAbsolutePath() + File.separator + execFile);
+		cmds.add(jobDir.getAbsolutePath() + File.separator + antScript);
+		
+		if (targetName != null) {
+			cmds.add(targetName);
+		}
+		
+		if (args != null) {
+			for (String argument : args) {
+				LOGGER.debug("%%%%%%%%%%%%%% {}", argument);
+				cmds.add(argument);
+			}
+		}
+		
+				
+		return runAndReturnLogs(commanderDir, cmds);
 
 	}
 	
