@@ -45,6 +45,10 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
     
 
 ## Start Tomcat
-- meerkat 이 설치된 tomcat 서버를 시작해서 http://\[SERVER IP\]:\[PORT\]/console 로 이상없이 접속되면 끝.
+- meerkat 이 설치된 tomcat을 시작하기 전에 CATALINA_BASE/bin/setenv.sh 파일에 아래 옵션을 설정한다.
+```
+export CATALINA_OPTS="$CATALINA_OPTS -Dspring.config.name=meerkat -Dspring.profiles.active=dev"
+```
+- tomcat 서버를 시작해서 http://\[SERVER IP\]:\[PORT\]/console 로 이상없이 접속되면 끝.
 
  
