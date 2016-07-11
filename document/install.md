@@ -11,7 +11,7 @@
 [https://github.com/OpenSourceConsulting/athena-meerkat/releases](https://github.com/OpenSourceConsulting/athena-meerkat/releases)
 에서 아래 파일을 모두 다운로드 한다.
 
-- athena-meerkat-commander-\[최신버전\]-bin.tar.gz
+- athena-meerkat-commander-\[최신버전\]-bin.tar.gz (commander)
 - console.war
 - controller.war
 - down.zip
@@ -34,9 +34,17 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
 
 ## Controller 설정변경
 - controller/WEB-INF/classes/meerkat-dev.properties 파일의 아래 설정을 환경에 맞게 수정한다.
-- mysql db 연결 설정
+- 위에서 생성한 mysql db 연결 설정
     - **spring.datasource.url** : database 연결 url 을 명시한다.
     - **spring.datasource.username** : db username 을 명시한다.
     - **spring.datasource.password** : db user password를 명시한다.
+- commander 설치위치 설정
+    - **meerkat.commander.home** : commander 설치 위치를 지정한다.
+    - **meerkat.tomcat.down.url** : down.zip 이 설치되고 다운받을수 있는 http url 주소를 입력한다.
+    - **meerkat.jar.down.url** : controller.war 가 설치되고 서비스 되는 server ip & http port 부분만 수정한다.
+    
+
+## Start Tomcat
+- meerkat 이 설치된 tomcat 서버를 시작해서 http://\[SERVER IP\]:\[PORT\]/console 로 이상없이 접속되면 끝.
 
  
