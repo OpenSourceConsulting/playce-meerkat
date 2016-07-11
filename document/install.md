@@ -35,8 +35,8 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
 ## Controller 설정변경
 - controller/WEB-INF/classes/meerkat-dev.properties 파일의 아래 설정을 환경에 맞게 수정한다.
 - mysql db 연결 설정
-    - spring.datasource.url : database 연결 url 을 명시한다.
-    - spring.datasource.username=db username 을 명시한다.
-    - spring.datasource.password=db user password를 명시한다.
+    - **spring.datasource.url** : database 연결 url 을 명시한다.
+    - **spring.datasource.username** : db username 을 명시한다.
+    - **spring.datasource.password** : db user password를 명시한다.
 
  
