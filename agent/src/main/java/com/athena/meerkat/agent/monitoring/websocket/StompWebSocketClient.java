@@ -166,7 +166,15 @@ public class StompWebSocketClient implements InitializingBean{
 	 */
 	public void sendMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.serverDestHeader).body(message).build();
-		session.sendMessage(txtMessage); 
+		
+		try {
+			session.sendMessage(txtMessage); 
+		} catch (IllegalArgumentException e) {
+			if(e.getMessage().endsWith("after connection closed.")) {
+				disconnect();
+			}
+			throw e;
+		}
 		
 		LOGGER.debug("send server >> {}", message);
 	}
@@ -182,14 +190,30 @@ public class StompWebSocketClient implements InitializingBean{
 	 */
 	public void sendJmxMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.jmxDestHeader).body(message).build();
-		session.sendMessage(txtMessage); 
+		
+		try {
+			session.sendMessage(txtMessage); 
+		} catch (IllegalArgumentException e) {
+			if(e.getMessage().endsWith("after connection closed.")) {
+				disconnect();
+			}
+			throw e;
+		}
 		
 		LOGGER.debug("send jmx >> {}", message);
 	}
 	
 	public void sendFSMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.fsDestHeader).body(message).build();
-		session.sendMessage(txtMessage); 
+		
+		try {
+			session.sendMessage(txtMessage); 
+		} catch (IllegalArgumentException e) {
+			if(e.getMessage().endsWith("after connection closed.")) {
+				disconnect();
+			}
+			throw e;
+		}
 		
 		LOGGER.debug("send fs >> {}", message);
 	}
@@ -199,6 +223,16 @@ public class StompWebSocketClient implements InitializingBean{
 		this.session.sendMessage(msg);
 		this.session.close();
 		this.session = null;
+	}
+	
+	/**
+	 * <pre>
+	 * Return whether the connection is still open.
+	 * </pre>
+	 * @return
+	 */
+	public boolean isOpen() {
+		return this.session != null && this.session.isOpen();
 	}
 
 }

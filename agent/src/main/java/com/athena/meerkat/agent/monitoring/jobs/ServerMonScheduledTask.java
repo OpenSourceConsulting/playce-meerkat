@@ -46,6 +46,11 @@ public class ServerMonScheduledTask extends MonitoringTask {
 			return;
 		}
 		
+		if (webSocketClient.isOpen() == false) {
+			LOGGER.info("websocket is not connected.");
+			return;
+		}
+		
 		try {
 			CpuPerc cpu = SigarUtil.getCpuPerc();
 			Mem mem = SigarUtil.getMem();

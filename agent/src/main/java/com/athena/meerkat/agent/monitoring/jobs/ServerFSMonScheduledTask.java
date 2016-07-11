@@ -54,6 +54,11 @@ public class ServerFSMonScheduledTask extends MonitoringTask{
 			return;
 		}
 		
+		if (webSocketClient.isOpen() == false) {
+			LOGGER.info("websocket is not connected.");
+			return;
+		}
+		
     	try{
     		String root = null;
     		FileSystem[] fileSysList = SigarUtil.getFileSystemList();

@@ -88,6 +88,11 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 			return;
 		}
 		
+		if (webSocketClient.isOpen() == false) {
+			LOGGER.info("websocket is not connected.");
+			return;
+		}
+		
 		try {
 			ArrayNode tomcatConfigs = webSocketClient.getInstanceConfigs();//DomainTomcatConfiguration array
 
