@@ -40,7 +40,9 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
     - **spring.datasource.password** : db user password를 명시한다.
 - commander 설치위치 설정
     - **meerkat.commander.home** : commander 설치 위치를 지정한다.
+- tomcat 설치파일 download http url 설정
     - **meerkat.tomcat.down.url** : down.zip 이 설치되고 다운받을수 있는 http url 주소를 입력한다.
+- controller http url 설정
     - **meerkat.jar.down.url** : controller.war 가 설치되고 서비스 되는 server ip & http port 부분만 수정한다.
     
 
