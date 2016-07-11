@@ -1,5 +1,6 @@
 -- CREATE DATABASE  IF NOT EXISTS `athena_meerkat` /*!40100 DEFAULT CHARACTER SET utf8 */;
--- USE `athena_meerkat`;
+-- grant all privileges on athena_meerkat.* to meerkat@'%' identified by '<password>';
+USE `athena_meerkat`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
 -- Host: localhost    Database: athena_meerkat_local
