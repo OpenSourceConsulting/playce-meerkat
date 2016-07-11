@@ -1,0 +1,23 @@
+{
+	"text": ".",
+	"children": [{
+		"name": "ClusterDomain",
+		"hostName": null,
+		"ipaddress": null,
+		"status": 0,
+		"statusName": null,
+		"logFilePath": null,
+		"iconCls": "task-folder",
+		"expanded": true,
+		"children": [{
+			"name": "svr3",
+			"hostName": "meerkat-svr3",
+			"ipaddress": "192.168.0.157",
+			"status": 0,
+			"statusName": null,
+			"logFilePath": "G:\\project\\AthenaMeerkat\\.aMeerkat\\jobs\\192.168.0.157\\56\\build.log",
+			"iconCls": "task-folder",
+			"leaf": true
+		}]
+	}]
+}

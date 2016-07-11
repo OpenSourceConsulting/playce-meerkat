@@ -1,0 +1,7 @@
+ext.zip 파일을 [Project Home]/ext 폴더에 압축해제 하세요.
+
+
+[Packaging War]
+
+use package.war target in build.xml file.
+then will be created build/production/console.war file.

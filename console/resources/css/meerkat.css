@@ -1,0 +1,181 @@
+
+.osc-body {
+    background: #f5f5f5 !important;
+}
+
+.osc-status-valid {
+    background-image: url(../images/icons/fam/accept.png) !important;
+    padding-left: 25px !important;
+    background: transparent no-repeat 3px 0;
+}
+
+/**
+ * text cls
+ */
+.osc-bold {
+    font-weight: bold;
+}
+.osc-h3 {
+	margin: 15px 0px 5px 14px;
+	font-weight: bold;
+}
+.osc-panel-tip {
+	color: #CC2EFA;
+}
+
+/**
+ * icons cls
+ */
+.icon-grid {
+    background-image:url(../images/icons/fam/grid.png) !important;
+}
+.add {
+    background-image:url(../images/icons/fam/add.gif) !important;
+}
+.icon-list1 {
+    background-image:url(../images/icons/fam/application_view_list.png);
+}
+.icon-list2 {
+    background-image:url(../images/icons/fam/grid.png);
+}
+.icon-user {
+    background-image:url(../images/icons/fam/user.png);
+}
+.icon-delete {
+	background-image:url(../images/icons/fam/cross.gif);
+}
+.icon-edit {
+	background-image:url(../images/icons/fam/edit.png);
+}
+.icon-accept {
+	background-image:url(../images/icons/fam/accept.png);
+}
+.icon-run {
+	background-image:url(../images/icons/fam/play.png);
+}
+.icon-	 {
+	background-image:url(../images/icons/fam/stop.png);
+}
+.icon-preview {
+	background-image:url(../images/icons/fam/preview.png);
+}
+.icon-search {
+	background-image:url(../images/icons/fam/search.png);
+}
+.icon-tomcat {
+	background-image:url(../images/icons/fam/tomcat.gif);
+}
+.icon-menu {
+	background-image:url(../images/icons/fam/menu-show.gif);
+}
+.icon-refresh {
+	background-image:url(../images/icons/fam/refresh.png);
+}
+
+.icon-live-update  .x-tool-customType {
+	background-image:url(../images/icons/fam/live-update-icon.png);
+	opacity:1;
+}
+
+.img-loading {
+    background: url(../images/loading.gif) no-repeat;
+    background-position: left center;
+    background-position-x: 5px;
+	padding-left: 15px;
+}
+
+.img-success {
+    background: url(../images/icons/fam/saved.png) no-repeat;
+    background-position: left center;
+    background-position-x: 5px;
+	padding-left: 15px;
+}
+
+.img-fail {
+    background: url(../images/icons/fam/exclamation.gif) no-repeat;
+    background-position: left center;
+    background-position-x: 5px;
+	padding-left: 15px;
+}
+
+/*
+ * menu css
+ */
+.osc-menu .x-tree-node-text, .osc-menu .x-accordion-hd {
+    cursor: pointer;
+}
+
+/*
+ * Form css
+ */
+
+input[readonly], input[readonly="readonly"], select[readonly], select[readonly="readonly"] {
+	background-color: #f5f5f5;
+}
+.x-form-item-label-default {
+	color: #5d6d7e;
+}
+
+.osc-vform .x-form-item-label-default {
+	font-weight: bold;
+	color: #4b9cd7;
+}
+
+
+/*
+ * Grid css
+ */
+ td.x-action-col-cell img {
+	margin-left: 10px;
+ }
+ 
+ /*
+  * dashboard css
+  */
+.stats-label1, .stats-label2, .dash-title {
+	font-weight: bold; text-align: center; color: #878ea2;
+ }
+ 
+.stats-label1 {
+	font-size: 28px; 
+ }
+ 
+.stats-label2 {
+	font-size: 10px; 
+	text-transform: uppercase;
+ }
+ 
+.dash-title {
+	font-size: 16px;
+ }
+ 
+ /*
+  * session window css
+  */
+.pretty-json pre {
+   background-color: ghostwhite;
+   border: 1px solid silver;
+   padding: 10px 20px;
+   margin: 20px; 
+}
+.pretty-json .json-key {
+   color: brown;
+}
+.pretty-json .json-value {
+   color: navy;
+}
+.pretty-json .json-string {
+   color: olive;
+}
+
+.custom-button {
+	background: ghostwhite!important;
+	border: 1px solid silver !important;
+}
+
+/*
+ * log window css
+ */
+ .osc-logs {
+	color: #c1c1c1;
+ }

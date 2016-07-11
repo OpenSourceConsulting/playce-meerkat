@@ -1,0 +1,10 @@
+{
+	"total": 5, 
+	"list":[
+		{"serverName" : "CENTOS01", "monValue" : "92", "severity":"1" },
+		{"serverName" : "CENTOS02", "monValue" : "87", "severity":"2" },
+		{"serverName" : "CENTOS03", "monValue" : "75", "severity":"3" },
+		{"serverName" : "CENTOS04", "monValue" : "43", "severity":"4" },
+		{"serverName" : "CENTOS05", "monValue" : "24", "severity":"4" }
+	]
+}

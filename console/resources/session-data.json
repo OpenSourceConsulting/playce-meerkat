@@ -1,0 +1,12 @@
+{
+	"success":true,
+	"msg":null,
+	"data": {
+		"sessionKey": "0AE3EC93FF44E3C525B4351B77ABB2D5", 
+		"sessionData": {
+			"userName":"홍길동", 
+			"loginId":"kd.hong",
+			"loginDate":"2016-05-11 12:33:24"
+		}
+	}
+}

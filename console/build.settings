@@ -1,0 +1,7 @@
+{
+    "webBuild": {
+        "environment": "testing",
+        "clean": "on",
+        "publishPath": "C:/Users/Tran/Desktop/sencha-build"
+    }
+}
