@@ -1,7 +1,0 @@
-{
-	"total": 30, 
-	"list":[
-		{"name" : "ds1", "jdbcUrl" : "url111", "dbType" : "MySQL" },
-		{"name" : "ds2", "jdbcUrl" : "ur222", "dbType" : "MySQL" }
-	]
-}

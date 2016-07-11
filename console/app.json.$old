@@ -1,9 +1,0 @@
-{
-   "name": "webapp",
-   "requires": [],
-   "id": "b5d3e615-7028-4af6-832d-21ceeb251877",
-   "theme": "ext-theme-neptune",
-   "resources": [
-      "resources/css/meerkat.css"
-   ]
-}
