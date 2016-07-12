@@ -52,5 +52,6 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
 export CATALINA_OPTS="$CATALINA_OPTS -Dspring.config.name=meerkat -Dspring.profiles.active=dev"
 ```
 - tomcat 서버를 시작해서 http://\[SERVER IP\]:\[PORT\]/console 로 이상없이 접속되면 끝.
+- 초기 로그인 비밀번호 admin / admin
 
  
