@@ -1,4 +1,4 @@
--- CREATE DATABASE  IF NOT EXISTS `athena_meerkat` /*!40100 DEFAULT CHARACTER SET utf8 */;
+﻿-- CREATE DATABASE  IF NOT EXISTS `athena_meerkat` /*!40100 DEFAULT CHARACTER SET utf8 */;
 -- grant all privileges on athena_meerkat.* to meerkat@'%' identified by '<password>';
 USE `athena_meerkat`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
@@ -547,7 +547,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_TOMCAT_ADMIN'),(3,'ROLE_TOMCAT_USER'),(4,'ROLE_MONITOR_ADMIN'),(5,'ROLE_RES_ADMIN'),(6,'ROLE_RES_USER'),(7,'ROLE_USER_ADMIN'),(8,'ROLE_USER_USER'),;
+INSERT INTO `user_role` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_TOMCAT_ADMIN'),(3,'ROLE_TOMCAT_USER'),(4,'ROLE_MONITOR_ADMIN'),(5,'ROLE_RES_ADMIN'),(6,'ROLE_RES_USER'),(7,'ROLE_USER_ADMIN'),(8,'ROLE_USER_USER');
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
