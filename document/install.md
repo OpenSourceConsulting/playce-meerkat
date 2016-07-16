@@ -11,7 +11,7 @@
 [https://github.com/OpenSourceConsulting/athena-meerkat/releases](https://github.com/OpenSourceConsulting/athena-meerkat/releases)
 에서 아래 파일을 모두 다운로드 한다.
 
-- athena-meerkat-commander-\[최신버전\]-bin.tar.gz (commander)
+- athena-meerkat-commander-\[최신버전\]-bin.tar.gz (commander, agent 포함)
 - console.war
 - controller.war
 - down.zip
@@ -29,7 +29,7 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
 ```
 
 ## Installing 
-- athena-meerkat-commander-\[최신버전\]-bin.tar.gz 적당한 위치에 압축 해제
+- athena-meerkat-commander-\[최신버전\]-bin.tar.gz 을 meerkat 서버의 적당한 위치에 압축 해제
 - console.war, controller.war, down.zip 파일 모두 설치된 Tomcat의 CATALINA_BASE/webapps 에 압축해제
 
 ## Controller 설정변경
@@ -42,8 +42,9 @@ shell> mysql -umeerkat -p<password> athena_meerkat < db_init_script.sql
     - **meerkat.commander.home** : commander 설치 위치를 지정한다.
 - tomcat 설치파일 download http url 설정
     - **meerkat.tomcat.down.url** : down.zip 이 설치되고 다운받을수 있는 http url 주소를 입력한다.
-- controller http url 설정
-    - **meerkat.jar.down.url** : controller.war 가 설치되고 서비스 되는 server ip & http port 부분만 수정한다.
+- controller ip & http port 설정
+    - **meerkat.controller.host.port** : controller.war 가 설치되고 서비스 되는 server ip & http port 부분만 수정한다.
+    - meerkat agent 가 연결할 controller 의 주소이다.
     
 
 ## Start Tomcat
