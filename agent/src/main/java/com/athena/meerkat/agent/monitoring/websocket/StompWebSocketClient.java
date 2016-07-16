@@ -57,6 +57,9 @@ public class StompWebSocketClient implements InitializingBean{
 	@Value("${meerkat.agent.server.topic}")
 	private String topic;
 	
+	@Value("${meerkat.controller.host.port}")
+	private String controllerHostPort;
+	
 	@Value("${meerkat.agent.server.endpoint}")
 	private String endpoint;
 	
@@ -100,6 +103,7 @@ public class StompWebSocketClient implements InitializingBean{
 	public void afterPropertiesSet() throws Exception {
 		
 		webSocketHandler = new StompWebSocketHandler("subs_" + serverId, this, topic);
+		this.endpoint = "ws://" + controllerHostPort + this.endpoint;
 		connect();
 	}
 	

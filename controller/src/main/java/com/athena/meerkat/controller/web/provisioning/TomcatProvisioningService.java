@@ -94,8 +94,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
 	
-	@Value("${meerkat.jar.down.url}")
-	private String jarDownUrl;
+	@Value("${meerkat.jar.down.uri}")
+	private String jarDownUri;
 
 	@Autowired
 	private MonJmxService monJmxService;
@@ -647,7 +647,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
-				pModel.addProps("jar.down.url", (isUploaded)? jarDownUrl: tomcatDownUrl);
+				pModel.addProps("jar.down.url", (isUploaded)? "http://" + controllerServerPort + jarDownUri: tomcatDownUrl);
 				pModel.setLastTask(count == list.size());
 
 				sendCommand(pModel, "installLibs.xml", null);

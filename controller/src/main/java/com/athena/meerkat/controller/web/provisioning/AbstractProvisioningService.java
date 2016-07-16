@@ -105,6 +105,9 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 	@Value("${meerkat.dolly.jar.name}")
 	private String dollyAgentJarName;
 	
+	@Value("${meerkat.controller.host.port}")
+	protected String controllerServerPort;
+	
 	protected File commanderDir;
 	
 	private Configuration cfg;
@@ -318,6 +321,7 @@ public abstract class AbstractProvisioningService implements InitializingBean{
 		targetProps.setProperty("agent.name", 		agentFileName);
 		targetProps.setProperty("server.ant.home", 	agentDeployDir + "/" + agentFileName + "/apache-ant-1.9.6");
 		targetProps.setProperty("tomcat.down.url", 	tomcatDownUrl);
+		targetProps.setProperty("meerkat.controller.host.port", controllerServerPort);
 		
 		if (tomcatInstance != null) {
 			targetProps.setProperty("tomcat.instance.name",	tomcatInstance.getName());
