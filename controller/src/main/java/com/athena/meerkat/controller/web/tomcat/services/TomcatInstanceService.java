@@ -98,18 +98,18 @@ public class TomcatInstanceService {
 
 	@Autowired
 	private TomcatDomainService domainService;
-	
+
 	@Autowired
 	private TaskHistoryService taskService;
-	
+
 	@Autowired
 	private MonJmxService monJmxService;
-	
+
 	@Autowired
 	private TomcatProvisioningService proviService;
 
 	public TomcatInstanceService() {
-		
+
 	}
 
 	public Page<TomcatInstance> getList(Pageable pageable) {
@@ -119,7 +119,7 @@ public class TomcatInstanceService {
 	public List<TomcatInstance> getTomcatListByDomainId(int domainId) {
 		return repo.findByTomcatDomain_Id(domainId);
 	}
-	
+
 	public List<TomcatInstance> getTomcatListWillInstallByDomainId(int domainId) {
 		return repo.findByTomcatDomain_IdAndState(domainId, MeerkatConstants.TOMCAT_STATUS_NOTINSTALLED);
 	}
@@ -135,7 +135,7 @@ public class TomcatInstanceService {
 
 	public void saveList(List<TomcatInstance> entities) {
 		repo.save(entities);
-		
+
 	}
 
 	public TomcatInstance findOne(int id) {
@@ -201,11 +201,11 @@ public class TomcatInstanceService {
 
 	@Transactional
 	public void delete(TomcatInstance tomcat) {
-		
+
 		taskService.updateTomcatInstanceToNull(tomcat.getId());
-		
+
 		repo.delete(tomcat);
-		
+
 		monJmxService.deleteAll(tomcat.getId());
 		LOGGER.debug("deleted tomcat instance ({})", tomcat.getId());
 	}
@@ -215,7 +215,6 @@ public class TomcatInstanceService {
 		// return list;
 		return null;
 	}
-
 
 	public void saveState(TomcatInstance instance, int state) {
 		//repo.setState(instanceId, state);
@@ -247,32 +246,32 @@ public class TomcatInstanceService {
 	}
 
 	public List<TomcatInstanceAppModel> getApplicationByTomcat(int instanceId) {
-		
+
 		TomcatInstance tomcatInstance = findOne(instanceId);
 		DomainTomcatConfiguration tomcatConfig = getTomcatConfig(instanceId);
 		ProvisionModel pModel = new ProvisionModel(tomcatConfig, tomcatInstance, null);
-		
+
 		List<TomcatInstanceAppModel> apps = new ArrayList<TomcatInstanceAppModel>();
 		List<String> logs = proviService.runCommandWithLogs(pModel, "listWebapps.xml");
-		
+
 		boolean involve = false;
 		for (String line : logs) {
-			
+
 			if (involve && line.startsWith("  [sshexec]")) {
 				apps.add(createTomcatInstanceAppModel(line));
 			}
-			
+
 			if (involve == false && line.endsWith("..")) {
 				involve = true;
 			}
 		}
-		
+
 		return apps;
 	}
-	
+
 	private TomcatInstanceAppModel createTomcatInstanceAppModel(String line) {
 		TomcatInstanceAppModel model = new TomcatInstanceAppModel();
-		
+
 		int pos = line.indexOf("[sshexec]");
 		String[] tokens = line.substring(pos + 9).split(" ");
 		for (int i = 0; i < tokens.length; i++) {
@@ -280,48 +279,54 @@ public class TomcatInstanceService {
 			System.out.print(",");
 		}
 		System.out.println("");
-		
+
 		model.setPerm(tokens[1]);
 		model.setOwn(tokens[3] + " " + tokens[4]);
-		model.setDate(tokens[tokens.length-3] + " " + tokens[tokens.length-2]);
-		model.setAppName(tokens[tokens.length-1]);
-		
+		model.setDate(tokens[tokens.length - 3] + " " + tokens[tokens.length - 2]);
+		model.setAppName(tokens[tokens.length - 1]);
+
 		return model;
 	}
-	
+
 	public TomcatInstance getTomcatInstance(int domainId, int serverId) {
 		return repo.findByTomcatDomainIdAndServerId(domainId, serverId);
 	}
 
 	public void saveTomcatConfig(TomcatInstance tomcat, DomainTomcatConfiguration conf) {
+		DomainTomcatConfiguration domainConfig = domainService.getTomcatConfig(tomcat.getDomainId());
+		if (domainConfig == null) {
+			return;
+		}
 		List<TomcatInstConfig> tomcatConfs = new ArrayList<>();
 		if (conf != null) {
 			// get all fields in domain tomcat config
 			Field[] fields = DomainTomcatConfiguration.class.getDeclaredFields();
 			for (Field field : fields) {
+				String name = field.getName();
 				// check whether the config property is exist in read-only
 				// conf
 				// list
-				String name = field.getName();
 				if (Arrays.asList(MeerkatConstants.TOMCAT_INSTANCE_CONFIGS_CUSTOM).contains(name)) {
 					String value = "";
 					try {
 						field.setAccessible(true);
 						value = field.get(conf).toString();
+						//check whether the value is modified
+						if (!field.get(domainConfig).toString().equals(value)) {
+							TomcatInstConfig tomcatConf = tomcatInstConfigRepo.findByConfigNameAndTomcatInstance(name, tomcat);
+							if (tomcatConf != null) {
+								tomcatConf.setConfigValue(value);
+							} else {
+								tomcatConf = new TomcatInstConfig(tomcat, name, value);
+							}
+							tomcatConfs.add(tomcatConf);
+						}
 						field.setAccessible(false);
 					} catch (IllegalAccessException e) {
-						
+
 						LOGGER.error(e.toString(), e);
 						throw new RuntimeException(e);
 					}
-
-					TomcatInstConfig tomcatConf = tomcatInstConfigRepo.findByConfigNameAndTomcatInstance(name, tomcat);
-					if (tomcatConf != null) {
-						tomcatConf.setConfigValue(value);
-					} else {
-						tomcatConf = new TomcatInstConfig(tomcat, name, value);
-					}
-					tomcatConfs.add(tomcatConf);
 				}
 			}
 			tomcatInstConfigRepo.save(tomcatConfs);
