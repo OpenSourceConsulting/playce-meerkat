@@ -3,14 +3,13 @@
 	"thresholdOpCdId": 16,
 	"thresholdValue": 80,
 	"status": false,
-	"monFactorId": "cpu.used_per"
-},
-{
+	"monFactorId": "mem.used_per"
+},{
 	"alertItemCdId": 19,
 	"thresholdOpCdId": 16,
 	"thresholdValue": 80,
 	"status": false,
-	"monFactorId": "mem.used_per"
+	"monFactorId": "cpu.used_per"
 },
 {
 	"alertItemCdId": 20,
