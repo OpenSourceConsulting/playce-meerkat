@@ -171,6 +171,7 @@ public abstract class MeerkatConstants {
 	public static final String MON_FACTOR_CPU_USED_PER = "cpu.used_per";
 	public static final String MON_FACTOR_MEM_USED = "mem.used";
 	public static final String MON_FACTOR_DISK_USED = "disk.used";
+	public static final String MON_FACTOR_DISK_USED_PER = "disk.used_per";
 	public static final String MON_FACTOR_MEM_USED_PER = "mem.used_per";
 	public static final String MON_FACTOR_TI_RUN = "ti.run"; // tomcat instance
 																// running

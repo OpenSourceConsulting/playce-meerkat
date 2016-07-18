@@ -96,11 +96,15 @@ public class MonUtilStatService {
 			//			}
 
 			for (MonAlertConfig setting : alertSettings) {
-				if (alert.getMonFactorId().equals(setting.getMonFactorId())) {
-					if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_GREATER_THAN_ID) {
-						alert.setAlertStatus(alert.getMonValue() > setting.getThresholdValue());
-					} else if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_LESS_THAN_ID) {
-						alert.setAlertStatus(alert.getMonValue() < setting.getThresholdValue());
+				if (setting.isStatus()) {
+					if (alert.getMonFactorId().equals(setting.getMonFactorId())
+							|| ((alert.getMonFactorId().contains("/") && setting.getMonFactorId() != null && setting.getMonFactorId().contains(
+									MeerkatConstants.MON_FACTOR_DISK_USED_PER)))) { //second condition is for disk
+						if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_GREATER_THAN_ID) {
+							alert.setAlertStatus(alert.getMonValue() > setting.getThresholdValue());
+						} else if (setting.getThresholdOpCdId() == MeerkatConstants.ALERT_ITEM_OPPERATOR_LESS_THAN_ID) {
+							alert.setAlertStatus(alert.getMonValue() < setting.getThresholdValue());
+						}
 					}
 				}
 			}
