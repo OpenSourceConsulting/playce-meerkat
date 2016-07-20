@@ -129,6 +129,8 @@ public class MeerkatBoot implements SchedulingConfigurer{
 					.antMatchers("/dashboard/**").fullyAuthenticated()
 					.antMatchers("/menu/**").fullyAuthenticated()
 					.antMatchers("/code/**").fullyAuthenticated()
+					.antMatchers("/user/my").fullyAuthenticated()
+					.antMatchers("/user/my/save").fullyAuthenticated()
 
 					.antMatchers(HttpMethod.POST, "/domain/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
 					.antMatchers(HttpMethod.POST, "/tomcat/**").access("hasRole('ROLE_TOMCAT_ADMIN')")
