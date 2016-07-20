@@ -440,7 +440,6 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		configFileService.saveConfigXmlFile(serverXmlFile, tomcatConfig);
 	}
 
-	@Transactional
 	public void updateTomcatInstanceConfig(TomcatInstance tomcat, WebSocketSession session) {
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcat.getId());
 		if (tomcatConfig == null) {

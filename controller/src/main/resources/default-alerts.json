@@ -15,6 +15,7 @@
 	"alertItemCdId": 20,
 	"thresholdOpCdId": 16,
 	"thresholdValue": 80,
+	"monFactorId": "disk.used_per",	
 	"status": false
 },
 {
