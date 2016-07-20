@@ -41,6 +41,15 @@ public class DatagridServerGroupController {
 		return json;
 	}
 
+	@RequestMapping(value = "/group/list/notempty", method = RequestMethod.GET)
+	@ResponseBody
+	public GridJsonResponse getNotEmptyList(GridJsonResponse json) {
+		List<DatagridServerGroup> result = service.getNotEmptyGroups();
+		json.setList(result);
+		json.setTotal(result.size());
+		return json;
+	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getByGroup(GridJsonResponse json, Integer groupId) {

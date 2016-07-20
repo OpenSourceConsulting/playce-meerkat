@@ -212,8 +212,8 @@ public class TomcatInstanceController {
 			conf.setCatalinaHome(cataHome + conf.getTomcatVersionNm());
 			service.saveTomcatConfig(tomcat, conf);
 		}
-
 		proviService.updateTomcatInstanceConfig(tomcat, null);
+		json.setData(tomcat.getTomcatDomain().getId());//use to refresh tree menu in frontend.
 		return json;
 	}
 

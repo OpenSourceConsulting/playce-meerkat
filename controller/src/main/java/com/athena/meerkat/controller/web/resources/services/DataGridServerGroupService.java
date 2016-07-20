@@ -22,9 +22,9 @@ import com.athena.meerkat.controller.web.resources.repositories.DatagridServersR
 
 @Service
 public class DataGridServerGroupService {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataGridServerGroupService.class);
-	
+
 	@Autowired
 	DatagridServerGroupRepository groupRepo;
 	@Autowired
@@ -109,11 +109,11 @@ public class DataGridServerGroupService {
 		}
 
 		LOGGER.debug("session server list property : {}", sb.toString());
-		
+
 		LOGGER.debug("session server list property : {}", sb.toString());
-		
+
 		LOGGER.debug("session server list property : {}", sb.toString());
-		
+
 		return sb.toString();
 	}
 
@@ -150,4 +150,14 @@ public class DataGridServerGroupService {
 		save(servers);
 	}
 
+	public List<DatagridServerGroup> getNotEmptyGroups() {
+		List<DatagridServerGroup> all = groupRepo.findAll();
+		List<DatagridServerGroup> result = new ArrayList<DatagridServerGroup>();
+		for (DatagridServerGroup group : all) {
+			if (group.getDatagridServers() != null && group.getDatagridServers().size() > 0) {
+				result.add(group);
+			}
+		}
+		return result;
+	}
 }
