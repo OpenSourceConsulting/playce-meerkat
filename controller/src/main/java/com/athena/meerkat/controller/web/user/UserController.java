@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.athena.meerkat.controller.web.common.model.SimpleJsonResponse;
+import com.athena.meerkat.controller.web.common.util.WebUtil;
 import com.athena.meerkat.controller.web.user.entities.User;
 import com.athena.meerkat.controller.web.user.entities.UserRole;
 import com.athena.meerkat.controller.web.user.services.UserService;
@@ -82,11 +83,12 @@ public class UserController {
 	public List<UserRole> getRoleList() {
 		return service.getRoleList();
 	}
-
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/saveWithRoles", method = RequestMethod.POST)
 	@ResponseBody
-	public SimpleJsonResponse saveUser(SimpleJsonResponse json, User user, String retypePassword, String userRoleStrIds) {
+	public SimpleJsonResponse saveUserWithRoles(SimpleJsonResponse json, User user, String retypePassword, String userRoleStrIds) {
 
+		
 		if (user.getId() == 0) {
 			User existingUser = service.getUser(user.getUsername());
 			if (existingUser != null) {
@@ -95,6 +97,9 @@ public class UserController {
 				return json;
 			}
 			user.setCreatedDate(new Date());
+		} else {
+			User dbUser = service.findUser(user.getId());
+			user.setLastLoginDate(dbUser.getLastLoginDate());
 		}
 
 		if (!user.getPassword().equals(retypePassword)) {
@@ -117,6 +122,28 @@ public class UserController {
 		user.setPassword(passEncoder.encode(user.getPassword()));
 		user.setUserRoles(roles);
 
+		service.saveUser(user);
+		return json;
+	}
+	
+	
+	@RequestMapping(value = "/my", method = RequestMethod.GET)
+	@ResponseBody
+	public SimpleJsonResponse getMyUser(SimpleJsonResponse json) {
+		
+		User user = WebUtil.getLoginUser();
+
+		json.setData(user);
+		return json;
+	}
+	
+	@RequestMapping(value = "/my/save", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleJsonResponse saveMyProfile(SimpleJsonResponse json, User user) {
+
+		User dbUser = service.findUser(user.getId());
+		user.setLastLoginDate(dbUser.getLastLoginDate());
+		
 		service.saveUser(user);
 		return json;
 	}

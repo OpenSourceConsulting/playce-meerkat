@@ -31,7 +31,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,16 +38,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.athena.meerkat.controller.MeerkatConstants;
-import com.athena.meerkat.controller.common.MeerkatUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.athena.meerkat.controller.web.common.converter.JsonDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * <pre>
@@ -76,9 +72,13 @@ public class User implements UserDetails {
 	private String password;
 	@Column(name = "email")
 	private String email;
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	@Column(name = "last_login_date")
 	private Date lastLoginDate;
-	@Column(name = "created_date")
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@Column(name = "created_date", updatable = false)
 	private Date createdDate;
 
 
@@ -193,7 +193,7 @@ public class User implements UserDetails {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
+/*
 	public String getLastLoginDateString() {
 		return MeerkatUtils.dateTimeToString(lastLoginDate, MeerkatConstants.DATE_TIME_FORMATTER);
 	}
@@ -201,7 +201,7 @@ public class User implements UserDetails {
 	public String getCreatedDateString() {
 		return MeerkatUtils.dateTimeToString(createdDate, MeerkatConstants.DATE_TIME_FORMATTER);
 	}
-
+*/
 	public String getUserRolesString() {
 		String userRolesStr = "";
 		for (UserRole role : this.userRoles) {
