@@ -152,10 +152,15 @@ public class TomcatInstanceService {
 		LOGGER.debug("domainId : {}, instanceId: {}", domainId, instanceId);
 
 		DomainTomcatConfiguration conf = domainService.getTomcatConfig(domainId);
-
-		if (conf == null) {
-			LOGGER.debug("DomainTomcatConfiguration is null of domainId({})", domainId);
-			return null;
+		DomainTomcatConfiguration clonedConf = null;
+		try {
+			if (conf == null) {
+				LOGGER.debug("DomainTomcatConfiguration is null of domainId({})", domainId);
+				return null;
+			}
+			clonedConf = conf.clone();
+		} catch (CloneNotSupportedException e1) {
+			e1.printStackTrace();
 		}
 
 		// get configurations that are different to domain tomcat config
@@ -163,7 +168,7 @@ public class TomcatInstanceService {
 		if (changedConfigs != null) {
 			for (TomcatInstConfig changedConf : changedConfigs) {
 				try {
-					BeanUtils.setProperty(conf, changedConf.getConfigName(), changedConf.getConfigValue());
+					BeanUtils.setProperty(clonedConf, changedConf.getConfigName(), changedConf.getConfigValue());
 				} catch (Exception e) {
 					LOGGER.error(e.toString(), e);
 					throw new RuntimeException(e);
@@ -171,9 +176,9 @@ public class TomcatInstanceService {
 			}
 		}
 
-		conf.setTomcatInstanceId(instanceId);
+		clonedConf.setTomcatInstanceId(instanceId);
 
-		return conf;
+		return clonedConf;
 
 	}
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +78,7 @@ public class TomcatDomainService {
 	private AlertSettingService alertService;
 
 	private TomcatProvisioningService provService;
-	
+
 	@Autowired
 	private TomcatVersionsProperties tomcatVersionsProps;
 
@@ -135,11 +134,10 @@ public class TomcatDomainService {
 	@Transactional
 	public TomcatConfigFile updateContextXml(int domainId) {
 
-		
 		List<DataSource> dsList = getDatasources(domainId);
 		return updateContextXml(domainId, dsList);
 	}
-	
+
 	@Transactional
 	public TomcatConfigFile updateContextXml(int domainId, List<DataSource> dsList) {
 
@@ -177,7 +175,7 @@ public class TomcatDomainService {
 
 		int domainId = datasources.get(0).getTomcatDomainId();
 		DomainTomcatConfiguration tomcatConfig = getTomcatConfig(domainId);
-		
+
 		TomcatConfigFile contextFile = confFileService.getLatestContextXmlFile(domainId);
 		List<DataSource> dsList = getDatasources(domainId);
 
@@ -216,7 +214,8 @@ public class TomcatDomainService {
 	}
 
 	public DomainTomcatConfiguration getTomcatConfig(int domainId) {
-		return domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
+		DomainTomcatConfiguration conf = domainTomcatConfRepo.findByTomcatDomain_Id(domainId);
+		return conf;
 	}
 
 	@Transactional
@@ -283,30 +282,30 @@ public class TomcatDomainService {
 		*/
 
 	}
-	
+
 	/**
 	 * <pre>
 	 * dsId 를 제외한 context.xml를 만들고 업데이트 한다.
 	 * </pre>
+	 * 
 	 * @param domainId
 	 * @param dsId
 	 * @return
 	 */
 	public TomcatConfigFile rmUpdateContextXml(int domainId, int dsId) {
 		List<DataSource> dsList = getDatasources(domainId);
-		
+
 		for (Iterator<DataSource> iterator = dsList.iterator(); iterator.hasNext();) {
 			DataSource dataSource = iterator.next();
-			
+
 			if (dsId == dataSource.getId()) {
 				iterator.remove();
 			}
-			
+
 		}
-		
+
 		return updateContextXml(domainId, dsList);
 	}
-	
 
 	public List<Server> getAvailableServers(int domainId) {
 		return serverRepo.getAvailableServersByDomain(domainId);

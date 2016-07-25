@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "domain_tomcat_configuration")
 @JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer" })
-public class DomainTomcatConfiguration implements Serializable {
+public class DomainTomcatConfiguration implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -5567525824190633125L;
 
@@ -258,6 +258,11 @@ public class DomainTomcatConfiguration implements Serializable {
 
 	public void setTomcatVersionCd(int tomcatVersionCd) {
 		this.tomcatVersionCd = tomcatVersionCd;
+	}
+
+	@Override
+	public DomainTomcatConfiguration clone() throws CloneNotSupportedException {
+		return (DomainTomcatConfiguration) super.clone();
 	}
 
 	@PrePersist
