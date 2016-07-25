@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,19 +29,19 @@ import com.athena.meerkat.controller.web.tomcat.services.TomcatInstanceService;
 @Controller
 @RequestMapping("/configfile")
 public class TomcatConfigFileController {
-	
+
 	@Autowired
 	private TomcatDomainService domainService;
-	
+
 	@Autowired
 	private CommonCodeHandler commonHandler;
-	
+
 	@Autowired
 	private TomcatInstanceService tomcatService;
-	
+
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
-	
+
 	@Autowired
 	private TaskHistoryService taskService;
 
@@ -78,18 +75,21 @@ public class TomcatConfigFileController {
 		}
 
 		conf.setContent(content);
-		conf = tomcatConfigFileService.saveConfigXmlFile(conf, td.getDomainTomcatConfig());
-		
+		if (td != null) {
+			conf = tomcatConfigFileService.saveConfigXmlFile(conf, td.getDomainTomcatConfig());
+		} else {
+			conf = tomcatConfigFileService.saveConfigXmlFile(conf, tcinst.getTomcatDomain().getDomainTomcatConfig());
+		}
+
 		// create task
 		TaskHistory task = taskService.createConfigXmlUpdateTask(conf.getTomcatDomain().getId(), conf.getFileTypeCdId());
-		
-		Map<String, Object> resultMap= new HashMap<String, Object>();
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("configFileId", conf.getId());
 		resultMap.put("task", task);
-		
-		
+
 		json.setData(resultMap);
-		
+
 		return json;
 	}
 
