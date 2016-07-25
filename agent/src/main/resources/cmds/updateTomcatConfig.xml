@@ -21,7 +21,7 @@
 			 <entry key="am.redirect.port"    	value="${am.redirect.port}" operation="${am.conf.op}" />
 			 <entry key="am.rmi.registry.port"  value="${am.rmi.registry.port}" operation="${am.conf.op}" />
 			 <entry key="am.rmi.server.port" 	value="${am.rmi.server.port}" 	operation="${am.conf.op}" />
-			 <entry key="am.session.timeout" 	value="${am.session.timeout}" 	operation="${am.conf.op}" />
+			 <entry key="am.session.timeout" 	value="${am.ssion.timeout}" 	operation="${am.conf.op}" />
 		</propertyfile>
 
 	</target>

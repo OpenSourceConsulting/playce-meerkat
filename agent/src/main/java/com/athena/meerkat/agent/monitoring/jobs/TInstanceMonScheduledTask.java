@@ -162,6 +162,11 @@ public class TInstanceMonScheduledTask extends MonitoringTask {
 			monitorJDBC(mbeanServerConn, tomcatInstanceId, tomcatVersionCd);
 
 		} catch (ConnectException e) {
+			
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.error(e.toString(), e);
+			}
+			
 			closeJmx(jmxc, tomcatInstanceId);
 
 		} catch (IOException e) {
