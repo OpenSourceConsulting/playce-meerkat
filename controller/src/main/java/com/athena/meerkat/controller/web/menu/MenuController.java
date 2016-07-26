@@ -38,14 +38,14 @@ public class MenuController {
 		boolean isLeaf = false;
 		String prefixMeuId = "";
 		List<HashMap<String, Object>> nodes = new ArrayList<>();
-		
-	    if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
+
+		if (node.equals("tomcatMng") || node.equals("mon_tomcats")) {
 			List<TomcatDomain> domains = domainService.getAll();
 			isLeaf = false;
 			prefixMeuId = node + "_domain_";
 			for (TomcatDomain d : domains) {
 
-				nodes.add(createMenuMap(d.getName(), prefixMeuId + d.getId(), isLeaf));
+				nodes.add(createMenuMap(d.getName(), prefixMeuId + d.getId(), isLeaf, null));
 			}
 		} else if ((node.indexOf("mon_tomcats") >= 0 || node.indexOf("tomcatMng_domain") >= 0) && node.indexOf("_domain_") > 0) {
 			Integer objId = Integer.parseInt(node.substring(node.indexOf("_domain_") + "_domain_".length()));
@@ -54,11 +54,11 @@ public class MenuController {
 			prefixMeuId = node + "_tomcat_";
 			tomcats = tomcatService.getTomcatListByDomainId(objId);
 			for (TomcatInstance t : tomcats) {
-				
+
 				DomainTomcatConfiguration domainConfig = tomcatService.getTomcatConfig(t.getId());
-				
-				String menuText = t.getName() + "(" + domainConfig.getHttpPort()  + ")";
-				nodes.add(createMenuMap(menuText, prefixMeuId + t.getId(), isLeaf));
+
+				String menuText = t.getName() + "(" + domainConfig.getHttpPort() + ")";
+				nodes.add(createMenuMap(menuText, prefixMeuId + t.getId(), isLeaf, t.getState()));
 			}
 		} else if (node.equals("mon_servers")) {
 			List<Server> servers = new ArrayList<>();
@@ -67,21 +67,32 @@ public class MenuController {
 			servers = serverService.getList();
 			for (Server s : servers) {
 
-				nodes.add(createMenuMap(s.getName(), prefixMeuId + s.getId(), isLeaf));
+				nodes.add(createMenuMap(s.getName(), prefixMeuId + s.getId(), isLeaf, null));
 			}
 		} else {
 
 		}
-		
+
 		return nodes;
 	}
-	
-	private HashMap<String, Object> createMenuMap(String text, String menuId, boolean isLeaf) {
+
+	/**
+	 * 
+	 * @param text
+	 * @param menuId
+	 * @param isLeaf
+	 * @param state
+	 *            tomcat instance state
+	 * @return
+	 */
+	private HashMap<String, Object> createMenuMap(String text, String menuId, boolean isLeaf, Integer state) {
 		HashMap<String, Object> n = new HashMap<String, Object>();
 		n.put("text", text);
 		n.put("id", menuId);
 		n.put("leaf", isLeaf);
-		
+		if (state != null) {
+			n.put("state", state);
+		}
 		return n;
 	}
 }
