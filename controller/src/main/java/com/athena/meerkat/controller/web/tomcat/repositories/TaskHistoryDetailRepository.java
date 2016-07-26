@@ -19,8 +19,7 @@ import com.athena.meerkat.controller.web.entities.TaskHistoryDetail;
 @Repository
 public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDetail, Integer> {
 
-	@Query("SELECT thd From TaskHistoryDetail thd WHERE thd.taskHistoryId = ?1 "
-			+ "ORDER BY thd.tomcatDomainId asc, thd.tomcatInstanceId asc")
+	@Query("SELECT thd From TaskHistoryDetail thd WHERE thd.taskHistoryId = ?1 " + "ORDER BY thd.tomcatDomainId asc, thd.tomcatInstanceId asc")
 	List<TaskHistoryDetail> getTaskHistoryDetailList(int taskHistoryId);
 
 	//List<TaskHistoryDetail> findByTaskHistoryIdAndTomcatInstanceIdNotNullOrderByTomcatDomainIdAscTomcatInstanceIdAsc(int taskHistoryId);
@@ -35,5 +34,9 @@ public interface TaskHistoryDetailRepository extends JpaRepository<TaskHistoryDe
 
 	Integer countByTomcatDomainId(Integer domainId);
 
+	Integer countByTomcatDomainIdAndTomcatInstanceNameContaining(Integer domainId, String tomcatInstName);
+
 	List<TaskHistoryDetail> findAllByOrderByFinishedTimeDesc(Pageable p);
+
+	List<TaskHistoryDetail> findByTomcatDomainIdAndTomcatInstanceNameContainingOrderByFinishedTimeDesc(Integer domainId, String tomcatInstName, Pageable p);
 }

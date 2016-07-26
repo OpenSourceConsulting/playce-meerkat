@@ -49,7 +49,7 @@ public class TaskHistoryService {
 
 	@Autowired
 	private TomcatInstanceService tomcatService;
-	
+
 	@Autowired
 	private ServerService serverService;
 
@@ -81,12 +81,13 @@ public class TaskHistoryService {
 
 		return createTomcatInstanceTask(tomcatInstanceId, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
 	}
-	
+
 	/**
 	 * <pre>
 	 * TomcatInstance 의 lastTaskHistoryId 로 등록될 task 생성.
 	 * - tomcat list grid 에서 최근 작업 로그를 조회할수 있음.
 	 * </pre>
+	 * 
 	 * @param tomcatInstanceId
 	 * @param taskCdId
 	 * @return
@@ -157,7 +158,7 @@ public class TaskHistoryService {
 		}
 
 		detailRepo.save(taskDetails);
-		
+
 		task.setTaskHistoryDetails(taskDetails);
 
 		return task;
@@ -169,12 +170,12 @@ public class TaskHistoryService {
 
 		return createTaskDetails(tomcats, taskCdId);
 	}
-	
+
 	public TaskHistory createTaskByServer(int serverId, int taskCdId) {
-		
+
 		Server server = serverService.getServer(serverId);
 		TomcatInstance tomcatInstance = new TomcatInstance();
-		
+
 		//tomcatInstance.setTomcatDomain(new TomcatDomain());
 		tomcatInstance.setServer(server);
 		tomcatInstance.setName(server.getName());
@@ -194,8 +195,8 @@ public class TaskHistoryService {
 	}
 
 	public void updateTaskLogFile(int taskHistoryId, TomcatInstance tomcatInstance, File jobDir) {
-		
-		Integer tomcatInstanceId = (tomcatInstance == null)? null: tomcatInstance.getId();
+
+		Integer tomcatInstanceId = (tomcatInstance == null) ? null : tomcatInstance.getId();
 
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setLogFilePath(jobDir.getAbsolutePath() + File.separator + "build.log");
@@ -207,8 +208,8 @@ public class TaskHistoryService {
 
 	public void updateTaskStatus(int taskHistoryId, TomcatInstance tomcatInstance, int status) {
 
-		Integer tomcatInstanceId = (tomcatInstance == null)? null: tomcatInstance.getId();
-		
+		Integer tomcatInstanceId = (tomcatInstance == null) ? null : tomcatInstance.getId();
+
 		TaskHistoryDetail taskDetail = detailRepo.findByTaskHistoryIdAndTomcatInstanceId(taskHistoryId, tomcatInstanceId);
 		taskDetail.setStatus(status);
 
@@ -333,6 +334,14 @@ public class TaskHistoryService {
 		Pageable p = new PageRequest(0, dashboardLogsCount);
 		List<TaskHistoryDetail> details = detailRepo.findAllByOrderByFinishedTimeDesc(p);
 		return details;
+	}
+
+	public List<TaskHistoryDetail> getAllTaskHistoryDetailsByDomainAndTomcatInstName(Integer domainId, String tomcatInstName, Pageable p) {
+		return detailRepo.findByTomcatDomainIdAndTomcatInstanceNameContainingOrderByFinishedTimeDesc(domainId, tomcatInstName, p);
+	}
+
+	public int getAllTaskHistoryDetailsByDomainAndTomcatInstNameCount(Integer domainId, String tomcatInstName) {
+		return detailRepo.countByTomcatDomainIdAndTomcatInstanceNameContaining(domainId, tomcatInstName);
 	}
 }
 //end of TaskHistoryService.java

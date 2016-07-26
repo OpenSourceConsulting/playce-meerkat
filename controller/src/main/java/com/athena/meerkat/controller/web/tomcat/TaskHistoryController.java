@@ -46,7 +46,7 @@ public class TaskHistoryController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private TomcatInstanceService tomcatService;
 
@@ -71,7 +71,7 @@ public class TaskHistoryController {
 
 		if (taskDetails.size() > 0) {
 			domains = new ArrayList<TaskDetailViewModel>();
-			
+
 			TaskDetailViewModel domainModel = null;
 			for (TaskHistoryDetail taskHistoryDetail : taskDetails) {
 
@@ -99,38 +99,37 @@ public class TaskHistoryController {
 
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/create/tomcat/{tomcatInstanceId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse createTomcatInstanceTask(SimpleJsonResponse jsonRes, @PathVariable Integer tomcatInstanceId, int taskCdId) {
 
 		TaskHistory task = service.createTomcatInstanceTask(tomcatInstanceId, taskCdId);
 		TaskHistoryDetail taskDetail = task.getTaskHistoryDetails().get(0);
-		
+
 		jsonRes.setData(taskDetail);
 
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/create/tomcats/{taskCdId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse createTomcatInstanceTasks(SimpleJsonResponse jsonRes, @PathVariable Integer taskCdId, @RequestBody List<TomcatInstance> tomcatIds) {
-		
-		
+
 		List<TomcatInstance> tomcats = new ArrayList<TomcatInstance>();
 		for (TomcatInstance t : tomcatIds) {
 			tomcats.add(tomcatService.findOne(t.getId()));
 		}
-		
+
 		TaskHistory task = service.createTaskDetails(tomcats, taskCdId);
-		
+
 		tomcatService.saveList(tomcats);// update lastTaskHistoryId.
-		
+
 		jsonRes.setData(task);
 
 		return jsonRes;
 	}
-	
+
 	@RequestMapping(value = "/create/agent", method = RequestMethod.POST)
 	@ResponseBody
 	public SimpleJsonResponse createAgentTask(SimpleJsonResponse jsonRes, int serverId, int taskCdId) {
@@ -181,18 +180,25 @@ public class TaskHistoryController {
 	@RequestMapping(value = "/list/domain/{domainId}", method = RequestMethod.GET)
 	@ResponseBody
 	public GridJsonResponse getByDomain(GridJsonResponse jsonRes, @PathVariable Integer domainId, @RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "limit", required = false) Integer limit) {
+			@RequestParam(value = "limit", required = false) Integer limit, String tomcatInstName) {
 		Pageable p = new PageRequest(page - 1, limit);
 
 		List<TaskDetailViewModel> viewmodels = new ArrayList<>();
-		List<TaskHistoryDetail> list = service.getAllTaskHistoryDetailsByDomain(domainId, p);
+		List<TaskHistoryDetail> list = new ArrayList<>();
+		if (tomcatInstName == null || tomcatInstName.isEmpty()) {
+			list = service.getAllTaskHistoryDetailsByDomain(domainId, p);
+			jsonRes.setTotal(service.getAllTaskHistoryDetailsByDomainCount(domainId));
+		} else {
+			list = service.getAllTaskHistoryDetailsByDomainAndTomcatInstName(domainId, tomcatInstName, p);
+			jsonRes.setTotal(service.getAllTaskHistoryDetailsByDomainAndTomcatInstNameCount(domainId, tomcatInstName));
+		}
 		for (TaskHistoryDetail detail : list) {
 			TaskDetailViewModel viewmodel = new TaskDetailViewModel(detail);
 			viewmodel.setUsername(userService.findUser(viewmodel.getUserId()).getUsername());
 			viewmodels.add(viewmodel);
 		}
 		jsonRes.setList(viewmodels);
-		jsonRes.setTotal(service.getAllTaskHistoryDetailsByDomainCount(domainId));
+
 		return jsonRes;
 	}
 

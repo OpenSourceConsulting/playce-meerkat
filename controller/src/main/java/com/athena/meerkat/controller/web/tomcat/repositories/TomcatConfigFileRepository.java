@@ -26,7 +26,7 @@ public interface TomcatConfigFileRepository extends
 	// List<TomcatConfigFile> getVersions(@Param("domainId") int domainId,
 	// @Param("type") String type);
 
-	@Query(value = "select cf from TomcatConfigFile cf where cf.tomcatDomain.id =:domainId and cf.fileTypeCdId = :fileTypeCdId order by cf.version desc")
+	@Query(value = "select cf from TomcatConfigFile cf where cf.tomcatDomain.id =:domainId and cf.tomcatInstance is null and cf.fileTypeCdId = :fileTypeCdId order by cf.version desc")
 	List<TomcatConfigFile> getConfiFileOrderByVersionDesc(
 			@Param("domainId") int domainId, @Param("fileTypeCdId") int fileTypeCdId);
 
