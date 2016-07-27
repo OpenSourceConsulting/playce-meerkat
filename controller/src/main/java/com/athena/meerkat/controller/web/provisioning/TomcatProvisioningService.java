@@ -84,22 +84,22 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 	@Autowired
 	private ApplicationService appService;
-	
+
 	@Autowired
 	private TomcatConfigFileService confFileService;
-	
+
 	@Autowired
 	private ServerService serverService;
-	
+
 	@Value("${meerkat.jdbc.driver.mysql}")
 	private String mysqlDriverFile;
-	
+
 	@Value("${meerkat.jar.down.uri}")
 	private String jarDownUri;
 
 	@Autowired
 	private MonJmxService monJmxService;
-	
+
 	@Autowired
 	private AgentProvisioningService agentProviService;
 
@@ -136,6 +136,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 	 * <pre>
 	 * 실패 task 를 재실행한다.
 	 * </pre>
+	 * 
 	 * @param taskHistoryDetailId
 	 */
 	public void rework(int taskHistoryDetailId) {
@@ -149,60 +150,60 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 		if (MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_INSTALL == taskHistory.getTaskCdId()) {
 			installSingleTomcatInstance(taskDetail.getTomcatInstance(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL == taskHistory.getTaskCdId()) {
-			
+
 			uninstallTomcatInstance(taskDetail.getTomcatInstanceId(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_TOMCAT_CONFIG_UPDATE == taskHistory.getTaskCdId()) {
-			
+
 			updateTomcatInstanceConfig(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), true);
-			
+
 		} else if (MeerkatConstants.TASK_CD_TOMCAT_START == taskHistory.getTaskCdId()) {
-			
+
 			startTomcatInstance(taskDetail.getTomcatInstance().getId(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_TOMCAT_STOP == taskHistory.getTaskCdId()) {
-			
+
 			stopTomcatInstance(taskDetail.getTomcatInstance().getId(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_SERVER_XML_UPDATE == taskHistory.getTaskCdId()) {
-			
+
 			TomcatConfigFile confFile = confFileService.getLatestServerXmlFile(taskDetail.getTomcatDomainId());
-			
+
 			updateXml(taskDetail.getTomcatInstance().getId(), confFile.getId(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_CONTEXT_XML_UPDATE == taskHistory.getTaskCdId()) {
-			
+
 			TomcatConfigFile confFile = confFileService.getLatestContextXmlFile(taskDetail.getTomcatDomainId());
-			
+
 			updateXml(taskDetail.getTomcatInstance().getId(), confFile.getId(), taskHistory.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_WAR_DEPLOY == taskHistory.getTaskCdId()) {
-			
+
 			TomcatApplication app = appService.getApplicationByTask(taskHistory.getId());
-			
+
 			deployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app.getId());
-			
+
 		} else if (MeerkatConstants.TASK_CD_WAR_UNDEPLOY == taskHistory.getTaskCdId()) {
-			
+
 			TomcatApplication app = appService.getApplicationByTask(taskHistory.getId());
-			
+
 			undeployWar(taskDetail.getTomcatInstance().getId(), taskHistory.getId(), app);
 		} else if (MeerkatConstants.TASK_CD_JDBC_MYSQL_INSTALL == taskHistory.getTaskCdId()) {
-			
+
 			installJar(taskDetail.getTomcatInstance().getId(), mysqlDriverFile, taskHistory.getId(), false);
-			
+
 		} else if (MeerkatConstants.TASK_CD_AGENT_INSTALL == taskHistory.getTaskCdId()) {
-			
+
 			Server server = serverService.getServerBySSHIPAddress(taskDetail.getIpaddress());
-			
+
 			agentProviService.installAgent(server, taskHistory.getId(), null);
-			
+
 		} else if (MeerkatConstants.TASK_CD_AGENT_REINSTALL == taskHistory.getTaskCdId()) {
-			
+
 			Server server = serverService.getServerBySSHIPAddress(taskDetail.getIpaddress());
-			
+
 			agentProviService.reinstallAgent(server, taskHistory.getId(), null);
 		}
 
@@ -251,7 +252,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				monJmxService.requestTomcatInstanceAdding(tomcatInstance.getServer(), tomcatInstance.getId(), tomcatConfig);
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, dsList, true);
@@ -296,13 +297,12 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 				 * 2. install agent
 				 */
 				isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "deploy-agent") && isSuccess;
-				
+
 				if (isSuccess) {
 					server.setAgentInstalled(isSuccess);
 					serverService.save(server);
 				}
 			}
-			
 
 			/*
 			 * 3. send cmd.xml and run cmd.xml .
@@ -310,7 +310,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 			isSuccess = ProvisioningUtil.sendCommand(commanderDir, jobDir) && isSuccess;
 
 			if (isSuccess) {
-				
+
 				/*
 				 * 4. update server.xml & context.xml
 				 */
@@ -322,9 +322,8 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 				if (pModel.getSessionServerGroupId() > 0) {
 					isSuccess = ProvisioningUtil.runDefaultTarget(commanderDir, jobDir, "send-script") && isSuccess;
 				}
-				
+
 			}
-			
 
 			if (isSuccess) {
 				instanceService.saveState(pModel.getTomcatInstance(), MeerkatConstants.TOMCAT_STATUS_INSTALLED);
@@ -346,7 +345,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		}
 
 	}
-	
+
 	public void updateTomcatInstanceConfig(int tomcatInstanceId, int taskHistoryId, boolean changeRMI) {
 
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
@@ -458,11 +457,14 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		boolean isSuccess = runCommand(new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null), "startTomcat.xml", null);
-		
-		if(isSuccess == false){
+
+		if (isSuccess == false) {
 			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_START_FAIL);
-			instanceService.save(tomcatInstance);// update state.
+
+		} else {
+			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 		}
+		instanceService.save(tomcatInstance);// update state.
 	}
 
 	public void stopTomcatInstance(int instanceId, int taskHistoryId) {
@@ -474,11 +476,13 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		DomainTomcatConfiguration tomcatConfig = instanceService.getTomcatConfig(tomcatInstance.getDomainId(), instanceId);
 
 		boolean isSuccess = runCommand(new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null), "stopTomcat.xml", null);
-		
-		if(isSuccess == false){
+
+		if (isSuccess == false) {
 			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_STOP_FAIL);
-			instanceService.save(tomcatInstance);// update state.
+		} else {
+			tomcatInstance.setState(MeerkatConstants.TOMCAT_STATUS_SHUTDOWN);
 		}
+		instanceService.save(tomcatInstance);// update state.
 	}
 
 	public void deployWar(int tomcatInstanceId, int taskHistoryId, int applicationId) {
@@ -646,7 +650,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.addProps("install.jar.name", installJarName);
-				pModel.addProps("jar.down.url", (isUploaded)? "http://" + controllerServerPort + jarDownUri: tomcatDownUrl);
+				pModel.addProps("jar.down.url", (isUploaded) ? "http://" + controllerServerPort + jarDownUri : tomcatDownUrl);
 				pModel.setLastTask(count == list.size());
 
 				sendCommand(pModel, "installLibs.xml", null);
@@ -657,16 +661,16 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		}
 
 	}
-	
+
 	public void uninstallTomcatInstance(int tomcatInstanceId, int taskHistoryId) {
 		TomcatInstance tomcatInstance = instanceService.findOne(tomcatInstanceId);
 
 		List<TomcatInstance> singleList = new ArrayList<TomcatInstance>();
 		singleList.add(tomcatInstance);
-		
+
 		uninstallTomcatInstanceList(tomcatInstance.getDomainId(), taskHistoryId, singleList);
 	}
-	
+
 	public void uninstallTomcatInstanceList(int domainId, int taskHistoryId, List<TomcatInstance> list) {
 
 		DomainTomcatConfiguration tomcatConfig = domainService.getTomcatConfig(domainId);
@@ -674,7 +678,7 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 		if (list == null) {
 			list = instanceService.getTomcatListByDomainId(domainId);
 		}
-		
+
 		taskService.createTaskDetails(list, MeerkatConstants.TASK_CD_TOMCAT_INSTANCE_UNINSTALL);
 
 		if (tomcatConfig == null) {
@@ -686,25 +690,25 @@ public class TomcatProvisioningService extends AbstractProvisioningService {
 
 			int count = 1;
 			for (TomcatInstance tomcatInstance : list) {
-				
+
 				monJmxService.requestTomcatInstanceRemoving(tomcatInstance.getServer(), tomcatInstance.getId());
 
 				ProvisionModel pModel = new ProvisionModel(taskHistoryId, tomcatConfig, tomcatInstance, null);
 				pModel.setLastTask(count == list.size());
 
 				runCommand(pModel, "uninstallTomcatInstance.xml", null);
-				
+
 				instanceService.delete(tomcatInstance);
 				count++;
 			}
-			
+
 			TomcatDomain domain = domainService.getDomain(domainId);
 			if (domain.getTomcatInstancesCount() == 0) {
 				domain.setScouterAgentInstallPath(null);
-				
+
 				domainService.save(domain);
 			}
-			
+
 		} else {
 			LOGGER.warn("tomcat instances is empty!!");
 		}
