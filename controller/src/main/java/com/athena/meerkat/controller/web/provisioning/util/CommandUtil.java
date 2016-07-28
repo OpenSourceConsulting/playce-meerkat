@@ -23,7 +23,7 @@ public class CommandUtil {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommandUtil.class);
 	
-	private static final String[] ERROR_LOGS = new String[]{"BUILD FAILED", "[sshexec] Error", "[sshexec] Caught exception:"};// except "[sshexec] Remote command failed", 
+	private static final String[] ERROR_LOGS = new String[]{"BUILD FAILED", "[sshexec] Error", "[sshexec] Caught exception:", "Exception"};// except "[sshexec] Remote command failed", 
 	
 	public static String execWithLog(File workingDir, List<String> cmds){
 		

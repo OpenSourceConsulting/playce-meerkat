@@ -9,11 +9,11 @@
 	<property file="${basedir}/build.properties" />
 		
 	
-	<!--
-	<property name="replace.file" value="${catalina.base}/env.sh" />
-	-->
-	<property name="replace.file" value="G://env.sh" />
 	
+	<property name="replace.file" value="${catalina.base}/env.sh" />
+	<!--
+	<property name="replace.file" value="G://env.sh" />
+	-->
 	<property name="match1" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-Ddolly\.properties=.+</property>
 	<property name="match2" >^export CATALINA_OPTS=\"\$CATALINA_OPTS \-javaagent:.+/dolly-agent/lib/.+</property>
 

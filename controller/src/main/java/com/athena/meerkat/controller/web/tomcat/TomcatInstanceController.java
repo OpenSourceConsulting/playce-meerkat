@@ -98,7 +98,6 @@ public class TomcatInstanceController {
 			json.setSuccess(false);
 			json.setMsg("Tomcat is already started.");
 		} else {
-
 			proviService.startTomcatInstance(id, taskHistoryId);
 			json.setData(MeerkatConstants.TOMCAT_STATUS_RUNNING);
 			json.setMsg("Tomcat is started.");
