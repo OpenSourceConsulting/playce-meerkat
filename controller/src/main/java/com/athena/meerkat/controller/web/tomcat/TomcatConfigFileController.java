@@ -1,4 +1,4 @@
-	package com.athena.meerkat.controller.web.tomcat;
+package com.athena.meerkat.controller.web.tomcat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +21,7 @@ import com.athena.meerkat.controller.web.entities.TaskHistory;
 import com.athena.meerkat.controller.web.entities.TomcatConfigFile;
 import com.athena.meerkat.controller.web.entities.TomcatDomain;
 import com.athena.meerkat.controller.web.entities.TomcatInstance;
+import com.athena.meerkat.controller.web.provisioning.TomcatProvisioningService;
 import com.athena.meerkat.controller.web.tomcat.services.TaskHistoryService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatConfigFileService;
 import com.athena.meerkat.controller.web.tomcat.services.TomcatDomainService;
@@ -41,6 +42,9 @@ public class TomcatConfigFileController {
 
 	@Autowired
 	private TomcatConfigFileService tomcatConfigFileService;
+
+	@Autowired
+	private TomcatProvisioningService proviService;
 
 	@Autowired
 	private TaskHistoryService taskService;
@@ -83,11 +87,14 @@ public class TomcatConfigFileController {
 
 		// create task
 		TaskHistory task = taskService.createConfigXmlUpdateTask(conf.getTomcatDomain().getId(), conf.getFileTypeCdId());
-
+		if (td != null) {
+			proviService.updateXml(td.getId(), conf.getId(), task.getId(), td.getTomcatInstances());
+		} else if (tcinst != null) {
+			proviService.updateXml(tcinst.getId(), conf.getId(), task.getId());
+		}
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("configFileId", conf.getId());
 		resultMap.put("task", task);
-
 		json.setData(resultMap);
 
 		return json;
