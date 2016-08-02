@@ -74,9 +74,9 @@ Ext.define('webapp.view.DatagridServerGroupForm', {
 							xtype: 'gridpanel',
 							flex: 4,
 							forceFit: true,
-							itemId: 'sessionServerGrid',
+							itemId: 'targetServerGrid',
 							name:'servers',
-							
+							emptyText:"No data.",
 							columns: [
 								{
 									xtype: 'checkcolumn',

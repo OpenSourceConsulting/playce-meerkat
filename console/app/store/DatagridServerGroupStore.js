@@ -4,7 +4,7 @@
 
 Ext.define('webapp.store.DatagridServerGroupStore', {
     extend: 'Ext.data.Store',
-
+	alias: 'store.DatagridServerGroupStore',
     requires: [
         'webapp.model.DatagridServerGroupModel',
         'Ext.data.proxy.Ajax',

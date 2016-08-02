@@ -26,11 +26,18 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
         },
         "ticWizard": {
             changewindow: 'onWindowChangeWindow'
-        }
+        },
+		"ticWizard #keywordField": {
+			specialkey: 'onFilteringServer'
+		}
     },
 	
 	onStep1Activate: function(component, eOpts) {
         component.down("[name=catalinaHome]").setWidth(400);
+		var form = component.down("#domainForm");
+		//reload session server group
+		form.down("[name='serverGroup']").getStore().getProxy().url = GlobalData.urlPrefix + "res/datagrid/group/list/notempty";
+		form.down("[name='serverGroup']").getStore().load();
     },
 
     onStep2Activate: function(component, eOpts) {
@@ -55,7 +62,7 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
     },
 
     onDSCreateButtonClick: function(button, e, eOpts) {
-                Ext.create("widget.DatasourceWindow").show();
+        Ext.create("widget.DatasourceWindow").show();
     },
 
     onNextButtonClick: function(button, e, eOpts) {
@@ -176,17 +183,19 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
 		var isWizardSave = button.up('window').down('#stepTitle').isVisible();
 
         if(s.length === 0) {
-		
-			var amsg = "Datasource를 선택해주세요.";
+			var amsg = "";
 			if(isWizardSave){
 				amsg = "다음에 설정하시겠습니까?";
+				MUtils.confirm(amsg, function(btn, text){
+					if (btn == 'yes'){
+						me.doNext(button, layout);
+					}
+				});
 			}
-		
-            MUtils.confirm(amsg, function(btn, text){
-                if (isWizardSave && btn == 'yes'){
-                    me.doNext(button, layout);
-                }
-            });
+			else {
+				amsg = "Datasource를 선택해주세요.";
+				MUtils.showWarn(amsg);
+			}
             return;
         }
 
@@ -272,12 +281,16 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
 					var task = response.data;
 					if(task.id > 0){
 						me.installTomcats(selected, task.id);
-						MUtils.showTaskWindow(task);
-					}
-					
-					if(hidden){
-						webapp.app.getController("MenuController").loadTomcatMenu(Domain.id);
-						Ext.getCmp('associatedTomcatGridView').getStore().load();
+						MUtils.showTaskWindow(task, function(){
+							if(hidden){
+								webapp.app.getController("MenuController").loadTomcatMenu(GlobalData.lastSelectedMenuId);
+								var url = GlobalData.urlPrefix + "domain/tomcatlist";
+								var store = Ext.getCmp('associatedTomcatGridView').getStore();
+								store.getProxy().url = url;
+								store.getProxy().extraParams = {"domainId":GlobalData.lastSelectedMenuId};
+								store.load();
+							}
+						});
 					}
 				}
 				else {
@@ -329,6 +342,22 @@ Ext.define('webapp.controller.TomcatInstWizardController', {
                 }
             });
 	    });
-	}
+	},
+	
+	onFilteringServer: function(field, e, eOpts) {
+        if(e.getKey() === e.ENTER){
+            var url = GlobalData.urlPrefix + "user/search";
+			var store = field.up("gridpanel").getStore();
+			var url = GlobalData.urlPrefix + "res/server/list";
+			store.getProxy().url = url;
+			store.load(
+			{
+				url: url,
+				params: {
+					"keyword": field.getValue()	
+				}
+			});
+        }
+    }
 
 });

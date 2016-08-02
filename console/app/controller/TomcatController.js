@@ -136,16 +136,40 @@ Ext.define('webapp.controller.TomcatController', {
 	onBtnTomcatConfSaveClick: function(button, e, eOpts) {
 		var tabs = Ext.getCmp('tomcatTabs');
 		var form  = tabs.down("#tomcatForm");
-		form.getForm().baseParams = {"tomcatInstanceId": GlobalData.lastSelectedMenuId};
+		var me = this;
+		var tomcatId =  GlobalData.lastSelectedMenuId;
+		form.getForm().baseParams = {"tomcatInstanceId":tomcatId};
         form.getForm().submit({
 			url: GlobalData.urlPrefix + "tomcat/instance/conf/save",
             submitEmptyText: false,
             waitMsg: 'Saving Data...',
 			success: function(formBasic, action){
+				var response = Ext.decode(action.response.responseText);
 				button.setVisible(false);
                 tabs.down("#btnTomcatConfEdit").setVisible(true);
 				formBasic.getFields().each (function (field) {
 					field.setReadOnly (true); 
+				});
+				
+				//reload menutree
+				var domainId = response.data;
+				var tree = Ext.getCmp('menuTreePanel');
+				var domainNode = tree.getStore().getNodeById('tomcatMng_domain_' + domainId);
+				var tomcatNode = domainNode.findChild('id','tomcatMng_domain_' + domainId + "_tomcat_" + tomcatId, true);
+				webapp.app.getController("MenuController").reloadChildMenu(tree, 'tomcatMng_domain_' + domainId);
+				tree.getSelectionModel().select(tomcatNode);
+				//reload tomcat info
+				var tomcatInfoForm = Ext.getCmp("tomcatInstanceContainer").down("#tomcatForm");
+				me.displayTomcatInstance(tomcatInfoForm, tomcatId, function(data){
+					if (data.state === 8 || data.state === 23) {
+						Ext.getCmp("btnTomcatStart").disable();
+						Ext.getCmp("btnTomcatStop").enable();
+						//Ext.getCmp("btnTomcatRestart").enable();
+					}else if(data.state === 7 || data.state === 22) {
+						Ext.getCmp("btnTomcatStart").enable();
+						Ext.getCmp("btnTomcatStop").disable();
+						//Ext.getCmp("btnTomcatRestart").disable();
+					}
 				});
 			}			
 		});	
@@ -207,11 +231,11 @@ Ext.define('webapp.controller.TomcatController', {
 						Ext.create("widget.logViewWindow", {'taskDetailId' : taskDetail.id, closeCallback: function(){
 							var form = Ext.getCmp('tomcatInstanceContainer').down("#tomcatForm");						
 							me.displayTomcatInstance(form, id, function(data){
-								if (data.state == GlobalData.tomcatStateRunning) {
+								if (data.state === 8 || data.state === 23) {
 									Ext.getCmp("btnTomcatStart").disable();
 									Ext.getCmp("btnTomcatStop").enable();
 									//Ext.getCmp("btnTomcatRestart").enable();
-								}else {
+								}else if(data.state === 7 || data.state === 22) {
 									Ext.getCmp("btnTomcatStart").enable();
 									Ext.getCmp("btnTomcatStop").disable();
 									//Ext.getCmp("btnTomcatRestart").disable();
@@ -293,11 +317,16 @@ Ext.define('webapp.controller.TomcatController', {
 		store.load();
     },
 	
-	uninstallTomcat: function (tomcatId) {
-	
+	uninstallTomcat: function (tomcatId, domainId) {
 		var me = this;
-		Ext.MessageBox.confirm('Confirm', '설치된 Tomcat Instance를 삭제하시겠습니까?', function(btn){
+		Ext.MessageBox.confirm('Confirm', '설치된 Tomcat Instance를 삭제하시겠습니까? <br/><br/><label><input type="checkbox" id="deleteOnlyDB" /> DB 데이타만 삭제</label>', function(btn){
             if(btn == "yes"){
+			
+				if (document.getElementById('deleteOnlyDB').checked){
+					me.deleteTomcat(tomcatId, domainId);
+					return;
+				}
+			
 				Ext.Ajax.request({
 					url: GlobalData.urlPrefix + "/task/create/uninstall/" + tomcatId,
 					method: 'POST',
@@ -316,8 +345,15 @@ Ext.define('webapp.controller.TomcatController', {
 							});
 							 
 							 MUtils.showTaskWindow(task, function(){
-								webapp.app.getController("MenuController").loadTomcatMenu(Domain.id);
+								webapp.app.getController("MenuController").loadTomcatMenu(domainId);
+								Ext.getCmp('associatedTomcatGridView').getStore().getProxy().extraParams = {domainId: domainId};
 								Ext.getCmp('associatedTomcatGridView').getStore().load();
+								//jump to parent domain
+								var domainNodeId = 'tomcatMng_domain_'  + domainId;
+								webapp.app.getController("MenuController").selectNode(domainNodeId);
+								
+								var centerContainer = Ext.getCmp("subCenterContainer");
+								centerContainer.layout.setActiveItem("DomainContainer");
 							 });
 						 }
 					}
@@ -326,30 +362,31 @@ Ext.define('webapp.controller.TomcatController', {
 		});
 
 	},
-	/*
+	
 	deleteTomcat: function(tomcatId, domainId) {
 		var url = GlobalData.urlPrefix + "tomcat/instance/delete";
-		webapp.app.getController("globalController").ajaxRequest(url, {"id": tomcatId}, "POST", function(json){
+		webapp.app.getController("globalController").ajaxRequest(url, {"id": tomcatId}, "POST", function(json){		
 			webapp.app.getController("MenuController").loadTomcatMenu(domainId);
-			Ext.getCmp("associatedTomcatGridView").getStore().reload({params:{domainId:domainId}});
-			//redirect to parent domain if the current view is in tomcat instance level
-			GlobalData.lastSelectedMenuId = domainId;
-			var centerContainer = Ext.getCmp("subCenterContainer");
-			centerContainer.layout.setActiveItem("DomainContainer");
+			var store = Ext.getCmp('associatedTomcatGridView').getStore();
+			store.getProxy().url = GlobalData.urlPrefix + "domain/tomcatlist";
+			store.getProxy().extraParams = {
+				domainId: domainId
+			}
+			store.load();
 		},null);
 	},
-	*/
+	
 	initTomcatInstanceContainerView: function (tomcatId) {
 		//reset tab active index 
 		var container = Ext.getCmp("TomcatInstanceContainerView");
 		container.down("tabpanel").setActiveItem(0);
 		var form = Ext.getCmp('tomcatInstanceContainer').down("#tomcatForm");
 		this.displayTomcatInstance(form, tomcatId, function(data){
-			if (data.state == GlobalData.tomcatStateRunning) {
-				Ext.getCmp("btnTomcatStart").disable();
-				Ext.getCmp("btnTomcatStop").enable();
-				//Ext.getCmp("btnTomcatRestart").enable();
-			}else {
+			if (data.state === 8 || data.state === 23) {
+						Ext.getCmp("btnTomcatStart").disable();
+						Ext.getCmp("btnTomcatStop").enable();
+						//Ext.getCmp("btnTomcatRestart").enable();
+			}else if(data.state === 7 || data.state === 22) {
 				Ext.getCmp("btnTomcatStart").enable();
 				Ext.getCmp("btnTomcatStop").disable();
 				//Ext.getCmp("btnTomcatRestart").disable();
@@ -381,6 +418,12 @@ Ext.define('webapp.controller.TomcatController', {
 				if(response.success === true) {
 					//reload grid
 					Ext.getCmp("associatedTomcatGridView").getStore().reload();
+					//reload tree menu
+					var domainId = GlobalData.lastSelectedMenuId;
+					var tree = Ext.getCmp('menuTreePanel');
+					var domainNode = tree.getStore().getNodeById('tomcatMng_domain_' + domainId);
+					webapp.app.getController("MenuController").reloadChildMenu(tree, 'tomcatMng_domain_' + domainId);
+					tree.getSelectionModel().select(domainNode);
 					button.up("window").close();
 				}
 			},

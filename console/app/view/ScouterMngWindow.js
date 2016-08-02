@@ -179,6 +179,8 @@ Ext.define('webapp.view.ScouterMngWindow', {
                 //var resData = Ext.decode(resp.responseText).data;
 				console.log('saved scouterAgentInstallPath.');
 				me.close();// window close.
+				//after installing scouter successfully, refresh domain info
+				webapp.app.getController("DomainController").loadDomainInfo(GlobalData.lastSelectedMenuId);
             }
         });
 	}

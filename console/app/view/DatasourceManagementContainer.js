@@ -28,6 +28,7 @@ Ext.define('webapp.view.DatasourceManagementContainer', {
     items: [
         {
             xtype: 'gridpanel',
+			emptyText:"No data.",
             region: 'north',
             split: true,
             height: 300,
@@ -305,6 +306,7 @@ Ext.define('webapp.view.DatasourceManagementContainer', {
 							id: 'dsTomcatInstanceGrid',
 							title: '사용중 서버',
 							forceFit: true,
+							emptyText:"No data.",
 							store: 'TomcatInstanceListStore',
 							columns: [
 								{

@@ -4,7 +4,7 @@
 var MSG_HOST_NM='Host name';
 var MSG_TI_STATUS='상태';//tomcat instance 상태
 var MSG_IP_ADDRESS='IP 주소';
-var MSG_HTTP_PORT='Http Port';
+var MSG_PORTS='Ports';
 
 Ext.define('webapp.view.TomcatInstanceForm', {
     extend: 'Ext.form.Panel',
@@ -65,7 +65,7 @@ Ext.define('webapp.view.TomcatInstanceForm', {
 				{
 					xtype: 'displayfield',
 					name :'tomcatPorts',
-					fieldLabel: MSG_HTTP_PORT,
+					fieldLabel: MSG_PORTS,
 					width: 320
 				}
 			]

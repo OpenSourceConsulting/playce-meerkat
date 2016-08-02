@@ -45,6 +45,7 @@ Ext.define('webapp.controller.DatagridServerController', {
         grid.getStore().load();
 		grid.getSelectionModel().deselectAll();
 		Ext.getCmp("datagridGroupTab").setVisible(false);
+		container.down("#messageField").setVisible(true);
     },
 
     onDatagridGroupTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
@@ -99,7 +100,7 @@ Ext.define('webapp.controller.DatagridServerController', {
 	showServerGroupWindow: function(type, id, isEditGroupInfo) {
 		var title = "New session server group";
 		var window = Ext.create("widget.datagridservergroupwindow");
-    	var grid = window.down("#sessionServerGrid");
+    	var grid = window.down("#targetServerGrid");
 		var serverListUrl = GlobalData.urlPrefix + "res/server/list";
 		var serverStore = Ext.create('Ext.data.JsonStore',{
 			storeId: 'serverWindowStore',
@@ -194,6 +195,9 @@ Ext.define('webapp.controller.DatagridServerController', {
 					var groupGrid = Ext.getCmp("dataGridServerGroupGrid");
 					var store = groupGrid.getStore();
 					store.reload();
+					//hide detail panel and show message to choose different group
+					Ext.getCmp("datagridGroupTab").setVisible(false);
+					groupGrid.up("container").down("#messageField").setVisible(true);
 				});
 			}
 		});

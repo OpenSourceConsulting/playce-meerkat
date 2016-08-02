@@ -50,6 +50,9 @@ Ext.define('webapp.controller.ServerManagementController', {
         "#testServerBtn": {
             click: 'onTestServerBtnClick'
         },
+		"#serverTestSSHConnectionBtn": {
+			click: 'onTestServerBtnClick'
+		},
         "#submitServerBtn": {
             click: 'onSubmitServerBtnClick'
         },
@@ -137,6 +140,13 @@ Ext.define('webapp.controller.ServerManagementController', {
     },
 
     onServerEditBtnClick: function(button, e, eOpts) {
+		var selectedRecords=Ext.getCmp('serverGrid').getSelectionModel().getSelection();
+		var tomcatNo = selectedRecords[0].get("tomcatInstanceNo");
+		var sessionServerNo = selectedRecords[0].get("sessionServerNo");
+		if(tomcatNo > 0 || sessionServerNo > 0) {
+			MUtils.showWarn("The used server could not be edited.");
+			return;
+		}
 		var form = button.up("tabpanel").down("#infoForm");
 		this.setStateInfoForm(form, false);
     },
@@ -243,8 +253,7 @@ Ext.define('webapp.controller.ServerManagementController', {
         var passwordField = Ext.getCmp("serverSSHPasswordTextField");
         var sshAccountIdField = Ext.getCmp("sshAccountHiddenField");
         var serverIdField = Ext.getCmp("serverIDHiddenField");
-        var rootField = Ext.getCmp("rootCheckBox");
-        this.saveSSHAccount(sshAccountIdField.getValue(), userIDField.getValue(), passwordField.getValue(), serverIdField.getValue(), rootField.getValue());
+        this.saveSSHAccount(sshAccountIdField.getValue(), userIDField.getValue(), passwordField.getValue(), serverIdField.getValue());
 
     },
 
@@ -282,7 +291,7 @@ Ext.define('webapp.controller.ServerManagementController', {
     onTestServerBtnClick: function(button, e, eOpts) {
 	
 		var form = button.up('window').down('form');
-
+		var submitBtn = button.up('window').down("[name='submitBtn']")
 		var loadMask = new Ext.LoadMask({
 			msg    : 'Please wait...',
 			target  : form
@@ -305,11 +314,11 @@ Ext.define('webapp.controller.ServerManagementController', {
                                        buttons: Ext.Msg.OK,
                                        icon: Ext.Msg.INFO
                                    });
-								   Ext.getCmp("submitServerBtn").setDisabled(false);
+								   submitBtn.setDisabled(false);
                                },
                               function(data){
 							      loadMask.hide();
-                                  Ext.getCmp("submitServerBtn").setDisabled(true);
+                                  submitBtn.setDisabled(true);
                               });
     },
 
@@ -445,8 +454,6 @@ Ext.define('webapp.controller.ServerManagementController', {
         var sshPasswordField = Ext.getCmp("serverSSHPasswordTextField");
         var sshAccountIdField = Ext.getCmp("sshAccountHiddenField");
         var serverIdField = Ext.getCmp("serverIDHiddenField");
-        var rootField = Ext.getCmp("rootCheckBox");
-
 
         sshIPAddrField.setValue(sshIPAddr);
         sshPortField.setValue(sshPort);
@@ -459,7 +466,6 @@ Ext.define('webapp.controller.ServerManagementController', {
             submitButton.setText("Save");
             sshUserIDField.setValue(sshUserID);
             sshPasswordField.setValue(sshPassword);
-            rootField.setValue(isRoot);
         }
         window.show();
 
@@ -475,9 +481,9 @@ Ext.define('webapp.controller.ServerManagementController', {
         });
     },
 
-    saveSSHAccount: function(id, username, password, serverId, isRoot) {
+    saveSSHAccount: function(id, username, password, serverId) {
 		var url = GlobalData.urlPrefix + "res/server/updatessh";
-		var params = {"Id":id, "username":username, "password":password, "server":serverId, "root":isRoot};
+		var params = {"Id":id, "username":username, "password":password, "server":serverId, "root":false};
 		webapp.app.getController("globalController").ajaxRequest(url, params, "POST", function(data){
 			 Ext.Msg.show({
 					title: "Message",
@@ -516,7 +522,7 @@ Ext.define('webapp.controller.ServerManagementController', {
 				webapp.app.getController("globalController").ajaxRequest(url, {"serverId":id}, "POST", function(data){
 					var detailTab = Ext.getCmp("detailServerTab");
 					detailTab.setVisible(false);
-					webapp.app.getStore("ServerStore").reload();
+					Ext.getCmp("serverGrid").getStore().reload();
 				});
 			}
 		});
@@ -569,7 +575,9 @@ Ext.define('webapp.controller.ServerManagementController', {
 								}
 							});
 							
-							MUtils.showTaskWindow(task);
+							MUtils.showTaskWindow(task, function(){
+								Ext.getCmp("serverGrid").getStore().reload();
+							});
 						}
 					}
 				});

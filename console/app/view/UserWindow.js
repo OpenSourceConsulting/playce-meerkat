@@ -55,6 +55,7 @@ Ext.define('webapp.view.UserWindow', {
                     fieldLabel: 'Retype-Password',
                     name: 'retypePassword',
                     inputType: 'password',
+					vtype:'password',
                     allowBlank: false,
                     allowOnlyWhitespace: false,
                     maxLength: 20,
@@ -87,6 +88,7 @@ Ext.define('webapp.view.UserWindow', {
 					items: [
 						{
 							xtype: 'gridpanel',
+							emptyText:"No data.",
 							name: 'userRoles',
 							margin: '5 0 0 0 ',
 							forceFit: true,

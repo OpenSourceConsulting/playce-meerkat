@@ -42,6 +42,7 @@ Ext.define('webapp.view.SSHAccountWindow', {
                     xtype: 'button',
                     disabled: true,
                     id: 'serverSubmitSSHBtn',
+					name:'submitBtn',
                     itemId: 'serverSubmitSSHBtn',
                     text: 'Add'
                 },

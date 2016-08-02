@@ -49,7 +49,7 @@ Ext.define('webapp.view.DomainForm', {
 					editable: false,
 					autoLoadOnValue: true,
 					displayField: 'name',
-					store: 'DatagridServerGroupStore',
+					store: {type:'DatagridServerGroupStore'},
 					valueField: 'id'
 				},
 				{

@@ -44,6 +44,7 @@ Ext.define('webapp.view.ServerWindow', {
                     xtype: 'button',
                     disabled: true,
                     id: 'submitServerBtn',
+					name:'submitBtn',
                     text: '저장'
                 },
                 {

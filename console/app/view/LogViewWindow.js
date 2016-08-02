@@ -65,14 +65,14 @@ Ext.define('webapp.view.LogViewWindow', {
     ],
 	
 	onWindowShow: function(window, eOpts) {
-		
 		var emptyEl = window.down('panel').body.insertHtml("beforeEnd", "<div></div>", true);
-		emptyEl.prev().setHeight(0);
-		
-		this.loadingStop = false;
-		this.loadLog();
-		
 		var me = this;
+		emptyEl.prev().setHeight(0);
+		this.loadingStop = false;
+		setTimeout(function() {
+			me.loadLog();
+		}, 600);
+		
 		this.intervalId = setInterval(function(){
 			me.loadLog();
 		}, 3000);

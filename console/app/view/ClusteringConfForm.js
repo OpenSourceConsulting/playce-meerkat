@@ -27,6 +27,7 @@ Ext.define('webapp.view.ClusteringConfForm', {
             xtype: 'gridpanel',
             itemId: 'clusteringConfigurationGridView',
             forceFit: true,
+			emptyText:"No data.",
             store: 'ClusteringConfigurationStore',
             columns: [
                 {

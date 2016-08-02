@@ -27,6 +27,7 @@ Ext.define('webapp.view.SessionServerGroupContainer', {
 			title: '세션 그룹 목록',
             region: 'north',
             height: 400,
+			emptyText:"No data.",
             id: 'dataGridServerGroupGrid',
             itemId: 'dataGridServerGroupGrid',
 			split: true,

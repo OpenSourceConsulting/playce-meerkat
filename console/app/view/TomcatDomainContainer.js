@@ -40,6 +40,7 @@ Ext.define('webapp.view.TomcatDomainContainer', {
             },
 			forceFit: true,
 			store: 'DomainStore',
+			emptyText: 'No data.',
 			dockedItems: [
 				{
 					xtype: 'pagingtoolbar',

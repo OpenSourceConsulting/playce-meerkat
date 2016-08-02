@@ -24,9 +24,12 @@ Ext.define('webapp.controller.UserController', {
         },
         "#btnUserRoleSubmit": {
             click: 'onBtnUserRoleSubmitClick'
-        }
+        },
+		"#btnMyProfileSubmit": {
+			click: 'onMyProfileSaveBtnClick'
+		}
     },
-
+	
     onNewUserButtonClick: function(button, e, eOpts) {
         this.showUserWindow("new", 0);
     },
@@ -36,11 +39,32 @@ Ext.define('webapp.controller.UserController', {
         Ext.getStore("UserStore").load();
         Ext.getStore("UserRoleStore").load();
     },
+	
+	onMyProfileSaveBtnClick: function(button, e, eOpts) {
+        var form = button.up('window').down("form");
+		
+		if(form.getForm().isValid()){
+			form.getForm().submit({
+				url: GlobalData.urlPrefix + "user/my/save",
+				waitMsg: 'Saving Data...',
+				success: function(formBasic, action){
+					
+				},
+				failure: function(form, action) {
+					var response = Ext.decode(action.response.responseText);
+					MUtils.showWarn(response.msg);
+				}
+			});
+		}
+    },
 
     onSubmitButtonClick: function(button, e, eOpts) {
         var form = Ext.getCmp("userForm");			// user form
     
 		if(form.getForm().isValid()){
+		
+		/* #### don't need this code. use vtype config.
+		
 			var password = form.down("[name=password]");
 			var retype_password = form.down("[name=retypePassword]");
 			if(password.getValue()!== retype_password.getValue()){
@@ -57,8 +81,8 @@ Ext.define('webapp.controller.UserController', {
 			else{
 				retype_password.removeCls("x-form-empty-field");
 			}
-			
-			var url = GlobalData.urlPrefix + "user/save";
+			*/
+			var url = GlobalData.urlPrefix + "user/saveWithRoles";
 			var items = form.down("grid").getStore();
 			var userRoleIds = "";
 			items.each(function(rec){
@@ -78,6 +102,10 @@ Ext.define('webapp.controller.UserController', {
                         Ext.getStore("UserRoleStore").reload();
                         form.up("window").close();
 					}
+				},
+				failure: function(form, action) {
+					var response = Ext.decode(action.response.responseText);
+					MUtils.showWarn(response.msg);
 				}
 			});
 		}

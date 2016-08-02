@@ -156,18 +156,28 @@ Ext.define('webapp.view.meerkatViewport', {
                                         },
                                         {
                                             xtype: 'label',
-                                            id: 'topUsername',
-                                            itemId: 'topUsername',
-                                            text: 'admin'
+                                            id: 'topLastLogonLabel'
                                         },
                                         {
                                             xtype: 'tbseparator'
                                         },
                                         {
                                             xtype: 'button',
-                                            id: 'logoutBtn',
-                                            itemId: 'logoutBtn',
-                                            text: '로그아웃'
+                                            id: 'topUsername',
+											iconCls: 'fa fa-user',
+											menu: [
+											{
+												text:'로그아웃',
+												id: 'logoutBtn',
+												iconCls: 'fa fa-sign-out'
+											},
+											{
+												text:'내정보',
+												handler: function(){
+													Ext.create("widget.UserMyWindow").show();
+												}
+											}
+										]
                                         }
                                     ]
                                 }

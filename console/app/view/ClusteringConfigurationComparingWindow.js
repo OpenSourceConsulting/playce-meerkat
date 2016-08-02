@@ -30,7 +30,7 @@ Ext.define('webapp.view.ClusteringConfigurationComparingWindow', {
             margin: '10 10 10 10',
             forceFit: true,
             store: 'ClusteringConfComparisonStore',
-			
+			emptyText:"No data.",
             columns: [
                 {
                     xtype: 'gridcolumn',

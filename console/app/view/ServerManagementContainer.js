@@ -36,6 +36,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
 			scrollable: true,
             forceFit: true,
             store: 'ServerStore',
+			emptyText:"No data.",
             columns: [
 				{
                     //xtype: 'gridcolumn',//default is gridcolumn
@@ -309,6 +310,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
 												{
 													xtype: 'gridpanel',
 													flex: 2,
+													emptyText:"No data.",
 													height: 277,
 													id: 'sshAccountGrid',
 													name :'sshGrid',

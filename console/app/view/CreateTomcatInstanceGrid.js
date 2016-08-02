@@ -25,6 +25,7 @@ Ext.define('webapp.view.CreateTomcatInstanceGrid', {
     bodyBorder: true,
     bodyStyle: 'background: #fff',
     header: false,
+	emptyText:"No data.",
     iconCls: 'icon-grid',
     store: {type: 'ServerStore'},
 
@@ -86,6 +87,7 @@ Ext.define('webapp.view.CreateTomcatInstanceGrid', {
                 {
                     xtype: 'textfield',
                     width: 250,
+					itemId:'keywordField',
                     fieldLabel: 'Search',
                     labelWidth: 50
                 }

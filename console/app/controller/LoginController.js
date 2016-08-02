@@ -191,7 +191,7 @@ Ext.define('webapp.controller.LoginController', {
         //Main Layout 설정
         Ext.getCmp("dollyViewport").layout.setActiveItem(1);
         Ext.getCmp("topUsername").setText(newRecord.get("userName"));
-        //Ext.getCmp("topLastLogonLabel").setText("(최근 접속시간 : "+newRecord.get("lastLogon")+")");
+        Ext.getCmp("topLastLogonLabel").setText("(최근 접속시간 : "+newRecord.get("lastLoginDate")+")");
 
         //Menu 권한 설정
         //this.initMenuAuthSetting();

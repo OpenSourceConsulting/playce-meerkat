@@ -28,6 +28,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
     layout: 'border',
     defaultListenerScope: true,
 	id:'TomcatInstanceContainerView',
+	itemId:'TomcatInstanceContainerView',
     items: [
         {
             xtype: 'panel',
@@ -120,6 +121,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             title: '',
                             forceFit: true,
                             store: 'DatasourceStore',
+							emptyText: "No data.",
                             columns: [
                                 {
                                     xtype: 'gridcolumn',

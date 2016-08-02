@@ -33,6 +33,10 @@ Ext.define('webapp.controller.ApplicationController', {
 		var redeploy = false;
         if(form.isValid()){
 			var contextPath = form.down("[name='contextPath']").getValue();
+			if(!contextPath.startsWith("/")) {
+				contextPath = "/" + contextPath;
+			}
+			alert(contextPath);
 			//temporarily validate
 			var grid = Ext.getCmp("associatedApplicationListView");
 			grid.getStore().each(function(record){

@@ -58,6 +58,7 @@ Ext.define('webapp.view.LinkNewDataSourceWindow', {
         {
             xtype: 'gridpanel',
             flex: 6,
+			emptyText:"No data.",
             id: 'allDatasourceGrid',
             margin: '5 5 5 5',
             forceFit: true,

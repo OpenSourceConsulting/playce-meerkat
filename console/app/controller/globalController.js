@@ -256,7 +256,7 @@ Ext.define('webapp.controller.globalController', {
 
             password: function(val, field) {
                 //var pwd = field.up('form').down('#passwd');
-                pwd = field.previousNode('textfield');
+                var pwd = field.previousNode('textfield');
                 return (val == pwd.getValue());
             },
 

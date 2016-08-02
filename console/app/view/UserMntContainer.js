@@ -34,6 +34,7 @@ Ext.define('webapp.view.UserMntContainer', {
                     items: [
                         {
                             xtype: 'gridpanel',
+							emptyText:"No data.",
                             forceFit: true,
                             store: 'UserStore',
                             columns: [
@@ -61,12 +62,12 @@ Ext.define('webapp.view.UserMntContainer', {
                                 },
                                 {
                                     width: 100,
-                                    dataIndex: 'createdDateString',
+                                    dataIndex: 'createdDate',
                                     text: 'Created Date'
                                 },
                                 {
                                     width: 100,
-                                    dataIndex: 'lastLoginDateString',
+                                    dataIndex: 'lastLoginDate',
                                     text: 'Last Login'
                                 },
 								{
@@ -144,6 +145,7 @@ Ext.define('webapp.view.UserMntContainer', {
                     items: [
                         {
                             xtype: 'gridpanel',
+							emptyText:"No data.",
                             height: 349,
                             margin: '5 0 0 0 ',
                             forceFit: true,

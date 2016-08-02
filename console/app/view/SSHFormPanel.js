@@ -26,18 +26,21 @@ Ext.define('webapp.view.SSHFormPanel', {
         {
             xtype: 'displayfield',
             id: 'serverSSHIPAddressDisplayField',
+			name: 'sshIPAddr',
             width: 372,
             fieldLabel: 'SSH IP Address:'
         },
         {
             xtype: 'displayfield',
             id: 'serverSSHPortDisplayField',
+			name: 'sshPort',
             width: 297,
             fieldLabel: 'SSH Port'
         },
         {
             xtype: 'textfield',
             id: 'serverSSHUserIDTextField',
+			name:'sshUserName',
             fieldLabel: 'User ID',
             allowBlank: false
         },
@@ -52,6 +55,7 @@ Ext.define('webapp.view.SSHFormPanel', {
                     xtype: 'textfield',
                     id: 'serverSSHPasswordTextField',
                     width: 255,
+					name:'sshPassword',
                     fieldLabel: 'Password',
                     inputType: 'password',
                     allowBlank: false
@@ -76,12 +80,6 @@ Ext.define('webapp.view.SSHFormPanel', {
                     fieldLabel: 'Label'
                 }
             ]
-        },
-        {
-            xtype: 'checkboxfield',
-            anchor: '100%',
-            id: 'rootCheckBox',
-            fieldLabel: 'Root permission'
         }
     ]
 

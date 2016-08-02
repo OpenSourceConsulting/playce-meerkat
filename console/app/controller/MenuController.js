@@ -120,7 +120,10 @@ Ext.define('webapp.controller.MenuController', {
 					   var domainName = record.get("text");
 					   switch (_item.id) {
 							case 'new-tomcat':
-							
+								//init domain model
+								GlobalData.lastSelectedMenuId = domainId;
+								//var domainModel = {"id": domainId};
+								//webapp.app.getController("TomcatInstWizardController").setDomainModel(domainModel);
 								if(me.checkAddableInstance(domainId)){
 									webapp.app.getController("DomainController").showTomcatInstanceWizardWindow('step3');
 								} else {
@@ -157,12 +160,12 @@ Ext.define('webapp.controller.MenuController', {
 					{
 						id: 'start-tomcat',
 						text: MSG_START_TOMCAT,
-						disabled:record.get("state") === 1?true:false
+						disabled:(record.get("state") !== 8 && record.get("state") !== 23)?false:true
 					},
 					{
 						id: 'stop-tomcat',
 						text: MSG_STOP_TOMCAT,
-						disabled:record.get("state") === 2?true:false
+						disabled:(record.get("state") !== 7 && record.get("state") !== 22)?false:true
 
 					},
 					{
@@ -171,11 +174,15 @@ Ext.define('webapp.controller.MenuController', {
 					},
 					{
 						id: 'delete-tomcat',
-						text: MSG_DELETE_TOMCAT
+						text: MSG_DELETE_TOMCAT,
+						disabled:record.get("state") === 8? true: false
 					}
                 ],
                 listeners: {
                     click: function( _menu, _item, _e, _eOpts ) {
+						if(typeof _item === 'undefined'){
+							return;
+						}
                         switch (_item.id) {
                             case 'start-tomcat':
                                 webapp.app.getController("TomcatController").changeState(tomcatId, 1);
@@ -187,7 +194,7 @@ Ext.define('webapp.controller.MenuController', {
                                 webapp.app.getController("TomcatController").editTomcat(tomcatId);
                                 break;
                             case 'delete-tomcat':
-								webapp.app.getController("TomcatController").deleteTomcat(tomcatId, domainId);
+								webapp.app.getController("TomcatController").uninstallTomcat(tomcatId, domainId);
                                 break;
                         }
                     },
@@ -324,5 +331,13 @@ Ext.define('webapp.controller.MenuController', {
 		console.log('return addable is ' + addable);
 		
 		return addable;
+	},
+	
+	selectNode: function(nodeId){
+		var tree = Ext.getCmp('menuTreePanel');
+		var node = tree.getStore().getNodeById(nodeId);
+		node.expand();
+		webapp.app.getController("MenuController").reloadChildMenu(tree, nodeId);
+		tree.getSelectionModel().select(node);
 	}
 });

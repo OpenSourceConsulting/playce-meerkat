@@ -43,6 +43,7 @@ Ext.define('webapp.view.DeployWindow', {
                     xtype: 'filefield',
                     fieldLabel: 'Choose application (*.war)',
                     name: 'warFile',
+					msgTarget: 'side',
                     allowBlank: false,
                     allowOnlyWhitespace: false,
                     emptyText: 'Select *.war file',
@@ -57,6 +58,7 @@ Ext.define('webapp.view.DeployWindow', {
                     xtype: 'textfield',
                     fieldLabel: 'Context path',
                     name: 'contextPath',
+					msgTarget: 'side',
                     allowBlank: false,
                     allowOnlyWhitespace: false
                 }

@@ -51,6 +51,9 @@ Ext.define('webapp.controller.DomainController', {
 		},
 		"#associatedTomcatGridView": {
 			render: 'onDomainTomcatGridRender'
+		},
+		"#logFilteringTextField": {
+			specialkey: 'onLogFilteringSpecialKey'
 		}
     },
 	
@@ -244,16 +247,16 @@ Ext.define('webapp.controller.DomainController', {
 				var response = Ext.JSON.decode(action.response.responseText);
 				if(response.success) {
 					var catalinaHome = form.down("[name='catalinaHome']");
-					var tomcatVersionName = form.down("[name='tomcatVersionNm']").getValue();
-					if(tomcatVersionName !== "") {
-						catalinaHome.setValue(catalinaHome.getValue() + "/" + tomcatVersionName);
+					var tomcatVersionName = form.down("[name='tomcatVersionNm']");
+					if(tomcatVersionName.isVisible()) {
+						catalinaHome.setValue(catalinaHome.getValue() + "/" + tomcatVersionName.getValue());
 					}
 					
 					button.setVisible(false);
 					button.up('panel').down("#editTomcatConfigBtn").setVisible(true);
 					button.up('panel').down("#cancelTomcatConfigBtn").setVisible(false);
 					form.down("[name='id']").setValue(response.data.configId);
-					form.down("[name='tomcatVersionNm']").setValue("");
+					tomcatVersionName.setVisible(false);
 					form.down("[name='separator']").setVisible(false);
 					formBasic.getFields().each (function (field) {
 						field.setReadOnly (true); 
@@ -262,7 +265,12 @@ Ext.define('webapp.controller.DomainController', {
 					var task = response.data.task;
 					if(task.id > 0){
 						me.updateTomcatConfig(changeRMI, task.id);
-						MUtils.showTaskWindow(task);
+						MUtils.showTaskWindow(task, function(){
+							//reload menutree
+							var domainId = GlobalData.lastSelectedMenuId;
+							var domainNodeId = 'tomcatMng_domain_'  + domainId;
+							webapp.app.getController("MenuController").selectNode(domainNodeId);
+						});
 					}
 					me.tabDisable(false);
 				}
@@ -358,6 +366,16 @@ Ext.define('webapp.controller.DomainController', {
         });
 		
 	},
+	
+	onLogFilteringSpecialKey: function(field, e, eOpts) {
+
+        if(e.getKey() === e.ENTER){
+            var store = field.up("gridpanel").getStore();
+			var url = GlobalData.urlPrefix + "task/list/domain/" +GlobalData.lastSelectedMenuId + "?tomcatInstName="+field.getValue();
+            store.getProxy().url = url;
+            store.reload();
+        }
+    },
 
     onTomcatIntKeywordFieldFiltering: function(field, e, eOpts) {
 
@@ -538,13 +556,14 @@ Ext.define('webapp.controller.DomainController', {
 		var me = this;
         var domainWindow = Ext.create("widget.DomainWindow");
         var submitButton = Ext.getCmp("btnSubmitNewDomain");
-        //load server group list
-        Ext.getStore("DatagridServerGroupStore").load();
-
+		var form = domainWindow.down("#domainForm");			// domain form
+		//reload session server group
+		form.down("[name='serverGroup']").getStore().getProxy().url = GlobalData.urlPrefix + "res/datagrid/group/list/notempty";
+		form.down("[name='serverGroup']").getStore().load();
         if (type === "edit"){
             domainWindow.setTitle("Edit Domain");
             submitButton.setText("Save");
-            var form = domainWindow.down("#domainForm");			// domain form
+        
 			form.getForm().load({
 				url: GlobalData.urlPrefix + "domain/get",
 				method : 'GET',
@@ -707,7 +726,6 @@ Ext.define('webapp.controller.DomainController', {
 	},
 	
 	resetTomcatForm: function(tomcatForm){
-	
 		tomcatForm.reset(true);
 		tomcatForm.down("[name=tomcatVersionCd]").setVisible(true);
 		tomcatForm.down("[name='separator']").setVisible(true);
@@ -721,7 +739,6 @@ Ext.define('webapp.controller.DomainController', {
                     url: GlobalData.urlPrefix + "domain/delete",
                     params: {"domainId":domainId},
                     success: function(resp, ops) {
-
                         var response = Ext.decode(resp.responseText);
                         if(response.success){
 							webapp.app.getController("MenuController").loadDomainMenu();
@@ -850,9 +867,7 @@ Ext.define('webapp.controller.DomainController', {
 	},
 	
 	showViewLogWindow: function(taskDetailId) {
-	
 		Ext.create("widget.logViewWindow", {'taskDetailId' : taskDetailId}).show();
-	
 	},
 	
 	loadDomainAlertSettings: function(domainId) {

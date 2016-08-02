@@ -79,6 +79,7 @@ Ext.define('webapp.view.DomainContainer', {
 								if(Ext.isEmpty(value)){
 									return '<span style="color:#bdbdbd;">NONE</span>';
 								}
+								field.setWidth(260);
 								return value;
 							}
                         },
@@ -303,7 +304,7 @@ Ext.define('webapp.view.DomainContainer', {
                                         },
 										{
                                             handler: function(view, rowIndex, colIndex, item, e, record, row) {
-                                                webapp.app.getController("TomcatController").uninstallTomcat(record.get('id'));
+                                                webapp.app.getController("TomcatController").uninstallTomcat(record.get('id'), GlobalData.lastSelectedMenuId);
                                             },
                                             iconCls: 'icon-delete',
                                             tooltip: 'Delete',
@@ -413,6 +414,7 @@ Ext.define('webapp.view.DomainContainer', {
                         {
                             xtype: 'gridpanel',
                             id: 'domainDatasourceGrid',
+							emptyText: 'No data.',
                             title: '',
                             forceFit: true,
                             store: 'DomainDatasourceStore',
@@ -704,6 +706,7 @@ Ext.define('webapp.view.DomainContainer', {
 							flex: 1,
 							border: 1,
 							forceFit: true,
+							emptyText: "No data.",
 							store: 'TaskHistoryStore',
 							columns: [
 								{
@@ -781,6 +784,7 @@ Ext.define('webapp.view.DomainContainer', {
                                     items: [
                                         {
                                             xtype: 'textfield',
+											itemId: 'logFilteringTextField',
                                             fieldLabel: 'Filtering'
                                         }
                                     ]

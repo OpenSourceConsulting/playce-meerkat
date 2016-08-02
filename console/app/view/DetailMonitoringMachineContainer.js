@@ -192,7 +192,7 @@ Ext.define('webapp.view.DetailMonitoringMachineContainer', {
 							xtype: 'gridpanel',
 							id: 'diskItemGrid',
 							store: 'ServerDiskMonitoringStore',
-							emptyText:"No data",
+							emptyText:"No data.",
 							columns: [
 								{
 									dataIndex: 'fsName',
