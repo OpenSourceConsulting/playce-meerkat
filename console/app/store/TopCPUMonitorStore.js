@@ -36,7 +36,7 @@ Ext.define('webapp.store.TopCPUMonitorStore', {
 				},
 				{
                     name: 'alertStatus'
-                },
+                }
             ]
         }, cfg)]);
     }

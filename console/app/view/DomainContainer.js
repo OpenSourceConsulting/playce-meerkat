@@ -52,7 +52,7 @@ Ext.define('webapp.view.DomainContainer', {
                     layout: 'hbox',
 					fieldDefaults: {
 						labelAlign: 'right',
-						width: 180,
+						width: 180
 					},
                     hideLabel: true,
                     items: [

@@ -388,7 +388,7 @@ Ext.define('webapp.view.ServerManagementContainer', {
 						}
 			]
 		}
-    ],
+    ]
 /*
     onDetailServerTabTabChange: function(tabPanel, newCard, oldCard, eOpts) {
 

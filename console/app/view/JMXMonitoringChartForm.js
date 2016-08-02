@@ -123,6 +123,6 @@ Ext.define('webapp.view.JMXMonitoringChartForm', {
 		}
 	
 		chart.getStore().loadData(list,false);
-	},
+	}
 
 });

@@ -257,7 +257,7 @@ Ext.define('webapp.view.TomcatInstanceContainer', {
                             ]
                         }
                     ]
-                },
+                }
                 /*{
                     xtype: 'panel',
                     title: 'Sessions',

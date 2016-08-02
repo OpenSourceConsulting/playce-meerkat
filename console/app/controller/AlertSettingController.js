@@ -108,5 +108,5 @@ Ext.define('webapp.controller.AlertSettingController', {
 			}
 			
 		});
-	},
+	}
 });

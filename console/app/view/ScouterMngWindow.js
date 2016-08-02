@@ -77,7 +77,7 @@ Ext.define('webapp.view.ScouterMngWindow', {
 			text: '설치하기',
 			handler: function(button, e) {
 				button.up("window").applyAgent();
-			},
+			}
 		},
 		{
 			handler: function(button, e) {

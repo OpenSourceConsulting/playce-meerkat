@@ -153,7 +153,7 @@ Ext.define('webapp.view.TomcatForm', {
 							value:8005,
                             allowBlank: false,
                             allowOnlyWhitespace: false
-                        },
+                        }
 					]
 				},
                 {
