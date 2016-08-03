@@ -15,7 +15,7 @@
 		<echo message="removing Tomcat" />
 		
 		<sshexec port="${server.port}" host="${server.ip}" username="${user.id}" password="${user.passwd}" keyfile="${key.file}"
-				 command="rm -rf ${catalina.base};rm -rf ${catalina.home};" trust="true" failonerror="true" />
+				 command="rm -rf ${catalina.base};" trust="true" failonerror="true" />
 
 	</target>
 
