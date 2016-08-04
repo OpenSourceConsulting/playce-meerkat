@@ -36,7 +36,6 @@ Ext.define('webapp.controller.ApplicationController', {
 			if(!contextPath.startsWith("/")) {
 				contextPath = "/" + contextPath;
 			}
-			alert(contextPath);
 			//temporarily validate
 			var grid = Ext.getCmp("associatedApplicationListView");
 			grid.getStore().each(function(record){
