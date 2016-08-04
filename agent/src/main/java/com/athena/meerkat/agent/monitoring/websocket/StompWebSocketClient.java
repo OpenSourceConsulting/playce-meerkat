@@ -168,7 +168,7 @@ public class StompWebSocketClient implements InitializingBean{
 	 * @param message
 	 * @throws IOException
 	 */
-	public void sendMessage(String message) throws IOException {
+	public synchronized void sendMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.serverDestHeader).body(message).build();
 		
 		try {
@@ -192,7 +192,7 @@ public class StompWebSocketClient implements InitializingBean{
 	 * @param message
 	 * @throws IOException
 	 */
-	public void sendJmxMessage(String message) throws IOException {
+	public synchronized void sendJmxMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.jmxDestHeader).body(message).build();
 		
 		try {
@@ -207,7 +207,7 @@ public class StompWebSocketClient implements InitializingBean{
 		LOGGER.debug("send jmx >> {}", message);
 	}
 	
-	public void sendFSMessage(String message) throws IOException {
+	public synchronized void sendFSMessage(String message) throws IOException {
 		TextMessage txtMessage = StompTextMessageBuilder.create(StompCommand.SEND).headers(this.fsDestHeader).body(message).build();
 		
 		try {
