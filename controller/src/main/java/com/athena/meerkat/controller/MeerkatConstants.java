@@ -180,7 +180,7 @@ public abstract class MeerkatConstants {
 	public static final String MON_FACTOR_NI_IN = "net.in";
 	//public static final String MON_JMX_FACTOR_HEAP_MEMORY = "jmx.HeapMemoryUsage";
 	//public static final String MON_JMX_FACTOR_CPU_USAGE = "jmx.ProcessCpuLoad";
-	public static final String MON_JMX_FACTOR_HEAP_MEMORY = MON_FACTOR_MEM_USED_PER;
+	public static final String MON_JMX_FACTOR_HEAP_MEMORY = MON_FACTOR_MEM_USED;
 	public static final String MON_JMX_FACTOR_CPU_USAGE = MON_FACTOR_CPU_USED_PER;
 	public static final String MON_JMX_FACTOR_ACTIVE_THREADS = "jmx.tomcatThreads";
 	public static final String MON_JMX_FACTOR_JDBC_CONNECTIONS = "jmx.ds";
